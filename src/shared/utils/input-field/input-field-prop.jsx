@@ -1,0 +1,11 @@
+export class InputFieldProps {
+
+    constructor(setValue, label, placeholder, type) {
+      this.setValue = setValue;
+      this.label = label.charAt(0).toUpperCase() + label.slice(1);
+      this.placeholder = placeholder ? placeholder : `Enter ${label.toLowerCase()}`;
+      this.type = type ? type : "text";
+  
+    }
+  }
+  

@@ -1,0 +1,24 @@
+import moment from "moment/moment";
+
+export const DDMMYYYY = (dateTime) => {
+  return dateTime && moment(dateTime).format("DD/MM/YYYY");
+};
+
+export const DateFormatYYYYMMDD = (dateTime) => {
+  return dateTime && moment(dateTime).format("YYYY-MM-DD");
+};
+
+export const StringToDate = (dateTime) => {
+  var date = moment(dateTime).format("YYYY-MM-DD");
+  return date;
+};
+export const DDMMYYHHMM = (dateTime) => {
+  return dateTime && moment(dateTime).format("DD/MM/YY h:mma");
+};
+export const DATEDIFF = (fromDate, toDate) => {
+  const result = (new Date(toDate) - new Date(fromDate))/ (1000*60*60*24);
+  
+  if (result < 0 ) 
+  {return 0}
+  return result
+};

@@ -1,0 +1,7 @@
+import { Skeleton } from '@mui/material'
+import React from 'react'
+
+const TextSkelton1 = () => <Skeleton variant="text" sx={{ fontSize: '1.334rem' }} />
+
+
+export default TextSkelton1

@@ -1,0 +1,10 @@
+import { Alert } from '@mui/material'
+import React from 'react'
+
+const CustomeAlert = ({ message, severity, top }) => {
+    return (
+        <Alert sx={{ width: "max-content", position: "absolute", top: { top }, left:"50%", zIndex: "99999", transform:" translateX(-50%)"}} severity={severity}>{message}</Alert>
+    )
+}
+
+export default CustomeAlert

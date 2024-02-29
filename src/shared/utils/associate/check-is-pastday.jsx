@@ -1,0 +1,14 @@
+const checkPastDay = (date) => {
+  const today = new Date();
+  let isPastDate = false;
+  if (date.getFullYear() < today.getFullYear() ||
+    (date.getFullYear() === today.getFullYear() && date.getMonth() < today.getMonth()) ||
+    (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() &&
+      date.getDate() < today.getDate())
+  ) {
+    isPastDate = true;
+  }
+  return isPastDate
+}
+
+export default checkPastDay

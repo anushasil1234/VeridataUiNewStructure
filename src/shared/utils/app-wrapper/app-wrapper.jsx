@@ -1,0 +1,943 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { storeApi } from "store/slices/api-slice";
+import PfcRequiest from "server/utils/pfc-requiest";
+import CommonHookFunctionWrapper from "shared/components/shared-hooks";
+import {
+  CON,
+  DIS,
+  FLT,
+  GEN,
+  GenerateAadharOTP_URL,
+  GenerateUANOTP_URL,
+  GetAppointeeActivity_URL,
+  GetAppointeeDetails_URL,
+  GetAppointeeStatusDetails_URL,
+  GetCriticalAppointeeData_URL,
+  GetDashboardWidgetCardData_URL,
+  GetExpiredProcessFileData_URL,
+  GetMastarDropdowndata_URL,
+  GetMenuListData_URL,
+  VerifyPassportDetails_URL,
+  GetPfCreationApponteeReport_URL,
+  GetProcessedEPFOData_URL,
+  GetRawFileData_URL,
+  GetRejectedFileData_URL,
+  GetRemarks_URL,
+  GetSetupConfigData_URL,
+  GetUANNumber_URL,
+  GetUnProcessedFileData_URL,
+  GetUnderProcessFileData_URL,
+  MAR,
+  NAT,
+  PostAppointeeApproved_URL,
+  PostAppointeeDetailsSave_URL,
+  PostAppointeeFileDetails_URL,
+  PostAppointeeRejected_URL,
+  PostAppointeeReprocess_URL,
+  PostSetupConfigData_URL,
+  QUA,
+  RawDataProcess_URL,
+  SubmitOTPAadharOTP_URL,
+  UANSubmitOTP_URL,
+  UploadxlsFile_URL,
+  VerifyPanDetails_URL,
+  fileUploadSuccess,
+  formSaveSuccess,
+  processStarted,
+  toLinknotsent,
+  toProcessing,
+  toVerified,
+  toCancelled,
+  toLapseddata,
+  GetTotalWidgetData_URL,
+  GetTotalCriticalAppointee_URL,
+  DownloadPassbookFile_URL,
+  PostAppointeeClose_URL,
+  appointteTerminationSuccess,
+  PostRemainderMail_URL,
+  remiderSuccessMsg,
+  appointeeApproveSuccess,
+  appointeeRejectionSuccess,
+  noRemarks,
+  formSubmitionSuccess,
+  AppointeeDetailsUpdate_URL,
+  editSuccess,
+  PostAppointeeSearch_URL,
+  GetRemarksRemedyData_URL,
+  noRemarksMsg,
+  configurationSuccessMsg,
+  toLogin,
+  GetAdminUserList_URL,
+  RLE,
+  CreateUser_URL,
+  userCreationSuccessMsg,
+  GetUserByUserId_URL,
+  ValidateUserCode_URL,
+  userUpdateSuccessMsg,
+  UpdateAdminUser_URL,
+  userDeletedSuccessMsg,
+  RemoveAdminUser_URL,
+  UploadUpdatexlsFile_URL,
+  AppointeeCounterReport_URL,
+  ValidateProfilePassword_URL,
+  EditUserProfile_URL,
+  passwordCreationSuccessMsg,
+  ValidateUserLogIn_URL,
+  UserSignInDetails_URL,
+  ApiCounterReport_URL,
+  GetReportFilterStatus_URL,
+  PassbookDetails_URL,
+  AppointeeConsentUpdate_URL
+} from "shared/constants/constants";
+import { storeDropdownList } from "store/slices/dropdown-slice";
+import { storeFunction } from "store/slices/function-slice";
+import AppointeeView from "modules/appointee/view/appointee-view";
+import ConfirmationModel from "../models/confirmation-modal";
+import ConsentModal from "../models/consent-modal";
+import InfoModel from "../models/info-modal";
+import OtpGenerationForm from "shared/components/otp/otp-generation/otp-generation";
+import OtpSubmitionForm from "shared/components/otp/otp-submition/otp-submition";
+import RemarksTable from "shared/components/remarks-table/remarks-table";
+import SubmitModal from "../models/submit-modal";
+import IssueRemedy from "../issue-remedy/issue-remedy";
+import DocumentView from "shared/components/document-view/document-view";
+import downloadFile from "../associate/download-file";
+// import { encryptedData, decryptedData } from "../associate/custom-encryption";
+import { useLocation } from "react-router-dom";
+import UserView from "modules/user/user-view/user-view";
+import ProfilePasswordForm from "shared/components/password-forms/password-form";
+import FilePasswordForm from "shared/components/password-forms/file-password-form";
+import PassbookView from "modules/appointee/view/passbook-details-view";
+import RemarksInputModel from "../models/remarks-modal";
+
+
+const AppWrapper = (App) => {
+  const Api = (props) => {
+    const { PfcRequest } = props;
+
+    const [isViewOpen, setIsViewOpen] = useState(false);
+    const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);
+    const [appointeeId, setAppointeeId] = useState();
+    const [confirmationModelOpen, setConfirmationModelOpen] = useState(false);
+    const [confirmationModelContent, setConfirmationModelContent] = useState();
+    const [consentModalOpen, setConsentModalOpen] = useState(false);
+    const [consentModalContent, setConsentModalContent] = useState();
+    const [infoModelOpen, setInfoModelOpen] = useState(false);
+    const [infoModelcontent, setInfoModelcontent] = useState();
+    const [otpFormOpen, setOtpFormOpen] = useState(false);
+    const [generateOtpProps, setGenerateOtpProps] = useState();
+    const [otpSubmitionModelOpen, setOtpSubmitionModelOpen] = useState(false);
+    const [isRemarksInputViewOpen, setRemarksInputViewOpen] = useState(false);
+    const [otpSubmitionProps, setOtpSubmitionProps] = useState(false);
+    const [remarksModelOpen, setRemarksModelOpen] = useState(false);
+    const [remarksInputModelProps, setRemarksInputModelProps] = useState(false);
+    const [remarksModelProps, setRemarksModelProps] = useState(false);
+    const [submitModelProps, setSubmitModelProps] = useState(false);
+    const [submitModelOpen, setSubmitModelOpen] = useState(false);
+    const [remedyModelOpen, setRemedyModelOpen] = useState(false);
+    const [remedyModelProps, setRemedyModelProps] = useState(false);
+    const [passwordSubmitionModelOpen, setPasswordSubmitionModelOpen] =
+      useState(false);
+    const [passwordSubmitionProps, setPasswordSubmitionProps] = useState(false);
+    const [filePasswordSubmitionModelOpen, setFilePasswordSubmitionModelOpen] =
+      useState(false);
+    const [filePasswordSubmitionProps, setFilePasswordSubmitionProps] =
+      useState(false);
+    const [documentModelOpen, setDocumentModelOpen] = useState(false);
+    const [documentModelProps, setDocumentModelProps] = useState();
+    const [userId, setUserId] = useState();
+    const [isUserViewOpen, setIsUserViewOpen] = useState(false);
+
+    const closeRemedyModel = () => {
+      setRemedyModelOpen(false);
+    };
+    const openRemedyModel = (remarksId) => {
+      setRemedyModelOpen(true);
+      setRemedyModelProps({ remarksId });
+    };
+    const openSubmitModel = (submitmodalcontent) => {
+      setSubmitModelOpen(true);
+      setSubmitModelProps({ submitmodalcontent });
+    };
+    const closeSubmitModel = () => {
+      setSubmitModelOpen(false);
+      setSubmitModelProps(null);
+    };
+    const openRemarksModel = (remarks) => {
+      let remarksList;
+      if (remarks && remarks.length > 0) {
+        remarksList = remarks;
+      } else {
+        remarksList = [noRemarks];
+      }
+      setRemarksModelOpen(true);
+      setRemarksModelProps({ remarksList });
+    };
+    const closeRemarksModel = () => {
+      setRemarksModelOpen(false);
+      setRemarksModelProps();
+    };
+
+    const openOtpSubmitionModel = (otpModelContent) => {
+      setOtpSubmitionModelOpen(true);
+      setOtpSubmitionProps(otpModelContent);
+    };
+    const closeOtpSubmitionModel = () => {
+      setOtpSubmitionModelOpen(false);
+    };
+
+    const openRemarksInputModel = (remarks) => {
+      setRemarksInputViewOpen(true);
+      setRemarksInputModelProps(remarks);
+    };
+    const closeRemarksInputModel = () => {
+      setRemarksInputViewOpen(false);
+    };
+    const openOtpForm = (
+      generateOtpInput,
+      generateOtpLable,
+      generateOtpFunc
+    ) => {
+      setGenerateOtpProps({
+        generateOtpInput,
+        generateOtpLable,
+        generateOtpFunc,
+      });
+      setOtpFormOpen(true);
+    };
+    const closeOtpForm = () => {
+      setOtpFormOpen(false);
+      setGenerateOtpProps();
+    };
+    const closeInfoModel = () => {
+      setInfoModelOpen(false);
+      setInfoModelcontent();
+    };
+    const openInfoModel = (infoModelcontent, taskAfterClose) => {
+      const handleClickOnOk = () => {
+        taskAfterClose && taskAfterClose();
+        closeInfoModel();
+      };
+      setInfoModelOpen(true);
+      setInfoModelcontent({ ...infoModelcontent, handleClickOnOk });
+    };
+    const openConfirmationModel = (
+      confirmationModelContent,
+      confirmationCallBack
+    ) => {
+      const confirmedYes = () => {
+        confirmationCallBack();
+        closeConfirmationModel();
+      };
+      setConfirmationModelContent({
+        ...confirmationModelContent,
+        confirmedYes,
+        closeConfirmationModel,
+      });
+      setConfirmationModelOpen(true);
+    };
+
+    const closeConfirmationModel = () => {
+      setConfirmationModelOpen(false);
+      setConfirmationModelContent();
+    };
+
+    const openConsentModal = (
+      consentModalContent,
+      consentCallBack
+    ) => {
+      setConsentModalContent({
+        ...consentModalContent,
+        consentCallBack,
+        closeConsentModal,
+      });
+      setConsentModalOpen(true);
+    };
+
+    const closeConsentModal = () => {
+      setConsentModalOpen(false);
+      setConsentModalContent();
+    };
+
+    const openViewModel = (appointeeId) => {
+      setAppointeeId(appointeeId);
+      setIsViewOpen(true);
+    };
+    const openPassbookViewModel = (appointeeId) => {
+      setAppointeeId(appointeeId);
+      setPassbookIsViewOpen(true);
+    };
+    const closePassbookViewModel = () => {
+      setPassbookIsViewOpen(false);
+    };
+    const openUserViewModel = (userId) => {
+      setUserId(userId);
+      setIsUserViewOpen(true);
+    };
+    const closeUserViewModel = (userId) => {
+      setIsUserViewOpen(false);
+    };
+    const closeViewModel = () => {
+      setIsViewOpen(false);
+    };
+    const closeDocumentModel = () => {
+      setDocumentModelOpen(false);
+    };
+    const openDocumentModel = (file, fileType) => {
+      setDocumentModelOpen(true);
+      setDocumentModelProps({ file, fileType });
+    };
+    const openPasswordSubmitionModel = (passwordModelContent) => {
+      setPasswordSubmitionModelOpen(true);
+      setPasswordSubmitionProps(passwordModelContent);
+    };
+    const closePasswordSubmitionModel = () => {
+      setPasswordSubmitionModelOpen(false);
+      setPasswordSubmitionProps(false);
+    };
+    const openFilePasswordSubmitionModel = (passwordModelContent) => {
+      setFilePasswordSubmitionModelOpen(true);
+      setFilePasswordSubmitionProps(passwordModelContent);
+    };
+    const closeFilePasswordSubmitionModel = () => {
+      setFilePasswordSubmitionModelOpen(false);
+      setFilePasswordSubmitionProps(false);
+    };
+    const { pathname } = useLocation();
+    useEffect(() => {
+      if (pathname === toLogin) {
+        closeViewModel();
+        closeUserViewModel();
+        closeConfirmationModel();
+        closeConsentModal();
+        closeRemarksModel();
+        closeDocumentModel();
+        closeInfoModel();
+        closeSubmitModel();
+        closeRemedyModel();
+        closeOtpForm();
+        closePasswordSubmitionModel();
+        closeFilePasswordSubmitionModel();
+      }
+    }, [pathname]);
+
+    // API FUNCTOINS STARTS
+    const postExcel = async (payLoad) => {
+      return await PfcRequest(
+        UploadxlsFile_URL,
+        "POST",
+        payLoad,
+        fileUploadSuccess
+      );
+    };
+    const postUpdateExcel = async (payLoad) => {
+      return await PfcRequest(
+        UploadUpdatexlsFile_URL,
+        "POST",
+        payLoad,
+        fileUploadSuccess
+      );
+    };
+    const getRawFileData = async (companyId, fileId) => {
+      const url = GetRawFileData_URL(companyId, fileId);
+      return await PfcRequest(url, "GET");
+    };
+    const postRawFileData = async (payLoad) => {
+      return await PfcRequest(
+        RawDataProcess_URL,
+        "POST",
+        payLoad,
+        processStarted
+      );
+    };
+    const getDashboardWidgetCardData = async (_filterday, _isfilterd) => {
+      const url = GetDashboardWidgetCardData_URL(_filterday, _isfilterd);
+      return await PfcRequest(url, "GET");
+    };
+    const getTotalWidgetData = async () => {
+      return await PfcRequest(GetTotalWidgetData_URL, "GET");
+    };
+    const getMenuList = async (userId) => {
+      const url = `${GetMenuListData_URL}${userId}`;
+      return await PfcRequest(url, "GET");
+    };
+    const getLatestAppointees = async (type) => {
+      const url = `${GetAppointeeStatusDetails_URL}${type}`;
+      return await PfcRequest(url, "GET");
+    };
+    const postLoginCredDetails = async (payLoad) => {
+      return await PfcRequest(ValidateUserLogIn_URL, "POST", payLoad);
+    };
+    const postLoginDetails = async (payLoad) => {
+      return await PfcRequest(UserSignInDetails_URL, "POST", payLoad);
+    };
+    const getVerifiedAppointeeList = async (payLoad) => {
+      return await PfcRequest(`${GetProcessedEPFOData_URL}`, "POST", payLoad);
+    };
+    const getRejectedAppointeeList = async (payLoad) => {
+      const responseInfo = await PfcRequest(
+        `${GetRejectedFileData_URL}`,
+        "POST",
+        payLoad
+      );
+      return responseInfo;
+    };
+    const getCriticalAppointeeList = async (payLoad) => {
+      const responseInfo = await PfcRequest(
+        `${GetCriticalAppointeeData_URL}`,
+        "POST",
+        payLoad
+      );
+      return responseInfo;
+    };
+    const getPfCreationAppointeeReportList = async (payLoad) => {
+      const responseInfo = await PfcRequest(
+        `${GetPfCreationApponteeReport_URL}`,
+        "POST",
+        payLoad
+      );
+      return responseInfo;
+    };
+    const getLinkNotSentList = async (payLoad) => {
+      const responseInfo = await PfcRequest(
+        `${GetUnProcessedFileData_URL}`,
+        "POST",
+        payLoad
+      );
+      return responseInfo;
+    };
+    const getProessingDataList = async (payLoad) => {
+      const responseInfo = await PfcRequest(
+        `${GetUnderProcessFileData_URL}`,
+        "POST",
+        payLoad
+      );
+      return responseInfo;
+    };
+    const getLapsedDataList = async (payLoad) => {
+      const responseInfo = await PfcRequest(
+        `${GetExpiredProcessFileData_URL}`,
+        "POST",
+        payLoad
+      );
+      return responseInfo;
+    };
+    const downloadReport = async (_url, payLoad) => {
+      const response = await PfcRequest(_url, "POST", payLoad);
+      if (response) {
+        const { fileData, fileName } = response.responseInfo;
+        const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${fileData}`;
+        downloadFile(linkSource, fileName);
+      }
+    };
+    const configerationSetUp = async (payLoad) => {
+      return await PfcRequest(
+        `${PostSetupConfigData_URL}`,
+        "POST",
+        payLoad,
+        configurationSuccessMsg
+      );
+    };
+    const getConfigedData = async () => {
+      return await PfcRequest(`${GetSetupConfigData_URL}`, "GET");
+    };
+    const getGenderList = async () => {
+      return await PfcRequest(`${GetMastarDropdowndata_URL}${GEN}`, "GET");
+    };
+    const getNationalityList = async () => {
+      return await PfcRequest(`${GetMastarDropdowndata_URL}${NAT}`, "GET");
+    };
+    const getCountryList = async () => {
+      return await PfcRequest(`${GetMastarDropdowndata_URL}${CON}`, "GET");
+    };
+    const getMaritalStatusList = async () => {
+      return await PfcRequest(`${GetMastarDropdowndata_URL}${MAR}`, "GET");
+    };
+    const getDisabilityList = async () => {
+      return await PfcRequest(`${GetMastarDropdowndata_URL}${DIS}`, "GET");
+    };
+    const getQualificationList = async () => {
+      return await PfcRequest(`${GetMastarDropdowndata_URL}${QUA}`, "GET");
+    };
+    const getFileTypeList = async () => {
+      return await PfcRequest(`${GetMastarDropdowndata_URL}${FLT}`, "GET");
+    };
+    const postAppointeeDetails = async (payLoad) => {
+      return await PfcRequest(
+        `${PostAppointeeDetailsSave_URL}`,
+        "POST",
+        payLoad,
+        formSaveSuccess
+      );
+    };
+    const getPassportDetails = async (payLoad) => {
+      return await PfcRequest(`${VerifyPassportDetails_URL}`, "POST", payLoad);
+    };
+    const verifyPANDetails = async (payLoad) => {
+      return await PfcRequest(`${VerifyPanDetails_URL}`, "POST", payLoad);
+    };
+    const getRemarks = async (appointeeId) => {
+      return await PfcRequest(`${GetRemarks_URL}${appointeeId}`, "GET");
+    };
+    const postAppointeeFileDetails = async (payLoad) => {
+      return await PfcRequest(
+        `${PostAppointeeFileDetails_URL}`,
+        "POST",
+        payLoad,
+        formSubmitionSuccess
+      );
+    };
+    const getAppointeeDetails = async (appointeeId) => {
+      return await PfcRequest(
+        `${GetAppointeeDetails_URL}${appointeeId}`,
+        "GET"
+      );
+    };
+    const getAppointeeActivity = async (appointeeId) => {
+      return await PfcRequest(
+        `${GetAppointeeActivity_URL}${appointeeId}`,
+        "GET"
+      );
+    };
+    const postAppointeeReprocess = async (payLoad) => {
+      return await PfcRequest(`${PostAppointeeReprocess_URL}`, "POST", payLoad);
+    };
+    const postAppointeeRejected = async (payLoad) => {
+      const response = await PfcRequest(
+        `${PostAppointeeRejected_URL}`,
+        "POST",
+        payLoad,
+        appointeeRejectionSuccess
+      );
+      return response;
+    };
+    const postAppointeeApproved = async (payLoad) => {
+      return await PfcRequest(
+        `${PostAppointeeApproved_URL}`,
+        "POST",
+        payLoad,
+        appointeeApproveSuccess
+      );
+    };
+    const getUANNumber = async (payLoad) => {
+      return await PfcRequest(`${GetUANNumber_URL}`, "POST", payLoad);
+    };
+    const generateAadharOTP = async (payLoad) => {
+      return await PfcRequest(`${GenerateAadharOTP_URL}`, "POST", payLoad);
+    };
+    const submitAadharOTP = async (payLoad) => {
+      return await PfcRequest(`${SubmitOTPAadharOTP_URL}`, "POST", payLoad);
+    };
+    const generateUANOtp = async (payLoad) => {
+      return await PfcRequest(`${GenerateUANOTP_URL}`, "POST", payLoad);
+    };
+    const getTotalCriticalAppointee = async () => {
+      return await PfcRequest(`${GetTotalCriticalAppointee_URL}`, "GET");
+    };
+    const submitUANOTP = async (payLoad) => {
+      return await PfcRequest(`${UANSubmitOTP_URL}`, "POST", payLoad);
+    };
+    const getPassbookFileData = async (payLoad) => {
+      return await PfcRequest(`${DownloadPassbookFile_URL}`, "POST", payLoad);
+    };
+    const postAppointeeClose = async (payLoad) => {
+      return await PfcRequest(
+        `${PostAppointeeClose_URL}`,
+        "POST",
+        payLoad,
+        appointteTerminationSuccess
+      );
+    };
+    const postRemainderMail = async (appointeeId) => {
+      return await PfcRequest(
+        `${PostRemainderMail_URL}${appointeeId}`,
+        "POST",
+        {},
+        remiderSuccessMsg
+      );
+    };
+    const appointeeDetailsUpdate = async (payLoad) => {
+      return await PfcRequest(
+        `${AppointeeDetailsUpdate_URL}`,
+        "POST",
+        payLoad,
+        editSuccess
+      );
+    };
+    const postAppointeeSearch = async (searchInput) => {
+      return await PfcRequest(
+        `${PostAppointeeSearch_URL}${searchInput}`,
+        "POST"
+      );
+    };
+    const getRemarksRemedyData = async (remarksId) => {
+      return await PfcRequest(`${GetRemarksRemedyData_URL}${remarksId}`, "GET");
+    };
+    const getAdminUserDetails = async () => {
+      return await PfcRequest(`${GetAdminUserList_URL}`, "GET");
+    };
+    const postUserDetails = async (payLoad) => {
+      return await PfcRequest(
+        `${CreateUser_URL}`,
+        "POST",
+        payLoad,
+        userCreationSuccessMsg
+      );
+    };
+    const postUpdateUserDetails = async (payLoad) => {
+      return await PfcRequest(
+        `${UpdateAdminUser_URL}`,
+        "POST",
+        payLoad,
+        userUpdateSuccessMsg
+      );
+    };
+    const deleteUserDetails = async (id, userId) => {
+      return await PfcRequest(
+        RemoveAdminUser_URL(id, userId),
+        "POST",
+        null,
+        userDeletedSuccessMsg
+      );
+    };
+    const getRoleList = async () => {
+      return await PfcRequest(`${GetMastarDropdowndata_URL}${RLE}`, "GET");
+    };
+    const getInputList = async (userId) => {
+      return await PfcRequest(`${GetUserByUserId_URL}${userId}`, "GET");
+    };
+    const validateUserCode = async (userCode) => {
+      return await PfcRequest(`${ValidateUserCode_URL}${userCode}`, "POST");
+    };
+    const getAppointeeCounterReport = async (payLoad) => {
+      const response = await PfcRequest(
+        AppointeeCounterReport_URL,
+        "POST",
+        payLoad
+      );
+      return response;
+    };
+    const getApiCounterReport = async (fromDate, toDate) => {
+      return await PfcRequest(ApiCounterReport_URL(fromDate, toDate), "POST");
+    };
+
+    const getPassbookDetails = async (Id) => {
+      const response = await PfcRequest(`${PassbookDetails_URL}${Id}`, "POST");
+      return response;
+    };
+
+    const postProfilePassword = async (payLoad) => {
+      return await PfcRequest(ValidateProfilePassword_URL, "POST", payLoad);
+    };
+    const editUserProfileDetails = async (payLoad) => {
+      return await PfcRequest(
+        EditUserProfile_URL,
+        "POST",
+        payLoad,
+        passwordCreationSuccessMsg
+      );
+    };
+    const getReportFilterStatusList = async () => {
+      const response = await PfcRequest(GetReportFilterStatus_URL, "GET");
+      return response;
+    };
+
+    const postAppointeeConsent = async (payLoad) => {
+      return await PfcRequest(AppointeeConsentUpdate_URL, "POST", payLoad);
+    };
+    const popUpSlice = useSelector((state) => state.popUpSlice);
+    const apiSlice = useSelector((state) => state.apiSlice);
+    const functionSlice = useSelector((state) => state.functionSlice);
+
+    const showErrorMessage =
+      popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+    const setDropdownList = async () => {
+      const nationalityList = await getNationalityList();
+      const countryList = await getCountryList();
+      const maritalStatusList = await getMaritalStatusList();
+      const disabilityList = await getDisabilityList();
+      const qualificationList = await getQualificationList();
+      const fileTypeList = await getFileTypeList();
+      const roleList = await getRoleList();
+      const reportFilterStatusList = await getReportFilterStatusList();
+
+      const dropdownList = {
+        genderList: [
+          { id: 1, code: "M", value: "MALE" },
+
+          { id: 2, code: "F", value: "FEMALE" },
+
+          { id: 3, code: "T", value: "OTHERS" }
+        ],
+        days: [
+          {
+            lable: "last 30 days",
+            value: 30,
+          },
+          {
+            lable: "last 60 days",
+            value: 60,
+          },
+          {
+            lable: "last 90 days",
+            value: 90,
+          },
+          {
+            lable: "more than 90 days",
+            value: "A",
+          }
+        ],
+        upcomingRecruitsStatusList: [
+          {
+            id: 1,
+            type: "002",
+            label: "Link not sent",
+            route: toLinknotsent,
+          },
+          {
+            id: 2,
+            type: "001",
+            label: "Under Process",
+            route: toProcessing,
+          },
+          {
+            id: 3,
+            type: "003",
+            label: "Verified",
+            route: toVerified,
+          },
+          {
+            id: 4,
+            type: "004",
+            label: "Cancelled",
+            route: toCancelled,
+          },
+          {
+            id: 5,
+            type: "005",
+            label: "Lapsed",
+            route: toLapseddata,
+          }
+        ],
+        nationalityList: nationalityList && nationalityList.responseInfos,
+        countryList: countryList && countryList.responseInfos,
+        maritalStatusList: maritalStatusList && maritalStatusList.responseInfos,
+        disabilityList: disabilityList && disabilityList.responseInfos,
+        qualificationList: qualificationList && qualificationList.responseInfos,
+        fileTypeList: fileTypeList && fileTypeList.responseInfos,
+        roleList: roleList && roleList.responseInfos,
+        reportFilterStatusList:
+          reportFilterStatusList && reportFilterStatusList.responseInfos,
+        relationList: [
+          {
+            id: 1,
+            code: "F",
+            value: "Father"
+          },
+          {
+            id: 2,
+            code: "H",
+            value: "Husband"
+          }
+        ]
+      };
+      dispatch(storeDropdownList(dropdownList));
+    };
+
+    const setRemarks = async (appointeeId) => {
+      const response = await getRemarks(appointeeId);
+      if (response.responseInfo && response.responseInfo.length > 0) {
+        const remarks = response.responseInfo;
+        openRemarksModel(remarks);
+      } else {
+        showErrorMessage(noRemarksMsg);
+      }
+    };
+
+    const dispatch = useDispatch();
+    if (apiSlice && apiSlice.length === 0) {
+      dispatch(
+        storeApi({
+          getMenuList,
+          postExcel,
+          postUpdateExcel,
+          getRawFileData,
+          postRawFileData,
+          getDashboardWidgetCardData,
+          postLoginCredDetails,
+          postLoginDetails,
+          getVerifiedAppointeeList,
+          downloadReport,
+          getLatestAppointees,
+          configerationSetUp,
+          getConfigedData,
+          getGenderList,
+          getNationalityList,
+          getCountryList,
+          getMaritalStatusList,
+          getDisabilityList,
+          getQualificationList,
+          postAppointeeDetails,
+          getAppointeeDetails,
+          getAppointeeActivity,
+          postAppointeeReprocess,
+          getPassportDetails,
+          getRemarks,
+          postAppointeeFileDetails,
+          postAppointeeRejected,
+          postAppointeeApproved,
+          getUANNumber,
+          getRejectedAppointeeList,
+          getCriticalAppointeeList,
+          getPfCreationAppointeeReportList,
+          getLinkNotSentList,
+          getProessingDataList,
+          getLapsedDataList,
+          generateAadharOTP,
+          submitAadharOTP,
+          generateUANOtp,
+          submitUANOTP,
+          verifyPANDetails,
+          getTotalWidgetData,
+          getTotalCriticalAppointee,
+          getPassbookFileData,
+          postAppointeeClose,
+          postRemainderMail,
+          appointeeDetailsUpdate,
+          postAppointeeSearch,
+          getRemarksRemedyData,
+          getAdminUserDetails,
+          postUserDetails,
+          getInputList,
+          validateUserCode,
+          postUpdateUserDetails,
+          deleteUserDetails,
+          getAppointeeCounterReport,
+          getApiCounterReport,
+          postProfilePassword,
+          editUserProfileDetails,
+          getReportFilterStatusList,
+          postAppointeeConsent,
+          getPassbookDetails
+        })
+      );
+    }
+    if (functionSlice && functionSlice.length === 0) {
+      dispatch(
+        storeFunction({
+          setDropdownList,
+          openViewModel,
+          openPassbookViewModel,
+          closePassbookViewModel,
+          openUserViewModel,
+          openConfirmationModel,
+          openConsentModal,
+          openInfoModel,
+          closeOtpForm,
+          openOtpForm,
+          openOtpSubmitionModel,
+          openRemarksInputModel,
+          closeRemarksInputModel,
+          closeOtpSubmitionModel,
+          openRemarksModel,
+          openSubmitModel,
+          closeSubmitModel,
+          openRemedyModel,
+          setRemarks,
+          openDocumentModel,
+          openPasswordSubmitionModel,
+          closePasswordSubmitionModel,
+          openFilePasswordSubmitionModel,
+          closeFilePasswordSubmitionModel,
+        })
+      );
+    }
+
+
+    return (
+      <>
+        <App />
+        <ConfirmationModel
+          open={confirmationModelOpen}
+          confirmationModelContent={confirmationModelContent}
+        />
+        <ConsentModal
+          open={consentModalOpen}
+          consentModalContent={consentModalContent}
+        />
+        <InfoModel
+          open={infoModelOpen}
+          confirmationModelContent={infoModelcontent}
+        />
+        <AppointeeView
+          openViewModel={openViewModel}
+          appointeeId={appointeeId}
+          closeViewModel={closeViewModel}
+          openView={isViewOpen}
+        />
+        <PassbookView
+          openViewModel={openPassbookViewModel}
+          appointeeId={appointeeId}
+          closeViewModel={closePassbookViewModel}
+          openView={isPassbookViewOpen}
+        />
+        <UserView
+          userId={userId}
+          closeViewModel={closeUserViewModel}
+          openView={isUserViewOpen}
+        />
+        <OtpGenerationForm
+          closeOtpForm={closeOtpForm}
+          open={otpFormOpen}
+          generateOtpProps={generateOtpProps}
+        />
+        <OtpSubmitionForm
+          open={otpSubmitionModelOpen}
+          otpSubmitionProps={otpSubmitionProps}
+          closeOtpSubmitionModel={closeOtpSubmitionModel}
+        />
+
+        <RemarksInputModel
+          open={isRemarksInputViewOpen}
+          remarksInputModelProps={remarksInputModelProps}
+          closeRemarksInputModel={closeRemarksInputModel}
+        />
+
+        <RemarksTable
+          open={remarksModelOpen}
+          remarksModelProps={remarksModelProps}
+          closeRemarksModel={closeRemarksModel}
+        />
+        <SubmitModal
+          openModal={submitModelOpen}
+          submitmodalprops={submitModelProps}
+          closeModel={closeSubmitModel}
+        />
+        <IssueRemedy
+          open={remedyModelOpen}
+          remedyModelProps={remedyModelProps}
+          closeRemedyModel={closeRemedyModel}
+        />
+        <DocumentView
+          open={documentModelOpen}
+          documentModelProps={documentModelProps}
+          closeDocumentModel={closeDocumentModel}
+        />
+        <ProfilePasswordForm
+          open={passwordSubmitionModelOpen}
+          passwordSubmitionProps={passwordSubmitionProps}
+          closePasswordSubmitionModel={closePasswordSubmitionModel}
+        />
+        <FilePasswordForm
+          open={filePasswordSubmitionModelOpen}
+          filePasswordSubmitionProps={filePasswordSubmitionProps}
+          closeFilePasswordSubmitionModel={closeFilePasswordSubmitionModel}
+        />
+      </>
+    );
+  };
+  const WrappedApp = CommonHookFunctionWrapper(PfcRequiest(Api));
+  return <WrappedApp />;
+};
+export default AppWrapper;

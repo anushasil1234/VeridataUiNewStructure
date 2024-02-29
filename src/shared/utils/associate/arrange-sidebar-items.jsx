@@ -1,0 +1,41 @@
+export const ArrangeSidebarItems = (menuItems) => {
+    let arrangedSidebarItems = [];
+    const createMenuList = (menuItems) => {
+
+        menuItems.map((element) => {
+            let hasChild = false;
+            const { displayName, isQuickMenu, children, id, pid, actionUrl, iconClass } = element;
+            let show = pid === 0 ? true : false;
+            
+            let menuItem = {
+                id,
+                pid,
+                show,
+                open: false
+            }
+            if (isQuickMenu) {
+                menuItem = {
+                    ...menuItem,
+                    subheader: displayName
+                }
+                if (children) {
+                    hasChild = true;
+                }
+            } else {
+                menuItem = {
+                    ...menuItem,
+                    title: displayName,
+                    href: actionUrl,
+                    icon: iconClass
+                }
+
+            }
+            arrangedSidebarItems = [...arrangedSidebarItems, menuItem]
+            if (hasChild) {
+                createMenuList(children)
+            }
+        })
+    }
+    createMenuList(menuItems);
+    return arrangedSidebarItems
+}

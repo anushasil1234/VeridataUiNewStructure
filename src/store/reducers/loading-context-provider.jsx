@@ -1,0 +1,61 @@
+import React, { useState, createContext } from "react";
+import { timeout } from "shared/constants/attachment-extention";
+import { ManuallyCloseableSnackBar } from "shared/utils";
+import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
+import ResponseMessage from "shared/utils/response-message/response-message";
+export const LoadingContext = createContext();
+
+const LoadingContextProvider = ({ children }) => {
+  const [loading, setLoading] = useState(false);
+  const [responseMessage, setResponseMessage] = useState(null);
+  const [user, setUser] = useState(null);
+  const [popUpAlertMessage, setPopUpAlertMessage] = useState(false);
+  // todo change to redux
+  const [receivedSearchResult, setReceivedSearchResult] = useState(true);
+
+  const startLoader = () => {
+    setLoading(true);
+    setResponseMessage(null);
+  };
+  const stopLoader = () => {
+    setLoading(false);
+  };
+  const handleResponseMessage = (message) => {
+    setResponseMessage(message);
+    setTimeout(() => {
+      setResponseMessage(null);
+    }, timeout);
+  };
+  const loaderFunction = {
+    startLoader,
+    stopLoader
+  };
+  const searchGetterSetter = {
+    receivedSearchResult,
+    setReceivedSearchResult,
+  };
+  const userGetterSetter = {
+    user,
+    setUser,
+  };
+  
+  return (
+    <LoadingContext.Provider
+      value={{
+        loaderFunction,
+        handleResponseMessage,
+        searchGetterSetter,
+        userGetterSetter,
+         popUpAlertMessage, 
+         setPopUpAlertMessage,
+      }}
+    >
+      {loading && <CircularIndeterminate />}
+      {responseMessage && <ResponseMessage message={responseMessage} />}
+      {popUpAlertMessage ? <ManuallyCloseableSnackBar setPopUpAlertMessage={setPopUpAlertMessage} alertMessage={popUpAlertMessage} /> : null}
+      {children}
+    </LoadingContext.Provider>
+  );
+};
+
+export default LoadingContextProvider;

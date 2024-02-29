@@ -1,0 +1,37 @@
+import PropTypes from 'prop-types';
+import { ListSubheader, styled } from '@mui/material';
+import { AppStyle } from 'app';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+
+const NavGroup = ({ item, handleToggle }) => {
+  const { id, subheader, open } = item;
+  const ListSubheaderStyle = styled((props) => <ListSubheader onClick={handleToggle} disableSticky {...props} />)(
+    () => ({
+      ...AppStyle.typography.overline,
+      display: "flex",
+      alignContent: "center",
+      justifyContent: "space-between",
+      fontWeight: '700',
+      marginTop: AppStyle.spacing(3),
+      marginBottom: AppStyle.spacing(0),
+      color: AppStyle.palette.text.white,
+      lineHeight: '26px',
+      padding: '3px 12px',
+      cursor: 'pointer'
+    }),
+  );
+  return (
+    <ListSubheaderStyle id={id} onClick={handleToggle}>
+      {subheader}
+      {
+        open ? <ExpandLess /> : <ExpandMore />
+      }
+    </ListSubheaderStyle>
+  );
+};
+
+NavGroup.propTypes = {
+  item: PropTypes.object,
+};
+
+export default NavGroup;

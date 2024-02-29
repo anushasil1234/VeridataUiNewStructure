@@ -1,0 +1,52 @@
+import SingleTableCell from "../dataTable/singleTableCell";
+
+export const generateTableRowData = (tableRowsObj, headCells, generateDisableRow, actionPermissionList, setTableRows, objProperty) => {
+
+    return tableRowsObj && tableRowsObj.length > 0 && tableRowsObj.map((tableRow, index) => {
+        
+        tableRow = objProperty ? tableRow[objProperty] : tableRow
+        let isCheckDisabled;
+        let generatedRowData = headCells && headCells.length > 0 && headCells.map((element) => {
+            let { id, component, type } = element;
+            let attributeData = {};
+            component.attribute && component.attribute.length > 0 && component.attribute.forEach(elem => {
+                attributeData = {
+                    ...attributeData,
+                    // [elem]: objProperty ? tableRow[objProperty][elem]:tableRow[elem]
+                    [elem]: tableRow[elem]
+                }
+            });
+
+            let tableCellDataObj = {
+                id,
+                tableRow,
+                headCell: element,
+                Component: component.element,
+                // attribute: {[component.attribute]: tableRow[component.attribute]} 
+                attribute: { 
+                    "rowAttribute": attributeData,
+                    actionPermissionList: actionPermissionList,
+                    setTableRows: setTableRows
+                },
+            }
+            
+            isCheckDisabled = generateDisableRow && generateDisableRow(tableCellDataObj);
+            return ({
+                id: id,
+                type: type,
+                component: <SingleTableCell props={tableCellDataObj} />
+            })
+        });
+
+        const singleRowObject = {
+            rowId: index,
+            values: generatedRowData,
+            isCheckDisabled: isCheckDisabled
+        }
+        return singleRowObject
+    }
+
+    );
+
+
+}

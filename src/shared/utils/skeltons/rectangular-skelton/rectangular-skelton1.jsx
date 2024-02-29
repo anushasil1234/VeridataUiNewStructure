@@ -1,0 +1,7 @@
+import { Skeleton } from '@mui/material'
+import React from 'react'
+
+const RectangleSkelton1 = () => <Skeleton variant="rectangular " sx={{ width: "80px", height: "25px" }}/>
+
+
+export default RectangleSkelton1

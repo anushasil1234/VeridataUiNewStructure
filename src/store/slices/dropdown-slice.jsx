@@ -1,0 +1,17 @@
+import { createSlice} from "@reduxjs/toolkit"
+
+const DropDownSlice = createSlice({
+    name: "dropDownSlice",
+    initialState: [],
+    reducers: {
+        storeDropdownList(state, action) {
+            state.push(action.payload);
+        },
+        removeDropdownList(state, action) {
+            state.pop();
+        },
+    }
+})
+
+export default DropDownSlice.reducer
+export const {storeDropdownList, removeDropdownList} = DropDownSlice.actions;

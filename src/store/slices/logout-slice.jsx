@@ -1,0 +1,17 @@
+import { createSlice} from "@reduxjs/toolkit"
+
+const LoggeoutData = createSlice({
+    name: "loggeoutData",
+    initialState: [],
+    reducers: {
+        storeLoggeoutData(state, action) {
+            state.push(action.payload);
+        },
+        removeLoggeoutData(state, action) {
+            state.pop();
+        }
+    }
+})
+
+export default LoggeoutData.reducer
+export const {storeLoggeoutData, removeLoggeoutData} = LoggeoutData.actions;

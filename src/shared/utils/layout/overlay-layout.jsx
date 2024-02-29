@@ -1,0 +1,19 @@
+import { Box, Stack } from '@mui/material'
+import { backgroundOverLay, loaderContainer } from 'app'
+import React from 'react'
+
+const OverlayLayout = ({ children }) => {
+    let viewportHeight = 100;
+      
+    return (
+        <Box sx={{...backgroundOverLay, height: `${viewportHeight}vh`}}>
+            <Box sx={loaderContainer}>
+                <Stack justifyContent={"center"} alignItems={"center"}>
+                    {children}
+                </Stack>
+            </Box>
+        </Box>
+    )
+}
+
+export default OverlayLayout

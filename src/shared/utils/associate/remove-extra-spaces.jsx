@@ -1,0 +1,3 @@
+const removeExtraSpaces = (string) => string.replace(/\s+/g, ' ').trim()
+
+export default removeExtraSpaces

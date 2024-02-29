@@ -1,0 +1,7 @@
+import { patternChecking } from "..";
+
+export const ckeckValidNumber = (value) => {
+    const pattern = /^[0-9]+$/;
+    return patternChecking(value, pattern)
+
+}

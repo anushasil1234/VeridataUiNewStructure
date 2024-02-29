@@ -1,0 +1,34 @@
+import actionList from '../../../action.json'
+
+export const hasActionpermission = (menuItems, searchRoute) => {
+    let actionPermitedList = {}
+    const isActionExissits = (menuItems) => {
+
+        for (let index = 0; index < menuItems.length; index++) {
+            const { actionUrl, children, optActions } = menuItems[index];
+            if (searchRoute === actionUrl) {
+                if (optActions) {
+                    for (let index = 0; index < actionList.length; index++) {
+                        const {code} = actionList[index];
+                        const searchedAction = optActions.find(({ oprnActionAlias }) => oprnActionAlias === code);
+                        
+                        if (searchedAction) {
+                            actionPermitedList = {...actionPermitedList, [code]: true}
+                        }else{
+                            actionPermitedList = {...actionPermitedList, [code]: false}
+                        }
+                    }
+                   break; 
+                }
+                break;
+            } else {
+                if (children && children.length > 0) {
+                    isActionExissits(children);
+                }
+            }
+        }
+        
+    }
+    isActionExissits(menuItems);
+    return actionPermitedList
+}

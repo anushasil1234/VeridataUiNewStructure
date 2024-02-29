@@ -1,0 +1,358 @@
+Date : 2023-10-12 15:00:25
+Directory : d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui
+Total : 214 files,  48071 codes, 1906 comments, 1397 blanks, all 51374 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          6 |     31,937 |          0 |          3 |     31,940 |
+| JavaScript JSX     |        166 |     13,698 |      1,514 |      1,099 |     16,311 |
+| JavaScript         |         31 |      1,139 |        336 |        124 |      1,599 |
+| CSS                |          2 |      1,053 |         53 |        113 |      1,219 |
+| HTML               |          1 |        160 |          0 |         20 |        180 |
+| Markdown           |          1 |         38 |          0 |         33 |         71 |
+| XML                |          5 |         37 |          0 |          3 |         40 |
+| JSON with Comments |          1 |          8 |          0 |          0 |          8 |
+| Properties         |          1 |          1 |          3 |          2 |          6 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                   |        214 |     48,071 |      1,906 |      1,397 |     51,374 |
+| . (Files)                                                                                                                           |          9 |     31,965 |          9 |         42 |     32,016 |
+| .vs                                                                                                                                 |          1 |          6 |          0 |          0 |          6 |
+| public                                                                                                                              |          3 |        191 |          0 |         21 |        212 |
+| public (Files)                                                                                                                      |          2 |        185 |          0 |         21 |        206 |
+| public\playground_assets                                                                                                            |          1 |          6 |          0 |          0 |          6 |
+| src                                                                                                                                 |        201 |     15,909 |      1,897 |      1,334 |     19,140 |
+| src (Files)                                                                                                                         |          4 |         96 |          5 |         10 |        111 |
+| src\app                                                                                                                             |          5 |      2,110 |        239 |        186 |      2,535 |
+| src\assets                                                                                                                          |          4 |         31 |          0 |          3 |         34 |
+| src\assets\images                                                                                                                   |          4 |         31 |          0 |          3 |         34 |
+| src\assets\images\backgrounds                                                                                                       |          1 |         10 |          0 |          0 |         10 |
+| src\assets\images\logos                                                                                                             |          3 |         21 |          0 |          3 |         24 |
+| src\hooks                                                                                                                           |          3 |         44 |         11 |         18 |         73 |
+| src\modules                                                                                                                         |         42 |      6,680 |        765 |        465 |      7,910 |
+| src\modules (Files)                                                                                                                 |          1 |          3 |          1 |          1 |          5 |
+| src\modules\account                                                                                                                 |          3 |        164 |          6 |         12 |        182 |
+| src\modules\account\login                                                                                                           |          1 |        164 |          6 |         10 |        180 |
+| src\modules\account\logout                                                                                                          |          1 |          0 |          0 |          1 |          1 |
+| src\modules\account\unauthorized                                                                                                    |          1 |          0 |          0 |          1 |          1 |
+| src\modules\appointee                                                                                                               |          4 |      2,302 |        100 |        138 |      2,540 |
+| src\modules\appointee\register                                                                                                      |          2 |      1,524 |         55 |         96 |      1,675 |
+| src\modules\appointee\view                                                                                                          |          2 |        778 |         45 |         42 |        865 |
+| src\modules\attention                                                                                                               |          1 |        120 |         11 |         10 |        141 |
+| src\modules\data-update                                                                                                             |          1 |         72 |          7 |          9 |         88 |
+| src\modules\data-upload                                                                                                             |          1 |         73 |          6 |          9 |         88 |
+| src\modules\home                                                                                                                    |         14 |      1,225 |        293 |        117 |      1,635 |
+| src\modules\home (Files)                                                                                                            |          2 |        213 |        212 |         28 |        453 |
+| src\modules\home\widget                                                                                                             |         12 |      1,012 |         81 |         89 |      1,182 |
+| src\modules\lapsed-data                                                                                                             |          1 |        211 |         20 |         16 |        247 |
+| src\modules\link-not-sent                                                                                                           |          1 |        204 |          1 |          9 |        214 |
+| src\modules\processing-data                                                                                                         |          1 |        193 |         13 |         13 |        219 |
+| src\modules\reports                                                                                                                 |          6 |        632 |         10 |         59 |        701 |
+| src\modules\setup                                                                                                                   |          2 |        874 |         43 |         16 |        933 |
+| src\modules\uploaded-data                                                                                                           |          1 |        100 |          0 |          7 |        107 |
+| src\modules\user                                                                                                                    |          5 |        507 |        254 |         49 |        810 |
+| src\modules\user\create-user                                                                                                        |          1 |         87 |        139 |         14 |        240 |
+| src\modules\user\update-user-view                                                                                                   |          1 |         92 |         44 |          8 |        144 |
+| src\modules\user\user-creation-form                                                                                                 |          1 |        183 |         17 |         12 |        212 |
+| src\modules\user\user-view                                                                                                          |          1 |         94 |         50 |          8 |        152 |
+| src\modules\user\userlist                                                                                                           |          1 |         51 |          4 |          7 |         62 |
+| src\server                                                                                                                          |          6 |        189 |          7 |         22 |        218 |
+| src\server\api                                                                                                                      |          4 |         23 |          2 |          8 |         33 |
+| src\server\utils                                                                                                                    |          2 |        166 |          5 |         14 |        185 |
+| src\shared                                                                                                                          |        123 |      6,519 |        849 |        595 |      7,963 |
+| src\shared\components                                                                                                               |         24 |      1,115 |         56 |        123 |      1,294 |
+| src\shared\components (Files)                                                                                                       |          4 |         64 |         10 |          9 |         83 |
+| src\shared\components\action-permission                                                                                             |          1 |         30 |          1 |          6 |         37 |
+| src\shared\components\disble-section                                                                                                |          1 |          9 |          0 |          3 |         12 |
+| src\shared\components\display-information                                                                                           |          1 |         40 |          0 |          5 |         45 |
+| src\shared\components\document-view                                                                                                 |          1 |         54 |          0 |          2 |         56 |
+| src\shared\components\download-report                                                                                               |          1 |        117 |         13 |          5 |        135 |
+| src\shared\components\file-update                                                                                                   |          1 |        107 |          4 |          9 |        120 |
+| src\shared\components\file-upload                                                                                                   |          1 |        106 |          3 |          9 |        118 |
+| src\shared\components\file-upload-section                                                                                           |          1 |         33 |          3 |          2 |         38 |
+| src\shared\components\form-dialog                                                                                                   |          2 |        116 |          4 |         15 |        135 |
+| src\shared\components\full-screen-wrapper                                                                                           |          1 |         23 |          0 |          5 |         28 |
+| src\shared\components\otp                                                                                                           |          2 |        303 |          7 |         30 |        340 |
+| src\shared\components\otp\otp-generation                                                                                            |          1 |         51 |          0 |          6 |         57 |
+| src\shared\components\otp\otp-submition                                                                                             |          1 |        252 |          7 |         24 |        283 |
+| src\shared\components\private-component                                                                                             |          1 |         13 |         11 |          5 |         29 |
+| src\shared\components\remarks-table                                                                                                 |          1 |         18 |          0 |          3 |         21 |
+| src\shared\components\update-button.jsx                                                                                             |          1 |         12 |          0 |          3 |         15 |
+| src\shared\components\upload-button.jsx                                                                                             |          1 |         12 |          0 |          3 |         15 |
+| src\shared\components\verification                                                                                                  |          3 |         58 |          0 |          9 |         67 |
+| src\shared\constants                                                                                                                |          2 |        970 |         37 |         35 |      1,042 |
+| src\shared\layouts                                                                                                                  |         12 |        849 |        340 |         76 |      1,265 |
+| src\shared\layouts\blank                                                                                                            |          1 |          7 |          0 |          3 |         10 |
+| src\shared\layouts\full                                                                                                             |         11 |        842 |        340 |         73 |      1,255 |
+| src\shared\layouts\full (Files)                                                                                                     |          1 |         70 |          2 |          8 |         80 |
+| src\shared\layouts\full\header                                                                                                      |          3 |        161 |        205 |         24 |        390 |
+| src\shared\layouts\full\shared                                                                                                      |          2 |         26 |          0 |          7 |         33 |
+| src\shared\layouts\full\shared\loadable                                                                                             |          1 |          8 |          0 |          3 |         11 |
+| src\shared\layouts\full\shared\logo                                                                                                 |          1 |         18 |          0 |          4 |         22 |
+| src\shared\layouts\full\sidebar                                                                                                     |          5 |        585 |        133 |         34 |        752 |
+| src\shared\layouts\full\sidebar (Files)                                                                                             |          3 |        479 |        130 |         24 |        633 |
+| src\shared\layouts\full\sidebar\NavGroup                                                                                            |          1 |         35 |          1 |          4 |         40 |
+| src\shared\layouts\full\sidebar\NavItem                                                                                             |          1 |         71 |          2 |          6 |         79 |
+| src\shared\routes                                                                                                                   |          1 |         64 |          9 |          6 |         79 |
+| src\shared\utils                                                                                                                    |         84 |      3,521 |        407 |        355 |      4,283 |
+| src\shared\utils (Files)                                                                                                            |          1 |         54 |          3 |          1 |         58 |
+| src\shared\utils\alert                                                                                                              |          5 |        174 |         10 |         35 |        219 |
+| src\shared\utils\app-wrapper                                                                                                        |          1 |        753 |        208 |         13 |        974 |
+| src\shared\utils\associate                                                                                                          |         30 |        315 |         38 |         51 |        404 |
+| src\shared\utils\auto-complete                                                                                                      |          1 |         30 |          0 |          6 |         36 |
+| src\shared\utils\button                                                                                                             |          3 |         20 |          0 |          6 |         26 |
+| src\shared\utils\confirmation-box                                                                                                   |          1 |          0 |         15 |          2 |         17 |
+| src\shared\utils\dataTable                                                                                                          |          9 |      1,304 |         18 |        100 |      1,422 |
+| src\shared\utils\date-picker                                                                                                        |          1 |         34 |          0 |          3 |         37 |
+| src\shared\utils\dialog                                                                                                             |          1 |          0 |         49 |          6 |         55 |
+| src\shared\utils\fab-icon                                                                                                           |          2 |         32 |          0 |          3 |         35 |
+| src\shared\utils\input-field                                                                                                        |          2 |         26 |          0 |          7 |         33 |
+| src\shared\utils\interactive-list                                                                                                   |          1 |         37 |          0 |          6 |         43 |
+| src\shared\utils\issue-remedy                                                                                                       |          1 |         52 |          2 |          9 |         63 |
+| src\shared\utils\layout                                                                                                             |          8 |        137 |         24 |         26 |        187 |
+| src\shared\utils\list-table                                                                                                         |          1 |         58 |          0 |          6 |         64 |
+| src\shared\utils\loader                                                                                                             |          1 |         13 |          0 |          1 |         14 |
+| src\shared\utils\models                                                                                                             |          5 |        185 |         32 |         19 |        236 |
+| src\shared\utils\page-headings                                                                                                      |          1 |          8 |          1 |          1 |         10 |
+| src\shared\utils\response-message                                                                                                   |          1 |         17 |          0 |          2 |         19 |
+| src\shared\utils\search                                                                                                             |          1 |        109 |          0 |         11 |        120 |
+| src\shared\utils\skeltons                                                                                                           |          5 |         27 |          3 |         15 |         45 |
+| src\shared\utils\skeltons (Files)                                                                                                   |          1 |         10 |          3 |          4 |         17 |
+| src\shared\utils\skeltons\circel-skelton                                                                                            |          1 |          5 |          0 |          3 |          8 |
+| src\shared\utils\skeltons\rectangular-skelton                                                                                       |          2 |          8 |          0 |          5 |         13 |
+| src\shared\utils\skeltons\text-skelton                                                                                              |          1 |          4 |          0 |          3 |          7 |
+| src\shared\utils\small-list-table                                                                                                   |          1 |        121 |          3 |         24 |        148 |
+| src\shared\utils\tooltip                                                                                                            |          1 |         15 |          1 |          2 |         18 |
+| src\store                                                                                                                           |         14 |        240 |         21 |         35 |        296 |
+| src\store (Files)                                                                                                                   |          1 |         30 |          1 |          3 |         34 |
+| src\store\actions                                                                                                                   |          1 |          2 |          0 |          0 |          2 |
+| src\store\reducers                                                                                                                  |          2 |         56 |         19 |          9 |         84 |
+| src\store\slices                                                                                                                    |         10 |        152 |          1 |         23 |        176 |
++-------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                                            | language           | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\.env                                                                   | Properties         |          1 |          3 |          2 |          6 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\.vs\VSWorkspaceState.json                                              | JSON               |          6 |          0 |          0 |          6 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\README.md                                                              | Markdown           |         38 |          0 |         33 |         71 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\action.json                                                            | JSON               |         30 |          0 |          0 |         30 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\config-overrides.js                                                    | JavaScript         |          6 |          0 |          1 |          7 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\index.js                                                               | JavaScript         |         48 |          6 |          3 |         57 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\jsconfig.json                                                          | JSON with Comments |          8 |          0 |          0 |          8 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\package-lock.json                                                      | JSON               |     31,773 |          0 |          1 |     31,774 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\package.json                                                           | JSON               |         57 |          0 |          1 |         58 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\public\index.html                                                      | HTML               |        160 |          0 |         20 |        180 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\public\manifest.json                                                   | JSON               |         25 |          0 |          1 |         26 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\public\playground_assets\redirect.svg                                  | XML                |          6 |          0 |          0 |          6 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\second.js                                                              | JavaScript         |          4 |          0 |          1 |          5 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\action.json                                                        | JSON               |         46 |          0 |          0 |         46 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\app\app-style.jsx                                                  | JavaScript JSX     |      1,001 |        185 |         66 |      1,252 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\app\app.css                                                        | CSS                |      1,048 |         53 |        113 |      1,214 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\app\app.jsx                                                        | JavaScript JSX     |         54 |          1 |          7 |         62 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\app\icon.css                                                       | CSS                |          5 |          0 |          0 |          5 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\app\index.js                                                       | JavaScript         |          2 |          0 |          0 |          2 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\assets\images\backgrounds\login-bg.svg                             | XML                |         10 |          0 |          0 |         10 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\assets\images\logos\VERIDATA_LOGO_FULL.svg                         | XML                |         11 |          0 |          1 |         12 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\assets\images\logos\Veridata_logo_SVG.svg                          | XML                |          3 |          0 |          1 |          4 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\assets\images\logos\dark-logo.svg                                  | XML                |          7 |          0 |          1 |          8 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\config.js                                                          | JavaScript         |         15 |          0 |          4 |         19 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\hooks\useAuth.jsx                                                  | JavaScript JSX     |          0 |          0 |          1 |          1 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\hooks\useScrollBlock.jsx                                           | JavaScript JSX     |         29 |         10 |         11 |         50 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\hooks\useWindowScrollPositions.jsx                                 | JavaScript JSX     |         15 |          1 |          6 |         22 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\index.js                                                           | JavaScript         |         17 |          0 |          2 |         19 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\account\login\login-view.jsx                               | JavaScript JSX     |        164 |          6 |         10 |        180 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\account\logout\user-logout.jsx                             | JavaScript JSX     |          0 |          0 |          1 |          1 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\account\unauthorized\unauthorized-view.jsx                 | JavaScript JSX     |          0 |          0 |          1 |          1 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\appointee\register\appointee-register.jsx                  | JavaScript JSX     |      1,505 |         55 |         92 |      1,652 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\appointee\register\form-heading.jsx                        | JavaScript JSX     |         19 |          0 |          4 |         23 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\appointee\view\activity-log-details.jsx                    | JavaScript JSX     |         81 |          4 |         16 |        101 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\appointee\view\appointee-view.jsx                          | JavaScript JSX     |        697 |         41 |         26 |        764 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\attention\attention.jsx                                    | JavaScript JSX     |        120 |         11 |         10 |        141 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\data-update\data-update.jsx                                | JavaScript JSX     |         72 |          7 |          9 |         88 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\data-upload\data-upload.jsx                                | JavaScript JSX     |         73 |          6 |          9 |         88 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\home-view.jsx                                         | JavaScript JSX     |        212 |        212 |         28 |        452 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\index.js                                              | JavaScript         |          1 |          0 |          0 |          1 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\card-structure.jsx                             | JavaScript JSX     |        121 |         16 |          7 |        144 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\critical-recruits.jsx                          | JavaScript JSX     |        111 |         10 |         11 |        132 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\cumulative-status.jsx                          | JavaScript JSX     |         82 |          5 |          8 |         95 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\index.js                                       | JavaScript         |          9 |          0 |          0 |          9 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\lapsed.jsx                                     | JavaScript JSX     |        102 |          9 |          7 |        118 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\link-not-sent.jsx                              | JavaScript JSX     |        108 |          7 |          6 |        121 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\no-response.jsx                                | JavaScript JSX     |        103 |          9 |          5 |        117 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\total-offer.jsx                                | JavaScript JSX     |         23 |          6 |          6 |         35 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\under-process.jsx                              | JavaScript JSX     |        102 |         11 |          8 |        121 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\upcoming-recruits.jsx                          | JavaScript JSX     |         85 |          0 |         15 |        100 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\verified.jsx                                   | JavaScript JSX     |        102 |          7 |          6 |        115 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\home\widget\widget-card.jsx                                | JavaScript JSX     |         64 |          1 |         10 |         75 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\index.js                                                   | JavaScript         |          3 |          1 |          1 |          5 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\lapsed-data\lapsed-data.jsx                                | JavaScript JSX     |        211 |         20 |         16 |        247 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\link-not-sent\link-not-sent.jsx                            | JavaScript JSX     |        204 |          1 |          9 |        214 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\processing-data\processing-data.jsx                        | JavaScript JSX     |        193 |         13 |         13 |        219 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\reports\appointee-count.jsx                                | JavaScript JSX     |        106 |          0 |          8 |        114 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\reports\cancelled-view.jsx                                 | JavaScript JSX     |        118 |          5 |         14 |        137 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\reports\index.js                                           | JavaScript         |          3 |          0 |          1 |          4 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\reports\pfusers-view.jsx                                   | JavaScript JSX     |        126 |          0 |         11 |        137 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\reports\report.jsx                                         | JavaScript JSX     |        145 |          1 |          9 |        155 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\reports\verified-view.jsx                                  | JavaScript JSX     |        134 |          4 |         16 |        154 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\setup\general-setup-view.jsx                               | JavaScript JSX     |        873 |         43 |         16 |        932 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\setup\index.js                                             | JavaScript         |          1 |          0 |          0 |          1 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\uploaded-data\uploaded-data.jsx                            | JavaScript JSX     |        100 |          0 |          7 |        107 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\user\create-user\create-user-view.jsx                      | JavaScript JSX     |         87 |        139 |         14 |        240 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\user\update-user-view\update-user-view.jsx                 | JavaScript JSX     |         92 |         44 |          8 |        144 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\user\user-creation-form\user-creation-form.jsx             | JavaScript JSX     |        183 |         17 |         12 |        212 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\user\user-view\user-view.jsx                               | JavaScript JSX     |         94 |         50 |          8 |        152 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\modules\user\userlist\userlist-view.jsx                            | JavaScript JSX     |         51 |          4 |          7 |         62 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\server\api\access.jsx                                              | JavaScript JSX     |          9 |          1 |          2 |         12 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\server\api\city-search.jsx                                         | JavaScript JSX     |          0 |          0 |          2 |          2 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\server\api\get-menu-item.jsx                                       | JavaScript JSX     |          8 |          1 |          2 |         11 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\server\api\login.jsx                                               | JavaScript JSX     |          6 |          0 |          2 |          8 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\server\utils\axios.jsx                                             | JavaScript JSX     |         28 |          0 |          5 |         33 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\server\utils\pfc-requiest.jsx                                      | JavaScript JSX     |        138 |          5 |          9 |        152 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\action-permission\action-permission.jsx          | JavaScript JSX     |         30 |          1 |          6 |         37 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\auth-provider.jsx                                | JavaScript JSX     |         19 |          5 |          2 |         26 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\authorized-redirection.jsx                       | JavaScript JSX     |         18 |          0 |          3 |         21 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\disble-section\disble-section.jsx                | JavaScript JSX     |          9 |          0 |          3 |         12 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\display-information\personal-information.jsx     | JavaScript JSX     |         40 |          0 |          5 |         45 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\document-view\document-view.jsx                  | JavaScript JSX     |         54 |          0 |          2 |         56 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\download-report\download-report.jsx              | JavaScript JSX     |        117 |         13 |          5 |        135 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\file-update\file-update.jsx                      | JavaScript JSX     |        107 |          4 |          9 |        120 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\file-upload-section\file-upload-section.jsx      | JavaScript JSX     |         33 |          3 |          2 |         38 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\file-upload\file-upload.jsx                      | JavaScript JSX     |        106 |          3 |          9 |        118 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\form-dialog\close-appointee-add-Remarks.jsx      | JavaScript JSX     |         31 |          0 |          2 |         33 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\form-dialog\update-appointee-data.jsx            | JavaScript JSX     |         85 |          4 |         13 |        102 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\full-screen-wrapper\full-screen-wrapper.jsx      | JavaScript JSX     |         23 |          0 |          5 |         28 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\index.js                                         | JavaScript         |          0 |          5 |          0 |          5 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\otp\otp-generation\otp-generation.jsx            | JavaScript JSX     |         51 |          0 |          6 |         57 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\otp\otp-submition\otp-submition.jsx              | JavaScript JSX     |        252 |          7 |         24 |        283 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\private-component\private-component.jsx          | JavaScript JSX     |         13 |         11 |          5 |         29 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\remarks-table\remarks-table.jsx                  | JavaScript JSX     |         18 |          0 |          3 |         21 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\shared-hooks.jsx                                 | JavaScript JSX     |         27 |          0 |          4 |         31 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\update-button.jsx\update-button.jsx              | JavaScript JSX     |         12 |          0 |          3 |         15 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\upload-button.jsx\upload-button.jsx              | JavaScript JSX     |         12 |          0 |          3 |         15 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\verification\verification-icon.jsx               | JavaScript JSX     |         17 |          0 |          4 |         21 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\verification\verification-status-section.jsx     | JavaScript JSX     |         13 |          0 |          3 |         16 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\components\verification\verification-status.jsx             | JavaScript JSX     |         28 |          0 |          2 |         30 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\constants\attachment-extention.jsx                          | JavaScript JSX     |          2 |          3 |          2 |          7 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\constants\constants.jsx                                     | JavaScript JSX     |        968 |         34 |         33 |      1,035 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\blank\BlankLayout.js                                | JavaScript         |          7 |          0 |          3 |         10 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\FullLayout.js                                  | JavaScript         |         70 |          2 |          8 |         80 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\header\Header.js                               | JavaScript         |         66 |          1 |          6 |         73 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\header\data.js                                 | JavaScript         |          0 |        169 |         10 |        179 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\header\profile.jsx                             | JavaScript JSX     |         95 |         35 |          8 |        138 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\shared\loadable\Loadable.js                    | JavaScript         |          8 |          0 |          3 |         11 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\shared\logo\Logo.js                            | JavaScript         |         18 |          0 |          4 |         22 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\sidebar\MenuItems.js                           | JavaScript         |        319 |        101 |         10 |        430 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\sidebar\NavGroup\NavGroup.js                   | JavaScript         |         35 |          1 |          4 |         40 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\sidebar\NavItem\index.js                       | JavaScript         |         71 |          2 |          6 |         79 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\sidebar\Sidebar.js                             | JavaScript         |         82 |          0 |          7 |         89 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\layouts\full\sidebar\SidebarItems.js                        | JavaScript         |         78 |         29 |          7 |        114 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\routes\custom-router.jsx                                    | JavaScript JSX     |         64 |          9 |          6 |         79 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\alert\AdminPannelAlert.js                             | JavaScript         |         44 |          6 |         18 |         68 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\alert\CustomeAlert.js                                 | JavaScript         |          9 |          0 |          2 |         11 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\alert\ManuallyCloseableSnackBar.js                    | JavaScript         |         46 |          3 |          2 |         51 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\alert\ShowAlertList.js                                | JavaScript         |         19 |          0 |          5 |         24 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\alert\SweetAlert.js                                   | JavaScript         |         56 |          1 |          8 |         65 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\app-wrapper\app-wrapper.jsx                           | JavaScript JSX     |        753 |        208 |         13 |        974 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\add-is-check-flag.jsx                       | JavaScript JSX     |         11 |          0 |          1 |         12 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\arrange-sidebar-items.jsx                   | JavaScript JSX     |         38 |          1 |          3 |         42 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\array-object-values.jsx                     | JavaScript JSX     |          0 |          3 |          1 |          4 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\array-of-specific-object-value.jsx          | JavaScript JSX     |          0 |          5 |          0 |          5 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\check-is-pastday.jsx                        | JavaScript JSX     |         13 |          0 |          1 |         14 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\check-validate-number.jsx                   | JavaScript JSX     |          5 |          0 |          2 |          7 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\date-filter.jsx                             | JavaScript JSX     |         14 |          0 |          3 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\download-file.jsx                           | JavaScript JSX     |          8 |          0 |          2 |         10 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\filter-object-property.jsx                  | JavaScript JSX     |          4 |          0 |          0 |          4 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\generate-fileupload-error-message.jsx       | JavaScript JSX     |         23 |          4 |          1 |         28 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\generate-table-row-data.jsx                 | JavaScript JSX     |         52 |         15 |          7 |         74 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\get-attribute.jsx                           | JavaScript JSX     |          3 |          0 |          0 |          3 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\get-char-pos.jsx                            | JavaScript JSX     |          3 |          0 |          0 |          3 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\get-from-localstorage.jsx                   | JavaScript JSX     |          4 |          0 |          1 |          5 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\handle-short.jsx                            | JavaScript JSX     |         22 |          0 |          2 |         24 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\has-action-permition.jsx                    | JavaScript JSX     |         35 |         10 |          9 |         54 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\has-value.jsx                               | JavaScript JSX     |          7 |          0 |          1 |          8 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\open-link.jsx                               | JavaScript JSX     |          3 |          0 |          0 |          3 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\pattern-check.jsx                           | JavaScript JSX     |          3 |          0 |          0 |          3 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\remove-extra-spaces.jsx                     | JavaScript JSX     |          2 |          0 |          1 |          3 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\remove-from-localstorage.jsx                | JavaScript JSX     |          6 |          0 |          3 |          9 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\seconds-to-minute-string.jsx                | JavaScript JSX     |         15 |          0 |          3 |         18 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\select-checked-rows.jsx                     | JavaScript JSX     |          6 |          0 |          1 |          7 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\set-to-localstorage.jsx                     | JavaScript JSX     |          4 |          0 |          4 |          8 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\toggle-action-menu.jsx                      | JavaScript JSX     |          8 |          0 |          1 |          9 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\trimmed-date.jsx                            | JavaScript JSX     |          4 |          0 |          0 |          4 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\trimmed-filename.jsx                        | JavaScript JSX     |          7 |          0 |          1 |          8 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\two-digits.jsx                              | JavaScript JSX     |          7 |          0 |          1 |          8 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\update-localstorage.jsx                     | JavaScript JSX     |          4 |          0 |          1 |          5 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\associate\upload-file-message.jsx                     | JavaScript JSX     |          4 |          0 |          1 |          5 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\auto-complete\AutoCompleteSelect.jsx                  | JavaScript JSX     |         30 |          0 |          6 |         36 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\button\button.jsx                                     | JavaScript JSX     |          0 |          0 |          1 |          1 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\button\button1.jsx                                    | JavaScript JSX     |         11 |          0 |          2 |         13 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\button\button2.jsx                                    | JavaScript JSX     |          9 |          0 |          3 |         12 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\confirmation-box\confirmation-box.jsx                 | JavaScript JSX     |          0 |         15 |          2 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dataTable\checkBoxdataTable.jsx                       | JavaScript JSX     |        372 |          1 |         28 |        401 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dataTable\collapsable-datatable.jsx                   | JavaScript JSX     |        163 |         12 |         12 |        187 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dataTable\dataTable.jsx                               | JavaScript JSX     |        318 |          5 |         28 |        351 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dataTable\dataTableProps.jsx                          | JavaScript JSX     |          9 |          0 |          5 |         14 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dataTable\first-cell.jsx                              | JavaScript JSX     |         23 |          0 |          3 |         26 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dataTable\singleTableCell.jsx                         | JavaScript JSX     |         79 |          0 |          9 |         88 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dataTable\table-action-cell.jsx                       | JavaScript JSX     |        257 |          0 |         10 |        267 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dataTable\table-clickable-cell.jsx                    | JavaScript JSX     |         19 |          0 |          1 |         20 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dataTable\table-status-cell.jsx                       | JavaScript JSX     |         64 |          0 |          4 |         68 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\date-picker\date-picker.jsx                           | JavaScript JSX     |         34 |          0 |          3 |         37 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\dialog\alert-dialog.jsx                               | JavaScript JSX     |          0 |         49 |          6 |         55 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\fab-icon\fab-icon-model.jsx                           | JavaScript JSX     |         14 |          0 |          1 |         15 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\fab-icon\fab-icon.jsx                                 | JavaScript JSX     |         18 |          0 |          2 |         20 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\index.js                                              | JavaScript         |         54 |          3 |          1 |         58 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\input-field\input-field-prop.jsx                      | JavaScript JSX     |          8 |          0 |          4 |         12 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\input-field\input-field.jsx                           | JavaScript JSX     |         18 |          0 |          3 |         21 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\interactive-list\interactive-list.jsx                 | JavaScript JSX     |         37 |          0 |          6 |         43 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\issue-remedy\issue-remedy.jsx                         | JavaScript JSX     |         52 |          2 |          9 |         63 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\layout\card-layout.jsx                                | JavaScript JSX     |         14 |          0 |          3 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\layout\container.jsx                                  | JavaScript JSX     |         11 |          0 |          1 |         12 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\layout\content-wrapper.jsx                            | JavaScript JSX     |         10 |          0 |          2 |         12 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\layout\detail-section.jsx                             | JavaScript JSX     |          9 |          0 |          3 |         12 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\layout\input-card.jsx                                 | JavaScript JSX     |         58 |          0 |          8 |         66 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\layout\overlay-layout.jsx                             | JavaScript JSX     |         16 |         14 |          3 |         33 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\layout\page-layout.jsx                                | JavaScript JSX     |         19 |          0 |          2 |         21 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\layout\section-search-card.jsx                        | JavaScript JSX     |          0 |         10 |          4 |         14 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\list-table\list-table.jsx                             | JavaScript JSX     |         58 |          0 |          6 |         64 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\loader\circularIndeterminate.jsx                      | JavaScript JSX     |         13 |          0 |          1 |         14 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\models\confirmation-model.jsx                         | JavaScript JSX     |         31 |          0 |          4 |         35 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\models\form-dialog.jsx                                | JavaScript JSX     |         36 |          5 |          2 |         43 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\models\fullscreen-model.jsx                           | JavaScript JSX     |         57 |         27 |          7 |         91 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\models\info-moel.jsx                                  | JavaScript JSX     |         22 |          0 |          4 |         26 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\models\submit-modal.jsx                               | JavaScript JSX     |         39 |          0 |          2 |         41 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\page-headings\page-heading1.jsx                       | JavaScript JSX     |          8 |          1 |          1 |         10 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\response-message\response-message.jsx                 | JavaScript JSX     |         17 |          0 |          2 |         19 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\search\search-app-bar.jsx                             | JavaScript JSX     |        109 |          0 |         11 |        120 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\skeltons\circel-skelton\circel-skelton1.jsx           | JavaScript JSX     |          5 |          0 |          3 |          8 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\skeltons\rectangular-skelton\rectangular-skelton1.jsx | JavaScript JSX     |          4 |          0 |          3 |          7 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\skeltons\rectangular-skelton\rectangular-skelton2.jsx | JavaScript JSX     |          4 |          0 |          2 |          6 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\skeltons\text-skelton\text-skelton1.jsx               | JavaScript JSX     |          4 |          0 |          3 |          7 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\skeltons\widget-card-skelton.jsx                      | JavaScript JSX     |         10 |          3 |          4 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\small-list-table\small-list-table.jsx                 | JavaScript JSX     |        121 |          3 |         24 |        148 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\shared\utils\tooltip\dark-tooltip.jsx                              | JavaScript JSX     |         15 |          1 |          2 |         18 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\actions\actionTypes.jsx                                      | JavaScript JSX     |          2 |          0 |          0 |          2 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\index.js                                                     | JavaScript         |         30 |          1 |          3 |         34 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\reducers\loading-context-provider.jsx                        | JavaScript JSX     |         56 |          1 |          5 |         62 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\reducers\reducer.jsx                                         | JavaScript JSX     |          0 |         18 |          4 |         22 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\action-route-slice.jsx                                | JavaScript JSX     |         15 |          0 |          2 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\api-slice.jsx                                         | JavaScript JSX     |         15 |          0 |          2 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\common-hook-function-slice.jsx                        | JavaScript JSX     |         15 |          0 |          3 |         18 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\dropdown-slice.jsx                                    | JavaScript JSX     |         15 |          0 |          2 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\function-slice.jsx                                    | JavaScript JSX     |         15 |          0 |          2 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\login-slice.jsx                                       | JavaScript JSX     |         15 |          0 |          2 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\logout-slice.jsx                                      | JavaScript JSX     |         15 |          0 |          2 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\popup-slice.jsx                                       | JavaScript JSX     |         15 |          0 |          2 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\set-table-rows-slice.jsx                              | JavaScript JSX     |         15 |          0 |          2 |         17 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\store\slices\side-menu-items-slice.jsx                             | JavaScript JSX     |         17 |          1 |          4 |         22 |
+| d:\Dibyojit\elogix_projects\veridata\general_setupImp\pfc_ui\src\user-config.js                                                     | JavaScript         |         18 |          5 |          4 |         27 |
+| Total                                                                                                                               |                    |     48,071 |      1,906 |      1,397 |     51,374 |
++-------------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

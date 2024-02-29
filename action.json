@@ -1,0 +1,30 @@
+ [
+    {
+       "code": "A001",
+        "actionName": "view"
+    },
+    {
+       "code": "A002",
+        "actionName": "approve"
+    },
+    {
+       "code": "A003",
+        "actionName": "reject"
+    },
+    {
+       "code": "A004",
+        "actionName": "start verify"
+    },
+    {
+       "code": "A005",
+        "actionName": "notify user"
+    },
+    {
+       "code": "A006",
+        "actionName": "upload data"
+    },
+    {
+       "code": "A007",
+        "actionName": "edit"
+    }
+]

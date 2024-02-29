@@ -1,0 +1,4 @@
+export const filteredObjectProperty = (arrayObject, searchItem) => {
+    const array = arrayObject && arrayObject.filter((object) => object.code === searchItem, searchItem)
+    return array && array[0]?.value
+}
