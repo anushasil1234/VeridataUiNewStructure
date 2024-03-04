@@ -561,10 +561,10 @@ const AppointeeRegister = () => {
     // };
     let formData = new FormData();
     formData.append("appointeeId", appointeeId);
-    formData.append("aadharName", nameAsOnAadhar);
+    formData.append("aadharName", nameAsOnAadhar.trim());
     formData.append("userId", userId);
     formData.append("appointeeId", appointeeId);
-    formData.append("shareCode", aadharShareCode);
+    formData.append("shareCode", aadharShareCode.trim());
     formData.append("aadharFileDetails", xmlFileUploaded);
 
 
