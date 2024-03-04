@@ -1302,6 +1302,7 @@ export const RemoveAdminUser_URL = (id, userId) => `${Users}/RemoveAdminUser?id=
 //Models messages starts
 export const approveConfirmation = `Candidate has not successfully completed verification process. Do you still want to approve?`;
 export const uploadSizeErrorMsg = `File upload size limit has exceeded`;
+export const uploadFormatErrorMsg = `Upload valid formated file`;
 export const verificationConfirmationMsg = `Are you sure you want to start the process?`;
 export const appointeerejetionConfirmationMsg = `Are you sure you want to reject?`;
 export const verificationRemiderMsg = `Reminder alert will be sent to appointee, asking them to complete the verification process. Do you want to continue?`;

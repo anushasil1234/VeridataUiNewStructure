@@ -60,6 +60,7 @@ import {
   uanVerifySuccessMsg,
   uploadSizeErrorMsg,
   duplicateFiles,
+  uploadFormatErrorMsg,
 } from "shared/constants/constants";
 import { DisableSection } from "shared/components/disble-section/disble-section";
 import VerificationStatus from "../../../shared/components/verification/verification-status";
@@ -530,17 +531,18 @@ const AppointeeRegister = () => {
     // console.log('target', target);
     setXmlFileUploaded();
     setAadharXmlFileName();
-    const {files} = target;
+    const { files } = target;
     const fileData = files[0];
-    const { name, size } = fileData;
-    console.log('fildata', fileData);
-    if (size <= 4000000) {
+    console.log('fileData', fileData);
+    const { name, size, type } = fileData;
+    if (type !== "application/x-zip-compressed" && "application/x-compressed") {
+      showErrorMessage(uploadFormatErrorMsg);
+    } else if (size > 4000000) {
+      showErrorMessage(uploadSizeErrorMsg);
+    } else {
       setAadharXmlFileName(name);
       setXmlFileUploaded(fileData);
-    } else {
-      showErrorMessage(uploadSizeErrorMsg);
     }
-
     setIsAadhaarXmlUploaded(true);
   };
   const uploadTrustEPFOFile = ({ target }) => {
@@ -565,7 +567,7 @@ const AppointeeRegister = () => {
     formData.append("shareCode", aadharShareCode);
     formData.append("aadharFileDetails", xmlFileUploaded);
 
-    
+
     const response = await verifyAadharDetails(formData);
     if (response) {
       const { remarks, isVarified } = response.responseInfo;
