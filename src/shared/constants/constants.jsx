@@ -17,6 +17,7 @@ export const userUpdateSuccessMsg = `User has been updated successfully`;
 export const userDeletedSuccessMsg = `User has been deleted successfully`;
 export const invalidOtpMsg = `Otp must be of 6 digits`;
 export const emptyAadharMsg = `Aadhar number or Aadhar name is empty`;
+export const emptyShareCodeMsg = `Aadhar share code or Aadhar name is empty`;
 export const emptyPanMsg = `Pan number or name on Pan is missing`;
 export const aadharVerifySuccessMsg = `Aadhar has been verified successfully`;
 export const aadharVerifyFailedMsg = `Aadhar has not been verified`;

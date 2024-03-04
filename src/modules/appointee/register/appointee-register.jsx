@@ -35,6 +35,7 @@ import {
   aadharVerifySuccessMsg,
   congratulationDialogContentTitle,
   emptyAadharMsg,
+  emptyShareCodeMsg,
   emptyPanMsg,
   fetchUanConfirmationtMsg,
   genders,
@@ -148,6 +149,7 @@ const AppointeeRegister = () => {
   const [nameAsOnPan, setNameAsOnPan] = useState(null);
   const [aadhar, setAadhar] = useState(null);
   const [nameAsOnAadhar, setNameAsOnAadhar] = useState(null);
+  const [aadharShareCode, setAadharShareCode] = useState(null);
   const [fetchUanConfirmation, setFetchUanConfirmation] = useState(false);
   const [appointeeDetailsId, setAppointeeDetailsId] = useState(0);
   const [candidteId, setCandidteId] = useState(null);
@@ -169,6 +171,7 @@ const AppointeeRegister = () => {
 
   const [isPFVerificatoinReq, setIsPFVerificatoinReq] = useState(null);
   const [isAadhaarVarified, setisAadhaarVarified] = useState(null);
+  const [isAadhaarXmlUploaded, setIsAadhaarXmlUploaded] = useState(false);
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isPassportVarified, setIsPassportVarified] = useState(false);
   const [isUanVarified, setisUanVarified] = useState(null);
@@ -179,12 +182,12 @@ const AppointeeRegister = () => {
   const [isPensionApplicable, setIsPensionApplicable] = useState(null);
   const [isEpfoSectionDisabled, setIsEpfoSectionDisabled] = useState(true);
   const [isPanSectionDisabled, setIsPanSectionDisabled] = useState(true);
-  const [isPassportVerifyBtnDisabled, setIsPassportVerifyBtnDisabled] =
-    useState(false);
+  const [isPassportVerifyBtnDisabled, setIsPassportVerifyBtnDisabled] = useState(false);
   const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(false);
   const [fileUploaded, setFileUploaded] = useState([]);
   const [fileDetails, setFileDetails] = useState([]);
   const [trustEpfoFileName, setTrustEpfoFileName] = useState();
+  const [aadharXmlFileName, setAadharXmlFileName] = useState();
   const [passportFileName, setPassportFileName] = useState();
   const [
     isRelationShipWithMemberDisabled,
@@ -431,7 +434,7 @@ const AppointeeRegister = () => {
     } else {
       setEpfoButton("Verify");
       setDisabledPanInput(true);
-      setDisabledAadharInput(true);
+      // setDisabledAadharInput(true);
     }
   }, [UAN]);
   useEffect(() => {
@@ -453,18 +456,18 @@ const AppointeeRegister = () => {
     ) {
       setIsSubmitDisabled(false);
     }
-    if(isPanVarified){
-      setDisabledPanInput(true); 
+    if (isPanVarified) {
+      setDisabledPanInput(true);
     }
-    if(isPanVarified!== null){
+    if (isPanVarified !== null) {
       setIsEpfoSectionDisabled(false);
     }
-    if(isAadhaarVarified !== null){
+    if (isAadhaarVarified !== null) {
       setIsPanSectionDisabled(false);
     }
     if (isAadhaarVarified) {
       setDisabledAadharInput(true);
-      
+
     }
     if (isUanVarified && isSubmit === false) {
       if (isAadhaarVarified && isPanVarified) {
@@ -520,6 +523,10 @@ const AppointeeRegister = () => {
     }
   };
 
+  const uploadAadharXmlFile = ({ target }) => {
+    uploadFile(target, "ADH", setAadharXmlFileName);
+    setIsAadhaarXmlUploaded(true);
+  };
   const uploadTrustEPFOFile = ({ target }) => {
     uploadFile(target, trustEpfoFileTypeAlias, setTrustEpfoFileName);
   };
@@ -540,7 +547,7 @@ const AppointeeRegister = () => {
       const { remarks, isVarified } = response.responseInfo;
       if (isVarified) {
         showSuccessMessage(aadharVerifySuccessMsg);
-       
+
       } else {
         showErrorMessage(aadharVerifyFailedMsg);
         if (hasValue(remarks)) {
@@ -554,43 +561,44 @@ const AppointeeRegister = () => {
       setAadharstatusMessage(new VerificationStatus(isVarified, "V"));
     }
   };
-  const validateAadharOtp = async () => {
-    const payLoad = {
-      aaddharNumber: aadhar,
-      appointeeId: appointeeId,
-      aaddharName: nameAsOnAadhar,
-      userId,
-    };
-    const response = await generateAadharOTP(payLoad);
-    if (response) {
-      const { responseInfo } = response;
-      let { if_number, otp_sent, client_id } = responseInfo;
-      if (!if_number) {
-        //
-        showErrorMessage(aadharNoValidationError);
-        closeOtpForm();
-      } else if (!otp_sent) {
-        showErrorMessage(generateOtpRety);
-      } else {
-        initialTimeOfOtpTimer();
-        showSuccessMessage(generateOtpSucces);
-        closeOtpForm();
-        openOtpSubmitionModel({
-          otpSubmitionFunction: (otp) => verifyAadhar(otp, client_id),
-          timeoutTimer: timeoutTimer,
-          setTimeoutTimer: setTimeoutTimer,
-        });
-      }
-    }
-  };
+  // const validateAadharOtp = async () => {
+  //   const payLoad = {
+  //     aaddharNumber: aadhar,
+  //     appointeeId: appointeeId,
+  //     aaddharName: nameAsOnAadhar,
+  //     userId,
+  //   };
+  //   const response = await generateAadharOTP(payLoad);
+  //   if (response) {
+  //     const { responseInfo } = response;
+  //     let { if_number, otp_sent, client_id } = responseInfo;
+  //     if (!if_number) {
+  //       //
+  //       showErrorMessage(aadharNoValidationError);
+  //       closeOtpForm();
+  //     } else if (!otp_sent) {
+  //       showErrorMessage(generateOtpRety);
+  //     } else {
+  //       initialTimeOfOtpTimer();
+  //       showSuccessMessage(generateOtpSucces);
+  //       closeOtpForm();
+  //       openOtpSubmitionModel({
+  //         otpSubmitionFunction: (otp) => verifyAadhar(otp, client_id),
+  //         timeoutTimer: timeoutTimer,
+  //         setTimeoutTimer: setTimeoutTimer,
+  //       });
+  //     }
+  //   }
+  // };
   const handleAadharVerifiaction = () => {
-    if (!(hasValue(aadhar) || hasValue(nameAsOnAadhar))) {
-      showErrorMessage(emptyAadharMsg);
-    } else if (!patternChecking(aadhar, /^[0-9]{12}/)) {
-      showErrorMessage(invalidAadharMsg);
-    } else {
-      openOtpForm(aadhar, "Aadhar Number", validateAadharOtp);
+    console.log('handle');
+    if (!(hasValue(aadharShareCode) && hasValue(nameAsOnAadhar))) {
+      showErrorMessage(emptyShareCodeMsg);
     }
+   else {
+    verifyAadhar("","");
+    // openOtpForm(aadhar, "Aadhar Number", validateAadharOtp);
+     }
   };
   const verifyPAN = async () => {
     const payLoad = {
@@ -721,7 +729,7 @@ const AppointeeRegister = () => {
   };
   const handleEpfoButtonClick = () => {
     if (epfoButton === "Fetch UAN") {
-      if (isPanVarified === false || isAadhaarVarified===false) {
+      if (isPanVarified === false || isAadhaarVarified === false) {
         const confirmationModelContent = {
           dialogContentText: fetchUanConfirmationtMsg,
         };
@@ -730,7 +738,7 @@ const AppointeeRegister = () => {
     } else handleEpfoVerifiaction();
   };
   const handleGetUANNumber = async () => {
-    
+
     const payLoad = {
       aaddharNumber: removeExtraSpaces(aadhar),
       appointeeId,
@@ -747,7 +755,7 @@ const AppointeeRegister = () => {
         epfostatusMessage.message = "Fetched";
         epfostatusMessage.color = "green";
         epfostatusMessage.success = null;
-        setDisabledAadharInput(true);
+        // setDisabledAadharInput(true);
         openOtpForm(uanNumber, "UAN Number", () => validateUANOtp(uanNumber));
       } else {
         showErrorMessage(remarks);
@@ -836,10 +844,7 @@ const AppointeeRegister = () => {
   };
 
   const formElement = useRef(null);
-  const handleAadharOnChange = (e) => {
-    const { value } = e.target;
-    setAadhar(value);
-  };
+
   const handlePassFileNumberOnChange = (e) => {
     const { value } = e.target;
     setPassportFileNumber(value);
@@ -885,7 +890,7 @@ const AppointeeRegister = () => {
       setIsRelationShipWithMemberDisabled(false);
     }
   }, [gender]);
- 
+
   return (
     <CardLayout>
       <Typography sx={heading2}>
@@ -1078,7 +1083,7 @@ const AppointeeRegister = () => {
                                   error={false}
                                   labelId="demo-simple-select-label"
                                   id="demo-simple-select"
-                                  
+
                                   className="customeTextField"
                                   disabled={isRelationShipWithMemberDisabled}
                                   sx={inputFieldStyle}
@@ -1155,7 +1160,7 @@ const AppointeeRegister = () => {
                                   error={false}
                                   labelId="demo-simple-select-label"
                                   id="demo-simple-select"
-                                  
+
 
                                   sx={inputFieldStyle}
                                   value={nationality}
@@ -1711,17 +1716,35 @@ const AppointeeRegister = () => {
                       >
                         <Grid item xs={12} md={6}>
                           <Typography sx={lable1Style}>
-                            Addhar Number
+                            Name On Aadhar
                           </Typography>
+
                           <TextField
                             style={inputFieldStyle}
                             type="text"
                             variant="outlined"
-                            onChange={handleAadharOnChange}
                             className="customeTextField"
-                            value={aadhar}
+                            onChange={(e) => {
+                              setNameAsOnAadhar(e.target.value.toUpperCase());
+                            }}
+                            value={nameAsOnAadhar}
                             defaultValue={" "}
                             disabled={disabledAadharInput}
+                          /> <Typography sx={lable1Style}>
+                            Share Code
+                          </Typography>
+
+                          <TextField
+                            style={inputFieldStyle}
+                            type="text"
+                            variant="outlined"
+                            className="customeTextField"
+                            onChange={(e) => {
+                              setAadharShareCode(e.target.value);
+                            }}
+                            value={aadharShareCode}
+                            defaultValue={" "}
+                            disabled={disabledAadharInput || !isAadhaarXmlUploaded}
                           />
                           <Button
                             sx={{ margin: "5px" }}
@@ -1737,27 +1760,13 @@ const AppointeeRegister = () => {
                           />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <Typography sx={lable1Style}>
-                            Name On Aadhar
-                          </Typography>
 
-                          <TextField
-                            style={inputFieldStyle}
-                            type="text"
-                            variant="outlined"
-                            className="customeTextField"
-                            onChange={(e) => {
-                              setNameAsOnAadhar(e.target.value.toUpperCase());
-                            }}
-                            value={nameAsOnAadhar}
-                            defaultValue={" "}
-                            disabled={disabledAadharInput}
+                          <FileUploadSection
+                            chooseFile={uploadAadharXmlFile}
+                            fileName={aadharXmlFileName}
                           />
-                          {/* <FileUploadSection
-                             chooseFile={uploadAadharFile}
-                             fileName={aadharFileName}
-                                                    /> */}
                         </Grid>
+
                       </Grid>
                     </Grid>
                   </Grid>
@@ -1778,7 +1787,7 @@ const AppointeeRegister = () => {
                     sx={positionRelative}
                     item xs={12}
                   >
-                    {isPanSectionDisabled && <DisableSection />}
+                    {/* {isPanSectionDisabled && <DisableSection />} */}
                     <Grid item xs={12} md={6} paddingRight={3}>
                       <Typography sx={lable1Style}>
                         PAN Number
