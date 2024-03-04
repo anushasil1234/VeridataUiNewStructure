@@ -112,8 +112,7 @@ const AppointeeRegister = () => {
     getPassportDetails,
     postAppointeeFileDetails,
     getUANNumber,
-    generateAadharOTP,
-    submitAadharOTP,
+    verifyAadharDetails,
     generateUANOtp,
     submitUANOTP,
     verifyPANDetails,
@@ -185,6 +184,7 @@ const AppointeeRegister = () => {
   const [isPassportVerifyBtnDisabled, setIsPassportVerifyBtnDisabled] = useState(false);
   const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(false);
   const [fileUploaded, setFileUploaded] = useState([]);
+  const [xmlFileUploaded, setXmlFileUploaded] = useState();
   const [fileDetails, setFileDetails] = useState([]);
   const [trustEpfoFileName, setTrustEpfoFileName] = useState();
   const [aadharXmlFileName, setAadharXmlFileName] = useState();
@@ -517,14 +517,30 @@ const AppointeeRegister = () => {
         };
         setFileUploaded([...fileUploaded, file]);
         setFileDetails([...fileDetails, fileData]);
+
       } else {
         showErrorMessage(uploadSizeErrorMsg);
       }
     }
   };
 
+
   const uploadAadharXmlFile = ({ target }) => {
-    uploadFile(target, "ADH", setAadharXmlFileName);
+    // uploadFile(target, "ADH", setAadharXmlFileName);
+    // console.log('target', target);
+    setXmlFileUploaded();
+    setAadharXmlFileName();
+    const {files} = target;
+    const fileData = files[0];
+    const { name, size } = fileData;
+    console.log('fildata', fileData);
+    if (size <= 4000000) {
+      setAadharXmlFileName(name);
+      setXmlFileUploaded(fileData);
+    } else {
+      showErrorMessage(uploadSizeErrorMsg);
+    }
+
     setIsAadhaarXmlUploaded(true);
   };
   const uploadTrustEPFOFile = ({ target }) => {
@@ -534,15 +550,23 @@ const AppointeeRegister = () => {
     uploadFile(target, passportFileTypeAlias, setPassportFileName);
   };
   const verifyAadhar = async (otp, clientId) => {
-    const payLoad = {
-      appointeeId: appointeeId,
-      otp: otp,
-      client_id: clientId,
-      aadharName: nameAsOnAadhar,
-      userId: userId,
-    };
+    // const payLoad = {
+    //   appointeeId: appointeeId,
+    //   otp: otp,
+    //   client_id: clientId,
+    //   aadharName: nameAsOnAadhar,
+    //   userId: userId,
+    // };
+    let formData = new FormData();
+    formData.append("appointeeId", appointeeId);
+    formData.append("aadharName", nameAsOnAadhar);
+    formData.append("userId", userId);
+    formData.append("appointeeId", appointeeId);
+    formData.append("shareCode", aadharShareCode);
+    formData.append("aadharFileDetails", xmlFileUploaded);
 
-    const response = await submitAadharOTP(payLoad);
+    
+    const response = await verifyAadharDetails(formData);
     if (response) {
       const { remarks, isVarified } = response.responseInfo;
       if (isVarified) {
@@ -591,14 +615,13 @@ const AppointeeRegister = () => {
   //   }
   // };
   const handleAadharVerifiaction = () => {
-    console.log('handle');
     if (!(hasValue(aadharShareCode) && hasValue(nameAsOnAadhar))) {
       showErrorMessage(emptyShareCodeMsg);
     }
-   else {
-    verifyAadhar("","");
-    // openOtpForm(aadhar, "Aadhar Number", validateAadharOtp);
-     }
+    else {
+      verifyAadhar("", "");
+      // openOtpForm(aadhar, "Aadhar Number", validateAadharOtp);
+    }
   };
   const verifyPAN = async () => {
     const payLoad = {
@@ -1764,6 +1787,7 @@ const AppointeeRegister = () => {
                           <FileUploadSection
                             chooseFile={uploadAadharXmlFile}
                             fileName={aadharXmlFileName}
+                            accept={'.rar, .zip'}
                           />
                         </Grid>
 

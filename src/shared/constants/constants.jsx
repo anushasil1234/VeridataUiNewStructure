@@ -8,7 +8,7 @@ import TableStatusCell from "shared/utils/dataTable/table-status-cell";
 
 export const emptyUserNameField = `username can't be empty`;
 export const maxUploadSize = `Max size: 4mb`;
-export const uploadFormat = `Accepted format: pdf, jpg, png`;
+export const defaultUploadFormat = `Accepted format: pdf, jpg, png`;
 export const noRemarks = `No Remarks Available`;
 export const noPassBookMsg = `Passbook not available`;
 export const configurationSuccessMsg = `Configuration updated`;
@@ -1283,8 +1283,7 @@ export const PassbookDetails_URL = `${AppoienteeWorkFlow}/GetPassbookDetails?App
 
 export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetails`;
 export const VerifyPanDetails_URL = `${AadhaarValidate}/VerifyPanDetails`;
-export const GenerateAadharOTP_URL = `${AadhaarValidate}/GenerateOTP`;
-export const SubmitOTPAadharOTP_URL = `${AadhaarValidate}/SubmitOTP`;
+export const VerifyAadharViaXml_URL = `${AadhaarValidate}/VerifyAadharViaXml`;
 export const GenerateUANOTP_URL = `${AadhaarValidate}/UANGenerateOTP`;
 export const GetUANNumber_URL = `${AadhaarValidate}/GetUANDetails`;
 export const UANSubmitOTP_URL = `${AadhaarValidate}/UANSubmitOTP`;

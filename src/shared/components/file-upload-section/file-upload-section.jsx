@@ -1,15 +1,16 @@
 import { Box, Stack, Typography } from '@mui/material'
 import { fileInputboxContainerStyle, fileInputs } from 'app'
 import React from 'react'
-import { maxUploadSize, uploadFormat } from 'shared/constants/constants'
+import { maxUploadSize, defaultUploadFormat } from 'shared/constants/constants'
 import UploadButton from '../upload-button.jsx/upload-button'
 
-const FileUploadSection = ({ chooseFile, fileName }) => {
+const FileUploadSection = ({ chooseFile, fileName, accept}) => {
+    const fileType =  `Accepted format: ${accept}`;
     return (
         <Stack sx={fileInputboxContainerStyle}>
             <Box sx={fileInputs}>
                 <input
-                    accept="application/pdf, image/png, image/jpeg"
+                    accept={accept ? accept : "application/pdf, image/png, image/jpeg"}
                     type="file"
                     onClick={(e) => e.target.value = null}
                     onChange={chooseFile}
@@ -23,7 +24,7 @@ const FileUploadSection = ({ chooseFile, fileName }) => {
                 {
                     !fileName &&
                     <Typography fontSize={".7rem"} marginTop={.25}>
-                        {uploadFormat}
+                       {accept ? fileType:  defaultUploadFormat }
                     </Typography>
                 }
             </Stack>

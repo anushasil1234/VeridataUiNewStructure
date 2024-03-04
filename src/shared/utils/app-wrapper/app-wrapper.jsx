@@ -8,7 +8,6 @@ import {
   DIS,
   FLT,
   GEN,
-  GenerateAadharOTP_URL,
   GenerateUANOTP_URL,
   GetAppointeeActivity_URL,
   GetAppointeeDetails_URL,
@@ -38,7 +37,6 @@ import {
   PostSetupConfigData_URL,
   QUA,
   RawDataProcess_URL,
-  SubmitOTPAadharOTP_URL,
   UANSubmitOTP_URL,
   UploadxlsFile_URL,
   VerifyPanDetails_URL,
@@ -88,7 +86,8 @@ import {
   ApiCounterReport_URL,
   GetReportFilterStatus_URL,
   PassbookDetails_URL,
-  AppointeeConsentUpdate_URL
+  AppointeeConsentUpdate_URL,
+  VerifyAadharViaXml_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -523,11 +522,8 @@ const AppWrapper = (App) => {
     const getUANNumber = async (payLoad) => {
       return await PfcRequest(`${GetUANNumber_URL}`, "POST", payLoad);
     };
-    const generateAadharOTP = async (payLoad) => {
-      return await PfcRequest(`${GenerateAadharOTP_URL}`, "POST", payLoad);
-    };
-    const submitAadharOTP = async (payLoad) => {
-      return await PfcRequest(`${SubmitOTPAadharOTP_URL}`, "POST", payLoad);
+    const verifyAadharDetails = async (payLoad) => {
+      return await PfcRequest(`${VerifyAadharViaXml_URL}`, "POST", payLoad);
     };
     const generateUANOtp = async (payLoad) => {
       return await PfcRequest(`${GenerateUANOTP_URL}`, "POST", payLoad);
@@ -794,8 +790,7 @@ const AppWrapper = (App) => {
           getLinkNotSentList,
           getProessingDataList,
           getLapsedDataList,
-          generateAadharOTP,
-          submitAadharOTP,
+          verifyAadharDetails,
           generateUANOtp,
           submitUANOTP,
           verifyPANDetails,
