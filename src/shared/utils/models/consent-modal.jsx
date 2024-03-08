@@ -57,7 +57,7 @@ const ConsentModal = ({ open, consentModalContent }) => {
   }
 
   return (
-    <Dialog open={open} >
+    <Dialog fullWidth={true} maxWidth={"md"} open={open} >
       <DialogTitle>{dialogTitle}</DialogTitle>
       <DialogContent>
         {/* {

@@ -561,6 +561,10 @@ export const lable1Style = {
 export const lable2Style = {
   ...lableCommonStyle
 };
+export const lable3Style = {
+  ...lableCommonStyle,
+  fontSize: "1rem" 
+};
 
 export const inputPropsStyle = {
   // height: "0.438em"
@@ -709,7 +713,7 @@ export const autocompleteStyle = {
 export const disableSectionStyle = {
   position: "absolute",
   left: "12px",
-  height: "100%",
+  height: "90%",
   background: "black",
   opacity: "0.2",
   width: "100%",

@@ -1,8 +1,11 @@
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   Grid,
+  Link,
   MenuItem,
   Select,
   Stack,
@@ -70,6 +73,8 @@ import FormDialog from "shared/utils/models/form-dialog";
 import FileUploadSection from "shared/components/file-upload-section/file-upload-section";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import uploadFileMessage from "shared/utils/associate/upload-file-message";
+import verficationAadharSteps from "shared/components/verification/verfication-aadhar";
+import VerficationAadharSteps from "shared/components/verification/verfication-aadhar";
 
 const AppointeeRegister = () => {
 
@@ -81,7 +86,6 @@ const AppointeeRegister = () => {
   );
   const functionSlice = useSelector((state) => state.functionSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
-
   const {
     openOtpForm,
     closeOtpForm,
@@ -91,6 +95,7 @@ const AppointeeRegister = () => {
     openConfirmationModel,
     openInfoModel,
     setRemarks,
+    openConsentModal,
   } = functionSlice[0];
   const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
   const {
@@ -172,6 +177,7 @@ const AppointeeRegister = () => {
   const [isPFVerificatoinReq, setIsPFVerificatoinReq] = useState(null);
   const [isAadhaarVarified, setisAadhaarVarified] = useState(null);
   const [isAadhaarXmlUploaded, setIsAadhaarXmlUploaded] = useState(false);
+  const [isOfflineXmlDownloaded, setIsOfflineXmlDownloaded] = useState(false);
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isPassportVarified, setIsPassportVarified] = useState(false);
   const [isUanVarified, setisUanVarified] = useState(null);
@@ -334,6 +340,7 @@ const AppointeeRegister = () => {
         setEpfostatusMessage(new VerificationStatus(isUanVarified, "V"));
       }
       setAadharstatusMessage(new VerificationStatus(isAadhaarVarified, "V"));
+      setIsOfflineXmlDownloaded(isAadhaarVarified);
       setPassportStatusMessage(new VerificationStatus(isPassportValid, "V"));
       setPANStatusMessage(new VerificationStatus(isPanVarified, "V"));
       setCurrentPageNo(saveStep + 1);
@@ -363,6 +370,14 @@ const AppointeeRegister = () => {
   };
   const openUploadDocInfoModel = (dialogContentText) => {
     openInfoModel({ dialogContentText });
+  };
+  const openOfflineKycInfoModel = () => {
+    const offlineKycContent = {
+      dialogTitle: "Offline Aadhar Kyc Steps Info",
+      dialogContentText: 'To complete the offline aadhar kyc process please follow the instructions given below :',
+      dialogContentComponent: <VerficationAadharSteps />,
+    }
+    openInfoModel(offlineKycContent);
   };
 
   const submitDetails = (autoSubmit) => {
@@ -460,9 +475,12 @@ const AppointeeRegister = () => {
     if (isPanVarified) {
       setDisabledPanInput(true);
     }
+  
     if (isPanVarified !== null) {
       setIsEpfoSectionDisabled(false);
     }
+    console.log(isPanVarified)
+    console.log(isEpfoSectionDisabled)
     if (isAadhaarVarified !== null) {
       setIsPanSectionDisabled(false);
     }
@@ -551,7 +569,7 @@ const AppointeeRegister = () => {
   const uploadPassportFile = ({ target }) => {
     uploadFile(target, passportFileTypeAlias, setPassportFileName);
   };
-  const verifyAadhar = async (otp, clientId) => {
+  const verifyAadhar = async () => {
     // const payLoad = {
     //   appointeeId: appointeeId,
     //   otp: otp,
@@ -582,6 +600,7 @@ const AppointeeRegister = () => {
         }
       }
       setisAadhaarVarified(isVarified);
+      setIsOfflineXmlDownloaded(true);
       setIsPanSectionDisabled(false);
       closeOtpSubmitionModel();
       setAadharstatusMessage(new VerificationStatus(isVarified, "V"));
@@ -621,7 +640,7 @@ const AppointeeRegister = () => {
       showErrorMessage(emptyShareCodeMsg);
     }
     else {
-      verifyAadhar("", "");
+      verifyAadhar();
       // openOtpForm(aadhar, "Aadhar Number", validateAadharOtp);
     }
   };
@@ -753,17 +772,22 @@ const AppointeeRegister = () => {
     //}
   };
   const handleEpfoButtonClick = () => {
-    if (epfoButton === "Fetch UAN") {
+    
+    if (epfoButton?.trim() === "Fetch UAN") {
+      console.log("1",epfoButton)
       if (isPanVarified === false || isAadhaarVarified === false) {
         const confirmationModelContent = {
           dialogContentText: fetchUanConfirmationtMsg,
         };
+        console.log(isPanVarified)
         openConfirmationModel(confirmationModelContent, handleGetUANNumber);
+      }else{
+        handleGetUANNumber();
       }
     } else handleEpfoVerifiaction();
   };
   const handleGetUANNumber = async () => {
-
+console.log(1)
     const payLoad = {
       aaddharNumber: removeExtraSpaces(aadhar),
       appointeeId,
@@ -873,6 +897,10 @@ const AppointeeRegister = () => {
   const handlePassFileNumberOnChange = (e) => {
     const { value } = e.target;
     setPassportFileNumber(value);
+  };
+  const handleIsOfflineXmlDownloadedOnChange = (e) => {
+    console.log(e.target.checked);
+    setIsOfflineXmlDownloaded(e.target.checked);
   };
   const handleInternationalWorkerOnChange = (e) => {
     const { value } = e.target;
@@ -1731,6 +1759,36 @@ const AppointeeRegister = () => {
                   >
                     <Grid item xs={12}>
                       <FormHeading step={"5"} heading={"Aadhar Verification"} />
+                      <Grid item xs={12} md={12}>
+                        <Typography sx={{ ...lable1Style, fontWeight: 500, fontSize: 18 }}>
+                        An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
+                          Aadhar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,  
+                          <Link onClick={() => openOfflineKycInfoModel()} > Click here</Link>
+                        </Typography>
+                        {isAadhaarVarified ?
+                          <FormControlLabel control={
+                            <Checkbox
+                              disabled
+                              checked
+                              inputProps={{ 'aria-label': 'controlled' }}
+
+                            />
+                          } label="I have downloaded the aadhar offline kyc file"
+                          />
+                          :
+
+                          <FormControlLabel control={
+                            <Checkbox
+                              checked={isOfflineXmlDownloaded}
+                              onChange={handleIsOfflineXmlDownloadedOnChange}
+                              inputProps={{ 'aria-label': 'controlled' }}
+
+                            />
+                          } label="I have downloaded the aadhar offline kyc file"
+                          />
+                        }
+                        {/* {<Checkbox  onChange={handleIsOfflineXmlDownloadedOnChange} />}  /> */}
+                      </Grid>
                     </Grid>
                     <Grid sx={positionRelative} item xs={12}>
                       <Grid
@@ -1739,6 +1797,7 @@ const AppointeeRegister = () => {
                         rowSpacing={1}
                         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                       >
+                        {!isOfflineXmlDownloaded  && <DisableSection />}
                         <Grid item xs={12} md={6}>
                           <Typography sx={lable1Style}>
                             Name On Aadhar
@@ -1790,11 +1849,13 @@ const AppointeeRegister = () => {
                             chooseFile={uploadAadharXmlFile}
                             fileName={aadharXmlFileName}
                             accept={'.rar, .zip'}
+                            disabled={isAadhaarVarified}
                           />
                         </Grid>
 
                       </Grid>
                     </Grid>
+                    {/* </Grid> */}
                   </Grid>
                   <Grid
                     container
