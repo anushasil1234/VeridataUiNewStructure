@@ -82,7 +82,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
     const response = await getPassbookDetails(appointeeId);
     const { dob, fatherName, fullName, pfUan, companies } =
       response.responseInfo;
-    if (dob && fatherName && fullName && pfUan && companies) {
+    if (pfUan && companies) {
       dob ? setDob(dob) : setDob(NA);
       fatherName ? setFatherName(fatherName) : setFatherName(NA);
       fullName ? setFullName(fullName) : setFullName(NA);
