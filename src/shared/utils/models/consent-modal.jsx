@@ -18,7 +18,7 @@ const ConsentModal = ({ open, consentModalContent }) => {
   const appointeeId = userDetails?.appointeeId;
   const userId = userDetails?.userId;
   const consentStatus = userDetails?.consentStatus;
-  const [isConsentProcessed, setIsConsentProcessed] = useState( userDetails?.IsConsentProcessed)
+  const [isConsentProcessed, setIsConsentProcessed] = useState(userDetails?.IsConsentProcessed)
 
   const { dialogTitle, dialogComponent, dialogContentText, closeConsentModal, consentCallBack } = consentModalContent || "";
 
@@ -67,7 +67,7 @@ const ConsentModal = ({ open, consentModalContent }) => {
           </DialogContentText>
         } */}
         <div>
-          <HtmlParser data={data} />
+          <HtmlParser data={data} type={"Consetnt"} />
         </div>
       </DialogContent>
       <DialogActions>

@@ -4,18 +4,23 @@ import React, { useEffect, useRef } from 'react';
 import Mustache from 'mustache';
 
 
-const HtmlParser = ({ data,htmlmodule }) => {
+const HtmlParser = ({ data, type }) => {
     const templateRef = useRef(null);
 
     useEffect(() => {
         const fetchTemplate = async () => {
             try {
-                 // const response = await fetch('../html-template-parse/test.html');
-                //  const templateHtml = response.text();
-                //  console.log("templateHtml",templateHtml);
                 
-                // eslint-disable-next-line import/no-webpack-loader-syntax
-                var htmlmodule = require('raw-loader!./consenttemplate.html');
+                
+                let htmlmodule;
+                if (type === "Consetnt") {
+
+                    htmlmodule = require(`raw-loader!./consenttemplate.html`);
+                }
+                if (type === "OfflineKyc") {
+
+                    htmlmodule = require(`raw-loader!./offlineKycTemplate.html`);
+                }
 
                 var html = htmlmodule.default;
                 if (templateRef.current) {

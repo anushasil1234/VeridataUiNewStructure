@@ -7,7 +7,7 @@ const InfoModel = ({open, confirmationModelContent}) => {
    const { dialogContentText,dialogTitle,dialogContentComponent ,handleClickOnOk} = confirmationModelContent || "";
 console.log(confirmationModelContent)
   return (
-    <Dialog open={open} >
+    <Dialog open={open} fullWidth={true} maxWidth={"lg"} >
          <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
           <DialogContentText>

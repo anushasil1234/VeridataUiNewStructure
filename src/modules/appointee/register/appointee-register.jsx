@@ -73,8 +73,8 @@ import FormDialog from "shared/utils/models/form-dialog";
 import FileUploadSection from "shared/components/file-upload-section/file-upload-section";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import uploadFileMessage from "shared/utils/associate/upload-file-message";
-import verficationAadharSteps from "shared/components/verification/verfication-aadhar";
 import VerficationAadharSteps from "shared/components/verification/verfication-aadhar";
+
 
 const AppointeeRegister = () => {
 
@@ -1761,8 +1761,11 @@ console.log(1)
                       <FormHeading step={"5"} heading={"Aadhar Verification"} />
                       <Grid item xs={12} md={12}>
                         <Typography sx={{ ...lable1Style, fontWeight: 500, fontSize: 18 }}>
-                        An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
-                          Aadhar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,  
+                        As part of onboarding process,
+                        Please generate your offline kyc verification file and upload it here.
+                        To see the details steps,
+                        {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
+                          Aadhar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
                           <Link onClick={() => openOfflineKycInfoModel()} > Click here</Link>
                         </Typography>
                         {isAadhaarVarified ?

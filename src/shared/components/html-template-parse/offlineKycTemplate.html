@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <style>
+      * {
+         margin: 0;
+         padding: 0
+      }
+
+      .container {
+         background-color: #c2d0db;
+         background-image: linear-gradient(white, #c2d0db);
+         margin: auto;
+         padding: 1.3rem 4rem;
+         font-family: Roboto, Helvetica, Arial, sans-serif;
+         width: 100%
+      }
+
+      .containt {
+         display: flex;
+         flex-direction: column;
+         align-items: center
+      }
+
+      .step_list_heading {
+         text-transform: uppercase
+      }
+
+      .containt>h1 {
+         font-size: 3rem
+      }
+
+      .containt>p {
+         font-size: 1.3rem
+      }
+
+      .containt>h1,
+      .containt>p {
+         color: #707f86
+      }
+
+      .step_heading {
+         color: "#707F86"
+      }
+
+      .steps {
+         margin: 1.5rem 0
+      }
+
+      .step_container {
+         display: flex;
+         margin: .725rem 0
+      }
+
+      .step_no_odd {
+         background-color: #7d70e3
+      }
+
+      .step_no_even {
+         background-color: #b049c0
+      }
+
+      .step_no {
+         color: #fff;
+         padding: .85rem 1.3rem;
+         padding-right: 1.899rem;
+         border-radius: 0 47px 47px 0;
+         font-weight: 500;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center
+      }
+
+      .step_container_right {
+         background-color: #fff;
+         padding: .85rem 1.3rem;
+         padding-right: 1.899rem;
+         border-radius: 0 47px 47px 0;
+         box-shadow: rgba(0, 0, 0, .15) 2.4px 2.4px 3.2px
+      }
+
+      .step {
+         font-size: 1.3rem
+      }
+
+      .no {
+         font-size: 2.5rem;
+         font-weight: 100;
+         line-height: .99
+      }
+
+      .step_desc {
+         padding: .85rem 1.3rem;
+         padding-right: 0;
+         background-color: #fff;
+         box-shadow: rgba(0, 0, 0, .15) 2.4px 2.4px 3.2px
+      }
+
+      .step_heading {
+         font-weight: 600;
+         text-transform: uppercase;
+         font-size: 1.3rem
+      }
+
+      .step_heading_odd {
+         color: #7d70e3
+      }
+
+      .step_heading_even {
+         color: #b049c0
+      }
+
+      .step_1_link {
+         text-decoration: none;
+         color: #7d70e3
+      }
+
+      .step_short_desc {
+         font-size: 1.3rem;
+         margin-top: 1.3rem
+      }
+
+      .step_no_container {
+         background-color: #fff;
+         display: flex;
+         box-shadow: rgba(0, 0, 0, .15) 2.4px 2.4px 3.2px
+      }
+   </style>
+</head>
+<div class="container">
+   <div class="containt">
+      <h1>Offline Verification</h1>
+      <p class="step_list_heading">details of Aadhaar Offline Verification</p>
+      <div class="steps">
+         <div class="step_container">
+            <div class="step_no_container">
+               <div class="step_no step_no_odd">
+                  <p class="step"></p>
+                  <p class="no">Q.1</p>
+               </div>
+            </div>
+            <div class="step_desc">
+               <h5 class="step_heading step_heading_odd">What is Aadhaar offline Verification?</h5>
+               <p class="step_short_desc">An eKYC XML file containing the personal data, required for verification, can
+                  be downloaded only by you using your Aadhar credentials.<br />
+                  This file contains the name, date of birth and gender, besides other information, that would be
+                  extracted to match with the information provided by you.<br />
+                  The process would first inspect the authenticity of the eKYC XML file provided by you and then perform
+                  the matching and then dispose the file.</p>
+            </div>
+            <div class="step_container_right"></div>
+         </div>
+
+         <div class="containt">
+            <p class="step_list_heading">steps for Aadhaar Offline Verification file</p>
+         </div>
+         <div class="step_container">
+            <div class="step_no_container">
+               <div class="step_no step_no_odd">
+                  <p class="step">STEP</p>
+                  <p class="no">01</p>
+               </div>
+            </div>
+            <div class="step_desc">
+               <h5 class="step_heading step_heading_odd">Go to <a href="https://myaadhaar.uidai.gov.in/"> MyAadhaar
+                     site</a></h5>
+               <p class="step_short_desc">Click <a style="color: blue;" href="https://myaadhaar.uidai.gov.in/"> MyAadhaar, </a> the official
+                  website to get details of offline verication.</p>
+            </div>
+            <div class="step_container_right"></div>
+         </div>
+         <div class="step_container">
+            <div class="step_no_container">
+               <div class="step_no step_no_even">
+                  <p class="step">STEP</p>
+                  <p class="no">02</p>
+               </div>
+            </div>
+            <div class="step_desc">
+               <h5 class="step_heading step_heading_even">Login </h5>
+               <p class="step_short_desc">Log in by entering your Aadhaar Number and OTP (OTP is sent to the UIDAI
+                  registered mobile number).</p>
+            </div>
+            <div class="step_container_right"></div>
+         </div>
+         <div class="step_container">
+            <div class="step_no_container">
+               <div class="step_no step_no_odd">
+                  <p class="step">STEP</p>
+                  <p class="no">03</p>
+               </div>
+            </div>
+            <div class="step_desc">
+               <h5 class="step_heading step_heading_odd">offline eKYC</h5>
+               <p class="step_short_desc">After Logging in to the site, click on the ‘offline eKYC’ widget (bottom
+                  left).</p>
+            </div>
+            <div class="step_container_right"></div>
+         </div>
+         <div class="step_container">
+            <div class="step_no_container">
+               <div class="step_no step_no_even">
+                  <p class="step">STEP</p>
+                  <p class="no">04</p>
+               </div>
+            </div>
+            <div class="step_desc">
+               <h5 class="step_heading step_heading_even">Generate Share Code </h5>
+               <p class="step_short_desc"> A 4-digit share code of your choice to be entered and then press download, a
+                  zip file will be downloaded in your default download folder</p>
+            </div>
+            <div class="step_container_right"></div>
+         </div>
+         <div class="step_container">
+            <div class="step_no_container">
+               <div class="step_no step_no_odd">
+                  <p class="step">STEP</p>
+                  <p class="no">05</p>
+               </div>
+            </div>
+            <div class="step_desc">
+               <h5 class="step_heading step_heading_odd">Upload file in Veridata</h5>
+               <p class="step_short_desc">Please, upload the zip folder along with the share code in Veridata</p>
+            </div>
+            <div class="step_container_right"></div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<body></body>
+
+</html>
