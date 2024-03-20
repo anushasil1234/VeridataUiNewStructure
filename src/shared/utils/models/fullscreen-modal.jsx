@@ -1,4 +1,4 @@
-import { Dialog, ListItem, List, AppBar, Toolbar, IconButton, Slide } from '@mui/material';
+import { Dialog, ListItem, List, AppBar, Toolbar, IconButton, Slide, Typography } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { fullScreenListItemStyle, modelToolbar } from 'app';
 import PropTypes from "prop-types";
@@ -9,7 +9,7 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenModel({ fullScreen, open, closeModel, content, screensize }) {
+export default function FullScreenModel({ fullScreen, open, closeModel, content, screensize, headerText }) {
 
     return (
         <Dialog
@@ -19,7 +19,7 @@ export default function FullScreenModel({ fullScreen, open, closeModel, content,
             onClose={closeModel}
             TransitionComponent={Transition}
         >
-            <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0',  }}>
+            <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0', }}>
                 <Toolbar >
                     <IconButton
                         edge="start"
@@ -29,6 +29,9 @@ export default function FullScreenModel({ fullScreen, open, closeModel, content,
                     >
                         <Close />
                     </IconButton>
+                    {headerText &&
+                        <Typography sx={{ ml: "5px", fontWeight: 'bold', textAlign: 'center' }} fontSize={15}>{headerText}</Typography>
+                    }
                 </Toolbar>
             </AppBar>
             <List>
