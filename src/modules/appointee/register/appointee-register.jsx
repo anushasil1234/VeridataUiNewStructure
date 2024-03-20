@@ -475,7 +475,7 @@ const AppointeeRegister = () => {
     if (isPanVarified) {
       setDisabledPanInput(true);
     }
-  
+
     if (isPanVarified !== null) {
       setIsEpfoSectionDisabled(false);
     }
@@ -637,7 +637,11 @@ const AppointeeRegister = () => {
   // };
   const handleAadharVerifiaction = () => {
     if (!(hasValue(aadharShareCode) && hasValue(nameAsOnAadhar))) {
-      showErrorMessage(emptyShareCodeMsg);
+      if (!hasValue(aadharShareCode)) {
+        showErrorMessage(emptyShareCodeMsg);
+      } else {
+        showErrorMessage(emptyAadharMsg);
+      }
     }
     else {
       verifyAadhar();
@@ -772,22 +776,20 @@ const AppointeeRegister = () => {
     //}
   };
   const handleEpfoButtonClick = () => {
-    
+
     if (epfoButton?.trim() === "Fetch UAN") {
-      console.log("1",epfoButton)
       if (isPanVarified === false || isAadhaarVarified === false) {
         const confirmationModelContent = {
           dialogContentText: fetchUanConfirmationtMsg,
         };
-        console.log(isPanVarified)
+        // console.log(isPanVarified)
         openConfirmationModel(confirmationModelContent, handleGetUANNumber);
-      }else{
+      } else {
         handleGetUANNumber();
       }
     } else handleEpfoVerifiaction();
   };
   const handleGetUANNumber = async () => {
-console.log(1)
     const payLoad = {
       aaddharNumber: removeExtraSpaces(aadhar),
       appointeeId,
@@ -1758,13 +1760,13 @@ console.log(1)
                     xs={12}
                   >
                     <Grid item xs={12}>
-                      <FormHeading step={"5"} heading={"Aadhar Verification"} />
+                      <FormHeading step={"4"} heading={"Aadhar Verification"} />
                       <Grid item xs={12} md={12}>
                         <Typography sx={{ ...lable1Style, fontWeight: 500, fontSize: 18 }}>
-                        As part of onboarding process,
-                        Please generate your offline kyc verification file and upload it here.
-                        To see the details steps,
-                        {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
+                          As part of onboarding process,
+                          Please generate your offline kyc verification file and upload it here.
+                          To see the details steps,
+                          {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
                           Aadhar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
                           <Link onClick={() => openOfflineKycInfoModel()} > Click here</Link>
                         </Typography>
@@ -1800,7 +1802,7 @@ console.log(1)
                         rowSpacing={1}
                         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                       >
-                        {!isOfflineXmlDownloaded  && <DisableSection />}
+                        {!isOfflineXmlDownloaded && <DisableSection />}
                         <Grid item xs={12} md={6}>
                           <Typography sx={lable1Style}>
                             Name On Aadhar
@@ -1818,7 +1820,7 @@ console.log(1)
                             defaultValue={" "}
                             disabled={disabledAadharInput}
                           /> <Typography sx={lable1Style}>
-                            Share Code
+                            Share Code (to be provided after uploading)
                           </Typography>
 
                           <TextField
@@ -1868,7 +1870,7 @@ console.log(1)
                     xs={12}
                   >
                     <Grid item xs={12}>
-                      <FormHeading step={"6"} heading={"PAN Verification"} />
+                      <FormHeading step={"5"} heading={"PAN Verification"} />
                     </Grid>{" "}
                   </Grid>
                   <Grid
@@ -1927,7 +1929,7 @@ console.log(1)
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
-                    <FormHeading step={"7"} heading={"UAN Verification"} />
+                    <FormHeading step={"6"} heading={"UAN Verification"} />
                   </Grid>
                   <Grid item xs={12}>
                     <Grid
