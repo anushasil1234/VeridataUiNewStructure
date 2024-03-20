@@ -38,10 +38,11 @@ let UnWrappedOtpGenerationForm = (
     )
 }
 const OtpGenerationForm = (props) => {
-
+console.log('props', props);
     return (
         <FullScreenModel
             open={props.open}
+            headerText={props.generateOtpProps && props.generateOtpProps.headerText}
             closeModel=
             {props.closeOtpForm}
             content={<UnWrappedOtpGenerationForm
