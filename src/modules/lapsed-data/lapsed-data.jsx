@@ -76,7 +76,7 @@ const UnwrappedLapseddata = (props) => {
     appointeeName: state && state.appointeeName,
     companyId: companyId,
     candidateId: state && state.candidateId,
-    statusCode: statusCode && statusCode,
+    statusCode:  statusCode,
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
   };
@@ -126,7 +126,7 @@ const UnwrappedLapseddata = (props) => {
   const clearSearch = () => {
     setFromDate(null);
     setToDate(null);
-    setStatusCode(null);
+    setStatusCode("All");
     const payLoad = {
       isFiltered: false,
       noOfDays: 0,

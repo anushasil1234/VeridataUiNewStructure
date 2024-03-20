@@ -542,7 +542,7 @@ const UnwrappedGeneralSetupView = (props) => {
                         {new Array(8).fill(null).map((element, index) => {
                           const days = 7 + index;
                           return (
-                            <MenuItem value={days}>{`${days} days`}</MenuItem>
+                            <MenuItem key={index} value={days}>{`${days} days`}</MenuItem>
                           );
                         })}
                       </Select>
@@ -569,7 +569,7 @@ const UnwrappedGeneralSetupView = (props) => {
                         {new Array(8).fill(null).map((element, index) => {
                           const days = 15 + index;
                           return (
-                            <MenuItem value={days}>{`${days} days`}</MenuItem>
+                            <MenuItem key={index} value={days}>{`${days} days`}</MenuItem>
                           );
                         })}
                       </Select>
@@ -596,7 +596,7 @@ const UnwrappedGeneralSetupView = (props) => {
                         {new Array(8).fill(null).map((element, index) => {
                           const days = 15 + index;
                           return (
-                            <MenuItem value={days}>{`${days} days`}</MenuItem>
+                            <MenuItem key={index} value={days}>{`${days} days`}</MenuItem>
                           );
                         })}
                       </Select>
@@ -1040,6 +1040,7 @@ const UnwrappedGeneralSetupView = (props) => {
                               const days = 7 + index;
                               return (
                                 <MenuItem
+                                  key={index}
                                   value={days}
                                 >{`${days} days`}</MenuItem>
                               );
@@ -1069,6 +1070,7 @@ const UnwrappedGeneralSetupView = (props) => {
                               const days = 15 + index;
                               return (
                                 <MenuItem
+                                  key={index}
                                   value={days}
                                 >{`${days} days`}</MenuItem>
                               );
@@ -1098,8 +1100,11 @@ const UnwrappedGeneralSetupView = (props) => {
                               const days = 15 + index;
                               return (
                                 <MenuItem
+                                  key={index}
                                   value={days}
-                                >{`${days} days`}</MenuItem>
+                                >
+                                  {`${days} days`}
+                                </MenuItem>
                               );
                             })}
                           </Select>

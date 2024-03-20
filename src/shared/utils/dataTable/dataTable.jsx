@@ -78,6 +78,7 @@ function EnhancedTableHead(props) {
                     if (headCell.id === "checkBox") {
                         return headerCheckBox ? (
                             <Checkbox
+                                key={i}
                                 color="primary"
                                 indeterminate={numSelected > 0 && numSelected < rowCount}
                                 checked={rowCount > 0 && numSelected === rowCount}

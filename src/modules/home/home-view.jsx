@@ -57,8 +57,8 @@ const HomeView = () => {
   const { openViewModel, openConsentModal } = functionSlice[0];
   const consentStatus = loggedInData[0]?.consentStatus;
   const setDashboardWidgetCardData = async (dayRange) => {
-    const filterday = dayRange === "A" ? 0 : dayRange;
     const isfilterd = !(dayRange === "A");
+    const filterday = dayRange === "A" ? 0 : dayRange;
     const response = await getDashboardWidgetCardData(filterday, isfilterd);
     if (response) {
       const { responseInfos } = response;

@@ -136,8 +136,9 @@ let PassbookViewDetails = ({ appointeeId }) => {
                 </Typography>
               </Stack>
               {companies &&
-                companies.map((companyitem) => (
+                companies.map((companyitem, index) => (
                   <Accordion
+                    key={index}
                     expanded={expanded === "panel1"}
                     onChange={handleChange("panel1")}
                   >

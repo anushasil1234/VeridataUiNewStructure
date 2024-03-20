@@ -52,7 +52,7 @@ const ActivityLogDetails = ({ activityStatus }) => {
                         <>
                             {activityStatus.map((value, index) => {
                                 return (
-                                    <TimelineItem>
+                                    <TimelineItem key={index}>
                                         <TimelineOppositeContent sx={{ padding: "6px 5px" }}>
                                             <Typography sx={{ fontSize: ".9rem" }}>{DDMMYYHHMM(value.createdOn)}</Typography>
 

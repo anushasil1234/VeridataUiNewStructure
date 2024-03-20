@@ -75,8 +75,8 @@ const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
               onChange={handleStatusChange}
             >
               {upcomingRecruitsStatusList &&
-                upcomingRecruitsStatusList.map(({ label, route, type }) => {
-                  return <MenuItem value={route}>{label}</MenuItem>;
+                upcomingRecruitsStatusList.map(({ label, route, type }, index) => {
+                  return <MenuItem key={index} value={route}>{label}</MenuItem>;
                 })}
             </Select>
           )}

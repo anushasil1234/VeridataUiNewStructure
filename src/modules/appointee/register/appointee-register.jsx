@@ -987,7 +987,7 @@ const AppointeeRegister = () => {
                           />
                         </Grid>
                         {genderList &&
-                          genderList.map((gender) => {
+                          genderList.map((gender, index) => {
                             const {
                               value,
                               icon,
@@ -1009,7 +1009,7 @@ const AppointeeRegister = () => {
                             };
 
                             return (
-                              <Grid item xs={12} md={4}>
+                              <Grid key={index} item xs={12} md={4}>
                                 {isAadhaarVarified ? (
                                   <Stack
                                     id={id}

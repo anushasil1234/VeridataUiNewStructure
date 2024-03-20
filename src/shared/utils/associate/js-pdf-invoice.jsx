@@ -630,10 +630,10 @@ function jsPDFInvoiceTemplate(tableObj) {
     };
 
     if (param.stamp.src) {
-      if (param.stamp.inAllPages)
+      if (param.stamp.inAllPages ||
+        (!param.stamp.inAllPages && doc.getCurrentPageInfo().pageNumber === doc.getNumberOfPages()))
         _addStampBase();
-      else if (!param.stamp.inAllPages && doc.getCurrentPageInfo().pageNumber === doc.getNumberOfPages())
-        _addStampBase();
+     
     }
   }
   //#endregion

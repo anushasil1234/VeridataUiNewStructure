@@ -48,19 +48,22 @@ function Row(props) {
                 <TableHead>
                   <TableRow>
                     {detailsHeadCells &&
-                      detailsHeadCells.map(({ label }) => {
-                        return <TableCell sx={tableHeader}>{label}</TableCell>;
+                      detailsHeadCells.map(({ label }, index) => {
+                        return <TableCell key={index} sx={tableHeader}>{label}</TableCell>;
                       })}
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {detailsCells &&
-                    detailsCells.map(({ values }) => {
+                    detailsCells.map(({ values }, index) => {
                       return (
-                        <TableRow>
-                          {values.map(({ component }) => (
-                            <TableCell>{component}</TableCell>
-                          ))}
+                        <TableRow key={index}>
+                          {values.map(({ component }, index) => {
+                            return (
+                              <TableCell key={index}>{component}</TableCell>
+                            )
+                          }
+                          )}
                         </TableRow>
                       );
                     })}
@@ -116,11 +119,11 @@ export const CollapsibleDataTable = ({
                   ))}
               </TableBody>
             ) : (
-                <TableBody>
+              <TableBody>
                 <TableCell colSpan={headCells.length} align="center" sx={{ fontWeight: 500 }}>
-                    <Typography> No Data Available</Typography>
+                  <Typography> No Data Available</Typography>
                 </TableCell>
-            </TableBody>
+              </TableBody>
             )}
           </Table>
         </TableContainer>

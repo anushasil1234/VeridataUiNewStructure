@@ -65,7 +65,7 @@ const AppointeeCount = () => {
   const [statusCode, setStatusCode] = useState(null);
 
   const payLoadData = {
-    appointeeName: appointeeName && appointeeName,
+    appointeeName: appointeeName,
     statusCode: statusCode && statusCode.toString(),
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString())

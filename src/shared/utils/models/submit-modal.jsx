@@ -16,7 +16,7 @@ export default function SubmitModal(props) {
   const { submitmodalcontent } = submitmodalprops || "";
   const { dialogComponent, dialogTitle, dialogContentText } =
     submitmodalcontent || "";
-  const title = dialogTitle && dialogTitle ? dialogTitle : null;
+  const title = dialogTitle ? dialogTitle : null;
   return (
     <div>
       <Dialog fullWidth open={openModal}>

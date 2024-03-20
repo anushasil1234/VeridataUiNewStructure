@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CircularIndeterminate from 'shared/utils/loader/circularIndeterminate';
-import { AuthHeader, ManuallyCloseableSnackBar,  decryptedData,  removeLocalStorageItems } from 'shared/utils';
+import { AuthHeader, ManuallyCloseableSnackBar, decryptedData, removeLocalStorageItems } from 'shared/utils';
 import { removePopUpSetFunction, storePopUpSetFunction } from 'store/slices/popup-slice';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
@@ -69,7 +69,7 @@ const PfcRequiest = (Component) => {
                 if (error.response) {
                     const { status, statusText } = error.response;
                     if (status === 401) {
-                         handleClickOnLogout();
+                        handleClickOnLogout();
                         message = "Your session has expired. Please login again";
                     } else {
                         if (error.response.data) {
@@ -87,8 +87,10 @@ const PfcRequiest = (Component) => {
                                         if (internalMessages && internalMessages.length > 0) {
                                             message =
                                                 <>
-                                                    {internalMessages.map((element) => {
-                                                        return <Typography>{element}</Typography>
+                                                    {internalMessages.map((element, index) => {
+                                                        return (
+                                                            <Typography key={index}>{element}</Typography>
+                                                        )
                                                     })}
                                                 </>
                                         } else {

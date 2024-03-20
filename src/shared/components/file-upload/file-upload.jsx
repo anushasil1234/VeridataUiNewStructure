@@ -61,12 +61,13 @@ const FileUpload = ({ modalConfirmation, SetFileId, files, setFiles, removeFile,
                         {dialogContentText}
                         <Stack flexDirection={"row"}>
                             {
-                                downloadFileData && downloadFileData.length > 0 && downloadFileData.map(({ fileData, fileName, fileType }) => {
+                                downloadFileData && downloadFileData.length > 0 && downloadFileData.map(({ fileData, fileName, fileType }, index) => {
                                     const downLoadName = (fileName === "Invalid_Data") ? "Invalid Data" : "Duplicate Data";
                                     fileName = `${fileName}.${fileType}`;
                                     const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${fileData}`;
                                     return (
                                         <Button1
+                                            key= {index}
                                             onClick={() => downloadFile(linkSource, fileName)}
                                             variant="contained"
                                             sx={{ fontWeight: "bold", mr: "2rem", mt: "1rem" }} endIcon={<Download sx={{ color: "#fff" }} />}>

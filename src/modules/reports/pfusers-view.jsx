@@ -62,7 +62,7 @@ const UnwappedPFUsers = (props) => {
       processStatus: null
     }
     setPayLoad(payLoad);
-    setTableRows(payLoad);
+    setTableRows();
     navigateTo(toPFUsers, {state:false});
   }
 
