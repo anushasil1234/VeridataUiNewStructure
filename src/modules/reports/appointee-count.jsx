@@ -62,24 +62,23 @@ const AppointeeCount = () => {
   const [appointeeCountListDetails, setAppointeeCountListDetails] = useState();
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
 
-  const [appointeeName, setAppointeeName] = useState();
+  const [appointeeName, setAppointeeName] = useState(null);
   const [statusCode, setStatusCode] = useState(null);
 
   const payLoadData = {
     appointeeName: appointeeName,
-    statusCode: statusCode && statusCode.toString(),
-    fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
-    toDate: toDate && DateFormatYYYYMMDD(toDate?.toString())
+    statusCode: statusCode ? statusCode.toString() : statusCode,
+    fromDate: fromDate ? DateFormatYYYYMMDD(fromDate?.toString()) : fromDate,
+    toDate: toDate ? DateFormatYYYYMMDD(toDate?.toString()) : toDate
   };
   let [payLoad, setPayLoad] = useState(payLoadData);
-
-  console.log('payLoad', payLoad);
-  const setTableRows = async (payLoad) => {
+  
+  const setTableRows = async ({appointeeName, statusCode, fromDate, toDate}) => {
     payLoad = {
-      appointeeName: payLoad.appointeeName && payLoad.appointeeName,
-      statusCode: payLoad.statusCode && payLoad.statusCode.toString(),
-      fromDate: payLoad.fromDate && DateFormatYYYYMMDD(payLoad.fromDate?.toString()),
-      toDate: payLoad.toDate && DateFormatYYYYMMDD(payLoad.toDate?.toString()),
+      appointeeName: appointeeName,
+      statusCode:  hasValue(statusCode) ? statusCode.toString() : null,
+      fromDate: hasValue(fromDate) ? DateFormatYYYYMMDD(fromDate?.toString()) : null,
+      toDate:  hasValue(toDate) ? DateFormatYYYYMMDD(toDate?.toString()) : null
     };
     console.log('payLoad', payLoad);
     const response = await getAppointeeCounterReport(payLoad);
