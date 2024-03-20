@@ -376,6 +376,7 @@ const AppointeeRegister = () => {
       dialogTitle: "Offline Aadhar Kyc Steps Info",
       dialogContentText: 'To complete the offline aadhar kyc process please follow the instructions given below :',
       dialogContentComponent: <VerficationAadharSteps />,
+      fullWidth: true
     }
     openInfoModel(offlineKycContent);
   };
@@ -652,7 +653,7 @@ const AppointeeRegister = () => {
     const payLoad = {
       appointeeId: appointeeId,
       panNummber: pan,
-      panName: removeExtraSpaces(nameAsOnPan),
+      panName: hasValue(nameAsOnPan) ? removeExtraSpaces(nameAsOnPan) : null,
       userId: userId,
     };
     const response = await verifyPANDetails(payLoad);
@@ -736,6 +737,7 @@ const AppointeeRegister = () => {
       }
     }
   };
+
   const handleAppointeeFormPage2Save = async () => {
     let payLoad = {
       appointeeDetailsId: appointeeDetailsId,
@@ -791,10 +793,10 @@ const AppointeeRegister = () => {
   };
   const handleGetUANNumber = async () => {
     const payLoad = {
-      aaddharNumber: removeExtraSpaces(aadhar),
+      aaddharNumber: hasValue(aadhar) ? removeExtraSpaces(aadhar) : null,
       appointeeId,
-      aaddharName: removeExtraSpaces(nameAsOnAadhar),
-      panNumber: removeExtraSpaces(pan),
+      aaddharName: hasValue(nameAsOnAadhar) ? removeExtraSpaces(nameAsOnAadhar) : null,
+      panNumber: hasValue(pan) ? removeExtraSpaces(pan) : null,
       userId,
     };
     const response = await getUANNumber(payLoad);
@@ -807,7 +809,7 @@ const AppointeeRegister = () => {
         epfostatusMessage.color = "green";
         epfostatusMessage.success = null;
         // setDisabledAadharInput(true);
-        openOtpForm(uanNumber, "UAN Number", () => validateUANOtp(uanNumber));
+        openOtpForm(uanNumber, "UAN Number", () => validateUANOtp(uanNumber), 'Generate OTP for PF Verification');
       } else {
         showErrorMessage(remarks);
       }
@@ -891,7 +893,7 @@ const AppointeeRegister = () => {
   };
 
   const handleEpfoVerifiaction = () => {
-    openOtpForm(UAN, "UAN Number", () => validateUANOtp(UAN));
+    openOtpForm(UAN, "UAN Number", () => validateUANOtp(UAN), 'Generate OTP for PF Verification');
   };
 
   const formElement = useRef(null);
