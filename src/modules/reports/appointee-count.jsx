@@ -35,6 +35,7 @@ import {
   DateFormatYYYYMMDD,
   PageLayout,
   generateTableRowData,
+  hasValue,
 } from "shared/utils";
 import { CollapsibleDataTable } from "shared/utils/dataTable/collapsable-datatable";
 import DatePicker from "shared/utils/date-picker/date-picker";
@@ -72,6 +73,7 @@ const AppointeeCount = () => {
   };
   let [payLoad, setPayLoad] = useState(payLoadData);
 
+  console.log('payLoad', payLoad);
   const setTableRows = async (payLoad) => {
     payLoad = {
       appointeeName: payLoad.appointeeName && payLoad.appointeeName,
@@ -79,6 +81,7 @@ const AppointeeCount = () => {
       fromDate: payLoad.fromDate && DateFormatYYYYMMDD(payLoad.fromDate?.toString()),
       toDate: payLoad.toDate && DateFormatYYYYMMDD(payLoad.toDate?.toString()),
     };
+    console.log('payLoad', payLoad);
     const response = await getAppointeeCounterReport(payLoad);
 
     if (response) {
@@ -121,6 +124,10 @@ const AppointeeCount = () => {
     payLoad.toDate = DateFormatYYYYMMDD(toDate?.toString());
     setPayLoad(payLoad);
   }, [toDate]);
+  useEffect(() => {
+    payLoad.appointeeName = hasValue(appointeeName)? appointeeName.trim() : appointeeName;
+    setPayLoad(payLoad);
+  }, [appointeeName]);
 
   useEffect(() => {
     payLoad.statusCode = statusCode;
