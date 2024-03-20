@@ -12,12 +12,14 @@ export const FirstCell = (cellElements) => {
                     {cellElements[0]}
                 </Typography>
                 {cellElements.slice(1, 3).map((element, index) => {
-                    <Typography
-                        key={index}
-                        sx={text2}
-                    >
-                        {element}
-                    </Typography>
+                    return (
+                        <Typography
+                            key={index}
+                            sx={text2}
+                        >
+                            {element}
+                        </Typography>
+                    )
                 })}
 
             </Box>
