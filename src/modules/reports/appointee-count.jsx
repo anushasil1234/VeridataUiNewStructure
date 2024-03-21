@@ -80,7 +80,7 @@ const AppointeeCount = () => {
       fromDate: hasValue(fromDate) ? DateFormatYYYYMMDD(fromDate?.toString()) : null,
       toDate:  hasValue(toDate) ? DateFormatYYYYMMDD(toDate?.toString()) : null
     };
-    console.log('payLoad', payLoad);
+    // console.log('payLoad', payLoad);
     const response = await getAppointeeCounterReport(payLoad);
 
     if (response) {
