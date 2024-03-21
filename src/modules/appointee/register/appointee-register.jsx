@@ -33,7 +33,6 @@ import {
 } from "shared/utils";
 import FormHeading from "./form-heading";
 import {
-  aadharNoValidationError,
   aadharVerifyFailedMsg,
   aadharVerifySuccessMsg,
   congratulationDialogContentTitle,
@@ -44,7 +43,6 @@ import {
   genders,
   generateOtpRety,
   generateOtpSucces,
-  invalidAadharMsg,
   invalidPanMsg,
   panSuccessMsg,
   panVerifyFailedMsg,
@@ -95,7 +93,6 @@ const AppointeeRegister = () => {
     openConfirmationModel,
     openInfoModel,
     setRemarks,
-    openConsentModal,
   } = functionSlice[0];
   const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
   const {
@@ -480,8 +477,8 @@ const AppointeeRegister = () => {
     if (isPanVarified !== null) {
       setIsEpfoSectionDisabled(false);
     }
-    console.log(isPanVarified)
-    console.log(isEpfoSectionDisabled)
+    // console.log(isPanVarified)
+    // console.log(isEpfoSectionDisabled)
     if (isAadhaarVarified !== null) {
       setIsPanSectionDisabled(false);
     }

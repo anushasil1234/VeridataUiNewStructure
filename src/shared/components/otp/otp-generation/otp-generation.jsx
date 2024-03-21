@@ -34,11 +34,11 @@ let UnWrappedOtpGenerationForm = (
                     </Button1>
                 </Grid>
             </Grid>
-        </Box >
+        </Box>
     )
 }
 const OtpGenerationForm = (props) => {
-console.log('props', props);
+// console.log('props', props);
     return (
         <FullScreenModel
             open={props.open}

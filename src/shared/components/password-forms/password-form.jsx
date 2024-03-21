@@ -40,7 +40,7 @@ let UnWrappedProfilePasswordFormSubmitionForm = (
                 setSubmitButtonStatus(true);
             }
         } catch (error) {
-            console.log('error', error);
+            // console.log('error', error);
         }
      
     }
@@ -83,7 +83,7 @@ let UnWrappedProfilePasswordFormSubmitionForm = (
                 </Button1>
             </Box>
 
-        </Box >
+        </Box>
     )
 }
 const ProfilePasswordForm = (props) => {
