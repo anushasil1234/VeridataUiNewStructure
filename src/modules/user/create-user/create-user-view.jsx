@@ -1,8 +1,8 @@
 import { Button,Grid} from '@mui/material'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { passwordEmptyMsg, toUserlist } from 'shared/constants/constants'
-import { CardLayout, PageLayout, hasValue } from 'shared/utils'
+import { invalidEmailMsg, contactNoEmptyMsg, emailEmptyMsg, emptyUserNameField, invalidUserCodeMsg, passwordEmptyMsg, roleEmptyMsg, toUserlist, useCodeEmptyMsg, invalidPasswordPatternMsg, invalidcontactNoMsg } from 'shared/constants/constants'
+import { CardLayout, PageLayout, hasValue, validationsCheck } from 'shared/utils'
 import UserCreationForm from '../user-creation-form/user-creation-form'
 
 const CreateUserView = () => {
@@ -29,29 +29,74 @@ const CreateUserView = () => {
 
     const saveUserDetails = async () => {
 
+        if (!hasValue(userName)) {
+            showErrorMessage(emptyUserNameField);
+            return   
+        }
+
+        if (!hasValue(userEmail) ) {
+            showErrorMessage(emailEmptyMsg);
+            return
+        }
+        const check = !validationsCheck(userEmail, 'email');
+        console.log('check', check);
+        if (hasValue(userEmail)  && !validationsCheck(userEmail.trim(), 'email')) {
+            showErrorMessage(invalidEmailMsg);
+            return
+        }
+        if (!hasValue(password)) {
+            showErrorMessage(passwordEmptyMsg);
+            return
+        }
+        if (hasValue(password)  && !validationsCheck(password.trim(), 'password')) {
+            showErrorMessage(invalidPasswordPatternMsg);
+            return
+        }
+        // if (!hasValue(userCode)) {
+        //     showErrorMessage(useCodeEmptyMsg);
+        //     return
+        // }
+        // if (hasValue(userCode) && !validationsCheck(userCode.trim(), 'userCode')) {
+        //     showErrorMessage(invalidUserCodeMsg);
+        //     return   
+        // }
+        if (!hasValue(contactNumber)) {
+            showErrorMessage(contactNoEmptyMsg);
+            return
+        }
+        if (hasValue(contactNumber)  && !validationsCheck(contactNumber.trim(), 'phnNumber')) {
+            showErrorMessage(invalidcontactNoMsg);
+            return
+        }
+        if (!hasValue(role)) {
+            showErrorMessage(roleEmptyMsg);
+            return
+        }
+   
         const payLoad = {
-            contactNo: contactNumber,
-            emailId: userEmail,
-            password: password,
+            contactNo: contactNumber.trim(),
+            emailId: userEmail.trim(),
+            password: password.trim(),
             roleId: role,
-            userCode: userCode,
-            userName: userName,
+            userCode: userCode.trim(),
+            userName: userName.trim(),
             candidateId: null,
             companyId: companyId,
             userTypeId: userTypeId,
             refAppointeeId: null,
             userId: userId
         }
-        const response = await postUserDetails(payLoad);
-        if (response){
-            setUserName("");
-            setUserEmail("");
-            setPassword("");
-            setContactNumber("");
-            setRole("");
-            setUserCode("");
-        }
-        
+        console.log('payLoad', payLoad);
+        // const response = await postUserDetails(payLoad);
+        // if (response){
+        //     setUserName("");
+        //     setUserEmail("");
+        //     setPassword("");
+        //     setContactNumber("");
+        //     setRole("");
+        //     setUserCode("");
+            
+        // }
     }
     // todo
     const handlePassWordValidation = (password) => {
