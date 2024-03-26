@@ -6,8 +6,9 @@ import TableStatusCell from "shared/utils/dataTable/table-status-cell";
 
 // messages
 
-export const emptyUserNameField = `username can't be empty`;
 export const maxUploadSize = `Max size: 4mb`;
+export const emptyUserNameField = `Username can't be empty`;
+export const invalidUserCodeMsg = `User code should contain alphabates and number only`;
 export const defaultUploadFormat = `Accepted format: pdf, jpg, png`;
 export const noRemarks = `No Remarks Available`;
 export const noPassBookMsg = `Passbook not available`;
@@ -1315,7 +1316,13 @@ export const registrationSuccessDialogContentText = `Your Aadhar & UAN details  
 export const congratulationDialogContentTitle = `Congratulatoins!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
+export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
 export const remarksEmptyMsg = `Remarks cant not be empty`;
 export const otpToMailMsg = `A verification code has been sent to your email address, Please check and enter `;
+export const emailEmptyMsg = `Email can't not be empty`;
+export const invalidEmailMsg = `Enter a valid email`;
+export const contactNoEmptyMsg = `Contact no can't be empty`;
+export const invalidcontactNoMsg = `Phone no should have 10 digits`;
+export const roleEmptyMsg = `Role can't be empty`;
 // Models messages ends
 

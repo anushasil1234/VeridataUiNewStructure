@@ -38,11 +38,12 @@ const UserCreationForm = (formData) => {
     const handleUserCodeBlur = async ({ target }) => {
         const userCode = target.value;
         if (hasValue(userCode)) {
-           const response = await validateUserCode(userCode);
+            const response = await validateUserCode(userCode);
         } else {
             showErrorMessage(useCodeEmptyMsg);
         }
     }
+
     return (
         <Grid container rowSpacing={2} columnSpacing={2.5} item xs={12} md={12}  >
             <Grid item xs={12} md={6} >
@@ -103,7 +104,7 @@ const UserCreationForm = (formData) => {
                     variant="outlined"
                     defaultValue={" "}
                     value={password}
-                    onBlur={({target}) =>handlePassWordValidation && handlePassWordValidation(target.value)}
+                    onBlur={({ target }) => handlePassWordValidation && handlePassWordValidation(target.value)}
                     inputStyle={{ padding: 0 }}
                     InputProps={{
                         style: {
@@ -113,7 +114,7 @@ const UserCreationForm = (formData) => {
                         disabled: action === 'U' ? true : false,
 
                     }}
-                    inputProps={{ maxLength: 10, minLength: 6 }}
+                    inputProps={{ maxLength: 15, minLength: 8 }}
                 />
             </Grid>
             <Grid item xs={12} md={6} >
@@ -162,11 +163,14 @@ const UserCreationForm = (formData) => {
                             color: "#000"
                         }
                     }}
+                    inputProps={{ maxLength: 10, minLength: 10 }}
                 />
             </Grid>
             <Grid item xs={12} md={6} >
                 <FormControl fullWidth>
-                    <Typography sx={lable1Style}>Role</Typography>
+                    <Typography sx={lable1Style}>Role
+                        <span className="requiredField">*</span>
+                    </Typography>
                     <Select
                         error={false}
                         labelId="demo-simple-select-label"
@@ -181,7 +185,6 @@ const UserCreationForm = (formData) => {
                                 return <MenuItem key={id} value={id}>{`${value}`}</MenuItem>
                             })
                         }
-
                     </Select>
                 </FormControl>
             </Grid>
