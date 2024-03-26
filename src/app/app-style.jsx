@@ -376,6 +376,8 @@ export const cardAppbar = {
 // Alert
 const alertStyle = {
   width: "100%",
+  fontSize: 18,
+  alignItems: "center",
   color: ThemeColorPalete.common.black
 };
 export const alertErrorStyle = {
