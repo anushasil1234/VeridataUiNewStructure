@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import { smallFormModelHeadingSx } from 'app';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { invalidPasswordMsg } from 'shared/constants/constants';
+import { invalidProfilePasswordMsg } from 'shared/constants/constants';
 import { encryptedData, hasValue } from 'shared/utils';
 import Button1 from 'shared/utils/button/button1';
 import FullScreenModel from 'shared/utils/models/fullscreen-modal';
@@ -55,7 +55,7 @@ let UnWrappedProfilePasswordFormSubmitionForm = (
             if (responseInfo) {
                 callBack()
             }else{
-                showErrorMessage(invalidPasswordMsg);
+                showErrorMessage(invalidProfilePasswordMsg);
             }
         }
     }
@@ -70,7 +70,7 @@ let UnWrappedProfilePasswordFormSubmitionForm = (
                         error={false}
                         style={{ width: "100%", margin: "5px" }}
                         type="password"
-                        label=""
+                        label="Profile Password"
                         variant="outlined"
                         onChange={handleInputChange}
                         value={displayfilePassword}
