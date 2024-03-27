@@ -1,7 +1,7 @@
 import { Button,Grid} from '@mui/material'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { invalidEmailMsg, contactNoEmptyMsg, emailEmptyMsg, emptyUserNameField, invalidUserCodeMsg, passwordEmptyMsg, roleEmptyMsg, toUserlist, useCodeEmptyMsg, invalidPasswordPatternMsg, invalidcontactNoMsg } from 'shared/constants/constants'
+import { invalidEmailMsg, contactNoEmptyMsg, emailEmptyMsg, emptyUserNameField, passwordEmptyMsg, roleEmptyMsg, toUserlist, invalidPasswordPatternMsg, invalidcontactNoMsg } from 'shared/constants/constants'
 import { CardLayout, PageLayout, hasValue, validationsCheck } from 'shared/utils'
 import UserCreationForm from '../user-creation-form/user-creation-form'
 
@@ -87,16 +87,16 @@ const CreateUserView = () => {
             userId: userId
         }
         console.log('payLoad', payLoad);
-        // const response = await postUserDetails(payLoad);
-        // if (response){
-        //     setUserName("");
-        //     setUserEmail("");
-        //     setPassword("");
-        //     setContactNumber("");
-        //     setRole("");
-        //     setUserCode("");
+        const response = await postUserDetails(payLoad);
+        if (response){
+            setUserName("");
+            setUserEmail("");
+            setPassword("");
+            setContactNumber("");
+            setRole("");
+            setUserCode("");
             
-        // }
+        }
     }
     // todo
     const handlePassWordValidation = (password) => {
