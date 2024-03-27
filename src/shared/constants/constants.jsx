@@ -53,7 +53,7 @@ export const noRecordsMsg = `No records found`;
 export const noRemarksMsg = `No remarks available`;
 export const emptyRowMsg = `Please select a row`;
 export const addPassWordMsg = `Please go to profile settings and add a profile password`;
-export const invalidPasswordMsg = `Password is not valid, please retry`;
+export const invalidPasswordMsg = `Password should have length 6-8, containing 1 letter, 1 number, 1 spacial character, please retry`;
 export const passwordCreationSuccessMsg = `Password has been created successfully`;
 
 
