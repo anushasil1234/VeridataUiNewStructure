@@ -1,11 +1,11 @@
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
 import { heading4, profilePasswordContainerSx, textField1Sx } from 'app'
 import React, { useState } from 'react'
-import { CardLayout, patternChecking } from 'shared/utils';
+import { CardLayout, hasValue, patternChecking, validationsCheck } from 'shared/utils';
 import ProfileImg from 'assets/images/profile/user-1.jpg';
 import { PersonalInformation } from 'shared/components/display-information/personal-information';
 import { useSelector } from 'react-redux';
-import { invalidPasswordMsg } from 'shared/constants/constants';
+import { invalidPasswordMsg, invalidPasswordPatternMsg, passwordEmptyMsg } from 'shared/constants/constants';
 
 const ManageProfile = () => {
 
@@ -20,8 +20,15 @@ const ManageProfile = () => {
     const [profilePassword, setProfilePassword] = useState();
 
     const submitPassword = async () => {
-        const isPasswordValid = patternChecking(profilePassword, /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{6,8}$/)
-        if (isPasswordValid) {
+        if (!hasValue(profilePassword)) {
+            showErrorMessage(passwordEmptyMsg);
+            return
+        }
+        if (hasValue(profilePassword)  && !validationsCheck(profilePassword.trim(), 'password')) {
+            showErrorMessage(invalidPasswordPatternMsg);
+            return
+        }
+     
             const payLoad = {
                 profilePassword,
                 userId
@@ -33,9 +40,7 @@ const ManageProfile = () => {
                     setProfilePassword();
                 }
             }
-        } else {
-            showErrorMessage(invalidPasswordMsg);
-        }
+       
     }
 
     return (
