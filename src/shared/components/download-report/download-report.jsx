@@ -50,19 +50,21 @@ const DownloadReport = ({
     openFilePasswordSubmitionModel(filePasswordSubmitModelProps);
   };
   const handleDownload = () => {
+    handleSuccssCallBack();
+    
     // add models for paword
-    if (isSetProfilePassword) {
-      const passwordSubmitModelProps = {
-        payLoad: payLoad,
-        callBack: () => {
-          closePasswordSubmitionModel();
-          handleSuccssCallBack();
-        },
-      };
-      openPasswordSubmitionModel(passwordSubmitModelProps);
-    } else {
-      showErrorMessage(addPassWordMsg);
-    }
+    // if (isSetProfilePassword) {
+    //   const passwordSubmitModelProps = {
+    //     payLoad: payLoad,
+    //     callBack: () => {
+    //       closePasswordSubmitionModel();
+    //       handleSuccssCallBack();
+    //     },
+    //   };
+    //   openPasswordSubmitionModel(passwordSubmitModelProps);
+    // } else {
+    //   showErrorMessage(addPassWordMsg);
+    // }
   };
   return (
     <Stack my={2} direction="row" justifyContent={"left"} alignItems={"center"}>

@@ -4,7 +4,7 @@ import { smallFormModelHeadingSx } from 'app';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { invalidProfilePasswordMsg } from 'shared/constants/constants';
-import { encryptedData, hasValue } from 'shared/utils';
+import { hasValue } from 'shared/utils';
 import Button1 from 'shared/utils/button/button1';
 import FullScreenModel from 'shared/utils/models/fullscreen-modal';
 
@@ -31,14 +31,15 @@ let UnWrappedProfilePasswordFormSubmitionForm = (
 
         try {
             const { value } = target;
-            const encryptedPassword = await encryptedData(value);
+            // const encryptedPassword = await encryptedData(value);
             setDisplayfilePassword(value);
-            setPassword(encryptedPassword);
+            setPassword(value);
             if (hasValue(value)) {
                 setSubmitButtonStatus(false);
             }else{
                 setSubmitButtonStatus(true);
             }
+            
         } catch (error) {
             // console.log('error', error);
         }
