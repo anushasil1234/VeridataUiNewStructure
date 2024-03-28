@@ -8,7 +8,7 @@ import TableStatusCell from "shared/utils/dataTable/table-status-cell";
 
 export const maxUploadSize = `Max size: 4mb`;
 export const emptyUserNameField = `Username can't be empty`;
-export const invalidUserCodeMsg = `User code should contain alphabates and number only`;
+export const invalidUserCodeMsg = `User code should contain alphabet's and number only`;
 export const defaultUploadFormat = `Accepted format: pdf, jpg, png`;
 export const noRemarks = `No Remarks Available`;
 export const noPassBookMsg = `Passbook not available`;
@@ -24,7 +24,7 @@ export const aadharVerifySuccessMsg = `Aadhar has been verified successfully`;
 export const aadharVerifyFailedMsg = `Aadhar has not been verified`;
 export const uanVerifyFailedMsg = `UAN has not been verified`;
 export const uanVerifySuccessMsg = `UAN has been verified successfully`;
-export const generateOtpRety = `Otp sending is unsuccesfull, please retry`;
+export const generateOtpRety = `Otp sending is unsuccessful, please retry`;
 export const generateOtpSucces = `OTP has sent successfully, Please fill the otp and submit`;
 export const aadharNoValidationError = `Your phone number is not linked with aadhar. Link your phone number then retry or submit anyway`;
 export const invalidPanMsg = `Pan number should be of 10 digits and properly formatted`;
@@ -34,8 +34,8 @@ export const emptyPasswordField = `password can't be empty`;
 export const fileUploadSuccess = `File upload completed`;
 export const duplicateData = `There is no unique data for processing`;
 export const processStarted = `Verification initiated  successfully`;
-export const duplicateFiles = `Both the files are same. Choose differnt one`;
-export const formSubmitionSuccess = `Form has been submited successfully`;
+export const duplicateFiles = `Both the files are same. Choose different one`;
+export const formSubmitionSuccess = `Form has been submitted successfully`;
 export const formSaveSuccess = `Form saved`;
 export const appointeeApproveSuccess = `Appointee has been approved successfully`;
 export const appointeeRejectionSuccess = `Appointee has been Rejected`;
@@ -53,7 +53,8 @@ export const noRecordsMsg = `No records found`;
 export const noRemarksMsg = `No remarks available`;
 export const emptyRowMsg = `Please select a row`;
 export const addPassWordMsg = `Please go to profile settings and add a profile password`;
-export const invalidPasswordMsg = `Password is not valid, please retry`;
+export const invalidPasswordMsg = `Password should have length 6-10, containing 1 letter, 1 number, 1 spacial character, please retry`;
+export const invalidProfilePasswordMsg = `Password is not valid, please retry`;
 export const passwordCreationSuccessMsg = `Password has been created successfully`;
 
 

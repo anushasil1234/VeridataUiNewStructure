@@ -64,7 +64,7 @@ const ManageProfile = () => {
                             !isSetProfilePassword &&
                             <PersonalInformation
                                 fieldName={"Profile Password"}
-                                fieldTooltip={"Password should have length 6-8, containing 1 letter, 1 number, 1 spacial charecter"}
+                                fieldTooltip={"Password should have length 6-10, containing 1 letter, 1 number, 1 spacial charecter"}
                                 fieldValue={
                                     <Stack sx={profilePasswordContainerSx}>
                                         <TextField value={profilePassword} onChange={({ target }) => {

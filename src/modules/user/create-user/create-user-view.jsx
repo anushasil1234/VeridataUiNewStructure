@@ -38,8 +38,6 @@ const CreateUserView = () => {
             showErrorMessage(emailEmptyMsg);
             return
         }
-        const check = !validationsCheck(userEmail, 'email');
-        console.log('check', check);
         if (hasValue(userEmail)  && !validationsCheck(userEmail.trim(), 'email')) {
             showErrorMessage(invalidEmailMsg);
             return
@@ -86,7 +84,6 @@ const CreateUserView = () => {
             refAppointeeId: null,
             userId: userId
         }
-        console.log('payLoad', payLoad);
         const response = await postUserDetails(payLoad);
         if (response){
             setUserName("");
