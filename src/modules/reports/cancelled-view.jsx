@@ -12,12 +12,10 @@ const UnwrappedCancelled = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
   let noOfDays = 0;
-  let isFiltered = false;
 
   if (state) {
     if (state.dayRangePayLoad) {
       noOfDays = state.dayRangePayLoad;
-      isFiltered = true;
     }
   }
   let _fromday;

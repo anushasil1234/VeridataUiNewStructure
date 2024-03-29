@@ -41,6 +41,7 @@ const HomeView = () => {
   // console.log('1', loggedInData);
   const { userTypeId, appointeeId, userName, emailId, phone } = loggedInData[0];
 
+  console.log('loggedInData', loggedInData[0]);
   const [filtertotaloffer, setfiltertotaloffer] = useState(null);
   // const [consentStatus, setConsentStatus] = useState(0);
   const [filterNoResponse, setfilterNoResponse] = useState(null);
@@ -131,6 +132,7 @@ const HomeView = () => {
       setDayRangePayLoad(dayRangePayLoad);
     }
   }, [dayRange]);
+
   return (
     <PageLayout pageName={"Dashboard"}>
       <Box>

@@ -22,7 +22,7 @@ import {
   linkStyle,
   positionRelative,
 } from "app";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   CardLayout,
@@ -184,7 +184,7 @@ const AppointeeRegister = () => {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [isPensionApplicable, setIsPensionApplicable] = useState(null);
   const [isEpfoSectionDisabled, setIsEpfoSectionDisabled] = useState(true);
-  const [isPanSectionDisabled, setIsPanSectionDisabled] = useState(true);
+  // const [isPanSectionDisabled, setIsPanSectionDisabled] = useState(true);
   const [isPassportVerifyBtnDisabled, setIsPassportVerifyBtnDisabled] = useState(false);
   const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(false);
   const [fileUploaded, setFileUploaded] = useState([]);
@@ -434,15 +434,21 @@ const AppointeeRegister = () => {
       }, genders);
     setGenderList(updatedGender);
   };
-  useEffect(() => {
-    const defaultCountry =
-      countryList &&
-      countryList?.find(({ value }) => value?.toUpperCase() === "INDIA")?.value;
-    setDefaultCountry(defaultCountry);
-    setAppointeeDetails(appointeeId);
-  }, [countryList]);
 
   useEffect(() => {
+    if (countryList !== undefined) {
+      const defaultCountry =
+        countryList &&
+        countryList?.find(({ value }) => value?.toUpperCase() === "INDIA")?.value;
+      setDefaultCountry(defaultCountry);
+
+      setAppointeeDetails(appointeeId);
+      console.log("countryList", countryList);
+    }
+    console.log("setAppointeeDetails", setAppointeeDetails);
+  }, [countryList]);
+
+  useEffect(() => { 
     if (!hasValue(UAN)) {
       setEpfoButton("Fetch UAN");
     } else {
@@ -480,7 +486,7 @@ const AppointeeRegister = () => {
     // console.log(isPanVarified)
     // console.log(isEpfoSectionDisabled)
     if (isAadhaarVarified !== null) {
-      setIsPanSectionDisabled(false);
+      // setIsPanSectionDisabled(false);
     }
     if (isAadhaarVarified) {
       setDisabledAadharInput(true);
@@ -549,7 +555,7 @@ const AppointeeRegister = () => {
     setAadharXmlFileName();
     const { files } = target;
     const fileData = files[0];
-    console.log('fileData', fileData);
+    // console.log('fileData', fileData);
     const { name, size, type } = fileData;
     if (type !== "application/x-zip-compressed" && "application/x-compressed") {
       showErrorMessage(uploadFormatErrorMsg);
@@ -599,7 +605,7 @@ const AppointeeRegister = () => {
       }
       setisAadhaarVarified(isVarified);
       setIsOfflineXmlDownloaded(true);
-      setIsPanSectionDisabled(false);
+      // setIsPanSectionDisabled(false);
       closeOtpSubmitionModel();
       setAadharstatusMessage(new VerificationStatus(isVarified, "V"));
     }
@@ -769,11 +775,14 @@ const AppointeeRegister = () => {
       const registrationSuccessContent = {
         dialogContentText: registrationSuccessDialogContentText,
         dialogTitle: congratulationDialogContentTitle,
+        maxWidth: 'sm',
+        btnName: 'Go to Dashboard'
       };
       openInfoModel(registrationSuccessContent, () => navigateTo(toDashboard));
     }
     //}
   };
+
   const handleEpfoButtonClick = () => {
 
     if (epfoButton?.trim() === "Fetch UAN") {
@@ -900,7 +909,7 @@ const AppointeeRegister = () => {
     setPassportFileNumber(value);
   };
   const handleIsOfflineXmlDownloadedOnChange = (e) => {
-    console.log(e.target.checked);
+    // console.log(e.target.checked);
     setIsOfflineXmlDownloaded(e.target.checked);
   };
   const handleInternationalWorkerOnChange = (e) => {

@@ -17,8 +17,8 @@ const SidebarItems = () => {
   const loggedInData = useSelector((state) => state.loggedInData);
   const apiSlice = useSelector((state) => state.apiSlice);
 
-  const { userId } = loggedInData[0];
-  const { getMenuList } = apiSlice[0];
+  const { userId } = loggedInData && loggedInData[0];
+  const { getMenuList } = apiSlice && apiSlice[0];
   const setMenu = async () => {
     const response = await getMenuList(userId);
     if (response) {
