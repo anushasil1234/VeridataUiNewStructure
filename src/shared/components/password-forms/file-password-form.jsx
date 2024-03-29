@@ -32,14 +32,14 @@ const { filePasswordSubmitionProps, closeFilePasswordSubmitionModel }  =props ;
         }
         await downloadReport(downloadApi, payLoad);
         closeFilePasswordSubmitionModel();
-        dispatch(removeData())
+        // dispatch(removeData())
     }
 
     const handlePasswordChange = async ({target})=>{
         try {
             const { value } = target;
-            const encryptedPassword = await encryptedData(value);
-            setFilePassword(encryptedPassword);
+            // const encryptedPassword = await encryptedData(value);
+            setFilePassword(value);
             setDisplayfilePassword(value);
         } catch (error) {
             console.log('error', error);
