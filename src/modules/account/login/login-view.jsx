@@ -1,13 +1,13 @@
-import { Box, Button, Grid, IconButton, InputAdornment, Paper } from "@mui/material";
+import { Box, Button, Grid, IconButton, InputAdornment, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { InputField, PageHeading1, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
 import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle } from "app";
 import { useNavigate } from "react-router-dom";
-import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard } from "shared/constants/constants";
+import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard, welcomeMsg } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
 import logo from 'assets/images/logos/pfc_logo1.png';
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
-import {removeLoggedinTokenData, storeLoggedinTokenData } from "store/slices/login-token-slice";
+import { removeLoggedinTokenData, storeLoggedinTokenData } from "store/slices/login-token-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useEffect } from "react";
@@ -83,7 +83,8 @@ export const LoginView = () => {
   const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
 
   const { postLoginCredDetails, postLoginDetails } = apiSlice[0];
-  const { setDropdownList, openOtpSubmitionModel, closeOtpSubmitionModel } = functionSlice[0];
+  const { setDropdownList, openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } = functionSlice[0];
+
 
   const handleClickOnLogout = () => {
     dispatch(removeLoggedinData());
@@ -124,6 +125,33 @@ export const LoginView = () => {
           if (response) {
             const { responseInfo } = response;
             const { userDetails, tokenDetails } = responseInfo;
+            const { userName, consentStatus, userTypeId } = userDetails;
+            if (userTypeId === 3 && consentStatus === 0) {
+
+              const infoModelcontent = {
+                // dialogContentText: 'dialogContentText',
+                // dialogTitle: 'dialogTitle',
+                dialogContentComponent:
+                  <Box>
+                    <Typography style={{
+                      fontSize: "1.5rem"
+                    }}>
+                      Hi {userName.split(' ')[0]} !
+                    </Typography>
+                    <Typography
+                      style={{
+                        fontSize: ".9rem",
+                        textAlign: "left",
+                        color: '#6e6d7a'
+                      }}
+                    >
+                      {welcomeMsg}
+                    </Typography>
+                  </Box>,
+                maxWidth: 'sm'
+              }
+              openInfoModel(infoModelcontent);
+            }
             setLocalStorageItem("pfc-user", userDetails);
             setLocalStorageItem("pfc-token", tokenDetails);
             dispatch(storeLoggedinData(userDetails));
