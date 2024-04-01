@@ -1,28 +1,29 @@
 import React from 'react'
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import Button1 from '../button/button1';
 
 
-const InfoModel = ({open, confirmationModelContent}) => {
-   const { dialogContentText,dialogTitle,dialogContentComponent, fullWidth = false, handleClickOnOk} = confirmationModelContent || "";
-// console.log(confirmationModelContent)
+const InfoModel = ({ open, confirmationModelContent }) => {
+  const { dialogContentText, dialogTitle, dialogContentComponent, fullWidth = false,
+    maxWidth = "lg", btnName = "Ok", handleClickOnOk } = confirmationModelContent || "";
+  // console.log(confirmationModelContent)
   return (
-    <Dialog open={open} fullWidth={fullWidth} maxWidth={"lg"} >
-         <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {dialogContentText}
-          </DialogContentText>
-         
-          {dialogContentComponent}
+    <Dialog open={open} fullWidth={fullWidth} maxWidth={maxWidth} >
+      <DialogTitle>{dialogTitle}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          {dialogContentText}
+        </DialogContentText>
 
-        </DialogContent>
-        <DialogActions >
-          <Button1 onClick={handleClickOnOk}>
-            Ok
-          </Button1>
-        </DialogActions>
-      </Dialog>
+        {dialogContentComponent}
+
+      </DialogContent>
+      <DialogActions >
+        <Button1 onClick={handleClickOnOk}>
+          {btnName}
+        </Button1>
+      </DialogActions>
+    </Dialog>
   )
 }
 

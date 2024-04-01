@@ -9,10 +9,10 @@ import { invalidPasswordMsg, invalidPasswordPatternMsg, passwordEmptyMsg } from 
 
 const ManageProfile = () => {
 
-    const loggedInData  = useSelector(state => state.loggedInData);
-    const apiSlice  = useSelector(state => state.apiSlice);
-    const popUpSlice  = useSelector(state => state.popUpSlice);
-    
+    const loggedInData = useSelector(state => state.loggedInData);
+    const apiSlice = useSelector(state => state.apiSlice);
+    const popUpSlice = useSelector(state => state.popUpSlice);
+
     const { editUserProfileDetails } = apiSlice[0];
     const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
     const { roleName, userName, emailId, isSetProfilePassword, userId } = loggedInData && loggedInData.length > 0 && loggedInData[0];
@@ -24,23 +24,23 @@ const ManageProfile = () => {
             showErrorMessage(passwordEmptyMsg);
             return
         }
-        if (hasValue(profilePassword)  && !validationsCheck(profilePassword.trim(), 'password')) {
+        if (hasValue(profilePassword) && !validationsCheck(profilePassword.trim(), 'password')) {
             showErrorMessage(invalidPasswordPatternMsg);
             return
         }
-     
-            const payLoad = {
-                profilePassword,
-                userId
+
+        const payLoad = {
+            profilePassword,
+            userId
+        }
+        const response = await editUserProfileDetails(payLoad);
+        if (response) {
+            const { responseInfo } = response;
+            if (responseInfo === 'success') {
+                setProfilePassword();
             }
-            const response = await editUserProfileDetails(payLoad);
-            if (response) {
-                const { responseInfo } = response;
-                if (responseInfo === 'success') {
-                    setProfilePassword();
-                }
-            }
-       
+        }
+
     }
 
     return (
@@ -67,9 +67,11 @@ const ManageProfile = () => {
                                 fieldTooltip={"Password should have length 6-10, containing 1 letter, 1 number, 1 spacial charecter"}
                                 fieldValue={
                                     <Stack sx={profilePasswordContainerSx}>
-                                        <TextField value={profilePassword} onChange={({ target }) => {
-                                            setProfilePassword(target.value);
-                                        }} sx={textField1Sx} variant="filled" />
+                                        <TextField value={profilePassword}
+                                            onChange={({ target }) => {
+                                                setProfilePassword(target.value);
+                                            }} sx={textField1Sx} variant="filled"
+                                        />
                                         <Button
                                             type="submit"
                                             color="primary"
