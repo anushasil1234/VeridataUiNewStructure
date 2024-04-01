@@ -4,7 +4,7 @@ import { smallFormModelHeadingSx } from 'app';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { invalidProfilePasswordMsg } from 'shared/constants/constants';
-import { hasValue } from 'shared/utils';
+import { encryptedData, hasValue } from 'shared/utils';
 import Button1 from 'shared/utils/button/button1';
 import FullScreenModel from 'shared/utils/models/fullscreen-modal';
 
@@ -18,32 +18,32 @@ let UnWrappedProfilePasswordFormSubmitionForm = (
     const apiSlice = useSelector((state) => state.apiSlice);
 
     const { userId } = loggedInData && loggedInData.length > 0 && loggedInData[0];
-    const {postProfilePassword} = apiSlice[0];
+    const { postProfilePassword } = apiSlice[0];
     const { showErrorMessage } = popUpSlice[0];
     const { callBack } = passwordSubmitionProps;
-    
+
     const [password, setPassword] = useState();
     const [displayfilePassword, setDisplayfilePassword] = useState();
     const [submitButtonStatus, setSubmitButtonStatus] = useState(true);
 
 
-    const handleInputChange = async ({target}) => {
+    const handleInputChange = async ({ target }) => {
 
         try {
             const { value } = target;
-            // const encryptedPassword = await encryptedData(value);
+            const encryptedPassword = await encryptedData(value);
             setDisplayfilePassword(value);
-            setPassword(value);
+            setPassword(encryptedPassword);
             if (hasValue(value)) {
                 setSubmitButtonStatus(false);
-            }else{
+            } else {
                 setSubmitButtonStatus(true);
             }
-            
+
         } catch (error) {
             // console.log('error', error);
         }
-     
+
     }
     const handlePasswordsubmition = async () => {
         const payLoad = {
@@ -55,7 +55,7 @@ let UnWrappedProfilePasswordFormSubmitionForm = (
             const { responseInfo } = response;
             if (responseInfo) {
                 callBack()
-            }else{
+            } else {
                 showErrorMessage(invalidProfilePasswordMsg);
             }
         }

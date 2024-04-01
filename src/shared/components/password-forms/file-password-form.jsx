@@ -38,8 +38,8 @@ const { filePasswordSubmitionProps, closeFilePasswordSubmitionModel }  =props ;
     const handlePasswordChange = async ({target})=>{
         try {
             const { value } = target;
-            // const encryptedPassword = await encryptedData(value);
-            setFilePassword(value);
+             const encryptedPassword = await encryptedData(value);
+            setFilePassword(encryptedPassword);
             setDisplayfilePassword(value);
         } catch (error) {
             console.log('error', error);
