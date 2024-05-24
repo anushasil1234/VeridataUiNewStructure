@@ -10,10 +10,10 @@ import {
   ListItemText
 } from '@mui/material';
 import ProfileImg from 'assets/images/profile/user-1.jpg';
-import { AccountCircle, ManageAccounts } from '@mui/icons-material';
+import { AccountCircle, ManageAccounts, HelpRounded } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { userNameTextStyle } from 'app';
-import { toManageProfile } from 'shared/constants/constants';
+import { toHelp, toManageProfile } from 'shared/constants/constants';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -30,7 +30,7 @@ const Profile = () => {
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
   const loggeoutFunction = loggeoutData && loggeoutData.length > 0 && loggeoutData[0];
 
-  const {roleName, userName} = loggedInData && loggedInData.length > 0 && loggedInData[0];
+  const { roleName, userName } = loggedInData && loggedInData.length > 0 && loggedInData[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
 
   return (
@@ -80,11 +80,17 @@ const Profile = () => {
           </ListItemIcon>
           <ListItemText sx={userNameTextStyle}>{`${userName}(${roleName})`}</ListItemText>
         </MenuItem>
-        <MenuItem onClick={()=>navigateTo(toManageProfile)}>
+        <MenuItem onClick={() => navigateTo(toManageProfile)}>
           <ListItemIcon>
             <ManageAccounts width={20} />
           </ListItemIcon>
           <ListItemText sx={userNameTextStyle}>Manage Profile</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => navigateTo(toHelp)}>
+          <ListItemIcon>
+            <HelpRounded width={20} />
+          </ListItemIcon>
+          <ListItemText sx={userNameTextStyle}>FAQ</ListItemText>
         </MenuItem>
         <Box mt={1} py={1} px={2}>
           <Button onClick={loggeoutFunction.handleClickOnLogout} variant="outlined" color="primary" fullWidth>

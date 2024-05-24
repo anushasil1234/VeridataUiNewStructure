@@ -275,7 +275,7 @@ const UnwrappedLapseddata = (props) => {
                 <Refresh width={18} sx={{ color: "#fff" }} />
               </Fab>
             </DarkTooltip>
-            {hasPermission && hasPermission["download Report"] && (
+            {hasPermission && hasPermission["A008"] && (
               <DarkTooltip placement="top" title={"Download"} arrow>
                 <Fab
                   variant="contained"

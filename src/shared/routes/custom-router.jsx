@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import RequireAuth from 'shared/components/auth-provider';
 import AuthorizedRedirection from 'shared/components/authorized-redirection';
-import { toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent, toLogin, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData, toUserlist, toVerified } from 'shared/constants/constants';
+import { toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent, toLogin, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData, toUserlist, toVerified, toHelp } from 'shared/constants/constants';
 
 
 /* ***Layouts**** */
@@ -31,6 +31,7 @@ const AppointeeRegister = Loadable(lazy(() => import('../../modules/appointee/re
 const AppointeeCount = Loadable(lazy(() => import('../../modules/reports/appointee-count')));
 const Login = Loadable(lazy(() => import('../../modules/account/login/login-view')));
 const ManageProfile = Loadable(lazy(() => import('../../modules/manage-profile/manage-profile')));
+const Help = Loadable(lazy(() => import('../../modules/help/help')));
 
 const CustomRouter = [
   {
@@ -56,7 +57,8 @@ const CustomRouter = [
       { path: toUpdateUser, exact: true, element: <UpdateUserView /> },
       { path: toUserlist, exact: true, element: <UserListView /> },
       { path: toAppointeecount, exact: true, element: <AppointeeCount /> },
-      { path: toManageProfile, exact: true, element: <ManageProfile /> }
+      { path: toManageProfile, exact: true, element: <ManageProfile /> },
+      { path: toHelp, exact: true, element: <Help/> }
     ],
   },
   {

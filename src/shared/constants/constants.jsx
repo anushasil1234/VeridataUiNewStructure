@@ -119,6 +119,7 @@ export const toAppointeecount = "/appointeecount";
 export const toDataUploaded = "/datauploaded";
 export const toLogin = "/auth/login";
 export const toManageProfile = "/manageprofile";
+export const toHelp = "/help";
 
 // dropdown values start
 
@@ -134,7 +135,7 @@ export const genders = [<Male />, <Female />, <Transgender />].map((genderIcon) 
 // table headercell start
 const rejetedListActions = ['VIEWDETAILS'];
 const latestAppointeeListActions = ['VIEWDETAILS'];
-const verifiedListActions = ['VIEWDETAILS', 'DWNLDPSSBK', 'DWNLDTRUSTPSSBK','VIEWPSSBK'];
+const verifiedListActions = ['VIEWDETAILS', 'DWNLDPSSBK', 'DWNLDTRUSTPSSBK', 'VIEWPSSBK'];
 const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
 const criticalListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
 const lapsedListActions = ['VIEWDETAILS', 'UPDTEAPNTEE'];
@@ -688,7 +689,7 @@ export const processingListPdfTableHeadCell = [
             element: (props) => TableStatusCell(props),
             attribute: ['appointeeId']
         }
-     },
+    },
 ]
 
 export const processingListTableHeadCell = [
@@ -943,7 +944,7 @@ export const userListTableHeadCell = [
             element: Typography
         }
     },
- 
+
     {
         id: 'Actions',
         numeric: true,
@@ -1014,7 +1015,7 @@ export const apiCountHeadCell = [
         component: {
             element: Typography
         }
-    }, 
+    },
     {
         id: 'apiName',
         numeric: true,
@@ -1195,7 +1196,7 @@ export const apiCountDetailsHeadCell = [
         component: {
             element: Typography
         }
-    }, 
+    },
     {
         id: 'totalUnprocessableEntityCount',
         numeric: true,
@@ -1242,6 +1243,7 @@ export const GetTotalWidgetData_URL = `${Account}/GetTotalWidgetData`;
 export const GetTotalCriticalAppointee_URL = `${Account}/GetTotalCriticalAppointee`;
 export const ValidateProfilePassword_URL = `${Account}/ValidateProfilePassword`;
 export const EditUserProfile_URL = `${Account}/EditUserProfile`;
+export const GetFaqData_URL = `${Account}/GetFaqData`;
 
 export const RawDataProcess_URL = `${AppoienteeWorkFlow}/RawDataProcess`;
 export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointeeDetailsUpdate`;

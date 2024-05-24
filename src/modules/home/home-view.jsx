@@ -39,7 +39,7 @@ const HomeView = () => {
   const { getDashboardWidgetCardData, getRemarks, getAppointeeDetails } =
     apiSlice[0];
   // console.log('1', loggedInData);
-  const { userTypeId, appointeeId, userName, emailId, phone } = loggedInData[0];
+  const { userTypeId, appointeeId, userName, emailId, phone, status  } = loggedInData[0];
 
   console.log('loggedInData', loggedInData[0]);
   const [filtertotaloffer, setfiltertotaloffer] = useState(null);
@@ -263,6 +263,9 @@ const HomeView = () => {
                 </Grid>
                 <Grid item lg={4} xs={12}>
                   Phone: {phone}
+                </Grid>
+                <Grid item lg={4} xs={12}>
+                  Status: {status}
                 </Grid>
                 <Grid item lg={4} xs={12}>
                   <Button

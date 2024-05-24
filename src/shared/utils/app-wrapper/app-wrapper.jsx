@@ -87,7 +87,8 @@ import {
   GetReportFilterStatus_URL,
   PassbookDetails_URL,
   AppointeeConsentUpdate_URL,
-  VerifyAadharViaXml_URL
+  VerifyAadharViaXml_URL,
+  GetFaqData_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -644,6 +645,9 @@ const AppWrapper = (App) => {
     const postAppointeeConsent = async (payLoad) => {
       return await PfcRequest(AppointeeConsentUpdate_URL, "POST", payLoad);
     };
+    const GetFaqData = async () => {
+      return await PfcRequest(GetFaqData_URL, "GET");
+    };
     const popUpSlice = useSelector((state) => state.popUpSlice);
     const apiSlice = useSelector((state) => state.apiSlice);
     const functionSlice = useSelector((state) => state.functionSlice);
@@ -816,7 +820,8 @@ const AppWrapper = (App) => {
           editUserProfileDetails,
           getReportFilterStatusList,
           postAppointeeConsent,
-          getPassbookDetails
+          getPassbookDetails,
+          GetFaqData
         })
       );
     }
