@@ -1306,7 +1306,7 @@ export const RemoveAdminUser_URL = (id, userId) => `${Users}/RemoveAdminUser?id=
 //Models messages starts
 export const approveConfirmation = `Candidate has not successfully completed verification process. Do you still want to approve?`;
 export const uploadSizeErrorMsg = `File upload size limit has exceeded`;
-export const uploadFormatErrorMsg = `Upload valid formated file`;
+export const uploadFormatErrorMsg = `Upload valid formatted file`;
 export const verificationConfirmationMsg = `Are you sure you want to start the process?`;
 export const appointeerejetionConfirmationMsg = `Are you sure you want to reject?`;
 export const verificationRemiderMsg = `Reminder alert will be sent to appointee, asking them to complete the verification process. Do you want to continue?`;
@@ -1316,7 +1316,9 @@ export const submitConfirmationMsg = `Your data will be submitted, you will no l
 export const epfoPassfileUploadeConfirmationMsg = `Please upload your trust epfo passbook before submition`;
 export const visafileUploadeConfirmationMsg = `You must upload your visa before submition`;
 export const registrationSuccessDialogContentText = `Your Aadhar & UAN details  has been verified and submited successfully. you have completed your verification process. Please wait for the hr to reply for further processing of your application`;
-export const welcomeMsg = `Welcome to VERIDATA, the onboarding assistant for you . You are requested to enter the details requested by following the instructions one step at a time, to start your verification process click "Verify"`;
+export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you. 
+Please start your verification compliance process by clicking on "Verify".
+Enter all the details requested in the following pages & complete your verification compliance.`;
 export const congratulationDialogContentTitle = `Congratulatoins!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
