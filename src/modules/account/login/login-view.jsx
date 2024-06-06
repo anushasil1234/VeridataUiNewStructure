@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { InputField, PageHeading1, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
 import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle } from "app";
 import { useNavigate } from "react-router-dom";
-import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard, welcomeMsg } from "shared/constants/constants";
+import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard, toSetPassword, welcomeMsg } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
 import logo from 'assets/images/logos/pfc_logo1.png';
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
@@ -125,9 +125,9 @@ export const LoginView = () => {
           if (response) {
             const { responseInfo } = response;
             const { userDetails, tokenDetails } = responseInfo;
-            const { userName, consentStatus, userTypeId } = userDetails;
-            if (userTypeId === 3 && consentStatus === 0) {
-
+            const { userName, consentStatus, userTypeId, isDefaultPassword } = userDetails;
+            
+            if (userTypeId === 3 && consentStatus === 0 && isDefaultPassword === false) {
               const infoModelcontent = {
                 // dialogContentText: 'dialogContentText',
                 // dialogTitle: 'dialogTitle',
@@ -152,13 +152,18 @@ export const LoginView = () => {
               }
               openInfoModel(infoModelcontent);
             }
+            
             setLocalStorageItem("pfc-user", userDetails);
             setLocalStorageItem("pfc-token", tokenDetails);
             dispatch(storeLoggedinData(userDetails));
             dispatch(storeLoggedinTokenData(tokenDetails));
             dispatch(storeLoggeoutData({ handleClickOnLogout }));
-            await setDropdownList();
-            navigate(`${toDashboard}`);
+            if (isDefaultPassword === true) {
+              navigate(`${toSetPassword}`);
+            } else {
+              await setDropdownList();
+              navigate(`${toDashboard}`);
+            }
             closeOtpSubmitionModel();
           } else {
             navigate("/");

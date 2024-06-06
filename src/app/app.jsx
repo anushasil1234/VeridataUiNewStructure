@@ -42,10 +42,11 @@ const App = () => {
     dispatch(storeLoggedinTokenData(tokenData));
     dispatch(storeLoggeoutData({ handleClickOnLogout }));
   }
-  const { userTypeId } = loggedInData.length > 0 && loggedInData[0];
+  const { userTypeId, isDefaultPassword } = loggedInData.length > 0 && loggedInData[0];
   useEffect(() => {
-    if (userTypeId) {
+    if (userTypeId && isDefaultPassword === false) {
       setDropdownList();
+      console.log('useuuruweu');
     }
   }, [userTypeId])
 

@@ -3,7 +3,8 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import RequireAuth from 'shared/components/auth-provider';
 import AuthorizedRedirection from 'shared/components/authorized-redirection';
-import { toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent, toLogin, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData, toUserlist, toVerified, toHelp } from 'shared/constants/constants';
+import { toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent, toLogin, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData, toUserlist, toVerified, toHelp, toSetPassword } from 'shared/constants/constants';
+import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 
 
 /* ***Layouts**** */
@@ -30,6 +31,7 @@ const Report = Loadable(lazy(() => import('../../modules/reports/report')));
 const AppointeeRegister = Loadable(lazy(() => import('../../modules/appointee/register/appointee-register')));
 const AppointeeCount = Loadable(lazy(() => import('../../modules/reports/appointee-count')));
 const Login = Loadable(lazy(() => import('../../modules/account/login/login-view')));
+const SetPassword = Loadable(lazy(() => import('../../modules/set-password/set-password')));
 const ManageProfile = Loadable(lazy(() => import('../../modules/manage-profile/manage-profile')));
 const Help = Loadable(lazy(() => import('../../modules/help/help')));
 
@@ -58,7 +60,15 @@ const CustomRouter = [
       { path: toUserlist, exact: true, element: <UserListView /> },
       { path: toAppointeecount, exact: true, element: <AppointeeCount /> },
       { path: toManageProfile, exact: true, element: <ManageProfile /> },
-      { path: toHelp, exact: true, element: <Help/> }
+      { path: toHelp, exact: true, element: <Help /> },
+      { path: toSetPassword, exact: true, element: <SetPassword />}
+    ],
+  },
+  {
+    path: '/setpassword',
+    element: RequireAuth(BlankLayoutWithHeader),
+    children: [
+      { path: toSetPassword, exact: true, element: <SetPassword />}
     ],
   },
   {

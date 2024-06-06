@@ -47,8 +47,8 @@ const Header = (props) => {
   const loggedInData = useSelector(state => state.loggedInData)
   const userDetails = loggedInData[0];
   const consentStatus = userDetails?.consentStatus;
-  
-  
+
+
   const appointeeConsent = () => {
     const ConsentModalContent = {
       dialogTitle: "Consent Notification",
@@ -78,26 +78,21 @@ const Header = (props) => {
           {loggedInData[0].roleId !== 5 ?
             <SearchAppBar />
             :
-
+            props?.showRevokeConsentCallToAction!== false &&
             <Box>
-              {consentStatus===1?
-              <Chip color="primary"
-                label="Revoke Consent"
-                onClick={appointeeConsent}
-                icon={<CancelIcon color="error" />}
-              />
-              :
-              <Chip color="primary"
-                label="Give Consent"
-                onClick={appointeeConsent}
-                icon={<AddModeratorIcon color="success" />}
-              />
-            }
-              {/* Consent
-              <Fab color="primary" aria-label="edit" size="medium" variant="extended" onClick={appointeeConsent}>
-                <AddModeratorIcon />
-                Consent Revoke
-              </Fab> */}
+              {consentStatus === 1 ?
+                <Chip color="primary"
+                  label="Revoke Consent"
+                  onClick={appointeeConsent}
+                  icon={<CancelIcon color="error" />}
+                />
+                :
+                <Chip color="primary"
+                  label="Give Consent"
+                  onClick={appointeeConsent}
+                  icon={<AddModeratorIcon color="success" />}
+                />
+              }
             </Box>
           }
           <Profile setToken={props.setToken} />

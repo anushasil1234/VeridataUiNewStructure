@@ -76,6 +76,7 @@ export const dateFormat = `DD/MM/YYYY`;
 // Button name
 
 export const saveButton = "Save as draft";
+export const changePassword = "Change Password";
 export const submitButton = "Submit";
 export const saveAndNextbutton = "Save and next";
 export const previousButton = "Previous";
@@ -119,6 +120,7 @@ export const toAppointeecount = "/appointeecount";
 export const toDataUploaded = "/datauploaded";
 export const toLogin = "/auth/login";
 export const toManageProfile = "/manageprofile";
+export const toSetPassword = "/setpassword";
 export const toHelp = "/help";
 
 // dropdown values start
@@ -1322,6 +1324,7 @@ Enter all the details requested in the following pages & complete your verificat
 export const congratulationDialogContentTitle = `Congratulatoins!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
+export const passwordNotMsg = `Password not matched`;
 export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
 export const remarksEmptyMsg = `Remarks cant not be empty`;
 export const otpToMailMsg = `A verification code has been sent to your email address, Please check and enter `;
