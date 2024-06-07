@@ -443,9 +443,7 @@ const AppointeeRegister = () => {
       setDefaultCountry(defaultCountry);
 
       setAppointeeDetails(appointeeId);
-      console.log("countryList", countryList);
     }
-    console.log("setAppointeeDetails", setAppointeeDetails);
   }, [countryList]);
 
   useEffect(() => { 
@@ -483,8 +481,7 @@ const AppointeeRegister = () => {
     if (isPanVarified !== null) {
       setIsEpfoSectionDisabled(false);
     }
-    // console.log(isPanVarified)
-    // console.log(isEpfoSectionDisabled)
+
     if (isAadhaarVarified !== null) {
       // setIsPanSectionDisabled(false);
     }
@@ -550,12 +547,11 @@ const AppointeeRegister = () => {
 
   const uploadAadharXmlFile = ({ target }) => {
     // uploadFile(target, "ADH", setAadharXmlFileName);
-    // console.log('target', target);
     setXmlFileUploaded();
     setAadharXmlFileName();
     const { files } = target;
     const fileData = files[0];
-    // console.log('fileData', fileData);
+
     const { name, size, type } = fileData;
     if (type !== "application/x-zip-compressed" && "application/x-compressed") {
       showErrorMessage(uploadFormatErrorMsg);
@@ -790,7 +786,6 @@ const AppointeeRegister = () => {
         const confirmationModelContent = {
           dialogContentText: fetchUanConfirmationtMsg,
         };
-        // console.log(isPanVarified)
         openConfirmationModel(confirmationModelContent, handleGetUANNumber);
       } else {
         handleGetUANNumber();
@@ -909,7 +904,6 @@ const AppointeeRegister = () => {
     setPassportFileNumber(value);
   };
   const handleIsOfflineXmlDownloadedOnChange = (e) => {
-    // console.log(e.target.checked);
     setIsOfflineXmlDownloaded(e.target.checked);
   };
   const handleInternationalWorkerOnChange = (e) => {

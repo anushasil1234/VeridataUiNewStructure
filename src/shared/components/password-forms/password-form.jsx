@@ -41,7 +41,7 @@ let UnWrappedProfilePasswordFormSubmitionForm = (
             }
 
         } catch (error) {
-            // console.log('error', error);
+
         }
 
     }

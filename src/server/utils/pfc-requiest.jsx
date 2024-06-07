@@ -39,17 +39,15 @@ const PfcRequiest = (Component) => {
         const PfcRequest = async (url, type, payLoad, successsMessage) => {
             const methodHeader = { headers: AuthHeader() };
             try {
-                
+
                 const BASE_URL = await decryptedData(process.env.REACT_APP_API_URL);
                 // const BASE_URL = process.env.REACT_APP_API_URL;
-                console.log('pPfcRequestayLoad', payLoad);
                 const api = axios.create({
                     baseURL: BASE_URL
                 });
                 let response;
                 if (type === "POST") {
                     setLoading(true);
-                    // console.log('pPfcRequestayLoad', payLoad);
                     response = await api.post(url, payLoad, methodHeader);
                 }
                 if (type === "GET") {
@@ -67,7 +65,6 @@ const PfcRequiest = (Component) => {
                     errorResponse.userMessage && showErrorMessage(errorResponse.userMessage);
                 }
             } catch (error) {
-                console.log('catcherror', error);
                 let message;
                 if (error.response) {
                     const { status, statusText } = error.response;

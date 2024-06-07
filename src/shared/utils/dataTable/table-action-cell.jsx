@@ -77,14 +77,14 @@ export const TableActionCell = (props1, props2) => {
     };
     openSubmitModel(submitmodalcontent);
   };
-
+  
   const notiFyAppointee = async () => {
     const confirmationModelContent = {
       dialogContentText: verificationRemiderMsg,
     };
     openConfirmationModel(
       confirmationModelContent,
-      async () => await postRemainderMail(appointeeId)
+      async () => await postRemainderMail(appointeeId, userId)
     );
   };
 

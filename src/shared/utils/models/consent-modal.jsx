@@ -14,7 +14,7 @@ const ConsentModal = ({ open, consentModalContent }) => {
 
   const { postAppointeeConsent } = apiSlice[0];
   const userDetails = loggedInData[0];
-  // console.log("userDetails", loggedInData)
+
   const appointeeId = userDetails?.appointeeId;
   const userId = userDetails?.userId;
   const consentStatus = userDetails?.consentStatus;
@@ -48,7 +48,7 @@ const ConsentModal = ({ open, consentModalContent }) => {
           consentStatus: consentStatusId,
           IsConsentProcessed: isConsentProcessed,
         }));
-        // console.log("userDetails", loggedInData)
+
         (consentCallBack && consentStatusId !== 2) && consentCallBack();
         closeConsentModal();
       }

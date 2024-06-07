@@ -42,7 +42,7 @@ const { filePasswordSubmitionProps, closeFilePasswordSubmitionModel }  =props ;
             setFilePassword(encryptedPassword);
             setDisplayfilePassword(value);
         } catch (error) {
-            // console.log('error', error);
+
         }
     }
 

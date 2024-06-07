@@ -6,7 +6,7 @@ import Button1 from '../button/button1';
 const InfoModel = ({ open, confirmationModelContent }) => {
   const { dialogContentText, dialogTitle, dialogContentComponent, fullWidth = false,
     maxWidth = "lg", btnName = "Ok", handleClickOnOk } = confirmationModelContent || "";
-  // console.log(confirmationModelContent)
+
   return (
     <Dialog open={open} fullWidth={fullWidth} maxWidth={maxWidth} >
       <DialogTitle>{dialogTitle}</DialogTitle>

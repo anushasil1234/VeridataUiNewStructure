@@ -38,10 +38,8 @@ const HomeView = () => {
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getDashboardWidgetCardData, getRemarks, getAppointeeDetails } =
     apiSlice[0];
-  // console.log('1', loggedInData);
   const { userTypeId, appointeeId, userName, emailId, phone, status  } = loggedInData[0];
 
-  console.log('loggedInData', loggedInData[0]);
   const [filtertotaloffer, setfiltertotaloffer] = useState(null);
   // const [consentStatus, setConsentStatus] = useState(0);
   const [filterNoResponse, setfilterNoResponse] = useState(null);

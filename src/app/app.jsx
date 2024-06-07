@@ -46,7 +46,6 @@ const App = () => {
   useEffect(() => {
     if (userTypeId && isDefaultPassword === false) {
       setDropdownList();
-      console.log('useuuruweu');
     }
   }, [userTypeId])
 

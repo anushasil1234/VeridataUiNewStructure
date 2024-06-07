@@ -38,7 +38,7 @@ let UnWrappedOtpGenerationForm = (
     )
 }
 const OtpGenerationForm = (props) => {
-// console.log('props', props);
+
     return (
         <FullScreenModel
             open={props.open}
