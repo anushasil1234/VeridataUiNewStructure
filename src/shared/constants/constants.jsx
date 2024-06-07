@@ -56,6 +56,7 @@ export const addPassWordMsg = `Please go to profile settings and add a profile p
 export const invalidPasswordMsg = `Password should have length 6-10, containing 1 letter, 1 number, 1 spacial character, please retry`;
 export const invalidProfilePasswordMsg = `Password is not valid, please retry`;
 export const passwordCreationSuccessMsg = `Password has been created successfully`;
+export const passwordChangeSuccessMsg = `Password has been changed successfully`;
 
 
 
@@ -1223,6 +1224,8 @@ const AadhaarValidate = `${Api}/AadhaarValidate`;
 const FileUpload = `${Api}/FileUpload`;
 const Users = `${Api}/Users`;
 
+export const PasswordChange_URL = `${Account}/DefaultPasswordChange`;
+
 export const DownloadSampleXlsFile_URL = `${FileUpload}/DownloadSampleXlsFile`;
 export const DownloadUpdateSampleXlsFile_URL = `${FileUpload}/DownloadUpdateSampleXlsFile`;
 export const UploadxlsFile_URL = `${FileUpload}/UploadxlsFile`;
@@ -1267,6 +1270,7 @@ export const GetCriticalAppointeeData_URL = `${AppoienteeWorkFlow}/GetCriticalAp
 export const GetRemarksRemedyData_URL = `${AppoienteeWorkFlow}/GetRemarksRemedy?remarksId=`;
 export const GetRemarks_URL = `${AppoienteeWorkFlow}/GetRemarks?AppointeeId=`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`;
+// export const PostRemainderMail_URL = (appointeeId, userId) => `${Account}/GetDashboardWidgetCardData?AppointeeId=${appointeeId}&UserId=${userId}`
 export const PostRemainderMail_URL = `${AppoienteeWorkFlow}/PostRemainderMail?AppointeeId=`;
 export const GetPfCreationApponteeReport_URL = `${AppointeeReports}/GetPfCreationApponteeReport`;
 export const downloadVerifiedList_URL = `${AppointeeReports}/ApprovedApponteeReport`;
@@ -1275,6 +1279,7 @@ export const downloadRejectedList_URL = `${AppointeeReports}/RejectedApponteeRep
 export const downloadProcessingList_URL = `${AppointeeReports}/GetUnderProcessReport`;
 export const downloadLapsedList_URL = `${AppointeeReports}/GetLapsedDataReport`;
 export const downloadApiCounterReport_URL = `${AppointeeReports}/ApiCounterReport`;
+
 
 export const AppointeeCounterReport_URL = `${AppointeeReports}/AppointeeCounterReport`
 export const ApiCounterReport_URL = (fromDate, toDate) => {

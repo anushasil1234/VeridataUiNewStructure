@@ -88,7 +88,9 @@ import {
   PassbookDetails_URL,
   AppointeeConsentUpdate_URL,
   VerifyAadharViaXml_URL,
-  GetFaqData_URL
+  GetFaqData_URL,
+  PasswordChange_URL,
+  passwordChangeSuccessMsg
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -369,6 +371,7 @@ const AppWrapper = (App) => {
       return await PfcRequest(url, "GET");
     };
     const postLoginCredDetails = async (payLoad) => {
+      console.log('payLoad', payLoad);
       return await PfcRequest(ValidateUserLogIn_URL, "POST", payLoad);
     };
     const postLoginDetails = async (payLoad) => {
@@ -551,6 +554,7 @@ const AppWrapper = (App) => {
     const postRemainderMail = async (appointeeId) => {
       return await PfcRequest(
         `${PostRemainderMail_URL}${appointeeId}`,
+        // PostRemainderMail_URL(appointeeId),
         "POST",
         {},
         remiderSuccessMsg
@@ -648,6 +652,9 @@ const AppWrapper = (App) => {
     const GetFaqData = async () => {
       return await PfcRequest(GetFaqData_URL, "GET");
     };
+    const postPasswordChange = async (payLoad)=>{
+      return await PfcRequest(PasswordChange_URL, "POST", payLoad, passwordChangeSuccessMsg);
+    }
     const popUpSlice = useSelector((state) => state.popUpSlice);
     const apiSlice = useSelector((state) => state.apiSlice);
     const functionSlice = useSelector((state) => state.functionSlice);
@@ -821,7 +828,8 @@ const AppWrapper = (App) => {
           getReportFilterStatusList,
           postAppointeeConsent,
           getPassbookDetails,
-          GetFaqData
+          GetFaqData,
+          postPasswordChange
         })
       );
     }

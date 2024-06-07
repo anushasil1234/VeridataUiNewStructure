@@ -15,13 +15,29 @@ const SetPassword = () => {
 
     console.log('confirmPassword', confirmPassword);
     const popUpSlice = useSelector(state => state.popUpSlice);
+    const apiSlice = useSelector(state => state.apiSlice);
     const loggeoutData = useSelector(state => state.loggeoutData);
+    const loggedInData = useSelector((state) => state.loggedInData);
+    const {postPasswordChange} = apiSlice[0];
+   console.log('apiSlice', apiSlice);
     const loggeoutFunction = loggeoutData && loggeoutData.length > 0 && loggeoutData[0];
+    const { userId } = loggedInData[0];
     const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-    const handlePasswordChange = () => {
+    const handlePasswordChange = async() => {
         if (hasValue(newPassword) && hasValue(confirmPassword)) {
-            if (newPassword.trim() === confirmPassword.trim()) {
-                loggeoutFunction.handleClickOnLogout();
+            const trimmedPassword = newPassword.trim();
+            if (trimmedPassword === confirmPassword.trim()) {
+                const payLoad = {
+                    userId : userId,
+                    password: trimmedPassword
+                  };
+                const response = await postPasswordChange(payLoad);
+                if(response){
+                    const { responseInfo } = response;
+                    if (responseInfo) {
+                        loggeoutFunction.handleClickOnLogout();
+                    }
+                }
             } else {
                 showErrorMessage(passwordNotMsg);
             }
