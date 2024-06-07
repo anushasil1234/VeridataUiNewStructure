@@ -89,8 +89,7 @@ import {
   AppointeeConsentUpdate_URL,
   VerifyAadharViaXml_URL,
   GetFaqData_URL,
-  PasswordChange_URL,
-  passwordChangeSuccessMsg
+  PasswordChange_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -653,7 +652,7 @@ const AppWrapper = (App) => {
       return await PfcRequest(GetFaqData_URL, "GET");
     };
     const postPasswordChange = async (payLoad)=>{
-      return await PfcRequest(PasswordChange_URL, "POST", payLoad, passwordChangeSuccessMsg);
+      return await PfcRequest(PasswordChange_URL, "POST", payLoad);
     }
     const popUpSlice = useSelector((state) => state.popUpSlice);
     const apiSlice = useSelector((state) => state.apiSlice);

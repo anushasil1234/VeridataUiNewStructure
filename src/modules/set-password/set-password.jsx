@@ -3,7 +3,7 @@ import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/
 import { lable1Style, loginFieldIconStyle } from 'app';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { changePassword, passwordEmptyMsg, passwordNotMsg } from 'shared/constants/constants';
+import { changePassword, passwordChangeSuccessMsg, passwordEmptyMsg, passwordNotMsg } from 'shared/constants/constants';
 import { CardLayout, InputField, InputFieldProps, hasValue } from 'shared/utils'
 
 const SetPassword = () => {
@@ -18,24 +18,29 @@ const SetPassword = () => {
     const apiSlice = useSelector(state => state.apiSlice);
     const loggeoutData = useSelector(state => state.loggeoutData);
     const loggedInData = useSelector((state) => state.loggedInData);
-    const {postPasswordChange} = apiSlice[0];
-   console.log('apiSlice', apiSlice);
+    const { postPasswordChange } = apiSlice[0];
+    console.log('apiSlice', apiSlice);
     const loggeoutFunction = loggeoutData && loggeoutData.length > 0 && loggeoutData[0];
     const { userId } = loggedInData[0];
     const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-    const handlePasswordChange = async() => {
+    const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
+
+    const handlePasswordChange = async () => {
         if (hasValue(newPassword) && hasValue(confirmPassword)) {
             const trimmedPassword = newPassword.trim();
             if (trimmedPassword === confirmPassword.trim()) {
                 const payLoad = {
-                    userId : userId,
+                    userId: userId,
                     password: trimmedPassword
-                  };
+                };
                 const response = await postPasswordChange(payLoad);
-                if(response){
+                if (response) {
                     const { responseInfo } = response;
                     if (responseInfo) {
-                        loggeoutFunction.handleClickOnLogout();
+                        showSuccessMessage(passwordChangeSuccessMsg);
+                        setTimeout(() => {
+                            loggeoutFunction.handleClickOnLogout();
+                        }, 3000);
                     }
                 }
             } else {
@@ -48,6 +53,7 @@ const SetPassword = () => {
     const handlePasswordVisibility = () => {
         setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
     }
+
     useEffect(() => {
         if (isPasswordVisibilityOn) {
             setPasswordType("text");
@@ -57,6 +63,7 @@ const SetPassword = () => {
             setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
         }
     }, [isPasswordVisibilityOn])
+
     const passwordInputProps = {
         endAdornment: (
             <InputAdornment position='end'>
@@ -69,6 +76,7 @@ const SetPassword = () => {
             </InputAdornment>
         ),
     }
+
     const newPasswordInput = new InputFieldProps(
         setNewPassword,
         "New password",
