@@ -67,9 +67,7 @@ const CustomRouter = [
   {
     path: '/setpassword',
     element: RequireAuth(BlankLayoutWithHeader),
-    children: [
-      { path: toSetPassword, exact: true, element: <SetPassword />}
-    ],
+    children: [{ path: toSetPassword, exact: true, element: <SetPassword />}],
   },
   {
     path: '/auth',

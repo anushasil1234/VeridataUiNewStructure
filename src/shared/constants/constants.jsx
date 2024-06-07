@@ -1270,8 +1270,7 @@ export const GetCriticalAppointeeData_URL = `${AppoienteeWorkFlow}/GetCriticalAp
 export const GetRemarksRemedyData_URL = `${AppoienteeWorkFlow}/GetRemarksRemedy?remarksId=`;
 export const GetRemarks_URL = `${AppoienteeWorkFlow}/GetRemarks?AppointeeId=`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`;
-// export const PostRemainderMail_URL = (appointeeId, userId) => `${Account}/GetDashboardWidgetCardData?AppointeeId=${appointeeId}&UserId=${userId}`
-export const PostRemainderMail_URL = `${AppoienteeWorkFlow}/PostRemainderMail?AppointeeId=`;
+export const PostRemainderMail_URL = (appointeeId, userId) => `${AppoienteeWorkFlow}/PostRemainderMail?AppointeeId=${appointeeId}&UserId=${userId}`
 export const GetPfCreationApponteeReport_URL = `${AppointeeReports}/GetPfCreationApponteeReport`;
 export const downloadVerifiedList_URL = `${AppointeeReports}/ApprovedApponteeReport`;
 export const downloadPfCreationApponteeList_URL = `${AppointeeReports}/DownloadPfCreationApponteeReport`;

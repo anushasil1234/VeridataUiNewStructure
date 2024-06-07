@@ -36,7 +36,7 @@ const _UserView = (props) => {
             hasValue(phone) ? setContactNumber(phone) : setContactNumber("");
             hasValue(userCode) ? setUserCode(userCode) : setUserCode("");
             if (hasValue(roleId)) {
-                const role = roleList.find(({ id }) => id === roleId);
+                const role = roleList && roleList.find(({ id }) => id === roleId);
                 if (role) {
                     setRoleName(role.value);
                 }

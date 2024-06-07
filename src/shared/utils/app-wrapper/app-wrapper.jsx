@@ -550,10 +550,9 @@ const AppWrapper = (App) => {
         appointteTerminationSuccess
       );
     };
-    const postRemainderMail = async (appointeeId) => {
+    const postRemainderMail = async (appointeeId, userId) => {
       return await PfcRequest(
-        `${PostRemainderMail_URL}${appointeeId}`,
-        // PostRemainderMail_URL(appointeeId),
+        PostRemainderMail_URL(appointeeId, userId),
         "POST",
         {},
         remiderSuccessMsg
