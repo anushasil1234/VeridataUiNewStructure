@@ -1,19 +1,24 @@
+import SetPassword from 'modules/set-password/set-password';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 
 const RequireAuth = (Component) => {
-  const Authenticate = (props)=>{
-    const loggedInTokendData  = useSelector((state)=> state.loggedinTokenData)
+  const Authenticate = (props) => {
+    const loggedInData = useSelector((state) => state.loggedInData)
+    const loggedInTokendData = useSelector((state) => state.loggedinTokenData)
     const [token, setToken] = useState(loggedInTokendData[0] && loggedInTokendData[0].token);
-
+    const { isDefaultPassword } = loggedInData.length > 0 && loggedInData[0];
     return (
-      loggedInTokendData[0] && loggedInTokendData[0].token ? 
-      <Component setToken = {setToken} {...props} />: 
-      <Navigate to="/auth/login" />
-      )  
+      loggedInTokendData[0] && loggedInTokendData[0].token ?
+        isDefaultPassword ?
+          <BlankLayoutWithHeader><SetPassword /></BlankLayoutWithHeader> :
+          <Component setToken={setToken} {...props} /> :
+        <Navigate to="/auth/login" />
+    )
   }
-  return <Authenticate /> 
+  return <Authenticate />
 };
 
 export default RequireAuth;

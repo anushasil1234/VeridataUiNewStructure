@@ -19,7 +19,7 @@ const PageWrapper = styled('div')(() => ({
 }));
 
 
-const BlankLayoutWithHeader = () => (
+const BlankLayoutWithHeader = ({children}) => (
     <MainWrapper
         className='mainwrapper'
     >
@@ -39,7 +39,8 @@ const BlankLayoutWithHeader = () => (
                 {/* ------------------------------------------- */}
                 <Box sx={{ minHeight: 'calc(100vh - 170px)' }}>
                     <ContentWrapper>
-                        <Outlet />
+                        {/* <Outlet /> */}
+                        {children}
                     </ContentWrapper>
                 </Box>
                 {/* ------------------------------------------- */}

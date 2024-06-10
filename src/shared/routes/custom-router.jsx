@@ -61,13 +61,11 @@ const CustomRouter = [
       { path: toAppointeecount, exact: true, element: <AppointeeCount /> },
       { path: toManageProfile, exact: true, element: <ManageProfile /> },
       { path: toHelp, exact: true, element: <Help /> },
-      { path: toSetPassword, exact: true, element: <SetPassword />}
     ],
   },
   {
-    path: '/setpassword',
-    element: RequireAuth(BlankLayoutWithHeader),
-    children: [{ path: toSetPassword, exact: true, element: <SetPassword />}],
+    path: toSetPassword,
+    element: RequireAuth(()=><BlankLayoutWithHeader><SetPassword /></BlankLayoutWithHeader>),
   },
   {
     path: '/auth',
