@@ -1329,6 +1329,7 @@ export const congratulationDialogContentTitle = `Congratulatoins!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
 export const passwordNotMsg = `Password not matched`;
+export const passwordPattern = `Password should be atleast 8 charecter long with atleast 1 upper case, 1 lower case, 1 number, and one special charecter`;
 export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
 export const remarksEmptyMsg = `Remarks cant not be empty`;
 export const otpToMailMsg = `A verification code has been sent to your email address, Please check and enter `;

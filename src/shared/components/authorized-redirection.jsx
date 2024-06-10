@@ -5,8 +5,14 @@ import { Navigate } from 'react-router-dom';
 const AuthorizedRedirection = (Component) => {
   const Authenticate = (props)=>{
     const loggedInTokendData  = useSelector((state)=> state.loggedinTokenData)
-    // console.log("Authenticated",loggedInTokendData);
     const [token, setToken] = useState(loggedInTokendData[0] && loggedInTokendData[0].token);
+
+    //  if(token)
+    //   {
+    //     return <Navigate to="/dashboard" />
+    //   }else{
+    //     return <Component setToken = {setToken} {...props} />
+    //   }
     return (
       !token ? 
       <Component setToken = {setToken} {...props} />: 

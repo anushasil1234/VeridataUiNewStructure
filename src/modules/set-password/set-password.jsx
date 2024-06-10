@@ -3,8 +3,9 @@ import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/
 import { lable1Style, loginFieldIconStyle } from 'app';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { changePassword, passwordChangeSuccessMsg, passwordEmptyMsg, passwordNotMsg } from 'shared/constants/constants';
+import { changePassword, passwordChangeSuccessMsg, passwordEmptyMsg, passwordNotMsg, passwordPattern } from 'shared/constants/constants';
 import { CardLayout, InputField, InputFieldProps, hasValue } from 'shared/utils'
+import isPaswordValid from 'shared/utils/associate/is-pasword-valid';
 
 const SetPassword = () => {
     const [newPassword, setNewPassword] = useState('');
@@ -27,19 +28,24 @@ const SetPassword = () => {
         if (hasValue(newPassword) && hasValue(confirmPassword)) {
             const trimmedPassword = newPassword.trim();
             if (trimmedPassword === confirmPassword.trim()) {
-                const payLoad = {
-                    userId: userId,
-                    password: trimmedPassword
-                };
-                const response = await postPasswordChange(payLoad);
-                if (response) {
-                    const { responseInfo } = response;
-                    if (responseInfo) {
-                        showSuccessMessage(passwordChangeSuccessMsg);
-                        setTimeout(() => {
-                            loggeoutFunction.handleClickOnLogout();
-                        }, 3000);
+                if (isPaswordValid(trimmedPassword)) {
+                    const payLoad = {
+                        userId: userId,
+                        password: trimmedPassword
+                    };
+                    const response = await postPasswordChange(payLoad);
+                    if (response) {
+                        const { responseInfo } = response;
+                        if (responseInfo) {
+                            showSuccessMessage(passwordChangeSuccessMsg);
+                            setTimeout(() => {
+                                loggeoutFunction.handleClickOnLogout();
+                            }, 3000);
+                        }
                     }
+                } else {
+                    showErrorMessage(passwordPattern);
+
                 }
             } else {
                 showErrorMessage(passwordNotMsg);
