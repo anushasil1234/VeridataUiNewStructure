@@ -125,9 +125,9 @@ export const LoginView = () => {
           if (response) {
             const { responseInfo } = response;
             const { userDetails, tokenDetails } = responseInfo;
-            const { userName, consentStatus, userTypeId, isDefaultPassword } = userDetails;
-            
-            if (userTypeId === 3 && consentStatus === 0 && isDefaultPassword === false) {
+            const { userName, consentStatus, userTypeId, isDefaultPassword, isPasswordExpire } = userDetails;
+            console.log("IsPasswordExpire", isPasswordExpire);
+            if (userTypeId === 3 && consentStatus === 0 && isDefaultPassword === false && isPasswordExpire === false) {
               const infoModelcontent = {
                 // dialogContentText: 'dialogContentText',
                 // dialogTitle: 'dialogTitle',
@@ -152,13 +152,13 @@ export const LoginView = () => {
               }
               openInfoModel(infoModelcontent);
             }
-            
+
             setLocalStorageItem("pfc-user", userDetails);
             setLocalStorageItem("pfc-token", tokenDetails);
             dispatch(storeLoggedinData(userDetails));
             dispatch(storeLoggedinTokenData(tokenDetails));
             dispatch(storeLoggeoutData({ handleClickOnLogout }));
-            if (isDefaultPassword === true) {
+            if (isDefaultPassword === true || isPasswordExpire === true) {
               navigate(`${toSetPassword}`);
             } else {
               await setDropdownList();

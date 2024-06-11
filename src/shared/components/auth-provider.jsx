@@ -9,10 +9,10 @@ const RequireAuth = (Component) => {
     const loggedInData = useSelector((state) => state.loggedInData)
     const loggedInTokendData = useSelector((state) => state.loggedinTokenData)
     const [token, setToken] = useState(loggedInTokendData[0] && loggedInTokendData[0].token);
-    const { isDefaultPassword } = loggedInData.length > 0 && loggedInData[0];
+    const { isDefaultPassword, isPasswordExpire } = loggedInData.length > 0 && loggedInData[0];
     return (
       loggedInTokendData[0] && loggedInTokendData[0].token ?
-        isDefaultPassword ?
+        (isDefaultPassword || isPasswordExpire) ?
           <BlankLayoutWithHeader><SetPassword /></BlankLayoutWithHeader> :
           <Component setToken={setToken} {...props} /> :
         <Navigate to="/auth/login" />
