@@ -1070,7 +1070,7 @@ export const apiCountHeadCell = [
         type: "string",
         enums: ['totalUnprocessableEntityCount'],
         disablePadding: false,
-        label: 'Total Unprocessable',
+        label: 'Total Invalid',
         component: {
             element: Typography
         }

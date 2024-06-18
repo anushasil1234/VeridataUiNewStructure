@@ -25,9 +25,11 @@ import { removeActionRoute } from "store/slices/action-route-slice";
 const UnwrappedReport = (props) => {
   const { hasPermission } = props;
 
-  const apiSlice = useSelector(state => state.apiSlice); 
-  const actionRouteSlice = useSelector(state => state.actionRouteSlice);
-  const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
+  const apiSlice = useSelector((state) => state.apiSlice);
+  const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
+  const commonHooksFunctionSlice = useSelector(
+    (state) => state.commonHooksFunctionSlice
+  );
 
   const { getApiCounterReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
@@ -36,17 +38,16 @@ const UnwrappedReport = (props) => {
   const [fromDate, setFromDate] = useState();
   const [rows, setRows] = useState([]);
   const [apiCountList, setApiCountList] = useState();
-
+  const [apiConsolidateCountList, setApiConsolidateCountList] = useState();
   const setTableRows = async (fromDate = null, toDate = null) => {
-
     const response = await getApiCounterReport(fromDate, toDate);
 
     if (response) {
       const { responseInfo } = response;
-      const { apiCountList } = responseInfo;
-
+      const { apiCountList, apiConsolidateCountList } = responseInfo;
+      setApiConsolidateCountList(apiConsolidateCountList);
       setApiCountList(apiCountList);
-    
+
       let generatedCells = generateTableRowData(
         apiCountList,
         apiCountDetailsHeadCell,
@@ -66,7 +67,7 @@ const UnwrappedReport = (props) => {
         tableHead: apiCountHeadCell,
         tableRows: generatedCells,
       });
-    } 
+    }
   };
 
   const dispatch = useDispatch();
@@ -75,7 +76,6 @@ const UnwrappedReport = (props) => {
   var currentDate = date.format("DDMMYYYY");
 
   const handleApiCountDownload = () => {
-
     const tableHeadList = apiCountHeadCell.map(({ label }) => {
       return {
         title: label,
@@ -83,9 +83,13 @@ const UnwrappedReport = (props) => {
     });
 
     const tableBodyList = apiCountList.map((apiTotalCount) => {
-
       return CreatePdfTableBody(apiTotalCount, apiCountHeadCell);
     });
+    const tableBodyListConsolidated = apiConsolidateCountList.map(
+      (apiCount) => {
+        return CreatePdfTableBody(apiCount, apiCountHeadCell);
+      }
+    );
 
     const tableObj = {
       headerList: tableHeadList,
@@ -95,7 +99,15 @@ const UnwrappedReport = (props) => {
       fromDate: fromDate,
       toDate: toDate,
     };
-    jsPDFInvoiceTemplate(tableObj);
+    const tableObjConsolidate = {
+      headerListConsolidate: tableHeadList,
+      rowsConsolidate: tableBodyListConsolidated,
+      // fileName1: `_Api_Count_${currentDate}`,
+      // label1: "Api Count",
+      // fromDate1: fromDate,
+      // toDate1: toDate,
+    };
+    jsPDFInvoiceTemplate({ tableObj, tableObjConsolidate });
   };
 
   const handleSearch = () => {
@@ -105,7 +117,7 @@ const UnwrappedReport = (props) => {
     setFromDate(null);
     setToDate(null);
     setTableRows();
-    navigateTo(toApiCountReport,{ state: false });
+    navigateTo(toApiCountReport, { state: false });
   };
 
   useEffect(() => {
