@@ -90,7 +90,8 @@ export { OutputType, jsPDF };
 function jsPDFInvoiceTemplate(tableProps) {
   const { headerList, rows, fileName, label, fromDate, toDate } =
     tableProps.tableObj;
-  const { headerListConsolidate, rowsConsolidate } = tableProps.tableObjConsolidate;
+  const { headerListConsolidate, rowsConsolidate } =
+    tableProps.tableObjConsolidate;
   var date = moment();
   var currentDateTime = date.format("DD/MM/YYYY HH:mm");
 
@@ -186,7 +187,7 @@ function jsPDFInvoiceTemplate(tableProps) {
       // }],
       rptDescLabel: "Report Note",
       rptDesc:
-        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+        "The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the API system.",
     },
     additionalReport: {
       header: headerListConsolidate,
@@ -391,16 +392,11 @@ function jsPDFInvoiceTemplate(tableProps) {
   doc.setFontSize(pdfConfig.headerTextSize - 5);
   if (param.contact.name) doc.text(10, currentHeight, param.contact.name);
 
-  if (param.report.label ) {
-    doc.text(
-      docWidth - 10,
-      currentHeight,
-      param.report.label ,
-      "right"
-    );
+  if (param.report.label) {
+    doc.text(docWidth - 10, currentHeight, param.report.label, "right");
   }
 
-  if (param.contact.name || (param.report.label))
+  if (param.contact.name || param.report.label)
     currentHeight += pdfConfig.subLineHeight;
 
   doc.setTextColor(colorGray);
@@ -556,9 +552,9 @@ function jsPDFInvoiceTemplate(tableProps) {
       doc.setFontSize(pdfConfig.fieldTextSize);
       doc.setTextColor(colorGray);
 
-      var tableWidth = docWidth - 20;
-      var columnWidth = tableWidth / header.length;
-      var rowHeight = pdfConfig.lineHeight;
+    //  var tableWidth = docWidth - 20;
+      //var columnWidth = tableWidth / header.length;
+    //  var rowHeight = pdfConfig.lineHeight;
 
       doc.setLineWidth(0.5);
 
