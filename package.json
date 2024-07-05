@@ -35,10 +35,10 @@
     "react-scripts": "5.0.1",
     "react-secure-storage": "^1.2.2",
     "web-vitals": "^2.1.4",
-    "write-excel-file": "^1.4.27"
+    "write-excel-file": "^2.0.0"
   },
   "devDependencies": {
-    "babel/plugin-transform-private-property-in-object": "^7.21.11"
+    "@babel/plugin-transform-private-property-in-object": "^7.21.11"
     },
   "scripts": {
     "start": "react-scripts start",
