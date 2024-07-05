@@ -1020,11 +1020,22 @@ export const apiCountHeadCell = [
         }
     },
     {
+        id: 'providerName',
+        numeric: false,
+        type: "string",
+        disablePadding: false,
+        label: 'Provider',
+        enums: ['providerName'],
+        component: {
+            element: Typography
+        }
+    },
+    {
         id: 'apiName',
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Api Name',
+        label: 'Api',
         enums: ['apiName'],
         component: {
             element: Typography
@@ -1036,7 +1047,7 @@ export const apiCountHeadCell = [
         type: "string",
         enums: ['totalApiCount'],
         disablePadding: false,
-        label: 'Total Api',
+        label: 'Total',
         component: {
             element: Typography
         }
@@ -1047,7 +1058,7 @@ export const apiCountHeadCell = [
         type: "string",
         enums: ['totalFailureCount'],
         disablePadding: false,
-        label: 'Total Failure',
+        label: 'Failure',
         component: {
             element: Typography,
         }
@@ -1058,7 +1069,7 @@ export const apiCountHeadCell = [
         type: "string",
         enums: ['totalSuccessApiCount'],
         disablePadding: false,
-        label: 'Total Success',
+        label: 'Success',
         component: {
             element: Typography
         }
@@ -1070,7 +1081,7 @@ export const apiCountHeadCell = [
         type: "string",
         enums: ['totalUnprocessableEntityCount'],
         disablePadding: false,
-        label: 'Total Invalid',
+        label: 'Invalid',
         component: {
             element: Typography
         }
@@ -1152,6 +1163,17 @@ export const apiCountDetailsHeadCell = [
         disablePadding: false,
         label: 'Date',
         enums: ['date'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'providerName',
+        numeric: false,
+        type: "string",
+        disablePadding: false,
+        label: 'Provider',
+        enums: ['providerName'],
         component: {
             element: Typography
         }

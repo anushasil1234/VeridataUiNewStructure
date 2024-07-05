@@ -568,7 +568,7 @@ function jsPDFInvoiceTemplate(tableProps) {
           row.forEach(function (rr, index) {
             const widthToUse = header[index]?.style?.width || tdWidth;
 
-            let item = splitTextAndGetHeight(rr.toString(), widthToUse - 1); //minus 1, to fix the padding issue between borders
+            let item = splitTextAndGetHeight(rr?.toString()??"", widthToUse - 1); //minus 1, to fix the padding issue between borders
             rowsHeight.push(item.height);
           });
 
@@ -586,7 +586,7 @@ function jsPDFInvoiceTemplate(tableProps) {
         let startWidth = 0;
         row.forEach(function (rr, index) {
           const widthToUse = header[index]?.style?.width || tdWidth;
-          let item = splitTextAndGetHeight(rr.toString(), widthToUse - 1); //minus 1, to fix the padding issue between borders
+          let item = splitTextAndGetHeight(rr?.toString()??"", widthToUse - 1); //minus 1, to fix the padding issue between borders
 
           if (index === 0) doc.text(item.text, 11, currentHeight + 4);
           else {

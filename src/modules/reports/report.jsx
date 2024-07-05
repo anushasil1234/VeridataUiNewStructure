@@ -81,7 +81,7 @@ const UnwrappedReport = (props) => {
         title: label,
       };
     });
-
+    console.log("apiConsolidateCountList", apiConsolidateCountList)
     const tableBodyList = apiCountList.map((apiTotalCount) => {
       return CreatePdfTableBody(apiTotalCount, apiCountHeadCell);
     });
@@ -107,6 +107,8 @@ const UnwrappedReport = (props) => {
       // fromDate1: fromDate,
       // toDate1: toDate,
     };
+
+
     jsPDFInvoiceTemplate({ tableObj, tableObjConsolidate });
   };
 

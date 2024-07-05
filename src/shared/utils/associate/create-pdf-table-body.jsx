@@ -1,31 +1,20 @@
 import { DDMMYYYY } from '..';
 
 export const CreatePdfTableBody = (object, columnList) => {
-  let tableBody = [];
+    let tableBody = [];
     for (const key in object) {
         if (Object.hasOwnProperty.call(object, key)) {
 
-            columnList.forEach(({ enums,type }) =>{
+            columnList.forEach(({ enums, type }) => {
                 if (enums.includes(key)) {
-                    if(type == 'date'){
+                    if (type == 'date') {
                         tableBody = [...tableBody, DDMMYYYY(object[key])];
-                    }else{
+                    } else {
                         tableBody = [...tableBody, object[key]];
                     }
-                   
+
                 }
             });
-
-            // columnList.map(({ enums,type }) => {
-            //     if (enums.includes(key)) {
-            //         if(type == 'date'){
-            //             tableBody = [...tableBody, DDMMYYYY(object[key])];
-            //         }else{
-            //             tableBody = [...tableBody, object[key]];
-            //         }
-                   
-            //     }
-            // })
         }
     }
     return tableBody
