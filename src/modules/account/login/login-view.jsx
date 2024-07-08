@@ -126,7 +126,6 @@ export const LoginView = () => {
             const { responseInfo } = response;
             const { userDetails, tokenDetails } = responseInfo;
             const { userName, consentStatus, userTypeId, isDefaultPassword, isPasswordExpire } = userDetails;
-            console.log("IsPasswordExpire", isPasswordExpire);
             if (userTypeId === 3 && consentStatus === 0 && isDefaultPassword === false && isPasswordExpire === false) {
               const infoModelcontent = {
                 // dialogContentText: 'dialogContentText',

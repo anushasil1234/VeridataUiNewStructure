@@ -8,6 +8,7 @@ import ActionPermission from "shared/components/action-permission/action-permiss
 import {
   apiCountDetailsHeadCell,
   apiCountHeadCell,
+  consoidateApiCountHeadCell,
   toApiCountReport,
 } from "shared/constants/constants";
 import {
@@ -81,13 +82,17 @@ const UnwrappedReport = (props) => {
         title: label,
       };
     });
-    console.log("apiConsolidateCountList", apiConsolidateCountList)
+    const consolidateTableHeadList = consoidateApiCountHeadCell.map(({ label }) => {
+      return {
+        title: label,
+      };
+    });
     const tableBodyList = apiCountList.map((apiTotalCount) => {
       return CreatePdfTableBody(apiTotalCount, apiCountHeadCell);
     });
     const tableBodyListConsolidated = apiConsolidateCountList.map(
       (apiCount) => {
-        return CreatePdfTableBody(apiCount, apiCountHeadCell);
+        return CreatePdfTableBody(apiCount, consoidateApiCountHeadCell);
       }
     );
 
@@ -100,7 +105,7 @@ const UnwrappedReport = (props) => {
       toDate: toDate,
     };
     const tableObjConsolidate = {
-      headerListConsolidate: tableHeadList,
+      headerListConsolidate: consolidateTableHeadList,
       rowsConsolidate: tableBodyListConsolidated,
       // fileName1: `_Api_Count_${currentDate}`,
       // label1: "Api Count",

@@ -1087,6 +1087,75 @@ export const apiCountHeadCell = [
         }
     }
 ]
+export const consoidateApiCountHeadCell = [
+    {
+        id: 'providerName',
+        numeric: false,
+        type: "string",
+        disablePadding: false,
+        label: 'Provider',
+        enums: ['providerName'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'apiName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Api',
+        enums: ['apiName'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'totalApiCount',
+        numeric: true,
+        type: "string",
+        enums: ['totalApiCount'],
+        disablePadding: false,
+        label: 'Total',
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'totalFailureCount',
+        numeric: true,
+        type: "string",
+        enums: ['totalFailureCount'],
+        disablePadding: false,
+        label: 'Failure',
+        component: {
+            element: Typography,
+        }
+    },
+    {
+        id: 'totalSuccessApiCount',
+        numeric: true,
+        type: "string",
+        enums: ['totalSuccessApiCount'],
+        disablePadding: false,
+        label: 'Success',
+        component: {
+            element: Typography
+        }
+    },
+
+    {
+        id: 'totalUnprocessableEntityCount',
+        numeric: true,
+        type: "string",
+        enums: ['totalUnprocessableEntityCount'],
+        disablePadding: false,
+        label: 'Invalid',
+        component: {
+            element: Typography
+        }
+    }
+]
 export const appointeeCountDetailsHeadCell = [
     {
         id: 'date',
@@ -1311,6 +1380,7 @@ export const ApiCounterReport_URL = (fromDate, toDate) => {
     return ApiCounterReportUrl
 };
 export const PassbookDetails_URL = `${AppoienteeWorkFlow}/GetPassbookDetails?AppointeeId=`;
+export const EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails?AppointeeId=`;
 
 
 export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetails`;

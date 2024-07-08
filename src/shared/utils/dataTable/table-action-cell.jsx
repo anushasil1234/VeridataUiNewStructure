@@ -44,7 +44,7 @@ export const TableActionCell = (props1, props2) => {
   const { showErrorMessage } = popUpSlice[0];
   const { openViewModel, openUserViewModel } = functionSlice[0];
   const { openSubmitModel } = functionSlice[0];
-  const { openPassbookViewModel } = functionSlice[0];
+  const { openPassbookViewModel,openEmploymentViewModel } = functionSlice[0];
 
   const {
     getPassbookFileData,
@@ -213,6 +213,19 @@ export const TableActionCell = (props1, props2) => {
                 size="small"
                 button={"N"}
                 onClick={() => openPassbookViewModel(appointeeId)}
+                sx={primaryFabStyle}
+              >
+                <Article width={18} />
+              </Fab>
+            </DarkTooltip>
+          ) : null}
+          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] ? (
+            <DarkTooltip placement="top" title={"Employment History"} arrow>
+              <Fab
+                variant="contained"
+                size="small"
+                button={"N"}
+                onClick={() => openEmploymentViewModel(appointeeId)}
                 sx={primaryFabStyle}
               >
                 <Article width={18} />

@@ -86,6 +86,7 @@ import {
   ApiCounterReport_URL,
   GetReportFilterStatus_URL,
   PassbookDetails_URL,
+  EmployementDetails_URL,
   AppointeeConsentUpdate_URL,
   VerifyAadharViaXml_URL,
   GetFaqData_URL,
@@ -110,6 +111,7 @@ import UserView from "modules/user/user-view/user-view";
 import ProfilePasswordForm from "shared/components/password-forms/password-form";
 import FilePasswordForm from "shared/components/password-forms/file-password-form";
 import PassbookView from "modules/appointee/view/passbook-details-view";
+import EmploymentView from "modules/appointee/view/employment-details-view";
 import RemarksInputModel from "../models/remarks-modal";
 
 
@@ -119,6 +121,7 @@ const AppWrapper = (App) => {
 
     const [isViewOpen, setIsViewOpen] = useState(false);
     const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);
+    const [isEmploymentViewOpen, setEmploymentIsViewOpen] = useState(false);
     const [appointeeId, setAppointeeId] = useState();
     const [confirmationModelOpen, setConfirmationModelOpen] = useState(false);
     const [confirmationModelContent, setConfirmationModelContent] = useState();
@@ -271,8 +274,16 @@ const AppWrapper = (App) => {
       setAppointeeId(appointeeId);
       setPassbookIsViewOpen(true);
     };
+   
     const closePassbookViewModel = () => {
       setPassbookIsViewOpen(false);
+    };
+    const openEmploymentViewModel = (appointeeId) => {
+      setAppointeeId(appointeeId);
+      setEmploymentIsViewOpen(true);
+    };
+    const closeEmploymentViewModel = () => {
+      setEmploymentIsViewOpen(false);
     };
     const openUserViewModel = (userId) => {
       setUserId(userId);
@@ -370,7 +381,6 @@ const AppWrapper = (App) => {
       return await PfcRequest(url, "GET");
     };
     const postLoginCredDetails = async (payLoad) => {
-      console.log('payLoad', payLoad);
       return await PfcRequest(ValidateUserLogIn_URL, "POST", payLoad);
     };
     const postLoginDetails = async (payLoad) => {
@@ -627,6 +637,10 @@ const AppWrapper = (App) => {
       const response = await PfcRequest(`${PassbookDetails_URL}${Id}`, "POST");
       return response;
     };
+    const getEmployementDetails = async (Id) => {
+      const response = await PfcRequest(`${EmployementDetails_URL}${Id}`, "POST");
+      return response;
+    };
 
     const postProfilePassword = async (payLoad) => {
       return await PfcRequest(ValidateProfilePassword_URL, "POST", payLoad);
@@ -826,6 +840,7 @@ const AppWrapper = (App) => {
           getReportFilterStatusList,
           postAppointeeConsent,
           getPassbookDetails,
+          getEmployementDetails,
           GetFaqData,
           postPasswordChange
         })
@@ -838,6 +853,8 @@ const AppWrapper = (App) => {
           openViewModel,
           openPassbookViewModel,
           closePassbookViewModel,
+          openEmploymentViewModel,
+          closeEmploymentViewModel,
           openUserViewModel,
           openConfirmationModel,
           openConsentModal,
@@ -889,6 +906,12 @@ const AppWrapper = (App) => {
           appointeeId={appointeeId}
           closeViewModel={closePassbookViewModel}
           openView={isPassbookViewOpen}
+        />
+        <EmploymentView
+          openViewModel={openEmploymentViewModel}
+          appointeeId={appointeeId}
+          closeViewModel={closeEmploymentViewModel}
+          openView={isEmploymentViewOpen}
         />
         <UserView
           userId={userId}
