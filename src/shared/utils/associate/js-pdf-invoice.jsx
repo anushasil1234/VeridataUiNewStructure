@@ -140,7 +140,7 @@ function jsPDFInvoiceTemplate(tableProps) {
     //     otherInfo: "www.website.al",
     // },
     report: {
-      label: `Report #:  ${label}`,
+      label: `Report:  ${label}`,
       // num: 19,
       rptDate: `Report From Date: ${
         fromDate ? DateFormatYYYYMMDD(fromDate?.toString()) : "NA"
