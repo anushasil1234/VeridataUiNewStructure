@@ -801,8 +801,8 @@ export const memberNameStyle = {
 };
 export const floatingIconListStyle = {
   position: "fixed",
-  top: 70,
-  right: 45,
+  top: 100,
+  right: 50,
   alignItems: "center"
 };
 export const actionIconListStyle = {

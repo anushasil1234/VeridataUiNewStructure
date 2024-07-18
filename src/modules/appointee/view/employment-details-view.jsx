@@ -5,15 +5,19 @@ import {
   Card,
   AccordionSummary,
   AccordionDetails,
+  Fab,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
-
+import DownloadIcon from '@mui/icons-material/Download';
 import {
+  _addFabStyle,
+  actionIconStyle,
   cardStyle,
+  floatingIconListStyle,
   gridContainerStyle,
   listHeadingConteinerStyle,
   listHeadingStyle,
@@ -22,6 +26,10 @@ import { NA, noPassBookMsg } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import { useSelector } from "react-redux";
+import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
+import { FabIcon } from "shared/utils";
+import moment from "moment";
+import jsPDFEmploymentHistTemplate from "shared/utils/associate/js-pdf-employmenthist";
 
 let EmploymentViewDetails = ({ appointeeId }) => {
 
@@ -93,12 +101,50 @@ let EmploymentViewDetails = ({ appointeeId }) => {
       showErrorMessage(noPassBookMsg);
     }
   };
+  const handleDownload = async () => {
+    var date = moment();
+    var currentDate = date.format("DDMMYYYY");
+    const personalInfo = {
+      name: fullName,
+      fathersName: fatherName,
+      dob: dob,
+      uanNumber: pfUan,
+      otherInfo:""
+    }
+    const tableObj = {
+      companyData: companies,
+      personalData: personalInfo,
+      fileName: `_Employment_History_${currentDate}`,
+      label: "Employment History",
+
+    };
+    jsPDFEmploymentHistTemplate({ tableObj });
+  };
+  const downloadFabProps = new FabIconPropsModel(
+    _addFabStyle,
+    handleDownload,
+    "primary",
+    "download",
+    <DownloadIcon />,
+    "Employement Report"
+  );
   useEffect(() => {
     setTableRows(appointeeId);
   }, []);
   return (
-    <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%" ,height :"100%" }}>
+    <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%" }}>
       <Box sx={gridContainerStyle}>
+        <Stack sx={floatingIconListStyle}>
+          <FabIcon
+            props={{
+              ...downloadFabProps,
+              selectedIndex: 1,
+              index: 1,
+              placement: "left-end",
+              size: "small",
+            }}
+          />
+        </Stack>
         <Grid container spacing={1}>
           <Grid item xs={12} md={12} letterSpacing={12}>
             <Box sx={cardStyle}>
@@ -155,7 +201,7 @@ let EmploymentViewDetails = ({ appointeeId }) => {
                               <PersonalInformation
                                 fieldName={"Pf Account for"}
                                 fieldValue={
-                                  `${companyitem.workForYear} year ${companyitem.workForMonth } month `
+                                  `${companyitem.workForYear} year ${companyitem.workForMonth} month `
                                 }
                               />
                             </Stack>

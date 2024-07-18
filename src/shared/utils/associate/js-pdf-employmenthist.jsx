@@ -1,5 +1,4 @@
 import { jsPDF } from "jspdf";
-import { DateFormatYYYYMMDD } from "..";
 import moment from "moment";
 
 const OutputType = {
@@ -12,86 +11,9 @@ const OutputType = {
 };
 
 export { OutputType, jsPDF };
-/**
- *
- * @param { {
- *  outputType: OutputType | string,
- *  returnJsPDFDocObject?: boolean,
- *  fileName: string,
- *  orientationLandscape?: boolean,
- *  compress?: boolean,
- *  logo?: {
- *      src?: string,
- *      type?: string,
- *      width?: number,
- *      height?: number,
- *      margin?: {
- *        top?: number,
- *        left?: number
- *      }
- *   },
- *  stamp?: {
- *      inAllPages?: boolean,
- *      src?: string,
- *      type?: string,
- *      width?: number,
- *      height?: number,
- *      margin?: {
- *        top?: number,
- *        left?: number
- *      }
- *   },
- *   business?: {
- *       name?: string,
- *       address?: string,
- *       phone?: string,
- *       email?: string,
- *       email_1?: string,
- *       website?: string,
- *   },
- *   contact?: {
- *       label?: string,
- *       name?: string,
- *       address?: string,
- *       phone?: string,
- *       email?: string,
- *       otherInfo?: string,
- *   },
- *   report?: {
- *       label?: string,
- *
- *       rptDate?: string,
- *       rptGenDate?: string,
- *       headerBorder?: boolean,
- *       tableBodyBorder?: boolean,
- *       header?:
- *        {
- *          title: string,
- *          style?: { width?: number }
- *        }[],
- *       table?: any,
- *       rptDescLabel?: string,
- *       rptDesc?: string,
- *       additionalRows?: [{
- *           col1?: string,
- *           col2?: string,
- *           col3?: string,
- *           style?: {
- *               fontSize?: number
- *           }
- *       }],
- *   },
- *   footer?: {
- *       text?: string,
- *   },
- *   pageEnable?: boolean,
- *   pageLabel?: string, } } props
- */
-function jsPDFInvoiceTemplate(tableProps) {
-  const { headerList, rows, fileName, label, fromDate, toDate } =
-    tableProps.tableObj;
 
-  const { headerListConsolidate = [], rowsConsolidate = [] } = tableProps.tableObjConsolidate || {};
+function jsPDFEmploymentHistTemplate(props) {
+  const { companyData, personalData, fileName} = props.tableObj;
 
   var date = moment();
   var currentDateTime = date.format("DD/MM/YYYY HH:mm");
@@ -114,86 +36,41 @@ function jsPDFInvoiceTemplate(tableProps) {
       },
     },
     stamp: {
-      inAllPages: true, //by default = false, just in the last page
+      inAllPages: true,
       src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
-      type: "JPG", //optional, when src= data:uri (nodejs case)
-      width: 20, //aspect ratio = width/height
+      type: "JPG",
+      width: 20,
       height: 20,
       margin: {
-        top: 0, //negative or positive num, from the current position
-        left: 0, //negative or positive num, from the current position
+        top: 0,
+        left: 0,
       },
     },
-    // business: {
-    //     // name: "Veridata",
-    //     // address: "Albania, Tirane ish-Dogana, Durres 2001",
-    //     // phone: "(+355) 069 11 11 111",
-    //     // email: "email@example.com",
-    //     // email_1: "info@example.al",
-    //     // website: "www.example.al",
-    // },
-    // contact: {
-    //     label: "Invoice issued for:",
-    //     name: "Client Name",
-    //     address: "Albania, Tirane, Astir",
-    //     phone: "(+355) 069 22 22 222",
-    //     email: "client@website.al",
-    //     otherInfo: "www.website.al",
-    // },
+    contact: {
+      label: "Employment History for:",
+      name: personalData?.name,
+      fathersName: personalData?.fathersName,
+      dob: personalData?.dob,
+      uanNumber: personalData?.uanNumber,
+      otherInfo: personalData?.otherInfo,
+    },
     report: {
-      label: `Report:  ${label}`,
-      // num: 19,
-      rptDate: `Report From Date: ${fromDate ? DateFormatYYYYMMDD(fromDate?.toString()) : "NA"
-        } - Report To Date: ${toDate ? DateFormatYYYYMMDD(toDate?.toString()) : "NA"
-        }`,
+      label: `Report: Employment History`,
       rptGenDate: `Report Date: ${currentDateTime}`,
       headerBorder: true,
       tableBodyBorder: true,
-      header: headerList,
-      table: rows,
-      //  table: Array.from(Array(10), (item, index)=>([
-      //      index + 1,
-      //      "There are many variations ",
-      //     //  "Lorem Ipsum is simply dummy text dummy text ",
-      //     //  200.5,
-      //     //  4.5,
-      //     //  "m2",
-      //     //  400.5
-      //  ])),
-      // additionalRows: [{
-      //     col1: 'Total:',
-      //     col2: '145,250.50',
-      //     col3: 'ALL',
-      //     style: {
-      //         fontSize: 14 //optional, default 12
-      //     }
-      // },
-      // {
-      //     col1: 'VAT:',
-      //     col2: '20',
-      //     col3: '%',
-      //     style: {
-      //         fontSize: 10 //optional, default 12
-      //     }
-      // },
-      // {
-      //     col1: 'SubTotal:',
-      //     col2: '116,199.90',
-      //     col3: 'ALL',
-      //     style: {
-      //         fontSize: 10 //optional, default 12
-      //     }
-      // }],
+      header: [
+        "Company Name",
+        "Pf Account Duration",
+        "First Transaction",
+        "Last Transaction",
+        "First Transaction Approved",
+        "Last Transaction Approved"
+      ],
+      table: companyData,
       rptDescLabel: "Report Note",
       rptDesc:
-        "The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the API system.",
-    },
-
-    additionalReport: {
-      header: headerListConsolidate,
-      table: rowsConsolidate,
-      headerBorder: true,
-      tableBodyBorder: true,
+        "The purpose of this report is to provide a comprehensive overview and analysis of the employee's employment history. This report includes personal information such as the employee's name, date of birth, and father's name, along with detailed information about the companies the employee has worked for. The goal is to help stakeholders gain a clear understanding of the employee's work experience and career progression.",
     },
     footer: {
       text: "The report is created on a computer and is valid without the signature and stamp.",
@@ -239,14 +116,13 @@ function jsPDFInvoiceTemplate(tableProps) {
     contact: {
       label: props.contact?.label || "",
       name: props.contact?.name || "",
-      address: props.contact?.address || "",
-      phone: props.contact?.phone || "",
-      email: props.contact?.email || "",
+      fathersName: props.contact?.fathersName || "",
+      dob: props.contact?.dob || "",
+      uanNumber: props.contact?.uanNumber || "",
       otherInfo: props.contact?.otherInfo || "",
     },
     report: {
       label: props.report?.label || "",
-      //   num: props.report?.num || "",
       rptDate: props.report?.rptDate || "",
       rptGenDate: props.report?.rptGenDate || "",
       headerBorder: props.report?.headerBorder || false,
@@ -266,12 +142,6 @@ function jsPDFInvoiceTemplate(tableProps) {
         };
       }),
     },
-    additionalReport: {
-      headerBorder: props.additionalReport?.headerBorder || false,
-      tableBodyBorder: props.additionalReport?.tableBodyBorder || false,
-      header: props.additionalReport?.header || [],
-      table: props.additionalReport?.table || [],
-    },
     footer: {
       text: props.footer?.text || "",
     },
@@ -286,21 +156,6 @@ function jsPDFInvoiceTemplate(tableProps) {
       height: doc.getTextDimensions(lines).h,
     };
   };
-
-  if (param.report.table && param.report.table.length) {
-    if (param.report.table[0].length !== param.report.header.length)
-      throw Error("Length of header and table column must be equal.");
-  }
-
-  if (param.additionalReport.table && param.additionalReport.table.length) {
-    if (
-      param.additionalReport.table[0].length !==
-      param.additionalReport.header.length
-    )
-      throw Error(
-        "Length of header and table column in additional report must be equal."
-      );
-  }
 
   const options = {
     orientation: param.orientationLandscape ? "landscape" : "",
@@ -363,7 +218,6 @@ function jsPDFInvoiceTemplate(tableProps) {
   currentHeight += pdfConfig.subLineHeight;
   doc.text(docWidth - 10, currentHeight, param.business.phone, "right");
   doc.setFontSize(pdfConfig.fieldTextSize);
-  // doc.setTextColor(colorGray);
   currentHeight += pdfConfig.subLineHeight;
   doc.text(docWidth - 10, currentHeight, param.business.email, "right");
 
@@ -373,15 +227,34 @@ function jsPDFInvoiceTemplate(tableProps) {
   currentHeight += pdfConfig.subLineHeight;
   doc.text(docWidth - 10, currentHeight, param.business.website, "right");
 
-  //line breaker after logo & business info
   if (param.report.header.length) {
     currentHeight += pdfConfig.subLineHeight;
     doc.line(10, currentHeight, docWidth - 10, currentHeight);
   }
 
-  //Contact part
+  var addReportDesc = () => {
+    currentHeight += 5;
+    doc.setFontSize(pdfConfig.labelTextSize);
+    doc.setTextColor(colorBlack);
+
+    doc.text(param.report.rptDescLabel, 10, currentHeight);
+    currentHeight += pdfConfig.subLineHeight;
+    doc.setTextColor(colorGray);
+    doc.setFontSize(pdfConfig.fieldTextSize - 1);
+
+    var lines = doc.splitTextToSize(param.report.rptDesc, docWidth - 10);
+    doc.text(lines, 10, currentHeight);
+    currentHeight +=
+      doc.getTextDimensions(lines).h > 5
+        ? doc.getTextDimensions(lines).h + 6
+        : pdfConfig.lineHeight;
+
+    return currentHeight;
+  };
+  addReportDesc();
+
   doc.setTextColor(colorGray);
-  doc.setFontSize(pdfConfig.fieldTextSize);
+  doc.setFontSize(pdfConfig.headerTextSize - 8);
   currentHeight += pdfConfig.lineHeight;
   if (param.contact.label) {
     doc.text(10, currentHeight, param.contact.label);
@@ -391,478 +264,137 @@ function jsPDFInvoiceTemplate(tableProps) {
   doc.setTextColor(colorBlack);
   doc.setFontSize(pdfConfig.headerTextSize - 5);
   if (param.contact.name) doc.text(10, currentHeight, param.contact.name);
-
   if (param.report.label) {
     doc.text(docWidth - 10, currentHeight, param.report.label, "right");
   }
-
-  if (param.contact.name || param.report.label)
-    currentHeight += pdfConfig.subLineHeight;
-
-  doc.setTextColor(colorGray);
-  doc.setFontSize(pdfConfig.fieldTextSize - 2);
-
-  if (param.contact.address || param.report.rptDate) {
-    doc.text(10, currentHeight, param.contact.address);
-    doc.text(docWidth - 10, currentHeight, param.report.rptDate, "right");
-    currentHeight += pdfConfig.subLineHeight;
-  }
-
-  if (param.contact.phone || param.report.rptGenDate) {
-    doc.text(10, currentHeight, param.contact.phone);
+ 
+  currentHeight += pdfConfig.subLineHeight;
+  doc.setFontSize(pdfConfig.fieldTextSize);
+  if (param.contact.fathersName || param.report.rptGenDate) {
+    doc.text(10, currentHeight, param.contact.fathersName);
     doc.text(docWidth - 10, currentHeight, param.report.rptGenDate, "right");
     currentHeight += pdfConfig.subLineHeight;
   }
-
-  if (param.contact.email) {
-    doc.text(10, currentHeight, param.contact.email);
+ if (param.contact.dob) {
+    doc.text(10, currentHeight, param.contact.dob);
     currentHeight += pdfConfig.subLineHeight;
   }
-
-  if (param.contact.otherInfo)
-    doc.text(10, currentHeight, param.contact.otherInfo);
-  else currentHeight -= pdfConfig.subLineHeight;
-  //end contact part
-
-  var addInvoiceDesc = () => {
-    doc.setFontSize(pdfConfig.labelTextSize);
-    doc.setTextColor(colorBlack);
-
-    doc.text(param.report.rptDescLabel, 10, currentHeight);
+  if (param.contact.uanNumber) {
+    doc.text(10, currentHeight, param.contact.uanNumber);
     currentHeight += pdfConfig.subLineHeight;
-    doc.setTextColor(colorGray);
-    doc.setFontSize(pdfConfig.fieldTextSize - 1);
-
-    var lines = doc.splitTextToSize(param.report.rptDesc, docWidth / 2);
-    //text in left half
-    doc.text(lines, 10, currentHeight);
-    currentHeight +=
-      doc.getTextDimensions(lines).h > 5
-        ? doc.getTextDimensions(lines).h + 6
-        : pdfConfig.lineHeight;
-
-    return currentHeight;
-  };
-  addInvoiceDesc();
-
-  //TABLE PART
-
-  //#region TABLE HEADER BORDER
-  var addTableHeaderBorder = (header, tdWidth) => {
-    currentHeight += 2;
-    const lineHeight = 7;
-    let startWidth = 0;
-    for (let i = 0; i < header.length; i++) {
-      const currentTdWidth = header[i]?.style?.width || tdWidth;
-      if (i === 0) doc.rect(10, currentHeight, currentTdWidth, lineHeight);
-      else {
-        const previousTdWidth = header[i - 1]?.style?.width || tdWidth;
-        const widthToUse =
-          currentTdWidth === previousTdWidth ? currentTdWidth : previousTdWidth;
-        startWidth += widthToUse;
-        doc.rect(startWidth + 10, currentHeight, currentTdWidth, lineHeight);
-      }
-    }
-    currentHeight -= 2;
-  };
-  //#endregion
-  //#region TABLE BODY BORDER
-  var addTableBodyBorder = (lineHeight, header, tdWidth) => {
-    let startWidth = 0;
-    for (let i = 0; i < header.length; i++) {
-      const currentTdWidth = header[i]?.style?.width || tdWidth;
-      if (i === 0) doc.rect(10, currentHeight, currentTdWidth, lineHeight);
-      else {
-        const previousTdWidth = header[i - 1]?.style?.width || tdWidth;
-        const widthToUse =
-          currentTdWidth === previousTdWidth ? currentTdWidth : previousTdWidth;
-        startWidth += widthToUse;
-        doc.rect(startWidth + 10, currentHeight, currentTdWidth, lineHeight);
-      }
-    }
-  };
-  //#endregion
-  //#region TABLE HEADER
-  var addTableHeader = (header, tdWidth) => {
-    if (param.report.headerBorder) addTableHeaderBorder(header, tdWidth);
-    if (param.additionalReport.headerBorder)
-      addTableHeaderBorder(header, tdWidth);
-
-    currentHeight += pdfConfig.subLineHeight;
-    doc.setTextColor(colorBlack);
-    doc.setFontSize(pdfConfig.fieldTextSize);
-    //border color
-    doc.setDrawColor(colorGray);
-    currentHeight += 2;
-
-    let startWidth = 0;
-    header &&
-      header.forEach(function (row, index) {
-        if (index === 0) doc.text(row.title, 11, currentHeight);
-        else {
-          const currentTdWidth = row?.style?.width || tdWidth;
-          const previousTdWidth = header[index - 1]?.style?.width || tdWidth;
-          const widthToUse =
-            currentTdWidth === previousTdWidth
-              ? currentTdWidth
-              : previousTdWidth;
-          startWidth += widthToUse;
-          doc.text(row.title, startWidth + 11, currentHeight);
-        }
-      });
-
-    currentHeight += pdfConfig.subLineHeight - 1;
-    doc.setTextColor(colorGray);
-  };
-  //#endregion
-  //#region TABLE BODY
-
-  let isFirstTable = true;
-  const addTable = (header, tableData, tableName, isFirstTable) => {
-    if (!isFirstTable) {
-      doc.addPage();
-      currentHeight = 10;
-    }
-
-    currentHeight += pdfConfig.lineHeight;
-    doc.setFontSize(pdfConfig.labelTextSize);
-    doc.setTextColor(colorBlack);
-    doc.text(tableName, 10, currentHeight);
-    //var tdWidth = 31.66;
-    //10 margin left - 10 margin right
-    var tdWidth = (doc.getPageWidth() - 20) / header.length;
-
-    //#region TD WIDTH
-    if (header.length > 2) {
-      //add style for 2 or more columns
-      const customColumnNo =
-        header && header.map((x) => x?.style?.width || 0).filter((x) => x > 0);
-      let customWidthOfAllColumns = customColumnNo.reduce((a, b) => a + b, 0);
-      tdWidth =
-        (doc.getPageWidth() - 20 - customWidthOfAllColumns) /
-        (header.length - customColumnNo.length);
-    }
-    //#endregion
-    currentHeight += pdfConfig.lineHeight - 2;
-    if (header.length) {
-      addTableHeader(header, tdWidth);
-      // doc.setTextColor(colorBlack);
-      // doc.setFontSize(pdfConfig.labelTextSize);
-
-      doc.setFontSize(pdfConfig.fieldTextSize);
-      doc.setTextColor(colorGray);
-
-      //  var tableWidth = docWidth - 20;
-      //var columnWidth = tableWidth / header.length;
-      //  var rowHeight = pdfConfig.lineHeight;
-
-      doc.setLineWidth(0.5);
-
-      var tableBodyLength = tableData.length;
-      tableData.forEach(function (row, index) {
-        // doc.line(10, currentHeight, docWidth - 10, currentHeight);
-
-        //get nax height for the current row
-        var getRowsHeight = function () {
-          let rowsHeight = [];
-          row.forEach(function (rr, index) {
-            const widthToUse = header[index]?.style?.width || tdWidth;
-
-            let item = splitTextAndGetHeight(rr?.toString() ?? "", widthToUse - 1); //minus 1, to fix the padding issue between borders
-            rowsHeight.push(item.height);
-          });
-
-          return rowsHeight;
-        };
-
-        var maxHeight = Math.max(...getRowsHeight());
-
-        //body borders
-        if (param.report.tableBodyBorder)
-          addTableBodyBorder(maxHeight + 1, header, tdWidth);
-        if (param.additionalReport.tableBodyBorder)
-          addTableBodyBorder(maxHeight + 1, header, tdWidth);
-
-        let startWidth = 0;
-        row.forEach(function (rr, index) {
-          const widthToUse = header[index]?.style?.width || tdWidth;
-          let item = splitTextAndGetHeight(rr?.toString() ?? "", widthToUse - 1); //minus 1, to fix the padding issue between borders
-
-          if (index === 0) doc.text(item.text, 11, currentHeight + 4);
-          else {
-            const currentTdWidth = rr?.style?.width || tdWidth;
-            const previousTdWidth = header[index - 1]?.style?.width || tdWidth;
-            const widthToUse =
-              currentTdWidth === previousTdWidth
-                ? currentTdWidth
-                : previousTdWidth;
-            startWidth += widthToUse;
-            doc.text(item.text, 11 + startWidth, currentHeight + 4);
-          }
-        });
-
-        currentHeight += maxHeight - 4;
-
-        //td border height
-        currentHeight += 5;
-        //pre-increase currentHeight to check the height based on next row
-        if (index + 1 < tableBodyLength) currentHeight += maxHeight;
-
-        if (
-          param.orientationLandscape &&
-          (currentHeight > 185 ||
-            (currentHeight > 178 && doc.getNumberOfPages() > 1))
-        ) {
-          doc.addPage();
-          currentHeight = 10;
-          if (index + 1 < tableBodyLength) addTableHeader(header, tdWidth);
-        }
-
-        if (
-          !param.orientationLandscape &&
-          (currentHeight > 265 ||
-            (currentHeight > 255 && doc.getNumberOfPages() > 1))
-        ) {
-          doc.addPage();
-          currentHeight = 10;
-          if (index + 1 < tableBodyLength) addTableHeader(header, tdWidth);
-          //else
-          //currentHeight += pdfConfig.subLineHeight + 2 + pdfConfig.subLineHeight - 1; //same as in addtableHeader
-        }
-
-        //reset the height that was increased to check the next row
-        if (index + 1 < tableBodyLength && currentHeight > 30)
-          // check if new page
-          currentHeight -= maxHeight;
-      });
-    }
-  };
-  // doc.text("Consolidated Api Report : ", 10, currentHeight);
-  // doc.setTextColor(colorBlack);
-  // doc.setFontSize(pdfConfig.headerTextSize);
-  // First Table
-  if (rowsConsolidate.length > 0) {
-    addTable(
-      param.additionalReport.header,
-      param.additionalReport.table,
-      "Consolidated Api Report : ",
-      isFirstTable
-    );
-    isFirstTable=false;
   }
-  currentHeight += pdfConfig.lineHeight;
-
-  addTable(
-    param.report.header,
-    param.report.table,
-    "Api Count Details : ",
-    isFirstTable
-  );
-
-  // Second Table
-
-  //doc.line(10, currentHeight, docWidth - 10, currentHeight); //if we want to show the last table line
-  //#endregion
-
-  var invDescSize = splitTextAndGetHeight(
-    param.report.rptDesc,
-    docWidth / 2
-  ).height;
-
-  //#region PAGE BREAKER
-  var checkAndAddPageLandscape = function () {
-    if (!param.orientationLandscape && currentHeight + invDescSize > 270) {
-      doc.addPage();
-      currentHeight = 10;
-    }
-  };
-
-  var checkAndAddPageNotLandscape = function (heightLimit = 173) {
-    if (
-      param.orientationLandscape &&
-      currentHeight + invDescSize > heightLimit
-    ) {
-      doc.addPage();
-      currentHeight = 10;
-    }
-  };
-  var checkAndAddPage = function () {
-    checkAndAddPageNotLandscape();
-    checkAndAddPageLandscape();
-  };
-  //#endregion
-
-  //#region Stamp
-  var addStamp = () => {
-    let _addStampBase = () => {
-      var stampImage = "";
-      if (typeof window === "undefined") {
-        stampImage = param.stamp.src;
-      } else {
-        stampImage = new Image();
-        stampImage.src = param.stamp.src;
-      }
-
-      if (param.stamp.type)
-        doc.addImage(
-          stampImage,
-          param.stamp.type,
-          10 + param.stamp.margin.left,
-          docHeight - 22 + param.stamp.margin.top,
-          param.stamp.width,
-          param.stamp.height
-        );
-      else
-        doc.addImage(
-          stampImage,
-          10 + param.stamp.margin.left,
-          docHeight - 22 + param.stamp.margin.top,
-          param.stamp.width,
-          param.stamp.height
-        );
-    };
-
-    if (param.stamp.src) {
-      if (
-        param.stamp.inAllPages ||
-        (!param.stamp.inAllPages &&
-          doc.getCurrentPageInfo().pageNumber === doc.getNumberOfPages())
-      )
-        _addStampBase();
-    }
-  };
-  //#endregion
-
-  checkAndAddPage();
-
-  doc.setTextColor(colorBlack);
   doc.setFontSize(pdfConfig.labelTextSize);
-  currentHeight += pdfConfig.lineHeight;
-
-  //#region additionalRows
-  if (param.report.additionalRows?.length > 0) {
-    //#region Line breaker before invoce total
-    doc.line(docWidth / 2, currentHeight, docWidth - 10, currentHeight);
-    currentHeight += pdfConfig.lineHeight;
-    //#endregion
-
-    for (let i = 0; i < param.report.additionalRows.length; i++) {
+  doc.text(`Company Details`, 15, currentHeight + 10); // Adjust text position for better alignment
+  var addCompanyDetails = (companyDetails) => {
+    companyDetails?.forEach((company, index) => {
+      currentHeight += 15; // Add some spacing between blocks
+  
+      // Define box border styles
+      var boxBorderWidth = 0.5; // Border width in mm
+      var boxBorderColor = "#CCCCCC"; // Border color
+  
+      // Draw box border around company details
+      doc.setDrawColor(boxBorderColor); // Set border color
+      doc.setLineWidth(boxBorderWidth); // Set border width
+      doc.rect(10, currentHeight, docWidth - 20, 40, "D"); // Draw rectangle (x, y, width, height, style)
+  
       currentHeight += pdfConfig.lineHeight;
-      doc.setFontSize(param.report.additionalRows[i].style.fontSize);
-
-      doc.text(
-        docWidth / 1.5,
-        currentHeight,
-        param.report.additionalRows[i].col1,
-        "right"
-      );
-      doc.text(
-        docWidth - 25,
-        currentHeight,
-        param.report.additionalRows[i].col2,
-        "right"
-      );
-      doc.text(
-        docWidth - 10,
-        currentHeight,
-        param.report.additionalRows[i].col3,
-        "right"
-      );
-      checkAndAddPage();
-    }
-  }
-  //#endregion
-
-  checkAndAddPage();
-
-  doc.setTextColor(colorBlack);
-  currentHeight += pdfConfig.subLineHeight;
-  currentHeight += pdfConfig.subLineHeight;
-  //   currentHeight += pdfConfig.subLineHeight;
-  doc.setFontSize(pdfConfig.labelTextSize);
-
-  //#region Add num of pages at the bottom
-  if (doc.getNumberOfPages() > 1) {
-    for (let i = 1; i <= doc.getNumberOfPages(); i++) {
-      doc.setFontSize(pdfConfig.fieldTextSize - 2);
+  
+      doc.setFontSize(pdfConfig.labelTextSize);
       doc.setTextColor(colorGray);
-
-      if (param.pageEnable) {
-        doc.text(docWidth / 2, docHeight - 10, param.footer.text, "center");
-        doc.setPage(i);
-        doc.text(
-          param.pageLabel + " " + i + " / " + doc.getNumberOfPages(),
-          docWidth - 20,
-          doc.internal.pageSize.height - 6
-        );
+      doc.text(`Company ${index + 1}`, 15, currentHeight ); // Adjust text position for better alignment
+  
+      currentHeight += pdfConfig.lineHeight;
+      doc.setFontSize(pdfConfig.labelTextSize);
+      doc.setTextColor(colorGray);
+      doc.text(`Name: ${company.companyName}`, 15, currentHeight);
+      doc.text(docWidth - 15, currentHeight, `Pf Account Duration: ${company.workForYear} year ${company.workForMonth} month`, "right");
+  
+      currentHeight += pdfConfig.lineHeight;
+      doc.text(`First Transaction : ${company.firstTransactionMonth} - ${company.firstTransactionYear} `, 15, currentHeight);
+      doc.text(docWidth - 15, currentHeight, `First Transaction Approved: ${company.firstTransactionApprovedOn}`, "right");
+  
+      currentHeight += pdfConfig.lineHeight;
+      doc.text(`Last Transaction: ${company.lastTransactionMonth} - ${company.lastTransactionYear}`, 15, currentHeight);
+      doc.text(docWidth - 15, currentHeight, `Last Transaction Approved: ${company.lastTransactionApprovedOn}`, "right");
+  
+      currentHeight += pdfConfig.lineHeight;
+  
+      // Check if new page is needed
+      if (currentHeight >= docHeight - 20) {
+        doc.addPage();
+        currentHeight = 10;
       }
+    });
+  };
+  
+  addCompanyDetails(param.report.table);
 
-      checkAndAddPageNotLandscape(183);
-      checkAndAddPageLandscape();
-      //addStamp();
-      if (param.stamp.src) {
-        const totalPages = doc.getNumberOfPages();
-        const currentPage = doc.getCurrentPageInfo().pageNumber;
+  if (param.stamp.src) {
+    var imageStamp = "";
+    if (typeof window === "undefined") {
+      imageStamp = param.stamp.src;
+    } else {
+      imageStamp = new Image();
+      imageStamp.src = param.stamp.src;
+    }
 
-        // Only add stamp on the last page
-        if (currentPage === totalPages) {
-          addStamp();
-        }
-      }
+    if (param.stamp.type) {
+      doc.addImage(
+        imageStamp,
+        param.stamp.type,
+        docWidth - param.stamp.width - 10,
+        docHeight - param.stamp.height - 10,
+        param.stamp.width,
+        param.stamp.height
+      );
+    } else {
+      doc.addImage(
+        imageStamp,
+        docWidth - param.stamp.width - 10,
+        docHeight - param.stamp.height - 10,
+        param.stamp.width,
+        param.stamp.height
+      );
     }
   }
 
-  //   addStamp();
-
-  //#region Add num of first page at the bottom
-  if (doc.getNumberOfPages() === 1 && param.pageEnable) {
-    doc.setFontSize(pdfConfig.fieldTextSize - 2);
+  if (param.footer.text) {
+    doc.setFontSize(pdfConfig.fieldTextSize);
     doc.setTextColor(colorGray);
-    doc.text(docWidth / 2, docHeight - 10, param.footer.text, "center");
-    doc.text(
-      param.pageLabel + "1 / 1",
-      docWidth - 20,
-      doc.internal.pageSize.height - 6
-    );
-  }
-  //#endregion
-
-  let returnObj = {
-    pagesNumber: doc.getNumberOfPages(),
-  };
-
-  if (param.returnJsPDFDocObject) {
-    returnObj = {
-      ...returnObj,
-      jsPDFDocObject: doc,
-    };
+    currentHeight = docHeight - 10;
+    doc.text(param.footer.text, 10, currentHeight);
   }
 
-  if (param.outputType === "save") doc.save(param.fileName);
-  else if (param.outputType === "blob") {
-    const blobOutput = doc.output("blob");
-    returnObj = {
-      ...returnObj,
-      blob: blobOutput,
-    };
-  } else if (param.outputType === "datauristring") {
-    returnObj = {
-      ...returnObj,
-      dataUriString: doc.output("datauristring", {
-        filename: param.fileName,
-      }),
-    };
-  } else if (param.outputType === "arraybuffer") {
-    returnObj = {
-      ...returnObj,
-      arrayBuffer: doc.output("arraybuffer"),
-    };
-  } else
-    doc.output(param.outputType, {
-      filename: param.fileName,
-    });
+  if (param.pageEnable) {
+    var pageCount = doc.internal.getNumberOfPages();
+    for (var i = 0; i < pageCount; i++) {
+      doc.setPage(i + 1);
+      var pageLabel = `${param.pageLabel} ${i + 1} / ${pageCount}`;
+      doc.text(docWidth - 20, docHeight - 10, pageLabel, "right");
+    }
+  }
 
-  return returnObj;
+  switch (param.outputType) {
+    case OutputType.Save:
+      doc.save(param.fileName);
+      break;
+    case OutputType.DataUriString:
+      return doc.output("datauristring");
+    case OutputType.DataUri:
+      return doc.output("datauri");
+    case OutputType.DataUrlNewWindow:
+      window.open(doc.output("dataurlnewwindow"));
+      break;
+    case OutputType.Blob:
+      return doc.output("blob");
+    case OutputType.ArrayBuffer:
+      return doc.output("arraybuffer");
+    default:
+      doc.save(param.fileName);
+  }
+
+  if (param.returnJsPDFDocObject) return doc;
 }
 
-export default jsPDFInvoiceTemplate;
+export default jsPDFEmploymentHistTemplate;

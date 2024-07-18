@@ -158,7 +158,8 @@ const AppointeeCount = () => {
       fromDate: fromDate,
       toDate: toDate,
     };
-    jsPDFInvoiceTemplate(tableObj);
+    
+    jsPDFInvoiceTemplate({tableObj});
   };
 
   const handleAppointeeDetailsDownload = () => {
@@ -180,7 +181,7 @@ const AppointeeCount = () => {
       toDate: toDate,
     };
 
-    jsPDFInvoiceTemplate(tableObj);
+    jsPDFInvoiceTemplate({tableObj});
   };
   const handleSearch = () => {
     setTableRows(payLoad);
