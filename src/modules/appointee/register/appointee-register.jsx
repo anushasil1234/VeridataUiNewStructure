@@ -121,9 +121,10 @@ const AppointeeRegister = () => {
     verifyPANDetails,
   } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const { userId, appointeeId, userCode, companyId } = loggedInData[0];
+  const { userId, appointeeId, userCode } = loggedInData[0];
 
   const [genderList, setGenderList] = useState();
+  const [companyId, setCompanyId] = useState(0);
   const [defaultCountry, setDefaultCountry] = useState();
   const [passportFileNumber, setPassportFileNumber] = useState("");
   const [UAN, setUAN] = useState("");
@@ -228,6 +229,7 @@ const AppointeeRegister = () => {
       let {
         appointeeDetailsId,
         candidateId,
+        companyId,
         appointeeName,
         appointeeEmailId,
         aadhaarName,
@@ -266,6 +268,7 @@ const AppointeeRegister = () => {
       } = response.responseInfo;
       setIsSubmit(isSubmit);
       setCompanyName(companyName);
+      setCompanyId(companyId);
       hasValue(appointeeDetailsId)
         ? setAppointeeDetailsId(appointeeDetailsId)
         : setAppointeeDetailsId("");

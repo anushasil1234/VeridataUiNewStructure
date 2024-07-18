@@ -1180,6 +1180,17 @@ export const appointeeCountDetailsHeadCell = [
         }
     },
     {
+        id: 'companyName',
+        numeric: true,
+        type: "string",
+        enums: ['companyName'],
+        disablePadding: false,
+        label: 'Entity Name',
+        component: {
+            element: Typography
+        }
+    },
+    {
         id: 'appointeeName',
         numeric: true,
         type: "string",
