@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import CircularIndeterminate from 'shared/utils/loader/circularIndeterminate';
-import { AuthHeader, ManuallyCloseableSnackBar, decryptedData, removeLocalStorageItems } from 'shared/utils';
+import { AuthHeader, ManuallyCloseableSnackBar, decryptedData, getLocalStorageItem, removeLocalStorageItems, setLocalStorageItem } from 'shared/utils';
 import { removePopUpSetFunction, storePopUpSetFunction } from 'store/slices/popup-slice';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
@@ -9,7 +9,6 @@ import { removeDropdownList } from 'store/slices/dropdown-slice';
 import { removeApi } from 'store/slices/api-slice';
 import { removeLoggedinData } from 'store/slices/login-slice';
 import axios from "axios";
-
 
 const PfcRequiest = (Component) => {
     const PfcRequiestAdded = () => {
@@ -36,18 +35,82 @@ const PfcRequiest = (Component) => {
             dispatch(removeFunction());
             dispatch(removePopUpSetFunction());
         }
+
+        const setupAxiosInterceptors = (api) => {
+            api.interceptors.response.use(
+                response => response,
+                async error => {
+                    const originalRequest = error.config;
+                    if (error.response.status === 401 && !originalRequest._retry) {
+                        originalRequest._retry = true;
+                        try {
+                            const tokenResponse = await refreshAuthToken();
+                            const { responseInfo } = tokenResponse.data;
+                            if (tokenResponse.status === 200) {
+                                const newTokenDetails = responseInfo;
+                                setLocalStorageItem("pfc-token", newTokenDetails);
+                                const userDetails = getLocalStorageItem("pfc-user");
+                                const customDetails = `${userDetails?.userCode}|~|${userDetails?.userId}|~|`;
+                                originalRequest.headers['Authorization'] = `Bearer ${customDetails + newTokenDetails.token}`;
+                                return api(originalRequest);
+                            }
+                        } catch (e) {
+                            handleClickOnLogout();
+                            showErrorMessage("Your session has expired. Please login again.");
+                            return Promise.reject(error);
+                        }
+                    } else {
+                        handleOtherErrors(error);
+                    }
+                    return Promise.reject(error);
+                }
+            );
+        };
+
+        const handleOtherErrors = (error) => {
+            let message;
+            if (error.response) {
+                const { status, statusText } = error.response;
+                if (error.response.data) {
+                    const { data } = error.response;
+                    if (status === 500) {
+                        message = data.ErrorResponse?.UserMessage || "Internal Server Error";
+                    } else {
+                        message = data.title || data.errorResponse?.userMessage || statusText;
+                        if (data.errorResponse?.internalMessages?.length > 0) {
+                            message = (
+                                <>
+                                    {data.errorResponse.internalMessages.map((element, index) => (
+                                        <Typography key={index}>{element}</Typography>
+                                    ))}
+                                </>
+                            );
+                        }
+                    }
+                } else {
+                    message = statusText;
+                }
+            }
+            message && showErrorMessage(message);
+        };
+
+        const refreshAuthToken = async () => {
+            const tokenDetails = getLocalStorageItem("pfc-token");
+            const token = tokenDetails.token;
+            const refreshToken = tokenDetails.refreshToken;
+            const BASE_URL = await decryptedData(process.env.REACT_APP_API_URL);
+            return axios.post(`${BASE_URL}api/Account/GenerateRefreshToken`, { token, refreshToken });
+        };
+
         const PfcRequest = async (url, type, payLoad, successsMessage) => {
             const methodHeader = { headers: AuthHeader() };
+            const BASE_URL = await decryptedData(process.env.REACT_APP_API_URL);
+            const api = axios.create({ baseURL: BASE_URL });
+            setupAxiosInterceptors(api);
+            let response;
             try {
-
-                const BASE_URL = await decryptedData(process.env.REACT_APP_API_URL);
-                // const BASE_URL = process.env.REACT_APP_API_URL;
-                const api = axios.create({
-                    baseURL: BASE_URL
-                });
-                let response;
+                setLoading(true);
                 if (type === "POST") {
-                    setLoading(true);
                     response = await api.post(url, payLoad, methodHeader);
                 }
                 if (type === "GET") {
@@ -56,59 +119,17 @@ const PfcRequiest = (Component) => {
                 const { errorResponse, responseInfo, responseInfos, statusCode } = response.data;
                 if (statusCode === 200) {
                     successsMessage && showSuccessMessage(successsMessage);
-                    return {
-                        responseInfo,
-                        responseInfos,
-                        errorResponse
-                    };
+                    return { responseInfo, responseInfos, errorResponse };
                 } else {
-                    errorResponse.userMessage && showErrorMessage(errorResponse.userMessage);
+                    errorResponse?.userMessage && showErrorMessage(errorResponse.userMessage);
                 }
             } catch (error) {
-                let message;
-                if (error.response) {
-                    const { status, statusText } = error.response;
-                    if (status === 401) {
-                        handleClickOnLogout();
-                        message = "Your session has expired. Please login again";
-                    } else {
-                        if (error.response.data) {
-                            const { data } = error.response;
-                            if (status === 500) {
-                                message = data.ErrorResponse.UserMessage;
-                            }
-                            else {
-                                if (data.title) {
-                                    message = data.title;
-                                } else {
-                                    if (data.errorResponse) {
-
-                                        const { internalMessages, userMessage } = data.errorResponse;
-                                        if (internalMessages && internalMessages.length > 0) {
-                                            message =
-                                                <>
-                                                    {internalMessages.map((element, index) => {
-                                                        return (
-                                                            <Typography key={index}>{element}</Typography>
-                                                        )
-                                                    })}
-                                                </>
-                                        } else {
-                                            message = userMessage;
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            message = statusText;
-                        }
-                    }
-                }
-                message && showErrorMessage(message);
+                handleOtherErrors(error);
             } finally {
                 setLoading(false);
             }
         };
+
         dispatch(storePopUpSetFunction({ showErrorMessage, showSuccessMessage }));
 
         return (
@@ -124,7 +145,7 @@ const PfcRequiest = (Component) => {
             </>
         )
     }
-    return PfcRequiestAdded
+    return PfcRequiestAdded;
 }
 
-export default PfcRequiest
+export default PfcRequiest;
