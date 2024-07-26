@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import CircularIndeterminate from 'shared/utils/loader/circularIndeterminate';
 import {
     AuthHeader,
@@ -22,7 +22,6 @@ import { removeLoggedinTokenData } from 'store/slices/login-token-slice';
 import { removeSideMenuItems } from 'store/slices/side-menu-items-slice';
 import axios from "axios";
 
-
 const PfcRequest = (Component) => {
     const PfcRequestWrapper = () => {
         const userDetails = getLocalStorageItem("pfc-user");
@@ -30,6 +29,15 @@ const PfcRequest = (Component) => {
         const [severity, setSeverity] = useState();
         const [popUpAlertMessage, setPopUpAlertMessage] = useState();
         const dispatch = useDispatch();
+        const timeoutRef = useRef(null);
+        const inactivityTime = 1 * 60 * 1000; // 1 minutes in milliseconds
+
+        const resetTimeout = () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+            timeoutRef.current = setTimeout(handleClickOnLogout, inactivityTime);
+        };
 
         const showSuccessMessage = (message) => {
             setSeverity("success");
@@ -50,6 +58,7 @@ const PfcRequest = (Component) => {
             dispatch(removeFunction());
             dispatch(removePopUpSetFunction());
             dispatch(removeSideMenuItems());
+            showErrorMessage("Your session has expired due to inactivity. Please login again.");
         }
 
         const isAdmin = () => {
@@ -125,6 +134,9 @@ const PfcRequest = (Component) => {
 
             try {
                 setLoading(true);
+                if (userDetails?.userTypeId === 3) {
+                    resetTimeout(); // Reset the timeout on API call
+                }
                 const response = type === "POST"
                     ? await api.post(url, payload, methodHeader)
                     : await api.get(url, methodHeader);
@@ -145,6 +157,17 @@ const PfcRequest = (Component) => {
 
         useEffect(() => {
             dispatch(storePopUpSetFunction({ showErrorMessage, showSuccessMessage }));
+            // Set the initial timeout
+            if (userDetails?.userTypeId === 3) {
+                resetTimeout(); // Reset the timeout on API call
+              
+            }
+            return () => {
+                if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                }
+            };
+            // Clear the timeout on component unmount
         }, [dispatch]);
 
         return (
