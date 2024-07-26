@@ -30,7 +30,7 @@ const PfcRequest = (Component) => {
         const [popUpAlertMessage, setPopUpAlertMessage] = useState();
         const dispatch = useDispatch();
         const timeoutRef = useRef(null);
-        const inactivityTime = 1 * 60 * 1000; // 1 minutes in milliseconds
+        const inactivityTime = 10 * 60 * 1000; // 10 minutes in milliseconds
 
         const resetTimeout = () => {
             if (timeoutRef.current) {
@@ -155,20 +155,19 @@ const PfcRequest = (Component) => {
             }
         };
 
+        dispatch(storePopUpSetFunction({ showErrorMessage, showSuccessMessage }));
         useEffect(() => {
-            dispatch(storePopUpSetFunction({ showErrorMessage, showSuccessMessage }));
             // Set the initial timeout
             if (userDetails?.userTypeId === 3) {
                 resetTimeout(); // Reset the timeout on API call
-              
+                return () => {
+                    if (timeoutRef.current) {
+                        clearTimeout(timeoutRef.current);
+                    }
+                };
             }
-            return () => {
-                if (timeoutRef.current) {
-                    clearTimeout(timeoutRef.current);
-                }
-            };
             // Clear the timeout on component unmount
-        }, [dispatch]);
+        }, []);
 
         return (
             <>
