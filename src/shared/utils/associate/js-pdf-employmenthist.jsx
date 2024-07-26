@@ -73,7 +73,7 @@ function jsPDFEmploymentHistTemplate(props) {
         "The purpose of this report is to provide a comprehensive overview and analysis of the employee's employment history. This report includes personal information such as the employee's name, date of birth, and father's name, along with detailed information about the companies the employee has worked for. The goal is to help stakeholders gain a clear understanding of the employee's work experience and career progression.",
     },
     footer: {
-      text: "The report is created on a computer and is valid without the signature and stamp.",
+      text: "The report is created on a computer.",
     },
     pageEnable: true,
     pageLabel: "Page",
@@ -330,34 +330,34 @@ function jsPDFEmploymentHistTemplate(props) {
   
   addCompanyDetails(param.report.table);
 
-  if (param.stamp.src) {
-    var imageStamp = "";
-    if (typeof window === "undefined") {
-      imageStamp = param.stamp.src;
-    } else {
-      imageStamp = new Image();
-      imageStamp.src = param.stamp.src;
-    }
+  // if (param.stamp.src) {
+  //   var imageStamp = "";
+  //   if (typeof window === "undefined") {
+  //     imageStamp = param.stamp.src;
+  //   } else {
+  //     imageStamp = new Image();
+  //     imageStamp.src = param.stamp.src;
+  //   }
 
-    if (param.stamp.type) {
-      doc.addImage(
-        imageStamp,
-        param.stamp.type,
-        docWidth - param.stamp.width - 10,
-        docHeight - param.stamp.height - 10,
-        param.stamp.width,
-        param.stamp.height
-      );
-    } else {
-      doc.addImage(
-        imageStamp,
-        docWidth - param.stamp.width - 10,
-        docHeight - param.stamp.height - 10,
-        param.stamp.width,
-        param.stamp.height
-      );
-    }
-  }
+  //   if (param.stamp.type) {
+  //     doc.addImage(
+  //       imageStamp,
+  //       param.stamp.type,
+  //       docWidth - param.stamp.width - 10,
+  //       docHeight - param.stamp.height - 10,
+  //       param.stamp.width,
+  //       param.stamp.height
+  //     );
+  //   } else {
+  //     doc.addImage(
+  //       imageStamp,
+  //       docWidth - param.stamp.width - 10,
+  //       docHeight - param.stamp.height - 10,
+  //       param.stamp.width,
+  //       param.stamp.height
+  //     );
+  //   }
+  // }
 
   if (param.footer.text) {
     doc.setFontSize(pdfConfig.fieldTextSize);

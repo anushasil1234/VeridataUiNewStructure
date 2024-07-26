@@ -196,7 +196,7 @@ function jsPDFInvoiceTemplate(tableProps) {
       tableBodyBorder: true,
     },
     footer: {
-      text: "The report is created on a computer and is valid without the signature and stamp.",
+      text: "The report is created on a computer.",
     },
     pageEnable: true,
     pageLabel: "Page",
@@ -693,44 +693,44 @@ function jsPDFInvoiceTemplate(tableProps) {
   //#endregion
 
   //#region Stamp
-  var addStamp = () => {
-    let _addStampBase = () => {
-      var stampImage = "";
-      if (typeof window === "undefined") {
-        stampImage = param.stamp.src;
-      } else {
-        stampImage = new Image();
-        stampImage.src = param.stamp.src;
-      }
+  // var addStamp = () => {
+  //   let _addStampBase = () => {
+  //     var stampImage = "";
+  //     if (typeof window === "undefined") {
+  //       stampImage = param.stamp.src;
+  //     } else {
+  //       stampImage = new Image();
+  //       stampImage.src = param.stamp.src;
+  //     }
 
-      if (param.stamp.type)
-        doc.addImage(
-          stampImage,
-          param.stamp.type,
-          10 + param.stamp.margin.left,
-          docHeight - 22 + param.stamp.margin.top,
-          param.stamp.width,
-          param.stamp.height
-        );
-      else
-        doc.addImage(
-          stampImage,
-          10 + param.stamp.margin.left,
-          docHeight - 22 + param.stamp.margin.top,
-          param.stamp.width,
-          param.stamp.height
-        );
-    };
+  //     if (param.stamp.type)
+  //       doc.addImage(
+  //         stampImage,
+  //         param.stamp.type,
+  //         10 + param.stamp.margin.left,
+  //         docHeight - 22 + param.stamp.margin.top,
+  //         param.stamp.width,
+  //         param.stamp.height
+  //       );
+  //     else
+  //       doc.addImage(
+  //         stampImage,
+  //         10 + param.stamp.margin.left,
+  //         docHeight - 22 + param.stamp.margin.top,
+  //         param.stamp.width,
+  //         param.stamp.height
+  //       );
+  //   };
 
-    if (param.stamp.src) {
-      if (
-        param.stamp.inAllPages ||
-        (!param.stamp.inAllPages &&
-          doc.getCurrentPageInfo().pageNumber === doc.getNumberOfPages())
-      )
-        _addStampBase();
-    }
-  };
+  //   if (param.stamp.src) {
+  //     if (
+  //       param.stamp.inAllPages ||
+  //       (!param.stamp.inAllPages &&
+  //         doc.getCurrentPageInfo().pageNumber === doc.getNumberOfPages())
+  //     )
+  //       _addStampBase();
+  //   }
+  // };
   //#endregion
 
   checkAndAddPage();
@@ -800,15 +800,15 @@ function jsPDFInvoiceTemplate(tableProps) {
       checkAndAddPageNotLandscape(183);
       checkAndAddPageLandscape();
       //addStamp();
-      if (param.stamp.src) {
-        const totalPages = doc.getNumberOfPages();
-        const currentPage = doc.getCurrentPageInfo().pageNumber;
+      // if (param.stamp.src) {
+      //   const totalPages = doc.getNumberOfPages();
+      //   const currentPage = doc.getCurrentPageInfo().pageNumber;
 
-        // Only add stamp on the last page
-        if (currentPage === totalPages) {
-          addStamp();
-        }
-      }
+      //   // Only add stamp on the last page
+      //   if (currentPage === totalPages) {
+      //     addStamp();
+      //   }
+      // }
     }
   }
 
