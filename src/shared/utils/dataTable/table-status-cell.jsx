@@ -75,6 +75,14 @@ const TableStatusCell = (props) => {
       labelValue = "Revoked";
       chipStyle = consetDeclinedChipStyle;
       chipIconStyle= <CancelIcon color="white"/>
+    }if (cellValue === 4) {
+      labelValue = "Pending";
+      chipStyle = consetPendingChipStyle;
+      chipIconStyle= <WatchLaterIcon color="white"/>
+    }if (cellValue === 5) {
+      labelValue = "Prerequisite Data Not available";
+      chipStyle = consetDeclinedChipStyle;
+      chipIconStyle= <CancelIcon color="white"/>
     }
   }
   return (

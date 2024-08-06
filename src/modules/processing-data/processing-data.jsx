@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import {
+  generateProcessingAppointeeReportDesc,
   processingListPdfTableHeadCell,
   processingListTableHeadCell,
   toProcessing,
@@ -30,7 +31,7 @@ import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import moment from "moment";
-import jsPDFInvoiceTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 
 const UnWrappedProcessing = (props) => {
   const { hasPermission } = props;
@@ -126,30 +127,12 @@ const UnWrappedProcessing = (props) => {
         title: label,
       };
     });
-    let resultKeysArr = [];
-    let resultValuesArr = [];
-    let tableBodyList = [];
-
-    tableBodyList = responseList.map((elem) => {
-      resultKeysArr = Object.keys(elem);
-      resultValuesArr = Object.values(elem);
-      let targetHeaderCell1 = {};
-      resultKeysArr.forEach((element, index) => {
-        processingListPdfTableHeadCell.forEach((res) => {
-          if (res["id"] === element) {
-            targetHeaderCell1 = {
-              ...targetHeaderCell1,
-              [element]: resultValuesArr[index],
-            };
-          }
-        });
-      });
-      return CreatePdfTableBody(
-        targetHeaderCell1,
-        processingListPdfTableHeadCell
-      );
-    });
-
+    const tableBodyList = responseList && responseList.map(
+      (tableRows) => {
+        return CreatePdfTableBody(tableRows, processingListPdfTableHeadCell);
+      }
+    );
+    
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
@@ -157,9 +140,11 @@ const UnWrappedProcessing = (props) => {
       label: "Processing List",
       fromDate: fromDate,
       toDate: toDate,
+      tableName: "Appointee details",
+      rptDesc: generateProcessingAppointeeReportDesc
     };
 
-    jsPDFInvoiceTemplate(tableObj);
+    jsPDFReportTemplate({tableObj});
   };
 
   const clearSearch = () => {

@@ -11,8 +11,8 @@ import React, { useEffect, useState } from "react";
 import NoResponse from "./widget/no-response";
 import { dashboardtextStyle, dropDownLableStyle, inputFieldStyle } from "app";
 import { submitConfirmationMsg, toRegister } from "shared/constants/constants";
-import { useSelector } from "react-redux";
-import { CardLayout, PageLayout } from "shared/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { CardLayout, hasValue, PageLayout, setLocalStorageItem } from "shared/utils";
 import {
   CriticalRecruits,
   Lapsed,
@@ -24,6 +24,8 @@ import {
   UpcomingRecruits,
 } from "./widget";
 import SmallListTable from "shared/utils/small-list-table/small-list-table";
+import PrerequisiteInformation from "shared/components/display-information/prerequisite-information";
+import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
 
 const HomeView = () => {
   const commonHooksFunctionSlice = useSelector(
@@ -31,14 +33,16 @@ const HomeView = () => {
   );
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
+  const userDetails = loggedInData[0];
   const dropdownList = useSelector((state) => state.dropdownList);
 
   const { days } = dropdownList.length > 0 && dropdownList[0];
-
+  const prerquistdata = hasValue(userDetails.IsPrerequisiteDataAvailable) && userDetails.IsPrerequisiteDataAvailable;
+  //console.log("prerquistdata", prerquistdata);
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const { getDashboardWidgetCardData, getRemarks, getAppointeeDetails } =
-    apiSlice[0];
-  const { userTypeId, appointeeId, userName, emailId, phone, status  } = loggedInData[0];
+  const { getDashboardWidgetCardData, getRemarks, getAppointeeDetails, postAppointeePrerequisiteStatus } = apiSlice[0];
+  const { userTypeId, appointeeId, userName, emailId, phone, status } = loggedInData[0];
+  const [isPrerequisiteDataAvailable, setIsPrerequisiteDataAvailable] = useState(prerquistdata)
 
   const [filtertotaloffer, setfiltertotaloffer] = useState(null);
   // const [consentStatus, setConsentStatus] = useState(0);
@@ -53,8 +57,9 @@ const HomeView = () => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   const functionSlice = useSelector(state => state.functionSlice);
-  const { openViewModel, openConsentModal } = functionSlice[0];
+  const { openViewModel, openConsentModal, openInfoModel, openConfirmationYesNoModal } = functionSlice[0];
   const consentStatus = loggedInData[0]?.consentStatus;
+  const dispatch = useDispatch();
   const setDashboardWidgetCardData = async (dayRange) => {
     const isfilterd = !(dayRange === "A");
     const filterday = dayRange === "A" ? 0 : dayRange;
@@ -87,18 +92,82 @@ const HomeView = () => {
     }
   };
 
+  const handleYes = () => {
+    submitPrerequisiteStatus(4, 'PREREQCNFYES')
+    return;
+  }
+
+  const handleNo = () => {
+    submitPrerequisiteStatus(5, 'PREREQCNFNO')
+    return;
+  }
+
+  const submitPrerequisiteStatus = async (consentStatusId, consentStatusCode) => {
+    const postConsentpayLoad = {
+      appointeeId: appointeeId,
+      ConsentStatus: consentStatusId,
+      ConsentStatusCode: consentStatusCode,
+      userId: userDetails?.userId
+    }
+    const response = await postAppointeePrerequisiteStatus(postConsentpayLoad);
+    setIsPrerequisiteDataAvailable(consentStatusCode === 'PREREQCNFYES');
+    console.log("isPrerequisiteDataAvailable", consentStatusCode === 'PREREQCNFYES')
+    if (response) {
+      const { responseInfo } = response;
+      if (responseInfo === 'success') {
+        setLocalStorageItem("pfc-user", {
+          ...userDetails,
+          IsPrerequisiteDataAvailable: consentStatusCode === 'PREREQCNFYES',
+          // IsConsentProcessed: isConsentProcessed,
+        });
+        dispatch(removeLoggedinData());
+        // userDetails.consentStatus = consentStatusId;
+        dispatch(storeLoggedinData({
+          ...userDetails,
+          IsPrerequisiteDataAvailable: consentStatusCode === 'PREREQCNFYES',
+        }));
+      }
+    }
+
+  }
+
+
   const appointeeVerification = () => {
-    if (consentStatus !== 1) {
-      const ConsentModalContent = {
-        dialogTitle:"Consent Notification",
-        dialogContentText: submitConfirmationMsg,
-        consentStatus:consentStatus
-      };
-      openConsentModal(ConsentModalContent, ()=> navigateTo(toRegister))
+
+    if (isPrerequisiteDataAvailable && consentStatus !== 1) {
+      handleConsent();
       //to do
-    } else {
+    } else if (consentStatus === 1) {
       navigateTo(toRegister);
     }
+  }
+
+  const handlePrerequisiteDataConsent = async () => {
+    if (!isPrerequisiteDataAvailable) {
+      const prerequisiteModelContent = {
+        dialogTitle: "Prerequisite Confirmation",
+        dialogContentText: "Before verification there are some prerequisites, thats needs to be done...",
+        dialogComponent: <PrerequisiteInformation />,
+        firstButtonName:"I do",
+        secondButtonName:"I don't have prerequisites",
+      };
+      openConfirmationYesNoModal(prerequisiteModelContent, handleYes, handleNo);
+    }else{
+      const prerequisiteModelContent = {
+        dialogTitle: "Prerequisite Confirmation",
+        dialogContentText: "Before verification there are some prerequisites, thats needs to be done...",
+        dialogContentComponent: <PrerequisiteInformation />,
+      };
+      openInfoModel(prerequisiteModelContent);
+    }
+  }
+  const handleConsent = async () => {
+    const ConsentModalContent = {
+      dialogTitle: "Consent Notification",
+      dialogContentText: submitConfirmationMsg,
+      consentStatus: consentStatus
+    };
+    openConsentModal(ConsentModalContent, () => navigateTo(toRegister))
   }
   const setRemarks = async () => {
     const response = await getRemarks(appointeeId);
@@ -274,7 +343,17 @@ const HomeView = () => {
                     color="primary"
                     onClick={() => openViewModel(appointeeId)}
                   >
-                    View
+                    My Info
+                  </Button>
+                  <Button
+                    name="Prerequisite"
+                    sx={{ m: "10px 10px 10px 0px " }}
+                    mood="V"
+                    variant="contained"
+                    color="primary"
+                    onClick={handlePrerequisiteDataConsent}
+                  >
+                    Prerequisite Details
                   </Button>
                   {!isSubmit ? (
                     <>
@@ -282,7 +361,7 @@ const HomeView = () => {
                         variant="contained"
                         color="primary"
                         onClick={appointeeVerification}
-                      // onClick={() => navigateTo(toRegister)}
+                        disabled={!isPrerequisiteDataAvailable}
                       >
                         Verification
                       </Button>

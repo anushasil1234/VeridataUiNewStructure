@@ -27,6 +27,7 @@ import { useSelector } from "react-redux";
 import {
   appointeeCountDetailsHeadCell,
   appointeeCountHeadCell,
+  generateAppointeeCountReportDesc,
   toAppointeecount,
 } from "shared/constants/constants";
 import {
@@ -40,7 +41,7 @@ import {
 import { CollapsibleDataTable } from "shared/utils/dataTable/collapsable-datatable";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
-import jsPDFInvoiceTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 import moment from "moment";
 
 const AppointeeCount = () => {
@@ -48,7 +49,7 @@ const AppointeeCount = () => {
   const apiSlice = useSelector((state) => state.apiSlice);
   const dropdownList = useSelector((state) => state.dropdownList);
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
- 
+
   const { navigateTo } = commonHooksFunctionSlice[0];
 
   const { getAppointeeCounterReport } = apiSlice[0];
@@ -72,13 +73,13 @@ const AppointeeCount = () => {
     toDate: toDate ? DateFormatYYYYMMDD(toDate?.toString()) : toDate
   };
   let [payLoad, setPayLoad] = useState(payLoadData);
-  
-  const setTableRows = async ({appointeeName, statusCode, fromDate, toDate}) => {
+
+  const setTableRows = async ({ appointeeName, statusCode, fromDate, toDate }) => {
     payLoad = {
       appointeeName: appointeeName,
-      statusCode:  hasValue(statusCode) ? statusCode.toString() : null,
+      statusCode: hasValue(statusCode) ? statusCode.toString() : null,
       fromDate: hasValue(fromDate) ? DateFormatYYYYMMDD(fromDate?.toString()) : null,
-      toDate:  hasValue(toDate) ? DateFormatYYYYMMDD(toDate?.toString()) : null
+      toDate: hasValue(toDate) ? DateFormatYYYYMMDD(toDate?.toString()) : null
     };
     const response = await getAppointeeCounterReport(payLoad);
 
@@ -123,7 +124,7 @@ const AppointeeCount = () => {
     setPayLoad(payLoad);
   }, [toDate]);
   useEffect(() => {
-    payLoad.appointeeName = hasValue(appointeeName)? appointeeName.trim() : appointeeName;
+    payLoad.appointeeName = hasValue(appointeeName) ? appointeeName.trim() : appointeeName;
     setPayLoad(payLoad);
   }, [appointeeName]);
 
@@ -155,11 +156,13 @@ const AppointeeCount = () => {
       rows: tableBodyList,
       fileName: `_Appointee_Count_${currentDate}`,
       label: "Appointee Count",
+      tableName:"Count Details",
       fromDate: fromDate,
       toDate: toDate,
+      rptDesc: generateAppointeeCountReportDesc
     };
-    
-    jsPDFInvoiceTemplate({tableObj});
+
+    jsPDFReportTemplate({ tableObj });
   };
 
   const handleAppointeeDetailsDownload = () => {
@@ -177,11 +180,13 @@ const AppointeeCount = () => {
       rows: tableBodyList,
       fileName: `_Appointee_Details_Count_${currentDate}`,
       label: "Appointee Details Count",
+      tableName:"Appointee Details",
       fromDate: fromDate,
       toDate: toDate,
+      rptDesc: generateAppointeeCountReportDesc
     };
 
-    jsPDFInvoiceTemplate({tableObj});
+    jsPDFReportTemplate({ tableObj });
   };
   const handleSearch = () => {
     setTableRows(payLoad);
@@ -191,13 +196,13 @@ const AppointeeCount = () => {
     setToDate(null);
     setStatusCode(null);
     const payLoad = {
-      fromDate : null,
-      toDate : null,
-      statusCode :null
+      fromDate: null,
+      toDate: null,
+      statusCode: null
     };
     setTableRows(payLoad);
 
-   navigateTo(toAppointeecount, { state: false });
+    navigateTo(toAppointeecount, { state: false });
   };
 
 
@@ -225,34 +230,34 @@ const AppointeeCount = () => {
             />
           </Grid>
           <Grid item xs={2}>
-          <FormControl sx={{width: "100%" }} size="large"> 
+            <FormControl sx={{ width: "100%" }} size="large">
 
-           <InputLabel id="demo-simple-select-label">Status</InputLabel>
-           {statusCode !== undefined && 
-            <Select
-              error={false}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              className="customeTextField"
-              sx={inputFieldStyleAdded}
-              value={statusCode}
-              label="Status"
-              inputProps={{
-                style: inputPropsStyle
-              }}
-              defaultValue={""}
-              onChange={(e) => { setStatusCode(e.target.value) }}
-            >
-              {reportFilterStatusList &&
-                reportFilterStatusList.map((element, index) => {
-                  return (
-                    <MenuItem
-                      key={index}
-                      value={element.code}
-                    >{`${element.value}`}</MenuItem>
-                  );
-                })}
-            </Select>}
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              {statusCode !== undefined &&
+                <Select
+                  error={false}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  className="customeTextField"
+                  sx={inputFieldStyleAdded}
+                  value={statusCode}
+                  label="Status"
+                  inputProps={{
+                    style: inputPropsStyle
+                  }}
+                  defaultValue={""}
+                  onChange={(e) => { setStatusCode(e.target.value) }}
+                >
+                  {reportFilterStatusList &&
+                    reportFilterStatusList.map((element, index) => {
+                      return (
+                        <MenuItem
+                          key={index}
+                          value={element.code}
+                        >{`${element.value}`}</MenuItem>
+                      );
+                    })}
+                </Select>}
             </FormControl>
           </Grid>
           <Grid item xs={2}>
@@ -262,9 +267,9 @@ const AppointeeCount = () => {
               type="text"
               className="customeTextField"
               variant="outlined"
-                onChange={(e) => {
-                  setAppointeeName(e.target.value);
-                }}
+              onChange={(e) => {
+                setAppointeeName(e.target.value);
+              }}
               value={appointeeName}
               inputStyle={{ padding: 0 }}
               inputProps={{
@@ -273,7 +278,7 @@ const AppointeeCount = () => {
               label={"Appointee Name"}
               defaultValue={" "}
               multiline
-             
+
             />
           </Grid>
           <Grid item xs={4}>

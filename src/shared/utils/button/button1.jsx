@@ -4,7 +4,7 @@ import React from 'react'
 
 const Button1 = (props) => {
     return (
-        <Button  {...props} sx={modelButtonStyle} variant="contained" color="primary">
+        <Button  {...props} sx={modelButtonStyle} variant="contained" hover color="primary">
             {props.children}
         </Button>
     )

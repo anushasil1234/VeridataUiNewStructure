@@ -3,7 +3,9 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import RequireAuth from 'shared/components/auth-provider';
 import AuthorizedRedirection from 'shared/components/authorized-redirection';
-import { toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent, toLogin, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData, toUserlist, toVerified, toHelp, toSetPassword } from 'shared/constants/constants';
+import { toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent,
+   toLogin, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData, toUserlist, toVerified,
+    toHelp, toSetPassword,toNoMovementAgingReport,toNoResponseAgingReport,toNationalityReport } from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 
 
@@ -34,6 +36,9 @@ const Login = Loadable(lazy(() => import('../../modules/account/login/login-view
 const SetPassword = Loadable(lazy(() => import('../../modules/set-password/set-password')));
 const ManageProfile = Loadable(lazy(() => import('../../modules/manage-profile/manage-profile')));
 const Help = Loadable(lazy(() => import('../../modules/help/help')));
+const NoResponseAgingReport =  Loadable(lazy(() => import('../../modules/reports/no-response-aging-view')));
+const AppointeeAgingReport =  Loadable(lazy(() => import('../../modules/reports/no-movement-aging-view')));
+const AppointeeNationalityReport =  Loadable(lazy(() => import('../../modules/reports/nationality-view')));
 
 const CustomRouter = [
   {
@@ -61,6 +66,9 @@ const CustomRouter = [
       { path: toAppointeecount, exact: true, element: <AppointeeCount /> },
       { path: toManageProfile, exact: true, element: <ManageProfile /> },
       { path: toHelp, exact: true, element: <Help /> },
+      { path: toNoResponseAgingReport, exact: true, element: <NoResponseAgingReport /> },
+      { path: toNoMovementAgingReport, exact: true, element: <AppointeeAgingReport /> },
+      { path: toNationalityReport, exact: true, element: <AppointeeNationalityReport /> },
     ],
   },
   {

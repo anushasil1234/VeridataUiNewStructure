@@ -964,7 +964,7 @@ export const modelButtonStyle = {
   fontSize: "0.875rem",
   borderRadius: "8px",
   "&:hover": {
-    backgroundColor: ThemeColorPalete.primary.main
+    backgroundColor: ThemeColorPalete.primary.secondary
   },
 };
 export const hideBoxSx = {

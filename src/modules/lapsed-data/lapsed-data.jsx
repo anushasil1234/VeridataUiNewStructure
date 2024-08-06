@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import {
+  generateLapsedAppointeeReportDesc,
   lapsedListPdfTableHeadCell,
   lapsedListTableHeadCell,
   toLapseddata,
@@ -29,7 +30,7 @@ import dayjs from "dayjs";
 import { inputFieldStyleAdded, primaryFabStyle } from "app";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
-import jsPDFInvoiceTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 import moment from "moment";
 
 const UnwrappedLapseddata = (props) => {
@@ -76,7 +77,7 @@ const UnwrappedLapseddata = (props) => {
     appointeeName: state && state.appointeeName,
     companyId: companyId,
     candidateId: state && state.candidateId,
-    statusCode:  statusCode,
+    statusCode: statusCode,
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
   };
@@ -150,29 +151,11 @@ const UnwrappedLapseddata = (props) => {
         title: label,
       };
     });
-
-    let resultKeysArr = [];
-    let resultValuesArr = [];
-    let tableBodyList = [];
-
-    tableBodyList = responseList.map((elem) => {
-      resultKeysArr = Object.keys(elem);
-      resultValuesArr = Object.values(elem);
-      let targetHeaderCell1 = {};
-
-      resultKeysArr.forEach((element, index) => {
-        lapsedListPdfTableHeadCell.forEach((res) => {
-          if (res["id"] === element) {
-            targetHeaderCell1 = {
-              ...targetHeaderCell1,
-              [element]: resultValuesArr[index],
-            };
-          }
-        });
-      });
-      return CreatePdfTableBody(targetHeaderCell1, lapsedListPdfTableHeadCell);
-    });
-
+    const tableBodyList = responseList && responseList.map(
+      (tableRows) => {
+        return CreatePdfTableBody(tableRows, lapsedListPdfTableHeadCell);
+      }
+    );
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
@@ -180,9 +163,11 @@ const UnwrappedLapseddata = (props) => {
       label: "Lapsed List",
       fromDate: fromDate,
       toDate: toDate,
+      tableName: "Appointee details",
+      rptDesc: generateLapsedAppointeeReportDesc
     };
 
-    jsPDFInvoiceTemplate(tableObj);
+    jsPDFReportTemplate({ tableObj });
   };
   const dispatch = useDispatch();
   useEffect(() => {

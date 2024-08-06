@@ -57,6 +57,12 @@ export const invalidPasswordMsg = `Password should have length 6-10, containing 
 export const invalidProfilePasswordMsg = `Password is not valid, please retry`;
 export const passwordCreationSuccessMsg = `Password has been created successfully`;
 export const passwordChangeSuccessMsg = `Password has been changed successfully`;
+export const generateNoMovementReportDesc = (days) => {
+    return `This report provides an overview and analysis of appointees who have made no progress for ${days} days during a specified period. It includes detailed information about these candidates to help stakeholders understand progress patterns, identify issues, and may indicate that the candidate are not interest in joining .`;
+};
+export const generateAppointeeCountReportDesc = `The purpose of this report is to provide an overview and analysis of the appointee count added to the system on a daily basis during a specified period. This report includes details such as the total number of appointees added each day, the total number of links sent, and the total number of links not sent. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
 
 
 
@@ -123,6 +129,9 @@ export const toLogin = "/auth/login";
 export const toManageProfile = "/manageprofile";
 export const toSetPassword = "/setpassword";
 export const toHelp = "/help";
+export const toNoResponseAgingReport = "/noresponseagigreport";
+export const toNoMovementAgingReport = "/nomovementagigreport";
+export const toNationalityReport = "/nationalityreport";
 
 // dropdown values start
 
@@ -143,6 +152,8 @@ const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
 const criticalListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
 const lapsedListActions = ['VIEWDETAILS', 'UPDTEAPNTEE'];
 const userListActions = ['VIEWUSERDETAILS', 'UPDATEUSER', 'CLOSEUSERDETAILS'];
+const viewDetailstActions = ['VIEWDETAILS'];
+
 
 export const verifiedListTableHeadCell = [
     {
@@ -638,61 +649,35 @@ export const criticalListTableHeadCell = [
 ]
 export const processingListPdfTableHeadCell = [
     {
-        id: 'appointeeName',
-        numeric: true,
         type: "string",
-        disablePadding: false,
         label: 'Name',
-        enums: ['appointeeName', 'mobileNo', 'appointeeEmailId'],
-        component: {
-            element: Typography
-        }
+        enums: ['appointeeName', 'candidateId'],
     },
     {
-        id: 'candidateId',
-        numeric: true,
         type: "string",
-        disablePadding: false,
-        label: 'Candidate ID',
-        enums: ['candidateId'],
-        component: {
-            element: Typography
-        }
+        label: 'mobile No',
+        enums: ['mobileNo'],
     },
     {
-        id: 'createdDate',
-        numeric: true,
+        type: "string",
+        label: 'Email',
+        enums: ['appointeeEmailId'],
+    },
+    {
         type: "date",
-        disablePadding: false,
         label: 'Link Sent Date',
         enums: ['createdDate'],
-        component: {
-            element: Typography
-        }
     },
     {
-        id: 'dateOfJoining',
-        numeric: true,
         type: "date",
-        disablePadding: false,
         label: 'Joining Date',
         enums: ['dateOfJoining'],
-        component: {
-            element: Typography
-        }
     },
     {
-        id: 'status',
-        numeric: true,
-        type: "badge",
-        disablePadding: false,
+        type: "string",
         label: 'Status',
-        enums: ['status', 'isNoIsuueinVerification', 'isReprocess'],
-        component: {
-            element: (props) => TableStatusCell(props),
-            attribute: ['appointeeId']
-        }
-    },
+        enums: ['status'],
+    }
 ]
 
 export const processingListTableHeadCell = [
@@ -858,59 +843,34 @@ export const lapsedListTableHeadCell = [
 ]
 export const lapsedListPdfTableHeadCell = [
     {
-        id: 'appointeeName',
-        numeric: true,
         type: "string",
-        disablePadding: false,
         label: 'Name',
-        enums: ['appointeeName', 'mobileNo', 'appointeeEmailId'],
-        component: {
-            element: Typography
-        }
+        enums: ['appointeeName', 'candidateId'],
     },
     {
-        id: 'candidateId',
-        numeric: true,
         type: "string",
-        disablePadding: false,
-        label: 'Candidate ID',
-        enums: ['candidateId'],
-        component: {
-            element: Typography
-        }
+        label: 'mobile No',
+        enums: ['mobileNo'],
     },
     {
-        id: 'createdDate',
-        numeric: true,
+        type: "string",
+        label: 'Email',
+        enums: ['appointeeEmailId'],
+    },
+    {
         type: "date",
-        disablePadding: false,
         label: 'Link Sent Date',
         enums: ['createdDate'],
-        component: {
-            element: Typography
-        }
     },
     {
-        id: 'dateOfJoining',
-        numeric: true,
         type: "date",
-        disablePadding: false,
         label: 'Joining Date',
         enums: ['dateOfJoining'],
-        component: {
-            element: Typography
-        }
     },
     {
-        id: 'status',
-        numeric: true,
-        type: "badge",
-        disablePadding: false,
+        type: "string",
         label: 'Status',
-        enums: ['status', 'isNoIsuueinVerification', 'isReprocess'],
-        component: {
-            element: Typography
-        }
+        enums: ['status'],
     }
 ]
 export const userListTableHeadCell = [
@@ -1314,7 +1274,342 @@ export const apiCountDetailsHeadCell = [
         }
     },
 ]
+export const noResponseListTableHeadCell = [
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'emailId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        enums: ['candidateId'],
+        disablePadding: false,
+        label: 'Candidate Id',
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Joining Date ',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'createdDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'status',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Status',
+        enums: ['status'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'lastActivityDesc',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Activity Info',
+        enums: ['lastActivityDesc'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'lastActionDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Activity at',
+        enums: ['lastActionDate'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'viewDetails',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Actions',
+        enums: ['viewDetails'],
+        component: {
+            element: (props) => TableActionCell({ actionList: viewDetailstActions, ...props }),
+            attribute: ['appointeeId']
+        }
+    }
+];
+export const noMovementListTableHeadCell = [
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'emailId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        enums: ['candidateId'],
+        disablePadding: false,
+        label: 'Candidate Id',
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Joining Date ',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'createdDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'status',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Status',
+        enums: ['status'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'lastActivityDesc',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Activity Info',
+        enums: ['lastActivityDesc'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'lastActionDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Activity at',
+        enums: ['lastActionDate'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'viewDetails',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Actions',
+        enums: ['viewDetails'],
+        component: {
+            element: (props) => TableActionCell({ actionList: viewDetailstActions, ...props }),
+            attribute: ['appointeeId']
+        }
+    }
+];
+export const noResponseReportTableHeadCell = [
+    {
+        type: "string",
+        label: 'Name',
+        enums: ['appointeeName', 'candidateId'],
+    },
+    {
+        type: "string",
+        label: 'Email',
+        enums: ['emailId'],
 
+    },
+    {
+        type: "string",
+        label: 'Mobile No',
+        enums: ['mobileNo'],
+
+    },
+    // {
+    //     type: "string",
+    //     enums: ['candidateId'],
+    //     label: 'Candidate Id',
+    // },
+    {
+        type: "date",
+        label: 'Joining Date ',
+        enums: ['dateOfJoining'],
+    },
+    {
+        type: "date",
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+    },
+    {
+        type: "string",
+        label: 'Last Activity',
+        enums: ['lastActivityDesc'],
+    },
+    {
+        type: "date",
+        label: 'Last Activity at',
+        enums: ['lastActionDate'],
+    }
+
+];
+export const nationalityListTableHeadCell = [
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'emailId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        enums: ['candidateId'],
+        disablePadding: false,
+        label: 'Candidate Id',
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'countryName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Country Name ',
+        enums: ['countryName'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'passportNumber',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Passport Number',
+        enums: ['passportNumber'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'startDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Start Date',
+        enums: ['startDate'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'expiryDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Expiry Date',
+        enums: ['expiryDate'],
+        component: {
+            element: Typography
+        }
+    }
+
+];
+export const nationalityReportTableHeadCell = [
+    {
+        type: "string",
+        label: 'Name',
+        enums: ['appointeeName', 'candidateId'],
+    },
+    {
+        type: "string",
+        label: 'Email',
+        enums: ['emailId'],
+
+    },
+    {
+        type: "string",
+        label: 'Mobile No',
+        enums: ['mobileNo'],
+
+    },
+    {
+        type: "string",
+        label: 'Country',
+        enums: ['countryName'],
+    },
+    {
+        type: "string",
+        label: 'Passport Number',
+        enums: ['passportNumber'],
+    },
+    {
+        type: "date",
+        label: 'Start Date ',
+        enums: ['startDate'],
+    },
+    {
+        type: "date",
+        label: 'Expiry Date',
+        enums: ['expiryDate'],
+    }
+
+];
 // table headercell end
 
 // Apis urls
@@ -1351,6 +1646,7 @@ export const GetTotalCriticalAppointee_URL = `${Account}/GetTotalCriticalAppoint
 export const ValidateProfilePassword_URL = `${Account}/ValidateProfilePassword`;
 export const EditUserProfile_URL = `${Account}/EditUserProfile`;
 export const GetFaqData_URL = `${Account}/GetFaqData`;
+// export const GetRefreshToken_URL = `${Account}/GenerateRefreshToken`;
 
 export const RawDataProcess_URL = `${AppoienteeWorkFlow}/RawDataProcess`;
 export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointeeDetailsUpdate`;
@@ -1382,6 +1678,8 @@ export const downloadLapsedList_URL = `${AppointeeReports}/GetLapsedDataReport`;
 export const downloadApiCounterReport_URL = `${AppointeeReports}/ApiCounterReport`;
 
 
+export const AppointeeAgingFilterReport_URL = `${AppointeeReports}/AppointeeAgingFilterReport`
+export const AppointeeNationalityReport_URL = `${AppointeeReports}/AppointeeNationalityFilterReport`
 export const AppointeeCounterReport_URL = `${AppointeeReports}/AppointeeCounterReport`
 export const ApiCounterReport_URL = (fromDate, toDate) => {
     let ApiCounterReportUrl = `${AppointeeReports}/ApiCounterReport`
@@ -1407,6 +1705,7 @@ export const UpdateAdminUser_URL = `${Users}/UpdateAdminUser`;
 export const GetUserByUserId_URL = `${Users}/GetUserByUserId?userId=`;
 export const ValidateUserCode_URL = `${Users}/ValidateUserCode?userCode=`;
 export const AppointeeConsentUpdate_URL = `${Users}/AppointeeConsentUpdate`;
+export const AppointeePrerequisiteUpdate_URL = `${Users}/AppointeePrerequisiteUpdate`;
 
 export const RemoveAdminUser_URL = (id, userId) => `${Users}/RemoveAdminUser?id=${id}&userId=${userId}`;
 

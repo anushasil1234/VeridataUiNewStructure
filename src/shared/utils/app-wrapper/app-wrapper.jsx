@@ -88,9 +88,12 @@ import {
   PassbookDetails_URL,
   EmployementDetails_URL,
   AppointeeConsentUpdate_URL,
+  AppointeePrerequisiteUpdate_URL,
   VerifyAadharViaXml_URL,
   GetFaqData_URL,
-  PasswordChange_URL
+  PasswordChange_URL,
+  AppointeeAgingFilterReport_URL,
+  AppointeeNationalityReport_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -113,6 +116,7 @@ import FilePasswordForm from "shared/components/password-forms/file-password-for
 import PassbookView from "modules/appointee/view/passbook-details-view";
 import EmploymentView from "modules/appointee/view/employment-details-view";
 import RemarksInputModel from "../models/remarks-modal";
+import ConfirmationYesNoModal from "../models/confirmation-modal-yes-no";
 
 
 const AppWrapper = (App) => {
@@ -125,6 +129,8 @@ const AppWrapper = (App) => {
     const [appointeeId, setAppointeeId] = useState();
     const [confirmationModelOpen, setConfirmationModelOpen] = useState(false);
     const [confirmationModelContent, setConfirmationModelContent] = useState();
+    const [confirmationYesNoModelOpen, setConfirmationYesNoModelOpen] = useState(false);
+    const [confirmationYesNoModelContent, setConfirmationYesNoModelContent] = useState();
     const [consentModalOpen, setConsentModalOpen] = useState(false);
     const [consentModalContent, setConsentModalContent] = useState();
     const [infoModelOpen, setInfoModelOpen] = useState(false);
@@ -249,6 +255,32 @@ const AppWrapper = (App) => {
       setConfirmationModelContent();
     };
 
+    const openConfirmationYesNoModal = (
+      confirmationYesNoModelContent,
+      confirmationYesCallBack,
+      confirmationNoCallBack,
+
+    ) => {
+      const confirmedYes = () => {
+        confirmationYesCallBack();
+        closeConfirmationYesNoModel();
+      };
+      const confirmedNo = () => {
+        confirmationNoCallBack();
+        closeConfirmationYesNoModel();
+      };
+      setConfirmationYesNoModelContent({
+        ...confirmationYesNoModelContent,
+        confirmedYes,
+        confirmedNo,
+      });
+      setConfirmationYesNoModelOpen(true);
+    };
+
+    const closeConfirmationYesNoModel = () => {
+      setConfirmationYesNoModelOpen(false);
+      setConfirmationYesNoModelContent();
+    };
     const openConsentModal = (
       consentModalContent,
       consentCallBack
@@ -274,7 +306,7 @@ const AppWrapper = (App) => {
       setAppointeeId(appointeeId);
       setPassbookIsViewOpen(true);
     };
-   
+
     const closePassbookViewModel = () => {
       setPassbookIsViewOpen(false);
     };
@@ -441,6 +473,15 @@ const AppWrapper = (App) => {
       const response = await PfcRequest(_url, "POST", payLoad);
       if (response) {
         const { fileData, fileName } = response.responseInfo;
+        const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${fileData}`;
+        downloadFile(linkSource, fileName);
+      }
+    };
+    const downloadAgingExelReport = async (_url, payLoad) => {
+      const response = await PfcRequest(_url, "POST", payLoad);
+      if (response) {
+        const { filedata } = response.responseInfo;
+        const { fileData,fileName } = fileData;
         const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${fileData}`;
         downloadFile(linkSource, fileName);
       }
@@ -661,12 +702,23 @@ const AppWrapper = (App) => {
     const postAppointeeConsent = async (payLoad) => {
       return await PfcRequest(AppointeeConsentUpdate_URL, "POST", payLoad);
     };
+    const postAppointeePrerequisiteStatus = async (payLoad) => {
+      return await PfcRequest(AppointeePrerequisiteUpdate_URL, "POST", payLoad);
+    };
     const GetFaqData = async () => {
       return await PfcRequest(GetFaqData_URL, "GET");
     };
-    const postPasswordChange = async (payLoad)=>{
+    const postPasswordChange = async (payLoad) => {
       return await PfcRequest(PasswordChange_URL, "POST", payLoad);
     }
+    const getAppointeeAgingFilterReport = async (payLoad) => {
+      return await PfcRequest(AppointeeAgingFilterReport_URL, "POST", payLoad);
+    };
+
+    // const getAppointeeAgingFilterReport = async (payLoad) => {
+    //   return await PfcRequest(AppointeeAgingFilterReport_URL, "POST", payLoad);
+    // };
+
     const popUpSlice = useSelector((state) => state.popUpSlice);
     const apiSlice = useSelector((state) => state.apiSlice);
     const functionSlice = useSelector((state) => state.functionSlice);
@@ -839,10 +891,13 @@ const AppWrapper = (App) => {
           editUserProfileDetails,
           getReportFilterStatusList,
           postAppointeeConsent,
+          postAppointeePrerequisiteStatus,
           getPassbookDetails,
           getEmployementDetails,
           GetFaqData,
-          postPasswordChange
+          postPasswordChange,
+          getAppointeeAgingFilterReport,
+          downloadAgingExelReport
         })
       );
     }
@@ -857,6 +912,7 @@ const AppWrapper = (App) => {
           closeEmploymentViewModel,
           openUserViewModel,
           openConfirmationModel,
+          openConfirmationYesNoModal,
           openConsentModal,
           openInfoModel,
           closeOtpForm,
@@ -886,6 +942,10 @@ const AppWrapper = (App) => {
         <ConfirmationModel
           open={confirmationModelOpen}
           confirmationModelContent={confirmationModelContent}
+        />
+        <ConfirmationYesNoModal
+          open={confirmationYesNoModelOpen}
+          confirmationYesNoModelContent={confirmationYesNoModelContent}
         />
         <ConsentModal
           open={consentModalOpen}

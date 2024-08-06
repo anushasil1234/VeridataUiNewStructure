@@ -18,7 +18,7 @@ import {
   PageLayout,
   generateTableRowData,
 } from "shared/utils";
-import jsPDFInvoiceTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { removeActionRoute } from "store/slices/action-route-slice";
@@ -114,7 +114,7 @@ const UnwrappedReport = (props) => {
     };
 
 
-    jsPDFInvoiceTemplate({ tableObj, tableObjConsolidate });
+    jsPDFReportTemplate({ tableObj, tableObjConsolidate });
   };
 
   const handleSearch = () => {
