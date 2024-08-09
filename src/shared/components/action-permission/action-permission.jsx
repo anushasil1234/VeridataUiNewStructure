@@ -5,11 +5,11 @@ import { hasActionpermission } from 'shared/utils/associate/has-action-permition
 
 
 const ActionPermission = (Component) => {
- const ActionPerssionComponent = (props) => {
+    const ActionPerssionComponent = (props) => {
 
         const { pathname } = useLocation();
         const sideMenuItemsSlice = useSelector((state) => state.sideMenuItemsSlice);
-        const  menuItems = sideMenuItemsSlice[0] && sideMenuItemsSlice[0].menuItems;
+        const menuItems = sideMenuItemsSlice[0] && sideMenuItemsSlice[0].menuItems;
         const [hasPermission, setHasPermission] = useState();
         useEffect(() => {
             if (menuItems) {
@@ -20,11 +20,11 @@ const ActionPermission = (Component) => {
 
         return (
             <>
-                 <Component {...props} hasPermission={hasPermission} />
+                <Component {...props} hasPermission={hasPermission} />
             </>
         )
     }
-   return ActionPerssionComponent
+    return ActionPerssionComponent
 }
 
 export default ActionPermission

@@ -18,20 +18,19 @@ const loginBase = {
     "isSubmit": Boolean || null,
     "appointeeId": Number || null,
     "status": String,
-    "isSetProfilePassword": Boolean|| null,
-    "isDefaultPassword": Boolean|| null,
-    "isPasswordExpire": Boolean|| null
+    "isSetProfilePassword": Boolean || null,
+    "isDefaultPassword": Boolean || null,
+    "isPasswordExpire": Boolean || null
 };
 const LoggedinData = createSlice({
     name: "loggedinData",
     initialState: [],
     reducers: {
         storeLoggedinData(state, action) {
-            console.log("statestatestate", action.payload);
             state.push(action.payload);
         },
         removeLoggedinData(state, action) {
-            state.push(loginBase);
+            state.pop();
         },
     }
 })

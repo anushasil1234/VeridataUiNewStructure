@@ -18,7 +18,7 @@ const ConsentModal = ({ open, consentModalContent }) => {
   const appointeeId = userDetails?.appointeeId;
   const userId = userDetails?.userId;
   const consentStatus = userDetails?.consentStatus;
-  const [isConsentProcessed, setIsConsentProcessed] = useState(userDetails?.IsConsentProcessed)
+  const [isConsentProcessed, setIsConsentProcessed] = useState(userDetails?.isConsentProcessed)
 
   const { dialogTitle, dialogComponent, dialogContentText, closeConsentModal, consentCallBack } = consentModalContent || "";
 
@@ -39,14 +39,14 @@ const ConsentModal = ({ open, consentModalContent }) => {
         setLocalStorageItem("pfc-user", {
           ...userDetails,
           consentStatus: consentStatusId,
-          IsConsentProcessed: isConsentProcessed,
+          isConsentProcessed: isConsentProcessed,
         });
         dispatch(removeLoggedinData());
         // userDetails.consentStatus = consentStatusId;
         dispatch(storeLoggedinData({
           ...userDetails,
           consentStatus: consentStatusId,
-          IsConsentProcessed: isConsentProcessed,
+          isConsentProcessed: isConsentProcessed,
         }));
 
         (consentCallBack && consentStatusId !== 2) && consentCallBack();

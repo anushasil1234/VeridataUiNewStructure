@@ -37,8 +37,8 @@ const HomeView = () => {
   const dropdownList = useSelector((state) => state.dropdownList);
 
   const { days } = dropdownList.length > 0 && dropdownList[0];
-  const prerquistdata = hasValue(userDetails.IsPrerequisiteDataAvailable) && userDetails.IsPrerequisiteDataAvailable;
-  //console.log("prerquistdata", prerquistdata);
+
+  const prerquistdata = hasValue(userDetails.isPrerequisiteDataAvailable) && userDetails.isPrerequisiteDataAvailable;
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getDashboardWidgetCardData, getRemarks, getAppointeeDetails, postAppointeePrerequisiteStatus } = apiSlice[0];
   const { userTypeId, appointeeId, userName, emailId, phone, status } = loggedInData[0];
@@ -117,14 +117,14 @@ const HomeView = () => {
       if (responseInfo === 'success') {
         setLocalStorageItem("pfc-user", {
           ...userDetails,
-          IsPrerequisiteDataAvailable: consentStatusCode === 'PREREQCNFYES',
+          isPrerequisiteDataAvailable: consentStatusCode === 'PREREQCNFYES',
           // IsConsentProcessed: isConsentProcessed,
         });
         dispatch(removeLoggedinData());
         // userDetails.consentStatus = consentStatusId;
         dispatch(storeLoggedinData({
           ...userDetails,
-          IsPrerequisiteDataAvailable: consentStatusCode === 'PREREQCNFYES',
+          isPrerequisiteDataAvailable: consentStatusCode === 'PREREQCNFYES',
         }));
       }
     }
