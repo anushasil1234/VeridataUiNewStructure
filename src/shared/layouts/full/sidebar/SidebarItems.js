@@ -32,7 +32,7 @@ const SidebarItems = () => {
   useEffect(() => {
     setMenu();
     return () => {
-      setMenuitems();
+      setMenuitems(null);
     }
   }, [])
 

@@ -80,7 +80,7 @@ const UnWrappedProcessing = (props) => {
     appointeeName: state && state.appointeeName,
     companyId: companyId,
     candidateId: state && state.candidateId,
-    statusCode:  statusCode,
+    statusCode: statusCode,
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
   });
@@ -132,7 +132,7 @@ const UnWrappedProcessing = (props) => {
         return CreatePdfTableBody(tableRows, processingListPdfTableHeadCell);
       }
     );
-    
+
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
@@ -144,7 +144,7 @@ const UnWrappedProcessing = (props) => {
       rptDesc: generateProcessingAppointeeReportDesc
     };
 
-    jsPDFReportTemplate({tableObj});
+    jsPDFReportTemplate({ tableObj });
   };
 
   const clearSearch = () => {
@@ -174,7 +174,7 @@ const UnWrappedProcessing = (props) => {
     if (actionRouteSlice.length === 0) {
       setTableRows(payLoad);
     }
-  }, [actionRouteSlice]);
+  }, [actionRouteSlice, state, hasPermission]);
 
   useEffect(() => {
     payLoad.statusCode = statusCode;
