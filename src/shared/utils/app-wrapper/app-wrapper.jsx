@@ -93,7 +93,10 @@ import {
   GetFaqData_URL,
   PasswordChange_URL,
   AppointeeAgingFilterReport_URL,
-  AppointeeNationalityReport_URL
+  AppointeeNationalityReport_URL,
+  ValidateUserByOtpForgetPassword_URL,
+  ChangePasswordGenerateOTP_URL
+
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -147,13 +150,10 @@ const AppWrapper = (App) => {
     const [submitModelOpen, setSubmitModelOpen] = useState(false);
     const [remedyModelOpen, setRemedyModelOpen] = useState(false);
     const [remedyModelProps, setRemedyModelProps] = useState(false);
-    const [passwordSubmitionModelOpen, setPasswordSubmitionModelOpen] =
-      useState(false);
+    const [passwordSubmitionModelOpen, setPasswordSubmitionModelOpen] = useState(false);
     const [passwordSubmitionProps, setPasswordSubmitionProps] = useState(false);
-    const [filePasswordSubmitionModelOpen, setFilePasswordSubmitionModelOpen] =
-      useState(false);
-    const [filePasswordSubmitionProps, setFilePasswordSubmitionProps] =
-      useState(false);
+    const [filePasswordSubmitionModelOpen, setFilePasswordSubmitionModelOpen] = useState(false);
+    const [filePasswordSubmitionProps, setFilePasswordSubmitionProps] = useState(false);
     const [documentModelOpen, setDocumentModelOpen] = useState(false);
     const [documentModelProps, setDocumentModelProps] = useState();
     const [userId, setUserId] = useState();
@@ -419,54 +419,30 @@ const AppWrapper = (App) => {
       return await PfcRequest(UserSignInDetails_URL, "POST", payLoad);
     };
     const getVerifiedAppointeeList = async (payLoad) => {
-      return await PfcRequest(`${GetProcessedEPFOData_URL}`, "POST", payLoad);
+      return await PfcRequest(GetProcessedEPFOData_URL, "POST", payLoad);
     };
     const getRejectedAppointeeList = async (payLoad) => {
-      const responseInfo = await PfcRequest(
-        `${GetRejectedFileData_URL}`,
-        "POST",
-        payLoad
-      );
+      const responseInfo = await PfcRequest(GetRejectedFileData_URL, "POST", payLoad);
       return responseInfo;
     };
     const getCriticalAppointeeList = async (payLoad) => {
-      const responseInfo = await PfcRequest(
-        `${GetCriticalAppointeeData_URL}`,
-        "POST",
-        payLoad
-      );
+      const responseInfo = await PfcRequest(GetCriticalAppointeeData_URL, "POST", payLoad);
       return responseInfo;
     };
     const getPfCreationAppointeeReportList = async (payLoad) => {
-      const responseInfo = await PfcRequest(
-        `${GetPfCreationApponteeReport_URL}`,
-        "POST",
-        payLoad
-      );
+      const responseInfo = await PfcRequest(GetPfCreationApponteeReport_URL, "POST", payLoad);
       return responseInfo;
     };
     const getLinkNotSentList = async (payLoad) => {
-      const responseInfo = await PfcRequest(
-        `${GetUnProcessedFileData_URL}`,
-        "POST",
-        payLoad
-      );
+      const responseInfo = await PfcRequest(GetUnProcessedFileData_URL, "POST", payLoad);
       return responseInfo;
     };
     const getProessingDataList = async (payLoad) => {
-      const responseInfo = await PfcRequest(
-        `${GetUnderProcessFileData_URL}`,
-        "POST",
-        payLoad
-      );
+      const responseInfo = await PfcRequest(GetUnderProcessFileData_URL, "POST", payLoad);
       return responseInfo;
     };
     const getLapsedDataList = async (payLoad) => {
-      const responseInfo = await PfcRequest(
-        `${GetExpiredProcessFileData_URL}`,
-        "POST",
-        payLoad
-      );
+      const responseInfo = await PfcRequest(GetExpiredProcessFileData_URL, "POST", payLoad);
       return responseInfo;
     };
     const downloadReport = async (_url, payLoad) => {
@@ -481,21 +457,16 @@ const AppWrapper = (App) => {
       const response = await PfcRequest(_url, "POST", payLoad);
       if (response) {
         const { filedata } = response.responseInfo;
-        const { fileData,fileName } = fileData;
+        const { fileData, fileName } = fileData;
         const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${fileData}`;
         downloadFile(linkSource, fileName);
       }
     };
     const configerationSetUp = async (payLoad) => {
-      return await PfcRequest(
-        `${PostSetupConfigData_URL}`,
-        "POST",
-        payLoad,
-        configurationSuccessMsg
-      );
+      return await PfcRequest(PostSetupConfigData_URL, "POST", payLoad, configurationSuccessMsg);
     };
     const getConfigedData = async () => {
-      return await PfcRequest(`${GetSetupConfigData_URL}`, "GET");
+      return await PfcRequest(GetSetupConfigData_URL, "GET");
     };
     const getGenderList = async () => {
       return await PfcRequest(`${GetMastarDropdowndata_URL}${GEN}`, "GET");
@@ -519,139 +490,79 @@ const AppWrapper = (App) => {
       return await PfcRequest(`${GetMastarDropdowndata_URL}${FLT}`, "GET");
     };
     const postAppointeeDetails = async (payLoad) => {
-      return await PfcRequest(
-        `${PostAppointeeDetailsSave_URL}`,
-        "POST",
-        payLoad,
-        formSaveSuccess
-      );
+      return await PfcRequest(PostAppointeeDetailsSave_URL, "POST", payLoad, formSaveSuccess);
     };
     const getPassportDetails = async (payLoad) => {
-      return await PfcRequest(`${VerifyPassportDetails_URL}`, "POST", payLoad);
+      return await PfcRequest(VerifyPassportDetails_URL, "POST", payLoad);
     };
     const verifyPANDetails = async (payLoad) => {
-      return await PfcRequest(`${VerifyPanDetails_URL}`, "POST", payLoad);
+      return await PfcRequest(VerifyPanDetails_URL, "POST", payLoad);
     };
     const getRemarks = async (appointeeId) => {
       return await PfcRequest(`${GetRemarks_URL}${appointeeId}`, "GET");
     };
     const postAppointeeFileDetails = async (payLoad) => {
-      return await PfcRequest(
-        `${PostAppointeeFileDetails_URL}`,
-        "POST",
-        payLoad,
-        formSubmitionSuccess
-      );
+      return await PfcRequest(PostAppointeeFileDetails_URL, "POST", payLoad, formSubmitionSuccess);
     };
     const getAppointeeDetails = async (appointeeId) => {
-      return await PfcRequest(
-        `${GetAppointeeDetails_URL}${appointeeId}`,
-        "GET"
-      );
+      return await PfcRequest(`${GetAppointeeDetails_URL}${appointeeId}`, "GET");
     };
     const getAppointeeActivity = async (appointeeId) => {
-      return await PfcRequest(
-        `${GetAppointeeActivity_URL}${appointeeId}`,
-        "GET"
-      );
+      return await PfcRequest(`${GetAppointeeActivity_URL}${appointeeId}`, "GET");
     };
     const postAppointeeReprocess = async (payLoad) => {
-      return await PfcRequest(`${PostAppointeeReprocess_URL}`, "POST", payLoad);
+      return await PfcRequest(PostAppointeeReprocess_URL, "POST", payLoad);
     };
     const postAppointeeRejected = async (payLoad) => {
-      const response = await PfcRequest(
-        `${PostAppointeeRejected_URL}`,
-        "POST",
-        payLoad,
-        appointeeRejectionSuccess
-      );
-      return response;
+      return await PfcRequest(PostAppointeeRejected_URL, "POST", payLoad, appointeeRejectionSuccess);
     };
     const postAppointeeApproved = async (payLoad) => {
-      return await PfcRequest(
-        `${PostAppointeeApproved_URL}`,
-        "POST",
-        payLoad,
-        appointeeApproveSuccess
-      );
+      return await PfcRequest(PostAppointeeApproved_URL, "POST", payLoad, appointeeApproveSuccess);
     };
     const getUANNumber = async (payLoad) => {
-      return await PfcRequest(`${GetUANNumber_URL}`, "POST", payLoad);
+      return await PfcRequest(GetUANNumber_URL, "POST", payLoad);
     };
     const verifyAadharDetails = async (payLoad) => {
-      return await PfcRequest(`${VerifyAadharViaXml_URL}`, "POST", payLoad);
+      return await PfcRequest(VerifyAadharViaXml_URL, "POST", payLoad);
     };
     const generateUANOtp = async (payLoad) => {
-      return await PfcRequest(`${GenerateUANOTP_URL}`, "POST", payLoad);
+      return await PfcRequest(GenerateUANOTP_URL, "POST", payLoad);
     };
     const getTotalCriticalAppointee = async () => {
-      return await PfcRequest(`${GetTotalCriticalAppointee_URL}`, "GET");
+      return await PfcRequest(GetTotalCriticalAppointee_URL, "GET");
     };
     const submitUANOTP = async (payLoad) => {
-      return await PfcRequest(`${UANSubmitOTP_URL}`, "POST", payLoad);
+      return await PfcRequest(UANSubmitOTP_URL, "POST", payLoad);
     };
     const getPassbookFileData = async (payLoad) => {
-      return await PfcRequest(`${DownloadPassbookFile_URL}`, "POST", payLoad);
+      return await PfcRequest(DownloadPassbookFile_URL, "POST", payLoad);
     };
     const postAppointeeClose = async (payLoad) => {
-      return await PfcRequest(
-        `${PostAppointeeClose_URL}`,
-        "POST",
-        payLoad,
-        appointteTerminationSuccess
-      );
+      return await PfcRequest(PostAppointeeClose_URL, "POST", payLoad, appointteTerminationSuccess);
     };
     const postRemainderMail = async (appointeeId, userId) => {
-      return await PfcRequest(
-        PostRemainderMail_URL(appointeeId, userId),
-        "POST",
-        {},
-        remiderSuccessMsg
-      );
+      return await PfcRequest(PostRemainderMail_URL(appointeeId, userId), "POST", {}, remiderSuccessMsg);
     };
     const appointeeDetailsUpdate = async (payLoad) => {
-      return await PfcRequest(
-        `${AppointeeDetailsUpdate_URL}`,
-        "POST",
-        payLoad,
-        editSuccess
-      );
+      return await PfcRequest(AppointeeDetailsUpdate_URL, "POST", payLoad, editSuccess);
     };
     const postAppointeeSearch = async (searchInput) => {
-      return await PfcRequest(
-        `${PostAppointeeSearch_URL}${searchInput}`,
-        "POST"
-      );
+      return await PfcRequest(`${PostAppointeeSearch_URL}${searchInput}`, "POST");
     };
     const getRemarksRemedyData = async (remarksId) => {
       return await PfcRequest(`${GetRemarksRemedyData_URL}${remarksId}`, "GET");
     };
     const getAdminUserDetails = async () => {
-      return await PfcRequest(`${GetAdminUserList_URL}`, "GET");
+      return await PfcRequest(GetAdminUserList_URL, "GET");
     };
     const postUserDetails = async (payLoad) => {
-      return await PfcRequest(
-        `${CreateUser_URL}`,
-        "POST",
-        payLoad,
-        userCreationSuccessMsg
-      );
+      return await PfcRequest(CreateUser_URL, "POST", payLoad, userCreationSuccessMsg);
     };
     const postUpdateUserDetails = async (payLoad) => {
-      return await PfcRequest(
-        `${UpdateAdminUser_URL}`,
-        "POST",
-        payLoad,
-        userUpdateSuccessMsg
-      );
+      return await PfcRequest(UpdateAdminUser_URL, "POST", payLoad, userUpdateSuccessMsg);
     };
     const deleteUserDetails = async (id, userId) => {
-      return await PfcRequest(
-        RemoveAdminUser_URL(id, userId),
-        "POST",
-        null,
-        userDeletedSuccessMsg
-      );
+      return await PfcRequest(RemoveAdminUser_URL(id, userId), "POST", null, userDeletedSuccessMsg);
     };
     const getRoleList = async () => {
       return await PfcRequest(`${GetMastarDropdowndata_URL}${RLE}`, "GET");
@@ -663,40 +574,27 @@ const AppWrapper = (App) => {
       return await PfcRequest(`${ValidateUserCode_URL}${userCode}`, "POST");
     };
     const getAppointeeCounterReport = async (payLoad) => {
-      const response = await PfcRequest(
-        AppointeeCounterReport_URL,
-        "POST",
-        payLoad
-      );
-      return response;
+      return await PfcRequest(AppointeeCounterReport_URL, "POST", payLoad);
     };
     const getApiCounterReport = async (fromDate, toDate) => {
       return await PfcRequest(ApiCounterReport_URL(fromDate, toDate), "POST");
     };
 
     const getPassbookDetails = async (Id) => {
-      const response = await PfcRequest(`${PassbookDetails_URL}${Id}`, "POST");
-      return response;
+      return await PfcRequest(`${PassbookDetails_URL}${Id}`, "POST");
     };
     const getEmployementDetails = async (Id) => {
-      const response = await PfcRequest(`${EmployementDetails_URL}${Id}`, "POST");
-      return response;
+      return await PfcRequest(`${EmployementDetails_URL}${Id}`, "POST");
     };
 
     const postProfilePassword = async (payLoad) => {
       return await PfcRequest(ValidateProfilePassword_URL, "POST", payLoad);
     };
     const editUserProfileDetails = async (payLoad) => {
-      return await PfcRequest(
-        EditUserProfile_URL,
-        "POST",
-        payLoad,
-        passwordCreationSuccessMsg
-      );
+      return await PfcRequest(EditUserProfile_URL, "POST", payLoad, passwordCreationSuccessMsg);
     };
     const getReportFilterStatusList = async () => {
-      const response = await PfcRequest(GetReportFilterStatus_URL, "GET");
-      return response;
+      return await PfcRequest(GetReportFilterStatus_URL, "GET");
     };
 
     const postAppointeeConsent = async (payLoad) => {
@@ -713,6 +611,15 @@ const AppWrapper = (App) => {
     }
     const getAppointeeAgingFilterReport = async (payLoad) => {
       return await PfcRequest(AppointeeAgingFilterReport_URL, "POST", payLoad);
+    };
+    const getAppointeeNationalityReport = async (payLoad) => {
+      return await PfcRequest(AppointeeNationalityReport_URL, "POST", payLoad);
+    };
+     const ChangePasswordGenerateOTP = async (payLoad) => {
+      return await PfcRequest(ChangePasswordGenerateOTP_URL, "POST", payLoad);
+    };
+     const ValidateForgetPassweordUsrByOtp = async (payLoad) => {
+      return await PfcRequest(ValidateUserByOtpForgetPassword_URL, "POST", payLoad);
     };
 
     // const getAppointeeAgingFilterReport = async (payLoad) => {
@@ -897,6 +804,9 @@ const AppWrapper = (App) => {
           GetFaqData,
           postPasswordChange,
           getAppointeeAgingFilterReport,
+          getAppointeeNationalityReport,
+          ChangePasswordGenerateOTP,
+          ValidateForgetPassweordUsrByOtp,
           downloadAgingExelReport
         })
       );

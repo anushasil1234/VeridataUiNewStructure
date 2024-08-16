@@ -4,8 +4,8 @@ import Loadable from '../layouts/full/shared/loadable/Loadable';
 import RequireAuth from 'shared/components/auth-provider';
 import AuthorizedRedirection from 'shared/components/authorized-redirection';
 import { toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent,
-   toLogin, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData, toUserlist, toVerified,
-    toHelp, toSetPassword,toNoMovementAgingReport,toNoResponseAgingReport,toNationalityReport } from 'shared/constants/constants';
+   toLogin,toForgotPassword, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData, toUserlist, toVerified,
+    toHelp, toSetPassword,toReSetPassword,toNoMovementAgingReport,toNoResponseAgingReport,toNationalityReport } from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 
 
@@ -34,11 +34,13 @@ const AppointeeRegister = Loadable(lazy(() => import('../../modules/appointee/re
 const AppointeeCount = Loadable(lazy(() => import('../../modules/reports/appointee-count')));
 const Login = Loadable(lazy(() => import('../../modules/account/login/login-view')));
 const SetPassword = Loadable(lazy(() => import('../../modules/set-password/set-password')));
+const ReSetPassword = Loadable(lazy(() => import('../../modules/set-password/reset-password')));
 const ManageProfile = Loadable(lazy(() => import('../../modules/manage-profile/manage-profile')));
 const Help = Loadable(lazy(() => import('../../modules/help/help')));
 const NoResponseAgingReport =  Loadable(lazy(() => import('../../modules/reports/no-response-aging-view')));
 const AppointeeAgingReport =  Loadable(lazy(() => import('../../modules/reports/no-movement-aging-view')));
 const AppointeeNationalityReport =  Loadable(lazy(() => import('../../modules/reports/nationality-view')));
+const ForgotPassword = Loadable(lazy(() => import('../../modules/account/login/forgot-password')));
 
 const CustomRouter = [
   {
@@ -55,7 +57,7 @@ const CustomRouter = [
       { path: toLinknotsent, exact: true, element: <LinkNotSent /> },
       { path: toLapseddata, exact: true, element: <LapsedData /> },
       { path: toProcessing, exact: true, element: <ProcessingData /> },
-      { path: toProcessing, exact: true, element: <ProcessingData /> },
+      // { path: toProcessing, exact: true, element: <ProcessingData /> },
       { path: toDataUploaded, exact: true, element: <UploadedData /> },
       { path: toUplodData, exact: true, element: <DataUpload /> },
       { path: toUpdateData, exact: true, element: <DataUpdata /> },
@@ -79,7 +81,9 @@ const CustomRouter = [
     path: '/auth',
     element: <BlankLayout />,
     children: [
-      { path: toLogin, exact: true, element: AuthorizedRedirection(Login) }
+      { path: toLogin, exact: true, element: AuthorizedRedirection(Login) },
+      { path: toForgotPassword, exact: true, element: AuthorizedRedirection(ForgotPassword) },
+      { path: toReSetPassword, exact: true, element: AuthorizedRedirection(ReSetPassword) }
     ]
   },
   { path: '*', element: <Navigate to="/auth/404" /> }

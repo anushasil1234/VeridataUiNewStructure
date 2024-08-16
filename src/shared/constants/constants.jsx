@@ -126,8 +126,10 @@ export const toUserlist = "/userlist";
 export const toAppointeecount = "/appointeecount";
 export const toDataUploaded = "/datauploaded";
 export const toLogin = "/auth/login";
+export const toForgotPassword = "/auth/forgetpassword";
 export const toManageProfile = "/manageprofile";
 export const toSetPassword = "/setpassword";
+export const toReSetPassword = "/auth/resetpassword";
 export const toHelp = "/help";
 export const toNoResponseAgingReport = "/noresponseagigreport";
 export const toNoMovementAgingReport = "/nomovementagigreport";
@@ -1525,6 +1527,17 @@ export const nationalityListTableHeadCell = [
         }
     },
     {
+        id: 'nationality',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Nationality',
+        enums: ['nationality'],
+        component: {
+            element: Typography
+        }
+    },
+    {
         id: 'countryName',
         numeric: true,
         type: "string",
@@ -1549,7 +1562,7 @@ export const nationalityListTableHeadCell = [
     {
         id: 'startDate',
         numeric: true,
-        type: "date",
+        type: "string",
         disablePadding: false,
         label: 'Start Date',
         enums: ['startDate'],
@@ -1560,7 +1573,7 @@ export const nationalityListTableHeadCell = [
     {
         id: 'expiryDate',
         numeric: true,
-        type: "date",
+        type: "string",
         disablePadding: false,
         label: 'Expiry Date',
         enums: ['expiryDate'],
@@ -1595,16 +1608,16 @@ export const nationalityReportTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Passport Number',
+        label: 'Passport No.',
         enums: ['passportNumber'],
     },
     {
-        type: "date",
+        type: "string",
         label: 'Start Date ',
         enums: ['startDate'],
     },
     {
-        type: "date",
+        type: "string",
         label: 'Expiry Date',
         enums: ['expiryDate'],
     }
@@ -1621,7 +1634,7 @@ const AadhaarValidate = `${Api}/AadhaarValidate`;
 const FileUpload = `${Api}/FileUpload`;
 const Users = `${Api}/Users`;
 
-export const PasswordChange_URL = `${Account}/DefaultPasswordChange`;
+export const PasswordChange_URL = `${Account}/PostPasswordChange`;
 
 export const DownloadSampleXlsFile_URL = `${FileUpload}/DownloadSampleXlsFile`;
 export const DownloadUpdateSampleXlsFile_URL = `${FileUpload}/DownloadUpdateSampleXlsFile`;
@@ -1679,7 +1692,7 @@ export const downloadApiCounterReport_URL = `${AppointeeReports}/ApiCounterRepor
 
 
 export const AppointeeAgingFilterReport_URL = `${AppointeeReports}/AppointeeAgingFilterReport`
-export const AppointeeNationalityReport_URL = `${AppointeeReports}/AppointeeNationalityFilterReport`
+export const AppointeeNationalityReport_URL = `${AppointeeReports}/NationalityFilterReport`
 export const AppointeeCounterReport_URL = `${AppointeeReports}/AppointeeCounterReport`
 export const ApiCounterReport_URL = (fromDate, toDate) => {
     let ApiCounterReportUrl = `${AppointeeReports}/ApiCounterReport`
@@ -1706,6 +1719,8 @@ export const GetUserByUserId_URL = `${Users}/GetUserByUserId?userId=`;
 export const ValidateUserCode_URL = `${Users}/ValidateUserCode?userCode=`;
 export const AppointeeConsentUpdate_URL = `${Users}/AppointeeConsentUpdate`;
 export const AppointeePrerequisiteUpdate_URL = `${Users}/AppointeePrerequisiteUpdate`;
+export const ChangePasswordGenerateOTP_URL = `${Account}/ChangePasswordGenerateOTP`;
+export const ValidateUserByOtpForgetPassword_URL = `${Account}/ValidateUserByOtpForgetPassword`;
 
 export const RemoveAdminUser_URL = (id, userId) => `${Users}/RemoveAdminUser?id=${id}&userId=${userId}`;
 
@@ -1730,11 +1745,13 @@ Enter all the details requested in the following pages & complete your verificat
 export const congratulationDialogContentTitle = `Congratulatoins!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
+export const OtpEmptyMsg = `Otp cant not be empty`;
 export const passwordNotMsg = `Password not matched`;
 export const passwordPattern = `Password should be atleast 8 charecter long with atleast 1 upper case, 1 lower case, 1 number, and one special charecter`;
 export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
 export const remarksEmptyMsg = `Remarks cant not be empty`;
 export const otpToMailMsg = `A verification code has been sent to your email address, Please check and enter `;
+export const setPasswordOtpToMailMsg = `A verification code has been sent to your email address, Please check and enter it in otp field `;
 export const emailEmptyMsg = `Email can't not be empty`;
 export const invalidEmailMsg = `Enter a valid email`;
 export const contactNoEmptyMsg = `Contact no can't be empty`;

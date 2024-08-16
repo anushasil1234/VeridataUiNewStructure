@@ -1,9 +1,9 @@
-import { Box, Button, Grid, IconButton, InputAdornment, Paper, Typography } from "@mui/material";
+import { Box, Button, Grid, IconButton, InputAdornment, Link, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { InputField, PageHeading1, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
 import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle } from "app";
 import { useNavigate } from "react-router-dom";
-import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard, toSetPassword, welcomeMsg } from "shared/constants/constants";
+import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard, toForgotPassword, toSetPassword, welcomeMsg } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
 import logo from 'assets/images/logos/pfc_logo1.png';
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
@@ -226,6 +226,13 @@ export const LoginView = () => {
                     Sign in
                   </Button>
                 </form>
+                <Box mt={2}>
+                  <Typography variant="body2" align="center">
+                    <Link href={toForgotPassword} underline="hover">
+                      Forgot Password?
+                    </Link>
+                  </Typography>
+                </Box>
               </Grid>
             </Grid>
           </Grid>
