@@ -88,7 +88,7 @@ export { OutputType, jsPDF };
  */
 function jsPDFReportTemplate(tableProps) {
   const { headerList, rows, tableName = null, fileName, label, fromDate, toDate, rptDesc = null } =
-    tableProps.tableObj||{};
+    tableProps.tableObj || {};
 
   const { headerListConsolidate = [], rowsConsolidate = [], table2Name = null } = tableProps.tableObjConsolidate || {};
 
@@ -235,7 +235,6 @@ function jsPDFReportTemplate(tableProps) {
       height: doc.getTextDimensions(lines).h,
     };
   };
-  console.log("Test", param.report.table, param.report.header.length)
   if (param.report.table && param.report.table.length) {
     if (param.report.table[0].length !== param.report.header.length)
       throw Error("Length of header and table column must be equal.");

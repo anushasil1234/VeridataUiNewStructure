@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
-import {  nationalityListTableHeadCell,  nationalityReportTableHeadCell, toNationalityReport } from "shared/constants/constants";
+import { nationalityListTableHeadCell, nationalityReportTableHeadCell, toNationalityReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 
@@ -21,12 +21,12 @@ const NationalityReportView = (props) => {
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
-  const { getAppointeeAgingFilterReport } = apiSlice[0];
+  const { getAppointeeNationalityReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   let payloadData = {
-    startDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
-    reportType: '',
-    noOfDays:  0,
+    fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
+    toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
+    nationalityType: nationalityType,
   }
   // const { showErrorMessage } = popUpSlice[0];
 
@@ -37,8 +37,8 @@ const NationalityReportView = (props) => {
 
   const handleNationalityChange = async (value) => {
     setNationalityType(value);
-    const _noOfDays = value === 0 ? null : value;
-    const _payLoad = { ...payLoad, noOfDays: _noOfDays }
+    const _nationalityType = value === 0 ? null : value;
+    const _payLoad = { ...payLoad, nationalityType: _nationalityType }
     setPayLoad(_payLoad);
   };
 
@@ -47,9 +47,9 @@ const NationalityReportView = (props) => {
     setNationalityType(null);
     setFilterType(0);
     const payLoad = {
-      startDate: null,
-      noOfDays: 0,
-      reportType: '',
+      fromDate: null,
+      toDate: null,
+      nationalityType: null,
 
     }
     setPayLoad(payLoad);
@@ -61,19 +61,19 @@ const NationalityReportView = (props) => {
 
   const setTableRows = async (payLoad) => {
 
-    const response = await getAppointeeAgingFilterReport(payLoad);
+    const response = await getAppointeeNationalityReport(payLoad);
     if (response) {
-      const { responseInfo } = response;
-      setAppointeeDetails(responseInfo?.appointeeDetails);
+      const { responseInfos } = response;
+      setAppointeeDetails(responseInfos);
 
       let generatedCells = generateTableRowData(
-        responseInfo?.appointeeDetails,
+        responseInfos,
         nationalityListTableHeadCell,
         null,
         hasPermission
       );
 
-      responseInfo?.appointeeDetails && responseInfo?.appointeeDetails.forEach(({ appointee }, index) => {
+      responseInfos && responseInfos?.forEach(({ appointee }, index) => {
         const detailsCells = generateTableRowData(
           appointee,
           nationalityListTableHeadCell,
@@ -100,15 +100,16 @@ const NationalityReportView = (props) => {
   useEffect(() => {
     const _payLoad = {
       ...payLoad,
-      startDate: DateFormatYYYYMMDD(fromDate?.toString()),
+      fromDate: DateFormatYYYYMMDD(fromDate?.toString()),
+      toDate: DateFormatYYYYMMDD(toDate?.toString()),
     }
     setPayLoad(_payLoad);
-  }, [fromDate]);
+  }, [fromDate, toDate]);
 
 
 
   const handleNaltionalityListDownload = () => {
-    const tableHeadList = nationalityListTableHeadCell.map(({ label }) => {
+    const tableHeadList = nationalityReportTableHeadCell.map(({ label }) => {
       return {
         title: label,
       };

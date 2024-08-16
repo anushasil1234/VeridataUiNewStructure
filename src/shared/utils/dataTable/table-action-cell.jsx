@@ -29,10 +29,8 @@ import { GetAttribute } from "..";
 import downloadFile from "../associate/download-file";
 
 export const TableActionCell = (props1, props2) => {
-  const { actionList, rowAttribute, actionPermissionList, setTableRows } =
-    props1;
+  const { actionList, rowAttribute, actionPermissionList, setTableRows } = props1;
   const { appointeeId, userId: id } = rowAttribute;
-
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
@@ -44,7 +42,7 @@ export const TableActionCell = (props1, props2) => {
   const { showErrorMessage } = popUpSlice[0];
   const { openViewModel, openUserViewModel } = functionSlice[0];
   const { openSubmitModel } = functionSlice[0];
-  const { openPassbookViewModel,openEmploymentViewModel } = functionSlice[0];
+  const { openPassbookViewModel, openEmploymentViewModel } = functionSlice[0];
 
   const {
     getPassbookFileData,
@@ -77,7 +75,7 @@ export const TableActionCell = (props1, props2) => {
     };
     openSubmitModel(submitmodalcontent);
   };
-  
+
   const notiFyAppointee = async () => {
     const confirmationModelContent = {
       dialogContentText: verificationRemiderMsg,

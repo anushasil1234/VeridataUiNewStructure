@@ -41,26 +41,17 @@ const DownloadReportFilter = ({
   const handleReportSearch = () => {
     if (filterType === 0) {
       setFromDate(null);
-      // handleNoOfDaysChange(null);
+      setToDate(null);
+      handleNationalityChange('All')
       handleSearch();
     }
-    else if (hasValue(fromDate)) {
-      handleSearch();
-    } else {
+    else if (hasValue(toDate) && !hasValue(fromDate)) {
       showErrorMessage("From date can not be empty");
+    } else {
+      handleSearch();
     }
   };
 
-  const handleNoOfInactivityDaysChange = (event) => {
-    const value = event?.target?.value;
-
-    const _startDate = fromDate && DateFormatYYYYMMDD(fromDate?.toString());
-    const startDate = moment(_startDate);
-    const daydiff = moment(currentDate).diff(moment(startDate), 'days');
-    if (value >= 0 && value <= daydiff) {
-      // handleNoOfDaysChange(value);
-    }
-  };
 
   return (
     <Stack my={2} direction="row" justifyContent={"left"} spacing={2} alignItems={"center"}>
@@ -100,22 +91,23 @@ const DownloadReportFilter = ({
             />
           </Box>
           <Stack direction="row" justifyContent={"left"} spacing={1} alignItems={"center"}>
-          <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
-          <InputLabel id="demo-select-small">Status</InputLabel>
-          {/* {processStatus !== undefined && ( */}
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={nationalityType}
-              label="Nationality"
-              onChange={handleNationalityChange}
-            >
-              <MenuItem value={"All"}>Select all</MenuItem>
-              <MenuItem value={"IN"}>Indian</MenuItem>
-              <MenuItem value={"OTH"}>Foreigner</MenuItem>
-            </Select>
-          {/* )} */}
-        </FormControl>
+            <FormControl sx={{ minWidth: 180 }} size="large">
+              <InputLabel id="demo-select-small">Nationality</InputLabel>
+              {/* {processStatus !== undefined && ( */}
+              <Select
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={nationalityType}
+                label="Nationality"
+                onChange={(e) => {
+                  handleNationalityChange(e.target.value);
+                }}>
+                <MenuItem value={"All"}>Select all</MenuItem>
+                <MenuItem value={"IN"}>Indian</MenuItem>
+                <MenuItem value={"OTH"}>Foreigner</MenuItem>
+              </Select>
+              {/* )} */}
+            </FormControl>
           </Stack>
         </> : null
       }
