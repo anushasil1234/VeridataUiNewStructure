@@ -3,9 +3,11 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import RequireAuth from 'shared/components/auth-provider';
 import AuthorizedRedirection from 'shared/components/authorized-redirection';
-import { toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent,
-   toLogin,toForgotPassword, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData, toUserlist, toVerified,
-    toHelp, toSetPassword,toReSetPassword,toNoMovementAgingReport,toNoResponseAgingReport,toNationalityReport } from 'shared/constants/constants';
+import {
+  toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent,
+  toLogin, toForgotPassword, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData,
+  toUserlist, toVerified, toHelp, toSetPassword, toReSetPassword, toNoMovementAgingReport, toNoResponseAgingReport, toNationalityReport, toAppointeeReport
+} from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 
 
@@ -37,9 +39,10 @@ const SetPassword = Loadable(lazy(() => import('../../modules/set-password/set-p
 const ReSetPassword = Loadable(lazy(() => import('../../modules/set-password/reset-password')));
 const ManageProfile = Loadable(lazy(() => import('../../modules/manage-profile/manage-profile')));
 const Help = Loadable(lazy(() => import('../../modules/help/help')));
-const NoResponseAgingReport =  Loadable(lazy(() => import('../../modules/reports/no-response-aging-view')));
-const AppointeeAgingReport =  Loadable(lazy(() => import('../../modules/reports/no-movement-aging-view')));
-const AppointeeNationalityReport =  Loadable(lazy(() => import('../../modules/reports/nationality-view')));
+const NoResponseAgingReport = Loadable(lazy(() => import('../../modules/reports/no-response-aging-view')));
+const AppointeeAgingReport = Loadable(lazy(() => import('../../modules/reports/no-movement-aging-view')));
+const AppointeeNationalityReport = Loadable(lazy(() => import('../../modules/reports/nationality-view')));
+const AppointeeReport = Loadable(lazy(() => import('../../modules/reports/appointee-data-view')));
 const ForgotPassword = Loadable(lazy(() => import('../../modules/account/login/forgot-password')));
 
 const CustomRouter = [
@@ -71,11 +74,12 @@ const CustomRouter = [
       { path: toNoResponseAgingReport, exact: true, element: <NoResponseAgingReport /> },
       { path: toNoMovementAgingReport, exact: true, element: <AppointeeAgingReport /> },
       { path: toNationalityReport, exact: true, element: <AppointeeNationalityReport /> },
+      { path: toAppointeeReport, exact: true, element: <AppointeeReport /> },
     ],
   },
   {
     path: toSetPassword,
-    element: RequireAuth(()=><BlankLayoutWithHeader><SetPassword /></BlankLayoutWithHeader>),
+    element: RequireAuth(() => <BlankLayoutWithHeader><SetPassword /></BlankLayoutWithHeader>),
   },
   {
     path: '/auth',

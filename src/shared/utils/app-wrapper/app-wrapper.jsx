@@ -95,7 +95,8 @@ import {
   AppointeeAgingFilterReport_URL,
   AppointeeNationalityReport_URL,
   ValidateUserByOtpForgetPassword_URL,
-  ChangePasswordGenerateOTP_URL
+  ChangePasswordGenerateOTP_URL,
+  AppointeeDataReport_URL
 
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
@@ -615,10 +616,13 @@ const AppWrapper = (App) => {
     const getAppointeeNationalityReport = async (payLoad) => {
       return await PfcRequest(AppointeeNationalityReport_URL, "POST", payLoad);
     };
-     const ChangePasswordGenerateOTP = async (payLoad) => {
+    const getAppointeeDataReport = async (payLoad) => {
+      return await PfcRequest(AppointeeDataReport_URL, "POST", payLoad);
+    };
+    const ChangePasswordGenerateOTP = async (payLoad) => {
       return await PfcRequest(ChangePasswordGenerateOTP_URL, "POST", payLoad);
     };
-     const ValidateForgetPassweordUsrByOtp = async (payLoad) => {
+    const ValidateForgetPassweordUsrByOtp = async (payLoad) => {
       return await PfcRequest(ValidateUserByOtpForgetPassword_URL, "POST", payLoad);
     };
 
@@ -805,6 +809,7 @@ const AppWrapper = (App) => {
           postPasswordChange,
           getAppointeeAgingFilterReport,
           getAppointeeNationalityReport,
+          getAppointeeDataReport,
           ChangePasswordGenerateOTP,
           ValidateForgetPassweordUsrByOtp,
           downloadAgingExelReport

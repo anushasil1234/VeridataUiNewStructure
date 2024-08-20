@@ -28,8 +28,9 @@ const DownloadReportFilter = ({
   setFromDate,
   toDate,
   setToDate,
-  nationalityType,
-  handleNationalityChange,
+  dropdownFilterType,
+  dropdownFilterTypeChange,
+  filterCode,
   hasPermission,
 }) => {
   const { popUpSlice } = useSelector(
@@ -42,7 +43,7 @@ const DownloadReportFilter = ({
     if (filterType === 0) {
       setFromDate(null);
       setToDate(null);
-      handleNationalityChange('All')
+      dropdownFilterTypeChange('All')
       handleSearch();
     }
     else if (hasValue(toDate) && !hasValue(fromDate)) {
@@ -91,23 +92,45 @@ const DownloadReportFilter = ({
             />
           </Box>
           <Stack direction="row" justifyContent={"left"} spacing={1} alignItems={"center"}>
-            <FormControl sx={{ minWidth: 180 }} size="large">
-              <InputLabel id="demo-select-small">Nationality</InputLabel>
-              {/* {processStatus !== undefined && ( */}
-              <Select
-                labelId="demo-select-small"
-                id="demo-select-small"
-                value={nationalityType}
-                label="Nationality"
-                onChange={(e) => {
-                  handleNationalityChange(e.target.value);
-                }}>
-                <MenuItem value={"All"}>Select all</MenuItem>
-                <MenuItem value={"IN"}>Indian</MenuItem>
-                <MenuItem value={"OTH"}>Foreigner</MenuItem>
-              </Select>
-              {/* )} */}
-            </FormControl>
+            {filterCode == 'NATNLTY' ?
+              <FormControl sx={{ minWidth: 180 }} size="large">
+                <InputLabel id="demo-select-small">Nationality</InputLabel>
+                {/* {processStatus !== undefined && ( */}
+                <Select
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  value={dropdownFilterType}
+                  label="Nationality"
+                  onChange={(e) => {
+                    dropdownFilterTypeChange(e.target.value);
+                  }}>
+                  <MenuItem value={"All"}>Select all</MenuItem>
+                  <MenuItem value={"IN"}>Indian</MenuItem>
+                  <MenuItem value={"OTH"}>Foreigner</MenuItem>
+                </Select>
+                {/* )} */}
+              </FormControl>
+              : filterCode == 'APPNTE' ?
+                <FormControl sx={{ minWidth: 180 }} size="large">
+                  <InputLabel id="demo-select-small">Status</InputLabel>
+                  {/* {processStatus !== undefined && ( */}
+                  <Select
+                    labelId="demo-select-small"
+                    id="demo-select-small"
+                    value={dropdownFilterType}
+                    label="Status"
+                    onChange={(e) => {
+                      dropdownFilterTypeChange(e.target.value);
+                    }}>
+                    <MenuItem value={"All"}>Select all</MenuItem>
+                    <MenuItem value={"001"}>Under Process</MenuItem>
+                    <MenuItem value={"003"}>Verified</MenuItem>
+                    <MenuItem value={"004"}>Rejected</MenuItem>
+                    <MenuItem value={"005"}>Lapsed</MenuItem>
+                  </Select>
+                  {/* )} */}
+                </FormControl>
+                : null}
           </Stack>
         </> : null
       }

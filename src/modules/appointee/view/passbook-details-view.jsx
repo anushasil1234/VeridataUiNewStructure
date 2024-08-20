@@ -22,16 +22,17 @@ import { NA, noPassBookMsg } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import { useSelector } from "react-redux";
+import { DateFormatYYYYMMDD } from "shared/utils";
 
 let PassbookViewDetails = ({ appointeeId }) => {
 
   const apiSlice = useSelector((state) => state.apiSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
- 
+
   const { getPassbookDetails } = apiSlice[0];
   const { closePassbookViewModel } = functionSlice[0];
- 
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -173,6 +174,16 @@ let PassbookViewDetails = ({ appointeeId }) => {
                                   fieldValue={companyitem.lastTransactionMonth}
                                 />
                               </Stack>
+                              <Stack direction="row" spacing={2}>
+                                <PersonalInformation
+                                  fieldName={"Is Pension Applicable"}
+                                  fieldValue={companyitem.isPensionApplicable}
+                                />
+                                <PersonalInformation
+                                  fieldName={"Last Pension Date"}
+                                  fieldValue={companyitem.lastPensionDate}
+                                />
+                              </Stack>
                             </>
                           </Box>
                         </Grid>
@@ -199,7 +210,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
                     </AccordionDetails>
                   </Accordion>
                 ))}
-       
+
             </Box>
           </Grid>
         </Grid>

@@ -29,6 +29,7 @@ import {
   DateFormatYYYYMMDD,
   hasValue,
   patternChecking,
+  StringToDate,
   trimmedDate,
 } from "shared/utils";
 import FormHeading from "./form-heading";
@@ -62,6 +63,7 @@ import {
   uploadSizeErrorMsg,
   duplicateFiles,
   uploadFormatErrorMsg,
+  passportExpireddMsg,
 } from "shared/constants/constants";
 import { DisableSection } from "shared/components/disble-section/disble-section";
 import VerificationStatus from "../../../shared/components/verification/verification-status";
@@ -449,7 +451,7 @@ const AppointeeRegister = () => {
     }
   }, [countryList]);
 
-  useEffect(() => { 
+  useEffect(() => {
     if (!hasValue(UAN)) {
       setEpfoButton("Fetch UAN");
     } else {
@@ -799,8 +801,9 @@ const AppointeeRegister = () => {
     const payLoad = {
       aaddharNumber: hasValue(aadhar) ? removeExtraSpaces(aadhar) : null,
       appointeeId,
-      aaddharName: hasValue(nameAsOnAadhar) ? removeExtraSpaces(nameAsOnAadhar) : null,
+      //aaddharName: hasValue(nameAsOnAadhar) ? removeExtraSpaces(nameAsOnAadhar) : null,
       panNumber: hasValue(pan) ? removeExtraSpaces(pan) : null,
+      mobileNumber:hasValue(mobileNo)?removeExtraSpaces(mobileNo) : null,
       userId,
     };
     const response = await getUANNumber(payLoad);
@@ -815,6 +818,7 @@ const AppointeeRegister = () => {
         // setDisabledAadharInput(true);
         openOtpForm(uanNumber, "UAN Number", () => validateUANOtp(uanNumber), 'Generate OTP for PF Verification');
       } else {
+        setisUanVarified(false);
         showErrorMessage(remarks);
       }
       setEpfostatusMessage(epfostatusMessage);
@@ -942,6 +946,15 @@ const AppointeeRegister = () => {
     }
   };
   const today = DateFormatYYYYMMDD(new Date());
+  const PasswordExpiryValidity = (e) => {
+    const expiryDate = e.target.value;
+    if (expiryDate > StringToDate(new Date())) {
+      setPassportValidTillDate(expiryDate);
+    } else {
+      showErrorMessage(passportExpireddMsg);
+    }
+
+  }
   useEffect(() => {
     if (gender === "M") {
       setRelationshipWithMember("F");
@@ -1471,9 +1484,9 @@ const AppointeeRegister = () => {
                                       shrink: true,
                                     }}
                                     disabled={isPassportVarified}
-                                    InputProps={{ inputProps: { min: today } }}
+                                    //InputProps={{ inputProps: { min: today } }}
                                     onChange={(e) => {
-                                      setPassportValidTillDate(e.target.value);
+                                      PasswordExpiryValidity(e);
                                     }}
                                     value={passportValidTillDate}
                                   />
@@ -1773,7 +1786,7 @@ const AppointeeRegister = () => {
                           To see the details steps,
                           {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
                           Aadhar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
-                          <Link sx={{cursor: 'pointer'}} onClick={() => openOfflineKycInfoModel()} > Click here</Link>
+                          <Link sx={{ cursor: 'pointer' }} onClick={() => openOfflineKycInfoModel()} > Click here</Link>
                         </Typography>
                         {isAadhaarVarified ?
                           <FormControlLabel control={

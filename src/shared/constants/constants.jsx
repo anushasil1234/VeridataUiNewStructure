@@ -47,6 +47,7 @@ export const passportSuccessMsg = `Passport has been verified successfully`;
 export const panSuccessMsg = `PAN details has been verified successfully`;
 export const panVerifyFailedMsg = `PAN has not been verified`;
 export const passportVerifyFailedMsg = `Passport details has not been verified`;
+export const passportExpireddMsg = `Your passport has expired. Please set the Date of Expiry to a future date or mark 'Is Passport Available' as 'No'`;
 export const fetchUanConfirmationtMsg = `Your aadhar or pan verification has failed. If you continue you will not be able to change your aadhar or pan.   want to continue?`;
 export const remiderSuccessMsg = `A reminder has been sent successfully`;
 export const noRecordsMsg = `No records found`;
@@ -134,6 +135,7 @@ export const toHelp = "/help";
 export const toNoResponseAgingReport = "/noresponseagigreport";
 export const toNoMovementAgingReport = "/nomovementagigreport";
 export const toNationalityReport = "/nationalityreport";
+export const toAppointeeReport = "/appointeereport";
 
 // dropdown values start
 
@@ -1623,6 +1625,100 @@ export const nationalityReportTableHeadCell = [
     }
 
 ];
+
+export const appointeeListTableHeadCell = [
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'emailId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        enums: ['candidateId'],
+        disablePadding: false,
+        label: 'Candidate Id',
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Joining Date ',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'createdDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'status',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Status',
+        enums: ['status'],
+        component: {
+            element: Typography
+        }
+    }
+
+];
+export const appointeeReportTableHeadCell = [
+    {
+        type: "string",
+        label: 'Name',
+        enums: ['appointeeName', 'candidateId'],
+    },
+    {
+        type: "string",
+        label: 'Email',
+        enums: ['emailId'],
+
+    },
+    {
+        type: "string",
+        label: 'Mobile No',
+        enums: ['mobileNo'],
+
+    },
+    {
+        type: "date",
+        label: 'Joining Date ',
+        enums: ['dateOfJoining'],
+    },
+    {
+        type: "date",
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+    },
+    {
+        type: "string",
+        label: 'Status',
+        enums: ['status'],
+    }
+
+];
 // table headercell end
 
 // Apis urls
@@ -1693,6 +1789,7 @@ export const downloadApiCounterReport_URL = `${AppointeeReports}/ApiCounterRepor
 
 export const AppointeeAgingFilterReport_URL = `${AppointeeReports}/AppointeeAgingFilterReport`
 export const AppointeeNationalityReport_URL = `${AppointeeReports}/NationalityFilterReport`
+export const AppointeeDataReport_URL = `${AppointeeReports}/AppointeeDataFilterReport`
 export const AppointeeCounterReport_URL = `${AppointeeReports}/AppointeeCounterReport`
 export const ApiCounterReport_URL = (fromDate, toDate) => {
     let ApiCounterReportUrl = `${AppointeeReports}/ApiCounterReport`

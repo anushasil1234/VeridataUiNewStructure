@@ -4,29 +4,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
-import { nationalityListTableHeadCell, nationalityReportTableHeadCell, toNationalityReport } from "shared/constants/constants";
+import { appointeeListTableHeadCell, appointeeReportTableHeadCell,  toNationalityReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 
 
-const NationalityReportView = (props) => {
+const AppointeeDataReportView = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
-  const [nationalityType, setNationalityType] = useState(null);
+  const [statusCode, setStatusCode] = useState('All');
   const [appointeeDetails, setAppointeeDetails] = useState();
   const apiSlice = useSelector(state => state.apiSlice);
   // const popUpSlice = useSelector(state => state.popUpSlice);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
-  const { getAppointeeNationalityReport } = apiSlice[0];
+  const { getAppointeeDataReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   let payloadData = {
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
-    nationalityType: nationalityType,
+    StatusCode: statusCode,
   }
   // const { showErrorMessage } = popUpSlice[0];
 
@@ -35,21 +35,21 @@ const NationalityReportView = (props) => {
 
   const [rows, setRows] = useState([]);
 
-  const handleNationalityChange = async (value) => {
-    setNationalityType(value);
-    const _nationalityType = value === 0 ? null : value;
-    const _payLoad = { ...payLoad, nationalityType: _nationalityType }
+  const handleStatusChange = async (value) => {
+    setStatusCode(value);
+    // const _nationalityType = value === 0 ? null : value;
+    const _payLoad = { ...payLoad, StatusCode: value }
     setPayLoad(_payLoad);
   };
 
   const clearSearch = () => {
     setFromDate(null);
-    setNationalityType(null);
+    setStatusCode('All');
     setFilterType(0);
     const payLoad = {
       fromDate: null,
       toDate: null,
-      nationalityType: null,
+      StatusCode: 'All',
 
     }
     setPayLoad(payLoad);
@@ -61,14 +61,14 @@ const NationalityReportView = (props) => {
 
   const setTableRows = async (payLoad) => {
 
-    const response = await getAppointeeNationalityReport(payLoad);
+    const response = await getAppointeeDataReport(payLoad);
     if (response) {
       const { responseInfos } = response;
       setAppointeeDetails(responseInfos);
 
       let generatedCells = generateTableRowData(
         responseInfos,
-        nationalityListTableHeadCell,
+        appointeeListTableHeadCell,
         null,
         hasPermission
       );
@@ -76,14 +76,14 @@ const NationalityReportView = (props) => {
       responseInfos && responseInfos?.forEach(({ appointee }, index) => {
         const detailsCells = generateTableRowData(
           appointee,
-          nationalityListTableHeadCell,
+          appointeeListTableHeadCell,
           null
         );
         generatedCells[index].detailsCells = detailsCells;
       });
 
       setRows({
-        tableHead: nationalityListTableHeadCell,
+        tableHead: appointeeListTableHeadCell,
         tableRows: generatedCells,
       });
     }
@@ -108,8 +108,8 @@ const NationalityReportView = (props) => {
 
 
 
-  const handleNaltionalityListDownload = () => {
-    const tableHeadList = nationalityReportTableHeadCell.map(({ label }) => {
+  const handleAppointeeListDownload = () => {
+    const tableHeadList = appointeeReportTableHeadCell.map(({ label }) => {
       return {
         title: label,
       };
@@ -117,17 +117,17 @@ const NationalityReportView = (props) => {
     const tableBodyList = appointeeDetails && appointeeDetails.map(
       (tableRows) => {
 
-        return CreatePdfTableBody(tableRows, nationalityReportTableHeadCell);
+        return CreatePdfTableBody(tableRows, appointeeReportTableHeadCell);
       }
     );
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
-      fileName: `Nationality_Appointee_${currentDate}`,
-      label: "Appointee Nationality",
+      fileName: `Appointee_Data_${currentDate}`,
+      label: "Appointee Data",
       fromDate: fromDate,
       toDate: toDate,
-      tableName: "Appointee Nationality",
+      tableName: "Appointee Data",
       rptDesc: ""
     };
 
@@ -135,34 +135,34 @@ const NationalityReportView = (props) => {
   };
 
   return (
-    <PageLayout pageName={"Nationality"}>
+    <PageLayout pageName={"Appointee Data"}>
       <CardLayout>
         <DownloadReportFilter
           filterType={filterType}
-          filterCode={'NATNLTY'}
           setFilterType={setFilterType}
+          filterCode={'APPNTE'}
           handleSearch={() => setTableRows(payLoad)}
           clearSearch={clearSearch}
           payLoad={payLoad}
-          handleDownload={handleNaltionalityListDownload}
+          handleDownload={handleAppointeeListDownload}
           fromDate={fromDate}
           setFromDate={setFromDate}
           toDate={toDate}
           setToDate={setToDate}
-          dropdownFilterType={nationalityType}
-          dropdownFilterTypeChange={handleNationalityChange}
+          dropdownFilterType={statusCode}
+          dropdownFilterTypeChange={handleStatusChange}
           hasPermission={hasPermission}
         />
 
         <DataTable
           rows={rows}
           setRows={setRows}
-          headCells={nationalityListTableHeadCell}
+          headCells={appointeeListTableHeadCell}
         />
       </CardLayout>
     </PageLayout>
   );
 };
 
-const NationalityReport = ActionPermission(NationalityReportView);
-export default NationalityReport;
+const AppointeeReport = ActionPermission(AppointeeDataReportView);
+export default AppointeeReport;
