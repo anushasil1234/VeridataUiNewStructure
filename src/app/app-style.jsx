@@ -567,7 +567,11 @@ export const lable3Style = {
   ...lableCommonStyle,
   fontSize: "1rem" 
 };
-
+export const lableRedStyle = {
+  ...lableCommonStyle,
+  fontSize: "1rem" ,
+  color:ThemeColorPalete.red.main,
+};
 export const inputPropsStyle = {
   // height: "0.438em"
   //todo
