@@ -109,7 +109,7 @@ let EmploymentViewDetails = ({ appointeeId }) => {
       fathersName: fatherName,
       dob: dob,
       uanNumber: pfUan,
-      otherInfo:""
+      otherInfo: ""
     }
     const tableObj = {
       companyData: companies,
@@ -255,6 +255,7 @@ let EmploymentViewDetails = ({ appointeeId }) => {
 const UnWrappedEmploymentView = (props) => {
   return (
     <FullScreenModel
+      headerText={"EPFO Employment history"}
       open={props.openView}
       fullScreen={true}
       closeModel={props.closeViewModel}

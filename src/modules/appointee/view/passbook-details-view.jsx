@@ -222,6 +222,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
 const UnWrappedPassbookView = (props) => {
   return (
     <FullScreenModel
+      headerText={"EPFO Passbook Details"}
       open={props.openView}
       fullScreen={true}
       closeModel={props.closeViewModel}

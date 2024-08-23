@@ -1,4 +1,4 @@
-import { Download, Refresh, Search } from "@mui/icons-material";
+import { Download, Info, Refresh, Search } from "@mui/icons-material";
 import {
   Box,
   Fab,
@@ -14,7 +14,8 @@ import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
-import { addPassWordMsg } from "shared/constants/constants";
+import { addPassWordMsg, verifiedReportInfo } from "shared/constants/constants";
+import { hasValue } from "shared/utils";
 
 const DownloadReport = ({
   handleSearch,
@@ -29,6 +30,7 @@ const DownloadReport = ({
   handleProcessStatusChange,
   isStatusFilter,
   hasPermission,
+  infoDetails
 }) => {
   const { functionSlice, popUpSlice, loggedInData } = useSelector(
     (state) => state
@@ -51,7 +53,7 @@ const DownloadReport = ({
   };
   const handleDownload = () => {
     handleSuccssCallBack();
-    
+
     // add models for paword
     // if (isSetProfilePassword) {
     //   const passwordSubmitModelProps = {
@@ -141,6 +143,19 @@ const DownloadReport = ({
           </Fab>
         </DarkTooltip>
       )}
+      {infoDetails && hasValue(infoDetails) ?
+        <DarkTooltip placement="right" title={infoDetails} arrow>
+          <Fab
+            variant="contained"
+            size="small"
+            button={"N"}
+            sx={primaryFabStyle}
+          >
+            <Info width={18} sx={{ color: "#fff" }} />
+          </Fab>
+        </DarkTooltip>
+        : null
+        }
     </Stack>
   );
 };

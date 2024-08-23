@@ -3,8 +3,7 @@ import React from 'react'
 
 export const InputField = ({props, inputProps}) => {
     const {setValue, label, placeholder, type, handleBlur} = props;
-    const test = ()=>{
-    }
+    
     return (
         <TextField
             name={label}

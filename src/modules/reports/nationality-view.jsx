@@ -7,6 +7,7 @@ import DownloadReportFilter from "shared/components/download-report/download-rep
 import { nationalityListTableHeadCell, nationalityReportTableHeadCell, toNationalityReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
+import { removeActionRoute } from "store/slices/action-route-slice";
 
 
 const NationalityReportView = (props) => {
@@ -50,7 +51,6 @@ const NationalityReportView = (props) => {
       fromDate: null,
       toDate: null,
       nationalityType: null,
-
     }
     setPayLoad(payLoad);
     setTableRows(payLoad);
@@ -91,7 +91,7 @@ const NationalityReportView = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(removeActionRoute());
+     dispatch(removeActionRoute());
     if (actionRouteSlice.length === 0 && hasPermission) {
       setTableRows(payLoad);
     }

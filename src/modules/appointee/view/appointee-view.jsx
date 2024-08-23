@@ -751,6 +751,7 @@ let AppointeeViewForm = ({
 const UnWrappedAppointeeView = (props) => {
   return (
     <FullScreenModel
+     headerText={"Appointee Details"}
       open={props.openView}
       fullScreen={true}
       closeModel={props.closeViewModel}

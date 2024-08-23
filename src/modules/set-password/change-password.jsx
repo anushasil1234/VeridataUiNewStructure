@@ -1,13 +1,13 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
-import { lable1Style, loginFieldIconStyle } from 'app';
+import { lable1Style, lableRedStyle, loginFieldIconStyle } from 'app';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { changePassword, OtpEmptyMsg, passwordChangeSuccessMsg, passwordEmptyMsg, passwordNotMsg, passwordPattern } from 'shared/constants/constants';
+import { changePassword, OtpEmptyMsg, passwordChangeSuccessMsg, passwordEmptyMsg, passwordNotMsg, passwordPattern, setPasswordOtpToMailMsg } from 'shared/constants/constants';
 import { CardLayout, InputField, InputFieldProps, hasValue } from 'shared/utils'
 import isPaswordValid from 'shared/utils/associate/is-pasword-valid';
 
-const ChangePassword = ({ userId, clientId,  PasswordChangeSuccessAction }) => {
+const ChangePassword = ({ userId, clientId, PasswordChangeSuccessAction }) => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [otp, setOtp] = useState('');
@@ -30,8 +30,8 @@ const ChangePassword = ({ userId, clientId,  PasswordChangeSuccessAction }) => {
                         const payLoad = {
                             userId: userId,
                             password: trimmedPassword,
-                            clientId:clientId,
-                            otp:otp
+                            clientId: clientId,
+                            otp: otp
                         };
                         const response = await postPasswordChange(payLoad);
                         if (response) {
@@ -118,6 +118,14 @@ const ChangePassword = ({ userId, clientId,  PasswordChangeSuccessAction }) => {
                     <Grid item xs={12} md={3}>
                         <InputField props={newOtpInput} />
                     </Grid>
+               
+                    <Grid item xs={12} md={3}>
+                        <Typography
+                            sx={{...lableRedStyle, paddingTop:1}}
+                        >
+                           ** {setPasswordOtpToMailMsg}
+                        </Typography>
+                    </Grid>
                 </Grid>
                 <Button
                     xs={12}
@@ -130,6 +138,7 @@ const ChangePassword = ({ userId, clientId,  PasswordChangeSuccessAction }) => {
                 >
                     {changePassword}
                 </Button>
+                
             </Box>
         </CardLayout>
     )

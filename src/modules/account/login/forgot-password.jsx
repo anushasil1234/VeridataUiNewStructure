@@ -36,12 +36,9 @@ export const ForgotPasswordView = () => {
   const apiSlice = useSelector(state => state.apiSlice);
   const functionSlice = useSelector(state => state.functionSlice);
   const popUpSlice = useSelector(state => state.popUpSlice);
-
   const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-  const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
-
-  const { ChangePasswordGenerateOTP, ValidateForgetPassweordUsrByOtp } = apiSlice[0];
-  const { openOtpSubmitionModel, closeOtpSubmitionModel } = functionSlice[0];
+  const { ChangePasswordGenerateOTP } = apiSlice[0];
+  // const { openOtpSubmitionModel, closeOtpSubmitionModel } = functionSlice[0];
 
 
   const handleSubmit = async (e) => {
@@ -59,7 +56,7 @@ export const ForgotPasswordView = () => {
         const { clientId, dbUserType, userId } = responseInfo;
         const data = { userId, clientId, dbUserType }; // Example data
         navigate(`${toReSetPassword}`, { state: data });
-        showSuccessMessage(setPasswordOtpToMailMsg);
+        //showSuccessMessage(setPasswordOtpToMailMsg);
       } else {
         //navigate("/");
       }

@@ -9,7 +9,7 @@ const ReSetPassword = () => {
     const location = useLocation();
     // const { userId } = location.state || {};
     const { clientId, userId } = location.state || {};
-    console.log("userId", userId);
+    // console.log("userId", userId);
 
     return (
         <>

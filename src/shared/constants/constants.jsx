@@ -1854,5 +1854,6 @@ export const invalidEmailMsg = `Enter a valid email`;
 export const contactNoEmptyMsg = `Contact no can't be empty`;
 export const invalidcontactNoMsg = `Phone no should have 10 digits`;
 export const roleEmptyMsg = `Role can't be empty`;
+export const verifiedReportInfo = `Trust pf data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
 // Models messages ends
 

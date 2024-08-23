@@ -111,7 +111,7 @@ const HomeView = () => {
     }
     const response = await postAppointeePrerequisiteStatus(postConsentpayLoad);
     setIsPrerequisiteDataAvailable(consentStatusCode === 'PREREQCNFYES');
-    console.log("isPrerequisiteDataAvailable", consentStatusCode === 'PREREQCNFYES')
+    // console.log("isPrerequisiteDataAvailable", consentStatusCode === 'PREREQCNFYES')
     if (response) {
       const { responseInfo } = response;
       if (responseInfo === 'success') {

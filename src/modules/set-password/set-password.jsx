@@ -33,7 +33,7 @@ const SetPassword = () => {
             const { responseInfo } = response;
             const { clientId, dbUserType } = responseInfo;
             setClientId(clientId);
-            showSuccessMessage(setPasswordOtpToMailMsg);
+            //showSuccessMessage(setPasswordOtpToMailMsg);
 
         }
     };

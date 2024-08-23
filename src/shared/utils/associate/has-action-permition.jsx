@@ -11,7 +11,6 @@ export const hasActionpermission = (menuItems, searchRoute) => {
                     for (let index = 0; index < actionList.length; index++) {
                         const {code} = actionList[index];
                         const searchedAction = optActions.find(({ oprnActionAlias }) => oprnActionAlias === code);
-                        
                         if (searchedAction) {
                             actionPermitedList = {...actionPermitedList, [code]: true}
                         }else{

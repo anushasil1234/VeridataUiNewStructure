@@ -111,12 +111,8 @@ const UnWrappedProcessing = (props) => {
     }
   };
 
-  useEffect(() => {
-    dispatch(removeActionRoute());
-    if (actionRouteSlice.length === 0 && hasPermission) {
-      setTableRows(payLoad);
-    }
-  }, [actionRouteSlice, state, hasPermission]);
+
+
 
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
@@ -169,27 +165,33 @@ const UnWrappedProcessing = (props) => {
   };
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     dispatch(removeActionRoute());
-    if (actionRouteSlice.length === 0) {
+    if (actionRouteSlice.length === 0 && hasPermission) {
       setTableRows(payLoad);
     }
-  }, [actionRouteSlice, state, hasPermission]);
+  }, [state, actionRouteSlice, hasPermission]);
 
   useEffect(() => {
-    payLoad.statusCode = statusCode;
-    setPayLoad(payLoad);
-  }, [statusCode]);
+    const _payLoad = {
+      ...payLoad,
+      statusCode: statusCode,
+      fromDate: DateFormatYYYYMMDD(fromDate?.toString()),
+      toDate: DateFormatYYYYMMDD(toDate?.toString()),
+    }
+    setPayLoad(_payLoad);
+  }, [statusCode, fromDate, toDate]);
 
-  useEffect(() => {
-    payLoad.fromDate = DateFormatYYYYMMDD(fromDate?.toString());
-    setPayLoad(payLoad);
-  }, [fromDate]);
+  // useEffect(() => {
+  //   payLoad.fromDate = DateFormatYYYYMMDD(fromDate?.toString());
+  //   setPayLoad(payLoad);
+  // }, [fromDate]);
 
-  useEffect(() => {
-    payLoad.toDate = DateFormatYYYYMMDD(toDate?.toString());
-    setPayLoad(payLoad);
-  }, [toDate]);
+  // useEffect(() => {
+  //   payLoad.toDate = DateFormatYYYYMMDD(toDate?.toString());
+  //   setPayLoad(payLoad);
+  // }, [toDate]);
 
   return (
     <PageLayout pageName={pageName}>
@@ -277,12 +279,10 @@ const UnWrappedProcessing = (props) => {
             )}
           </Grid>
         </Grid>
-
         <DataTable
           rows={rows}
           setRows={setRows}
           headCells={processingListTableHeadCell}
-          checkboxEnable={true}
         />
       </CardLayout>
     </PageLayout>

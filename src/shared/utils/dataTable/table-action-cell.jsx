@@ -205,7 +205,7 @@ export const TableActionCell = (props1, props2) => {
             </DarkTooltip>
           ) : null}
           {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] ? (
-            <DarkTooltip placement="top" title={"View Passbook"} arrow>
+            <DarkTooltip placement="top" title={"EPFO Passbook"} arrow>
               <Fab
                 variant="contained"
                 size="small"
@@ -218,7 +218,7 @@ export const TableActionCell = (props1, props2) => {
             </DarkTooltip>
           ) : null}
           {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] ? (
-            <DarkTooltip placement="top" title={"Employment History"} arrow>
+            <DarkTooltip placement="top" title={"EPFO Employment History"} arrow>
               <Fab
                 variant="contained"
                 size="small"
