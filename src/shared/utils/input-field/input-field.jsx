@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material'
 import React from 'react'
 
-export const InputField = ({props, inputProps}) => {
+export const InputField = ({props, inputProps,disabled=false}) => {
     const {setValue, label, placeholder, type, handleBlur} = props;
     
     return (
@@ -15,6 +15,7 @@ export const InputField = ({props, inputProps}) => {
             fullWidth
             InputProps={inputProps}
             onBlur={handleBlur && handleBlur}
+            disabled={disabled}
         />
     )
 }

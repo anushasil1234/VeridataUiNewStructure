@@ -1,11 +1,11 @@
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
 import { heading4, profilePasswordContainerSx, textField1Sx } from 'app'
 import React, { useState } from 'react'
-import { CardLayout, hasValue, patternChecking, validationsCheck } from 'shared/utils';
+import { CardLayout, hasValue, validationsCheck } from 'shared/utils';
 import ProfileImg from 'assets/images/profile/user-1.jpg';
 import { PersonalInformation } from 'shared/components/display-information/personal-information';
 import { useSelector } from 'react-redux';
-import { invalidPasswordMsg, invalidPasswordPatternMsg, passwordEmptyMsg } from 'shared/constants/constants';
+import { invalidPasswordPatternMsg, passwordEmptyMsg } from 'shared/constants/constants';
 
 const ManageProfile = () => {
 

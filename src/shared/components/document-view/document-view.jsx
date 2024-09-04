@@ -33,7 +33,7 @@ const UnWrappedDocumentView = ({ documentModelProps }) => {
             </Stack>
             <Stack sx={imageFileContainerStackStyle}>
                 <Box sx={imageFileContainerStyle}>
-                    <img src={fileDetails} style={fileImageStyle} alt='text'/>
+                    <img src={fileDetails} style={fileImageStyle} alt={fileName}/>
                 </Box>
             </Stack>
         </Stack>

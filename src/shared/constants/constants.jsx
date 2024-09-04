@@ -1722,13 +1722,14 @@ export const appointeeReportTableHeadCell = [
 // table headercell end
 
 // Apis urls
-const Api = `/api`;
-const AppointeeReports = `${Api}/AppointeeReports`;
-const AppoienteeWorkFlow = `${Api}/AppoienteeWorkFlow`;
-const Account = `${Api}/Account`;
-const AadhaarValidate = `${Api}/AadhaarValidate`;
-const FileUpload = `${Api}/FileUpload`;
-const Users = `${Api}/Users`;
+// const Api = `/api`;
+// const Api = process.env.REACT_APP_API_PATH || ''; 
+const AppointeeReports = `/AppointeeReports`;
+const AppoienteeWorkFlow = `/AppoienteeWorkFlow`;
+const Account = `/Account`;
+const AadhaarValidate = `/AadhaarValidate`;
+const FileUpload = `/FileUpload`;
+const Users = `/Users`;
 
 export const PasswordChange_URL = `${Account}/PostPasswordChange`;
 
@@ -1755,7 +1756,7 @@ export const GetTotalCriticalAppointee_URL = `${Account}/GetTotalCriticalAppoint
 export const ValidateProfilePassword_URL = `${Account}/ValidateProfilePassword`;
 export const EditUserProfile_URL = `${Account}/EditUserProfile`;
 export const GetFaqData_URL = `${Account}/GetFaqData`;
-// export const GetRefreshToken_URL = `${Account}/GenerateRefreshToken`;
+ export const GetRefreshToken_URL = `${Account}/GenerateRefreshToken`;
 
 export const RawDataProcess_URL = `${AppoienteeWorkFlow}/RawDataProcess`;
 export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointeeDetailsUpdate`;
@@ -1774,7 +1775,7 @@ export const GetProcessedEPFOData_URL = `${AppoienteeWorkFlow}/GetVerifiedData`;
 export const GetUnProcessedFileData_URL = `${AppoienteeWorkFlow}/GetUnProcessedFileData`;
 export const GetProcessedMISData_URL = `${AppoienteeWorkFlow}/GetProcessedMISData`;
 export const GetCriticalAppointeeData_URL = `${AppoienteeWorkFlow}/GetCriticalAppointeeList`;
-export const GetRemarksRemedyData_URL = `${AppoienteeWorkFlow}/GetRemarksRemedy?remarksId=`;
+export const GetRemarksRemedyData_URL = `${AppoienteeWorkFlow}/GetRemarksRemedy`;
 export const GetRemarks_URL = `${AppoienteeWorkFlow}/GetRemarks?AppointeeId=`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`;
 export const PostRemainderMail_URL = (appointeeId, userId) => `${AppoienteeWorkFlow}/PostRemainderMail?AppointeeId=${appointeeId}&UserId=${userId}`
@@ -1844,7 +1845,7 @@ export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
 export const OtpEmptyMsg = `Otp cant not be empty`;
 export const passwordNotMsg = `Password not matched`;
-export const passwordPattern = `Password should be atleast 8 charecter long with atleast 1 upper case, 1 lower case, 1 number, and one special charecter`;
+export const passwordPattern = `Password should be of atleast 8 characters long, with atleast 1 UPPER CASE, 1 lower case, 1 number, and one special charecter`;
 export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
 export const remarksEmptyMsg = `Remarks cant not be empty`;
 export const otpToMailMsg = `A verification code has been sent to your email address, Please check and enter `;
@@ -1854,6 +1855,6 @@ export const invalidEmailMsg = `Enter a valid email`;
 export const contactNoEmptyMsg = `Contact no can't be empty`;
 export const invalidcontactNoMsg = `Phone no should have 10 digits`;
 export const roleEmptyMsg = `Role can't be empty`;
-export const verifiedReportInfo = `Trust pf data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
+export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
 // Models messages ends
 

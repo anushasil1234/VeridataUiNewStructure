@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { InputField, PageHeading1, InputFieldProps } from "shared/utils";
 import { styles, imageContainer, loginImageStyle, noBtnIconStyle } from "app";
 import { useNavigate } from "react-router-dom";
-import { emptyUserNameField, setPasswordOtpToMailMsg, toReSetPassword, toLogin } from "shared/constants/constants";
+import { emptyUserNameField, toReSetPassword, toLogin } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
 import logo from 'assets/images/logos/pfc_logo1.png';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AccountCircle } from "@mui/icons-material";
 
 
@@ -54,7 +54,7 @@ export const ForgotPasswordView = () => {
       if (response) {
         const { responseInfo } = response;
         const { clientId, dbUserType, userId } = responseInfo;
-        const data = { userId, clientId, dbUserType }; // Example data
+        const data = { userId, clientId, userCode: userName, dbUserType }; // Example data
         navigate(`${toReSetPassword}`, { state: data });
         //showSuccessMessage(setPasswordOtpToMailMsg);
       } else {

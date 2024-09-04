@@ -110,7 +110,7 @@ const SmallListTable = ({ rows }) => {
                                                                 remarksId={row.remarksId}
                                                                 mood='R'
                                                                 variant="contained"
-                                                                onClick={() => openRemedyModel(row.remarksId)}
+                                                                onClick={() => openRemedyModel({remarksId: row.remarksId ,remedyType :"ISSU",remedySubType:""})}
                                                             />
                                                         </IconButton>
                                                     </Tooltip>

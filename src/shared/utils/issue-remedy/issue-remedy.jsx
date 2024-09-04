@@ -8,17 +8,23 @@ import { hasValue } from '..';
 
 const IssueRemedyContent = ({ remedyModelProps }) => {
 
-    const { remarksId } = remedyModelProps;
+    const { remarksId, remedyType, remedySubType } = remedyModelProps;
 
     const apiSlice = useSelector(state => state.apiSlice);
 
     const { getRemarksRemedyData } = apiSlice[0];
 
     const [remedy, setremedy] = useState("");
-    const fetchRemedy = async (remarksId) => {
-        const response = await getRemarksRemedyData(remarksId);
+    const postRemedypayLoad = {
+        remarksId: remarksId,
+        remedyType: remedyType,
+        remedySubType: remedySubType
+      }
+    const fetchRemedy = async (postRemedypayLoad) => {
+        const response = await getRemarksRemedyData(postRemedypayLoad);
         if (response) {
             const { responseInfo } = response;
+            console.log("responseInfo",parse(remedy))
             if (responseInfo) {
                 setremedy(responseInfo);
 
@@ -29,7 +35,12 @@ const IssueRemedyContent = ({ remedyModelProps }) => {
         }
     }
     useEffect(() => {
-        fetchRemedy(remarksId)
+        // const postRemedypayLoad = {
+        //     remarksId: remarksId,
+        //     remedyType: remedyType,
+        //     remedySubType: remedySubType
+        //   }
+        fetchRemedy(postRemedypayLoad)
     }, []);
 
     return (

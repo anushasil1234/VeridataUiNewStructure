@@ -46,6 +46,7 @@ const SetPassword = () => {
             <ChangePassword
                 userId={userId}
                 clientId={clientId}
+                userCode={userCode}
                 // dbUserType={dbUserType}
                 PasswordChangeSuccessAction={loggeoutFunction.handleClickOnLogout}
             /> : null

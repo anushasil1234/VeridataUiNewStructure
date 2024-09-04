@@ -171,3 +171,8 @@
   width: 116px;
   height: 116px;
 }
+
+.requiredField{
+  color: var(--dl-color-danger-500);
+
+}

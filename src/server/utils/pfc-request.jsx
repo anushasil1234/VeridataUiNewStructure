@@ -5,6 +5,7 @@ import {
     ManuallyCloseableSnackBar,
     decryptedData,
     getLocalStorageItem,
+    hasValue,
     removeLocalStorageItems,
     setLocalStorageItem
 } from 'shared/utils';
@@ -31,7 +32,9 @@ const PfcRequest = (Component) => {
         const dispatch = useDispatch();
         const timeoutRef = useRef(null);
         const inactivityTime = 10 * 60 * 1000; // 10 minutes in milliseconds
-
+        const API_KEY = (process.env.REACT_APP_API_API_KEY || '');
+        const SECRET_KEY = (process.env.REACT_APP_API_API_SECRET || '');
+        const PROXY_AUTH = (process.env.REACT_APP_API_PROXY_AUTH || '');
         const resetTimeout = () => {
             if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
@@ -118,16 +121,44 @@ const PfcRequest = (Component) => {
         };
 
         const refreshAuthToken = async () => {
+            let methodHeader = {}
+            if (hasValue(API_KEY) && hasValue(SECRET_KEY) && hasValue(PROXY_AUTH)) {
+
+                methodHeader = {
+                    headers: {
+                        'proxy-authorization': PROXY_AUTH,
+                        'apikey': API_KEY,
+                        'apikeysecret': SECRET_KEY,
+                    }
+                };
+            }
             const tokenDetails = getLocalStorageItem("pfc-token");
             const BASE_URL = await decryptedData(process.env.REACT_APP_API_URL);
-            return axios.post(`${BASE_URL}api/Account/GenerateRefreshToken`, {
+
+            return axios.post(`${BASE_URL}/Account/GenerateRefreshToken`, {
                 token: tokenDetails.token,
                 refreshToken: tokenDetails.refreshToken
-            });
+            }, methodHeader);
         };
 
         const PfcRequest = async (url, type, payload, successMessage) => {
-            const methodHeader = { headers: AuthHeader() };
+            // const methodHeader = { headers: AuthHeader() };
+            // console.log("PROXY_AUTH", PROXY_AUTH)
+            let APiSecretHeader = {}
+            if (hasValue(API_KEY) && hasValue(SECRET_KEY) && hasValue(PROXY_AUTH)) {
+
+                APiSecretHeader = {
+                    'proxyauthorization': PROXY_AUTH,
+                    'apikey': API_KEY,
+                    'apikeysecret': SECRET_KEY,
+                }
+            }
+            const methodHeader = {
+                headers: {
+                    ...AuthHeader(),
+                    ...APiSecretHeader
+                }
+            };
             const BASE_URL = await decryptedData(process.env.REACT_APP_API_URL);
             const api = axios.create({ baseURL: BASE_URL });
             setupAxiosInterceptors(api);

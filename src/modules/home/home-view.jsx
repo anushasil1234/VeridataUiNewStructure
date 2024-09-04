@@ -146,16 +146,18 @@ const HomeView = () => {
     if (!isPrerequisiteDataAvailable) {
       const prerequisiteModelContent = {
         dialogTitle: "Prerequisite Confirmation",
-        dialogContentText: "Before verification there are some prerequisites, thats needs to be done...",
+        dialogContentText: <><Typography>Before verification there are some prerequisites,</Typography>
+          <Typography> thats needs to be done...</Typography></>,
         dialogComponent: <PrerequisiteInformation />,
-        firstButtonName:"I do",
-        secondButtonName:"I don't have prerequisites",
+        firstButtonName: "I do",
+        secondButtonName: "I don't have prerequisites",
       };
       openConfirmationYesNoModal(prerequisiteModelContent, handleYes, handleNo);
-    }else{
+    } else {
       const prerequisiteModelContent = {
         dialogTitle: "Prerequisite Confirmation",
-        dialogContentText: "Before verification there are some prerequisites, thats needs to be done...",
+        dialogContentText: <><Typography>Before verification there are some prerequisites,</Typography>
+          <Typography>thats needs to be done...</Typography></>,
         dialogContentComponent: <PrerequisiteInformation />,
       };
       openInfoModel(prerequisiteModelContent);

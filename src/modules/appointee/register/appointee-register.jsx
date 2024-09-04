@@ -5,6 +5,7 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   Link,
   MenuItem,
   Select,
@@ -22,7 +23,7 @@ import {
   linkStyle,
   positionRelative,
 } from "app";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   CardLayout,
@@ -67,13 +68,15 @@ import {
 } from "shared/constants/constants";
 import { DisableSection } from "shared/components/disble-section/disble-section";
 import VerificationStatus from "../../../shared/components/verification/verification-status";
-import { Autorenew } from "@mui/icons-material";
+import { Autorenew, HelpOutline } from "@mui/icons-material";
 import { VerificationStatusSection } from "../../../shared/components/verification/verification-status-section";
 import FormDialog from "shared/utils/models/form-dialog";
 import FileUploadSection from "shared/components/file-upload-section/file-upload-section";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import uploadFileMessage from "shared/utils/associate/upload-file-message";
 import VerficationAadharSteps from "shared/components/verification/verfication-aadhar";
+import PassportSample from 'assets/images/backgrounds/PassportSample2.jpeg';
+import PassportFileNoSample from 'assets/images/backgrounds/file-number-in-indian-passport.png';
 
 
 const AppointeeRegister = () => {
@@ -143,6 +146,7 @@ const AppointeeRegister = () => {
   const [qualification, setQualification] = useState(" ");
   const [maritalStatus, setMaritalStatus] = useState(" ");
   const [isInterNationalWorker, setisInterNationalWorker] = useState("N");
+  const [disabledIsInterNationalWorker, setDisabledIsInterNationalWorker] = useState(false);
   const [passportAvailable, setPassportAvailable] = useState("");
   const [countryOfOrigin, setCountryOfOrigin] = useState("");
   const [passportNo, setPassportNo] = useState(null);
@@ -189,7 +193,8 @@ const AppointeeRegister = () => {
   const [isEpfoSectionDisabled, setIsEpfoSectionDisabled] = useState(true);
   // const [isPanSectionDisabled, setIsPanSectionDisabled] = useState(true);
   const [isPassportVerifyBtnDisabled, setIsPassportVerifyBtnDisabled] = useState(false);
-  const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(false);
+  const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(true);
+ // const [isTrustPensionAvailable, setIsTrustPensionAvailable] = useState(false);
   const [fileUploaded, setFileUploaded] = useState([]);
   const [xmlFileUploaded, setXmlFileUploaded] = useState();
   const [fileDetails, setFileDetails] = useState([]);
@@ -280,9 +285,9 @@ const AppointeeRegister = () => {
       setIsPensionApplicable(isPensionApplicable);
       hasValue(aadhaarName)
         ? setNameAsOnAadhar(aadhaarName)
-        : setNameAsOnAadhar(aadhaarName);
+        : setNameAsOnAadhar(appointeeName);
       hasValue(aadhaarNumber) ? setAadhar(aadhaarNumber) : setAadhar("");
-      hasValue(panName) ? setNameAsOnPan(panName) : setNameAsOnPan(panName);
+      hasValue(panName) ? setNameAsOnPan(panName) : setNameAsOnPan(appointeeName);
       hasValue(panNumber) ? setPan(panNumber) : setPan("");
       hasValue(handicapeType)
         ? setHandicapType(handicapeType)
@@ -748,6 +753,7 @@ const AppointeeRegister = () => {
       appointeeId: appointeeId,
       appointeeCode: userCode,
       trustPassbookAvailable: isTrustEpfoAvailable,
+      //trustPensionAvailable: isTrustPensionAvailable,
       isSubmit: true,
       userId: userId,
       FileDetails: fileDetails,
@@ -803,7 +809,7 @@ const AppointeeRegister = () => {
       appointeeId,
       //aaddharName: hasValue(nameAsOnAadhar) ? removeExtraSpaces(nameAsOnAadhar) : null,
       panNumber: hasValue(pan) ? removeExtraSpaces(pan) : null,
-      mobileNumber:hasValue(mobileNo)?removeExtraSpaces(mobileNo) : null,
+      mobileNumber: hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null,
       userId,
     };
     const response = await getUANNumber(payLoad);
@@ -917,44 +923,132 @@ const AppointeeRegister = () => {
     const { value } = e.target;
     setisInterNationalWorker(value);
     if (value === "Y") {
-      setCountryOfOrigin();
+      const nationalityLower = nationality?.toLowerCase();
+      const matchedNationality = nationalityList.find((element) =>
+        element.value?.toLowerCase() === nationalityLower
+      );
+      const index = nationalityList.indexOf(matchedNationality);
+      setCountryOfOrigin(countryList[index]?.value);
+      // setCountryOfOrigin();
     }
     if (value === "N") {
       setCountryOfOrigin(defaultCountry);
     }
   };
-  const handleIsPassportAvailableOnChange = (e) => {
-    const { value } = e.target;
-    setPassportAvailable(value);
-    if (value === "Y") {
-      setisInterNationalWorker("N");
-      nationalityList &&
-        nationalityList.forEach((element, index) => {
-          if (element.value === nationality) {
-            setCountryOfOrigin(countryList[index].value);
-          } else {
-            setCountryOfOrigin(defaultCountry);
-          }
-        }, countryList);
-    }
-    if (value === "N") {
-      setisInterNationalWorker("N");
-      setCountryOfOrigin("");
-      setPassportNo("");
-      setPassportValidForDate("");
-      setPassportValidTillDate("");
-    }
-  };
+  // const handleIsPassportAvailableOnChange = (e) => {
+  //   const { value } = e.target;
+  //   setPassportAvailable(value);
+  //   if (value === "Y") {
+
+  //     // setisInterNationalWorker("N");
+  //     // nationalityList &&
+  //     //   nationalityList.forEach((element, index) => {
+  //     //     console.log("Nation", element.value, nationality)
+  //     //     if (element.value?.toLowerCase() === nationality?.toLowerCase) {
+  //     //       setCountryOfOrigin(countryList[index].value);
+  //     //     } else {
+  //     //       setCountryOfOrigin(defaultCountry);
+  //     //     }
+  //     //   }, countryList);
+
+  //     const nationalityLower = nationality?.toLowerCase();
+  //     if (defaultCountry?.toLowerCase() === nationalityLower) {
+  //       setisInterNationalWorker("N");
+  //       setDisabledIsInterNationalWorker(true)
+  //     } else {
+  //       setisInterNationalWorker("Y");
+
+  //     }
+  //     const matchedNationality = nationalityList.find((element) =>
+  //       element.value?.toLowerCase() === nationalityLower
+  //     );
+  //     console.log("Nation", matchedNationality)
+  //     if (matchedNationality) {
+  //       const index = nationalityList.indexOf(matchedNationality);
+  //       setCountryOfOrigin(countryList[index]?.value);
+  //     } else {
+  //       setCountryOfOrigin(defaultCountry);
+  //     }
+  //   }
+  //   if (value === "N") {
+  //     setisInterNationalWorker("N");
+  //     setCountryOfOrigin("");
+  //     setPassportNo("");
+  //     setPassportValidForDate("");
+  //     setPassportValidTillDate("");
+  //   }
+  // };
   const today = DateFormatYYYYMMDD(new Date());
   const PasswordExpiryValidity = (e) => {
     const expiryDate = e.target.value;
     if (expiryDate > StringToDate(new Date())) {
       setPassportValidTillDate(expiryDate);
     } else {
-      showErrorMessage(passportExpireddMsg);
+      const formattedMessage = passportExpireddMsg ? passportExpireddMsg.split('. ').map((sentence, index) => (
+        <React.Fragment key={index}>
+          {`${sentence}.`}
+          {index < passportExpireddMsg.split('. ').length - 1 && <br />}
+        </React.Fragment>
+      )) : '';
+      showErrorMessage(formattedMessage);
     }
 
   }
+
+  // const determineIsInternationalWorker = (nationalityLower, defaultCountry) => {
+  //   if (defaultCountry?.toLowerCase() === nationalityLower) {
+  //     setisInterNationalWorker("N");
+  //     setDisabledIsInterNationalWorker(true);
+  //   } else {
+  //     setisInterNationalWorker("Y");
+  //     setDisabledIsInterNationalWorker(false);
+  //   }
+  // };
+
+  const setCountryOfOriginBasedOnNationality = (nationalityLower) => {
+    const matchedNationality = nationalityList.find(
+      (element) => element.value?.toLowerCase() === nationalityLower
+    );
+
+    if (matchedNationality) {
+      const index = nationalityList.indexOf(matchedNationality);
+
+      if (defaultCountry?.toLowerCase() === countryList[index]?.value?.toLowerCase()) {
+        setisInterNationalWorker("N");
+        setDisabledIsInterNationalWorker(true);
+      } else {
+        setisInterNationalWorker("Y");
+        setDisabledIsInterNationalWorker(false);
+      }
+      setCountryOfOrigin(countryList[index]?.value || defaultCountry);
+    } else {
+      setCountryOfOrigin(defaultCountry);
+    }
+  };
+
+  const resetPassportDetails = () => {
+    setisInterNationalWorker("N");
+    setCountryOfOrigin("");
+    setPassportNo("");
+    setPassportValidForDate("");
+    setPassportValidTillDate("");
+    setDisabledIsInterNationalWorker(false); // Optional: enable the field if "No" is selected
+  };
+
+  const handleIsPassportAvailableOnChange = (e) => {
+    const { value } = e.target;
+    setPassportAvailable(value);
+
+    if (value === "Y") {
+      const nationalityLower = nationality?.toLowerCase();
+
+      // determineIsInternationalWorker(nationalityLower, defaultCountry);
+      setCountryOfOriginBasedOnNationality(nationalityLower);
+    } else if (value === "N") {
+      resetPassportDetails();
+    }
+  };
+
   useEffect(() => {
     if (gender === "M") {
       setRelationshipWithMember("F");
@@ -963,6 +1057,58 @@ const AppointeeRegister = () => {
       setIsRelationShipWithMemberDisabled(false);
     }
   }, [gender]);
+
+  useEffect(() => {
+    if (passportAvailable === "Y") {
+      const nationalityLower = nationality?.toLowerCase();
+      console.log(nationalityLower, defaultCountry)
+      // determineIsInternationalWorker(nationalityLower, defaultCountry);
+      setCountryOfOriginBasedOnNationality(nationalityLower);
+    }
+  }, [nationality, passportAvailable]);
+
+  const handlePassporNumbertHelp = () => {
+    const passportHelpContent = {
+      dialogContentText: "",
+      dialogTitle: "PASSPORT HELP",
+      dialogContentComponent: <img
+        src={PassportSample}
+        alt="Help"
+        style={{ maxWidth: '100%', maxHeight: '100%' }}
+      />,
+      maxWidth: 'sm',
+      btnName: 'Close'
+    };
+    openInfoModel(passportHelpContent);
+
+  }
+  const handlePassporFileNumbertHelp = () => {
+    const passportHelpContent = {
+      dialogContentText: "",
+      dialogTitle: "PASSPORT FILE NO. HELP",
+      dialogContentComponent: <img
+        src={PassportFileNoSample}
+        alt="Help"
+        style={{ maxWidth: '100%', maxHeight: '100%' }}
+      />,
+      maxWidth: 'sm',
+      btnName: 'Close'
+    };
+    openInfoModel(passportHelpContent);
+
+  }
+
+  const passportNumberInputProps = {
+    maxLength: 12,
+    ...inputFieldStyle,
+    // endAdornment: (
+    //   <InputAdornment position="end">
+    //     <IconButton onClick={handlePassporNumbertHelp}>
+    //       <HelpOutline />
+    //     </IconButton>
+    //   </InputAdornment>
+    // ),
+  }
 
   return (
     <CardLayout>
@@ -1333,7 +1479,11 @@ const AppointeeRegister = () => {
                               <FormHeading
                                 step={"2"}
                                 heading={"Passport Details"}
+                                Children={<IconButton onClick={handlePassporNumbertHelp}>
+                                  <HelpOutline />
+                                </IconButton>}
                               />
+
                             </Grid>
                             <Grid item xs={12} md={6}>
                               <FormControl fullWidth>
@@ -1363,7 +1513,7 @@ const AppointeeRegister = () => {
                                 <Grid item xs={12} md={6}>
                                   <FormControl fullWidth>
                                     <Typography sx={lable1Style}>
-                                      Is international worker
+                                      Is International Worker
                                       <span className="requiredField">*</span>
                                     </Typography>
                                     {isInterNationalWorker !== undefined && (
@@ -1373,7 +1523,7 @@ const AppointeeRegister = () => {
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         sx={inputFieldStyle}
-                                        disabled={isPassportVarified}
+                                        disabled={isPassportVarified || disabledIsInterNationalWorker}
                                         onChange={
                                           handleInternationalWorkerOnChange
                                         }
@@ -1433,16 +1583,11 @@ const AppointeeRegister = () => {
                                     type="text"
                                     className="customeTextField"
                                     variant="outlined"
-                                    onChange={(e) => {
-                                      setPassportNo(e.target.value);
-                                    }}
+                                    onChange={(e) => setPassportNo(e.target.value)}
                                     value={passportNo}
                                     disabled={isPassportVarified}
                                     defaultValue={" "}
-                                    inputProps={{
-                                      maxLength: 12,
-                                      ...inputFieldStyle,
-                                    }}
+                                    inputProps={passportNumberInputProps}
                                   />
                                 </Grid>
                                 <Grid item xs={12} md={6}>
@@ -1534,7 +1679,7 @@ const AppointeeRegister = () => {
                             <Grid item xs={12} md={6}>
                               <FormControl fullWidth>
                                 <Typography sx={lable1Style}>
-                                  Is Physically handicap
+                                  Is Physically Handicap
                                 </Typography>
                                 {isPhysicallyHandicap !== undefined && (
                                   <Select
@@ -1639,7 +1784,7 @@ const AppointeeRegister = () => {
                     <Grid item xs={12}>
                       <FormHeading step={""} heading={""} />
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={7}>
                       <Stack
                         flexDirection={"row"}
                         justifyContent={"space-between"}
@@ -1650,7 +1795,7 @@ const AppointeeRegister = () => {
                         <Typography
                           sx={{ ...lable1Style, whiteSpace: "nowrap" }}
                         >
-                          {"Is EPFO under any Trust"}
+                          {"Do you have PF under any Trust, in the past or present"}
                         </Typography>
                         <FormControl fullWidth>
                           <Stack
@@ -1672,14 +1817,46 @@ const AppointeeRegister = () => {
                         </FormControl>
                       </Stack>
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={5}>
                       {isTrustEpfoAvailable && (
                         <FileUploadSection
                           chooseFile={uploadTrustEPFOFile}
                           fileName={trustEpfoFileName}
+                          accept={"image/png, image/jpeg"}
                         />
                       )}
                     </Grid>
+                    {/* <Grid item xs={12} md={7}>
+                      <Stack
+                        flexDirection={"row"}
+                        justifyContent={"space-between"}
+                        alignItems={"center"}
+                      >
+                        <Typography
+                          sx={{ ...lable1Style, whiteSpace: "nowrap" }}
+                        >
+                          {"Do you have Pension under any Trust, in the past or present"}
+                        </Typography>
+                        <FormControl fullWidth>
+                          <Stack
+                            direction="row"
+                            spacing={1}
+                            justifyContent={"end"}
+                            alignItems="center"
+                          >
+                            <Typography>No</Typography>
+                            <Switch
+                              onChange={({ target }) =>
+                                setIsTrustPensionAvailable(target.checked)
+                              }
+                              checked={isTrustPensionAvailable}
+                              color="secondary"
+                            />
+                            <Typography>Yes</Typography>
+                          </Stack>
+                        </FormControl>
+                      </Stack>
+                    </Grid> */}
                   </Grid>
                   {hasValue(countryOfOrigin) &&
                     (countryOfOrigin !== "Nepal" ||
@@ -1695,6 +1872,9 @@ const AppointeeRegister = () => {
                         <FormHeading
                           step={"4"}
                           heading={"Passport Verification"}
+                          Children={<IconButton onClick={handlePassporFileNumbertHelp}>
+                            <HelpOutline />
+                          </IconButton>}
                         />
                       </Grid>
                       <Grid sx={positionRelative} item xs={12}>
@@ -1756,7 +1936,8 @@ const AppointeeRegister = () => {
                                 <Typography
                                   sx={{ ...lable1Style, textAlign: "center" }}
                                 >
-                                  Visa details*
+                                  Visa details
+                                  <span className="requiredField">*</span>
                                 </Typography>
                                 <FileUploadSection
                                   chooseFile={uploadPassportFile}
@@ -1836,7 +2017,7 @@ const AppointeeRegister = () => {
                             }}
                             value={nameAsOnAadhar}
                             defaultValue={" "}
-                            disabled={disabledAadharInput}
+                            disabled={true}
                           /> <Typography sx={lable1Style}>
                             Share Code (to be provided after uploading)
                           </Typography>
@@ -1942,7 +2123,7 @@ const AppointeeRegister = () => {
                         }}
                         value={nameAsOnPan}
                         defaultValue={" "}
-                        disabled={disabledPanInput}
+                        disabled={true}
                       />
                     </Grid>
                   </Grid>

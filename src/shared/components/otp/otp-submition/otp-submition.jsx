@@ -154,7 +154,7 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
           m={"20px"}
           textAlign={"center"}
         >
-          Enter otp
+          Type OTP - Copy/Paste is disabled
         </Typography>
         <Stack
           justifyContent={"center"}

@@ -8,14 +8,14 @@ const ReSetPassword = () => {
     const navigate = useNavigate();
     const location = useLocation();
     // const { userId } = location.state || {};
-    const { clientId, userId } = location.state || {};
-    // console.log("userId", userId);
+    const { clientId, userId,userCode } = location.state || {};
 
     return (
         <>
             <ChangePassword
                 userId={userId}
                 clientId={clientId}
+                userCode={userCode}
                 // dbUserType={dbUserType}
                 PasswordChangeSuccessAction={() => navigate(`${toLogin}`)}
             />

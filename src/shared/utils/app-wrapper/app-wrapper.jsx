@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { storeApi } from "store/slices/api-slice";
-import PfcRequiest from "server/utils/pfc-requiest";
+import PfcRequiest from "server/utils/pfc-request";
 import CommonHookFunctionWrapper from "shared/components/shared-hooks";
 import {
   CON,
@@ -163,9 +163,9 @@ const AppWrapper = (App) => {
     const closeRemedyModel = () => {
       setRemedyModelOpen(false);
     };
-    const openRemedyModel = (remarksId) => {
+    const openRemedyModel = ({remarksId, remedyType, remedySubType}) => {
       setRemedyModelOpen(true);
-      setRemedyModelProps({ remarksId });
+      setRemedyModelProps({ remarksId, remedyType, remedySubType });
     };
     const openSubmitModel = (submitmodalcontent) => {
       setSubmitModelOpen(true);
@@ -550,8 +550,8 @@ const AppWrapper = (App) => {
     const postAppointeeSearch = async (searchInput) => {
       return await PfcRequest(`${PostAppointeeSearch_URL}${searchInput}`, "POST");
     };
-    const getRemarksRemedyData = async (remarksId) => {
-      return await PfcRequest(`${GetRemarksRemedyData_URL}${remarksId}`, "GET");
+    const getRemarksRemedyData = async (payLoad) => {
+      return await PfcRequest(GetRemarksRemedyData_URL, "POST", payLoad);
     };
     const getAdminUserDetails = async () => {
       return await PfcRequest(GetAdminUserList_URL, "GET");
