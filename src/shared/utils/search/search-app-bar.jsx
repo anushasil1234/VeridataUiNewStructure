@@ -98,7 +98,7 @@ export default function SearchAppBar() {
                     </Box>
                     <InputBase
                         sx={searchInputBaseStyle}
-                        placeholder="Search…"
+                        placeholder="Search Name/CandidateId"
                         inputProps={{ 'aria-label': 'search' }}
                         onChange={handleChangeInInput}
                         value={searchInput}

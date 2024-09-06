@@ -1047,7 +1047,7 @@ export const searchInputBaseStyle = {
     [AppStyle.breakpoints.up('sm')]: {
       width: '12ch',
       '&:focus': {
-        width: '20ch'
+        width: '25ch'
       }
     }
   }

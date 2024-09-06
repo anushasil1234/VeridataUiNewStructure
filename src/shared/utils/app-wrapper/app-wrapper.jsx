@@ -8,6 +8,7 @@ import {
   DIS,
   FLT,
   GEN,
+  ENTITY,
   GenerateUANOTP_URL,
   GetAppointeeActivity_URL,
   GetAppointeeDetails_URL,
@@ -163,7 +164,7 @@ const AppWrapper = (App) => {
     const closeRemedyModel = () => {
       setRemedyModelOpen(false);
     };
-    const openRemedyModel = ({remarksId, remedyType, remedySubType}) => {
+    const openRemedyModel = ({ remarksId, remedyType, remedySubType }) => {
       setRemedyModelOpen(true);
       setRemedyModelProps({ remarksId, remedyType, remedySubType });
     };
@@ -490,6 +491,9 @@ const AppWrapper = (App) => {
     const getFileTypeList = async () => {
       return await PfcRequest(`${GetMastarDropdowndata_URL}${FLT}`, "GET");
     };
+    const getEntityList = async () => {
+      return await PfcRequest(`${GetMastarDropdowndata_URL}${ENTITY}`, "GET");
+    };
     const postAppointeeDetails = async (payLoad) => {
       return await PfcRequest(PostAppointeeDetailsSave_URL, "POST", payLoad, formSaveSuccess);
     };
@@ -645,6 +649,7 @@ const AppWrapper = (App) => {
       const fileTypeList = await getFileTypeList();
       const roleList = await getRoleList();
       const reportFilterStatusList = await getReportFilterStatusList();
+      const entityList = await getEntityList();
 
       const dropdownList = {
         genderList: [
@@ -711,8 +716,8 @@ const AppWrapper = (App) => {
         qualificationList: qualificationList && qualificationList.responseInfos,
         fileTypeList: fileTypeList && fileTypeList.responseInfos,
         roleList: roleList && roleList.responseInfos,
-        reportFilterStatusList:
-          reportFilterStatusList && reportFilterStatusList.responseInfos,
+        reportFilterStatusList: reportFilterStatusList && reportFilterStatusList.responseInfos,
+        entityList: entityList && entityList.responseInfos,
         relationList: [
           {
             id: 1,

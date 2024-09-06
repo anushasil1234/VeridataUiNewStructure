@@ -53,9 +53,7 @@ const AppointeeCount = () => {
   const { navigateTo } = commonHooksFunctionSlice[0];
 
   const { getAppointeeCounterReport } = apiSlice[0];
-  const { reportFilterStatusList } =
-    dropdownList && dropdownList.length > 0 && dropdownList[0];
-
+  const { reportFilterStatusList, entityList } = dropdownList && dropdownList.length > 0 && dropdownList[0];
   const [toDate, setToDate] = useState(null);
   const [fromDate, setFromDate] = useState(null);
   const [rows, setRows] = useState();
@@ -65,21 +63,25 @@ const AppointeeCount = () => {
 
   const [appointeeName, setAppointeeName] = useState(null);
   const [statusCode, setStatusCode] = useState(null);
+  const [entityId, setEntityId] = useState(null);
 
   const payLoadData = {
     appointeeName: appointeeName,
     statusCode: statusCode ? statusCode.toString() : statusCode,
     fromDate: fromDate ? DateFormatYYYYMMDD(fromDate?.toString()) : fromDate,
-    toDate: toDate ? DateFormatYYYYMMDD(toDate?.toString()) : toDate
+    toDate: toDate ? DateFormatYYYYMMDD(toDate?.toString()) : toDate,
+    entityId :entityId
+    
   };
   let [payLoad, setPayLoad] = useState(payLoadData);
 
-  const setTableRows = async ({ appointeeName, statusCode, fromDate, toDate }) => {
+  const fetchTableRows = async ({ appointeeName, statusCode, fromDate, toDate,entityId }) => {
     payLoad = {
       appointeeName: appointeeName,
       statusCode: hasValue(statusCode) ? statusCode.toString() : null,
       fromDate: hasValue(fromDate) ? DateFormatYYYYMMDD(fromDate?.toString()) : null,
-      toDate: hasValue(toDate) ? DateFormatYYYYMMDD(toDate?.toString()) : null
+      toDate: hasValue(toDate) ? DateFormatYYYYMMDD(toDate?.toString()) : null,
+      entityId :hasValue(entityId)?entityId:null
     };
     const response = await getAppointeeCounterReport(payLoad);
 
@@ -112,26 +114,15 @@ const AppointeeCount = () => {
     }
   };
 
+  
   useEffect(() => {
-    setTableRows(payLoad);
-  }, []);
-  useEffect(() => {
-    payLoad.fromDate = DateFormatYYYYMMDD(fromDate?.toString());
-    setPayLoad(payLoad);
-  }, [fromDate]);
-  useEffect(() => {
-    payLoad.toDate = DateFormatYYYYMMDD(toDate?.toString());
-    setPayLoad(payLoad);
-  }, [toDate]);
-  useEffect(() => {
-    payLoad.appointeeName = hasValue(appointeeName) ? appointeeName.trim() : appointeeName;
-    setPayLoad(payLoad);
-  }, [appointeeName]);
-
-  useEffect(() => {
-    payLoad.statusCode = statusCode;
+    setAppointeeName(appointeeName);
     setStatusCode(statusCode);
-  }, [statusCode]);
+    setFromDate(fromDate);
+    setToDate(toDate);
+    setEntityId(entityId);
+    
+  }, [appointeeName, statusCode, fromDate, toDate, entityId]);
 
   const handleClickOnDownload = () => {
     setIsDownloadListOpened(!isDownloadListOpened);
@@ -156,7 +147,7 @@ const AppointeeCount = () => {
       rows: tableBodyList,
       fileName: `_Appointee_Count_${currentDate}`,
       label: "Appointee Count",
-      tableName:"Count Details",
+      tableName: "Count Details",
       fromDate: fromDate,
       toDate: toDate,
       rptDesc: generateAppointeeCountReportDesc
@@ -180,7 +171,7 @@ const AppointeeCount = () => {
       rows: tableBodyList,
       fileName: `_Appointee_Details_Count_${currentDate}`,
       label: "Appointee Details Count",
-      tableName:"Appointee Details",
+      tableName: "Appointee Details",
       fromDate: fromDate,
       toDate: toDate,
       rptDesc: generateAppointeeCountReportDesc
@@ -188,19 +179,31 @@ const AppointeeCount = () => {
 
     jsPDFReportTemplate({ tableObj });
   };
+
   const handleSearch = () => {
-    setTableRows(payLoad);
+
+    const payLoad = {
+      appointeeName: appointeeName?.trim() || "",
+      statusCode: statusCode ? statusCode.toString() : "",
+      fromDate: fromDate ? DateFormatYYYYMMDD(fromDate) : null,
+      toDate: toDate ? DateFormatYYYYMMDD(toDate) : null,
+      entityId: entityId || null,
+    };
+    fetchTableRows(payLoad);
   };
   const clearSearch = () => {
     setFromDate(null);
     setToDate(null);
     setStatusCode(null);
-    const payLoad = {
+    setEntityId(null);
+    const clearPayLoad = {
+      appointeeName:null,
       fromDate: null,
       toDate: null,
-      statusCode: null
+      statusCode: null,
+      entityId:null,
     };
-    setTableRows(payLoad);
+    fetchTableRows(clearPayLoad);
 
     navigateTo(toAppointeecount, { state: false });
   };
@@ -261,6 +264,39 @@ const AppointeeCount = () => {
             </FormControl>
           </Grid>
           <Grid item xs={2}>
+            <FormControl sx={{ width: "100%" }} size="large">
+
+              <InputLabel id="demo-simple-select-label">Entity</InputLabel>
+              {statusCode !== undefined &&
+                <Select
+                  error={false}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  className="customeTextField"
+                  sx={inputFieldStyleAdded}
+                  value={entityId}
+                  label="entityId"
+                  inputProps={{
+                    style: inputPropsStyle
+                  }}
+                  defaultValue={""}
+                  onChange={(e) => {
+                    setEntityId(e.target.value)
+                  }}
+                >
+                  {entityList &&
+                    entityList.map((element, index) => {
+                      return (
+                        <MenuItem
+                          key={index}
+                          value={element.id}
+                        >{`${element.value}`}</MenuItem>
+                      );
+                    })}
+                </Select>}
+            </FormControl>
+          </Grid>
+          <Grid item xs={2}>
             <TextField
               error={false}
               style={inputFieldStyleAdded}
@@ -281,7 +317,7 @@ const AppointeeCount = () => {
 
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={2}>
             <DarkTooltip placement="top" title={"Search"} arrow>
               <Fab
                 variant="contained"

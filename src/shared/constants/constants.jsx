@@ -76,6 +76,7 @@ export const DIS = `DIS`;
 export const FLT = `FLT`;
 export const QUA = `QUA`;
 export const RLE = `RLE`;
+export const ENTITY = `ENTITY`;
 
 // Date Format
 
