@@ -1,6 +1,5 @@
 
 import { Box, InputBase } from '@mui/material';
-
 import { Stack } from '@mui/material';
 import InteractiveList from '../interactive-list/interactive-list';
 import { useSelector } from 'react-redux';
@@ -36,10 +35,10 @@ export default function SearchAppBar() {
                 if (responseInfos && responseInfos.length > 0) {
 
                     setSearchResponse(responseInfos);
-                    const searcheList = responseInfos.map((({ appointeeName, candidateId, pathName }) => {
+                    const searchList = responseInfos.map((({ appointeeName, candidateId, pathName }) => {
                         return { primaryText: `${appointeeName} (${candidateId})`, secondaryText: pathName }
                     }))
-                    setSearchedList(searcheList)
+                    setSearchedList(searchList)
                 } else {
                     showErrorMessage(noRecordsMsg);
                     clearSearch();
