@@ -194,7 +194,7 @@ const AppointeeRegister = () => {
   // const [isPanSectionDisabled, setIsPanSectionDisabled] = useState(true);
   const [isPassportVerifyBtnDisabled, setIsPassportVerifyBtnDisabled] = useState(false);
   const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(true);
- // const [isTrustPensionAvailable, setIsTrustPensionAvailable] = useState(false);
+  // const [isTrustPensionAvailable, setIsTrustPensionAvailable] = useState(false);
   const [fileUploaded, setFileUploaded] = useState([]);
   const [xmlFileUploaded, setXmlFileUploaded] = useState();
   const [fileDetails, setFileDetails] = useState([]);
@@ -1146,6 +1146,7 @@ const AppointeeRegister = () => {
                           <FormHeading
                             step={"1"}
                             heading={"Personal Details"}
+                            info={"Enter all your Personal Details like Gender, DOB to verify with Adhar, PAN, UAN."}
                           />
                         </Grid>
                         {genderList &&
@@ -1479,6 +1480,7 @@ const AppointeeRegister = () => {
                               <FormHeading
                                 step={"2"}
                                 heading={"Passport Details"}
+                                info={"Enter your Passport details to verify its authenticity."}
                                 Children={<IconButton onClick={handlePassporNumbertHelp}>
                                   <HelpOutline />
                                 </IconButton>}
@@ -1650,6 +1652,7 @@ const AppointeeRegister = () => {
                               <FormHeading
                                 step={"3"}
                                 heading={"Others Details"}
+                                info={"Enter your other information like handicap details ."}
                               />
                             </Grid>
                             <Grid item xs={12} md={6}>
@@ -1872,6 +1875,8 @@ const AppointeeRegister = () => {
                         <FormHeading
                           step={"4"}
                           heading={"Passport Verification"}
+                          info={"Enter your Passport file number to verify also see the help sign (?) to see how to find passport file number ."}
+
                           Children={<IconButton onClick={handlePassporFileNumbertHelp}>
                             <HelpOutline />
                           </IconButton>}
@@ -1959,7 +1964,10 @@ const AppointeeRegister = () => {
                     xs={12}
                   >
                     <Grid item xs={12}>
-                      <FormHeading step={"4"} heading={"Aadhar Verification"} />
+                      <FormHeading step={"4"}
+                        heading={"Aadhar Verification"}
+                        info={"Enter Adhar data to verify, see more info in the below link."}
+                      />
                       <Grid item xs={12} md={12}>
                         <Typography sx={{ ...lable1Style, fontWeight: 500, fontSize: 18 }}>
                           As part of onboarding process,
@@ -2069,7 +2077,8 @@ const AppointeeRegister = () => {
                     xs={12}
                   >
                     <Grid item xs={12}>
-                      <FormHeading step={"5"} heading={"PAN Verification"} />
+                      <FormHeading step={"5"} heading={"PAN Verification"} info={"Enter your Pan Numebr to verify."}
+                      />
                     </Grid>{" "}
                   </Grid>
                   <Grid
@@ -2128,7 +2137,7 @@ const AppointeeRegister = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
-                    <FormHeading step={"6"} heading={"UAN Verification"} />
+                    <FormHeading step={"6"} heading={"UAN Verification"} info={"Enter your Universal Account Number(UAN) to verify."}  />
                   </Grid>
                   <Grid item xs={12}>
                     <Grid

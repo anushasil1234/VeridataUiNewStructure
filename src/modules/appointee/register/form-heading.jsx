@@ -1,10 +1,10 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack, Tooltip, Typography } from "@mui/material";
 import { stepContainerStyle, stepHeadingStyle, stepNumberContainerStyle } from "app";
 import PropTypes from "prop-types";
 import { Children } from "react";
 
 
-const FormHeading = ({ step, heading,Children }) => {
+const FormHeading = ({ step, heading, info,Children }) => {
 
     return (
         <Stack sx={stepContainerStyle}  >
@@ -12,7 +12,9 @@ const FormHeading = ({ step, heading,Children }) => {
                 <Stack sx={stepNumberContainerStyle}>
                     <Typography fontWeight={500}>{step}</Typography>
                 </Stack>}
-            <Typography sx={stepHeadingStyle}>{heading}</Typography>
+            <Tooltip title={info} placement="right">
+                <Typography sx={stepHeadingStyle}>{heading}</Typography>
+            </Tooltip>
             {Children}
         </Stack>
     )
