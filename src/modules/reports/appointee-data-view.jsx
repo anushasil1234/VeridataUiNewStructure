@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
-import { appointeeListTableHeadCell, appointeeReportTableHeadCell,  toNationalityReport } from "shared/constants/constants";
+import { appointeeListTableHeadCell, appointeeReportTableHeadCell,  toAppointeeReport,  toNationalityReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 
@@ -54,7 +54,7 @@ const AppointeeDataReportView = (props) => {
     }
     setPayLoad(payLoad);
     setTableRows(payLoad);
-    navigateTo(toNationalityReport, { state: false });
+    navigateTo(toAppointeeReport, { state: false });
   }
   var date = moment();
   var currentDate = date.format("DDMMYYYY");

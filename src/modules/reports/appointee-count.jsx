@@ -208,7 +208,9 @@ const AppointeeCount = () => {
     navigateTo(toAppointeecount, { state: false });
   };
 
-
+  useEffect(() => {
+    handleSearch()
+  }, []);
   return (
     <PageLayout pageName={"Appointee count"}>
       <CardLayout>
