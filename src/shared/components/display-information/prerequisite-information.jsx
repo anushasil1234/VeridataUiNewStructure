@@ -14,7 +14,7 @@ const PrerequisiteInformation = () => {
     const { openRemedyModel } = functionSlice[0];
 
     return (
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                     <Avatar alt="Aadhar" src="/static/images/avatar/3.jpg" />
@@ -59,9 +59,9 @@ const PrerequisiteInformation = () => {
                                 variant="body2"
                                 color="text.primary"
                             >
-                                check if the given mobile is pinned with aadhar.
+                                Check if the given mobile is pinned with aadhar.
                             </Typography>
-                            {" — other wise contact with respective hr to update mobile number. "}
+                            {" — Other wise contact with respective hr to update mobile number. "}
                         </>
                     }
                 />
@@ -83,12 +83,42 @@ const PrerequisiteInformation = () => {
                             >
                                 If you have a UAN account, make sure you have a activate it
                             </Typography>
-                            {" — please login to the epfo portal at least once and then try verifying you details."}
+                            {" — Please login to the epfo portal at least once and then try verifying you details."}
                             <Box >
-                                <Button onClick={() => openRemedyModel({remedyType: "OTH", remedySubType: "INACTUAN" })}
+                                <Button onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "INACTUAN" })}
                                 >
                                     ...show more info
                                 </Button>
+                            </Box>
+                        </>
+                    }
+                />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+            <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                    <Avatar alt="Verification" src="/static/images/avatar/2.jpg" />
+                </ListItemAvatar>
+                <ListItemText
+                    primary="Verify"
+                    secondary={
+                        <>
+                            <Typography
+                                sx={{ display: 'inline' }}
+                                component="span"
+                                variant="body2"
+                                color="text.primary"
+                            >
+                                All verifications are mandatory 
+                            </Typography>
+                            {" — Please complete all of them. Dont leave out any information asked for."}
+                            <Box >
+                                {/* <Button onClick={() => openRemedyModel({remedyType: "OTH", remedySubType: "INACTUAN" })}
+                                > */}
+                                <Typography color="#1976d2">
+                                    To know about the verification process in details, pls go to FAQ" and FAQ will have the above section on verification process
+                                </Typography>
+                                {/* </Button> */}
                             </Box>
                         </>
                     }

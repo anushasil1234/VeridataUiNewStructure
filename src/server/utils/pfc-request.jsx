@@ -126,7 +126,7 @@ const PfcRequest = (Component) => {
 
                 methodHeader = {
                     headers: {
-                        'proxy-authorization': PROXY_AUTH,
+                        'proxyauthorization': PROXY_AUTH,
                         'apikey': API_KEY,
                         'apikeysecret': SECRET_KEY,
                     }
@@ -141,7 +141,7 @@ const PfcRequest = (Component) => {
             }, methodHeader);
         };
 
-        const PfcRequest = async (url, type, payload, successMessage) => {
+        const PfcRequest = async (url, type, payload, successMessage,isInternal = false) => {
             // const methodHeader = { headers: AuthHeader() };
             // console.log("PROXY_AUTH", PROXY_AUTH)
             let APiSecretHeader = {}
@@ -159,7 +159,7 @@ const PfcRequest = (Component) => {
                     ...APiSecretHeader
                 }
             };
-            const BASE_URL = await decryptedData(process.env.REACT_APP_API_URL);
+            const BASE_URL = isInternal ? await decryptedData(process.env.REACT_APP_API_INTERNAL_URL):await decryptedData(process.env.REACT_APP_API_URL);
             const api = axios.create({ baseURL: BASE_URL });
             setupAxiosInterceptors(api);
 

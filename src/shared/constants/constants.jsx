@@ -1745,6 +1745,7 @@ export const GetRawFileData_URL = (companyId, fileId) => `${FileUpload}/GetRawFi
 export const GetReportFilterStatus_URL = `${AppoienteeWorkFlow}/GetAllReportFilterStatus`;
 
 export const ValidateUserLogIn_URL = `${Account}/ValidateUserLogIn`;
+export const UserSignInDetailsByEmail_URL = `${Account}/UserSignInDetailsByEmail?email=`;
 export const UserSignInDetails_URL = `${Account}/UserSignInDetails`;
 export const GetMenuListData_URL = `${Account}/GetMenuListData?userId=`;
 export const GetDashboardWidgetCardData_URL = (filterDays, isfilterd) => `${Account}/GetDashboardWidgetCardData?filterDays=${filterDays}&isfilterd=${isfilterd}`

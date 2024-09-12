@@ -4,9 +4,12 @@ import Button1 from '../button/button1';
 
 
 const ConfirmationYesNoModal = ({ open, confirmationYesNoModelContent }) => {
-  const { dialogTitle, dialogComponent, dialogContentText, confirmedYes, confirmedNo , firstButtonName= "Yes",secondButtonName="No" } = confirmationYesNoModelContent || "";
+  const { dialogTitle, dialogComponent, dialogContentText, confirmedYes, confirmedNo , firstButtonName= "Yes",secondButtonName="No" ,fullWidth=false, maxWidth='sm'} = confirmationYesNoModelContent || "";
+  
   return (
-    <Dialog open={open} >
+    <Dialog open={open}
+     fullWidth={fullWidth}
+        maxWidth={maxWidth}>
       <DialogTitle>{dialogTitle}</DialogTitle>
       <DialogContent>
         {
