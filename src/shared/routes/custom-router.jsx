@@ -9,7 +9,11 @@ import {
   toUserlist, toVerified, toHelp, toSetPassword, toReSetPassword, toNoMovementAgingReport, toNoResponseAgingReport, toNationalityReport, toAppointeeReport
 } from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
+import { MsalProvider } from '@azure/msal-react';
+import { msalConfig } from 'authConfig';
+import { PublicClientApplication } from '@azure/msal-browser';
 
+const msalInstance = new PublicClientApplication(msalConfig);
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -60,7 +64,6 @@ const CustomRouter = [
       { path: toLinknotsent, exact: true, element: <LinkNotSent /> },
       { path: toLapseddata, exact: true, element: <LapsedData /> },
       { path: toProcessing, exact: true, element: <ProcessingData /> },
-      // { path: toProcessing, exact: true, element: <ProcessingData /> },
       { path: toDataUploaded, exact: true, element: <UploadedData /> },
       { path: toUplodData, exact: true, element: <DataUpload /> },
       { path: toUpdateData, exact: true, element: <DataUpdata /> },
@@ -85,9 +88,23 @@ const CustomRouter = [
     path: '/auth',
     element: <BlankLayout />,
     children: [
-      { path: toLogin, exact: true, element: AuthorizedRedirection(Login) },
-      { path: toForgotPassword, exact: true, element: AuthorizedRedirection(ForgotPassword) },
-      { path: toReSetPassword, exact: true, element: AuthorizedRedirection(ReSetPassword) }
+      {
+        path: toLogin, exact: true, element: (
+          <MsalProvider instance={msalInstance}>
+            {AuthorizedRedirection(Login)}
+          </MsalProvider>
+        )
+      },
+      {
+        path: toForgotPassword, exact: true, element: (
+          AuthorizedRedirection(ForgotPassword)
+        )
+      },
+      {
+        path: toReSetPassword, exact: true, element: (
+          AuthorizedRedirection(ReSetPassword)
+        )
+      }
     ]
   },
   { path: '*', element: <Navigate to="/auth/404" /> }

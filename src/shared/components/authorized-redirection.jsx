@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { useMsal } from '@azure/msal-react';
 
 const AuthorizedRedirection = (Component) => {
-  const Authenticate = (props)=>{
-    const loggedInTokendData  = useSelector((state)=> state.loggedinTokenData)
+  const Authenticate = (props) => {
+    const { accounts, inProgress } = useMsal(); // Track Azure AD login state
+    const loggedInTokendData = useSelector((state) => state.loggedinTokenData)
     const [token, setToken] = useState(loggedInTokendData[0] && loggedInTokendData[0].token);
+    useEffect(() => {
+      if (loggedInTokendData.length > 0) {
+        setToken(loggedInTokendData[0].token);
+      }
+    }, [loggedInTokendData]);
 
-    //  if(token)
-    //   {
-    //     return <Navigate to="/dashboard" />
-    //   }else{
-    //     return <Component setToken = {setToken} {...props} />
-    //   }
+    if (inProgress === "login" || inProgress === "handleRedirect") {
+      return <div>Loading...</div>; // You can show a loader during redirect handling
+    }
     return (
-      !token ? 
-      <Component setToken = {setToken} {...props} />: 
-      <Navigate to="/dashboard" />
-      )
-      
+      (accounts && accounts.length == 0) && !token ?
+        <Component setToken={setToken} {...props} /> :
+        <Navigate to="/dashboard" />
+    )
+
   }
-  return <Authenticate /> 
+  return <Authenticate />
 };
 
 export default AuthorizedRedirection;

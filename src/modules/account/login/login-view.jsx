@@ -17,7 +17,8 @@ import { removeFunction } from "store/slices/function-slice";
 import { removePopUpSetFunction } from "store/slices/popup-slice";
 import { storeLoggeoutData } from "store/slices/logout-slice";
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
-
+import { useMsal } from '@azure/msal-react';
+import { loginRequest } from "authConfig";
 
 export const LoginView = () => {
   const [userName, setUserName] = useState("");
@@ -26,7 +27,7 @@ export const LoginView = () => {
   const [isPasswordVisibilityOn, setIsPasswordVisibilityOn] = useState(false);
   const [passwordFieldIcon, setPasswordFieldIcon] = useState(<VisibilityOff sx={loginFieldIconStyle} />);
   const [timeoutTimer, setTimeoutTimer] = useState();
-
+  const { instance } = useMsal();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -82,7 +83,7 @@ export const LoginView = () => {
   const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
   const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
 
-  const { postLoginCredDetails, postLoginDetails } = apiSlice[0];
+  const { postLoginCredDetails, postLoginDetails, postLoginByEmailDetails } = apiSlice[0];
   const { setDropdownList, openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } = functionSlice[0];
 
 
@@ -187,6 +188,45 @@ export const LoginView = () => {
     }
   };
 
+  const handleGetUserDetails = async (username) => {
+    // const payLoad = {
+    //   email: userName,
+    // };
+    const response = await postLoginByEmailDetails(username);
+    if (response) {
+      const { responseInfo } = response;
+      const { userDetails, tokenDetails } = responseInfo;
+      const { isDefaultPassword, isPasswordExpire } = userDetails;
+      setLocalStorageItem("pfc-user", userDetails);
+      setLocalStorageItem("pfc-token", tokenDetails);
+      dispatch(storeLoggedinData(userDetails));
+      dispatch(storeLoggedinTokenData(tokenDetails));
+      dispatch(storeLoggeoutData({ handleClickOnLogout }));
+      await setDropdownList();
+      navigate(`${toDashboard}`)
+      // if (!isDefaultPassword === true || isPasswordExpire === true) {
+      //   navigate(`${toSetPassword}`);
+      // } else {
+      //   await setDropdownList();
+      //   navigate(`${toDashboard}`);
+      // }
+    } else {
+      navigate("/");
+    }
+  }
+  const handleSSOLogin = () => {
+    instance.loginPopup(loginRequest)
+      .then((response) => {
+        //   console.log("Logged in", response);
+        //  Handle successful login, navigate to a secure page
+        handleGetUserDetails(response.account.username);
+        //  handleGetUserDetails(userName);
+      })
+      .catch((e) => {
+        handleGetUserDetails();
+        console.error("SSO Login failed", e);
+      });
+  };
   return (
     <>
       <Grid>
@@ -226,6 +266,17 @@ export const LoginView = () => {
                     Sign in
                   </Button>
                 </form>
+                <hr />
+
+                {/* SSO login button */}
+                <Button
+                  color="primary"
+                  variant="contained"
+                  style={styles.btnstyle}
+                  fullWidth
+                  onClick={handleSSOLogin}
+                >Admin User Sign in
+                </Button>
                 <Box mt={2}>
                   <Typography variant="body2" align="center">
                     <Link href={toForgotPassword} underline="hover">
