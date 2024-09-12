@@ -56,6 +56,11 @@ const ListTable = ({ rows }) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                {(noteList.length > 0 || issuesList.length>0) && (
+                    <Typography sx={{ mt: 2,  color: 'gray' }}>
+                        Please check Steps to Resolution in Dashboard to view more info.
+                    </Typography>
+                )}
             </Box>
         </Stack>
     );
