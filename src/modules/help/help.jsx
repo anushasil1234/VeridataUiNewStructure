@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import ArrowDropDownIcon from '@mui/icons-material/ExpandMore';
 // import { useLocation } from "react-router-dom";
+import parse from "html-react-parser";
 
 const Help = () => {
     const [responseList, setResponseList] = useState(null);
@@ -34,7 +35,7 @@ const Help = () => {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                                {element.faqDescription}
+                                {parse(element.faqDescription)}
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
