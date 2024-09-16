@@ -27,7 +27,7 @@ export const LoginView = () => {
   const [isPasswordVisibilityOn, setIsPasswordVisibilityOn] = useState(false);
   const [passwordFieldIcon, setPasswordFieldIcon] = useState(<VisibilityOff sx={loginFieldIconStyle} />);
   const [timeoutTimer, setTimeoutTimer] = useState();
-  const { instance } = useMsal();
+  const { accounts, instance } = useMsal();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -97,6 +97,9 @@ export const LoginView = () => {
     dispatch(removeFunction());
     dispatch(removePopUpSetFunction());
     dispatch(removeSideMenuItems());
+    instance.logoutPopup({
+      postLogoutRedirectUri: "/",  // Redirect user to home after logout
+    });
   }
 
   const handleSubmit = async (e) => {
@@ -223,10 +226,16 @@ export const LoginView = () => {
         //  handleGetUserDetails(userName);
       })
       .catch((e) => {
-        handleGetUserDetails();
-        console.error("SSO Login failed", e);
+        alert.error("SSO Login failed", e);
       });
   };
+
+  useEffect(() => {
+    if (accounts && accounts.length > 0) {
+      handleGetUserDetails(accounts[0].username);
+    }
+  }, []);
+
   return (
     <>
       <Grid>

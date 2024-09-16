@@ -195,7 +195,7 @@ const AppointeeRegister = () => {
   const [isPassportVerifyBtnDisabled, setIsPassportVerifyBtnDisabled] = useState(false);
   const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(true);
   // const [isTrustPensionAvailable, setIsTrustPensionAvailable] = useState(false);
-  const [fileUploaded, setFileUploaded] = useState([]);
+  const [uploadedFile, setUploadedFile] = useState([]);
   const [xmlFileUploaded, setXmlFileUploaded] = useState();
   const [fileDetails, setFileDetails] = useState([]);
   const [trustEpfoFileName, setTrustEpfoFileName] = useState();
@@ -208,6 +208,7 @@ const AppointeeRegister = () => {
   const [isSubmit, setIsSubmit] = useState();
   const [companyName, setCompanyName] = useState();
   const [timeoutTimer, setTimeoutTimer] = useState();
+  const [fileUploaded, setFileUploaded] = useState();
 
   const initialTimeOfOtpTimer = () => {
     setTimeoutTimer(10 * 60);
@@ -215,14 +216,14 @@ const AppointeeRegister = () => {
   const clearFileVaribles = (fileTypeAllias, setFileName) => {
     let updatedFileDetails = [];
     let updatedFileUploaded = [];
-    for (let index = 0; index < fileUploaded.length; index++) {
-      const { uploadTypeAlias } = fileUploaded[index];
+    for (let index = 0; index < uploadedFile.length; index++) {
+      const { uploadTypeAlias } = uploadedFile[index];
       if (uploadTypeAlias !== fileTypeAllias) {
-        updatedFileUploaded = [...updatedFileUploaded, fileUploaded[index]];
+        updatedFileUploaded = [...updatedFileUploaded, uploadedFile[index]];
         updatedFileDetails = [...updatedFileDetails, fileDetails[index]];
       }
     }
-    setFileUploaded(updatedFileUploaded);
+    setUploadedFile(updatedFileUploaded);
     setFileDetails(updatedFileDetails);
     setFileName();
   };
@@ -272,6 +273,7 @@ const AppointeeRegister = () => {
         saveStep,
         companyName,
         isSubmit,
+        fileUploaded,
       } = response.responseInfo;
       setIsSubmit(isSubmit);
       setCompanyName(companyName);
@@ -351,6 +353,7 @@ const AppointeeRegister = () => {
       setPassportStatusMessage(new VerificationStatus(isPassportValid, "V"));
       setPANStatusMessage(new VerificationStatus(isPanVarified, "V"));
       setCurrentPageNo(saveStep + 1);
+      setFileUploaded(fileUploaded)
     }
   };
 
@@ -369,12 +372,18 @@ const AppointeeRegister = () => {
   };
   const hasTrustEpfoUpload = () => {
     const uploadTypeAlias =
-      fileUploaded &&
-      fileUploaded.find(
+      uploadedFile &&
+      uploadedFile.find(
         ({ uploadTypeAlias }) => uploadTypeAlias === trustEpfoFileTypeAlias
       );
+    // const uploadedTypeAlias =
+    // fileUploaded &&
+    // fileUploaded.find(
+    //     ({ uploadTypeAlias }) => uploadTypeAlias === trustEpfoFileTypeAlias
+    //   );
     return hasValue(uploadTypeAlias);
   };
+
   const openUploadDocInfoModel = (dialogContentText) => {
     openInfoModel({ dialogContentText });
   };
@@ -395,7 +404,7 @@ const AppointeeRegister = () => {
       submitVerification = false;
       dialogContentText = (
         <>
-          <Typography>{uploadFileMessage("trust epfo passbook")}</Typography>
+          <Typography>{uploadFileMessage("trust epfo passbook")}, then submit details </Typography>
           {dialogContentText}
         </>
       );
@@ -410,7 +419,7 @@ const AppointeeRegister = () => {
       submitVerification = false;
       dialogContentText = (
         <>
-          <Typography>{uploadFileMessage("visa")}</Typography>
+          <Typography>{uploadFileMessage("visa")} , then submit details</Typography>
           {dialogContentText}
         </>
       );
@@ -478,10 +487,9 @@ const AppointeeRegister = () => {
   }, [isTrustEpfoAvailable]);
   useEffect(() => {
     if (
-      isAadhaarVarified !== null &&
-      isUanVarified !== null &&
-      isPanVarified !== null
-    ) {
+      isAadhaarVarified === true &&
+      isPanVarified === true &&
+      isUanVarified !== null) {
       setIsSubmitDisabled(false);
     }
     if (isPanVarified) {
@@ -545,7 +553,7 @@ const AppointeeRegister = () => {
           uploadTypeAlias: uploadTypeAlias,
           isFileUploaded: true,
         };
-        setFileUploaded([...fileUploaded, file]);
+        setUploadedFile([...uploadedFile, file]);
         setFileDetails([...fileDetails, fileData]);
 
       } else {
@@ -757,7 +765,7 @@ const AppointeeRegister = () => {
       isSubmit: true,
       userId: userId,
       FileDetails: fileDetails,
-      fileUploaded: fileUploaded,
+      fileUploaded: uploadedFile,
     };
     let formData = new FormData();
     for (const property in payLoad) {
@@ -2137,7 +2145,7 @@ const AppointeeRegister = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
-                    <FormHeading step={"6"} heading={"UAN Verification"} info={"Enter your Universal Account Number(UAN) to verify."}  />
+                    <FormHeading step={"6"} heading={"UAN Verification"} info={"Enter your Universal Account Number(UAN) to verify."} />
                   </Grid>
                   <Grid item xs={12}>
                     <Grid
@@ -2186,16 +2194,19 @@ const AppointeeRegister = () => {
                     >
                       {previousButton}
                     </Button>
-                    <Button
-                      name="submit"
-                      disabled={isSubmitDisabled}
-                      onClick={() => submitDetails(false)}
-                      sx={{ m: "15px 5px" }}
-                      variant="contained"
-                      color="primary"
-                    >
-                      {submitButton}
-                    </Button>
+                    {isSubmitDisabled && !isSubmitDisabled ?
+                      <Button
+                        name="submit"
+                        // disabled={isSubmitDisabled}
+                        onClick={() => submitDetails(false)}
+                        sx={{ m: "15px 5px" }}
+                        variant="contained"
+                        color="primary"
+                      >
+                        {submitButton}
+                      </Button>
+                      : null
+                    }
                   </Grid>
                 </Grid>
               </form>

@@ -7,15 +7,17 @@ import {
   IconButton,
   MenuItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Typography
 } from '@mui/material';
 import ProfileImg from 'assets/images/profile/user-1.jpg';
 import { AccountCircle, ManageAccounts, HelpRounded } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { userNameTextStyle } from 'app';
 import { toHelp, toManageProfile } from 'shared/constants/constants';
-
+import { useMsal } from '@azure/msal-react';
 const Profile = () => {
+  const { instance } = useMsal(); // Get the MSAL instance
   const [anchorEl2, setAnchorEl2] = useState(null);
   const handleClick2 = ({ currentTarget }) => {
     setAnchorEl2(currentTarget);
@@ -24,15 +26,38 @@ const Profile = () => {
     setAnchorEl2(null);
   };
 
-
   const loggeoutData = useSelector(state => state.loggeoutData);
   const loggedInData = useSelector(state => state.loggedInData);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
   const loggeoutFunction = loggeoutData && loggeoutData.length > 0 && loggeoutData[0];
-
-  const { roleName, userName } = loggedInData && loggedInData.length > 0 && loggedInData[0];
+  const { roleName, userName, userTypeId, isSubmit } = loggedInData && loggedInData.length > 0 && loggedInData[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
+  const functionSlice = useSelector(state => state.functionSlice);
+  const { openConfirmationYesNoModal } = functionSlice[0];
 
+  const handleLogout = () => {
+    if (userTypeId === 3 && isSubmit === false) {
+      const VerificationPendingModelContent = {
+        dialogTitle: "Log out Confirmation",
+        dialogContentText: <><Typography>Your verification is still not complete. If you don't/can't completed now, please check solutions/FAQ and come back later to complete the verification as soon as possible. Do you still want to logout.</Typography>
+          <Typography> </Typography></>,
+        dialogComponent: <> </>,
+        firstButtonName: "Yes",
+        secondButtonName: "No",
+        fullWidth: true,
+        mxWidth: 'md'
+      };
+      openConfirmationYesNoModal(VerificationPendingModelContent, handleYes, handleNo);
+    } else {
+      loggeoutFunction.handleClickOnLogout();
+    }
+  };
+  const handleYes = () => {
+    loggeoutFunction.handleClickOnLogout();
+  }
+  const handleNo = () => {
+    // loggeoutFunction.handleClickOnLogout();
+  }
   return (
     <Box>
       <IconButton
@@ -93,7 +118,7 @@ const Profile = () => {
           <ListItemText sx={userNameTextStyle}>FAQ</ListItemText>
         </MenuItem>
         <Box mt={1} py={1} px={2}>
-          <Button onClick={loggeoutFunction.handleClickOnLogout} variant="outlined" color="primary" fullWidth>
+          <Button onClick={handleLogout} variant="outlined" color="primary" fullWidth>
             Logout
           </Button>
         </Box>

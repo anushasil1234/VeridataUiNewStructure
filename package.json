@@ -3,6 +3,8 @@
   "version": "1.1.0",
   "private": true,
   "dependencies": {
+    "@azure/msal-browser": "^3.23.0",
+    "@azure/msal-react": "^2.0.22",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
