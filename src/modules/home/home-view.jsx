@@ -26,6 +26,7 @@ import {
 import SmallListTable from "shared/utils/small-list-table/small-list-table";
 import PrerequisiteInformation from "shared/components/display-information/prerequisite-information";
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
+import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
 
 const HomeView = () => {
   const commonHooksFunctionSlice = useSelector(
@@ -43,6 +44,7 @@ const HomeView = () => {
   const { getDashboardWidgetCardData, getRemarks, getAppointeeDetails, postAppointeePrerequisiteStatus } = apiSlice[0];
   const { userTypeId, appointeeId, userName, emailId, phone, status } = loggedInData[0];
   const [isPrerequisiteDataAvailable, setIsPrerequisiteDataAvailable] = useState(prerquistdata)
+  const [loading, setLoading] = useState(false);
 
   const [filtertotaloffer, setfiltertotaloffer] = useState(null);
   // const [consentStatus, setConsentStatus] = useState(0);
@@ -63,6 +65,7 @@ const HomeView = () => {
   const setDashboardWidgetCardData = async (dayRange) => {
     const isfilterd = !(dayRange === "A");
     const filterday = dayRange === "A" ? 0 : dayRange;
+    setLoading(true);
     const response = await getDashboardWidgetCardData(filterday, isfilterd);
     if (response) {
       const { responseInfos } = response;
@@ -88,6 +91,7 @@ const HomeView = () => {
           if (widgetTypeCode === "LAPSED") {
             setfilterLapsed(widgetValue);
           }
+          setLoading(false);
         });
     }
   };
@@ -207,184 +211,189 @@ const HomeView = () => {
   }, [dayRange]);
 
   return (
-    <PageLayout pageName={"Dashboard"}>
-      <Box>
-        {(userTypeId === 1 || userTypeId === 2) && (
-          <Box>
-            <Grid
-              container
-              spacing={{ xs: 2, md: 3 }}
-              columns={{ xs: 4, sm: 8, md: 12 }}
-            >
-              <Grid item xs={6} sm={4} md={3} lg={3}>
-                <FormControl fullWidth>
-                  <Typography sx={{ ...dropDownLableStyle, ml: 0 }}>
-                    Select
-                  </Typography>
-                  {dayRange && (
-                    <Select
-                      error={false}
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={dayRange}
-                      className="customeTextField"
-                      sx={{ ...inputFieldStyle, bgcolor: "#fff", ml: 0 }}
-                      onChange={(event) => setDayRange(event.target.value)}
-                    >
-                      {days &&
-                        days.map((element, index) => {
-                          return (
-                            <MenuItem key={index} value={element.value}>
-                              {element.lable}
-                            </MenuItem>
-                          );
-                        })}
-                    </Select>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={4}
-                md={8}
-                sx={{ marginBottom: "5px", alignSelf: "end" }}
-              >
-                <TotalOffer
-                  wizValue={
-                    filtertotaloffer && filtertotaloffer.widgetTypeValue
-                  }
-                  wizName={filtertotaloffer && filtertotaloffer.widgetTypeName}
-                />
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              spacing={{ xs: 2, md: 3 }}
-              columns={{ xs: 4, sm: 8, md: 12 }}
-            >
-              <Grid item xs={6} sm={4} md={2.4}>
-                <LinkNotSent
-                  dayRangePayLoad={dayRangePayLoad}
-                  wizdata={filterNotValidate}
-                  fitToContaner={true}
-                />
-              </Grid>
-              <Grid item xs={6} sm={4} md={2.4}>
-                <NoResponse
-                  dayRangePayLoad={dayRangePayLoad}
-                  wizdata={filterNoResponse}
-                  fitToContaner={true}
-                />
-              </Grid>
-              <Grid item xs={6} sm={4} md={2.4}>
-                <UnderProcess
-                  dayRangePayLoad={dayRangePayLoad}
-                  wizdata={filterUnderProcess}
-                  fitToContaner={true}
-                />
-              </Grid>
-              <Grid item xs={6} sm={4} md={2.4}>
-                <Lapsed
-                  dayRangePayLoad={dayRangePayLoad}
-                  wizdata={filterLapsed}
-                  fitToContaner={true}
-                />
-              </Grid>
-              <Grid item xs={6} sm={4} md={2.4}>
-                <Verified
-                  dayRangePayLoad={dayRangePayLoad}
-                  wizdata={filterValidate}
-                  fitToContaner={true}
-                />
-              </Grid>
+    <>
+      {loading && <CircularIndeterminate />}
 
-              <Grid item xs={12} sm={6} md={12}>
-                <Grid
-                  container
-                  spacing={{ xs: 2, md: 3 }}
-                  columns={{ xs: 4, sm: 8, md: 12 }}
-                >
-                  <Grid item xs={12} sm={6} md={4}>
-                    <CumulativeStatus />
-                    <br />
-                    <CriticalRecruits />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={8}>
-                    <UpcomingRecruits />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Box>
-        )}
-        {userTypeId === 3 && (
-          <>
-            <CardLayout>
+
+      <PageLayout pageName={"Dashboard"}>
+        <Box>
+          {(userTypeId === 1 || userTypeId === 2) && (
+            <Box>
               <Grid
-                py={5}
-                sx={dashboardtextStyle}
                 container
-                rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                spacing={{ xs: 2, md: 3 }}
+                columns={{ xs: 4, sm: 8, md: 12 }}
               >
-                <Grid item lg={4} xs={12}>
-                  Name: {userName}
-                </Grid>
-                <Grid item lg={4} xs={12}>
-                  Email: {emailId}
-                </Grid>
-                <Grid item lg={4} xs={12}>
-                  Phone: {phone}
-                </Grid>
-                <Grid item lg={4} xs={12}>
-                  Status: {status}
-                </Grid>
-                <Grid item lg={4} xs={12}>
-                  <Button
-                    name="view"
-                    sx={{ m: "10px 10px 10px 0px " }}
-                    mood="V"
-                    variant="contained"
-                    color="primary"
-                    onClick={() => openViewModel(appointeeId)}
-                  >
-                    My Info
-                  </Button>
-                  <Button
-                    name="Prerequisite"
-                    sx={{ m: "10px 10px 10px 0px " }}
-                    mood="V"
-                    variant="contained"
-                    color="primary"
-                    onClick={handlePrerequisiteDataConsent}
-                  >
-                    Prerequisite Details
-                  </Button>
-                  {!isSubmit ? (
-                    <>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={appointeeVerification}
-                        disabled={!isPrerequisiteDataAvailable}
+                <Grid item xs={6} sm={4} md={3} lg={3}>
+                  <FormControl fullWidth>
+                    <Typography sx={{ ...dropDownLableStyle, ml: 0 }}>
+                      Select
+                    </Typography>
+                    {dayRange && (
+                      <Select
+                        error={false}
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={dayRange}
+                        className="customeTextField"
+                        sx={{ ...inputFieldStyle, bgcolor: "#fff", ml: 0 }}
+                        onChange={(event) => setDayRange(event.target.value)}
                       >
-                        Pending Verification
-                      </Button>
-                    </>
-                  ) : null}
+                        {days &&
+                          days.map((element, index) => {
+                            return (
+                              <MenuItem key={index} value={element.value}>
+                                {element.lable}
+                              </MenuItem>
+                            );
+                          })}
+                      </Select>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  sm={4}
+                  md={8}
+                  sx={{ marginBottom: "5px", alignSelf: "end" }}
+                >
+                  <TotalOffer
+                    wizValue={
+                      filtertotaloffer && filtertotaloffer.widgetTypeValue
+                    }
+                    wizName={filtertotaloffer && filtertotaloffer.widgetTypeName}
+                  />
                 </Grid>
               </Grid>
-            </CardLayout>
-            <Box mt={2}>
-              <CardLayout>
-                <SmallListTable rows={remarkList} />
-              </CardLayout>
+              <Grid
+                container
+                spacing={{ xs: 2, md: 3 }}
+                columns={{ xs: 4, sm: 8, md: 12 }}
+              >
+                <Grid item xs={6} sm={4} md={2.4}>
+                  <LinkNotSent
+                    dayRangePayLoad={dayRangePayLoad}
+                    wizdata={filterNotValidate}
+                    fitToContaner={true}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4} md={2.4}>
+                  <NoResponse
+                    dayRangePayLoad={dayRangePayLoad}
+                    wizdata={filterNoResponse}
+                    fitToContaner={true}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4} md={2.4}>
+                  <UnderProcess
+                    dayRangePayLoad={dayRangePayLoad}
+                    wizdata={filterUnderProcess}
+                    fitToContaner={true}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4} md={2.4}>
+                  <Lapsed
+                    dayRangePayLoad={dayRangePayLoad}
+                    wizdata={filterLapsed}
+                    fitToContaner={true}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4} md={2.4}>
+                  <Verified
+                    dayRangePayLoad={dayRangePayLoad}
+                    wizdata={filterValidate}
+                    fitToContaner={true}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={12}>
+                  <Grid
+                    container
+                    spacing={{ xs: 2, md: 3 }}
+                    columns={{ xs: 4, sm: 8, md: 12 }}
+                  >
+                    <Grid item xs={12} sm={6} md={4}>
+                      <CumulativeStatus />
+                      <br />
+                      <CriticalRecruits />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={8}>
+                      <UpcomingRecruits />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Box>
-          </>
-        )}
-      </Box>
-    </PageLayout>
+          )}
+          {userTypeId === 3 && (
+            <>
+              <CardLayout>
+                <Grid
+                  py={5}
+                  sx={dashboardtextStyle}
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                >
+                  <Grid item lg={4} xs={12}>
+                    Name: {userName}
+                  </Grid>
+                  <Grid item lg={4} xs={12}>
+                    Email: {emailId}
+                  </Grid>
+                  <Grid item lg={4} xs={12}>
+                    Phone: {phone}
+                  </Grid>
+                  <Grid item lg={4} xs={12}>
+                    Status: {status}
+                  </Grid>
+                  <Grid item lg={4} xs={12}>
+                    <Button
+                      name="view"
+                      sx={{ m: "10px 10px 10px 0px " }}
+                      mood="V"
+                      variant="contained"
+                      color="primary"
+                      onClick={() => openViewModel(appointeeId)}
+                    >
+                      My Info
+                    </Button>
+                    <Button
+                      name="Prerequisite"
+                      sx={{ m: "10px 10px 10px 0px " }}
+                      mood="V"
+                      variant="contained"
+                      color="primary"
+                      onClick={handlePrerequisiteDataConsent}
+                    >
+                      Prerequisite Details
+                    </Button>
+                    {!isSubmit ? (
+                      <>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={appointeeVerification}
+                          disabled={!isPrerequisiteDataAvailable}
+                        >
+                          Pending Verification
+                        </Button>
+                      </>
+                    ) : null}
+                  </Grid>
+                </Grid>
+              </CardLayout>
+              <Box mt={2}>
+                <CardLayout>
+                  <SmallListTable rows={remarkList} />
+                </CardLayout>
+              </Box>
+            </>
+          )}
+        </Box>
+      </PageLayout>
+    </>
   );
 };
 
