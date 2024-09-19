@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 import { useMsal } from '@azure/msal-react';
+import { toUserLogin } from 'shared/constants/constants';
 
 const RequireAuth = (Component) => {
   const Authenticate = (props) => {
@@ -17,7 +18,7 @@ const RequireAuth = (Component) => {
         (isDefaultPassword || isPasswordExpire) ?
           <BlankLayoutWithHeader><SetPassword /></BlankLayoutWithHeader> :
           <Component setToken={setToken} {...props} /> :
-        <Navigate to="/auth/login" />
+        <Navigate to={toUserLogin} />
     )
   }
   return <Authenticate />

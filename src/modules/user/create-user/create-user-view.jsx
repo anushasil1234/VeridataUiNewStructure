@@ -42,14 +42,14 @@ const CreateUserView = () => {
             showErrorMessage(invalidEmailMsg);
             return
         }
-        if (!hasValue(password)) {
-            showErrorMessage(passwordEmptyMsg);
-            return
-        }
-        if (hasValue(password)  && !validationsCheck(password.trim(), 'password')) {
-            showErrorMessage(invalidPasswordPatternMsg);
-            return
-        }
+        // if (!hasValue(password)) {
+        //     showErrorMessage(passwordEmptyMsg);
+        //     return
+        // }
+        // if (hasValue(password)  && !validationsCheck(password.trim(), 'password')) {
+        //     showErrorMessage(invalidPasswordPatternMsg);
+        //     return
+        // }
         // if (!hasValue(userCode)) {
         //     showErrorMessage(useCodeEmptyMsg);
         //     return
@@ -74,9 +74,9 @@ const CreateUserView = () => {
         const payLoad = {
             contactNo: contactNumber.trim(),
             emailId: userEmail.trim(),
-            password: password.trim(),
+            // password: password.trim(),
             roleId: role,
-            userCode: userCode.trim(),
+            // userCode: userCode.trim(),
             userName: userName.trim(),
             candidateId: null,
             companyId: companyId,
@@ -115,8 +115,8 @@ const CreateUserView = () => {
                         <UserCreationForm
                             userName={userName}
                             userEmail={userEmail}
-                            password={password}
-                            userCode={userCode}
+                            // password={password}
+                            // userCode={userCode}
                             contactNumber={contactNumber}
                             role={role}
                             setUserName={setUserName}

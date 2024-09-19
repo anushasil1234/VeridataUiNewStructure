@@ -1,90 +1,56 @@
-import { Box, Button, Grid, IconButton, InputAdornment, Link, Paper, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { InputField, PageHeading1, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
-import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle } from "app";
+import { Box, Button, Grid, Link, Paper, Typography } from "@mui/material";
+import React from "react";
+import { PageHeading1, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
+import { styles, imageContainer, loginImageStyle } from "app";
 import { useNavigate } from "react-router-dom";
-import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard, toForgotPassword, toSetPassword, welcomeMsg } from "shared/constants/constants";
+import { toDashboard, toLogin, toForgotPassword } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
 import logo from 'assets/images/logos/pfc_logo1.png';
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
 import { removeLoggedinTokenData, storeLoggedinTokenData } from "store/slices/login-token-slice";
 import { useDispatch, useSelector } from "react-redux";
-import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useEffect } from "react";
 import { removeDropdownList } from "store/slices/dropdown-slice";
 import { removeApi } from "store/slices/api-slice";
 import { removeFunction } from "store/slices/function-slice";
 import { removePopUpSetFunction } from "store/slices/popup-slice";
-import { storeLoggeoutData } from "store/slices/logout-slice";
+import { removeLoggeoutData, storeLoggeoutData } from "store/slices/logout-slice";
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
 import { useMsal } from '@azure/msal-react';
 import { loginRequest } from "authConfig";
 
 export const LoginView = () => {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordType, setPasswordType] = useState("password");
-  const [isPasswordVisibilityOn, setIsPasswordVisibilityOn] = useState(false);
-  const [passwordFieldIcon, setPasswordFieldIcon] = useState(<VisibilityOff sx={loginFieldIconStyle} />);
-  const [timeoutTimer, setTimeoutTimer] = useState();
+  // const [userName, setUserName] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [passwordType, setPasswordType] = useState("password");
+  // const [isPasswordVisibilityOn, setIsPasswordVisibilityOn] = useState(false);
+  // const [passwordFieldIcon, setPasswordFieldIcon] = useState(<VisibilityOff sx={loginFieldIconStyle} />);
+  // const [timeoutTimer, setTimeoutTimer] = useState();
   const { accounts, instance } = useMsal();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handlePasswordVisibility = () => {
-    setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
-  }
-  useEffect(() => {
-    if (isPasswordVisibilityOn) {
-      setPasswordType("text");
-      setPasswordFieldIcon(<Visibility sx={loginFieldIconStyle} />);
-    } else {
-      setPasswordType("password");
-      setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
-    }
-  }, [isPasswordVisibilityOn])
-  const userNameInput = new InputFieldProps(
-    setUserName,
-    "Username",
-    null,
-    null
-  );
-  const userNameInputProps = {
-    endAdornment: (
-      <InputAdornment position='end'>
-        <AccountCircle sx={noBtnIconStyle} />
-      </InputAdornment>
-    ),
-  }
-  const passwordInput = new InputFieldProps(
-    setPassword,
-    "password",
-    null,
-    passwordType
-  );
-  const passwordInputProps = {
-    endAdornment: (
-      <InputAdornment position='end'>
-        <IconButton
-          aria-label='toggle password visibility'
-          onClick={handlePasswordVisibility}
-        >
-          {passwordFieldIcon}
-        </IconButton>
-      </InputAdornment>
-    ),
-  }
+  // const handlePasswordVisibility = () => {
+  //   setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
+  // }
+  // useEffect(() => {
+  //   if (isPasswordVisibilityOn) {
+  //     setPasswordType("text");
+  //     setPasswordFieldIcon(<Visibility sx={loginFieldIconStyle} />);
+  //   } else {
+  //     setPasswordType("password");
+  //     setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
+  //   }
+  // }, [isPasswordVisibilityOn])
 
 
   const apiSlice = useSelector(state => state.apiSlice);
   const functionSlice = useSelector(state => state.functionSlice);
   const popUpSlice = useSelector(state => state.popUpSlice);
 
-  const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-  const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
 
-  const { postLoginCredDetails, postLoginDetails, postLoginByEmailDetails } = apiSlice[0];
-  const { setDropdownList, openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } = functionSlice[0];
+  const { postLoginByEmailDetails } = apiSlice[0];
+  const { setDropdownList } = functionSlice[0];
 
 
   const handleClickOnLogout = () => {
@@ -97,99 +63,25 @@ export const LoginView = () => {
     dispatch(removeFunction());
     dispatch(removePopUpSetFunction());
     dispatch(removeSideMenuItems());
-    instance.logoutPopup({
-      postLogoutRedirectUri: "/",  // Redirect user to home after logout
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Redirect-based logout (no popup)
+    instance.logoutRedirect({
+      postLogoutRedirectUri: toLogin,  // Redirect user to login page after logout
+    }).catch(error => {
+      // Handle errors here if needed
+      console.error("Logout error:", error);
     });
+
+    // navigate(`${toLogin}`)
+    // instance.logoutPopup({
+    //   localStorage.clear(),
+    // sessionStorage.clear(),
+    //   postLogoutRedirectUri: "/auth/login",  // Redirect user to home after logout
+    // });
+
   }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (userName === "") {
-      showErrorMessage(emptyUserNameField);
-    } else if (password === "") {
-      showErrorMessage(emptyPasswordField);
-    } else {
-      const payLoad = {
-        userCode: userName,
-        password: password
-      };
-      const response = await postLoginCredDetails(payLoad);
-      if (response) {
-
-        const { responseInfo } = response;
-        const { clientId, dbUserType } = responseInfo;
-        const handlePostUserDetails = async (otp = null) => {
-          const payLoad = {
-            clientId: clientId,
-            dbUserType: dbUserType,
-            otp: otp
-          };
-
-          const response = await postLoginDetails(payLoad);
-          if (response) {
-            const { responseInfo } = response;
-            const { userDetails, tokenDetails } = responseInfo;
-            const { userName, consentStatus, userTypeId, isDefaultPassword, isPasswordExpire } = userDetails;
-            if (userTypeId === 3 && consentStatus === 0 && isDefaultPassword === false && isPasswordExpire === false) {
-              const infoModelcontent = {
-                // dialogContentText: 'dialogContentText',
-                // dialogTitle: 'dialogTitle',
-                dialogContentComponent:
-                  <Box>
-                    <Typography style={{
-                      fontSize: "1.5rem"
-                    }}>
-                      Hi {userName.split(' ')[0]} !
-                    </Typography>
-                    <Typography
-                      style={{
-                        fontSize: ".9rem",
-                        textAlign: "left",
-                        color: '#6e6d7a'
-                      }}
-                    >
-                      {welcomeMsg}
-                    </Typography>
-                  </Box>,
-                maxWidth: 'sm'
-              }
-              openInfoModel(infoModelcontent);
-            }
-
-            setLocalStorageItem("pfc-user", userDetails);
-            setLocalStorageItem("pfc-token", tokenDetails);
-            dispatch(storeLoggedinData(userDetails));
-            dispatch(storeLoggedinTokenData(tokenDetails));
-            dispatch(storeLoggeoutData({ handleClickOnLogout }));
-            if (isDefaultPassword === true || isPasswordExpire === true) {
-              navigate(`${toSetPassword}`);
-            } else {
-              await setDropdownList();
-              navigate(`${toDashboard}`);
-            }
-            closeOtpSubmitionModel();
-          } else {
-            navigate("/");
-          }
-        }
-        if (dbUserType === 3) {
-          showSuccessMessage(otpToMailMsg);
-          openOtpSubmitionModel({
-            otpSubmitionFunction: (otp) => {
-              handlePostUserDetails(otp);
-            },
-            timeoutTimer: timeoutTimer,
-            setTimeoutTimer: setTimeoutTimer
-          });
-        } else {
-          handlePostUserDetails();
-        }
-
-      } else {
-        navigate("/");
-      }
-    }
-  };
 
   const handleGetUserDetails = async (username) => {
     // const payLoad = {
@@ -199,11 +91,12 @@ export const LoginView = () => {
     if (response) {
       const { responseInfo } = response;
       const { userDetails, tokenDetails } = responseInfo;
-      const { isDefaultPassword, isPasswordExpire } = userDetails;
+      // const { isDefaultPassword, isPasswordExpire } = userDetails;
       setLocalStorageItem("pfc-user", userDetails);
       setLocalStorageItem("pfc-token", tokenDetails);
       dispatch(storeLoggedinData(userDetails));
       dispatch(storeLoggedinTokenData(tokenDetails));
+      dispatch(removeLoggeoutData());
       dispatch(storeLoggeoutData({ handleClickOnLogout }));
       await setDropdownList();
       navigate(`${toDashboard}`)
@@ -218,22 +111,29 @@ export const LoginView = () => {
     }
   }
   const handleSSOLogin = () => {
-    instance.loginPopup(loginRequest)
-      .then((response) => {
-        //   console.log("Logged in", response);
-        //  Handle successful login, navigate to a secure page
-        handleGetUserDetails(response.account.username);
-        //  handleGetUserDetails(userName);
-      })
-      .catch((e) => {
-        alert.error("SSO Login failed", e);
-      });
+    if (accounts && accounts.length > 0) {
+      handleGetUserDetails(accounts[0].username);
+    } else {
+      instance.loginPopup(loginRequest)
+        .then((response) => {
+          //   console.log("Logged in", response);
+          //  Handle successful login, navigate to a secure page
+          handleGetUserDetails(response.account.username);
+          //  handleGetUserDetails(userName);
+        })
+        .catch((e) => {
+          alert("SSO Login failed", e);
+        });
+    }
   };
 
   useEffect(() => {
     if (accounts && accounts.length > 0) {
       handleGetUserDetails(accounts[0].username);
     }
+    // else {
+    //   handleSSOLogin()
+    // }
   }, []);
 
   return (
@@ -262,7 +162,7 @@ export const LoginView = () => {
                 </Box>
               </Grid>
               <Grid>
-                <form onSubmit={handleSubmit}>
+                {/* <form onSubmit={handleSubmit}>
                   <InputField inputProps={userNameInputProps} props={userNameInput} />
                   <InputField inputProps={passwordInputProps} props={passwordInput} />
                   <Button
@@ -274,8 +174,8 @@ export const LoginView = () => {
                   >
                     Sign in
                   </Button>
-                </form>
-                <hr />
+                </form> */}
+                {/* <hr /> */}
 
                 {/* SSO login button */}
                 <Button

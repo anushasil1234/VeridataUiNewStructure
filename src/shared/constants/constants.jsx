@@ -128,6 +128,7 @@ export const toUserlist = "/userlist";
 export const toAppointeecount = "/appointeecount";
 export const toDataUploaded = "/datauploaded";
 export const toLogin = "/auth/login";
+export const toUserLogin = "/auth/userlogin";
 export const toForgotPassword = "/auth/forgetpassword";
 export const toManageProfile = "/manageprofile";
 export const toSetPassword = "/setpassword";

@@ -118,9 +118,11 @@ const Profile = () => {
           <ListItemText sx={userNameTextStyle}>FAQ</ListItemText>
         </MenuItem>
         <Box mt={1} py={1} px={2}>
+
           <Button onClick={handleLogout} variant="outlined" color="primary" fullWidth>
             Logout
           </Button>
+
         </Box>
       </Menu>
     </Box>

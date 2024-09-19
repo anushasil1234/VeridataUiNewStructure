@@ -6,7 +6,8 @@ import AuthorizedRedirection from 'shared/components/authorized-redirection';
 import {
   toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent,
   toLogin, toForgotPassword, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData,
-  toUserlist, toVerified, toHelp, toSetPassword, toReSetPassword, toNoMovementAgingReport, toNoResponseAgingReport, toNationalityReport, toAppointeeReport
+  toUserlist, toVerified, toHelp, toSetPassword, toReSetPassword, toNoMovementAgingReport, toNoResponseAgingReport, toNationalityReport, toAppointeeReport,
+  toUserLogin
 } from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 import { MsalProvider } from '@azure/msal-react';
@@ -48,6 +49,7 @@ const AppointeeAgingReport = Loadable(lazy(() => import('../../modules/reports/n
 const AppointeeNationalityReport = Loadable(lazy(() => import('../../modules/reports/nationality-view')));
 const AppointeeReport = Loadable(lazy(() => import('../../modules/reports/appointee-data-view')));
 const ForgotPassword = Loadable(lazy(() => import('../../modules/account/login/forgot-password')));
+const UserLogin = Loadable(lazy(() => import('../../modules/account/login/user-login-view')));
 
 const CustomRouter = [
   {
@@ -96,6 +98,10 @@ const CustomRouter = [
         )
       },
       {
+        path: toUserLogin, exact: true, element: (
+          AuthorizedRedirection(UserLogin)
+        )
+      },{
         path: toForgotPassword, exact: true, element: (
           AuthorizedRedirection(ForgotPassword)
         )

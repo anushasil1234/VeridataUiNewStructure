@@ -10,8 +10,8 @@ const UserCreationForm = (formData) => {
     const {
         userName,
         userEmail,
-        password,
-        userCode,
+        // password,
+        // userCode,
         contactNumber,
         role,
         setUserName,
@@ -91,7 +91,7 @@ const UserCreationForm = (formData) => {
                     }}
                 />
             </Grid>
-            <Grid item xs={12} md={6} >
+            {/* <Grid item xs={12} md={6} >
                 <Typography sx={lable1Style}>Password
                     <span className="requiredField">*</span>
                 </Typography>
@@ -141,7 +141,7 @@ const UserCreationForm = (formData) => {
                     inputProps={{ maxLength: 12 }}
 
                 />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} md={6} >
                 <Typography sx={lable1Style}>Contact No
                     <span className="requiredField">*</span>

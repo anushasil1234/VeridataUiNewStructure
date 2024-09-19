@@ -6,7 +6,7 @@ export const msalConfig = {
     },
     cache: {
       cacheLocation: "localStorage", // optional
-      storeAuthStateInCookie: true, // optional
+      storeAuthStateInCookie: false, // optional
     },
   };
   export const loginRequest = {

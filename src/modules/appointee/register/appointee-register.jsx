@@ -24,12 +24,14 @@ import {
   positionRelative,
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   CardLayout,
   DateFormatYYYYMMDD,
+  getLocalStorageItem,
   hasValue,
   patternChecking,
+  setLocalStorageItem,
   StringToDate,
   trimmedDate,
 } from "shared/utils";
@@ -77,6 +79,7 @@ import uploadFileMessage from "shared/utils/associate/upload-file-message";
 import VerficationAadharSteps from "shared/components/verification/verfication-aadhar";
 import PassportSample from 'assets/images/backgrounds/PassportSample2.jpeg';
 import PassportFileNoSample from 'assets/images/backgrounds/file-number-in-indian-passport.png';
+import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
 
 
 const AppointeeRegister = () => {
@@ -754,8 +757,9 @@ const AppointeeRegister = () => {
       }
     }
   };
-
+  const dispatch = useDispatch();
   const handleAppointeeFormPage2Save = async () => {
+    const loginUserData = getLocalStorageItem("pfc-user");
     let payLoad = {
       appointeeDetailsId: appointeeDetailsId,
       appointeeId: appointeeId,
@@ -787,6 +791,18 @@ const AppointeeRegister = () => {
     }
     const response = await postAppointeeFileDetails(formData);
     if (response) {
+      setLocalStorageItem("pfc-user", {
+        ...loginUserData,
+      isSubmit: true,
+      status:'Submitted'
+      });
+      dispatch(removeLoggedinData());
+      dispatch(storeLoggedinData({
+        ...loginUserData,
+        isSubmit: true,
+        status:'Submitted'
+      }));
+      
       const registrationSuccessContent = {
         dialogContentText: registrationSuccessDialogContentText,
         dialogTitle: congratulationDialogContentTitle,
@@ -2194,7 +2210,7 @@ const AppointeeRegister = () => {
                     >
                       {previousButton}
                     </Button>
-                    {isSubmitDisabled && !isSubmitDisabled ?
+                    {isSubmitDisabled===false ?
                       <Button
                         name="submit"
                         // disabled={isSubmitDisabled}

@@ -105,14 +105,18 @@ const UnWrappedVerified = (props) => {
       });
     }
   };
+  const updatDatePayLoad = (filePassword) => {
+    const _payLoad = { ...payLoad, filePassword }
+    setPayLoad(_payLoad);
+  }
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(removeActionRoute());
     if (actionRouteSlice.length === 0 && hasPermission) {
       setTableRows(payLoad);
     }
   }, [state, actionRouteSlice, hasPermission]);
+ 
   useEffect(() => {
     const _payLoad = {
       ...payLoad, 
@@ -122,10 +126,7 @@ const UnWrappedVerified = (props) => {
 
     setPayLoad(_payLoad);
   }, [fromDate, toDate]);
-  const updatDatePayLoad = (filePassword) => {
-    const _payLoad = { ...payLoad, filePassword }
-    setPayLoad(_payLoad);
-  }
+  
   useEffect(() => {
     dispatch(storeData({
       fileSubmitionPayLoad: payLoad
