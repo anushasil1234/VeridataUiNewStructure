@@ -1241,6 +1241,47 @@ export const useStyles = makeStyles(() => ({
 
 
 
+// export const ResponsiveFab = styled(Fab)(({ backgroundColor, hoverColor }) => ({
+//   backgroundColor: backgroundColor || AppStyle.palette.yellow1.light,
+//   color: AppStyle.palette.common.white,
+//   padding: '0.5rem', // Use rem for padding
+//   borderRadius: '50%',
+//   //fontSize: '1rem', // Default font size in rem
+
+//   // Media queries for different screen sizes
+//   [AppStyle.breakpoints.down('sm')]: {
+//     width: '2rem',
+//     height: '2rem',
+//     fontSize: '0.8rem',
+//   },
+//   [AppStyle.breakpoints.between('sm', 'md')]: {
+//     width: '2.5rem',
+//     height: '2.5rem',
+//     fontSize: '1rem',
+//   },
+//   [AppStyle.breakpoints.between('md', 'lg')]: {
+//     width: '3rem',
+//     height: '3rem',
+//     fontSize: '1.5rem',
+//   },
+//   [AppStyle.breakpoints.between('lg','xl')]: {
+//     width: '3.2rem',
+//     height: '3.2rem',
+//     fontSize: '2.5rem',
+//   },
+//   [AppStyle.breakpoints.up('xl')]: {
+//     width: '3.7rem',
+//     height: '3.7rem',
+//     fontSize: '2.5rem',
+//   },
+
+//   // Hover effect
+//   '&:hover': {
+//     backgroundColor: hoverColor || AppStyle.palette.yellow1.main,
+//   },
+// }));
+
+
 export const ResponsiveFab = styled(Fab)(({ backgroundColor, hoverColor }) => ({
   backgroundColor: backgroundColor || AppStyle.palette.yellow1.light,
   color: AppStyle.palette.common.white,
@@ -1255,23 +1296,23 @@ export const ResponsiveFab = styled(Fab)(({ backgroundColor, hoverColor }) => ({
     fontSize: '0.8rem',
   },
   [AppStyle.breakpoints.between('sm', 'md')]: {
-    width: '2.5rem',
-    height: '2.5rem',
+    width: '2.2rem',
+    height: '2.2rem',
     fontSize: '1rem',
   },
   [AppStyle.breakpoints.between('md', 'lg')]: {
-    width: '3rem',
-    height: '3rem',
+    width: '2.2rem',
+    height: '2.2rem',
     fontSize: '1.5rem',
   },
   [AppStyle.breakpoints.between('lg','xl')]: {
-    width: '3.2rem',
-    height: '3.2rem',
+    width: '2.5rem',
+    height: '2.5rem',
     fontSize: '2.5rem',
   },
   [AppStyle.breakpoints.up('xl')]: {
-    width: '3.7rem',
-    height: '3.7rem',
+    width: '3rem',
+    height: '3rem',
     fontSize: '2.5rem',
   },
 
