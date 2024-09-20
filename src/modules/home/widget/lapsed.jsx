@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import RectangleSkelton1 from 'shared/utils/skeltons/rectangular-skelton/rectangular-skelton1';
 import CircelSkelton1 from 'shared/utils/skeltons/circel-skelton/circel-skelton1';
 import RectangularSkelton2 from 'shared/utils/skeltons/rectangular-skelton/rectangular-skelton2';
+import { ResponsiveFab } from 'app';
 
 const Lapsed = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
@@ -72,11 +73,15 @@ const Lapsed = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
         right: 0,
         zIndex: 1
     }
-    const action = wizName ?
-        <Fab onClick={() => navigateTo(toLapseddata, { state: { dayRangePayLoad } })} size="small" sx={{ ...underProcessFabStyle, ...dashBoardwidget }}>
+    const action = wizName ? (
+        <ResponsiveFab
+            onClick={() => navigateTo(toLapseddata, { state: { dayRangePayLoad, filterType: "UNDPRCS" } })}
+            //size="small"
+            sx={dashBoardwidget}
+        >
             <img src={"./playground_assets/redirect.svg"} alt="YourSVG" />
-
-        </Fab> : <CircelSkelton1 />
+        </ResponsiveFab>
+    ) : <CircelSkelton1 />;
     return (
         <WidgetCard
             title={wizName}

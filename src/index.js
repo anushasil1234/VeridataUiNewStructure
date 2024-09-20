@@ -4,6 +4,7 @@ import { WrappedApp } from "./app";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "store";
+import { StyledEngineProvider } from "@mui/material";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -26,11 +27,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 // console.error = () => {}
 root.render(
   <Suspense>
-    <Provider store={store}>
-      <BrowserRouter>
-        {WrappedApp}
-        {/* <App /> */}
-      </BrowserRouter>
-    </Provider>
+    <StyledEngineProvider injectFirst>
+      <Provider store={store}>
+        <BrowserRouter>
+          {WrappedApp}
+          {/* <App /> */}
+        </BrowserRouter>
+      </Provider>
+    </StyledEngineProvider>
   </Suspense>
 );

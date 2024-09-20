@@ -1,5 +1,7 @@
-import { alpha, createTheme} from "@mui/material/styles";
-
+import { alpha, createTheme } from "@mui/material/styles";
+import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
+import Fab from "@mui/material/Fab"; // Import Fab component from MUI
 
 let AppStyle = createTheme({
   palette: {
@@ -336,7 +338,7 @@ export const dropDownLableStyle = {
 
 // app lable style END
 export const datepickerpx = {
-  width : "160px"
+  width: "160px"
 }
 // input start
 export const inputFieldStyle = {
@@ -350,17 +352,17 @@ export const inputFieldStyleAdded = {
   padding: 0
 };
 export const textField1Sx = {
-  "& .css-1ddqow9-MuiInputBase-root-MuiFilledInput-root::before":{
-   display: "none",
-   borderRadius: "5px",
+  "& .css-1ddqow9-MuiInputBase-root-MuiFilledInput-root::before": {
+    display: "none",
+    borderRadius: "5px",
   },
-  "& input":{
+  "& input": {
     height: "2px"
   },
   width: "50%"
 }
 export const profilePasswordContainerSx = {
-  flexDirection:"row",
+  flexDirection: "row",
   gap: 1
 }
 // input end
@@ -565,12 +567,12 @@ export const lable2Style = {
 };
 export const lable3Style = {
   ...lableCommonStyle,
-  fontSize: "1rem" 
+  fontSize: "1rem"
 };
 export const lableRedStyle = {
   ...lableCommonStyle,
-  fontSize: "1rem" ,
-  color:ThemeColorPalete.red.main,
+  fontSize: "1rem",
+  color: ThemeColorPalete.red.main,
 };
 export const inputPropsStyle = {
   // height: "0.438em"
@@ -857,7 +859,7 @@ export const issueChipStyle = {
 
 export const consetPendingChipStyle = {
   ...chipStyle,
-  backgroundColor:"#9e9e9e" 
+  backgroundColor: "#9e9e9e"
 };
 export const consetGivenChipStyle = {
   ...chipStyle,
@@ -865,7 +867,7 @@ export const consetGivenChipStyle = {
 };
 export const consetDeclinedChipStyle = {
   ...chipStyle,
-  backgroundColor:'#e0040c'
+  backgroundColor: '#e0040c'
 };
 export const reprocessedChipStyle = {
   ...chipStyle,
@@ -1047,7 +1049,7 @@ export const searchInputBaseStyle = {
     [AppStyle.breakpoints.up('sm')]: {
       width: '12ch',
       '&:focus': {
-          width: '20ch'
+        width: '20ch'
       }
     }
   }
@@ -1184,3 +1186,202 @@ export const downLoadListSx = {
   boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)"
 }
 export const genderIconStyle = { fontSize: "3rem" };
+
+export const useStyles = makeStyles(() => ({
+  cardTitle: {
+    fontSize: (props) => (props.isSmallScreen ? '1.0rem' : '0.80rem'),
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: (props) => (props.isSmallScreen ? 'normal' : 'nowrap'),
+  },
+}));
+
+
+// Styled component with responsive styles
+// export const ResponsiveFab = styled('button')((theme) => ({
+//   backgroundColor: AppStyle.palette.yellow1.light,
+//   color: AppStyle.palette.common.white,
+//   padding: '7px',
+//   borderRadius: '50%',
+//   fontSize: '0.9rem', // Default font size
+
+//   // Media queries
+//   padding: theme.spacing(1),
+//   [theme.breakpoints.down('sm')]: {
+//     width: '31px',
+//     height: '31px',
+//     fontSize: '0.8rem', // Slightly smaller font size for extra small screens
+//   },
+//   [theme.breakpoints.between('sm', 'md')]: {
+//     width: '34px',
+//     height: '34px',
+//     fontSize: '0.9rem',
+//   },
+//   [theme.breakpoints.between('md', 'lg')]: {
+//     width: '37px',
+//     height: '37px',
+//     fontSize: '1rem',
+//   },
+//   [theme.breakpoints.up('lg')]: {
+//     width: '40px',
+//     height: '40px',
+//     fontSize: '1.1rem',
+//   },
+//   [theme.breakpoints.up('xl')]: {
+//     width: '43px',
+//     height: '43px',
+//     fontSize: '1.2rem',
+//   },
+
+//   '&:hover': {
+//     backgroundColor: theme.palette.yellow1.main,
+//   }
+// }));
+// export const styles1 = (theme) => ({
+//   root: {
+//     padding: theme.spacing(1),
+//     [theme.breakpoints.down('md')]: {
+//       backgroundColor: theme.palette.secondary.main,
+//     },
+//     [theme.breakpoints.up('md')]: {
+//       backgroundColor: theme.palette.primary.main,
+//     },
+//     [theme.breakpoints.up('lg')]: {
+//       backgroundColor: green[500],
+//     },
+//   },
+// });
+
+
+// export const ResponsiveFab = styled('div')(({ AppStyle, color }) => {
+//   // Define a color mapping based on the `color` prop
+//   const backgroundColor =
+//     color === 'secondary'
+//       ? AppStyle.palette.secondary.main
+//       : color === 'primary'
+//       ? AppStyle.palette.primary.main
+//       : color || AppStyle.palette.yellow1.light; // Default fallback color
+
+//   return {
+//     backgroundColor, // Use the computed background color
+//     color: AppStyle.palette.common.white,
+//     padding: '7px',
+//     borderRadius: '50%',
+//     fontSize: '0.9rem',
+
+//     // Media queries
+//     [AppStyle.breakpoints.down('sm')]: {
+//       width: '31px',
+//       height: '31px',
+//       fontSize: '0.8rem',
+//     },
+//     [AppStyle.breakpoints.between('sm', 'md')]: {
+//       width: '34px',
+//       height: '34px',
+//       fontSize: '0.9rem',
+//     },
+//     [AppStyle.breakpoints.between('md', 'lg')]: {
+//       width: '37px',
+//       height: '37px',
+//       fontSize: '1rem',
+//     },
+//     [AppStyle.breakpoints.up('lg')]: {
+//       width: '39px',
+//       height: '39px',
+//       fontSize: '1.2rem',
+//     },
+//     [AppStyle.breakpoints.up('xl')]: {
+//       width: '43px',
+//       height: '43px',
+//       fontSize: '1.2rem',
+//     },
+
+//     '&:hover': {
+//       backgroundColor: AppStyle.palette.yellow1.main,
+//     },
+//   };
+// });
+
+
+// export const ResponsiveFab = styled('div')(() => ({
+//   backgroundColor: AppStyle.palette.yellow1.light,
+//   color: AppStyle.palette.common.white,
+//   padding: '7px',
+//   borderRadius: '50%',
+//   fontSize: '0.9rem', // Default font size
+
+//   // Media queries
+  
+//   [AppStyle.breakpoints.down('sm')]: {
+//     width: '31px',
+//     height: '31px',
+//     fontSize: '0.8rem', // Slightly smaller font size for extra small screens
+//   },
+//   [AppStyle.breakpoints.between('sm', 'md')]: {
+//     width: '34px',
+//     height: '34px',
+//     fontSize: '0.9rem',
+//   },
+//   [AppStyle.breakpoints.between('md', 'lg')]: {
+//     width: '37px',
+//     height: '37px',
+//     fontSize: '1rem',
+//   },
+//   [AppStyle.breakpoints.up('lg')]: {
+//     width: '39px',
+//     height: '39px',
+//     fontSize: '1.2rem',
+//   },
+//   [AppStyle.breakpoints.up('xl')]: {
+//     width: '43px',
+//     height: '43px',
+//     fontSize: '1.2rem',
+//   },
+
+//   '&:hover': {
+//     backgroundColor: AppStyle.palette.yellow1.main,
+//   }
+// }));
+
+
+// Styled Fab component
+export const ResponsiveFab = styled(Fab)(({ backgroundColor,hoverColor  }) => ({
+  backgroundColor: backgroundColor || AppStyle.palette.yellow1.light, // Use prop or default color
+  color: AppStyle.palette.common.white,
+  padding: '7px',
+  borderRadius: '50%',
+  fontSize: '0.9rem',
+
+  // Media queries for different screen sizes
+  [AppStyle.breakpoints.down('sm')]: {
+    width: '31px',
+    height: '31px',
+    fontSize: '0.8rem',
+  },
+  [AppStyle.breakpoints.between('sm', 'md')]: {
+    width: '34px',
+    height: '34px',
+    fontSize: '0.9rem',
+  },
+  [AppStyle.breakpoints.between('md', 'lg')]: {
+    width: '37px',
+    height: '37px',
+    fontSize: '1rem',
+  },
+  [AppStyle.breakpoints.up('lg')]: {
+    width: '39px',
+    height: '39px',
+    fontSize: '1.2rem',
+  },
+  [AppStyle.breakpoints.up('xl')]: {
+    width: '43px',
+    height: '43px',
+    fontSize: '1.2rem',
+  },
+
+  // Hover effect
+  // Hover effect
+  '&:hover': {
+    backgroundColor: hoverColor || AppStyle.palette.yellow1.main, // Use prop or default hover color
+  },
+}));

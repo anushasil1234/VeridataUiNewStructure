@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import RectangularSkelton2 from 'shared/utils/skeltons/rectangular-skelton/rectangular-skelton2';
 import RectangleSkelton1 from 'shared/utils/skeltons/rectangular-skelton/rectangular-skelton1';
 import CircelSkelton1 from 'shared/utils/skeltons/circel-skelton/circel-skelton1';
+import { ResponsiveFab } from 'app';
 
 const Verified = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
@@ -18,6 +19,8 @@ const Verified = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     const secondary = theme.palette.secondary.main;
     const secondarylight = '#f5fcff';
     const varifiedColor = '#5a8577';
+    const verifiedColour = theme.palette.green1.light
+    const verifiedColourdark = theme.palette.green1.main
     const chartdata = wizdata?.widgetChartValue;
     const wizName = wizdata?.widgetTypeName ?? <RectangleSkelton1 />;
     const wizValue = wizdata?.widgetTypeValue ?? <RectangleSkelton1 />;
@@ -75,10 +78,22 @@ const Verified = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
         right: 0,
         zIndex: 1
     }
+
     const action = wizName ?
-    <Fab onClick={() => navigateTo(toVerified, { state: { dayRangePayLoad } })} size="small" sx={{ ...greenFabStyle, ...dashBoardwidget }}>
-    <img src={"./playground_assets/redirect.svg"} alt="YourSVG" />
-</Fab> : <CircelSkelton1 />
+    <ResponsiveFab
+      onClick={() =>
+        navigateTo(toVerified, { state: { dayRangePayLoad, filterType: "UNDPRCS" } })
+      }
+      backgroundColor={verifiedColour}
+      hoverColor = {verifiedColourdark}
+      //color="secondary"
+      //size="small"
+      sx={{ ...dashBoardwidget }}
+    >
+      <img src={"./playground_assets/redirect.svg"} alt="YourSVG" />
+    </ResponsiveFab> : <CircelSkelton1 />
+
+
     return (
         <WidgetCard
             title={wizName}

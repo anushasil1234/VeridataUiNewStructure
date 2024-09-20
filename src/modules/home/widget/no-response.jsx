@@ -1,6 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import { useTheme } from '@mui/material/styles';
+import {useMediaQuery } from '@mui/material';
 import { Stack, Typography, Fab } from '@mui/material';
 import { WidgetCard } from '.';
 import { useSelector } from 'react-redux';
@@ -8,7 +9,7 @@ import { toProcessing } from 'shared/constants/constants';
 import CircelSkelton1 from 'shared/utils/skeltons/circel-skelton/circel-skelton1';
 import RectangularSkelton2 from 'shared/utils/skeltons/rectangular-skelton/rectangular-skelton2';
 import RectangleSkelton1 from 'shared/utils/skeltons/rectangular-skelton/rectangular-skelton1';
-
+import { ResponsiveFab } from 'app';
 
 const NoResponse = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     const commonHooksFunctionSlice  = useSelector((state) => state.commonHooksFunctionSlice);
@@ -16,16 +17,11 @@ const NoResponse = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     const { navigateTo } = commonHooksFunctionSlice[0];
     // chart color
     const theme = useTheme();
+
     const secondary = theme.palette.secondary.main;
     const secondarylight = '#f5fcff';
     const underProcessColor = '#bdaf4ae3';
-    const underProcessFabStyle = {
-        bgcolor: theme.palette.yellow1.light,
-        color: theme.palette.common.white,
-        "&:hover": {
-            bgcolor: theme.palette.yellow1.main
-        }
-    }
+
 
     const chartdata = wizdata?.widgetChartValue;
     const wizName = wizdata?.widgetTypeName ?? <RectangleSkelton1 />;
@@ -67,17 +63,21 @@ const NoResponse = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
             data: chartdata
         }
     ];
-    const action = wizName ?
-        <Fab
-            onClick={() =>
-                navigateTo(toProcessing, { state: { dayRangePayLoad, filterType: "NORES" } })
-            }
-            color="secondary"
-            size="small"
-            sx={{ ...underProcessFabStyle }}
+    const dashBoardwidget = {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        zIndex: 1
+    }
+    const action = wizName ? (
+        <ResponsiveFab
+            onClick={() => navigateTo(toProcessing, { state: { dayRangePayLoad, filterType: "UNDPRCS" } })}
+            //size="small"
+            sx={dashBoardwidget}
         >
             <img src={"./playground_assets/redirect.svg"} alt="YourSVG" />
-        </Fab> : <CircelSkelton1 />
+        </ResponsiveFab>
+    ) : <CircelSkelton1 />;
     return (
         <WidgetCard
             title={wizName}
