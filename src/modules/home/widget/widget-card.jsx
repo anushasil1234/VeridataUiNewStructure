@@ -142,7 +142,7 @@ const WidgetCard = ({
                                     ) : null}
                                 </Box>
                             </Grid>
-                            <Grid item xs={12} sm={4} lg= {8}
+                            <Grid item xs={12} sm={4} 
                                 sx={{ position: 'absolute', top: '10px', right: '10px', p: 0, m: 0 }}
                             >
                                 <Box >

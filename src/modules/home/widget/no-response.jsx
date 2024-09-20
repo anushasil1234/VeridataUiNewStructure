@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import { useTheme } from '@mui/material/styles';
-import {useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import { Stack, Typography, Fab } from '@mui/material';
 import { WidgetCard } from '.';
 import { useSelector } from 'react-redux';
@@ -12,8 +12,8 @@ import RectangleSkelton1 from 'shared/utils/skeltons/rectangular-skelton/rectang
 import { ResponsiveFab } from 'app';
 
 const NoResponse = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
-    const commonHooksFunctionSlice  = useSelector((state) => state.commonHooksFunctionSlice);
-    
+    const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
+
     const { navigateTo } = commonHooksFunctionSlice[0];
     // chart color
     const theme = useTheme();
@@ -75,7 +75,7 @@ const NoResponse = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
             //size="small"
             sx={dashBoardwidget}
         >
-            <img src={"./playground_assets/redirect.svg"} alt="YourSVG" />
+            <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '70%', height: 'auto' }} />
         </ResponsiveFab>
     ) : <CircelSkelton1 />;
     return (
@@ -98,7 +98,7 @@ const NoResponse = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
                         </Typography> : <RectangularSkelton2 />}
                 </Stack>
             </>
-        </WidgetCard >
+        </WidgetCard>
     );
 };
 

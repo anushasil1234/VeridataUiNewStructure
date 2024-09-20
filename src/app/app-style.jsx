@@ -1197,125 +1197,19 @@ export const useStyles = makeStyles(() => ({
 }));
 
 
-// Styled component with responsive styles
-// export const ResponsiveFab = styled('button')((theme) => ({
-//   backgroundColor: AppStyle.palette.yellow1.light,
+// // Styled Fab component
+// export const ResponsiveFab = styled(Fab)(({ backgroundColor,hoverColor  }) => ({
+//   backgroundColor: backgroundColor || AppStyle.palette.yellow1.light, // Use prop or default color
 //   color: AppStyle.palette.common.white,
 //   padding: '7px',
 //   borderRadius: '50%',
-//   fontSize: '0.9rem', // Default font size
+//   fontSize: '0.9rem',
 
-//   // Media queries
-//   padding: theme.spacing(1),
-//   [theme.breakpoints.down('sm')]: {
-//     width: '31px',
-//     height: '31px',
-//     fontSize: '0.8rem', // Slightly smaller font size for extra small screens
-//   },
-//   [theme.breakpoints.between('sm', 'md')]: {
-//     width: '34px',
-//     height: '34px',
-//     fontSize: '0.9rem',
-//   },
-//   [theme.breakpoints.between('md', 'lg')]: {
-//     width: '37px',
-//     height: '37px',
-//     fontSize: '1rem',
-//   },
-//   [theme.breakpoints.up('lg')]: {
-//     width: '40px',
-//     height: '40px',
-//     fontSize: '1.1rem',
-//   },
-//   [theme.breakpoints.up('xl')]: {
-//     width: '43px',
-//     height: '43px',
-//     fontSize: '1.2rem',
-//   },
-
-//   '&:hover': {
-//     backgroundColor: theme.palette.yellow1.main,
-//   }
-// }));
-// export const styles1 = (theme) => ({
-//   root: {
-//     padding: theme.spacing(1),
-//     [theme.breakpoints.down('md')]: {
-//       backgroundColor: theme.palette.secondary.main,
-//     },
-//     [theme.breakpoints.up('md')]: {
-//       backgroundColor: theme.palette.primary.main,
-//     },
-//     [theme.breakpoints.up('lg')]: {
-//       backgroundColor: green[500],
-//     },
-//   },
-// });
-
-
-// export const ResponsiveFab = styled('div')(({ AppStyle, color }) => {
-//   // Define a color mapping based on the `color` prop
-//   const backgroundColor =
-//     color === 'secondary'
-//       ? AppStyle.palette.secondary.main
-//       : color === 'primary'
-//       ? AppStyle.palette.primary.main
-//       : color || AppStyle.palette.yellow1.light; // Default fallback color
-
-//   return {
-//     backgroundColor, // Use the computed background color
-//     color: AppStyle.palette.common.white,
-//     padding: '7px',
-//     borderRadius: '50%',
-//     fontSize: '0.9rem',
-
-//     // Media queries
-//     [AppStyle.breakpoints.down('sm')]: {
-//       width: '31px',
-//       height: '31px',
-//       fontSize: '0.8rem',
-//     },
-//     [AppStyle.breakpoints.between('sm', 'md')]: {
-//       width: '34px',
-//       height: '34px',
-//       fontSize: '0.9rem',
-//     },
-//     [AppStyle.breakpoints.between('md', 'lg')]: {
-//       width: '37px',
-//       height: '37px',
-//       fontSize: '1rem',
-//     },
-//     [AppStyle.breakpoints.up('lg')]: {
-//       width: '39px',
-//       height: '39px',
-//       fontSize: '1.2rem',
-//     },
-//     [AppStyle.breakpoints.up('xl')]: {
-//       width: '43px',
-//       height: '43px',
-//       fontSize: '1.2rem',
-//     },
-
-//     '&:hover': {
-//       backgroundColor: AppStyle.palette.yellow1.main,
-//     },
-//   };
-// });
-
-
-// export const ResponsiveFab = styled('div')(() => ({
-//   backgroundColor: AppStyle.palette.yellow1.light,
-//   color: AppStyle.palette.common.white,
-//   padding: '7px',
-//   borderRadius: '50%',
-//   fontSize: '0.9rem', // Default font size
-
-//   // Media queries
-  
+//   // Media queries for different screen sizes
 //   [AppStyle.breakpoints.down('sm')]: {
 //     width: '31px',
 //     height: '31px',
-//     fontSize: '0.8rem', // Slightly smaller font size for extra small screens
+//     fontSize: '0.8rem',
 //   },
 //   [AppStyle.breakpoints.between('sm', 'md')]: {
 //     width: '34px',
@@ -1338,50 +1232,51 @@ export const useStyles = makeStyles(() => ({
 //     fontSize: '1.2rem',
 //   },
 
+//   // Hover effect
+//   // Hover effect
 //   '&:hover': {
-//     backgroundColor: AppStyle.palette.yellow1.main,
-//   }
+//     backgroundColor: hoverColor || AppStyle.palette.yellow1.main, // Use prop or default hover color
+//   },
 // }));
 
 
-// Styled Fab component
-export const ResponsiveFab = styled(Fab)(({ backgroundColor,hoverColor  }) => ({
-  backgroundColor: backgroundColor || AppStyle.palette.yellow1.light, // Use prop or default color
+
+export const ResponsiveFab = styled(Fab)(({ backgroundColor, hoverColor }) => ({
+  backgroundColor: backgroundColor || AppStyle.palette.yellow1.light,
   color: AppStyle.palette.common.white,
-  padding: '7px',
+  padding: '0.5rem', // Use rem for padding
   borderRadius: '50%',
-  fontSize: '0.9rem',
+  //fontSize: '1rem', // Default font size in rem
 
   // Media queries for different screen sizes
   [AppStyle.breakpoints.down('sm')]: {
-    width: '31px',
-    height: '31px',
+    width: '2rem',
+    height: '2rem',
     fontSize: '0.8rem',
   },
   [AppStyle.breakpoints.between('sm', 'md')]: {
-    width: '34px',
-    height: '34px',
-    fontSize: '0.9rem',
-  },
-  [AppStyle.breakpoints.between('md', 'lg')]: {
-    width: '37px',
-    height: '37px',
+    width: '2.5rem',
+    height: '2.5rem',
     fontSize: '1rem',
   },
-  [AppStyle.breakpoints.up('lg')]: {
-    width: '39px',
-    height: '39px',
-    fontSize: '1.2rem',
+  [AppStyle.breakpoints.between('md', 'lg')]: {
+    width: '3rem',
+    height: '3rem',
+    fontSize: '1.5rem',
+  },
+  [AppStyle.breakpoints.between('lg','xl')]: {
+    width: '3.2rem',
+    height: '3.2rem',
+    fontSize: '2.5rem',
   },
   [AppStyle.breakpoints.up('xl')]: {
-    width: '43px',
-    height: '43px',
-    fontSize: '1.2rem',
+    width: '3.7rem',
+    height: '3.7rem',
+    fontSize: '2.5rem',
   },
 
   // Hover effect
-  // Hover effect
   '&:hover': {
-    backgroundColor: hoverColor || AppStyle.palette.yellow1.main, // Use prop or default hover color
+    backgroundColor: hoverColor || AppStyle.palette.yellow1.main,
   },
 }));

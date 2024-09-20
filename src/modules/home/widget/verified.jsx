@@ -90,7 +90,7 @@ const Verified = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
       //size="small"
       sx={{ ...dashBoardwidget }}
     >
-      <img src={"./playground_assets/redirect.svg"} alt="YourSVG" />
+      <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '70%', height: 'auto' }}/>
     </ResponsiveFab> : <CircelSkelton1 />
 
 
