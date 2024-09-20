@@ -82,7 +82,7 @@ const Verified = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     const action = wizName ?
     <ResponsiveFab
       onClick={() =>
-        navigateTo(toVerified, { state: { dayRangePayLoad, filterType: "UNDPRCS" } })
+        navigateTo(toVerified, { state: { dayRangePayLoad } })
       }
       backgroundColor={verifiedColour}
       hoverColor = {verifiedColourdark}
@@ -90,7 +90,7 @@ const Verified = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
       //size="small"
       sx={{ ...dashBoardwidget }}
     >
-      <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '70%', height: 'auto' }}/>
+      <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '80%', height: 'auto' }}/>
     </ResponsiveFab> : <CircelSkelton1 />
 
 

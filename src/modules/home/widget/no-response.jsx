@@ -71,11 +71,11 @@ const NoResponse = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     }
     const action = wizName ? (
         <ResponsiveFab
-            onClick={() => navigateTo(toProcessing, { state: { dayRangePayLoad, filterType: "UNDPRCS" } })}
+            onClick={() => navigateTo(toProcessing, { state: { dayRangePayLoad, filterType: "NORES" } })}
             //size="small"
             sx={dashBoardwidget}
         >
-            <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '70%', height: 'auto' }} />
+            <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '80%', height: 'auto' }} />
         </ResponsiveFab>
     ) : <CircelSkelton1 />;
     return (

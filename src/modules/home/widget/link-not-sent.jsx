@@ -183,7 +183,7 @@ const LinkNotSent = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
       //size="small"
       sx={{ ...dashBoardwidget }}
     >
-      <img src={"./playground_assets/redirect.svg"} alt="YourSVG"   style={{ width: '70%', height: 'auto' }}/> 
+      <img src={"./playground_assets/redirect.svg"} alt="YourSVG"   style={{ width: '80%', height: 'auto' }}/> 
     </ResponsiveFab> : <CircelSkelton1 />
   return (
     <WidgetCard
