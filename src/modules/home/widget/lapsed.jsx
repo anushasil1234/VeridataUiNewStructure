@@ -96,7 +96,7 @@ const Lapsed = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
                 </Typography>
                 <Stack direction="row" spacing={1} my={1} alignItems="center">
                     {wizName ?
-                        <Typography variant="subtitle2" fontWeight="530">
+                        <Typography variant="subtitle2" >
                             Verification process incomplete and Date of Joining is over.
                         </Typography> : <RectangularSkelton2 />}
                 </Stack>

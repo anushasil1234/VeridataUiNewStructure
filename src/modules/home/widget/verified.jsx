@@ -109,7 +109,7 @@ const Verified = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
                 </Typography>
                 <Stack direction="row" spacing={1} my={1} alignItems="center">
                     {wizName ?
-                        <Typography variant="subtitle2" fontWeight="530">
+                        <Typography variant="subtitle2" >
                             Verification process completed successfully
                         </Typography> : <RectangularSkelton2 />}
                 </Stack>

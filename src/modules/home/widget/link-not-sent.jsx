@@ -205,7 +205,7 @@ const LinkNotSent = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
         </Typography>
         <Stack direction="row" spacing={1} my={1} alignItems="center">
           {wizName ?
-            <Typography variant="subtitle2" fontWeight="530">
+            <Typography variant="subtitle2" >
               Verification link not sent
             </Typography> : <RectangularSkelton2 />}
         </Stack>

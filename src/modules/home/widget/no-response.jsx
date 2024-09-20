@@ -93,7 +93,7 @@ const NoResponse = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
                 <Stack direction="row" spacing={1} my={1} alignItems="center">
 
                     {wizName ?
-                        <Typography variant="subtitle2" fontWeight="530">
+                        <Typography variant="subtitle2" >
                             Verification link sent but not used
                         </Typography> : <RectangularSkelton2 />}
                 </Stack>

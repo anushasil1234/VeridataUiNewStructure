@@ -125,8 +125,9 @@ const WidgetCard = ({
                                 <Box sx={{ minWidth: 0 }}>
                                     <Tooltip title={title} arrow>
                                         <Typography
-                                            variant={isSmallScreen ? 'h6' : 'h5'}
-                                            className={classes.cardTitle}
+                                            //variant={isSmallScreen ? 'h6' : 'h6'}
+                                            variant="subtitle2" fontWeight="530"
+                                            //className={classes.cardTitle}
                                         >
                                             {title}
                                         </Typography>

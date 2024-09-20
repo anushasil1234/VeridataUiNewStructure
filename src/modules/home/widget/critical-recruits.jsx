@@ -9,13 +9,13 @@ import { toAttention } from 'shared/constants/constants';
 import RectangularSkelton2 from 'shared/utils/skeltons/rectangular-skelton/rectangular-skelton2';
 import { hasValue } from 'shared/utils';
 import { criticalFabStyle, dashBoardwidget } from 'app';
-
+import { ResponsiveFab } from 'app';
 
 const CriticalRecruits = () => {
-  
+
     const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
     const apiSlice = useSelector((state) => state.apiSlice);
-   
+
     const { navigateTo } = commonHooksFunctionSlice[0];
     const { getTotalCriticalAppointee } = apiSlice[0];
 
@@ -24,6 +24,9 @@ const CriticalRecruits = () => {
     const theme = useTheme();
     const primary = theme.palette.secondary.main;
     const criticalColor = '#ca5180e3';
+    const attention_light = theme.palette.error.main;
+    const attention_dark = theme.palette.error.main;
+    
     const [critical, setcritical] = useState(null);
     const optionscolumnchart = {
         chart: {
@@ -89,11 +92,29 @@ const CriticalRecruits = () => {
         <WidgetCard title="Attention"
 
             action={
-                <Fab onClick={() => navigateTo(toAttention)} size="small" sx={{ ...criticalFabStyle, ...dashBoardwidget }}>
-                    <img src={"./playground_assets/redirect.svg"} alt="YourSVG" />
-                </Fab>
+                <ResponsiveFab onClick={() => navigateTo(toAttention)} 
+                backgroundColor={attention_light}
+                hoverColor={attention_dark} // Pass the desired hover color
+               // size="small" 
+                sx={{ ...dashBoardwidget }}>
+                    <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '80%', height: 'auto' }} />
+                </ResponsiveFab>
             }
         >
+
+            {/* const action = wizName ?
+            <ResponsiveFab
+                onClick={() =>
+                    navigateTo(toLinknotsent, { state: { dayRangePayLoad } })
+                }
+                backgroundColor={linknotsentColour}
+                hoverColor={secondary} // Pass the desired hover color
+                //color="secondary"
+                //size="small"
+                sx={{ ...dashBoardwidget }}
+            >
+                <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '80%', height: 'auto' }} />
+            </ResponsiveFab> : <CircelSkelton1 /> */}
             <Grid container spacing={3}>
 
                 <Grid item xs={7} sm={7} md={12}>
@@ -111,9 +132,9 @@ const CriticalRecruits = () => {
                 </Grid>
             </Grid>
             <Stack direction="row" spacing={1} mt={1} alignItems="center">
-                { hasValue(critical && critical.totalCriticalAppointee) ?
-                    <Typography variant="subtitle2" fontWeight="530">
-                        Appointees with Joining Date within  { critical.totalCriticalAppointee} days and yet to complete verification
+                {hasValue(critical && critical.totalCriticalAppointee) ?
+                    <Typography variant="subtitle2" >
+                        Appointees with Joining Date within  {critical.totalCriticalAppointee} days and yet to complete verification
                     </Typography> : <RectangularSkelton2 />}
             </Stack>
         </WidgetCard>
