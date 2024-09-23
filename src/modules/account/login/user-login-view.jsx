@@ -141,17 +141,21 @@ export const UserLoginView = () => {
 
               // Show welcome message if needed
               if (userTypeId === 3 && consentStatus === 0 && !isDefaultPassword && !isPasswordExpire) {
-                const infoModelcontent = (
-                  <Box>
+                const wellcomeMsgContent = {
+                  dialogContentText: "",
+                  dialogTitle: "",
+                  dialogContentComponent: <Box>
                     <Typography style={{ fontSize: "1.5rem" }}>
                       Hi {userName.split(' ')[0]} !
                     </Typography>
                     <Typography style={{ fontSize: ".9rem", textAlign: "left", color: '#6e6d7a' }}>
                       {welcomeMsg}
                     </Typography>
-                  </Box>
-                );
-                openInfoModel(infoModelcontent);
+                  </Box>,
+                  maxWidth: 'sm',
+                  btnName: 'Close'
+                };
+                openInfoModel(wellcomeMsgContent);
               }
 
               // Store user and token data
