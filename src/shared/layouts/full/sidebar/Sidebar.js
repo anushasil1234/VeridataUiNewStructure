@@ -1,13 +1,13 @@
 import { useMediaQuery, Box, Drawer, Typography } from '@mui/material';
 import Logo from '../shared/logo/Logo';
 import SidebarItems from './SidebarItems';
-import { AppStyle, menuFooterTextStyle } from 'app';
+import { AppStyle, menuFooterTextStyle, sidebarContainerStyle } from 'app';
 
 const Sidebar = (props) => {
 
   const lgUp = useMediaQuery(AppStyle.breakpoints.up("lg"));
 
-  const sidebarWidth = '270px';
+  const sidebarWidth = '18vw';
 
   if (lgUp) {
     return (
@@ -15,6 +15,8 @@ const Sidebar = (props) => {
         sx={{
           width: sidebarWidth,
           flexShrink: 0,
+          position: 'relative', //indra
+          height: '100vh', //indra
         }}
       >
         {/* ------------------------------------------- */}
@@ -24,20 +26,15 @@ const Sidebar = (props) => {
           anchor="left"
           open={props.isSidebarOpen}
           variant="permanent"
-          PaperProps={{
-            sx: {
-              width: sidebarWidth,
-              boxSizing: 'border-box',
-            },
-          }}
+          PaperProps={{sx:{...sidebarContainerStyle}}}
         >
           {/* ------------------------------------------- */}
           {/* Sidebar Box */}
           {/* ------------------------------------------- */}
           <Box
-            sx={{
-              height: '100%',
-            }}
+            // sx={{
+            //   height: '100%',
+            // }}
           >
             {/* ------------------------------------------- */}
             {/* Logo */}

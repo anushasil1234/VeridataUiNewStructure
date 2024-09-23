@@ -127,7 +127,7 @@ import ConfirmationYesNoModal from "../models/confirmation-modal-yes-no";
 
 const AppWrapper = (App) => {
   const Api = (props) => {
-    const { PfcRequest } = props;
+    const { PfcRequest , startLoader, stopLoader} = props;
 
     const [isViewOpen, setIsViewOpen] = useState(false);
     const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);
@@ -645,6 +645,7 @@ const AppWrapper = (App) => {
     const showErrorMessage =
       popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
     const setDropdownList = async () => {
+      startLoader();
       const nationalityList = await getNationalityList();
       const countryList = await getCountryList();
       const maritalStatusList = await getMaritalStatusList();
@@ -654,7 +655,7 @@ const AppWrapper = (App) => {
       const roleList = await getRoleList();
       const reportFilterStatusList = await getReportFilterStatusList();
       const entityList = await getEntityList();
-
+      
       const dropdownList = {
         genderList: [
           { id: 1, code: "M", value: "MALE" },
@@ -735,7 +736,9 @@ const AppWrapper = (App) => {
           }
         ]
       };
+      stopLoader()
       dispatch(storeDropdownList(dropdownList));
+     
     };
 
     const setRemarks = async (appointeeId) => {

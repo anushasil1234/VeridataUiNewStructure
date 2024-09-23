@@ -13,7 +13,7 @@ import { AppStyle } from 'app';
 const NavItem = ({ item, level, pathDirect, onClick }) => {
   const Icon = item.icon;
   const theme = AppStyle;
-  const itemIcon = <Icon stroke={1.5} size="1.3rem" />;
+  const itemIcon = <Icon stroke={1.5} size="1rem" />;
 
   const ListItemStyled = styled(ListItemButton)(() => ({
     whiteSpace: 'nowrap',
@@ -23,7 +23,7 @@ const NavItem = ({ item, level, pathDirect, onClick }) => {
     backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
     color:
       theme.palette.text.white,
-    paddingLeft: '10px',
+    paddingLeft: '5px',
     '&:hover': {
       backgroundColor: theme.palette.primary.light,
       color: theme.palette.primary.main,
@@ -59,7 +59,7 @@ const NavItem = ({ item, level, pathDirect, onClick }) => {
         >
           {itemIcon}
         </ListItemIcon>
-        <ListItemText>
+        <ListItemText sx={{fontSize : '.5rem'}}>
           <Link to={`${item.href}`}>{item.title}</Link>
         </ListItemText>
       </ListItemStyled>

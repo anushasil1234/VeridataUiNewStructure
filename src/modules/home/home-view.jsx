@@ -57,15 +57,16 @@ const HomeView = () => {
   const [dayRangePayLoad, setDayRangePayLoad] = useState();
   const [remarkList, setRemarkList] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
-
+  const startLoader = () => setLoading(true);
+  const stopLoader = () => setLoading(false);
   const functionSlice = useSelector(state => state.functionSlice);
   const { openViewModel, openConsentModal, openInfoModel, openConfirmationYesNoModal } = functionSlice[0];
   const consentStatus = loggedInData[0]?.consentStatus;
   const dispatch = useDispatch();
   const setDashboardWidgetCardData = async (dayRange) => {
+    startLoader();
     const isfilterd = !(dayRange === "A");
     const filterday = dayRange === "A" ? 0 : dayRange;
-    setLoading(true);
     const response = await getDashboardWidgetCardData(filterday, isfilterd);
     if (response) {
       const { responseInfos } = response;
@@ -91,9 +92,11 @@ const HomeView = () => {
           if (widgetTypeCode === "LAPSED") {
             setfilterLapsed(widgetValue);
           }
-          setLoading(false);
         });
+      // setLoading(false);
     }
+    stopLoader();
+
   };
 
   const handleYes = () => {
@@ -188,7 +191,7 @@ const HomeView = () => {
   const setSubmitStatus = async () => {
     const response = await getAppointeeDetails(appointeeId);
     if (response) {
-      setIsSubmit(response.responseInfo.isSubmit);
+      setIsSubmit(response.responseInfo.isSubmit || response.responseInfo.isProcessed);
     }
   };
   useEffect(() => {
@@ -213,8 +216,6 @@ const HomeView = () => {
   return (
     <>
       {loading && <CircularIndeterminate />}
-
-
       <PageLayout pageName={"Dashboard"}>
         <Box>
           {(userTypeId === 1 || userTypeId === 2) && (
@@ -318,7 +319,7 @@ const HomeView = () => {
                       <br />
                       <CriticalRecruits />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={8}>
+                    <Grid item xs={12} sm={12} md={8}>
                       <UpcomingRecruits />
                     </Grid>
                   </Grid>

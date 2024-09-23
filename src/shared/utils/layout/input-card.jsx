@@ -34,10 +34,10 @@ const InputCard = ({
                             sx={{ position: "relative" }}
                         >
                             <Box>
-                                {title ? <Typography variant="h5" sx={{ fontSize: "1.3rem" }}>{title}</Typography> : ''}
+                                {title ? <Typography variant="h5" sx={{ fontSize: "1rem" }}>{title}</Typography> : ''}
 
                                 {subtitle ? (
-                                    <Typography variant="subtitle2" sx={{ fontSize: "1.05rem" }} color="textSecondary">
+                                    <Typography variant="subtitle2" sx={{ fontSize: ".9rem" }} color="textSecondary">
                                         {subtitle}
                                     </Typography>
                                 ) : (

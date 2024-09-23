@@ -31,10 +31,15 @@ const PfcRequest = (Component) => {
         const [popUpAlertMessage, setPopUpAlertMessage] = useState();
         const dispatch = useDispatch();
         const timeoutRef = useRef(null);
-        const inactivityTime = 10 * 60 * 1000; // 10 minutes in milliseconds
+        const inactivityTime = 1 * 60 * 1000; // 10 minutes in milliseconds
         const API_KEY = (process.env.REACT_APP_API_API_KEY || '');
         const SECRET_KEY = (process.env.REACT_APP_API_API_SECRET || '');
         const PROXY_AUTH = (process.env.REACT_APP_API_PROXY_AUTH || '');
+
+        // Manual loader control
+        const startLoader = () => setLoading(true);
+        const stopLoader = () => setLoading(false);
+
         const resetTimeout = () => {
             if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
@@ -45,14 +50,16 @@ const PfcRequest = (Component) => {
         const showSuccessMessage = (message) => {
             setSeverity("success");
             setPopUpAlertMessage(message);
-        }
+        };
 
         const showErrorMessage = (message) => {
             setSeverity("error");
             setPopUpAlertMessage(message);
-        }
+        };
 
         const handleClickOnLogout = () => {
+            localStorage.clear();
+            sessionStorage.clear();
             dispatch(removeLoggedinData());
             dispatch(removeLoggedinTokenData());
             removeLocalStorageItems(["pfc-user", "pfc-token"]);
@@ -62,11 +69,11 @@ const PfcRequest = (Component) => {
             dispatch(removePopUpSetFunction());
             dispatch(removeSideMenuItems());
             showErrorMessage("Your session has expired due to inactivity. Please login again.");
-        }
+        };
 
         const isAdmin = () => {
-            return userDetails.userTypeId === 1 || userDetails.userTypeId === 2;
-        }
+            return userDetails.userTypeId !== 3;
+        };
 
         const setupAxiosInterceptors = (api) => {
             api.interceptors.response.use(
@@ -121,9 +128,8 @@ const PfcRequest = (Component) => {
         };
 
         const refreshAuthToken = async () => {
-            let methodHeader = {}
+            let methodHeader = {};
             if (hasValue(API_KEY) && hasValue(SECRET_KEY) && hasValue(PROXY_AUTH)) {
-
                 methodHeader = {
                     headers: {
                         'proxyauthorization': PROXY_AUTH,
@@ -141,17 +147,14 @@ const PfcRequest = (Component) => {
             }, methodHeader);
         };
 
-        const PfcRequest = async (url, type, payload, successMessage,isInternal = false) => {
-            // const methodHeader = { headers: AuthHeader() };
-            // console.log("PROXY_AUTH", PROXY_AUTH)
-            let APiSecretHeader = {}
+        const PfcRequest = async (url, type, payload, successMessage, isInternal = false) => {
+            let APiSecretHeader = {};
             if (hasValue(API_KEY) && hasValue(SECRET_KEY) && hasValue(PROXY_AUTH)) {
-
                 APiSecretHeader = {
                     'proxyauthorization': PROXY_AUTH,
                     'apikey': API_KEY,
                     'apikeysecret': SECRET_KEY,
-                }
+                };
             }
             const methodHeader = {
                 headers: {
@@ -159,12 +162,12 @@ const PfcRequest = (Component) => {
                     ...APiSecretHeader
                 }
             };
-            const BASE_URL = isInternal ? await decryptedData(process.env.REACT_APP_API_INTERNAL_URL):await decryptedData(process.env.REACT_APP_API_URL);
+            const BASE_URL = isInternal ? await decryptedData(process.env.REACT_APP_API_INTERNAL_URL) : await decryptedData(process.env.REACT_APP_API_URL);
             const api = axios.create({ baseURL: BASE_URL });
             setupAxiosInterceptors(api);
 
             try {
-                setLoading(true);
+                startLoader();
                 if (userDetails?.userTypeId === 3) {
                     resetTimeout(); // Reset the timeout on API call
                 }
@@ -182,22 +185,22 @@ const PfcRequest = (Component) => {
             } catch (error) {
                 handleOtherErrors(error);
             } finally {
-                setLoading(false);
+                stopLoader();
             }
         };
 
+        // Pass the loader control methods along with the PfcRequest function
         dispatch(storePopUpSetFunction({ showErrorMessage, showSuccessMessage }));
+
         useEffect(() => {
-            // Set the initial timeout
             if (userDetails?.userTypeId === 3) {
-                resetTimeout(); // Reset the timeout on API call
+                resetTimeout();
                 return () => {
                     if (timeoutRef.current) {
                         clearTimeout(timeoutRef.current);
                     }
                 };
             }
-            // Clear the timeout on component unmount
         }, []);
 
         return (
@@ -210,12 +213,12 @@ const PfcRequest = (Component) => {
                     />
                 )}
                 {loading && <CircularIndeterminate />}
-                <Component PfcRequest={PfcRequest} />
+                <Component PfcRequest={PfcRequest} startLoader={startLoader} stopLoader={stopLoader} />
             </>
-        )
-    }
+        );
+    };
 
     return PfcRequestWrapper;
-}
+};
 
 export default PfcRequest;

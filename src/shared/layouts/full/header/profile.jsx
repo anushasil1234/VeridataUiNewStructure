@@ -30,13 +30,13 @@ const Profile = () => {
   const loggedInData = useSelector(state => state.loggedInData);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
   const loggeoutFunction = loggeoutData && loggeoutData.length > 0 && loggeoutData[0];
-  const { roleName, userName, userTypeId, isSubmit } = loggedInData && loggedInData.length > 0 && loggedInData[0];
+  const { roleName, userName, userTypeId, isSubmit, isProcessed } = loggedInData && loggedInData.length > 0 && loggedInData[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   const functionSlice = useSelector(state => state.functionSlice);
   const { openConfirmationYesNoModal } = functionSlice[0];
 
   const handleLogout = () => {
-    if (userTypeId === 3 && isSubmit === false) {
+    if (userTypeId === 3 && (!(isSubmit === true || isProcessed === true))) {
       const VerificationPendingModelContent = {
         dialogTitle: "Log out Confirmation",
         dialogContentText: <><Typography>Your verification is still not complete. If you don't/can't completed now, please check solutions/FAQ and come back later to complete the verification as soon as possible. Do you still want to logout.</Typography>

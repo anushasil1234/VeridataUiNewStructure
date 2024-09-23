@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { InputField, PageHeading1, InputFieldProps } from "shared/utils";
 import { styles, imageContainer, loginImageStyle, noBtnIconStyle } from "app";
 import { useNavigate } from "react-router-dom";
-import { emptyUserNameField, toReSetPassword, toLogin } from "shared/constants/constants";
+import { emptyUserNameField, toReSetPassword, toUserLogin } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
 import logo from 'assets/images/logos/pfc_logo1.png';
 import { useSelector } from "react-redux";
@@ -65,8 +65,8 @@ export const ForgotPasswordView = () => {
 
   return (
     <>
-      <Grid>
-        <Paper elevation={10} style={styles.paperStyle}>
+      <Grid container spacing={1} justifyContent="center" alignItems="center" sx={{ ...styles.containerStyles }}>
+        <Paper elevation={8} sx={{ ...styles.paperStyle }}>
           <Grid container align="center" sx={styles.stackimageContainer}>
             <Grid item md={8} sx={{ ...styles.loginsection, display: { xs: "none", md: "block" } }}>
               <img
@@ -76,18 +76,16 @@ export const ForgotPasswordView = () => {
               />
             </Grid>
             <Grid item md={4} sx={styles.loginsection}>
-              <Grid>
-                <Box sx={imageContainer}>
-                  <img
-                    style={{ height: "100%", width: "100%" }}
-                    src={logo}
-                    alt="text"
-                  />
-                </Box>
-                <Box my={1.25}>
-                  <PageHeading1 heading={"sign in"} />
-                </Box>
-              </Grid>
+              <Box sx={imageContainer}>
+                <img
+                  style={{ height: "50%", width: "50%", objectFit: "contain" }}
+                  src={logo}
+                  alt="text"
+                />
+              </Box>
+              <Box my={1.25}>
+                <PageHeading1 heading={"sign in"} />
+              </Box>
               <Grid>
                 <form onSubmit={handleSubmit}>
                   <InputField inputProps={userNameInputProps} props={userNameInput} />
@@ -103,7 +101,7 @@ export const ForgotPasswordView = () => {
                 </form>
                 <Box mt={2}>
                   <Typography variant="body2" align="center">
-                    <Link href={toLogin} underline="hover">
+                    <Link href={toUserLogin} underline="hover">
                       Back to login
                     </Link>
                   </Typography>

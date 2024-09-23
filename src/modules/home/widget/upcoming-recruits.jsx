@@ -170,8 +170,8 @@ const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
     <WidgetCard
       title="Status Report"
       action={
-        <Stack flexDirection={"row"} alignItems={"center"} flexWrap="wrap">
-          <Typography sx={{ mr: { xs: "5px", sm: "10px" }, mb: { xs: 1, sm: 0 } }}>
+        <Stack flexDirection={"row"} alignItems={"center"} >
+          <Typography sx={{ mr: { xs: "5px", sm: "8px" }, mb: { xs: 1, sm: 0 } }}>
             Select
           </Typography>
           {urltype !== undefined && (
@@ -181,10 +181,7 @@ const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
               value={urltype}
               size="small"
               onChange={handleStatusChange}
-              sx={{
-                minWidth: { xs: "70%", sm: "120px", md: "170px" }, // Adjust the width based on screen size
-                mb: { xs: 2, sm: 0 }, // Add margin for small screens
-              }}
+              
             >
               {upcomingRecruitsStatusList &&
                 upcomingRecruitsStatusList.map(({ label, route }, index) => {
@@ -197,7 +194,7 @@ const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
       }
       fitToContaner={fitToContaner}
     >
-      <Box sx={{ overflow: "auto" }}>
+      <Box >
         <DataTable
           rows={recruits}
           setRows={setrecruits}

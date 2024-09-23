@@ -176,7 +176,7 @@ const UnwrapedLinkNotSent = (props) => {
                 <Stack my={2} direction="row" justifyContent={"left"} alignItems={"center"}>
                     <Box >
                         <DatePicker
-                            label={"From Date"}
+                            label={"Upload From"}
                             value={fromDate}
                             maxDate={toDate}
                             setValue={setFromDate}
@@ -185,7 +185,7 @@ const UnwrapedLinkNotSent = (props) => {
                     </Box>
                     <Box mx={"0.5rem"}>
                         <DatePicker
-                            label={"To Date"}
+                            label={"Upload To"}
                             value={toDate}
                             minDate={fromDate}
                             setValue={setToDate}

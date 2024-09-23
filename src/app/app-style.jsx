@@ -398,23 +398,23 @@ export const disableStyle = {
 export const text3 = {
   fontFamily: AppStyle.typography.secondaryFont,
   fontWeight: 700,
-  fontSize: "2rem",
+  fontSize: "1.5rem",
   lineHeight: "107.5%",
   color: "#FFFFFF"
 };
 export const text2 = {
-  fontSize: "12px",
+  fontSize: "0.75rem",
   lineHeight: 1.5,
   fontWeight: 500
 };
 export const text1 = {
   fontFamily: AppStyle.typography.fontFamily,
   fontWeight: 400,
-  fontSize: "0.875rem"
+  fontSize: "0.70rem"
 };
 export const text4 = {
   fontWeight: 400,
-  fontSize: "0.9rem",
+  fontSize: "0.8rem",
   color: ThemeColorPalete.primary.main
 };
 export const text5 = {
@@ -439,13 +439,19 @@ export const tableHeader = {
 };
 
 export const styles = {
-
   paperStyle: {
-    padding: 20,
-    height: "80vh",
-    width: "80vw",
-    margin: "20px auto"
+    width: '100%',  //indra
+    maxWidth: { xs: '100vw', sm: '95vw', md: '90vw', lg: '85vw', xl: '75vw' },//indra
+    padding: { xs: '10px', md: '20px', lg: '30px' }, //indra
+    boxSizing: 'border-box',//indra
+    margin: '0 auto',//indra
   },
+  // paperStyle: {
+  //   padding: 20,
+  //   height: "80vh",
+  //   width: "80vw",
+  //   margin: "20px auto"
+  // },
   btnstyle: {
     margin: "8px 0",
     "&:hover": {
@@ -453,19 +459,52 @@ export const styles = {
     }
   },
   stackimageContainer: {
-    flexDirection: "row",
-    backgroundColor: "#8029bb29"
+    // flexDirection: "row",
+    // backgroundColor: "#8029bb29"
+    display: 'flex',//indra
+    flexDirection: { xs: 'column', md: 'row' },//indra
+    backgroundColor: "#8029bb29",
+    justifyContent: 'center',//indra
+    alignItems: 'center',//indra
+    width: '100%',//indra
   },
+  // loginsection: {
+  //   padding: 4,
+  //   alignItems: "center",
+  //   justifyContent: "center"
+  // }
   loginsection: {
-    padding: 4,
-    alignItems: "center",
-    justifyContent: "center"
-  }
+    display: 'flex',//indra
+    flexDirection: 'column',//indra
+    alignItems: 'center',
+    padding: { xs: '10px', sm: '20px', md: '30px' },//indra
+    flex: 1,//indra
+  },
+  containerStyles: {
+    minHeight: '100vh',
+    width: '100%',
+    maxWidth: '100vw',
+    padding: {
+      xs: '0',
+      md: '10px'
+    },
+    margin: '0 auto',
+    boxSizing: 'border-box',
+  },//new add indra for mother container
 };
 export const imageContainer = {
-  width: "150px",
-  height: "150px"
+  width: { xs: '150px', sm: '180px', md: '200px' },
+  margin: '0 auto',
+  height: 'auto',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: 'auto',
 };
+// export const imageContainer = {
+//   width: "150px",
+//   height: "150px"
+// };
 // horizontal and vertical centering
 export const centerAbsoluteItem = {
   top: "50%",
@@ -535,12 +574,13 @@ export const stepNumberContainerStyle = {
 };
 export const stepHeadingStyle = {
   fontWeight: 500,
-  fontSize: { xs: "1rem", md: "1.5rem" },
+  fontSize: { xs: ".75rem", md: "1rem" },
   marginLeft: ".8rem"
 };
 // step heading ends
 
 export const casesyle = {
+  fontSize: '0.8rem',
   padding: "10px",
   fontWeight: 500
 };
@@ -554,7 +594,7 @@ export const lableStyle = {
 };
 const lableCommonStyle = {
   fontWeight: 400,
-  fontSize: ".9rem",
+  fontSize: ".70rem",
   marginBottom: "2px",
   lineHeight: "1.4375em"
 }
@@ -567,7 +607,7 @@ export const lable2Style = {
 };
 export const lable3Style = {
   ...lableCommonStyle,
-  fontSize: "1rem"
+  fontSize: ".75rem"
 };
 export const lableRedStyle = {
   ...lableCommonStyle,
@@ -1111,7 +1151,14 @@ export const menuFooterTextStyle = {
   paddingY: 1.6,
   fontWeight: 500
 }
-
+export const sidebarContainerStyle = {
+  width: '18vw',  
+  boxSizing: 'border-box',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  height: '100%',
+}
 export const fileImageHeaderStyle = {
   flexDirection: "row",
   justifyContent: "space-between",
@@ -1305,7 +1352,7 @@ export const ResponsiveFab = styled(Fab)(({ backgroundColor, hoverColor }) => ({
     height: '2.2rem',
     fontSize: '1.5rem',
   },
-  [AppStyle.breakpoints.between('lg','xl')]: {
+  [AppStyle.breakpoints.between('lg', 'xl')]: {
     width: '2.5rem',
     height: '2.5rem',
     fontSize: '2.5rem',

@@ -17,7 +17,6 @@ import { removeFunction } from "store/slices/function-slice";
 import { removePopUpSetFunction } from "store/slices/popup-slice";
 import { storeLoggeoutData } from "store/slices/logout-slice";
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
-import { useMsal } from '@azure/msal-react';
 import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
 
 export const UserLoginView = () => {
@@ -86,8 +85,12 @@ export const UserLoginView = () => {
   const { setDropdownList, openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } = functionSlice[0];
   const [loading, setLoading] = useState(false);
 
+  const startLoader = () => setLoading(true);
+  const stopLoader = () => setLoading(false);
 
   const handleClickOnLogout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
     dispatch(removeLoggedinData());
     dispatch(removeLoggedinTokenData());
     removeLocalStorageItems(["pfc-user"]);
@@ -101,6 +104,7 @@ export const UserLoginView = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (userName === "") {
       showErrorMessage(emptyUserNameField);
     } else if (password === "") {
@@ -110,91 +114,104 @@ export const UserLoginView = () => {
         userCode: userName,
         password: password
       };
-      
-      const response = await postLoginCredDetails(payLoad);
-      if (response) {
 
-        const { responseInfo } = response;
-        const { clientId, dbUserType } = responseInfo;
-        const handlePostUserDetails = async (otp = null) => {
-          const payLoad = {
-            clientId: clientId,
-            dbUserType: dbUserType,
-            otp: otp
-          };
-          setLoading(true);
-          const response = await postLoginDetails(payLoad);
-          if (response) {
-            const { responseInfo } = response;
-            const { userDetails, tokenDetails } = responseInfo;
-            const { userName, consentStatus, userTypeId, isDefaultPassword, isPasswordExpire } = userDetails;
-            if (userTypeId === 3 && consentStatus === 0 && isDefaultPassword === false && isPasswordExpire === false) {
-              const infoModelcontent = {
-                // dialogContentText: 'dialogContentText',
-                // dialogTitle: 'dialogTitle',
-                dialogContentComponent:
+      try {
+        // Start the loader before making the API call
+        startLoader();
+
+        const response = await postLoginCredDetails(payLoad);
+
+        if (response) {
+          const { responseInfo } = response;
+          const { clientId, dbUserType } = responseInfo;
+
+          const handlePostUserDetails = async (otp = null) => {
+            const payLoad = {
+              clientId: clientId,
+              dbUserType: dbUserType,
+              otp: otp
+            };
+
+            const response = await postLoginDetails(payLoad);
+
+            if (response) {
+              const { responseInfo } = response;
+              const { userDetails, tokenDetails } = responseInfo;
+              const { userName, consentStatus, userTypeId, isDefaultPassword, isPasswordExpire } = userDetails;
+
+              // Show welcome message if needed
+              if (userTypeId === 3 && consentStatus === 0 && !isDefaultPassword && !isPasswordExpire) {
+                const infoModelcontent = (
                   <Box>
-                    <Typography style={{
-                      fontSize: "1.5rem"
-                    }}>
+                    <Typography style={{ fontSize: "1.5rem" }}>
                       Hi {userName.split(' ')[0]} !
                     </Typography>
-                    <Typography
-                      style={{
-                        fontSize: ".9rem",
-                        textAlign: "left",
-                        color: '#6e6d7a'
-                      }}
-                    >
+                    <Typography style={{ fontSize: ".9rem", textAlign: "left", color: '#6e6d7a' }}>
                       {welcomeMsg}
                     </Typography>
-                  </Box>,
-                maxWidth: 'sm'
+                  </Box>
+                );
+                openInfoModel(infoModelcontent);
               }
-              openInfoModel(infoModelcontent);
-            }
 
-            setLocalStorageItem("pfc-user", userDetails);
-            setLocalStorageItem("pfc-token", tokenDetails);
-            dispatch(storeLoggedinData(userDetails));
-            dispatch(storeLoggedinTokenData(tokenDetails));
-            dispatch(storeLoggeoutData({ handleClickOnLogout }));
-            if (isDefaultPassword === true || isPasswordExpire === true) {
-              navigate(`${toSetPassword}`);
+              // Store user and token data
+              setLocalStorageItem("pfc-user", userDetails);
+              setLocalStorageItem("pfc-token", tokenDetails);
+              dispatch(storeLoggedinData(userDetails));
+              dispatch(storeLoggedinTokenData(tokenDetails));
+              dispatch(storeLoggeoutData({ handleClickOnLogout }));
+
+              if (isDefaultPassword || isPasswordExpire) {
+                navigate(toSetPassword);
+              } else {
+                await setDropdownList();
+                navigate(toDashboard);
+              }
+
+              // Stop the loader after successful login
+              stopLoader();
+              closeOtpSubmitionModel();
             } else {
-              await setDropdownList();
-              navigate(`${toDashboard}`);
-              setLoading(false);
+              navigate("/");
+              stopLoader(); // Stop loader in case of error
             }
-            closeOtpSubmitionModel();
-          } else {
-            navigate("/");
-          }
-          
-        }
-        if (dbUserType === 3) {
-          showSuccessMessage(otpToMailMsg);
-          openOtpSubmitionModel({
-            otpSubmitionFunction: (otp) => {
-              handlePostUserDetails(otp);
-            },
-            timeoutTimer: timeoutTimer,
-            setTimeoutTimer: setTimeoutTimer
-          });
-        } else {
-          handlePostUserDetails();
-        }
+          };
 
-      } else {
-        navigate("/");
+          // If the user type requires OTP submission
+          if (dbUserType === 3) {
+            stopLoader(); // Stop loader if no response
+            showSuccessMessage(otpToMailMsg);
+            openOtpSubmitionModel({
+              otpSubmitionFunction: (otp) => {
+                handlePostUserDetails(otp);
+              },
+              timeoutTimer: timeoutTimer,
+              setTimeoutTimer: setTimeoutTimer
+            });
+          } else {
+            startLoader(); //
+            handlePostUserDetails();
+            stopLoader(); // Stop loader if no response
+
+          }
+        } else {
+          navigate("/");
+          stopLoader(); // Stop loader if no response
+        }
+      } catch (error) {
+        console.error("Error during login:", error);
+        stopLoader(); // Stop loader in case of any errors
+        showErrorMessage("An error occurred during login. Please try again.");
       }
     }
   };
+
+
   return (
     <>
       {loading && <CircularIndeterminate />}
-      <Grid>
-        <Paper elevation={10} style={styles.paperStyle}>
+      <Grid container spacing={1} justifyContent="center" alignItems="center" sx={{ ...styles.containerStyles }}>
+        <Paper elevation={8} sx={{ ...styles.paperStyle }}>
           <Grid container align="center" sx={styles.stackimageContainer}>
             <Grid item md={8} sx={{ ...styles.loginsection, display: { xs: "none", md: "block" } }}>
               <img
@@ -204,18 +221,18 @@ export const UserLoginView = () => {
               />
             </Grid>
             <Grid item md={4} sx={styles.loginsection}>
-              <Grid>
-                <Box sx={imageContainer}>
-                  <img
-                    style={{ height: "100%", width: "100%" }}
-                    src={logo}
-                    alt="text"
-                  />
-                </Box>
-                <Box my={1.25}>
-                  <PageHeading1 heading={"sign in"} />
-                </Box>
-              </Grid>
+              {/* <Grid> */}
+              <Box sx={imageContainer}>
+                <img
+                  style={{ height: "50%", width: "50%", objectFit: "contain" }}
+                  src={logo}
+                  alt="text"
+                />
+              </Box>
+              <Box my={1.25}>
+                <PageHeading1 heading={"sign in"} />
+              </Box>
+              {/* </Grid> */}
               <Grid>
                 <form onSubmit={handleSubmit}>
                   <InputField inputProps={userNameInputProps} props={userNameInput} />

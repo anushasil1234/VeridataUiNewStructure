@@ -54,6 +54,8 @@ export const LoginView = () => {
 
 
   const handleClickOnLogout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
     dispatch(removeLoggedinData());
     dispatch(removeLoggedinTokenData());
     removeLocalStorageItems(["pfc-user"]);
@@ -63,17 +65,20 @@ export const LoginView = () => {
     dispatch(removeFunction());
     dispatch(removePopUpSetFunction());
     dispatch(removeSideMenuItems());
-    localStorage.clear();
-    sessionStorage.clear();
+    navigate(toLogin);
+    // // Redirect-based logout (no popup)
+    // instance.logoutRedirect({
+    //   postLogoutRedirectUri: toLogin,  // Redirect user to login page after logout
+    // }).catch(error => {
+    //   // Handle errors here if needed
+    //   console.error("Logout error:", error);
+    // });
+    // instance.logoutRedirect().then(() => {
+    //   localStorage.clear();
+    //   sessionStorage.clear();
+    //   navigate(toLogin);
 
-    // Redirect-based logout (no popup)
-    instance.logoutRedirect({
-      postLogoutRedirectUri: toLogin,  // Redirect user to login page after logout
-    }).catch(error => {
-      // Handle errors here if needed
-      console.error("Logout error:", error);
-    });
-
+    // });
     // navigate(`${toLogin}`)
     // instance.logoutPopup({
     //   localStorage.clear(),
@@ -122,7 +127,7 @@ export const LoginView = () => {
           //  handleGetUserDetails(userName);
         })
         .catch((e) => {
-          alert("SSO Login failed", e);
+          alert("SSO Login failed, please try Again", e);
         });
     }
   };
@@ -138,8 +143,8 @@ export const LoginView = () => {
 
   return (
     <>
-      <Grid>
-        <Paper elevation={10} style={styles.paperStyle}>
+      <Grid container spacing={1} justifyContent="center" alignItems="center" sx={{ ...styles.containerStyles }}>
+        <Paper elevation={8} sx={{ ...styles.paperStyle }}>
           <Grid container align="center" sx={styles.stackimageContainer}>
             <Grid item md={8} sx={{ ...styles.loginsection, display: { xs: "none", md: "block" } }}>
               <img
@@ -149,18 +154,16 @@ export const LoginView = () => {
               />
             </Grid>
             <Grid item md={4} sx={styles.loginsection}>
-              <Grid>
-                <Box sx={imageContainer}>
-                  <img
-                    style={{ height: "100%", width: "100%" }}
-                    src={logo}
-                    alt="text"
-                  />
-                </Box>
-                <Box my={1.25}>
-                  <PageHeading1 heading={"sign in"} />
-                </Box>
-              </Grid>
+              <Box sx={imageContainer}>
+                <img
+                  style={{ height: "50%", width: "50%", objectFit: "contain" }}
+                  src={logo}
+                  alt="text"
+                />
+              </Box>
+              <Box my={1.25}>
+                <PageHeading1 heading={"sign in"} />
+              </Box>
               <Grid>
                 {/* <form onSubmit={handleSubmit}>
                   <InputField inputProps={userNameInputProps} props={userNameInput} />

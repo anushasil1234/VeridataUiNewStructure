@@ -11,11 +11,11 @@ const NavGroup = ({ item, handleToggle }) => {
       display: "flex",
       alignContent: "center",
       justifyContent: "space-between",
-      fontWeight: '700',
+      fontWeight: '600',
       marginTop: AppStyle.spacing(3),
       marginBottom: AppStyle.spacing(0),
       color: AppStyle.palette.text.white,
-      lineHeight: '26px',
+      lineHeight: '20px',
       padding: '3px 12px',
       cursor: 'pointer'
     }),

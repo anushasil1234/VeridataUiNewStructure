@@ -1,9 +1,13 @@
 import { Box, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { heading3 } from 'app';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 
 
 const ListTable = ({ rows }) => {
+    const loggedInData = useSelector((state) => state.loggedInData);
+    const { userTypeId } = loggedInData[0];
+
     let issuesList = [];
     let noteList = [];
     rows && rows.forEach(row => {
@@ -56,8 +60,8 @@ const ListTable = ({ rows }) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {(noteList.length > 0 || issuesList.length>0) && (
-                    <Typography sx={{ mt: 2,  color: 'gray' }}>
+                {((userTypeId === 3)&& (noteList.length > 0 || issuesList.length > 0)) && (
+                    <Typography sx={{ mt: 2, color: 'gray' }}>
                         Please check Steps to Resolution in Dashboard to view more info.
                     </Typography>
                 )}

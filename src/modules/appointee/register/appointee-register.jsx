@@ -155,7 +155,7 @@ const AppointeeRegister = () => {
   const [passportNo, setPassportNo] = useState(null);
   const [passportValidForDate, setPassportValidForDate] = useState("");
   const [passportValidTillDate, setPassportValidTillDate] = useState("");
-  const [isPhysicallyHandicap, setIsPhysicallyHandicap] = useState("N");
+  const [isPhysicallyHandicap, setIsPhysicallyHandicap] = useState("");
   const [handicapType, setHandicapType] = useState("");
   const [pan, setPan] = useState(null);
   const [nameAsOnPan, setNameAsOnPan] = useState(null);
@@ -793,16 +793,16 @@ const AppointeeRegister = () => {
     if (response) {
       setLocalStorageItem("pfc-user", {
         ...loginUserData,
-      isSubmit: true,
-      status:'Submitted'
+        isSubmit: true,
+        status: 'Submitted'
       });
       dispatch(removeLoggedinData());
       dispatch(storeLoggedinData({
         ...loginUserData,
         isSubmit: true,
-        status:'Submitted'
+        status: 'Submitted'
       }));
-      
+
       const registrationSuccessContent = {
         dialogContentText: registrationSuccessDialogContentText,
         dialogTitle: congratulationDialogContentTitle,
@@ -1147,7 +1147,7 @@ const AppointeeRegister = () => {
             columnSpacing={2.5}
             item
             xs={12}
-            md={8}
+            md={10}
           >
             {currentPageNo === 1 ? (
               <>
@@ -1811,7 +1811,7 @@ const AppointeeRegister = () => {
                     <Grid item xs={12}>
                       <FormHeading step={""} heading={""} />
                     </Grid>
-                    <Grid item xs={12} md={7}>
+                    <Grid item xs={12} md={12} lg={7}>
                       <Stack
                         flexDirection={"row"}
                         justifyContent={"space-between"}
@@ -1820,16 +1820,17 @@ const AppointeeRegister = () => {
                         {/* <Typography sx={lable1Style}>Passport Number</Typography> */}
 
                         <Typography
-                          sx={{ ...lable1Style, whiteSpace: "nowrap" }}
+                          sx={{ ...lable1Style }}
                         >
                           {"Do you have PF under any Trust, in the past or present"}
                         </Typography>
-                        <FormControl fullWidth>
+                        <FormControl >
                           <Stack
                             direction="row"
                             spacing={1}
                             justifyContent={"end"}
                             alignItems="center"
+                            width={'auto'}
                           >
                             <Typography>No</Typography>
                             <Switch
@@ -1844,7 +1845,7 @@ const AppointeeRegister = () => {
                         </FormControl>
                       </Stack>
                     </Grid>
-                    <Grid item xs={12} md={5}>
+                    <Grid item xs={12} md={12} lg={5}>
                       {isTrustEpfoAvailable && (
                         <FileUploadSection
                           chooseFile={uploadTrustEPFOFile}
@@ -2210,7 +2211,7 @@ const AppointeeRegister = () => {
                     >
                       {previousButton}
                     </Button>
-                    {isSubmitDisabled===false ?
+                    {isSubmitDisabled === false ?
                       <Button
                         name="submit"
                         // disabled={isSubmitDisabled}

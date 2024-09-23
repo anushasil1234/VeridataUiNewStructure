@@ -27,6 +27,8 @@ const App = () => {
   const loginData = getLocalStorageItem("pfc-user");
   const tokenData = getLocalStorageItem("pfc-token");
   const handleClickOnLogout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
     dispatch(removeLoggedinData());
     dispatch(removeLoggedinTokenData());
     removeLocalStorageItems(["pfc-user"]);
