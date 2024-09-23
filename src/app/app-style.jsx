@@ -886,7 +886,8 @@ export const modelToolbar = {
 // chip style start
 const chipStyle = {
   px: "4px",
-  color: "#fff"
+  color: "#fff",
+  margin:"1px"
 };
 const issueColor = "#e71a64";
 export const issueTextStyle = {
