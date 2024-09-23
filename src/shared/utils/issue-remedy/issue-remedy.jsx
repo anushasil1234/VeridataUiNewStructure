@@ -24,7 +24,7 @@ const IssueRemedyContent = ({ remedyModelProps }) => {
         const response = await getRemarksRemedyData(postRemedypayLoad);
         if (response) {
             const { responseInfo } = response;
-            console.log("responseInfo",parse(remedy))
+            // console.log("responseInfo",parse(remedy))
             if (responseInfo) {
                 setremedy(responseInfo);
 

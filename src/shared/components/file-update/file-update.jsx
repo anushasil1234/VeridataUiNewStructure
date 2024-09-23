@@ -42,13 +42,13 @@ const FileUpdate = ({ files, setFiles, removeFile,
     const uploadHandler = async (event) => {
 
         const FileDetails = event.target.files[0];
-        console.log(FileDetails)
+        // console.log(FileDetails)
         const formData = new FormData();
         formData.append("CompanyId", companyId)
         formData.append("UserId", userId)
         formData.append("FileDetails", FileDetails)
 
-        console.log("formData",formData)
+        // console.log("formData",formData)
 
         const response = await postUpdateExcel(formData);
         if (response) {

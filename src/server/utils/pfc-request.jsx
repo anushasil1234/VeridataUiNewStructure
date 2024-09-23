@@ -403,7 +403,6 @@ const PfcRequest = (Component) => {
             setupAxiosInterceptors(api);
         
             try {
-                console.log("API Call 1 ", url); // Log start
                 startLoader();
                 const response = type === "POST"
                     ? await api.post(url, payload, methodHeader)
@@ -419,7 +418,6 @@ const PfcRequest = (Component) => {
             } catch (error) {
                 handleOtherErrors(error);
             } finally {
-                console.log("API Call 2 ", url); // Log finish
                 stopLoader();
             }
         };
