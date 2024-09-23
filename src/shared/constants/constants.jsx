@@ -1841,7 +1841,7 @@ export const epfoPassfileUploadeConfirmationMsg = `Please upload your trust epfo
 export const visafileUploadeConfirmationMsg = `You must upload your visa before submition`;
 export const registrationSuccessDialogContentText = `Your Aadhar & UAN details  has been verified and submited successfully. you have completed your verification process. Please wait for the hr to reply for further processing of your application`;
 export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you. 
-Please start your verification compliance process by clicking on "Verify".
+Please start your verification compliance process by clicking on "Pending Verification" after giving consent.
 Enter all the details requested in the following pages & complete your verification compliance.`;
 export const congratulationDialogContentTitle = `Congratulatoins!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
