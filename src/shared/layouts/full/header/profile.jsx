@@ -10,7 +10,7 @@ import {
   ListItemText,
   Typography
 } from '@mui/material';
-import ProfileImg from 'assets/images/profile/user-1.jpg';
+import ProfileImg from 'assets/images/profile/user-2.jpg';
 import { AccountCircle, ManageAccounts, HelpRounded } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { userNameTextStyle } from 'app';
@@ -77,8 +77,8 @@ const Profile = () => {
           src={ProfileImg}
           alt={ProfileImg}
           sx={{
-            width: 35,
-            height: 35,
+            width: 36,
+            height: 34,
           }}
         />
       </IconButton>
