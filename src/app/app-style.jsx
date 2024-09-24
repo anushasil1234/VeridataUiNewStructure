@@ -137,6 +137,17 @@ let AppStyle = createTheme({
   }
 });
 
+ export const listitemTextstyle={
+  fontSize: '.5rem', 
+  display: 'block',
+  wordBreak: 'break-word', 
+  whiteSpace: 'normal', 
+  overflow: 'hidden', 
+  textOverflow: 'ellipsis',
+  marginLeft: '-15px', 
+  justifyContent:'center'
+ }
+
 const ThemeColorPalete = AppStyle.palette;
 
 AppStyle = {
@@ -343,8 +354,9 @@ export const datepickerpx = {
 // input start
 export const inputFieldStyle = {
   width: "100%",
-  margin: "5px",
-  padding: 0
+  margin: "10px",
+  padding: 0,
+  // height: "50px" 
 };
 export const inputFieldStyleAdded = {
   width: "100%",
@@ -426,10 +438,12 @@ export const text5 = {
 };
 export const clickableCell = {
   whiteSpace: "nowrap",
+  fontSize: "0.8rem",
   width: "190px",
   overflow: "hidden",
   textOverflow: "ellipsis",
-  cursor: "pointer"
+  cursor: "pointer",
+  color: "#e82e27",
 }
 export const tableHeader = {
   fontFamily: AppStyle.typography.fontFamily,

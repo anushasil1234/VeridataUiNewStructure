@@ -257,7 +257,7 @@ const HomeView = () => {
                   xs={12}
                   sm={4}
                   md={8}
-                  sx={{ marginBottom: "5px", alignSelf: "end" }}
+                  sx={{ marginBottom: "13px", alignSelf: "end" }} // change margin button 5px to 13px
                 >
                   <TotalOffer
                     wizValue={

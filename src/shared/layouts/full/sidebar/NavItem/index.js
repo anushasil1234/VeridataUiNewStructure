@@ -8,7 +8,7 @@ import {
   ListItemText,
   ListItemButton
 } from '@mui/material';
-import { AppStyle } from 'app';
+import { AppStyle, listitemTextstyle } from 'app';// add class listitemtextstyle
 
 const NavItem = ({ item, level, pathDirect, onClick }) => {
   const Icon = item.icon;
@@ -21,12 +21,14 @@ const NavItem = ({ item, level, pathDirect, onClick }) => {
     padding: '8px 10px',
     borderRadius: '8px',
     backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
-    color:
-      theme.palette.text.white,
+    color: theme.palette.text.white,
     paddingLeft: '5px',
+    display: 'flex',      //change
+    alignItems: 'center',  //change
+    overflow: 'hidden',    //change
     '&:hover': {
       backgroundColor: theme.palette.primary.light,
-      color: theme.palette.primary.main,
+      color: "#ddd5b0",  //new color add
     },
     '&.Mui-selected': {
       color: 'white',
@@ -49,6 +51,7 @@ const NavItem = ({ item, level, pathDirect, onClick }) => {
         selected={pathDirect === item.href}
         target={item.external ? '_blank' : ''}
         onClick={onClick}
+        sx={{ flexGrow: 1 }} //add
       >
         <ListItemIcon
           sx={{
@@ -59,8 +62,10 @@ const NavItem = ({ item, level, pathDirect, onClick }) => {
         >
           {itemIcon}
         </ListItemIcon>
-        <ListItemText sx={{fontSize : '.5rem'}}>
-          <Link to={`${item.href}`}>{item.title}</Link>
+        <ListItemText sx={{ ...listitemTextstyle }}>{/*add sx class*/}
+          <Link to={`${item.href}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+            {item.title}
+          </Link>
         </ListItemText>
       </ListItemStyled>
     </List>
