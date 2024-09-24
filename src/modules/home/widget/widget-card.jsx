@@ -87,7 +87,8 @@ const WidgetCard = ({
     headtitle,
     headsubtitle,
     middlecontent,
-    fitToContaner
+    fitToContaner,
+    cardHeight
 }) => {
     const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const classes = useStyles({ isSmallScreen });
@@ -101,7 +102,7 @@ const WidgetCard = ({
                 padding: 0,
                 height: fitToContaner ? '100%' : 'fit-content',
                 position: 'relative',
-                minHeight: isSmallScreen ? 'auto' : '245px',
+                minHeight: cardHeight || (isSmallScreen ? 'auto' : '245px'),
                 display: 'flex',
                 flexDirection: 'column'
             }}
