@@ -99,19 +99,30 @@ const Profile = () => {
           },
         }}
       >
-        <MenuItem>
+
+        <Box display="flex" alignItems="center" sx={{ml:2}}>
           <ListItemIcon>
             <AccountCircle width={20} />
           </ListItemIcon>
-          <ListItemText sx={userNameTextStyle}>{`${userName}(${roleName})`}</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={() => navigateTo(toManageProfile)}>
+          <ListItemText sx={userNameTextStyle}>{`${userName} (${roleName})`}</ListItemText>
+        </Box>
+
+
+        <MenuItem
+          onClick={() => {
+            handleClose2(); // Close the menu
+            navigateTo(toManageProfile); // Navigate to the Manage Profile page
+          }}>
           <ListItemIcon>
             <ManageAccounts width={20} />
           </ListItemIcon>
           <ListItemText sx={userNameTextStyle}>Manage Profile</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => navigateTo(toHelp)}>
+        <MenuItem
+          onClick={() => {
+            handleClose2(); // Close the menu
+            navigateTo(toHelp); // Navigate to the FAQ page
+          }}>
           <ListItemIcon>
             <HelpRounded width={20} />
           </ListItemIcon>

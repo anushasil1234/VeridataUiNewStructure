@@ -143,7 +143,7 @@ const ManageProfile = () => {
             <Grid container rowSpacing={2} columnSpacing={2.5} >
                 {/* Profile Image */}
                 <Grid item xs={12} sm={6} md={4} lg={4} xl={3}>
-                    <img src={ProfileImg} alt="profile" style={{ width: '100%', height: 'auto', borderRadius: '8px' }} />
+                    <img src={ProfileImg} alt="profile image" style={{ width: '100%', height: 'auto', borderRadius: '8px' }} />
                 </Grid>
 
                 {/* User Information */}
@@ -158,11 +158,15 @@ const ManageProfile = () => {
                                 fieldName="Profile Password"
                                 fieldTooltip="Password should have length 6-10, containing 1 letter, 1 number, 1 special character"
                                 fieldValue={
-                                    <Stack sx={profilePasswordContainerSx}>
+                                    <Stack
+                                        sx={{ ...profilePasswordContainerSx, alignItems: 'center' }} // Align items vertically centered
+                                        direction="row" // Set direction to row
+                                        spacing={2} // Add space between the input and button
+                                    >
                                         <TextField
                                             value={profilePassword}
                                             onChange={({ target }) => setProfilePassword(target.value)}
-                                            sx={textField1Sx}
+                                            sx={{ ...textField1Sx, flexGrow: 1 }} // Allow input to grow in width
                                             variant="filled"
                                             fullWidth
                                         />
@@ -171,13 +175,13 @@ const ManageProfile = () => {
                                             color="primary"
                                             variant="contained"
                                             onClick={submitPassword}
-                                            sx={{ mt: 2 }}
                                         >
                                             Submit
                                         </Button>
                                     </Stack>
                                 }
                             />
+
                         }
                     </Grid>
                 </Grid>
