@@ -233,6 +233,19 @@ const AppointeeRegister = () => {
   const disablePassportVerifyBtn = () => {
     setIsPassportVerifyBtnDisabled(true);
   };
+  const handleSpacialcharecter = (e) => {
+    const char = /^[A-Za-z\s]+$/;
+    const allowedKeys = ["Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete"];
+    if (!char.test(e.key) && !allowedKeys.includes(e.key)) {
+      e.preventDefault();
+    }
+  }
+  const handelSpacialCharecterPaste=(e)=>{
+    const paste = (e.clipboardData || window.clipboardData).getData('text');
+    if (!/^[A-Za-z\s]*$/.test(paste)) {
+      e.preventDefault();
+    }
+  }
 
   const setAppointeeDetails = async (appointeeId) => {
     const response = await getAppointeeDetails(appointeeId);
@@ -1309,9 +1322,9 @@ const AppointeeRegister = () => {
                               type="text"
                               className="customeTextField"
                               variant="outlined"
-                              onChange={(e) => {
-                                setFathersOrHusbandName(e.target.value);
-                              }}
+                              onKeyDown={ handleSpacialcharecter}
+                              onPaste={handelSpacialCharecterPaste}
+                              onChange={(e)=>{setFathersOrHusbandName(e.target.value)}}
                               value={fathersOrHusbandName}
                               defaultValue={" "}
                               inputProps={{ maxLength: 50 }}
