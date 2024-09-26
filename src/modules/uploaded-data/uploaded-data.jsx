@@ -42,7 +42,7 @@ const UnWrappedUploadedData = (props) => {
               : appointeeName === filteredAppointeeName
           )
         })] : responseInfos;
-      let generatedCells = generateTableRowData(filterredResponse, rawAppointeeListTableHeadCell);
+      let generatedCells = generateTableRowData(filterredResponse, rawAppointeeListTableHeadCell,false);
       setRows({
         tableHead: rawAppointeeListTableHeadCell,
         tableRows: generatedCells
@@ -89,7 +89,7 @@ const UnWrappedUploadedData = (props) => {
         <DataTable
           rows={rows}
           checBoxRequired={true}
-          headerCheckBox={false}
+          headerCheckBox={true}
           setRows={setRows}
           headCells={rawAppointeeListTableHeadCell}
           selected={selected}

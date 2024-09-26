@@ -233,7 +233,6 @@ const DataTable = ({
                     }
                 });
             setCountCheckBoxEnabledRows(countCheckBoxEnabledRows);
-
             setSelected(newSelected);
         } else {
             setSelected([]);
