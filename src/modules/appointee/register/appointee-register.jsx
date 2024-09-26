@@ -587,9 +587,10 @@ const AppointeeRegister = () => {
     const fileData = files[0];
 
     const { name, size, type } = fileData;
-    if (type !== "application/x-zip-compressed" && "application/x-compressed") {
+    if (type !== "application/x-zip-compressed" && type !== "application/x-compressed" && type !== "application/zip") {
       showErrorMessage(uploadFormatErrorMsg);
-    } else if (size > 4000000) {
+    }
+    else if (size > 4000000) {
       showErrorMessage(uploadSizeErrorMsg);
     } else {
       setAadharXmlFileName(name);
