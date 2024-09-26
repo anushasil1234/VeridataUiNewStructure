@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadAgingReport from "shared/components/download-report/download-aging-report";
 import { generateNoMovementReportDesc, noMovementListTableHeadCell, noResponseListTableHeadCell, noResponseReportTableHeadCell, toNoResponseAgingReport } from "shared/constants/constants";
-import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
+import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 
 
@@ -130,14 +130,26 @@ const NoResponseAgingReportView = (props) => {
 
     jsPDFReportTemplate({ tableObj });
   };
-
+  const handleReportSearch = () => {
+    if (filterType === 0) {
+      setFromDate(null);
+      const _payLoad = {
+        ...payLoad,
+        startDate: null
+      }
+      setTableRows(_payLoad);
+    }
+    else if (hasValue(fromDate)) {
+      setTableRows(payLoad)
+    }
+  };
   return (
     <PageLayout pageName={"No Response"}>
       <CardLayout>
         <DownloadAgingReport
           filterType={filterType}
           setFilterType={setFilterType}
-          handleSearch={() => setTableRows(payLoad)}
+          handleSearch={handleReportSearch}
           clearSearch={clearSearch}
           payLoad={payLoad}
           handleDownload={handleAppointeeCountDownload}

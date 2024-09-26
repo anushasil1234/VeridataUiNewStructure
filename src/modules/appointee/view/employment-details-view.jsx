@@ -3,19 +3,13 @@ import {
   Typography,
   Accordion,
   Card,
-  AccordionSummary,
-  AccordionDetails,
-  Fab,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
 import DownloadIcon from '@mui/icons-material/Download';
 import {
   _addFabStyle,
-  actionIconStyle,
   cardStyle,
   floatingIconListStyle,
   gridContainerStyle,

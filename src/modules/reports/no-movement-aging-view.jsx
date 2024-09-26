@@ -47,7 +47,7 @@ const NoMovementAgingReportView = (props) => {
     setFilterType(0);
     const payLoad = {
       startDate: null,
-      noOfDays: noOfDays ?? 0,
+      noOfDays:  0,
       reportType: '',
 
     }
@@ -131,14 +131,26 @@ const NoMovementAgingReportView = (props) => {
 
     jsPDFReportTemplate({ tableObj });
   };
-
+  const handleReportSearch = () => {
+    if (filterType === 0) {
+      const _payLoad = {
+        ...payLoad,
+        startDate: null,
+        noOfDays: 0,
+      }
+      setTableRows(_payLoad);
+    }
+    else{
+      setTableRows(payLoad)
+    }
+  };
   return (
     <PageLayout pageName={"No Movement"}>
       <CardLayout>
         <DownloadAgingReport
           filterType={filterType}
           setFilterType={setFilterType}
-          handleSearch={() => setTableRows(payLoad)}
+          handleSearch={handleReportSearch}
           clearSearch={clearSearch}
           payLoad={payLoad}
           handleDownload={handleAppointeeCountDownload}

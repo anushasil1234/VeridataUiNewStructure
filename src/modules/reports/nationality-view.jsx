@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
 import { nationalityListTableHeadCell, nationalityReportTableHeadCell, toNationalityReport } from "shared/constants/constants";
-import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
+import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 import { removeActionRoute } from "store/slices/action-route-slice";
 
@@ -104,7 +104,7 @@ const NationalityReportView = (props) => {
       toDate: DateFormatYYYYMMDD(toDate?.toString()),
     }
     setPayLoad(_payLoad);
-  }, [fromDate, toDate]);
+  }, [fromDate, toDate,]);
 
 
 
@@ -133,7 +133,20 @@ const NationalityReportView = (props) => {
 
     jsPDFReportTemplate({ tableObj });
   };
-
+  const handleReportSearch = () => {
+    if (filterType === 0) {
+      const _payLoad = {
+        ...payLoad,
+        fromDate: null,
+        toDate: null,
+        nationalityType: null,
+      }
+      setTableRows(_payLoad);
+    }
+    else{
+      setTableRows(payLoad)
+    }
+  };
   return (
     <PageLayout pageName={"Nationality"}>
       <CardLayout>
@@ -141,7 +154,7 @@ const NationalityReportView = (props) => {
           filterType={filterType}
           filterCode={'NATNLTY'}
           setFilterType={setFilterType}
-          handleSearch={() => setTableRows(payLoad)}
+          handleSearch={handleReportSearch}
           clearSearch={clearSearch}
           payLoad={payLoad}
           handleDownload={handleNaltionalityListDownload}

@@ -133,7 +133,20 @@ const AppointeeDataReportView = (props) => {
 
     jsPDFReportTemplate({ tableObj });
   };
-
+  const handleReportSearch = () => {
+    if (filterType === 0) {
+      const _payLoad = {
+        ...payLoad,
+        fromDate: null,
+        toDate: null,
+        StatusCode: "All",
+      }
+      setTableRows(_payLoad);
+    }
+    else{
+      setTableRows(payLoad)
+    }
+  };
   return (
     <PageLayout pageName={"Appointee Data"}>
       <CardLayout>
@@ -141,7 +154,7 @@ const AppointeeDataReportView = (props) => {
           filterType={filterType}
           setFilterType={setFilterType}
           filterCode={'APPNTE'}
-          handleSearch={() => setTableRows(payLoad)}
+          handleSearch={handleReportSearch}
           clearSearch={clearSearch}
           payLoad={payLoad}
           handleDownload={handleAppointeeListDownload}

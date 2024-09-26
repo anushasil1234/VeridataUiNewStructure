@@ -25,6 +25,7 @@ const DownloadAgingReport = ({
   clearSearch,
   handleDownload,
   fromDate,
+  payLoad,
   setFromDate,
   noOfDays,
   handleNoOfDaysChange,
@@ -39,7 +40,6 @@ const DownloadAgingReport = ({
   const handleReportSearch = () => {
     if (filterType === 0) {
       setFromDate(null);
-      // handleNoOfDaysChange(null);
       handleSearch();
     }
     else if (hasValue(fromDate)) {
@@ -79,7 +79,7 @@ const DownloadAgingReport = ({
           </Select>
         </FormControl>
       </Box>
-      {filterType != 0 ?
+      {filterType !== 0 ?
         <>
           <Box>
             <DatePicker
@@ -159,6 +159,7 @@ DownloadAgingReport.propTypes = {
   processStatus: PropTypes.string.isRequired,
   fromDate: PropTypes.string,
   setFromDate: PropTypes.func.isRequired,
+  payLoad: PropTypes.object,
   noOfDays: PropTypes.number,
   handleNoOfDaysChange: PropTypes.func.isRequired,
   filterType: PropTypes.number,
