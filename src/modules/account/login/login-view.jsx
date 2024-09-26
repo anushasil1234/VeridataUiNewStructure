@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Link, Paper, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { PageHeading1, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
 import { styles, imageContainer, loginImageStyle } from "app";
 import { useNavigate } from "react-router-dom";
@@ -20,30 +20,9 @@ import { useMsal } from '@azure/msal-react';
 import { loginRequest } from "authConfig";
 
 export const LoginView = () => {
-  // const [userName, setUserName] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [passwordType, setPasswordType] = useState("password");
-  // const [isPasswordVisibilityOn, setIsPasswordVisibilityOn] = useState(false);
-  // const [passwordFieldIcon, setPasswordFieldIcon] = useState(<VisibilityOff sx={loginFieldIconStyle} />);
-  // const [timeoutTimer, setTimeoutTimer] = useState();
   const { accounts, instance } = useMsal();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // const handlePasswordVisibility = () => {
-  //   setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
-  // }
-  // useEffect(() => {
-  //   if (isPasswordVisibilityOn) {
-  //     setPasswordType("text");
-  //     setPasswordFieldIcon(<Visibility sx={loginFieldIconStyle} />);
-  //   } else {
-  //     setPasswordType("password");
-  //     setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
-  //   }
-  // }, [isPasswordVisibilityOn])
-
-
   const apiSlice = useSelector(state => state.apiSlice);
   const functionSlice = useSelector(state => state.functionSlice);
   const popUpSlice = useSelector(state => state.popUpSlice);
@@ -51,7 +30,10 @@ export const LoginView = () => {
 
   const { postLoginByEmailDetails } = apiSlice[0];
   const { setDropdownList } = functionSlice[0];
+  const [loading, setLoading] = useState(false);
 
+  const startLoader = () => setLoading(true);
+  const stopLoader = () => setLoading(false);
 
   const handleClickOnLogout = () => {
     localStorage.clear();
@@ -66,32 +48,11 @@ export const LoginView = () => {
     dispatch(removePopUpSetFunction());
     dispatch(removeSideMenuItems());
     navigate(toLogin);
-    // // Redirect-based logout (no popup)
-    // instance.logoutRedirect({
-    //   postLogoutRedirectUri: toLogin,  // Redirect user to login page after logout
-    // }).catch(error => {
-    //   // Handle errors here if needed
-    //   console.error("Logout error:", error);
-    // });
-    // instance.logoutRedirect().then(() => {
-    //   localStorage.clear();
-    //   sessionStorage.clear();
-    //   navigate(toLogin);
-
-    // });
-    // navigate(`${toLogin}`)
-    // instance.logoutPopup({
-    //   localStorage.clear(),
-    // sessionStorage.clear(),
-    //   postLogoutRedirectUri: "/auth/login",  // Redirect user to home after logout
-    // });
-
   }
 
   const handleGetUserDetails = async (username) => {
-    // const payLoad = {
-    //   email: userName,
-    // };
+    // Start the loader before making the API call
+    startLoader();
     const response = await postLoginByEmailDetails(username);
     if (response) {
       const { responseInfo } = response;
@@ -105,13 +66,9 @@ export const LoginView = () => {
       dispatch(storeLoggeoutData({ handleClickOnLogout }));
       await setDropdownList();
       navigate(`${toDashboard}`)
-      // if (!isDefaultPassword === true || isPasswordExpire === true) {
-      //   navigate(`${toSetPassword}`);
-      // } else {
-      //   await setDropdownList();
-      //   navigate(`${toDashboard}`);
-      // }
+      stopLoader();
     } else {
+      stopLoader();
       navigate("/");
     }
   }
@@ -136,9 +93,7 @@ export const LoginView = () => {
     if (accounts && accounts.length > 0) {
       handleGetUserDetails(accounts[0].username);
     }
-    // else {
-    //   handleSSOLogin()
-    // }
+
   }, []);
 
   return (
@@ -165,22 +120,6 @@ export const LoginView = () => {
                 <PageHeading1 heading={"sign in"} />
               </Box>
               <Grid>
-                {/* <form onSubmit={handleSubmit}>
-                  <InputField inputProps={userNameInputProps} props={userNameInput} />
-                  <InputField inputProps={passwordInputProps} props={passwordInput} />
-                  <Button
-                    type="submit"
-                    color="primary"
-                    variant="contained"
-                    style={styles.btnstyle}
-                    fullWidth
-                  >
-                    Sign in
-                  </Button>
-                </form> */}
-                {/* <hr /> */}
-
-                {/* SSO login button */}
                 <Button
                   color="primary"
                   variant="contained"
@@ -189,13 +128,6 @@ export const LoginView = () => {
                   onClick={handleSSOLogin}
                 >Admin User Sign in
                 </Button>
-                <Box mt={2}>
-                  <Typography variant="body2" align="center">
-                    <Link href={toForgotPassword} underline="hover">
-                      Forgot Password?
-                    </Link>
-                  </Typography>
-                </Box>
               </Grid>
             </Grid>
           </Grid>
