@@ -405,7 +405,7 @@ const AppointeeRegister = () => {
   };
   const openOfflineKycInfoModel = () => {
     const offlineKycContent = {
-      dialogTitle: "Offline Aadhar Kyc Steps Info",
+      dialogTitle: "Offline Aadhaar Kyc Steps Info",
       dialogContentText: 'To complete the offline aadhar kyc process please follow the instructions given below :',
       dialogContentComponent: <VerficationAadharSteps />,
       fullWidth: true
@@ -680,7 +680,7 @@ const AppointeeRegister = () => {
     }
     else {
       verifyAadhar();
-      // openOtpForm(aadhar, "Aadhar Number", validateAadharOtp);
+      // openOtpForm(aadhar, "Aadhaar Number", validateAadharOtp);
     }
   };
   const verifyPAN = async () => {
@@ -1151,7 +1151,7 @@ const AppointeeRegister = () => {
   return (
     <CardLayout>
       <Typography sx={heading2}>
-        Your personal details must match with your Aadhar details
+        Your personal details must match with your Aadhaar details
       </Typography>
       <Box my={"20px"}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -1315,6 +1315,7 @@ const AppointeeRegister = () => {
                           <Grid item xs={12} md={6}>
                             <Typography sx={lable1Style}>
                               Father's/ Husband's Name
+                              <span className="requiredField">*</span>
                             </Typography>
 
                             <TextField
@@ -1335,6 +1336,7 @@ const AppointeeRegister = () => {
                             <FormControl fullWidth>
                               <Typography sx={lable1Style}>
                                 Relationship{" "}
+                                <span className="requiredField">*</span>
                               </Typography>
                               {relationshipWithMember !== undefined && (
                                 <Select
@@ -1412,6 +1414,7 @@ const AppointeeRegister = () => {
                             <FormControl fullWidth>
                               <Typography sx={lable1Style}>
                                 Nationality
+                                <span className="requiredField">*</span>
                               </Typography>
                               {nationality !== undefined && (
                                 <Select
@@ -1447,6 +1450,7 @@ const AppointeeRegister = () => {
                             <FormControl fullWidth>
                               <Typography sx={lable1Style}>
                                 Qualification
+                              
                               </Typography>
                               {qualification !== undefined && (
                                 <Select
@@ -1479,6 +1483,7 @@ const AppointeeRegister = () => {
                             <FormControl fullWidth>
                               <Typography sx={lable1Style}>
                                 Marital status
+                                <span className="requiredField">*</span>
                               </Typography>
                               {maritalStatus !== undefined && (
                                 <Select
@@ -1721,6 +1726,7 @@ const AppointeeRegister = () => {
                               <FormControl fullWidth>
                                 <Typography sx={lable1Style}>
                                   Is Physically Handicap
+                                  <span className="requiredField">*</span>
                                 </Typography>
                                 {isPhysicallyHandicap !== undefined && (
                                   <Select
@@ -2004,7 +2010,7 @@ const AppointeeRegister = () => {
                   >
                     <Grid item xs={12}>
                       <FormHeading step={"4"}
-                        heading={"Aadhar Verification"}
+                        heading={"Aadhaar Verification"}
                         info={"Enter Adhar data to verify, see more info in the below link."}
                       />
                       <Grid item xs={12} md={12}>
@@ -2012,8 +2018,8 @@ const AppointeeRegister = () => {
                           As part of onboarding process,
                           Please generate your offline kyc verification file and upload it here.
                           To see the details steps,
-                          {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
-                          Aadhar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
+                          {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
+                          Aadhaar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
                           <Link sx={{ cursor: 'pointer' }} onClick={() => openOfflineKycInfoModel()} > Click here</Link>
                         </Typography>
                         {isAadhaarVarified ?
@@ -2051,7 +2057,7 @@ const AppointeeRegister = () => {
                         {!isOfflineXmlDownloaded && <DisableSection />}
                         <Grid item xs={12} md={6}>
                           <Typography sx={lable1Style}>
-                            Name On Aadhar
+                            Name On Aadhaar
                           </Typography>
 
                           <TextField

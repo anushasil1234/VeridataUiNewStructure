@@ -1840,9 +1840,10 @@ export const submitConfirmationMsg = `Your data will be submitted, you will no l
 export const epfoPassfileUploadeConfirmationMsg = `Please upload your trust epfo passbook before submition`;
 export const visafileUploadeConfirmationMsg = `You must upload your visa before submition`;
 export const registrationSuccessDialogContentText = `Your Aadhar & UAN details  has been verified and submited successfully. you have completed your verification process. Please wait for the hr to reply for further processing of your application`;
-export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you. 
-Please start your verification compliance process by clicking on "Pending Verification" after giving consent.
-Enter all the details requested in the following pages & complete your verification compliance.`;
+export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you.\n
+1. Review the Prerequisite Details.\n
+2. Click 'Start Verification' to begin the process (which includes giving consent).\n
+Fill in the required information to complete verification.`;
 export const congratulationDialogContentTitle = `Congratulatoins!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;

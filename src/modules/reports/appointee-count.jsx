@@ -183,7 +183,7 @@ const AppointeeCount = () => {
   const handleSearch = () => {
 
     const payLoad = {
-      appointeeName: appointeeName?.trim() || "",
+      appointeeName: appointeeName?appointeeName.trim() : "",
       statusCode: statusCode ? statusCode.toString() : "",
       fromDate: fromDate ? DateFormatYYYYMMDD(fromDate) : null,
       toDate: toDate ? DateFormatYYYYMMDD(toDate) : null,
@@ -196,6 +196,7 @@ const AppointeeCount = () => {
     setToDate(null);
     setStatusCode(null);
     setEntityId(null);
+    setAppointeeName(null);
     const clearPayLoad = {
       appointeeName:null,
       fromDate: null,
@@ -308,13 +309,13 @@ const AppointeeCount = () => {
               onChange={(e) => {
                 setAppointeeName(e.target.value);
               }}
-              value={appointeeName}
+              value={appointeeName || ""}
               inputStyle={{ padding: 0 }}
               inputProps={{
                 style: inputPropsStyle,
               }}
               label={"Appointee Name"}
-              defaultValue={" "}
+              defaultValue={""}
               multiline
 
             />

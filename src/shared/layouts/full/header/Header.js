@@ -91,6 +91,7 @@ const Header = (props) => {
                   label="Give Consent"
                   onClick={appointeeConsent}
                   icon={<AddModeratorIcon color="success" />}
+                 
                 />
               }
             </Box>

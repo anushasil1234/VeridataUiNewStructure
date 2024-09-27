@@ -489,7 +489,7 @@ let AppointeeViewForm = ({
                       ) : isAadharVerified === false ? (
                         <Chip
                           sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"Aadhar Verification failed"}
+                          label={"Aadhaar Verification failed"}
                           color={"error"}
                         />
                       ) : isUanVerified === false ? (
@@ -507,7 +507,7 @@ let AppointeeViewForm = ({
                       ) : isAadharVerified === "N/A" ? (
                         <Chip
                           sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"Aadhar Verification Pending"}
+                          label={"Aadhaar Verification Pending"}
                           color={"warning"}
                         />
                       ) : isUanVerified === "N/A" ? (
@@ -532,12 +532,12 @@ let AppointeeViewForm = ({
               </Stack>
               <DocumentDetails
                 isVerified={isAadharVerified}
-                fieldName={"Aadhar Name"}
+                fieldName={"Aadhaar Name"}
                 fieldValue={nameAsOnAadhar}
               />
               <DocumentDetails
                 isVerified={isAadharVerified}
-                fieldName={"Aadhar Number"}
+                fieldName={"Aadhaar Number"}
                 fieldValue={aadhar}
               />
               

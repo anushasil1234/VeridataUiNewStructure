@@ -147,7 +147,7 @@ const UnWrrappedDataUpload = (props) => {
                             removeFile={removeFile}
                             hasPermission={hasPermission}
                         />
-                        <DarkTooltip placement="right" arrow>
+                        <DarkTooltip placement="right" arrow title="Help">
                             <Fab
                                 variant="contained"
                                 size="small"
@@ -177,25 +177,29 @@ const UnWrrappedDataUpload = (props) => {
 
                     </DialogContent>
                     <DialogContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left', alignItems: 'flex-start' }}>
+
                         <Typography variant="subtitle2">
-                            Please follow the template format for correct data upload.
+                            Notes:
+                        </Typography>
+                        <Typography variant="subtitle2" sx={{ mt: 1 }}>
+                            1. Please use the template for correct data upload.
                         </Typography>
 
                         {/* Numbered list */}
-                        <Typography variant="subtitle2"  sx={{ mt: 1 }}>
-                            1. All fields are required except level1, level2, and level3 Email fields.
+                        <Typography variant="subtitle2" sx={{ mt: 1 }}>
+                            2. All fields are required except Level1, Level2, and Level3 Email fields.
                         </Typography>
 
-                        <Typography variant="subtitle2"  sx={{ mt: 1 }}>
-                            2. Candidate ID must be unique.
+                        <Typography variant="subtitle2" sx={{ mt: 1 }}>
+                            3. Candidate ID must be unique.
                         </Typography>
 
-                        <Typography variant="subtitle2"  sx={{ mt: 1 }}>
-                            3. Date of Joining: Use dd-mm-yyyy format. Must be a future date.
+                        <Typography variant="subtitle2" sx={{ mt: 1 }}>
+                            4. Date of Joining: Use dd-mm-yyyy format. Must be a future date.
                         </Typography>
 
-                        <Typography variant="subtitle2"  sx={{ mt: 1 }}>
-                            4. Ensure that the header is not changed.
+                        <Typography variant="subtitle2" sx={{ mt: 1 }}>
+                            5. Don't change the header.
                         </Typography>
                     </DialogContent>
 

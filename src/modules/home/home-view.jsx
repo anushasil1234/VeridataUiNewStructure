@@ -27,6 +27,7 @@ import SmallListTable from "shared/utils/small-list-table/small-list-table";
 import PrerequisiteInformation from "shared/components/display-information/prerequisite-information";
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
 import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
+import CloseIcon from '@mui/icons-material/Close';
 
 const HomeView = () => {
   const commonHooksFunctionSlice = useSelector(
@@ -43,6 +44,7 @@ const HomeView = () => {
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getDashboardWidgetCardData, getRemarks, getAppointeeDetails, postAppointeePrerequisiteStatus } = apiSlice[0];
   const { userTypeId, appointeeId, userName, emailId, phone, status } = loggedInData[0];
+  console.log("loggedInData", loggedInData)
   const [isPrerequisiteDataAvailable, setIsPrerequisiteDataAvailable] = useState(prerquistdata)
   const [loading, setLoading] = useState(false);
 
@@ -62,6 +64,7 @@ const HomeView = () => {
   const functionSlice = useSelector(state => state.functionSlice);
   const { openViewModel, openConsentModal, openInfoModel, openConfirmationYesNoModal } = functionSlice[0];
   const consentStatus = loggedInData[0]?.consentStatus;
+  console.log("consentStatus", consentStatus)
   const dispatch = useDispatch();
   const setDashboardWidgetCardData = async (dayRange) => {
     startLoader();
@@ -150,16 +153,24 @@ const HomeView = () => {
   }
 
   const handlePrerequisiteDataConsent = async () => {
+
     if (!isPrerequisiteDataAvailable) {
       const prerequisiteModelContent = {
-        dialogTitle: "Prerequisite Confirmation",
+        dialogTitle: (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography>Prerequisite Confirmation</Typography>
+            
+          </div>
+        ),
         dialogContentText: <><Typography>Before verification there are some prerequisites, thats needs to be done...</Typography>
           <Typography> </Typography></>,
         dialogComponent: <PrerequisiteInformation />,
         firstButtonName: "I do",
         secondButtonName: "I don't have prerequisites",
+        // thirdButtonName: "Close",
         fullWidth: true,
-        mxWidth: 'md'
+        mxWidth: 'md',
+        
       };
       openConfirmationYesNoModal(prerequisiteModelContent, handleYes, handleNo);
     } else {
@@ -357,6 +368,8 @@ const HomeView = () => {
                       variant="contained"
                       color="primary"
                       onClick={() => openViewModel(appointeeId)}
+                      //disabled={status === "No Response"}
+                      disabled={consentStatus === 0 || consentStatus === 5}
                     >
                       My Info
                     </Button>
@@ -377,9 +390,25 @@ const HomeView = () => {
                           color="primary"
                           onClick={appointeeVerification}
                           disabled={!isPrerequisiteDataAvailable}
+                          sx={{
+                            //ml: 6,
+                            boxShadow: 10, // Elevation effect
+                            fontSize: '1rem', // Larger font for emphasis
+                            //padding: '10px 20px', // Increased padding for a bigger button
+                            border: '2px solid rgba(255, 255, 255, 0.8)', // White border for emphasis
+                            borderRadius: '8px', // Rounded corners for a modern look
+                            '&:hover': {
+                              boxShadow: 20, // Stronger elevation on hover
+                              transform: 'scale(1.05)', // Slight scale up on hover
+                            },
+                            transition: 'box-shadow 0.3s, transform 0.3s', // Smooth transition for elevation and scale
+                          }}
                         >
-                          Pending Verification
+                          {status === "No Response" ? "Start Verification" : "Pending Verification"}
                         </Button>
+
+
+
                       </>
                     ) : null}
                   </Grid>
