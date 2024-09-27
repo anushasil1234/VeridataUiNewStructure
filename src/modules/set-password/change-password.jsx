@@ -141,7 +141,6 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
 
         
         if (hasValue(newPassword) && hasValue(confirmPassword) && newPassword.length >= 8) {
-            console.log('qaa', newPassword)
             const trimmedPassword = newPassword.trim();
             if (isPaswordValid(trimmedPassword)) {
                 if (trimmedPassword === confirmPassword.trim()) {
