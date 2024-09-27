@@ -13,7 +13,9 @@ import {
   Switch,
   TextField,
   Typography,
+  Tooltip,
 } from "@mui/material";
+import { InfoOutlined } from '@mui/icons-material';
 import {
   genderSectionContainer,
   genderTypeStyle,
@@ -80,7 +82,7 @@ import VerficationAadharSteps from "shared/components/verification/verfication-a
 import PassportSample from 'assets/images/backgrounds/PassportSample2.jpeg';
 import PassportFileNoSample from 'assets/images/backgrounds/file-number-in-indian-passport.png';
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
-
+import { useNavigate } from "react-router-dom";
 
 const AppointeeRegister = () => {
 
@@ -167,6 +169,7 @@ const AppointeeRegister = () => {
   const [candidteId, setCandidteId] = useState(null);
   const [currentPageNo, setCurrentPageNo] = useState(null);
   const [clickedButton, setClickedButton] = useState(null);
+  const navigate = useNavigate();
 
   const [epfostatusMessage, setEpfostatusMessage] = useState(
     new VerificationStatus()
@@ -240,7 +243,7 @@ const AppointeeRegister = () => {
       e.preventDefault();
     }
   }
-  const handelSpacialCharecterPaste=(e)=>{
+  const handelSpacialCharecterPaste = (e) => {
     const paste = (e.clipboardData || window.clipboardData).getData('text');
     if (!/^[A-Za-z\s]*$/.test(paste)) {
       e.preventDefault();
@@ -1324,9 +1327,9 @@ const AppointeeRegister = () => {
                               type="text"
                               className="customeTextField"
                               variant="outlined"
-                              onKeyDown={ handleSpacialcharecter}
+                              onKeyDown={handleSpacialcharecter}
                               onPaste={handelSpacialCharecterPaste}
-                              onChange={(e)=>{setFathersOrHusbandName(e.target.value)}}
+                              onChange={(e) => { setFathersOrHusbandName(e.target.value) }}
                               value={fathersOrHusbandName}
                               defaultValue={" "}
                               inputProps={{ maxLength: 50 }}
@@ -1452,7 +1455,7 @@ const AppointeeRegister = () => {
                             <FormControl fullWidth>
                               <Typography sx={lable1Style}>
                                 Qualification
-                              
+
                               </Typography>
                               {qualification !== undefined && (
                                 <Select
@@ -1846,6 +1849,11 @@ const AppointeeRegister = () => {
                         >
                           {"Do you have PF under any Trust, in the past or present"}
                         </Typography>
+                        <Tooltip arrow="bottom" title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO">
+                          <IconButton>
+                            <InfoOutlined />
+                          </IconButton>
+                        </Tooltip>
                         <FormControl >
                           <Stack
                             direction="row"
@@ -2247,6 +2255,16 @@ const AppointeeRegister = () => {
                       : null
                     }
                   </Grid>
+                  <Button
+                    name="dashboard"
+                    // disabled={isSubmitDisabled}
+                    onClick={() => navigate(toDashboard)}
+                    sx={{ m: "15px 5px", ml: 3 }}
+                    variant="contained"
+                    color="primary"
+                  >
+                   Go to Dashboard
+                  </Button>
                 </Grid>
               </form>
             ) : null}

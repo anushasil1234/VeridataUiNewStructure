@@ -17,11 +17,11 @@ const PrerequisiteInformation = () => {
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar alt="Aadhar" src="/static/images/avatar/3.jpg" />
+                    <Avatar alt="Aadhaar" src="/static/images/avatar/3.jpg" />
                 </ListItemAvatar>
                 <ListItemText
 
-                    primary="Aadhar Number"
+                    primary="Aadhaar Number"
                     secondary={
                         <>
                             <Typography

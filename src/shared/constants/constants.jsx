@@ -17,18 +17,18 @@ export const userCreationSuccessMsg = `User has been created successfully`;
 export const userUpdateSuccessMsg = `User has been updated successfully`;
 export const userDeletedSuccessMsg = `User has been deleted successfully`;
 export const invalidOtpMsg = `Otp must be of 6 digits`;
-export const emptyAadharMsg = `Aadhar name is empty`;
-export const emptyShareCodeMsg = `Aadhar share code is empty`;
+export const emptyAadharMsg = `Aadhaar name is empty`;
+export const emptyShareCodeMsg = `Aadhaar share code is empty`;
 export const emptyPanMsg = `Pan number or name on Pan is missing`;
-export const aadharVerifySuccessMsg = `Aadhar has been verified successfully`;
-export const aadharVerifyFailedMsg = `Aadhar has not been verified`;
+export const aadharVerifySuccessMsg = `Aadhaar has been verified successfully`;
+export const aadharVerifyFailedMsg = `Aadhaar has not been verified`;
 export const uanVerifyFailedMsg = `UAN has not been verified`;
 export const uanVerifySuccessMsg = `UAN has been verified successfully`;
 export const generateOtpRety = `Otp sending is unsuccessful, please retry`;
 export const generateOtpSucces = `OTP has sent successfully, Please fill the otp and submit`;
 export const aadharNoValidationError = `Your phone number is not linked with aadhar. Link your phone number then retry or submit anyway`;
 export const invalidPanMsg = `Pan number should be of 10 digits and properly formatted`;
-export const invalidAadharMsg = `Aadhar number should be of 12 digits`;
+export const invalidAadharMsg = `Aadhaar number should be of 12 digits`;
 export const emptyAadharFileMsg = `Please upload aadhar`;
 export const emptyPasswordField = `password can't be empty`;
 export const fileUploadSuccess = `File upload completed`;
@@ -40,7 +40,7 @@ export const formSaveSuccess = `Form saved`;
 export const appointeeApproveSuccess = `Appointee has been approved successfully`;
 export const appointeeRejectionSuccess = `Appointee has been Rejected`;
 export const appointeeReprocessSuccess = `Appointee has been sent for reprocessing`;
-export const aadharVerificationSuccess = `Aadhar verified`;
+export const aadharVerificationSuccess = `Aadhaar verified`;
 export const editSuccess = `Appointee details has been updated successfully`;
 export const appointteTerminationSuccess = `The process has been successfully terminated for this appointee`;
 export const passportSuccessMsg = `Passport has been verified successfully`;
@@ -178,7 +178,7 @@ export const verifiedListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Aadhar',
+        label: 'Aadhaar',
         enums: ['adhaarNo'],
         component: {
             element: Typography
@@ -379,7 +379,7 @@ export const GetPfCreationListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Aadhar',
+        label: 'Aadhaar',
         enums: ['adhaarNo'],
         component: {
             element: Typography
@@ -470,7 +470,7 @@ export const rejectedListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Aadhar',
+        label: 'Aadhaar',
         enums: ['adhaarNo'],
         component: {
             element: Typography
@@ -1839,7 +1839,7 @@ export const notProcessedDataVerificationConfirmationMsg = `Do you want to send 
 export const submitConfirmationMsg = `Your data will be submitted, you will no longer be able to verify your data. To re verify your data you have to contact the admin`;
 export const epfoPassfileUploadeConfirmationMsg = `Please upload your trust epfo passbook before submition`;
 export const visafileUploadeConfirmationMsg = `You must upload your visa before submition`;
-export const registrationSuccessDialogContentText = `Your Aadhar & UAN details  has been verified and submited successfully. you have completed your verification process. Please wait for the hr to reply for further processing of your application`;
+export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details  has been verified and submited successfully. you have completed your verification process. Please wait for the hr to reply for further processing of your application`;
 export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you.\n
 1. Review the Prerequisite Details.\n
 2. Click 'Start Verification' to begin the process (which includes giving consent).\n
