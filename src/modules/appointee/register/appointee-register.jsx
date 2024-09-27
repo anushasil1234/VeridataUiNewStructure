@@ -1368,6 +1368,7 @@ const AppointeeRegister = () => {
                             </FormControl>
                           </Grid>
                           <Grid item xs={12} md={6}>
+                          
                             <Typography sx={lable1Style}>
                               Mobile No
                               <span className="requiredField">*</span>
@@ -1385,9 +1386,10 @@ const AppointeeRegister = () => {
                               defaultValue={" "}
                               InputProps={{
                                 readOnly: true,
-                                style: inputFieldStyle,
+                               
                               }}
                             />
+                               
                           </Grid>
                           <Grid item xs={12} md={6}>
                             <Typography sx={lable1Style}>

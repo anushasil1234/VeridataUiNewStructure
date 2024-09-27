@@ -1,6 +1,6 @@
 import { Download, Refresh, Search } from "@mui/icons-material";
 import { Box, Fab, Stack } from "@mui/material";
-import { primaryFabStyle } from "app";
+import { primaryFabStyle,ResponsiveFab  } from "app";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -157,7 +157,7 @@ const UnwrappedReport = (props) => {
             />
           </Box>
           <DarkTooltip placement="top" title={"Search"} arrow>
-            <Fab
+            <ResponsiveFab  count report
               variant="contained"
               size="small"
               button={"N"}
@@ -165,10 +165,10 @@ const UnwrappedReport = (props) => {
               sx={primaryFabStyle}
             >
               <Search width={18} sx={{ color: "#fff" }} />
-            </Fab>
+            </ResponsiveFab>
           </DarkTooltip>
           <DarkTooltip placement="top" title={"Clear Search"} arrow>
-            <Fab
+            <ResponsiveFab 
               variant="contained"
               size="small"
               button={"N"}
@@ -176,10 +176,10 @@ const UnwrappedReport = (props) => {
               sx={primaryFabStyle}
             >
               <Refresh width={18} sx={{ color: "#fff" }} />
-            </Fab>
+            </ResponsiveFab>
           </DarkTooltip>
           <DarkTooltip placement="top" title={"Download Report"} arrow>
-            <Fab
+            <ResponsiveFab 
               variant="contained"
               size="small"
               button={"N"}
@@ -187,7 +187,7 @@ const UnwrappedReport = (props) => {
               sx={primaryFabStyle}
             >
               <Download width={18} />
-            </Fab>
+            </ResponsiveFab>
           </DarkTooltip>
         </Stack>
         <DataTable rows={rows} setRows={setRows} headCells={apiCountHeadCell} />

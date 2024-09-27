@@ -15,12 +15,16 @@ import {
   MenuItem,
   Select,
   TextField,
+  Box
 } from "@mui/material";
 import {
+  backgroundOverLay,
   downLoadListSx,
   inputFieldStyleAdded,
   inputPropsStyle,
   primaryFabStyle,
+  ResponsiveFab ,
+  datePickerstyle
 } from "app";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -64,6 +68,8 @@ const AppointeeCount = () => {
   const [appointeeName, setAppointeeName] = useState(null);
   const [statusCode, setStatusCode] = useState(null);
   const [entityId, setEntityId] = useState(null);
+  
+
 
   const payLoadData = {
     appointeeName: appointeeName,
@@ -214,196 +220,200 @@ const AppointeeCount = () => {
   }, []);
   return (
     <PageLayout pageName={"Appointee count"}>
-      <CardLayout>
-        <Grid container spacing={2}>
-          <Grid item xs={2}>
-            <DatePicker
-              label={"From Date"}
-              value={fromDate}
-              maxDate={toDate}
-              setValue={setFromDate}
-              disableFuture={true}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <DatePicker
-              label={"To Date"}
-              clearable
-              value={toDate}
-              minDate={fromDate}
-              setValue={setToDate}
-              disableFuture={true}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <FormControl sx={{ width: "100%" }} size="large">
-
-              <InputLabel id="demo-simple-select-label">Status</InputLabel>
-              {statusCode !== undefined &&
-                <Select
-                  error={false}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  className="customeTextField"
-                  sx={inputFieldStyleAdded}
-                  value={statusCode}
-                  label="Status"
-                  inputProps={{
-                    style: inputPropsStyle
-                  }}
-                  defaultValue={""}
-                  onChange={(e) => { setStatusCode(e.target.value) }}
-                >
-                  {reportFilterStatusList &&
-                    reportFilterStatusList.map((element, index) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          value={element.code}
-                        >{`${element.value}`}</MenuItem>
-                      );
-                    })}
-                </Select>}
-            </FormControl>
-          </Grid>
-          <Grid item xs={2}>
-            <FormControl sx={{ width: "100%" }} size="large">
-
-              <InputLabel id="demo-simple-select-label">Entity</InputLabel>
-              {statusCode !== undefined &&
-                <Select
-                  error={false}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  className="customeTextField"
-                  sx={inputFieldStyleAdded}
-                  value={entityId}
-                  label="entityId"
-                  inputProps={{
-                    style: inputPropsStyle
-                  }}
-                  defaultValue={""}
-                  onChange={(e) => {
-                    setEntityId(e.target.value)
-                  }}
-                >
-                  {entityList &&
-                    entityList.map((element, index) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          value={element.id}
-                        >{`${element.value}`}</MenuItem>
-                      );
-                    })}
-                </Select>}
-            </FormControl>
-          </Grid>
-          <Grid item xs={2}>
-            <TextField
-              error={false}
-              style={inputFieldStyleAdded}
-              type="text"
-              className="customeTextField"
-              variant="outlined"
-              onChange={(e) => {
-                setAppointeeName(e.target.value);
-              }}
-              value={appointeeName || ""}
-              inputStyle={{ padding: 0 }}
-              inputProps={{
-                style: inputPropsStyle,
-              }}
-              label={"Appointee Name"}
-              defaultValue={""}
-              multiline
-
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <DarkTooltip placement="top" title={"Search"} arrow>
-              <Fab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={handleSearch}
-                sx={primaryFabStyle}
-              >
-                <Search width={18} sx={{ color: "#fff" }} />
-              </Fab>
-            </DarkTooltip>
-            <DarkTooltip placement="top" title={"Clear Search"} arrow>
-              <Fab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={clearSearch}
-                sx={primaryFabStyle}
-              >
-                <Refresh width={18} sx={{ color: "#fff" }} />
-              </Fab>
-            </DarkTooltip>
-
-            <DarkTooltip placement="top" title={"Download Report"} arrow>
-              <Fab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={handleClickOnDownload}
-                sx={primaryFabStyle}
-              >
-                <Download width={18} />
-              </Fab>
-            </DarkTooltip>
-            {isDownloadListOpened && (
-              <List sx={downLoadListSx}>
-                <ListItemButton component="a">
-                  <DarkTooltip
-                    placement="top"
-                    title={"Download AppointeeCount"}
-                    arrow
-                  >
-                    <Fab
-                      variant="contained"
-                      size="small"
-                      button={"N"}
-                      onClick={handleAppointeeCountDownload}
-                      sx={primaryFabStyle}
-                    >
-                      <Summarize width={18} />
-                    </Fab>
-                  </DarkTooltip>
-                </ListItemButton>
-                <ListItemButton component="a">
-                  <DarkTooltip
-                    placement="top"
-                    title={"Download Appointee Details Count"}
-                    arrow
-                  >
-                    <Fab
-                      variant="contained"
-                      size="small"
-                      button={"N"}
-                      onClick={handleAppointeeDetailsDownload}
-                      sx={primaryFabStyle}
-                    >
-                      <Assessment width={18} />
-                    </Fab>
-                  </DarkTooltip>
-                </ListItemButton>
-              </List>
-            )}
-          </Grid>
+   <CardLayout sx={{ width: "100%" }}>
+  <Grid container spacing={2}>
+    <Grid item xs={4} >
+      <Box sx={{...datePickerstyle}}>
+      <DatePicker
+        label={"From Date"}
+        value={fromDate}
+        maxDate={toDate}
+        setValue={setFromDate}
+        disableFuture={true}
+      />
+      </Box>
+    </Grid>
+        <Grid item xs={4}>
+        <Box sx={{...datePickerstyle}}>
+          <DatePicker
+            label={"To Date"}
+            clearable
+            value={toDate}
+            minDate={fromDate}
+            setValue={setToDate}
+            disableFuture={true}
+          />
+          </Box>
         </Grid>
-        <CollapsibleDataTable
-          headCells={appointeeCountHeadCell}
-          rows={rows}
-          detailsHeadCells={appointeeCountDetailsHeadCell}
-          detailsTableName={"Details"}
-        />
-      </CardLayout>
-    </PageLayout>
-  );
+        <Grid item xs={4}>
+          <FormControl sx={{ width: "100%" }} size="large">
+            <InputLabel id="demo-simple-select-label">Status</InputLabel>
+            {statusCode !== undefined &&
+              <Select
+                error={false}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className="customeTextField"
+                sx={inputFieldStyleAdded}
+                value={statusCode}
+                label="Status"
+                inputProps={{
+                  style: inputPropsStyle
+                }}
+                defaultValue={""}
+                onChange={(e) => { setStatusCode(e.target.value) }}
+              >
+                {reportFilterStatusList &&
+                  reportFilterStatusList.map((element, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        value={element.code}
+                      >{`${element.value}`}</MenuItem>
+                    );
+                  })}
+              </Select>}
+          </FormControl>
+        </Grid>
+        <Grid item xs={4}>
+          <FormControl sx={{ width: "100%" }} size="large">
+
+            <InputLabel id="demo-simple-select-label">Entity</InputLabel>
+            {statusCode !== undefined &&
+              <Select
+                error={false}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className="customeTextField"
+                sx={inputFieldStyleAdded}
+                value={entityId}
+                label="entityId"
+                inputProps={{
+                  style: inputPropsStyle
+                }}
+                defaultValue={""}
+                onChange={(e) => {
+                  setEntityId(e.target.value)
+                }}
+              >
+                {entityList &&
+                  entityList.map((element, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        value={element.id}
+                      >{`${element.value}`}</MenuItem>
+                    );
+                  })}
+              </Select>}
+          </FormControl>
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            error={false}
+            style={inputFieldStyleAdded}
+            type="text"
+            className="customeTextField"
+            variant="outlined"
+            onChange={(e) => {
+              setAppointeeName(e.target.value);
+            }}
+            value={appointeeName || ""}
+            inputStyle={{ padding: 0 }}
+            inputProps={{
+              style: inputPropsStyle,
+            }}
+            label={"Appointee Name"}
+            defaultValue={""}
+            multiline
+
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <DarkTooltip placement="top" title={"Search"} arrow>
+            <ResponsiveFab
+              variant="contained"
+              size="small"
+              button={"N"}
+              onClick={handleSearch}
+              sx={primaryFabStyle}
+            >
+              <Search width={18} sx={{ color: "#fff" }} />
+            </ResponsiveFab>
+          </DarkTooltip>
+          <DarkTooltip placement="top" title={"Clear Search"} arrow>
+            <ResponsiveFab
+              variant="contained"
+              size="small"
+              button={"N"}
+              onClick={clearSearch}
+              sx={primaryFabStyle}
+            >
+              <Refresh width={18} sx={{ color: "#fff" }} />
+            </ResponsiveFab>
+          </DarkTooltip>
+
+          <DarkTooltip placement="top" title={"Download Report"} arrow>
+            <ResponsiveFab
+              variant="contained"
+              size="small"
+              button={"N"}
+              onClick={handleClickOnDownload}
+              sx={primaryFabStyle}
+            >
+              <Download width={18} />
+            </ResponsiveFab>
+          </DarkTooltip>
+          {isDownloadListOpened && (
+            <List sx={downLoadListSx}>
+              <ListItemButton component="a">
+                <DarkTooltip
+                  placement="top"
+                  title={"Download AppointeeCount"}
+                  arrow
+                >
+                  <ResponsiveFab
+                    variant="contained"
+                    size="small"
+                    button={"N"}
+                    onClick={handleAppointeeCountDownload}
+                    sx={primaryFabStyle}
+                  >
+                    <Summarize width={18} />
+                  </ResponsiveFab>
+                </DarkTooltip>
+              </ListItemButton>
+              <ListItemButton component="a">
+                <DarkTooltip
+                  placement="top"
+                  title={"Download Appointee Details Count"}
+                  arrow
+                >
+                  <ResponsiveFab
+                    variant="contained"
+                    size="small"
+                    button={"N"}
+                    onClick={handleAppointeeDetailsDownload}
+                    sx={primaryFabStyle}
+                  >
+                    <Assessment width={18} />
+                  </ResponsiveFab>
+                </DarkTooltip>
+              </ListItemButton>
+            </List>
+          )}
+        </Grid>
+      </Grid>
+      <CollapsibleDataTable
+        headCells={appointeeCountHeadCell}
+        rows={rows}
+        detailsHeadCells={appointeeCountDetailsHeadCell}
+        detailsTableName={"Details"}
+      />
+    </CardLayout>
+  </PageLayout>
+);
+  
 };
 
 export default AppointeeCount;

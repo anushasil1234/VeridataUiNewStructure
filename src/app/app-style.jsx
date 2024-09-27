@@ -444,6 +444,7 @@ export const clickableCell = {
   textOverflow: "ellipsis",
   cursor: "pointer",
   color: "#e82e27",
+  marginLeft:"12px"
 }
 export const tableHeader = {
   fontFamily: AppStyle.typography.fontFamily,
@@ -709,7 +710,7 @@ export const tableActionIconListStylesx = {
 };
 export const actionIconStyle = {
   // marginRight: "1rem",
-  margin: ".5rem ",
+   margin: ".5rem ",
 };
 export const _addFabStyle = {
   bgcolor: ThemeColorPalete.primary.main,
@@ -730,7 +731,7 @@ export const primaryFabStyle = {
   bgcolor: ThemeColorPalete.primary.main,
   color: ThemeColorPalete.common.white,
   "&:hover": {
-    bgcolor: ThemeColorPalete.primary.main
+    bgcolor: ThemeColorPalete.primary.light
   },
 };
 export const redFabStyle = {
@@ -1383,3 +1384,10 @@ export const ResponsiveFab = styled(Fab)(({ backgroundColor, hoverColor }) => ({
     backgroundColor: hoverColor || AppStyle.palette.yellow1.main,
   },
 }));
+
+
+export const datePickerstyle={
+  width:'100%',
+        '& .MuiFormControl-root': {
+            width: '100%',  }  
+}

@@ -22,8 +22,11 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow
-        sx={{ "& > *": { borderBottom: "unset" }, ...tableHeadRowStyle }}
-      >
+        sx={{
+          "& > *": { borderBottom: "unset" },
+          ...tableHeadRowStyle,
+        }}
+      >  
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -40,7 +43,18 @@ function Row(props) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box
+              sx={{
+                 marginTop: 2,
+                 marginBottom:2,
+                justifyContent:'center',
+                flex:'display',
+                width: "100%", 
+                backgroundColor: open ? "#f0f0f0" : "transparent", 
+                transition: "background-color 0.3s ease", 
+                //  padding: 2
+              }}
+            >
               <Typography variant="h6" gutterBottom component="div">
                 {detailsTableName}
               </Typography>
@@ -49,7 +63,11 @@ function Row(props) {
                   <TableRow>
                     {detailsHeadCells &&
                       detailsHeadCells.map(({ label }, index) => {
-                        return <TableCell key={index} sx={tableHeader}>{label}</TableCell>;
+                        return (
+                          <TableCell key={index} sx={tableHeader}>
+                            {label}
+                          </TableCell>
+                        );
                       })}
                   </TableRow>
                 </TableHead>
@@ -61,9 +79,8 @@ function Row(props) {
                           {values.map(({ component }, index) => {
                             return (
                               <TableCell key={index}>{component}</TableCell>
-                            )
-                          }
-                          )}
+                            );
+                          })}
                         </TableRow>
                       );
                     })}
@@ -76,7 +93,6 @@ function Row(props) {
     </React.Fragment>
   );
 }
-
 export const CollapsibleDataTable = ({
   headCells,
   rows,

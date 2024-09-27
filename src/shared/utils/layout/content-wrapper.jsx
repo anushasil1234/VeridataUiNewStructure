@@ -3,7 +3,7 @@ import React from 'react'
 
 const ContentWrapper = ({ children, sx }) => {
     return (
-        <Box sx={{px: "8px", ...sx}}>
+        <Box sx={{px: "1px", ...sx}}>
             {children}
         </Box>
     )

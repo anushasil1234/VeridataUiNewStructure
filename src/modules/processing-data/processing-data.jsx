@@ -25,7 +25,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { inputFieldStyleAdded, primaryFabStyle } from "app";
+import { inputFieldStyleAdded, primaryFabStyle,ResponsiveFab } from "app";
 import { Download, Refresh, Search } from "@mui/icons-material";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
@@ -197,7 +197,7 @@ const UnWrappedProcessing = (props) => {
     <PageLayout pageName={pageName}>
       <CardLayout>
         <Grid container spacing={2}>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <DatePicker
               label={"From Date"}
               value={fromDate}
@@ -206,7 +206,7 @@ const UnWrappedProcessing = (props) => {
               disableFuture={true}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <DatePicker
               label={"To Date"}
               value={toDate}
@@ -243,7 +243,7 @@ const UnWrappedProcessing = (props) => {
 
           <Grid item xs={4}>
             <DarkTooltip placement="top" title={"Search"} arrow>
-              <Fab
+              <ResponsiveFab
                 variant="contained"
                 size="small"
                 button={"N"}
@@ -251,10 +251,10 @@ const UnWrappedProcessing = (props) => {
                 sx={primaryFabStyle}
               >
                 <Search width={18} sx={{ color: "#fff" }} />
-              </Fab>
+              </ResponsiveFab>
             </DarkTooltip>
             <DarkTooltip placement="top" title={"Clear Search"} arrow>
-              <Fab
+              <ResponsiveFab
                 variant="contained"
                 size="small"
                 button={"N"}
@@ -262,11 +262,11 @@ const UnWrappedProcessing = (props) => {
                 sx={primaryFabStyle}
               >
                 <Refresh width={18} sx={{ color: "#fff" }} />
-              </Fab>
+              </ResponsiveFab>
             </DarkTooltip>
             {hasPermission && hasPermission["A008"] && (
               <DarkTooltip placement="top" title={"Download"} arrow>
-                <Fab
+                <ResponsiveFab List
                   variant="contained"
                   size="small"
                   button={"N"}
@@ -274,7 +274,7 @@ const UnWrappedProcessing = (props) => {
                   sx={primaryFabStyle}
                 >
                   <Download width={18} sx={{ color: "#fff" }} />
-                </Fab>
+                </ResponsiveFab>
               </DarkTooltip>
             )}
           </Grid>

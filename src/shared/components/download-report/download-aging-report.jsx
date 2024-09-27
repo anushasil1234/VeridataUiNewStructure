@@ -9,7 +9,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { inputFieldStyle, primaryFabStyle } from "app";
+import { inputFieldStyle, primaryFabStyle, ResponsiveFab } from "app";
 import React, { useState } from "react";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
@@ -61,95 +61,104 @@ const DownloadAgingReport = ({
   };
 
   return (
-    <Stack my={2} direction="row" justifyContent={"left"} spacing={2} alignItems={"center"}>
-      <Box>
-        <FormControl sx={{ minWidth: 180 }} size="large">
-          <InputLabel id="demo-select-small">Filter</InputLabel>
-          <Select
-            labelId="demo-select-small"
-            id="demo-select-small"
-            value={filterType}
-            label="Filter"
-            onChange={(e) => {
-              setFilterType(e.target.value);
-            }}
-          >
-            <MenuItem value={0}>All</MenuItem>
-            <MenuItem value={1}>Custom</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-      {filterType !== 0 ?
-        <>
-          <Box>
-            <DatePicker
-              label={"From Date"}
-              value={fromDate}
-              // maxDate={toDate}
-              setValue={setFromDate}
-              disableFuture={true}
-            />
-          </Box>
-          <Stack direction="row" justifyContent={"left"} spacing={1} alignItems={"center"}>
-            <span style={{ paddingLeft: "1rem" }}> No of Days of Inactivity </span>
-            {/* <Box size={"small"}> */}
-            <TextField
-              // label="No of days"
-              style={{ width: "30%" }}
+    <Box
+  my={2}
+  display="flex" 
+  direction="row"
+  justifyContent="flex-start"
+  alignItems="center"
+  spacing={2} 
+>
+  
+  <Box mr={2}> 
+    <FormControl sx={{ minWidth: 180 }} size="large">
+      <InputLabel id="demo-select-small">Filter</InputLabel>
+      <Select
+        labelId="demo-select-small"
+        id="demo-select-small"
+        value={filterType}
+        label="Filter"
+        onChange={(e) => setFilterType(e.target.value)}
+      >
+        <MenuItem value={0}>All</MenuItem>
+        <MenuItem value={1}>Custom</MenuItem>
+      </Select>
+    </FormControl>
+  </Box>
 
-              type="number"
-              variant="outlined"
-              className="customeTextField"
-              value={noOfDays}
-              onChange={handleNoOfInactivityDaysChange}
-              defaultValue=""
-              placeholder="No of days"
-              InputProps={{ inputProps: { min: 0, } }} // Enforce positive numbers only
-              disabled={!hasValue(fromDate)}
-            />
-            {/* </Box> */}
-            <span> on {_currentDate} </span>
-          </Stack>
-        </> : null
-      }
-      <DarkTooltip placement="top" title={"Search"} arrow>
-        <Fab
+  
+  {filterType !== 0 && (
+    <>
+      
+      <Box mr={2}>
+        <DatePicker
+          label="From Date"
+          value={fromDate}
+          setValue={setFromDate}
+          disableFuture={true}
+        />
+      </Box>
+      <Box display="flex" alignItems="center" mr={2}>
+      <span style={{ marginRight: "0.5rem", whiteSpace: "nowrap" }}>
+          No of Days of Inactivity
+        </span>
+        <TextField
+          style={{ width: "100px" }} 
+          type="number"
+          variant="outlined"
+          value={noOfDays}
+          onChange={handleNoOfInactivityDaysChange}
+          placeholder="No of days"
+          InputProps={{ inputProps: { min: 0 } }} 
+          disabled={!hasValue(fromDate)}
+        />
+        <span style={{ marginLeft: "0.5rem" }}>
+          on {_currentDate}
+        </span>
+      </Box>
+    </>
+  )}
+
+  <Box display="flex" alignItems="center" ml={2}>
+    <DarkTooltip placement="top" title="Search" arrow>
+      <ResponsiveFab
+        variant="contained"
+        size="small"
+        button="N"
+        onClick={handleReportSearch}
+        sx={primaryFabStyle}
+      >
+        <Search width={18} sx={{ color: "#fff" }} />
+      </ResponsiveFab>
+    </DarkTooltip>
+    
+    <DarkTooltip placement="top" title="Clear Search" arrow>
+      <ResponsiveFab
+        variant="contained"
+        size="small"
+        button="N"
+        onClick={clearSearch}
+        sx={{ ...primaryFabStyle }} 
+      >
+        <Refresh width={18} sx={{ color: "#fff" }} />
+      </ResponsiveFab>
+    </DarkTooltip>
+
+    {hasPermission && hasPermission["A008"] && (
+      <DarkTooltip placement="top" title="Download" arrow>
+        <ResponsiveFab
           variant="contained"
           size="small"
-          button={"N"}
-          onClick={handleReportSearch}
-          sx={primaryFabStyle}
+          button="N"
+          onClick={handleDownload}
+          sx={{  ...primaryFabStyle }} 
         >
-          <Search width={18} sx={{ color: "#fff" }} />
-        </Fab>
+          <Download width={18} sx={{ color: "#fff" }} />
+        </ResponsiveFab>
       </DarkTooltip>
-      <DarkTooltip placement="top" title={"Clear Search"} arrow>
-        <Fab
-          variant="contained"
-          size="small"
-          button={"N"}
-          onClick={clearSearch}
-          sx={primaryFabStyle}
-        >
-          <Refresh width={18} sx={{ color: "#fff" }} />
-        </Fab>
-      </DarkTooltip>
-      {
-        hasPermission && hasPermission["A008"] && (
-          <DarkTooltip placement="top" title={"Download"} arrow>
-            <Fab
-              variant="contained"
-              size="small"
-              button={"N"}
-              onClick={handleDownload}
-              sx={primaryFabStyle}
-            >
-              <Download width={18} sx={{ color: "#fff" }} />
-            </Fab>
-          </DarkTooltip>
-        )
-      }
-    </Stack >
+    )}
+  </Box>
+</Box>
   );
 };
 

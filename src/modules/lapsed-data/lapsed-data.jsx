@@ -27,7 +27,7 @@ import {
 import DatePicker from "shared/utils/date-picker/date-picker";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import dayjs from "dayjs";
-import { inputFieldStyleAdded, primaryFabStyle } from "app";
+import { inputFieldStyleAdded, primaryFabStyle,ResponsiveFab  } from "app";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
@@ -193,7 +193,7 @@ const UnwrappedLapseddata = (props) => {
     <PageLayout pageName={pageName}>
       <CardLayout>
         <Grid container spacing={2}>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <DatePicker
               label={"From Date"}
               value={fromDate}
@@ -202,7 +202,7 @@ const UnwrappedLapseddata = (props) => {
               disableFuture={true}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <DatePicker
               label={"To Date"}
               value={toDate}
@@ -239,7 +239,7 @@ const UnwrappedLapseddata = (props) => {
 
           <Grid item xs={4}>
             <DarkTooltip placement="top" title={"Search"} arrow>
-              <Fab
+              <ResponsiveFab 
                 variant="contained"
                 size="small"
                 button={"N"}
@@ -247,10 +247,10 @@ const UnwrappedLapseddata = (props) => {
                 sx={primaryFabStyle}
               >
                 <Search width={18} sx={{ color: "#fff" }} />
-              </Fab>
+              </ResponsiveFab>
             </DarkTooltip>
             <DarkTooltip placement="top" title={"Clear Search"} arrow>
-              <Fab
+              <ResponsiveFab  List
                 variant="contained"
                 size="small"
                 button={"N"}
@@ -258,11 +258,11 @@ const UnwrappedLapseddata = (props) => {
                 sx={primaryFabStyle}
               >
                 <Refresh width={18} sx={{ color: "#fff" }} />
-              </Fab>
+              </ResponsiveFab>
             </DarkTooltip>
             {hasPermission && hasPermission["A008"] && (
               <DarkTooltip placement="top" title={"Download"} arrow>
-                <Fab
+                <ResponsiveFab 
                   variant="contained"
                   size="small"
                   button={"N"}
@@ -270,7 +270,7 @@ const UnwrappedLapseddata = (props) => {
                   sx={primaryFabStyle}
                 >
                   <Download width={18} sx={{ color: "#fff" }} />
-                </Fab>
+                </ResponsiveFab>
               </DarkTooltip>
             )}
           </Grid>

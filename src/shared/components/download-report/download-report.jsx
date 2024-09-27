@@ -8,7 +8,7 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import { primaryFabStyle } from "app";
+import { primaryFabStyle,ResponsiveFab } from "app";
 import React from "react";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
@@ -44,7 +44,7 @@ const DownloadReport = ({
     openFilePasswordSubmitionModel,
     closePasswordSubmitionModel,
   } = functionSlice[0];
-
+  
   const handleSuccssCallBack = () => {
     const filePasswordSubmitModelProps = {
       downloadApi,
@@ -90,11 +90,13 @@ const DownloadReport = ({
           disableFuture={true}
         />
       </Box>
+      <Box display="flex" alignItems="center" spacing={1} >
       {isStatusFilter && isStatusFilter === true ? (
-        <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
-          <InputLabel id="demo-select-small">Status</InputLabel>
+        <FormControl sx={{ m: 1, minWidth: 180, }} size="small">
+          <InputLabel id="demo-select-small" >Status</InputLabel>
           {processStatus !== undefined && (
             <Select
+            sx={{height:'57px'}}
               labelId="demo-select-small"
               id="demo-select-small"
               value={processStatus}
@@ -108,19 +110,22 @@ const DownloadReport = ({
           )}
         </FormControl>
       ) : null}
+      </Box>
       <DarkTooltip placement="top" title={"Search"} arrow>
-        <Fab
+        <ResponsiveFab  Movement
           variant="contained"
           size="small"
           button={"N"}
           onClick={handleSearch}
+          // backgroundColor={downloadcolor}
+          // hoverColor={secondary}
           sx={primaryFabStyle}
         >
           <Search width={18} sx={{ color: "#fff" }} />
-        </Fab>
+        </ResponsiveFab>
       </DarkTooltip>
       <DarkTooltip placement="top" title={"Clear Search"} arrow>
-        <Fab
+        <ResponsiveFab 
           variant="contained"
           size="small"
           button={"N"}
@@ -128,11 +133,11 @@ const DownloadReport = ({
           sx={primaryFabStyle}
         >
           <Refresh width={18} sx={{ color: "#fff" }} />
-        </Fab>
+        </ResponsiveFab>
       </DarkTooltip>
       {hasPermission && hasPermission["A008"] && (
         <DarkTooltip placement="top" title={"Download"} arrow>
-          <Fab
+          <ResponsiveFab 
             variant="contained"
             size="small"
             button={"N"}
@@ -140,19 +145,19 @@ const DownloadReport = ({
             sx={primaryFabStyle}
           >
             <Download width={18} sx={{ color: "#fff" }} />
-          </Fab>
+          </ResponsiveFab>
         </DarkTooltip>
       )}
       {infoDetails && hasValue(infoDetails) ?
         <DarkTooltip placement="right" title={infoDetails} arrow>
-          <Fab
+          <ResponsiveFab 
             variant="contained"
             size="small"
             button={"N"}
             sx={primaryFabStyle}
           >
             <Info width={18} sx={{ color: "#fff" }} />
-          </Fab>
+          </ResponsiveFab>
         </DarkTooltip>
         : null
         }
