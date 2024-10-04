@@ -1862,3 +1862,25 @@ export const roleEmptyMsg = `Role can't be empty`;
 export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
 // Models messages ends
 
+export const getStatusTooltip = (status) => {
+    switch (status) {
+      case "Issue":
+        return "There is an issue that needs to be solved.";
+      case "Submitted":
+        return "Your data has been submitted successfully. HR Admin will take action accordingly.";
+      case "Ongoing":
+        return "verification is in progress";
+      case "No Response":
+        return "There has been no response yet.";
+      case "Success":
+        return "The verificaton was successful.";
+      case "Cancelled":
+        return "process has been cancelled.";
+      case "Lapsed":
+        return "Verification process incomplete and Date of Joining is over.";
+      case "Verified":
+        return "Verification process completed successfully"  
+      default:
+        return 
+    }
+  };
