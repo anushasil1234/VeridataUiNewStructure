@@ -384,6 +384,7 @@ export const cardAppbar = {
   bgcolor: ThemeColorPalete.common.white,
   color: ThemeColorPalete.common.black,
   p: { xs: 2, sm: 2.8 }
+ 
 };
 // card ends
 
@@ -572,6 +573,7 @@ export const searchContainer = {
 export const stepContainerStyle = {
   flexDirection: "row",
   alignItems: "start",
+ 
   height: { xs: "45px", md: "58px" },
   borderBottom: "1px solid #C7C8D0",
   marginBottom: "5px"
@@ -590,14 +592,17 @@ export const stepNumberContainerStyle = {
 export const stepHeadingStyle = {
   fontWeight: 500,
   fontSize: { xs: ".75rem", md: "1rem" },
-  marginLeft: ".8rem"
+  marginLeft: ".8rem",
+  marginTop:"5px"
 };
 // step heading ends
 
 export const casesyle = {
   fontSize: '0.8rem',
   padding: "10px",
-  fontWeight: 500
+  fontWeight: 500,
+  marginTop:'2rem'
+
 };
 // todo start
 export const lableStyle = {
@@ -611,7 +616,8 @@ const lableCommonStyle = {
   fontWeight: 400,
   fontSize: ".70rem",
   marginBottom: "2px",
-  lineHeight: "1.4375em"
+  lineHeight: "1.4375em",
+  paddingLeft:'12px'
 }
 export const lable1Style = {
   ...lableCommonStyle,
@@ -953,7 +959,32 @@ export const lapsedStyle = {
   ...chipStyle,
   backgroundColor: ThemeColorPalete.error.main
 };
-
+export const getStatusChipStyle = (status) => {
+  switch (status) {
+    case "Submitted":
+      return submittedStyle;
+    case "Ongoing":
+      return ongoingStyle;
+    case "No Response":
+      return noResponseStyle;
+    case "Verified":
+      return successStyle;
+    case "Cancelled":
+      return cancelledStyle;
+    case "Lapsed":
+      return lapsedStyle;
+    case "Consent Pending":
+      return consetPendingChipStyle;
+    case "Consent Given":
+      return consetGivenChipStyle;
+    case "Consent Declined":
+      return consetDeclinedChipStyle;
+    case "Reprocessed":
+      return reprocessedChipStyle;
+    default:
+      return {};
+  }
+};
 // chip style end
 // Upload file starts
 export const uploadIconContainer = {
@@ -1242,11 +1273,15 @@ export const iconStyle = {
   cursor: "pointer"
 }
 export const downLoadListSx = {
-  backgroundColor: ThemeColorPalete.common.white,
-  position: "absolute",
-  zIndex: 2,
-  borderRadius: "8px",
-  boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)"
+   backgroundColor: ThemeColorPalete.common.white,
+  
+   zIndex: 2,
+   borderRadius: "8px",
+   boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)",
+   position: 'absolute', 
+   top: 'calc(100% + 8px)', 
+   left: 0,
+   marginTop: 0, 
 }
 export const genderIconStyle = { fontSize: "3rem" };
 
