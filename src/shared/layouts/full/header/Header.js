@@ -26,15 +26,18 @@ const Header = (props) => {
   const functionSlice = useSelector(state => state.functionSlice);
   const { openConsentModal } = functionSlice[0];
   const AppBarStyled = styled(AppBar)(() => ({
-    boxShadow: "none",
+     boxShadow: "none",
+     position: "sticky", 
+     top: 0,  // Stick at the top
+     zIndex: 1100,
     background: AppStyle.palette.background.paper,
-    backgroundImage:
-      "linear-gradient(69deg,#836ade 0%,#b049c0 65%,#f67363 100%)",
-    justifyContent: "center",
+     backgroundImage:
+       "linear-gradient(69deg,#836ade 0%,#b049c0 65%,#f67363 100%)",
+     justifyContent: "center",
     backdropFilter: "blur(4px)",
-    [AppStyle.breakpoints.up("lg")]: {
-      minHeight: "70px",
-    },
+     [AppStyle.breakpoints.up("lg")]: {
+       minHeight: "70px",
+     },
   }));
   const { navigateTo } = commonHooksFunctionSlice[0];
 
@@ -78,7 +81,7 @@ const Header = (props) => {
           {loggedInData[0].roleId !== 5 ?
             <SearchAppBar />
             :
-            props?.showRevokeConsentCallToAction!== false &&
+            props?.showRevokeConsentCallToAction !== false &&
             <Box>
               {consentStatus === 1 ?
                 <Chip color="primary"
