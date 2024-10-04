@@ -389,7 +389,7 @@ const DataTable = ({
                 <Stack direction={"row"} py={2} justifyContent="space-between">
                     <FormControlLabel
                         control={<Switch checked={dense} onChange={handleChangeDense} />}
-                        label="Show more  rows"
+                        label="Compact View"
                     />
                 </Stack>
             )}
