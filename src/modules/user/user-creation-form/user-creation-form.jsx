@@ -3,7 +3,7 @@ import { inputFieldStyle, lable1Style } from 'app';
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { useCodeEmptyMsg } from 'shared/constants/constants';
-import { hasValue } from 'shared/utils';
+import { hasValue,validationsCheck } from 'shared/utils';
 
 const UserCreationForm = (formData) => {
 
@@ -75,9 +75,9 @@ const UserCreationForm = (formData) => {
                 </Typography>
                 <TextField
                     onChange={(e) => { setUserEmail(e.target.value) }}
-                    error={false}
+                    error={! validationsCheck(userEmail,'email')}
                     style={inputFieldStyle}
-                    type="text"
+                    type="email"
                     className='customeTextField'
                     variant="outlined"
                     defaultValue={" "}
@@ -147,7 +147,13 @@ const UserCreationForm = (formData) => {
                     <span className="requiredField">*</span>
                 </Typography>
                 <TextField
-                    onChange={(e) => { setContactNumber(e.target.value) }}
+                    onChange={(e) => { const value = e.target.value;
+                        
+                        const isValid = /^[0-9]*$/.test(value);
+                        if (isValid && value.length <= 10) {
+                            setContactNumber(value);
+                        }
+                    }}
                     error={false}
                     style={inputFieldStyle}
                     type="text"
