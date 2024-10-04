@@ -25,7 +25,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ActionPermission from "shared/components/action-permission/action-permission";
-import { CardLayout } from "shared/utils";
+import { CardLayout,validationsCheck } from "shared/utils";
 import InputCard from "shared/utils/layout/input-card";
 
 const DetailesHeadingSection = ({ prop }) => {
@@ -406,8 +406,9 @@ const UnwrappedGeneralSetupView = (props) => {
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         <Grid container rowSpacing={1} columnSpacing={2.5} item xs={12}>
-          <Grid item xs={12}>
+          <Grid item xs={12} >
             <DetailesHeadingSection
+              sx={{ paddingLeft: "4px"}}
               prop={{ step: "1", heading: "Email Notification Configuration" }}
             />
           </Grid>
@@ -426,7 +427,7 @@ const UnwrappedGeneralSetupView = (props) => {
                 marginRight={2}
               >
                 <Grid
-                  sx={{ paddingLeft: "20px" }}
+                  sx={{ paddingLeft: "4px" }}
                   container
                   rowSpacing={1}
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
@@ -451,9 +452,9 @@ const UnwrappedGeneralSetupView = (props) => {
                           {`Email ID for Escalation Level 1`}{" "}
                         </Typography>
                         <TextField
-                          error={false}
+                          error={!validationsCheck(emailaddressLvl1, 'email')}
                           style={inputFieldStyle}
-                          type="text"
+                          type="email"
                           className="customeTextField"
                           variant="outlined"
                           defaultValue={" "}
@@ -462,6 +463,7 @@ const UnwrappedGeneralSetupView = (props) => {
                           inputStyle={{ padding: 0 }}
                           inputProps={{
                             style: inputPropsStyle,
+                           
                           }}
                         />
                       </Grid>
@@ -470,9 +472,9 @@ const UnwrappedGeneralSetupView = (props) => {
                           {`Email ID for Escalation Level 2`}{" "}
                         </Typography>
                         <TextField
-                          error={false}
+                          error={!validationsCheck(emailaddressLvl2, 'email')}
                           style={inputFieldStyle}
-                          type="text"
+                          type="email"
                           className="customeTextField"
                           variant="outlined"
                           defaultValue={" "}
@@ -481,6 +483,7 @@ const UnwrappedGeneralSetupView = (props) => {
                           inputStyle={{ padding: 0 }}
                           inputProps={{
                             style: inputPropsStyle,
+                        
                           }}
                         />
                       </Grid>
@@ -489,9 +492,9 @@ const UnwrappedGeneralSetupView = (props) => {
                           {`Email ID for Escalation Level 3`}{" "}
                         </Typography>
                         <TextField
-                          error={false}
+                         error={!validationsCheck(emailaddressLvl3, 'email')}
                           style={inputFieldStyle}
-                          type="text"
+                          type="email"
                           className="customeTextField"
                           variant="outlined"
                           defaultValue={" "}
@@ -500,6 +503,7 @@ const UnwrappedGeneralSetupView = (props) => {
                           inputStyle={{ padding: 0 }}
                           inputProps={{
                             style: inputPropsStyle,
+                         
                           }}
                         />
                       </Grid>
@@ -519,7 +523,7 @@ const UnwrappedGeneralSetupView = (props) => {
                 lg={12}
                 justifyContent={"space-between"}
               >
-                <Grid item xs={12} md={4}>
+                <Grid item xs={12} md={4} >
                   <FormControl fullWidth>
                     <Typography
                       sx={lable2Style}
@@ -669,8 +673,8 @@ const UnwrappedGeneralSetupView = (props) => {
                             <Typography>Yes</Typography>
                           </Stack>
                           <TextField
-                            error={false}
-                            type="text"
+                           error={!validationsCheck(linkNotSentEmailLvl1, 'email')}
+                            type="email"
                             className="customeTextField"
                             variant="outlined"
                             defaultValue={" "}
@@ -708,8 +712,8 @@ const UnwrappedGeneralSetupView = (props) => {
                             <Typography>Yes</Typography>
                           </Stack>
                           <TextField
-                            error={false}
-                            type="text"
+                           error={!validationsCheck(linkNotSentEmailLvl2, 'email')}
+                            type="email"
                             className="customeTextField"
                             variant="outlined"
                             defaultValue={" "}
@@ -747,9 +751,9 @@ const UnwrappedGeneralSetupView = (props) => {
                             <Typography>Yes</Typography>
                           </Stack>
                           <TextField
-                            error={false}
-                            style={inputFieldStyle}
-                            type="text"
+                            error={!validationsCheck(linkNotSentEmailLvl3, 'email')}
+                           
+                            type="email"
                             className="customeTextField"
                             variant="outlined"
                             defaultValue={" "}
@@ -789,8 +793,8 @@ const UnwrappedGeneralSetupView = (props) => {
                           </Stack>
                         </FormControl>
                         <TextField
-                          error={false}
-                          type="text"
+                         error={!validationsCheck(noResponseEmailLvl1, 'email')}
+                          type="email"
                           className="customeTextField"
                           variant="outlined"
                           defaultValue={" "}
@@ -824,8 +828,8 @@ const UnwrappedGeneralSetupView = (props) => {
                           </Stack>
                         </FormControl>
                         <TextField
-                          error={false}
-                          type="text"
+                         error={!validationsCheck(noResponseEmailLvl2, 'email')}
+                          type="email"
                           className="customeTextField"
                           variant="outlined"
                           defaultValue={" "}
@@ -859,8 +863,8 @@ const UnwrappedGeneralSetupView = (props) => {
                           </Stack>
                         </FormControl>
                         <TextField
-                          error={false}
-                          type="text"
+                          error={!validationsCheck(noResponseEmailLvl3, 'email')}
+                          type="email"
                           className="customeTextField"
                           variant="outlined"
                           defaultValue={" "}
@@ -900,8 +904,8 @@ const UnwrappedGeneralSetupView = (props) => {
                           </Stack>
                         </FormControl>
                         <TextField
-                          error={false}
-                          type="text"
+                         error={!validationsCheck(noSubmissionEmailLvl1, 'email')}
+                          type="email"
                           className="customeTextField"
                           variant="outlined"
                           defaultValue={" "}
@@ -935,8 +939,8 @@ const UnwrappedGeneralSetupView = (props) => {
                           </Stack>
                         </FormControl>
                         <TextField
-                          error={false}
-                          type="text"
+                          error={!validationsCheck(noSubmissionEmailLvl2, 'email')}
+                          type="email"
                           className="customeTextField"
                           variant="outlined"
                           defaultValue={" "}
@@ -970,8 +974,8 @@ const UnwrappedGeneralSetupView = (props) => {
                           </Stack>
                         </FormControl>
                         <TextField
-                          error={false}
-                          type="text"
+                           error={!validationsCheck(noSubmissionEmailLvl3, 'email')}
+                          type="email"
                           className="customeTextField"
                           variant="outlined"
                           defaultValue={" "}
@@ -1140,8 +1144,8 @@ const UnwrappedGeneralSetupView = (props) => {
                         </Stack>
                       </FormControl>
                       <TextField
-                        error={false}
-                        type="text"
+                        error={!validationsCheck(DOJ1EmailLvl1, 'email')}
+                        type="email"
                         className="customeTextField"
                         variant="outlined"
                         defaultValue={" "}
@@ -1167,8 +1171,8 @@ const UnwrappedGeneralSetupView = (props) => {
                         </Stack>
                       </FormControl>
                       <TextField
-                        error={false}
-                        type="text"
+                         error={!validationsCheck(DOJ1EmailLvl2, 'email')}
+                        type="email"
                         className="customeTextField"
                         variant="outlined"
                         defaultValue={" "}
@@ -1194,8 +1198,8 @@ const UnwrappedGeneralSetupView = (props) => {
                         </Stack>
                       </FormControl>
                       <TextField
-                        error={false}
-                        type="text"
+                         error={!validationsCheck(DOJ1EmailLvl3, 'email')}
+                        type="email"
                         className="customeTextField"
                         variant="outlined"
                         defaultValue={" "}
