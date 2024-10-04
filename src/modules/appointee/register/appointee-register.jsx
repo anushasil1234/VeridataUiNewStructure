@@ -1624,7 +1624,7 @@ const AppointeeRegister = () => {
                                 </Grid>
                                 <Grid item xs={12} md={6}>
                                   <Typography sx={lable1Style}>
-                                    Passport Number
+                                    Passport Number 
                                     <span className="requiredField">*</span>
                                   </Typography>
                                   <TextField
@@ -1861,7 +1861,7 @@ const AppointeeRegister = () => {
                             justifyContent={"end"}
                             alignItems="center"
                             width={'auto'}
-                          >
+                          ><br></br>
                             <Typography>No</Typography>
                             <Switch
                               onChange={({ target }) =>
@@ -2154,7 +2154,14 @@ const AppointeeRegister = () => {
                         variant="outlined"
                         className="customeTextField"
                         onChange={(e) => {
-                          setPan(e.target.value.toUpperCase());
+                          const value = e.target.value.toUpperCase();
+                          const regex = /^[A-Z0-9]*$/; 
+                          if (regex.test(value) || value === "") {
+                            setPan(value); 
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                            return;
                         }}
                         value={pan}
                         defaultValue={" "}
@@ -2210,7 +2217,11 @@ const AppointeeRegister = () => {
                         </Typography>
                         <TextField
                           onChange={(e) => {
-                            setUAN(e.target.value);
+                            const value=e.target.value
+                            const isValid = /^[0-9]*$/.test(value);
+                            if(isValid && value.length<= 12){
+                              setUAN(value); 
+                            }
                           }}
                           style={inputFieldStyle}
                           type="text"
