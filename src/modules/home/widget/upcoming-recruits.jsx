@@ -104,10 +104,9 @@
 // export { UpcomingRecruits };
 
 
-import React from "react";
-import { Typography, Box, Select, MenuItem, Stack } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Typography, Box, Select, MenuItem, Stack, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom"; 
 import { DataTable, generateTableRowData } from "shared/utils";
 import { WidgetCard } from ".";
 import { useSelector } from "react-redux";
@@ -116,36 +115,51 @@ import { sampleDownLoadLinkContainerStyle } from "app";
 import ActionPermission from "shared/components/action-permission/action-permission";
 
 const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
-  const [recruits, setrecruits] = useState([]);
+  const [recruits, setRecruits] = useState([]);
+  const [type, setType] = useState();
+  const [urltype, setUrltType] = useState("");
+  const [error, setError] = useState(null); 
 
-  const dropdownList = useSelector(state => state.dropdownList);
-  const apiSlice = useSelector(state => state.apiSlice);
+  const dropdownList = useSelector((state) => state.dropdownList);
+  const apiSlice = useSelector((state) => state.apiSlice);
 
-  const { getLatestAppointees } = apiSlice[0];
+  const navigate = useNavigate(); 
 
-  const { upcomingRecruitsStatusList } =
-    dropdownList && dropdownList.length > 0 && dropdownList[0];
+ 
+  const { getLatestAppointees } = apiSlice[0] || {};
 
+ 
+  const upcomingRecruitsStatusList =
+    dropdownList && dropdownList.length > 0 && dropdownList[0].upcomingRecruitsStatusList
+      ? dropdownList[0].upcomingRecruitsStatusList
+      : [];
+
+  
   const setLatestAppointeeData = async (type) => {
-    const response = await getLatestAppointees(type);
-    if (response) {
-      const { responseInfos } = response;
-
-      let generatedCells = generateTableRowData(
-        responseInfos,
-        latestAppointeeListTableHeadCell,
-        null,
-        hasPermission
-      );
-      setrecruits({
-        tableHead: latestAppointeeListTableHeadCell,
-        tableRows: generatedCells
-      });
+    try {   
+      const response = await getLatestAppointees(type);
+      if (response && response.responseInfos) {
+        const { responseInfos } = response;
+        const generatedCells = generateTableRowData(
+          responseInfos,
+          latestAppointeeListTableHeadCell,
+          null,
+          hasPermission
+        );
+        setRecruits({
+          tableHead: latestAppointeeListTableHeadCell,
+          tableRows: generatedCells,
+        });
+      } else {
+        
+        setRecruits({ tableHead: latestAppointeeListTableHeadCell, tableRows: [] });
+      }
+    } catch (err) {
+      
+      setError("Failed to load latest appointees.");
     }
   };
 
-  const [type, setType] = React.useState();
-  const [urltype, setUrltType] = React.useState("");
 
   const handleStatusChange = (event) => {
     const { value } = event.target;
@@ -153,25 +167,57 @@ const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
     const currentStatus = upcomingRecruitsStatusList.find(
       ({ route }) => route === value
     );
-    setType(currentStatus.type);
-  };
-  useEffect(() => {
 
-    hasPermission && setLatestAppointeeData(type);
-  }, [type]);
+    if (currentStatus) {
+      setType(currentStatus.type);
+    } else {
+      
+      setType(undefined);
+    }
+  };
+
+
   useEffect(() => {
-    if (upcomingRecruitsStatusList) {
-      const { type, route } = upcomingRecruitsStatusList[1];
+    if (hasPermission && type) {
+      setLatestAppointeeData(type);
+    }
+  }, [type, hasPermission]);
+
+ 
+  useEffect(() => {
+    if (upcomingRecruitsStatusList.length > 1) {
+      const { type, route } = upcomingRecruitsStatusList[1];    
       setType(type);
       setUrltType(route);
+    } else if (upcomingRecruitsStatusList.length > 0) {     
+      const { type, route } = upcomingRecruitsStatusList[0];      
+      setType(type);
+      setUrltType(route);
+    } else {
+      console.warn("upcomingRecruitsStatusList is empty or undefined.");
     }
   }, [upcomingRecruitsStatusList]);
+
+  
+  const handleShowMoreRows = () => {
+    if (urltype) {
+      navigate(urltype);
+    } else {
+      console.warn("urltype is not defined.");
+    }
+  };
+
   return (
     <WidgetCard
       title="Status Report"
       action={
-        <Stack flexDirection={"row"} alignItems={"center"} >
-          <Typography sx={{ mr: { xs: "5px", sm: "8px" }, mb: { xs: 1, sm: 0 } }}>
+        <Stack flexDirection={"row"} alignItems={"center"}>
+          <Typography
+            sx={{
+              mr: { xs: "5px", sm: "8px" },
+              mb: { xs: 1, sm: 0 },
+            }}
+          >
             Select
           </Typography>
           {urltype !== undefined && (
@@ -181,34 +227,66 @@ const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
               value={urltype}
               size="small"
               onChange={handleStatusChange}
-              
             >
-              {upcomingRecruitsStatusList &&
-                upcomingRecruitsStatusList.map(({ label, route }, index) => {
-                  return <MenuItem key={index} value={route}>{label}</MenuItem>;
-                })}
+              {upcomingRecruitsStatusList.map(({ label, route }, index) => (
+                <MenuItem key={index} value={route}>
+                  {label}
+                </MenuItem>
+              ))}
             </Select>
           )}
         </Stack>
-
       }
       fitToContaner={fitToContaner}
     >
-      <Box >
+      <Box sx={{ overflow: "auto" }}>
+        {error && (
+          <Typography color="error" variant="body2" sx={{ mb: 2 }}>
+            {error}
+          </Typography>
+        )}
         <DataTable
           rows={recruits}
-          setRows={setrecruits}
+          setRows={setRecruits}
           headCells={latestAppointeeListTableHeadCell}
           isPaginationOn={false}
           isShowMoreRowsOn={false}
         />
-        <Box sx={{ ...sampleDownLoadLinkContainerStyle, marginTop: 2 }}>
-          <Link to={urltype}>Show more rows</Link>
-        </Box>
+       
+        <Button
+          variant="text"
+          color="primary"
+          onClick={handleShowMoreRows}
+          sx={{ marginTop: 2 }}
+        >
+          Show more rows
+        </Button>
+        {/* Alternatively, use Box with improved styling and logging */}
+        
+        {/* <Box
+          sx={{
+            ...sampleDownLoadLinkContainerStyle,
+            marginTop: 2,
+            cursor: "pointer",
+            color: "primary.main",
+            textDecoration: "underline",
+          }}
+          onClick={handleShowMoreRows}
+          role="button"
+          tabIndex={0}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") handleShowMoreRows();
+          }}
+          aria-label="Show more rows"
+        >
+          Show more rows
+        </Box> */}
+       
       </Box>
     </WidgetCard>
   );
 };
+
 const UpcomingRecruits = ActionPermission(UnwrappedUpcomingRecruits);
 
 export { UpcomingRecruits };
