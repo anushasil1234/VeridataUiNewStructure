@@ -1,7 +1,7 @@
 import { Box, Button, Grid, IconButton, InputAdornment, Link, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { InputField, PageHeading1, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
-import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle } from "app";
+import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle, logoImageStyle } from "app";
 import { useNavigate } from "react-router-dom";
 import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard, toForgotPassword, toSetPassword, welcomeMsg } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
@@ -226,40 +226,43 @@ export const UserLoginView = () => {
             </Grid>
             <Grid item md={4} sx={styles.loginsection}>
               {/* <Grid> */}
-              <Box sx={imageContainer}>
-                <img
-                  style={{ height: "50%", width: "50%", objectFit: "contain" }}
-                  src={logo}
-                  alt="text"
-                />
-              </Box>
-              <Box my={1.25}>
-                <PageHeading1 heading={"sign in"} />
-              </Box>
-              {/* </Grid> */}
-              <Grid>
-                <form onSubmit={handleSubmit}>
-                  <InputField inputProps={userNameInputProps} props={userNameInput} />
-                  <InputField inputProps={passwordInputProps} props={passwordInput} />
-                  <Button
-                    type="submit"
-                    color="primary"
-                    variant="contained"
-                    style={styles.btnstyle}
-                    fullWidth
-                  >
-                    Sign in
-                  </Button>
-                </form>
-                <hr />
-                <Box mt={2}>
-                  <Typography variant="body2" align="center">
-                    <Link href={toForgotPassword} underline="hover">
-                      Forgot Password?
-                    </Link>
-                  </Typography>
+              <Box>
+                <Box sx={imageContainer}>
+                  <img
+                    // style={{ height: "50%", width: "50%", objectFit: "contain" }}
+                    style={logoImageStyle}
+                    src={logo}
+                    alt="text"
+                  />
                 </Box>
-              </Grid>
+                <Box my={1.25}>
+                  <PageHeading1 heading={"sign in"} />
+                </Box>
+                {/* </Grid> */}
+                <Box>
+                  <form onSubmit={handleSubmit}>
+                    <InputField inputProps={userNameInputProps} props={userNameInput} />
+                    <InputField inputProps={passwordInputProps} props={passwordInput} />
+                    <Button
+                      type="submit"
+                      color="primary"
+                      variant="contained"
+                      style={styles.btnstyle}
+                      fullWidth
+                    >
+                      Sign in
+                    </Button>
+                  </form>
+                  <hr />
+                  <Box mt={2}>
+                    <Typography variant="body2" align="center">
+                      <Link href={toForgotPassword} underline="hover">
+                        Forgot Password?
+                      </Link>
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
             </Grid>
           </Grid>
         </Paper>

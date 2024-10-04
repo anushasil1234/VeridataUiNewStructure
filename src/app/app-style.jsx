@@ -137,16 +137,16 @@ let AppStyle = createTheme({
   }
 });
 
- export const listitemTextstyle={
-  fontSize: '.5rem', 
+export const listitemTextstyle = {
+  fontSize: '.5rem',
   display: 'block',
-  wordBreak: 'break-word', 
-  whiteSpace: 'normal', 
-  overflow: 'hidden', 
+  wordBreak: 'break-word',
+  whiteSpace: 'normal',
+  overflow: 'hidden',
   textOverflow: 'ellipsis',
-  marginLeft: '-15px', 
-  justifyContent:'center'
- }
+  marginLeft: '-15px',
+  justifyContent: 'center'
+}
 
 const ThemeColorPalete = AppStyle.palette;
 
@@ -384,7 +384,7 @@ export const cardAppbar = {
   bgcolor: ThemeColorPalete.common.white,
   color: ThemeColorPalete.common.black,
   p: { xs: 2, sm: 2.8 }
- 
+
 };
 // card ends
 
@@ -445,7 +445,7 @@ export const clickableCell = {
   textOverflow: "ellipsis",
   cursor: "pointer",
   color: "#e82e27",
-  marginLeft:"12px"
+  marginLeft: "12px"
 }
 export const tableHeader = {
   fontFamily: AppStyle.typography.fontFamily,
@@ -457,6 +457,7 @@ export const tableHeader = {
 export const styles = {
   paperStyle: {
     width: '100%',  //indra
+    height: { xs: '100vh', md: 'auto' },
     maxWidth: { xs: '100vw', sm: '95vw', md: '90vw', lg: '85vw', xl: '75vw' },//indra
     padding: { xs: '10px', md: '20px', lg: '30px' }, //indra
     boxSizing: 'border-box',//indra
@@ -483,6 +484,7 @@ export const styles = {
     justifyContent: 'center',//indra
     alignItems: 'center',//indra
     width: '100%',//indra
+    height: { xs: '100%', md: 'auto' }
   },
   // loginsection: {
   //   padding: 4,
@@ -495,6 +497,7 @@ export const styles = {
     alignItems: 'center',
     padding: { xs: '10px', sm: '20px', md: '30px' },//indra
     flex: 1,//indra
+    justifyContent: 'center'
   },
   containerStyles: {
     minHeight: '100vh',
@@ -509,7 +512,7 @@ export const styles = {
   },//new add indra for mother container
 };
 export const imageContainer = {
-  width: { xs: '150px', sm: '180px', md: '200px' },
+  width: { xs: '300px', sm: '360px', md: '200px' },
   margin: '0 auto',
   height: 'auto',
   display: 'flex',
@@ -517,6 +520,14 @@ export const imageContainer = {
   alignItems: 'center',
   height: 'auto',
 };
+export const logoImageStyle = {
+  // height: { xs: "100%", md: "50%" },
+  // width: { xs: "100%", md: "50%" },
+  // objectFit: "contain"
+  height: "auto",
+  width: "50%",
+  objectFit: "contain"
+}
 // export const imageContainer = {
 //   width: "150px",
 //   height: "150px"
@@ -573,7 +584,7 @@ export const searchContainer = {
 export const stepContainerStyle = {
   flexDirection: "row",
   alignItems: "start",
- 
+
   height: { xs: "45px", md: "58px" },
   borderBottom: "1px solid #C7C8D0",
   marginBottom: "5px"
@@ -593,7 +604,7 @@ export const stepHeadingStyle = {
   fontWeight: 500,
   fontSize: { xs: ".75rem", md: "1rem" },
   marginLeft: ".8rem",
-  marginTop:"5px"
+  marginTop: "5px"
 };
 // step heading ends
 
@@ -601,7 +612,7 @@ export const casesyle = {
   fontSize: '0.8rem',
   padding: "10px",
   fontWeight: 500,
-  marginTop:'2rem'
+  marginTop: '2rem'
 
 };
 // todo start
@@ -617,7 +628,7 @@ const lableCommonStyle = {
   fontSize: ".70rem",
   marginBottom: "2px",
   lineHeight: "1.4375em",
-  paddingLeft:'12px'
+  paddingLeft: '12px'
 }
 export const lable1Style = {
   ...lableCommonStyle,
@@ -716,7 +727,7 @@ export const tableActionIconListStylesx = {
 };
 export const actionIconStyle = {
   // marginRight: "1rem",
-   margin: ".5rem ",
+  margin: ".5rem ",
 };
 export const _addFabStyle = {
   bgcolor: ThemeColorPalete.primary.main,
@@ -908,7 +919,7 @@ export const modelToolbar = {
 const chipStyle = {
   px: "4px",
   color: "#fff",
-  margin:"1px"
+  margin: "1px"
 };
 const issueColor = "#e71a64";
 export const issueTextStyle = {
@@ -1199,7 +1210,7 @@ export const menuFooterTextStyle = {
   fontWeight: 500
 }
 export const sidebarContainerStyle = {
-  width: '18vw',  
+  width: '18vw',
   boxSizing: 'border-box',
   display: 'flex',
   flexDirection: 'column',
@@ -1273,15 +1284,15 @@ export const iconStyle = {
   cursor: "pointer"
 }
 export const downLoadListSx = {
-   backgroundColor: ThemeColorPalete.common.white,
-  
-   zIndex: 2,
-   borderRadius: "8px",
-   boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)",
-   position: 'absolute', 
-   top: 'calc(100% + 8px)', 
-   left: 0,
-   marginTop: 0, 
+  backgroundColor: ThemeColorPalete.common.white,
+
+  zIndex: 2,
+  borderRadius: "8px",
+  boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)",
+  position: 'absolute',
+  top: 'calc(100% + 8px)',
+  left: 0,
+  marginTop: 0,
 }
 export const genderIconStyle = { fontSize: "3rem" };
 
@@ -1421,8 +1432,9 @@ export const ResponsiveFab = styled(Fab)(({ backgroundColor, hoverColor }) => ({
 }));
 
 
-export const datePickerstyle={
-  width:'100%',
-        '& .MuiFormControl-root': {
-            width: '100%',  }  
+export const datePickerstyle = {
+  width: '100%',
+  '& .MuiFormControl-root': {
+    width: '100%',
+  }
 }
