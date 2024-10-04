@@ -12,11 +12,13 @@ import {
   submittedStyle,
   successStyle,
 } from "app";
+import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import React from "react";
 import { useSelector } from "react-redux";
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import {getStatusTooltip } from "shared/constants/constants";
 
 const TableStatusCell = (props) => {
 
@@ -48,6 +50,7 @@ const TableStatusCell = (props) => {
       chipStyle = lapsedStyle;
     }
   }
+  
   
   if (cellName === "isReprocess" && cellValue === true) {
     labelValue = "Reprocessed";
@@ -87,6 +90,11 @@ const TableStatusCell = (props) => {
   }
   return (
     labelValue && (
+      <DarkTooltip
+      title={getStatusTooltip(cellValue)} 
+      arrow
+      placement="top"
+    >
       <Chip
         onClick={labelValue === "Issue" ? () => setRemarks(appointeeId) : null}
         sx={chipStyle}
@@ -96,6 +104,7 @@ const TableStatusCell = (props) => {
         // variant="outlined"
         // color="primary"
       ></Chip>
+      </DarkTooltip>
     )
   );
 };
