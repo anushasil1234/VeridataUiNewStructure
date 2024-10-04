@@ -6,10 +6,19 @@ import {
   MenuItem,
   Select,
   Typography,
+  Chip,
+  Tooltip
 } from "@mui/material";
+
+import { getStatusTooltip } from "shared/constants/constants";
 import React, { useEffect, useState } from "react";
 import NoResponse from "./widget/no-response";
-import { dashboardtextStyle, dropDownLableStyle, inputFieldStyle } from "app";
+import {
+  dashboardtextStyle,
+  dropDownLableStyle,
+  inputFieldStyle,
+  getStatusChipStyle 
+} from "app";
 import { submitConfirmationMsg, toRegister } from "shared/constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { CardLayout, hasValue, PageLayout, setLocalStorageItem } from "shared/utils";
@@ -268,7 +277,7 @@ const HomeView = () => {
                   xs={12}
                   sm={4}
                   md={8}
-                  sx={{ marginBottom: "13px", alignSelf: "end" }} // change margin button 5px to 13px
+                  sx={{ marginBottom: "13px", alignSelf: "end" }} 
                 >
                   <TotalOffer
                     wizValue={
@@ -358,7 +367,29 @@ const HomeView = () => {
                     Phone: {phone}
                   </Grid>
                   <Grid item lg={4} xs={12}>
-                    Status: {status}
+                  Status: 
+                    <Tooltip
+                       title={
+                        <Typography sx={{ maxWidth: 200, whiteSpace: "normal" }}>
+                          {getStatusTooltip(status)}
+                        </Typography>
+                      }
+                      arrow
+                      placement="bottom"
+                     
+                    >
+                      <Chip
+                        label={status}
+                        sx={{
+                          ...getStatusChipStyle(status),
+                          
+                         // fontWeight: "bold",
+                          marginLeft: "8px",
+                        }}
+                        size="small" 
+                        aria-label={`Status: ${status}`}
+                      />
+                    </Tooltip>
                   </Grid>
                   <Grid item lg={4} xs={12}>
                     <Button
