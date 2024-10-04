@@ -124,11 +124,13 @@ const WidgetCard = ({
                         <Grid container spacing={2} alignItems="center">
                             <Grid item xs={12} sm={8}>
                                 <Box sx={{ minWidth: 0 }}>
-                                    <Tooltip title={title} arrow>
+                                    <Tooltip title={title} arrow placement="top">
                                         <Typography
-                                            //variant={isSmallScreen ? 'h6' : 'h6'}
                                             variant="subtitle2" fontWeight="530"
-                                            //className={classes.cardTitle}
+                                            sx={{
+                                                display: "inline-block", 
+                                                cursor: "default",
+                                              }}
                                         >
                                             {title}
                                         </Typography>
