@@ -137,6 +137,7 @@ let AppStyle = createTheme({
   }
 });
 
+
 export const listitemTextstyle = {
   fontSize: '.5rem',
   display: 'block',
@@ -585,6 +586,14 @@ export const stepContainerStyle = {
   flexDirection: "row",
   alignItems: "start",
 
+  height: { xs: "45px", md: "58px" },
+  borderBottom: "1px solid #C7C8D0",
+  marginBottom: "5px"
+};
+
+export const stepContainerStyleHeading = {
+  flexDirection: "row",
+  alignItems: "center",
   height: { xs: "45px", md: "58px" },
   borderBottom: "1px solid #C7C8D0",
   marginBottom: "5px"
@@ -1210,13 +1219,31 @@ export const menuFooterTextStyle = {
   fontWeight: 500
 }
 export const sidebarContainerStyle = {
-  width: '18vw',
+  // width: {xs:'80vw', md:'10vw'},
   boxSizing: 'border-box',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
   height: '100%',
+  // width: {xs: '77%', md: 'auto'}
 }
+export const sidebarWidth = { xs: '80vw', sm: '27vw', md: '20vw', lg: '18vw' };
+// export const sidebarWidth = { xs: '18vw' };
+export const menuDrawerBoxContainer = {
+  width: sidebarWidth,
+  flexShrink: 0,
+  position: 'relative', //indra
+  height: '100vh', //indra
+  '& .MuiPaper-root':{
+    width: sidebarWidth,
+  }
+}
+
+export const sidebarDrawerPaperStyle = {
+  width: sidebarWidth,
+  boxShadow: AppStyle.shadows[8],
+
+} 
 export const fileImageHeaderStyle = {
   flexDirection: "row",
   justifyContent: "space-between",
@@ -1262,7 +1289,7 @@ export const menuIconSx = {
 }
 
 export const containerSx = {
-  padding: { xs: "20px 0 0 0", md: "20px 16px 0 16px" }
+  padding: { xs: "20px", md: "20px 16px 0 16px" }
 }
 export const smallFormModelHeadingSx = {
   fontWeight: "bold",

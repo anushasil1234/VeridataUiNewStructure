@@ -33,6 +33,7 @@ import {
   PostAppointeeApproved_URL,
   PostAppointeeDetailsSave_URL,
   PostAppointeeFileDetails_URL,
+  PostUpdatePfUanDetails_URL,
   PostAppointeeRejected_URL,
   PostAppointeeReprocess_URL,
   PostSetupConfigData_URL,
@@ -513,6 +514,12 @@ const AppWrapper = (App) => {
     const postAppointeeFileDetails = async (payLoad) => {
       return await PfcRequest(PostAppointeeFileDetails_URL, "POST", payLoad, formSubmitionSuccess);
     };
+
+    const PostUpdatePfUanDetails = async (payLoad) => {
+      return await PfcRequest(PostUpdatePfUanDetails_URL, "POST", payLoad);
+    };
+
+    
     const getAppointeeDetails = async (appointeeId) => {
       return await PfcRequest(`${GetAppointeeDetails_URL}${appointeeId}`, "GET");
     };
@@ -782,6 +789,7 @@ const AppWrapper = (App) => {
           getPassportDetails,
           getRemarks,
           postAppointeeFileDetails,
+          PostUpdatePfUanDetails,
           postAppointeeRejected,
           postAppointeeApproved,
           getUANNumber,
