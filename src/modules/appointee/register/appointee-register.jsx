@@ -2544,6 +2544,7 @@ const AppointeeRegister = () => {
   const [companyName, setCompanyName] = useState();
   const [timeoutTimer, setTimeoutTimer] = useState();
   const [fileUploaded, setFileUploaded] = useState();
+  const [isNextVisible, setIsNextVisible] = useState(false);
 
 
   const initialTimeOfOtpTimer = () => {
@@ -2899,7 +2900,7 @@ const AppointeeRegister = () => {
         submitDetails(true);
       }
     }
-  }, [isAadhaarVarified, isPanVarified, isEmployementDataVarified, isUanVarified,UAN]);
+  }, [isAadhaarVarified, isPanVarified, isEmployementDataVarified, isUanVarified, UAN]);
 
 
   // useEffect to check if UAN appointee is available on page load
@@ -3145,6 +3146,7 @@ const AppointeeRegister = () => {
     // Once the user confirms, save the details
     await saveDetails();
     handleCloseModal(); // Close the confirmation modal after saving
+    setIsNextVisible(true);
   };
 
 
@@ -3196,7 +3198,7 @@ const AppointeeRegister = () => {
     if (response) {
       setCurrentPageNo(3)
 
-      // setIsPreviousSectionDisabled(true);
+      setIsPreviousSectionDisabled(true);
       // setShowAdditionalSection(true);
 
       //setIsUANappointeeAvailable(true)
@@ -3535,7 +3537,7 @@ const AppointeeRegister = () => {
     const response = await generateUANOtp(payLoad);
     if (response) {
       const { responseInfo } = response;
-      
+
       let { otp_sent, client_id } = responseInfo;
       if (!otp_sent) {
         showErrorMessage(generateOtpRety);
@@ -5033,7 +5035,8 @@ const AppointeeRegister = () => {
                         <Button
                           //onClick={() => setCurrentPageNo(1)}
                           onClick={handleBack}
-                          sx={{ m: "15px 5px", ml: 3 }}
+                          //sx={{ m: "15px 5px", ml: 3 }}
+                          sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
                           variant="contained"
                           color="primary"
                         >
@@ -5046,7 +5049,8 @@ const AppointeeRegister = () => {
                           name="dashboard"
                           // disabled={isSubmitDisabled}
                           onClick={() => navigate(toDashboard)}
-                          sx={{ m: "15px 5px", ml: 3 }}
+                          //sx={{ m: "15px 5px", ml: 3 }}
+                          sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
                           variant="contained"
                           color="primary"
                         >
@@ -5083,7 +5087,8 @@ const AppointeeRegister = () => {
                           name="save"
                           // disabled={isSubmitDisabled}
                           onClick={handleSaveClick}
-                          sx={{ m: "15px 25px", ml: 3 }}
+                          //sx={{ m: "15px 25px", ml: 3 }}
+                          sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
                           variant="contained"
                           color="primary"
                           disabled={isPreviousSectionDisabled}
@@ -5091,14 +5096,18 @@ const AppointeeRegister = () => {
                           Save
                         </Button>
 
-                        <Button
-                          onClick={handleNext}
-                          sx={{ m: "15px 25px", ml: 3 }}
-                          variant="contained"
-                          color="primary"
-                        >
-                          Next
-                        </Button>
+                        {isNextVisible && (
+
+                          <Button
+                            onClick={handleNext}
+                            sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
+                            //sx={{ m: "15px 25px", ml: 3 }}
+                            variant="contained"
+                            color="primary"
+                          >
+                            Next
+                          </Button>
+                        )}
                       </>
                     </Grid>
                   </Grid>
