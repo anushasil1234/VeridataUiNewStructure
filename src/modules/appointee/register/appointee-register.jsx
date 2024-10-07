@@ -3740,14 +3740,15 @@ const AppointeeRegister = () => {
         </Stepper>
 
         <Box my={"20px"}>
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid   container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid
               container
               rowSpacing={1}
               columnSpacing={2.5}
               item
               xs={12}
-              md={10}
+              md={12}
+           
             >
               {currentPageNo === 1 ? (
                 <>
@@ -4414,7 +4415,7 @@ const AppointeeRegister = () => {
               ) : null}
               {currentPageNo === 2 ? (
 
-
+                <Box sx={{width: '100%'}}>
                 <form ref={formElement}>
                   <Grid
                     sx={{ paddingLeft: "20px" }}
@@ -4619,7 +4620,6 @@ const AppointeeRegister = () => {
                           <Divider sx={{ borderBottomWidth: 2, mt: 1 }} />
                         </Box> */}
                             {/* <Typography sx={lable1Style}>Passport Number</Typography> */}
-
                             <Box>
                               <Stack direction="row">
                                 <Typography sx={{ ...lable1Style, display: 'flex', alignItems: 'center' }}>
@@ -4653,12 +4653,11 @@ const AppointeeRegister = () => {
                                 </Stack>
                               </FormControl>
                             </Box>
-
                           </Stack>
                         </Grid>
                         <Grid item xs={12} md={6}>
                           {isTrustEpfoAvailable && (
-                            <>
+                            <Box>
                               <Typography
                                 sx={{ ...lable1Style, textAlign: "center" }}
                               >
@@ -4671,12 +4670,12 @@ const AppointeeRegister = () => {
                                 accept={"image/png, image/jpeg"}
                                 disabled={isPreviousSectionDisabled}
                               />
-                            </>
+                            </Box>
                           )}
 
                         </Grid>
 
-                        <Grid item xs={12} md={12} lg={7}>
+                        <Grid item xs={12} md={6}>
                           <Stack flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"}>
                             <Typography sx={{ ...lable1Style }}>
                               {"Do you have UAN number"}
@@ -4694,13 +4693,6 @@ const AppointeeRegister = () => {
                             </RadioGroup>
                           </Stack>
                         </Grid>
-
-
-
-
-
-
-
                         <Dialog
                           open={isModalOpen}
                           onClose={handleCloseModal}
@@ -4730,13 +4722,10 @@ const AppointeeRegister = () => {
                     </Grid>
                   </Grid>
                 </form>
+                </Box>
               ) : null}
 
               {currentPageNo === 3 ? (
-
-
-
-
                 <form ref={formElement}>
                   <Grid
                     sx={{ paddingLeft: "20px" }}
@@ -5033,7 +5022,6 @@ const AppointeeRegister = () => {
 
 
               ) : null}
-
 
               {(currentPageNo === 2 || currentPageNo === 3) && (
 
