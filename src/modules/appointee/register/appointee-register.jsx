@@ -3164,7 +3164,7 @@ const AppointeeRegister = () => {
       fileUploaded: uploadedFile,
     };
 
-    console.log("payLoad", payLoad)
+    console.log("payload123", payLoad)
 
     let formData = new FormData();
     for (const property in payLoad) {
@@ -3178,7 +3178,9 @@ const AppointeeRegister = () => {
           else if (property === "FileDetails") {
             if (payLoad?.FileDetails?.length > 0) {
               // If FileDetails is not empty, append the first element
-              formData.append(`${property}`, payLoad[property]);
+              payLoad?.FileDetails?.forEach((element, index) => {
+                formData.append(`${property}`, payLoad[property][index]);
+              });
             }
           }
 
@@ -3188,7 +3190,7 @@ const AppointeeRegister = () => {
         }
       }
     }
-
+    
     // Make the API call
     const response = await PostUpdatePfUanDetails(formData);
     if (response) {
