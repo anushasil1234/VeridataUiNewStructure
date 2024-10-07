@@ -2895,11 +2895,11 @@ const AppointeeRegister = () => {
 
     }
     if (isEmployementDataVarified === null && isSubmit === false) {
-      if (isAadhaarVarified && isPanVarified && isUanVarified) {
+      if (isAadhaarVarified && isPanVarified && isUanVarified && !hasValue(UAN)) {
         submitDetails(true);
       }
     }
-  }, [isAadhaarVarified, isPanVarified, isEmployementDataVarified, isUanVarified]);
+  }, [isAadhaarVarified, isPanVarified, isEmployementDataVarified, isUanVarified,UAN]);
 
 
   // useEffect to check if UAN appointee is available on page load
@@ -3446,6 +3446,7 @@ const AppointeeRegister = () => {
       if (isVarified) {
         setIsUANModalOpen(true); // Open the dialog when UAN is available
         setUAN(uanNumber); // Save the uanNumber to the existing state
+        setisUanVarified(true);
       } else if ((isUANAvailableState === false) && (!isUanAvailable) && (!hasValue(uanNumber))) {
         setisUanVarified(true);
         // setIsEmployementDataVarified(false);
@@ -3512,6 +3513,7 @@ const AppointeeRegister = () => {
       const { remarks, isVarified } = response.responseInfo;
       if (isVarified) {
         showSuccessMessage(uanVerifySuccessMsg);
+        setIsEmployementDataVarified(true);
       } else {
         showErrorMessage(uanVerifyFailedMsg);
         if (hasValue(remarks)) {
@@ -3533,6 +3535,7 @@ const AppointeeRegister = () => {
     const response = await generateUANOtp(payLoad);
     if (response) {
       const { responseInfo } = response;
+      
       let { otp_sent, client_id } = responseInfo;
       if (!otp_sent) {
         showErrorMessage(generateOtpRety);
@@ -3551,6 +3554,7 @@ const AppointeeRegister = () => {
 
   const handleEpfoVerifiaction = () => {
     openOtpForm(UAN, "UAN Number", () => validateUANOtp(UAN), 'Generate OTP for PF Verification');
+    setIsEmployementDataVarified(true);
   };
 
   const formElement = useRef(null);

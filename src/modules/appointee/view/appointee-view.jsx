@@ -147,6 +147,8 @@ let AppointeeViewForm = ({
   const [trustPfFile, setTrustPfFile] = useState();
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
+  const [isEmployementVarified, setIsEmployementVarified] = useState(null);
+  
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isAadharVerified, setIsAadharVerified] = useState(null);
   const [isPassportAvailable, setIsPassportAvailable] = useState(null);
@@ -248,6 +250,7 @@ let AppointeeViewForm = ({
           ? setIsPanVarified(isPanVarified)
           : setIsPanVarified(NA);
       isProcessed ? setIsProcessed(isProcessed) : setIsProcessed(false);
+      isEmployementVarified ? setIsEmployementVarified(isEmployementVarified) : setIsEmployementVarified(null);     
       appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
       isUanVarified
         ? setIsUanVerified(isUanVarified)
@@ -388,9 +391,13 @@ let AppointeeViewForm = ({
   };
 
   // console.log("uanNumber",uanNumber)
+
+  console.log("isTrustPassbook",isTrustPassbook)
   console.log("isUanVerified", isUanVerified)
 
   console.log("isPhysicallyHandicap", isPhysicallyHandicap)
+
+  console.log("isPassportAvailable",isPassportAvailable)
 
   let verifyIconStyle;
   if (isdocumentVerified === null) {
@@ -542,7 +549,14 @@ let AppointeeViewForm = ({
                           label={"No UAN Available"}
                           color={"success"}
                         />
-                      ) : null}
+                      ) : isUanVerified === true && (hasValue(uanNumber)) && (!hasValue(isEmployementVarified)) ? (
+                        <Chip
+                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                          label={"Employement Verification Pending"}
+                          color={"warning"}
+                        />
+                      ) 
+                      : null}
                     </>
                   ) : null}
                 </Box>
