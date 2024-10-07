@@ -2545,6 +2545,7 @@ const AppointeeRegister = () => {
   const [timeoutTimer, setTimeoutTimer] = useState();
   const [fileUploaded, setFileUploaded] = useState();
   //const [isNextVisible, setIsNextVisible] = useState(false);
+  const [isthirdNextVisible, setIsThirdNextVisible] = useState(false);
 
 
   const initialTimeOfOtpTimer = () => {
@@ -3067,7 +3068,7 @@ const AppointeeRegister = () => {
     console.log("activeStep", (activeStep - 1))
     if (activeStep > 0) {
       // setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+      setActiveStep(activeStep - 1);
       setCurrentPageNo(currentPageNo - 1)
       console.log("activeStep", activeStep)
     }
@@ -3146,7 +3147,8 @@ const AppointeeRegister = () => {
     // Once the user confirms, save the details
     await saveDetails();
     handleCloseModal(); // Close the confirmation modal after saving
-    //setIsNextVisible(true);
+    //setIsThirdNextVisible(true);
+    //setCurrentPageNo(3);
   };
 
 
@@ -3196,8 +3198,7 @@ const AppointeeRegister = () => {
     // Make the API call
     const response = await PostUpdatePfUanDetails(formData);
     if (response) {
-      setCurrentPageNo(3);
-
+      handleNext();
       setIsPreviousSectionDisabled(true);
       // setShowAdditionalSection(true);
 
@@ -3241,6 +3242,7 @@ const AppointeeRegister = () => {
   const handleDialogConfirm = () => {
     setIsPANModalOpen(false); // Close the dialog
     handleGetUANNumber(); // Now call the function to get UAN number
+    setCurrentPageNo(3);
   };
 
   const handleDialogCancel = () => {
@@ -3309,6 +3311,7 @@ const AppointeeRegister = () => {
         //setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, steps.length - 1));
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setCurrentPageNo(2);
+        setIsNextVisible(true);
       }
     }
   };
@@ -3378,6 +3381,11 @@ const AppointeeRegister = () => {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setCurrentPageNo(3);
+  };
+
+  const handleSecondNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setCurrentPageNo(2);
   };
 
   const handleChange = (event) => {
@@ -4372,6 +4380,7 @@ const AppointeeRegister = () => {
                             sx={{ m: "10px 5px" }}
                             variant="contained"
                             color="primary"
+                            disabled={clickedButton === "N"} // Hide saveButton when clickedButton is "N"
                           >
                             {saveButton}
                           </Button>
@@ -4384,6 +4393,16 @@ const AppointeeRegister = () => {
                             color="primary"
                           >
                             {saveAndNextbutton}
+                          </Button>
+
+                          <Button
+                            onClick={handleSecondNext}
+                            sx={{ m: "10px 5px" }}
+                            variant="contained"
+                            color="primary"
+                            disabled={clickedButton !== "N"} // Show Next button only when clickedButton is "N"
+                          >
+                            Next
                           </Button>
                         </Stack>
                       </Grid>
@@ -5091,10 +5110,12 @@ const AppointeeRegister = () => {
                           //sx={{ m: "15px 25px", ml: 3 }}
                           variant="contained"
                           color="primary"
-                          enabled={isPreviousSectionDisabled}
+                          disabled = {isthirdNextVisible===false}
+                         
                         >
                           Next
                         </Button>
+
                       </>
                     </Grid>
                   </Grid>
