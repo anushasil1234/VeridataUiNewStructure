@@ -2544,8 +2544,9 @@ const AppointeeRegister = () => {
   const [companyName, setCompanyName] = useState();
   const [timeoutTimer, setTimeoutTimer] = useState();
   const [fileUploaded, setFileUploaded] = useState();
-  //const [isNextVisible, setIsNextVisible] = useState(false);
+  const [isNextVisible, setIsNextVisible] = useState(false);
   const [isthirdNextVisible, setIsThirdNextVisible] = useState(false);
+  const [isDraft, setIsDraft] = useState(true);
 
 
   const initialTimeOfOtpTimer = () => {
@@ -2709,10 +2710,11 @@ const AppointeeRegister = () => {
       setIsOfflineXmlDownloaded(isAadhaarVarified);
       setPassportStatusMessage(new VerificationStatus(isPassportValid, "V"));
       setPANStatusMessage(new VerificationStatus(isPanVarified, "V"));
-
+      setIsDraft(saveStep == 0)
       if (hasValue(isUanAvailable)) {
         setCurrentPageNo(saveStep + 2);
         setActiveStep(saveStep + 1);
+        setIsThirdNextVisible(true);
       } else {
         setActiveStep(saveStep);
         setCurrentPageNo(saveStep + 1);
@@ -3147,7 +3149,7 @@ const AppointeeRegister = () => {
     // Once the user confirms, save the details
     await saveDetails();
     handleCloseModal(); // Close the confirmation modal after saving
-    //setIsThirdNextVisible(true);
+    setIsThirdNextVisible(true);
     //setCurrentPageNo(3);
   };
 
@@ -3312,6 +3314,7 @@ const AppointeeRegister = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setCurrentPageNo(2);
         setIsNextVisible(true);
+        setIsDraft(false)
       }
     }
   };
@@ -4379,7 +4382,7 @@ const AppointeeRegister = () => {
                             sx={{ m: "10px 5px" }}
                             variant="contained"
                             color="primary"
-                            disabled={clickedButton === "N"} // Hide saveButton when clickedButton is "N"
+                            disabled={!isDraft} // Hide saveButton when clickedButton is "N"
                           >
                             {saveButton}
                           </Button>
@@ -4399,7 +4402,7 @@ const AppointeeRegister = () => {
                             sx={{ m: "10px 5px" }}
                             variant="contained"
                             color="primary"
-                            disabled={clickedButton !== "N"} // Show Next button only when clickedButton is "N"
+                            disabled={isDraft} // Show Next button only when clickedButton is "N"
                           >
                             Next
                           </Button>
@@ -5122,8 +5125,8 @@ const AppointeeRegister = () => {
                           //sx={{ m: "15px 25px", ml: 3 }}
                           variant="contained"
                           color="primary"
-                          disabled = {isthirdNextVisible===false}
-                         
+                          disabled={isthirdNextVisible === false}
+
                         >
                           Next
                         </Button>
