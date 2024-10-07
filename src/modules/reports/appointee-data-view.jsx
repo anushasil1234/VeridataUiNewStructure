@@ -7,6 +7,7 @@ import DownloadReportFilter from "shared/components/download-report/download-rep
 import { appointeeListTableHeadCell, appointeeReportTableHeadCell,  toAppointeeReport,  toNationalityReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 
 const AppointeeDataReportView = (props) => {
@@ -108,6 +109,31 @@ const AppointeeDataReportView = (props) => {
 
 
 
+  // const handleAppointeeListDownload = () => {
+  //   const tableHeadList = appointeeReportTableHeadCell.map(({ label }) => {
+  //     return {
+  //       title: label,
+  //     };
+  //   });
+  //   const tableBodyList = appointeeDetails && appointeeDetails.map(
+  //     (tableRows) => {
+
+  //       return CreatePdfTableBody(tableRows, appointeeReportTableHeadCell);
+  //     }
+  //   );
+  //   const tableObj = {
+  //     headerList: tableHeadList,
+  //     rows: tableBodyList,
+  //     fileName: `Appointee_Data_${currentDate}`,
+  //     label: "Appointee Data",
+  //     fromDate: fromDate,
+  //     toDate: toDate,
+  //     tableName: "Appointee Data",
+  //     rptDesc: ""
+  //   };
+
+  //   jsPDFReportTemplate({ tableObj });
+  // };
   const handleAppointeeListDownload = () => {
     const tableHeadList = appointeeReportTableHeadCell.map(({ label }) => {
       return {
@@ -123,15 +149,19 @@ const AppointeeDataReportView = (props) => {
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
-      fileName: `Appointee_Data_${currentDate}`,
-      label: "Appointee Data",
-      fromDate: fromDate,
-      toDate: toDate,
       tableName: "Appointee Data",
-      rptDesc: ""
+      rptDesc: "All candidate details.",
     };
-
-    jsPDFReportTemplate({ tableObj });
+    jsPDFReportDataTemplate({
+      reportDetails: {
+        fileName: `Appointee_Data_${currentDate}`,
+        label: "Appointee Data",
+        fromDate: fromDate,
+        toDate: toDate,
+        rptDesc: "All candidate details.",
+      },
+      tables: [tableObj]
+    });
   };
   const handleReportSearch = () => {
     if (filterType === 0) {

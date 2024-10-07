@@ -2544,7 +2544,7 @@ const AppointeeRegister = () => {
   const [companyName, setCompanyName] = useState();
   const [timeoutTimer, setTimeoutTimer] = useState();
   const [fileUploaded, setFileUploaded] = useState();
-  const [isNextVisible, setIsNextVisible] = useState(false);
+  //const [isNextVisible, setIsNextVisible] = useState(false);
 
 
   const initialTimeOfOtpTimer = () => {
@@ -3146,7 +3146,7 @@ const AppointeeRegister = () => {
     // Once the user confirms, save the details
     await saveDetails();
     handleCloseModal(); // Close the confirmation modal after saving
-    setIsNextVisible(true);
+    //setIsNextVisible(true);
   };
 
 
@@ -3196,7 +3196,7 @@ const AppointeeRegister = () => {
     // Make the API call
     const response = await PostUpdatePfUanDetails(formData);
     if (response) {
-      setCurrentPageNo(3)
+      setCurrentPageNo(3);
 
       setIsPreviousSectionDisabled(true);
       // setShowAdditionalSection(true);
@@ -4609,7 +4609,7 @@ const AppointeeRegister = () => {
                                   </IconButton>
                                 </Tooltip>
                               </Stack>
-                              <FormControl sx={{marginLeft: '17px'}}>
+                              <FormControl sx={{ marginLeft: '17px' }}>
                                 <Stack
                                   direction="row"
                                   spacing={1}
@@ -5096,18 +5096,17 @@ const AppointeeRegister = () => {
                           Save
                         </Button>
 
-                        {isNextVisible && (
 
-                          <Button
-                            onClick={handleNext}
-                            sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
-                            //sx={{ m: "15px 25px", ml: 3 }}
-                            variant="contained"
-                            color="primary"
-                          >
-                            Next
-                          </Button>
-                        )}
+                        <Button
+                          onClick={handleNext}
+                          sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
+                          //sx={{ m: "15px 25px", ml: 3 }}
+                          variant="contained"
+                          color="primary"
+                          enabled={isPreviousSectionDisabled}
+                        >
+                          Next
+                        </Button>
                       </>
                     </Grid>
                   </Grid>

@@ -33,7 +33,7 @@ export const TableActionCell = (props1, props2) => {
   const { appointeeId, userId: id, isPassbookVerified, uanNo } = rowAttribute;
   console.log('rowAttribute1234', rowAttribute);
   // console.log('props12121', props1);
-  
+
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
@@ -207,7 +207,7 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] && hasValue(uanNo) ?  (
+          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] && isPassbookVerified ? (
             <DarkTooltip placement="top" title={"EPFO Passbook"} arrow>
               <Fab
                 variant="contained"
@@ -220,7 +220,7 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] && isPassbookVerified ? (
+          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] && hasValue(uanNo) ? (
             <DarkTooltip placement="top" title={"EPFO Employment History"} arrow>
               <Fab
                 variant="contained"
