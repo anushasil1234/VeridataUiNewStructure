@@ -1289,7 +1289,7 @@ export const menuIconSx = {
 }
 
 export const containerSx = {
-  padding: { xs: "20px 0 0 0", md: "20px 16px 0 16px" }
+  padding: { xs: "20px", md: "20px 16px 0 16px" }
 }
 export const smallFormModelHeadingSx = {
   fontWeight: "bold",
