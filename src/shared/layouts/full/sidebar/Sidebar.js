@@ -1,23 +1,17 @@
 import { useMediaQuery, Box, Drawer, Typography } from '@mui/material';
 import Logo from '../shared/logo/Logo';
 import SidebarItems from './SidebarItems';
-import { AppStyle, menuFooterTextStyle, sidebarContainerStyle } from 'app';
+import { AppStyle, menuDrawerBoxContainer, menuFooterTextStyle, sidebarContainerStyle, sidebarDrawerPaperStyle, sidebarWidth } from 'app';
 
 const Sidebar = (props) => {
 
   const lgUp = useMediaQuery(AppStyle.breakpoints.up("lg"));
 
-  const sidebarWidth = '18vw';
 
   if (lgUp) {
     return (
       <Box
-        sx={{
-          width: sidebarWidth,
-          flexShrink: 0,
-          position: 'relative', //indra
-          height: '100vh', //indra
-        }}
+        sx={menuDrawerBoxContainer}
       >
         {/* ------------------------------------------- */}
         {/* Sidebar for desktop */}
@@ -42,7 +36,7 @@ const Sidebar = (props) => {
             <Box px={3}>
               <Logo />
             </Box>
-            <Box>
+            <Box >
               {/* ------------------------------------------- */}
               {/* Sidebar Items */}
               {/* ------------------------------------------- */}
@@ -62,10 +56,7 @@ const Sidebar = (props) => {
       onClose={props.onSidebarClose}
       variant="temporary"
       PaperProps={{
-        sx: {
-          width: sidebarWidth,
-          boxShadow: AppStyle.shadows[8],
-        },
+        sx: sidebarDrawerPaperStyle,
       }}
     >
       {/* ------------------------------------------- */}

@@ -137,6 +137,7 @@ let AppStyle = createTheme({
   }
 });
 
+
 export const listitemTextstyle = {
   fontSize: '.5rem',
   display: 'block',
@@ -324,6 +325,11 @@ export const heading3 = {
   fontSize: "1.1rem",
   my: 1
 };
+export const sidebarDrawerPaperStyle = {
+    width: sidebarWidth,
+    boxShadow: AppStyle.shadows[8],
+  
+} 
 export const heading4 = {
   color: ThemeColorPalete.common.black,
   fontSize: "40px",
@@ -1210,12 +1216,24 @@ export const menuFooterTextStyle = {
   fontWeight: 500
 }
 export const sidebarContainerStyle = {
-  width: '18vw',
+  // width: {xs:'80vw', md:'10vw'},
   boxSizing: 'border-box',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
   height: '100%',
+  // width: {xs: '77%', md: 'auto'}
+}
+export const sidebarWidth = { xs: '80vw', sm: '27vw', md: '20vw', lg: '18vw' };
+// export const sidebarWidth = { xs: '18vw' };
+export const menuDrawerBoxContainer = {
+  width: sidebarWidth,
+  flexShrink: 0,
+  position: 'relative', //indra
+  height: '100vh', //indra
+  '& .MuiPaper-root':{
+    width: sidebarWidth,
+  }
 }
 export const fileImageHeaderStyle = {
   flexDirection: "row",
