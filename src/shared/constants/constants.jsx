@@ -65,8 +65,18 @@ export const generateAppointeeCountReportDesc = `The purpose of this report is t
 export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
 export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
 export const generateapiCountReportDesc =  `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns,identify any issues, and improve the efficiency of the API system.`;
-export const generatenationlityReportDesc =  `This report provides a comprehensive overview of individuals based on the selected category. If 'Select All' is chosen, it includes data for both Indian and foreign nationals, offering a complete view of all individuals. If filtered by 'Indian,' the report focuses exclusively on Indian nationals. For 'Foreigner,' the report provides detailed data on foreign nationals, emphasizing relevant information for this group.`;
-
+export const generatenationlityReportDesc = (type) => {
+    switch (type) {
+        case 'All':
+            return "This report provides a comprehensive overview of individuals, including both Indian and foreign nationals, offering a complete view of all individuals.";
+        case 'IN':
+            return "This report gives an overview of important information about Indian nationals, highlighting their unique trends and details";
+        case 'OTH':
+            return "This report focuses on foreign individuals, offering detailed information and insights specifically related to non-Indian nationals. It highlights key trends and data that are important for understanding this group.";
+        default:
+            return "Please select a valid category to generate the report description.";
+    }
+};
 
 // Dropdown Types
 export const GEN = `GEN`;
