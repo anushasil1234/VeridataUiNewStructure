@@ -325,11 +325,6 @@ export const heading3 = {
   fontSize: "1.1rem",
   my: 1
 };
-export const sidebarDrawerPaperStyle = {
-    width: sidebarWidth,
-    boxShadow: AppStyle.shadows[8],
-  
-} 
 export const heading4 = {
   color: ThemeColorPalete.common.black,
   fontSize: "40px",
@@ -1235,6 +1230,11 @@ export const menuDrawerBoxContainer = {
     width: sidebarWidth,
   }
 }
+export const sidebarDrawerPaperStyle = {
+  width: sidebarWidth,
+  boxShadow: AppStyle.shadows[8],
+
+} 
 export const fileImageHeaderStyle = {
   flexDirection: "row",
   justifyContent: "space-between",
