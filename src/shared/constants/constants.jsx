@@ -64,7 +64,7 @@ export const generateNoMovementReportDesc = (days) => {
 export const generateAppointeeCountReportDesc = `The purpose of this report is to provide an overview and analysis of the appointee count added to the system on a daily basis during a specified period. This report includes details such as the total number of appointees added each day, the total number of links sent, and the total number of links not sent. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
 export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
 export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generateapiCountReportDesc =  `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns,identify any issues, and improve the efficiency of the API system.`;
+export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns,identify any issues, and improve the efficiency of the API system.`;
 export const generatenationlityReportDesc = (type) => {
     switch (type) {
         case 'All':
@@ -74,7 +74,7 @@ export const generatenationlityReportDesc = (type) => {
         case 'OTH':
             return "This report focuses on foreign individuals, offering detailed information and insights specifically related to non-Indian nationals. It highlights key trends and data that are important for understanding this group.";
         default:
-            return "Please select a valid category to generate the report description.";
+            return "This report provides a comprehensive overview of individuals, including both Indian and foreign nationals, offering a complete view of all individuals.";
     }
 };
 
@@ -1616,6 +1616,11 @@ export const nationalityReportTableHeadCell = [
         label: 'Mobile No',
         enums: ['mobileNo'],
 
+    }, 
+    {
+        type: "string",
+        label: 'Nationality',
+        enums: ['nationality'],
     },
     {
         type: "string",
@@ -1771,7 +1776,7 @@ export const GetTotalCriticalAppointee_URL = `${Account}/GetTotalCriticalAppoint
 export const ValidateProfilePassword_URL = `${Account}/ValidateProfilePassword`;
 export const EditUserProfile_URL = `${Account}/EditUserProfile`;
 export const GetFaqData_URL = `${Account}/GetFaqData`;
- export const GetRefreshToken_URL = `${Account}/GenerateRefreshToken`;
+export const GetRefreshToken_URL = `${Account}/GenerateRefreshToken`;
 
 export const RawDataProcess_URL = `${AppoienteeWorkFlow}/RawDataProcess`;
 export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointeeDetailsUpdate`;
@@ -1877,36 +1882,36 @@ export const verifiedReportInfo = `Trust PF data is not reflected in following f
 
 export const getStatusTooltip = (status) => {
     switch (status) {
-      case "Issue":
-        return "There is an issue that needs to be solved.";
-      case "Submitted":
-        return "Your data has been submitted successfully. HR Admin will take action accordingly.";
-      case "Ongoing":
-        return "verification is in progress";
-      case "No Response":
-        return "There has been no response yet.";
-      case "Success":
-        return "The verificaton was successful.";
-      case "Cancelled":
-        return "process has been cancelled.";
-      case "Lapsed":
-        return "Verification process incomplete and Date of Joining is over.";
-      case "Verified":
-        return "Verification process completed successfully"  
-      default:
-        return 
+        case "Issue":
+            return "There is an issue that needs to be solved.";
+        case "Submitted":
+            return "Your data has been submitted successfully. HR Admin will take action accordingly.";
+        case "Ongoing":
+            return "verification is in progress";
+        case "No Response":
+            return "There has been no response yet.";
+        case "Success":
+            return "The verificaton was successful.";
+        case "Cancelled":
+            return "process has been cancelled.";
+        case "Lapsed":
+            return "Verification process incomplete and Date of Joining is over.";
+        case "Verified":
+            return "Verification process completed successfully"
+        default:
+            return
     }
-  };
+};
 export const getHandicapTypeDescription = (type) => {
     switch (type) {
-      case 'L':
-        return 'Locomotive';
-      case 'H':
-        return 'Hearing';
-      case 'V':
-        return 'Visual';
-      default:
-        return ''; // Return an empty string for any unrecognized type
+        case 'L':
+            return 'Locomotive';
+        case 'H':
+            return 'Hearing';
+        case 'V':
+            return 'Visual';
+        default:
+            return ''; // Return an empty string for any unrecognized type
     }
-  };
+};
 

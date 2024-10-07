@@ -18,7 +18,6 @@ import {
 } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import {
-  Fab,
   FormControl,
   Grid,
   InputLabel,
@@ -31,7 +30,7 @@ import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import moment from "moment";
-import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 const UnWrappedProcessing = (props) => {
   const { hasPermission } = props;
@@ -117,32 +116,60 @@ const UnWrappedProcessing = (props) => {
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
 
+  // const handleDownload = () => {
+  //   const tableHeadList = processingListPdfTableHeadCell.map(({ label }) => {
+  //     return {
+  //       title: label,
+  //     };
+  //   });
+  //   const tableBodyList = responseList && responseList.map(
+  //     (tableRows) => {
+  //       return CreatePdfTableBody(tableRows, processingListPdfTableHeadCell);
+  //     }
+  //   );
+
+  //   const tableObj = {
+  //     headerList: tableHeadList,
+  //     rows: tableBodyList,
+  //     fileName: `_Processing_List_${currentDate}`,
+  //     label: "Processing List",
+  //     fromDate: fromDate,
+  //     toDate: toDate,
+  //     tableName: "Appointee details",
+  //     rptDesc: generateProcessingAppointeeReportDesc
+  //   };
+
+  //   jsPDFReportTemplate({ tableObj });
+  // };
   const handleDownload = () => {
     const tableHeadList = processingListPdfTableHeadCell.map(({ label }) => {
       return {
         title: label,
       };
     });
-    const tableBodyList = responseList && responseList.map(
-      (tableRows) => {
-        return CreatePdfTableBody(tableRows, processingListPdfTableHeadCell);
-      }
-    );
-
+  
+    const tableBodyList = responseList && responseList.map((tableRows) => {
+      return CreatePdfTableBody(tableRows, processingListPdfTableHeadCell);
+    });
+  
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
-      fileName: `_Processing_List_${currentDate}`,
-      label: "Processing List",
-      fromDate: fromDate,
-      toDate: toDate,
-      tableName: "Appointee details",
-      rptDesc: generateProcessingAppointeeReportDesc
     };
-
-    jsPDFReportTemplate({ tableObj });
+  
+    // Call jsPDFReportTemplate with tableObj
+    jsPDFReportDataTemplate({
+      reportDetails: {
+        fileName: `_Processing_List_${currentDate}`,
+        label: "Processing List",
+        fromDate: fromDate,
+        toDate: toDate,
+        rptDesc: generateProcessingAppointeeReportDesc,
+        companyName: "PWC REPORT", // or use a dynamic company name
+      },
+      tables: [tableObj],
+    });
   };
-
   const clearSearch = () => {
     setFromDate(null);
     setToDate(null);

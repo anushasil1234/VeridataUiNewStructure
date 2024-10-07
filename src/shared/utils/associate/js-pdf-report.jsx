@@ -222,6 +222,12 @@ const jsPDFReportDataTemplate = async ({ reportDetails = {}, tables = [] }) => {
             console.warn(`Table at index ${index} has no rows.`);
             return;
         }
+        if (index > 0) {
+          doc.addPage();
+          addHeader(doc, label, formattedFromDate, formattedToDate, formattedReportDate);
+          addFooter(doc, tableCompanyName || defaultCompanyName);
+          startY = lineY + 10;
+        }
         const pageHeight = doc.internal.pageSize.height;
         const marginBottom = 20;
         const rowHeight = 10;
@@ -261,28 +267,28 @@ const jsPDFReportDataTemplate = async ({ reportDetails = {}, tables = [] }) => {
                 cellPadding: 3,
                 fontSize: 8,
             },
-            didDrawPage: () => {
-                addFooter(doc, tableCompanyName || defaultCompanyName);
+            didDrawPage: (data) => {
+        
+              if (data.pageNumber > 1) {
                 addHeader(doc, label, formattedFromDate, formattedToDate, formattedReportDate);
-                if (index === 0 && isFirstPage) {
-                    addHeader(doc, label, formattedFromDate, formattedToDate, formattedReportDate);
-                    isFirstPage = false;
-                }
+                addFooter(doc, tableCompanyName || defaultCompanyName);
+              }
             },
-        });
+          });
 
         startY = doc.autoTable.previous.finalY + 20;
 
-        if (index < tables.length - 1) {
-            doc.addPage();
-            startY = lineY + 40;
-        }
-    });
-};
+        // if (index < tables.length - 1) {
+        //   doc.addPage();
+        //   isFirstPage = false;
+        //   startY = lineY + 10;
+        // }
+      });
+    };
 
-
+    addHeader(doc, label, formattedFromDate, formattedToDate, formattedReportDate);
+    addFooter(doc, defaultCompanyName);
   addContent();
-  addFooter(doc);
 
   doc.save(`${fileName}.pdf`);
 };

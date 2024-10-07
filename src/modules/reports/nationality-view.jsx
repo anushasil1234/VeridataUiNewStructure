@@ -6,10 +6,10 @@ import ActionPermission from "shared/components/action-permission/action-permiss
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
 import { nationalityListTableHeadCell, nationalityReportTableHeadCell, toNationalityReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
-import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import { removeActionRoute } from "store/slices/action-route-slice";
 
-
+import {generatenationlityReportDesc } from "shared/constants/constants"
 const NationalityReportView = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
@@ -106,33 +106,63 @@ const NationalityReportView = (props) => {
     setPayLoad(_payLoad);
   }, [fromDate, toDate,]);
 
-
-
   const handleNaltionalityListDownload = () => {
+
     const tableHeadList = nationalityReportTableHeadCell.map(({ label }) => {
       return {
         title: label,
       };
     });
-    const tableBodyList = appointeeDetails && appointeeDetails.map(
-      (tableRows) => {
-
-        return CreatePdfTableBody(tableRows, nationalityReportTableHeadCell);
-      }
-    );
+   
+ 
+    const tableBodyList = appointeeDetails && appointeeDetails.map((tableRows) => {
+      return CreatePdfTableBody(tableRows, nationalityReportTableHeadCell);
+    });
+ 
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
-      fileName: `Nationality_Appointee_${currentDate}`,
-      label: "Appointee Nationality",
-      fromDate: fromDate,
-      toDate: toDate,
-      tableName: "Appointee Nationality",
-      rptDesc: ""
+      tableName: "Appointee Nationality", 
+     rptDesc:generatenationlityReportDesc(nationalityType?.toString()),                          
     };
-
-    jsPDFReportTemplate({ tableObj });
+  
+    jsPDFReportDataTemplate({
+      reportDetails: {
+        fileName: `Nationality_Appointee_${currentDate}`, 
+        label: "Appointee Nationality",                  
+        fromDate: fromDate,                               
+        toDate: toDate,                                   
+       rptDesc:generatenationlityReportDesc(nationalityType?.toString()),                                      
+      },
+      tables: [tableObj],                               
+    });
   };
+
+  // const handleNaltionalityListDownload = () => {
+  //   const tableHeadList = nationalityReportTableHeadCell.map(({ label }) => {
+  //     return {
+  //       title: label,
+  //     };
+  //   });
+  //   const tableBodyList = appointeeDetails && appointeeDetails.map(
+  //     (tableRows) => {
+
+  //       return CreatePdfTableBody(tableRows, nationalityReportTableHeadCell);
+  //     }
+  //   );
+  //   const tableObj = {
+  //     headerList: tableHeadList,
+  //     rows: tableBodyList,
+  //     fileName: `Nationality_Appointee_${currentDate}`,
+  //     label: "Appointee Nationality",
+  //     fromDate: fromDate,
+  //     toDate: toDate,
+  //     tableName: "Appointee Nationality",
+  //     rptDesc: ""
+  //   };
+
+  //   jsPDFReportTemplate({ tableObj });
+  // };
   const handleReportSearch = () => {
     if (filterType === 0) {
       const _payLoad = {

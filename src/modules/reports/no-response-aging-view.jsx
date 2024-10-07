@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadAgingReport from "shared/components/download-report/download-aging-report";
-import { generateNoMovementReportDesc, noMovementListTableHeadCell, noResponseListTableHeadCell, noResponseReportTableHeadCell, toNoResponseAgingReport } from "shared/constants/constants";
+import { generateNoMovementReportDesc, noResponseListTableHeadCell, noResponseReportTableHeadCell, toNoResponseAgingReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
-import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 
 const NoResponseAgingReportView = (props) => {
@@ -103,8 +103,6 @@ const NoResponseAgingReportView = (props) => {
     setPayLoad(_payLoad);
   }, [fromDate]);
 
-
-
   const handleAppointeeCountDownload = () => {
     const tableHeadList = noResponseReportTableHeadCell.map(({ label }) => {
       return {
@@ -120,16 +118,46 @@ const NoResponseAgingReportView = (props) => {
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
-      fileName: `NoResponse_Appointee_${currentDate}`,
-      label: "No Response Appointee",
-      fromDate: fromDate,
-      toDate: "",
       tableName: "Appointee details",
-      rptDesc: generateNoMovementReportDesc(noOfDays)
+      rptDesc: generateNoMovementReportDesc(noOfDays ?? 0),
     };
-
-    jsPDFReportTemplate({ tableObj });
+    jsPDFReportDataTemplate({
+      reportDetails: {
+        fileName: `NoResponse_Appointee_${currentDate}`,
+        label: "No Response Appointee",
+        fromDate: fromDate,
+        toDate: "",
+        rptDesc: generateNoMovementReportDesc(noOfDays ?? 0),
+      },
+      tables: [tableObj]
+    });
   };
+
+  // const handleAppointeeCountDownload = () => {
+  //   const tableHeadList = noResponseReportTableHeadCell.map(({ label }) => {
+  //     return {
+  //       title: label,
+  //     };
+  //   });
+  //   const tableBodyList = appointeeDetails && appointeeDetails.map(
+  //     (tableRows) => {
+
+  //       return CreatePdfTableBody(tableRows, noResponseReportTableHeadCell);
+  //     }
+  //   );
+  //   const tableObj = {
+  //     headerList: tableHeadList,
+  //     rows: tableBodyList,
+  //     fileName: `NoResponse_Appointee_${currentDate}`,
+  //     label: "No Response Appointee",
+  //     fromDate: fromDate,
+  //     toDate: "",
+  //     tableName: "Appointee details",
+  //     rptDesc: generateNoMovementReportDesc(noOfDays)
+  //   };
+
+  //   jsPDFReportTemplate({ tableObj });
+  // };
   const handleReportSearch = () => {
     if (filterType === 0) {
       setFromDate(null);

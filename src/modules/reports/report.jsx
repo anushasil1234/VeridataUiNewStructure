@@ -1,6 +1,6 @@
 import { Download, Refresh, Search } from "@mui/icons-material";
-import { Box, Fab, Stack } from "@mui/material";
-import { primaryFabStyle,ResponsiveFab  } from "app";
+import { Box, Stack } from "@mui/material";
+import { primaryFabStyle, ResponsiveFab } from "app";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import {
   apiCountDetailsHeadCell,
   apiCountHeadCell,
   consoidateApiCountHeadCell,
+  generateAppointeeCountReportDesc,
   toApiCountReport,
 } from "shared/constants/constants";
 import {
@@ -18,7 +19,7 @@ import {
   PageLayout,
   generateTableRowData,
 } from "shared/utils";
-import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { removeActionRoute } from "store/slices/action-route-slice";
@@ -76,47 +77,82 @@ const UnwrappedReport = (props) => {
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
 
-  const handleApiCountDownload = () => {
-    const tableHeadList = apiCountHeadCell.map(({ label }) => {
-      return {
-        title: label,
-      };
-    });
-    const consolidateTableHeadList = consoidateApiCountHeadCell.map(({ label }) => {
-      return {
-        title: label,
-      };
-    });
-    const tableBodyList = apiCountList.map((apiTotalCount) => {
-      return CreatePdfTableBody(apiTotalCount, apiCountHeadCell);
-    });
-    const tableBodyListConsolidated = apiConsolidateCountList.map(
-      (apiCount) => {
-        return CreatePdfTableBody(apiCount, consoidateApiCountHeadCell);
-      }
+  // const handleApiCountDownload = () => {
+  //   const tableHeadList = apiCountHeadCell.map(({ label }) => {
+  //     return {
+  //       title: label,
+  //     };
+  //   });
+  //   const consolidateTableHeadList = consoidateApiCountHeadCell.map(({ label }) => {
+  //     return {
+  //       title: label,
+  //     };
+  //   });
+  //   const tableBodyList = apiCountList.map((apiTotalCount) => {
+  //     return CreatePdfTableBody(apiTotalCount, apiCountHeadCell);
+  //   });
+  //   const tableBodyListConsolidated = apiConsolidateCountList.map(
+  //     (apiCount) => {
+  //       return CreatePdfTableBody(apiCount, consoidateApiCountHeadCell);
+  //     }
+  //   );
+
+  //   const tableObj = {
+  //     headerList: tableHeadList,
+  //     rows: tableBodyList,
+  //     fileName: `_Api_Count_${currentDate}`,
+  //     label: "Api Count",
+  //     fromDate: fromDate,
+  //     toDate: toDate,
+  //   };
+  //   const tableObjConsolidate = {
+  //     headerListConsolidate: consolidateTableHeadList,
+  //     rowsConsolidate: tableBodyListConsolidated,
+  //     // fileName1: `_Api_Count_${currentDate}`,
+  //     // label1: "Api Count",
+  //     // fromDate1: fromDate,
+  //     // toDate1: toDate,
+  //   };
+
+
+  //   jsPDFReportTemplate({ tableObj, tableObjConsolidate });
+  // };
+  const handleApiCountDownload = async () => {
+    const tableHeadList = apiCountHeadCell.map(({ label }) => ({ title: label }));
+    const consolidateTableHeadList = consoidateApiCountHeadCell.map(({ label }) => ({ title: label }));
+
+    const tableBodyList = apiCountList.map((apiTotalCount) =>
+      CreatePdfTableBody(apiTotalCount, apiCountHeadCell)
+    );
+    const tableBodyListConsolidated = apiConsolidateCountList.map((apiCount) =>
+      CreatePdfTableBody(apiCount, consoidateApiCountHeadCell)
     );
 
-    const tableObj = {
-      headerList: tableHeadList,
-      rows: tableBodyList,
+    const reportDetails = {
       fileName: `_Api_Count_${currentDate}`,
       label: "Api Count",
-      fromDate: fromDate,
-      toDate: toDate,
-    };
-    const tableObjConsolidate = {
-      headerListConsolidate: consolidateTableHeadList,
-      rowsConsolidate: tableBodyListConsolidated,
-      // fileName1: `_Api_Count_${currentDate}`,
-      // label1: "Api Count",
-      // fromDate1: fromDate,
-      // toDate1: toDate,
+      fromDate,
+      toDate,
+      rptDesc: generateAppointeeCountReportDesc,
+      companyName: 'ELOGIX.LTD'
     };
 
+    const tables = [
+      {
+        tableName: "API Count",
+        headerList: tableHeadList,
+        rows: tableBodyList,
+      },
+      {
+        tableName: "Consolidated API Count",
+        headerList: consolidateTableHeadList,
+        rows: tableBodyListConsolidated,
+      },
 
-    jsPDFReportTemplate({ tableObj, tableObjConsolidate });
+    ];
+
+    await jsPDFReportDataTemplate({ reportDetails, tables });
   };
-
   const handleSearch = () => {
     setTableRows(fromDate, toDate);
   };
@@ -157,7 +193,7 @@ const UnwrappedReport = (props) => {
             />
           </Box>
           <DarkTooltip placement="top" title={"Search"} arrow>
-            <ResponsiveFab  count report
+            <ResponsiveFab count report
               variant="contained"
               size="small"
               button={"N"}
@@ -168,7 +204,7 @@ const UnwrappedReport = (props) => {
             </ResponsiveFab>
           </DarkTooltip>
           <DarkTooltip placement="top" title={"Clear Search"} arrow>
-            <ResponsiveFab 
+            <ResponsiveFab
               variant="contained"
               size="small"
               button={"N"}
@@ -179,7 +215,7 @@ const UnwrappedReport = (props) => {
             </ResponsiveFab>
           </DarkTooltip>
           <DarkTooltip placement="top" title={"Download Report"} arrow>
-            <ResponsiveFab 
+            <ResponsiveFab
               variant="contained"
               size="small"
               button={"N"}

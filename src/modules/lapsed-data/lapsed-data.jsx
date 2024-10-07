@@ -1,6 +1,5 @@
 import { Download, Refresh, Search } from "@mui/icons-material";
 import {
-  Fab,
   FormControl,
   Grid,
   InputLabel,
@@ -27,11 +26,11 @@ import {
 import DatePicker from "shared/utils/date-picker/date-picker";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import dayjs from "dayjs";
-import { inputFieldStyleAdded, primaryFabStyle,ResponsiveFab  } from "app";
+import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab } from "app";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
-import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 import moment from "moment";
+import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 const UnwrappedLapseddata = (props) => {
   const { hasPermission } = props;
@@ -144,31 +143,63 @@ const UnwrappedLapseddata = (props) => {
   const handleSearch = () => {
     setTableRows(payLoad);
   };
-
   const handleDownload = () => {
+
     const tableHeadList = lapsedListPdfTableHeadCell.map(({ label }) => {
       return {
         title: label,
       };
     });
-    const tableBodyList = responseList && responseList.map(
-      (tableRows) => {
-        return CreatePdfTableBody(tableRows, lapsedListPdfTableHeadCell);
-      }
-    );
+
+
+    const tableBodyList = responseList && responseList.map((tableRows) => {
+      return CreatePdfTableBody(tableRows, lapsedListPdfTableHeadCell);
+    });
+
+
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
-      fileName: `_Lapsed_List_${currentDate}`,
-      label: "Lapsed List",
-      fromDate: fromDate,
-      toDate: toDate,
       tableName: "Appointee details",
-      rptDesc: generateLapsedAppointeeReportDesc
+      rptDesc: generateLapsedAppointeeReportDesc,
     };
 
-    jsPDFReportTemplate({ tableObj });
+
+    jsPDFReportDataTemplate({
+      reportDetails: {
+        fileName: `_Lapsed_List_${currentDate}`,
+        label: "Lapsed List",
+        fromDate: fromDate,
+        toDate: toDate,
+        rptDesc: generateLapsedAppointeeReportDesc,
+      },
+      tables: [tableObj],
+    });
   };
+  // const handleDownload = () => {
+  //   const tableHeadList = lapsedListPdfTableHeadCell.map(({ label }) => {
+  //     return {
+  //       title: label,
+  //     };
+  //   });
+  //   const tableBodyList = responseList && responseList.map(
+  //     (tableRows) => {
+  //       return CreatePdfTableBody(tableRows, lapsedListPdfTableHeadCell);
+  //     }
+  //   );
+  //   const tableObj = {
+  //     headerList: tableHeadList,
+  //     rows: tableBodyList,
+  //     fileName: `_Lapsed_List_${currentDate}`,
+  //     label: "Lapsed List",
+  //     fromDate: fromDate,
+  //     toDate: toDate,
+  //     tableName: "Appointee details",
+  //     rptDesc: generateLapsedAppointeeReportDesc
+  //   };
+
+  //   jsPDFReportTemplate({ tableObj });
+  // };
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(removeActionRoute());
@@ -239,7 +270,7 @@ const UnwrappedLapseddata = (props) => {
 
           <Grid item xs={4}>
             <DarkTooltip placement="top" title={"Search"} arrow>
-              <ResponsiveFab 
+              <ResponsiveFab
                 variant="contained"
                 size="small"
                 button={"N"}
@@ -250,7 +281,7 @@ const UnwrappedLapseddata = (props) => {
               </ResponsiveFab>
             </DarkTooltip>
             <DarkTooltip placement="top" title={"Clear Search"} arrow>
-              <ResponsiveFab  List
+              <ResponsiveFab List
                 variant="contained"
                 size="small"
                 button={"N"}
@@ -262,7 +293,7 @@ const UnwrappedLapseddata = (props) => {
             </DarkTooltip>
             {hasPermission && hasPermission["A008"] && (
               <DarkTooltip placement="top" title={"Download"} arrow>
-                <ResponsiveFab 
+                <ResponsiveFab
                   variant="contained"
                   size="small"
                   button={"N"}

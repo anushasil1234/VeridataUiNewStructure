@@ -6,7 +6,7 @@ import ActionPermission from "shared/components/action-permission/action-permiss
 import DownloadAgingReport from "shared/components/download-report/download-aging-report";
 import { generateNoMovementReportDesc, noMovementListTableHeadCell, noResponseListTableHeadCell, noResponseReportTableHeadCell, toNoMovementAgingReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
-import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
+import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 
 const NoMovementAgingReportView = (props) => {
@@ -105,7 +105,6 @@ const NoMovementAgingReportView = (props) => {
   }, [fromDate]);
 
 
-
   const handleAppointeeCountDownload = () => {
     const tableHeadList = noResponseReportTableHeadCell.map(({ label }) => {
       return {
@@ -121,16 +120,45 @@ const NoMovementAgingReportView = (props) => {
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
-      fileName: `NoMovement_Appointee_${currentDate}`,
-      label: "No Movement Appointee",
-      fromDate: fromDate,
-      toDate: "",
       tableName: "Appointee details",
-      rptDesc: generateNoMovementReportDesc(noOfDays??0)
+      rptDesc: generateNoMovementReportDesc(noOfDays ?? 0),
     };
-
-    jsPDFReportTemplate({ tableObj });
+    jsPDFReportDataTemplate({
+      reportDetails: {
+        fileName: `NoMovement_Appointee_${currentDate}`,
+        label: "No Movement Appointee",
+        fromDate: fromDate,
+        toDate: "",
+        rptDesc: generateNoMovementReportDesc(noOfDays ?? 0),
+      },
+      tables: [tableObj]
+    });
   };
+  // const handleAppointeeCountDownload = () => {
+  //   const tableHeadList = noResponseReportTableHeadCell.map(({ label }) => {
+  //     return {
+  //       title: label,
+  //     };
+  //   });
+  //   const tableBodyList = appointeeDetails && appointeeDetails.map(
+  //     (tableRows) => {
+
+  //       return CreatePdfTableBody(tableRows, noResponseReportTableHeadCell);
+  //     }
+  //   );
+  //   const tableObj = {
+  //     headerList: tableHeadList,
+  //     rows: tableBodyList,
+  //     fileName: `NoMovement_Appointee_${currentDate}`,
+  //     label: "No Movement Appointee",
+  //     fromDate: fromDate,
+  //     toDate: "",
+  //     tableName: "Appointee details",
+  //     rptDesc: generateNoMovementReportDesc(noOfDays??0)
+  //   };
+
+  //   jsPDFReportTemplate({ tableObj });
+  // };
   const handleReportSearch = () => {
     if (filterType === 0) {
       const _payLoad = {
