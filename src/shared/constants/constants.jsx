@@ -84,10 +84,10 @@ export const dateFormat = `DD/MM/YYYY`;
 
 // Button name
 
-export const saveButton = "Save as draft";
+export const saveButton = "Save as Draft";
 export const changePassword = "Change Password";
 export const submitButton = "Submit";
-export const saveAndNextbutton = "Save and next";
+export const saveAndNextbutton = "Save and Next";
 export const previousButton = "Previous";
 export const remarks = "Remarks";
 export const startVerification = "Start Verification";
@@ -99,6 +99,7 @@ export const fatherNameAlias = "101";
 export const dobAlias = "100";
 export const otherAlias = "107";
 export const trustEpfoFileTypeAlias = "EPFPSBKTRUST";
+export const handicapFileTypeAlias = "HANDCERT";
 export const aadharFileTypeAlias = "ADH";
 export const passportFileTypeAlias = "VISA";
 export const epfTypeAlias = "EPFPSBK";
@@ -1766,6 +1767,7 @@ export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointe
 export const PostAppointeeDetailsSave_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSave`;
 export const PostAppointeeSearch_URL = `${AppoienteeWorkFlow}/AppointeeSearch?appointeeName=`;
 export const PostAppointeeFileDetails_URL = `${AppoienteeWorkFlow}/PostAppointeeFileDetails`;
+export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdatePfUanDetails`;
 export const PostAppointeeReprocess_URL = `${AppoienteeWorkFlow}/PostAppointeeReprocess`;
 export const GetAppointeeDetails_URL = `${AppoienteeWorkFlow}/GetAppointeeDetails?appointeeId=`;
 export const GetAppointeeActivity_URL = `${AppoienteeWorkFlow}/GetAppointeeActivity?appointeeId=`;
@@ -1884,3 +1886,16 @@ export const getStatusTooltip = (status) => {
         return 
     }
   };
+export const getHandicapTypeDescription = (type) => {
+    switch (type) {
+      case 'L':
+        return 'Locomotive';
+      case 'H':
+        return 'Hearing';
+      case 'V':
+        return 'Visual';
+      default:
+        return ''; // Return an empty string for any unrecognized type
+    }
+  };
+

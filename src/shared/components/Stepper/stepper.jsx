@@ -1,0 +1,64 @@
+import React, { useState } from 'react';
+import {
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+  Box,
+} from '@mui/material';
+
+const steps = ['Step 1', 'Step 2', 'Step 3', 'Step 4'];
+
+const NonLinearStepper = () => {
+  const [activeStep, setActiveStep] = useState(0);
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, steps.length - 1));
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
+  };
+
+  const handleStep = (step) => () => {
+    setActiveStep(step);
+  };
+
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Stepper activeStep={activeStep} alternativeLabel>
+        {steps.map((label, index) => (
+          <Step key={label} completed={activeStep > index}>
+            <StepLabel
+              onClick={handleStep(index)} // Enable clicking to go to a specific step
+              optional={activeStep === index ? <Typography variant="caption">Current</Typography> : null}
+            >
+              {label}
+            </StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+
+      <Box sx={{ mt: 2 }}>
+        {activeStep === steps.length ? (
+          <Typography>All steps completed</Typography>
+        ) : (
+          <div>
+            <Typography>{`You are on ${steps[activeStep]}`}</Typography>
+            <Box sx={{ mt: 2 }}>
+              <Button disabled={activeStep === 0} onClick={handleBack}>
+                Back
+              </Button>
+              <Button variant="contained" onClick={handleNext}>
+                Next
+              </Button>
+            </Box>
+          </div>
+        )}
+      </Box>
+    </Box>
+  );
+};
+
+export default NonLinearStepper;

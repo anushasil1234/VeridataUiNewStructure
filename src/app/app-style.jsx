@@ -590,6 +590,14 @@ export const stepContainerStyle = {
   borderBottom: "1px solid #C7C8D0",
   marginBottom: "5px"
 };
+
+export const stepContainerStyleHeading = {
+  flexDirection: "row",
+  alignItems: "center",
+  height: { xs: "45px", md: "58px" },
+  borderBottom: "1px solid #C7C8D0",
+  marginBottom: "5px"
+};
 const circleDiameter = { xs: "28px", md: "34px" };
 export const stepNumberContainerStyle = {
   width: circleDiameter,
@@ -1230,6 +1238,7 @@ export const menuDrawerBoxContainer = {
     width: sidebarWidth,
   }
 }
+
 export const sidebarDrawerPaperStyle = {
   width: sidebarWidth,
   boxShadow: AppStyle.shadows[8],

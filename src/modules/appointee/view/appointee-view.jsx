@@ -45,6 +45,8 @@ import {
   appointeerejetionConfirmationMsg,
   approveConfirmation,
   passportFileTypeAlias,
+  handicapFileTypeAlias,
+  trustEpfoFileTypeAlias,
   remarksEmptyMsg,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
@@ -58,6 +60,8 @@ import {
 } from "shared/components/display-information/personal-information";
 import RemarksInputModel from "shared/utils/models/remarks-modal";
 import Button2 from "shared/utils/button/button2";
+import viewImage from 'assets/images/profile/view_image.png';
+import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 
 const DocumentDetails = ({ fieldName, fieldValue, isVerified }) => {
   return (
@@ -115,6 +119,7 @@ let AppointeeViewForm = ({
     getRemarks
   } = apiSlice[0];
   const [UAN, setUAN] = useState(null);
+  const [uanNumber, setUanNumber] = useState(null);
   const [appointeeName, setAppointeeName] = useState(null);
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [dateOfJoining, setDateOfJoining] = useState(null);
@@ -138,11 +143,14 @@ let AppointeeViewForm = ({
   const [aadhar, setAadhar] = useState(null);
   const [nameAsOnAadhar, setNameAsOnAadhar] = useState(null);
   const [visaFile, setVisaFile] = useState();
+  const [handicapFile, setHandicapFile] = useState();
+  const [trustPfFile, setTrustPfFile] = useState();
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isAadharVerified, setIsAadharVerified] = useState(null);
   const [isPassportAvailable, setIsPassportAvailable] = useState(null);
+  //const [isHandicap, setIsHandicap] = useState(null);
   const [isProcessed, setIsProcessed] = useState(null);
   const [degreeOfRotation, setDegreeOfRotation] = useState(0);
   const [timelineStates, setTimelineStates] = useState([]);
@@ -193,13 +201,14 @@ let AppointeeViewForm = ({
     }
   };
 
- 
+
 
   const setAppointeeDetails = async () => {
     const response = await getAppointeeDetails(appointeeId);
     if (response) {
       const {
         maskedUANNumber,
+        uanNumber,
         appointeeName,
         dateOfBirth,
         dateOfJoining,
@@ -232,7 +241,7 @@ let AppointeeViewForm = ({
         isTrustPassbook
       } = response.responseInfo;
       maskedUANNumber ? setUAN(maskedUANNumber) : setUAN(NA);
-
+      uanNumber ? setUanNumber(uanNumber) : setUanNumber(null)
       isPanVarified
         ? setIsPanVarified(isPanVarified)
         : isPanVarified === false
@@ -330,25 +339,31 @@ let AppointeeViewForm = ({
       setIsSaveStep(saveStep);
       if (isTrustPassbook === true) {
         setIsTrustPassbook('Yes');
-      }else if(isTrustPassbook === false){
+      } else if (isTrustPassbook === false) {
         setIsTrustPassbook('No');
-      }else{
+      } else {
         setIsTrustPassbook(NA);
       }
 
-        fileUploaded.forEach(
-          ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
-            const fileDetails = `data:${mimeType};base64,${fileData}`;
-            const file = {
-              fileDetails,
-              fileName,
-            };
-         
-            if (uploadTypeAlias === passportFileTypeAlias) {
-              setVisaFile(file);
-            }
+      fileUploaded.forEach(
+        ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
+          const fileDetails = `data:${mimeType};base64,${fileData}`;
+          const file = {
+            fileDetails,
+            fileName,
+          };
+
+          if (uploadTypeAlias === passportFileTypeAlias) {
+            setVisaFile(file);
           }
-        );
+          if (uploadTypeAlias === handicapFileTypeAlias) {
+            setHandicapFile(file);
+          }
+          if (uploadTypeAlias === trustEpfoFileTypeAlias) {
+            setTrustPfFile(file);
+          }
+        }
+      );
     }
   };
   const setAppointeeActivity = async () => {
@@ -371,6 +386,11 @@ let AppointeeViewForm = ({
       openRemarksModel(remarks);
     }
   };
+
+  // console.log("uanNumber",uanNumber)
+  console.log("isUanVerified", isUanVerified)
+
+  console.log("isPhysicallyHandicap", isPhysicallyHandicap)
 
   let verifyIconStyle;
   if (isdocumentVerified === null) {
@@ -516,6 +536,12 @@ let AppointeeViewForm = ({
                           label={"UAN Verification Pending"}
                           color={"warning"}
                         />
+                      ) : isUanVerified === true && (!hasValue(uanNumber)) ? (
+                        <Chip
+                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                          label={"No UAN Available"}
+                          color={"success"}
+                        />
                       ) : null}
                     </>
                   ) : null}
@@ -540,7 +566,7 @@ let AppointeeViewForm = ({
                 fieldName={"Aadhaar Number"}
                 fieldValue={aadhar}
               />
-              
+
               <DocumentDetails
                 isVerified={isUanVerified}
                 fieldName={"UAN Number"}
@@ -560,6 +586,28 @@ let AppointeeViewForm = ({
                 fieldName={"Trust PF"}
                 fieldValue={isTrustPassbook}
               />
+              {isTrustPassbook === "Yes" && trustPfFile && (
+                <DocumentDetails
+                  fieldName={"Trust Pf File"}
+                  fieldValue={
+                    <DarkTooltip placement="right" title="View image" arrow>
+
+                    <img
+                      src={viewImage}
+                      alt="Trust Pf File"
+                      title="View image"
+                      style={{
+                        width: "2.5vw", // or use "5vw" to make it responsive to the viewport width
+                        height: "auto", // Keeps the aspect ratio intact
+                      }}
+                      //style={{ width: "30px", height: "30px" }} // Adjust size as needed
+                      onClick={() => openDocumentModel(trustPfFile, "Trust Pf")}
+                    />
+                    </DarkTooltip>
+
+                  }
+                />
+              )}
             </Box>
             <Box sx={cardStyle}>
               <Stack sx={listHeadingConteinerStyle}>
@@ -591,11 +639,21 @@ let AppointeeViewForm = ({
                     <DocumentDetails
                       fieldName={"Passport File"}
                       fieldValue={
-                        <Button2
+                        <DarkTooltip placement="right" title="View image" arrow>
+
+                        <img
+                          src={viewImage}
+                          alt="Passport File"
+                         
+                          style={{
+                            width: "2.5vw", // or use "5vw" to make it responsive to the viewport width
+                            height: "auto", // Keeps the aspect ratio intact
+                          }}
+                          // style={{ width: "30px", height: "30px" }} // Adjust size as needed
                           onClick={() => openDocumentModel(visaFile, "Passport")}
-                        >
-                          View image
-                        </Button2>
+                        />
+                        </DarkTooltip>
+
                       }
                     />
                   }
@@ -658,6 +716,31 @@ let AppointeeViewForm = ({
                   fieldName={"Handicap Type"}
                   fieldValue={handicapType}
                 />
+                {isPhysicallyHandicap === "Yes" && handicapFile && (
+                  <PersonalInformation
+                    fieldName={"Handicap Certificate"}
+                    fieldValue={
+                      <DarkTooltip placement="right" title="View image" arrow>
+
+                      <img
+                        src={viewImage}
+                        alt="Handicap Certificate"
+                        style={{
+                          width: "2.5vw", // or use "5vw" to make it responsive to the viewport width
+                          height: "auto", // Keeps the aspect ratio intact
+                          marginLeft: "2%", // Relative margin for responsiveness
+                          marginTop: "0.5rem" // Responsive margin based on font size
+                        }}
+                        //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
+                        onClick={() => openDocumentModel(handicapFile, "Handicap")}
+                      />
+                      </DarkTooltip>
+
+                    }
+                  />
+                )}
+
+
               </Grid>
             </Box>
             <Box sx={cardStyle}>
@@ -751,7 +834,7 @@ let AppointeeViewForm = ({
 const UnWrappedAppointeeView = (props) => {
   return (
     <FullScreenModel
-     headerText={"Appointee Details"}
+      headerText={"Appointee Details"}
       open={props.openView}
       fullScreen={true}
       closeModel={props.closeViewModel}

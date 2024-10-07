@@ -45,6 +45,7 @@ const HomeView = () => {
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const userDetails = loggedInData[0];
+  console.log("loggedInData", userDetails)
   const dropdownList = useSelector((state) => state.dropdownList);
 
   const { days } = dropdownList.length > 0 && dropdownList[0];
@@ -52,8 +53,8 @@ const HomeView = () => {
   const prerquistdata = hasValue(userDetails.isPrerequisiteDataAvailable) && userDetails.isPrerequisiteDataAvailable;
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getDashboardWidgetCardData, getRemarks, getAppointeeDetails, postAppointeePrerequisiteStatus } = apiSlice[0];
-  const { userTypeId, appointeeId, userName, emailId, phone, status } = loggedInData[0];
-  console.log("loggedInData", loggedInData)
+  const { userTypeId, appointeeId, userName, emailId, phone, status,isProcessed } = loggedInData[0];
+  console.log("loggedInData**", loggedInData)
   const [isPrerequisiteDataAvailable, setIsPrerequisiteDataAvailable] = useState(prerquistdata)
   const [loading, setLoading] = useState(false);
 
@@ -168,7 +169,7 @@ const HomeView = () => {
         dialogTitle: (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography>Prerequisite Confirmation</Typography>
-            
+
           </div>
         ),
         dialogContentText: <><Typography>Before verification there are some prerequisites, thats needs to be done...</Typography>
@@ -179,7 +180,7 @@ const HomeView = () => {
         // thirdButtonName: "Close",
         fullWidth: true,
         mxWidth: 'md',
-        
+
       };
       openConfirmationYesNoModal(prerequisiteModelContent, handleYes, handleNo);
     } else {
@@ -435,7 +436,8 @@ const HomeView = () => {
                             transition: 'box-shadow 0.3s, transform 0.3s', // Smooth transition for elevation and scale
                           }}
                         >
-                          {status === "No Response" ? "Start Verification" : "Pending Verification"}
+                          {(consentStatus === 4 || consentStatus === 0) && isProcessed !== true ? "Start Verification" : "Pending Verification"}
+
                         </Button>
 
 
