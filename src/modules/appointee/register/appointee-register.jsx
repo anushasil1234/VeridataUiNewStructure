@@ -3190,7 +3190,7 @@ const AppointeeRegister = () => {
         }
       }
     }
-    
+
     // Make the API call
     const response = await PostUpdatePfUanDetails(formData);
     if (response) {
@@ -4597,15 +4597,17 @@ const AppointeeRegister = () => {
                             {/* <Typography sx={lable1Style}>Passport Number</Typography> */}
 
                             <Box>
-                              <Typography sx={{ ...lable1Style }}>
-                                {"Do you have PF under any Trust, in the past or present"}
-                              </Typography>
-                              <Tooltip arrow="bottom" title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO">
-                                <IconButton disabled={isPreviousSectionDisabled}>
-                                  <InfoOutlined />
-                                </IconButton>
-                              </Tooltip>
-                              <FormControl>
+                              <Stack direction="row">
+                                <Typography sx={{ ...lable1Style, display: 'flex', alignItems: 'center' }}>
+                                  {"Do you have PF under any Trust, in the past or present"}
+                                </Typography>
+                                <Tooltip arrow="bottom" title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO">
+                                  <IconButton disabled={isPreviousSectionDisabled}>
+                                    <InfoOutlined />
+                                  </IconButton>
+                                </Tooltip>
+                              </Stack>
+                              <FormControl sx={{marginLeft: '17px'}}>
                                 <Stack
                                   direction="row"
                                   spacing={1}

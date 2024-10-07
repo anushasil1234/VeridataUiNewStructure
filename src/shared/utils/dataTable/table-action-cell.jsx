@@ -25,12 +25,15 @@ import {
 } from "shared/constants/constants";
 import UpdateAppointeeForm from "shared/components/form-dialog/update-appointee-data";
 import CloseAppointeeAddRemarks from "shared/components/form-dialog/close-appointee-add-Remarks";
-import { GetAttribute } from "..";
+import { GetAttribute, hasValue } from "..";
 import downloadFile from "../associate/download-file";
 
 export const TableActionCell = (props1, props2) => {
   const { actionList, rowAttribute, actionPermissionList, setTableRows } = props1;
-  const { appointeeId, userId: id } = rowAttribute;
+  const { appointeeId, userId: id, isPassbookVerified, uanNo } = rowAttribute;
+  console.log('rowAttribute1234', rowAttribute);
+  // console.log('props12121', props1);
+  
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
@@ -204,7 +207,7 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] ? (
+          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] && hasValue(uanNo) ?  (
             <DarkTooltip placement="top" title={"EPFO Passbook"} arrow>
               <Fab
                 variant="contained"
@@ -217,7 +220,7 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] ? (
+          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] && isPassbookVerified ? (
             <DarkTooltip placement="top" title={"EPFO Employment History"} arrow>
               <Fab
                 variant="contained"

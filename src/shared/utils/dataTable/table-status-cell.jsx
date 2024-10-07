@@ -24,6 +24,7 @@ const TableStatusCell = (props) => {
 
   const functionSlice = useSelector(state => state.functionSlice);
   let { cellName, cellValue, rowAttribute } = props;
+
   const { appointeeId } = rowAttribute;
   const { setRemarks } = functionSlice[0];
   let labelValue;
@@ -61,6 +62,34 @@ const TableStatusCell = (props) => {
     chipStyle = issueChipStyle;
   }
 
+  if (cellName === "consentStatusCode") {
+    if (cellValue === 0) {
+      labelValue = "Pending";
+      chipStyle = consetPendingChipStyle;
+      chipIconStyle= <WatchLaterIcon color="white"/>
+    }if (cellValue === 1) {
+      labelValue = "Given";
+      chipStyle = consetGivenChipStyle;
+      chipIconStyle= <CheckCircleIcon color="white"/>
+    }if (cellValue === 2) {
+      labelValue = "Declined";
+      chipStyle = consetDeclinedChipStyle;
+      chipIconStyle= <CancelIcon color="white"/>
+    }if (cellValue === 3) {
+      labelValue = "Revoked";
+      chipStyle = consetDeclinedChipStyle;
+      chipIconStyle= <CancelIcon color="white"/>
+    }if (cellValue === 4) {
+      labelValue = "Pending";
+      chipStyle = consetPendingChipStyle;
+      chipIconStyle= <WatchLaterIcon color="white"/>
+    }if (cellValue === 5) {
+      labelValue = "Prerequisite Data Not available";
+      chipStyle = consetDeclinedChipStyle;
+      chipIconStyle= <CancelIcon color="white"/>
+    }
+  }
+  
   if (cellName === "consentStatusCode") {
     if (cellValue === 0) {
       labelValue = "Pending";

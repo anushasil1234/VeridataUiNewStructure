@@ -252,6 +252,17 @@ export const verifiedListTableHeadCell = [
         }
     },
     {
+        id: 'isPassbookVerified',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Is Passbook Verified',
+        enums: ['isPassbookVerified'],
+        component: {
+            element: Typography
+        }
+    },
+    {
         id: 'viewDetails',
         numeric: true,
         type: "string",
@@ -260,7 +271,7 @@ export const verifiedListTableHeadCell = [
         enums: ['viewDetails'],
         component: {
             element: (props) => TableActionCell({ actionList: verifiedListActions, ...props }),
-            attribute: ['appointeeId', 'isTrustPFApplicable']
+            attribute: ['appointeeId', 'isTrustPFApplicable', 'uanNo', 'isPassbookVerified']
         }
     }
 ];
