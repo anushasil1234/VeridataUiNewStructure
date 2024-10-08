@@ -238,6 +238,7 @@ let AppointeeViewForm = ({
         isAadhaarVarified,
         isPanVarified,
         isUanVarified,
+        isEmployementVarified,
         isProcessed,
         saveStep,
         isTrustPassbook
@@ -369,6 +370,8 @@ let AppointeeViewForm = ({
       );
     }
   };
+
+  console.log("isEmployementVarified",isEmployementVarified)
   const setAppointeeActivity = async () => {
     const response = await getAppointeeActivity(appointeeId);
     if (response) {
@@ -525,7 +528,14 @@ let AppointeeViewForm = ({
                           label={"UAN Verification failed"}
                           color={"error"}
                         />
-                      ) : isPanVarified === "N/A" ? (
+                      )
+                      : isEmployementVarified === false ? (
+                        <Chip
+                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                          label={"Employement Verification failed"}
+                          color={"error"}
+                        />
+                       ) : isPanVarified === "N/A" ? (
                         <Chip
                           sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
                           label={"PAN Verification Pending"}
@@ -549,7 +559,7 @@ let AppointeeViewForm = ({
                           label={"No UAN Available"}
                           color={"success"}
                         />
-                      ) : isUanVerified === true && (hasValue(uanNumber)) && (!hasValue(isEmployementVarified)) ? (
+                      ) : isUanVerified === true && (hasValue(uanNumber)) && (isEmployementVarified===null) ? (
                         <Chip
                           sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
                           label={"Employement Verification Pending"}
