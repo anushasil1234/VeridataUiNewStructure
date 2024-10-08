@@ -7,6 +7,7 @@ import {
   processingListPdfTableHeadCell,
   processingListTableHeadCell,
   toProcessing,
+  reportGenarate
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -35,7 +36,8 @@ import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 const UnWrappedProcessing = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
-
+  const popUpSlice = useSelector((state) => state.popUpSlice);
+  const {showErrorMessage} =popUpSlice[0]
   let noOfDays = 0;
   let isFiltered = false;
 
@@ -142,6 +144,10 @@ const UnWrappedProcessing = (props) => {
   //   jsPDFReportTemplate({ tableObj });
   // };
   const handleDownload = () => {
+    if(!responseList || responseList.length === 0){
+      showErrorMessage(reportGenarate)
+      return;
+    }
     const tableHeadList = processingListPdfTableHeadCell.map(({ label }) => {
       return {
         title: label,

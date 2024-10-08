@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadAgingReport from "shared/components/download-report/download-aging-report";
-import { generateNoMovementReportDesc, noResponseListTableHeadCell, noResponseReportTableHeadCell, toNoResponseAgingReport } from "shared/constants/constants";
+import { generateNoMovementReportDesc, noResponseListTableHeadCell, noResponseReportTableHeadCell,reportGenarate, toNoResponseAgingReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
@@ -12,6 +12,7 @@ import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 const NoResponseAgingReportView = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
+  const popUpSlice = useSelector(state => state.popUpSlice);
   const [fromDate, setFromDate] = useState(null);
   const [noOfDays, setNoOfDays] = useState(null);
   const [appointeeDetails, setAppointeeDetails] = useState();
@@ -26,7 +27,7 @@ const NoResponseAgingReportView = (props) => {
     reportType: 'PINORS',
     noOfDays: noOfDays ?? 0,
   }
-  // const { showErrorMessage } = popUpSlice[0];
+   const { showErrorMessage } = popUpSlice[0];
 
   let [payLoad, setPayLoad] = useState(payloadData);
   const [filterType, setFilterType] = useState(0);
@@ -104,6 +105,10 @@ const NoResponseAgingReportView = (props) => {
   }, [fromDate]);
 
   const handleAppointeeCountDownload = () => {
+    if(!appointeeDetails || appointeeDetails.length === 0 ){
+      showErrorMessage(reportGenarate)
+      return;
+     }
     const tableHeadList = noResponseReportTableHeadCell.map(({ label }) => {
       return {
         title: label,

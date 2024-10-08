@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
-import { appointeeListTableHeadCell, appointeeReportTableHeadCell,  toAppointeeReport,  toNationalityReport } from "shared/constants/constants";
+import { appointeeListTableHeadCell, appointeeReportTableHeadCell,  toAppointeeReport,  toNationalityReport,reportGenarate } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
@@ -18,7 +18,7 @@ const AppointeeDataReportView = (props) => {
   const [statusCode, setStatusCode] = useState('All');
   const [appointeeDetails, setAppointeeDetails] = useState();
   const apiSlice = useSelector(state => state.apiSlice);
-  // const popUpSlice = useSelector(state => state.popUpSlice);
+   const popUpSlice = useSelector(state => state.popUpSlice);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
@@ -29,7 +29,7 @@ const AppointeeDataReportView = (props) => {
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
     StatusCode: statusCode,
   }
-  // const { showErrorMessage } = popUpSlice[0];
+  const { showErrorMessage } = popUpSlice[0];
 
   let [payLoad, setPayLoad] = useState(payloadData);
   const [filterType, setFilterType] = useState(0);
@@ -135,6 +135,10 @@ const AppointeeDataReportView = (props) => {
   //   jsPDFReportTemplate({ tableObj });
   // };
   const handleAppointeeListDownload = () => {
+    if (!appointeeDetails|| appointeeDetails.length === 0) {
+      showErrorMessage(reportGenarate)
+      return; 
+    }
     const tableHeadList = appointeeReportTableHeadCell.map(({ label }) => {
       return {
         title: label,

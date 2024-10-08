@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
-import { nationalityListTableHeadCell, nationalityReportTableHeadCell, toNationalityReport } from "shared/constants/constants";
+import { nationalityListTableHeadCell, nationalityReportTableHeadCell, toNationalityReport ,reportGenarate} from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import { removeActionRoute } from "store/slices/action-route-slice";
@@ -18,7 +18,8 @@ const NationalityReportView = (props) => {
   const [nationalityType, setNationalityType] = useState(null);
   const [appointeeDetails, setAppointeeDetails] = useState();
   const apiSlice = useSelector(state => state.apiSlice);
-  // const popUpSlice = useSelector(state => state.popUpSlice);
+   const popUpSlice = useSelector(state => state.popUpSlice);
+   
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
@@ -29,7 +30,7 @@ const NationalityReportView = (props) => {
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
     nationalityType: nationalityType,
   }
-  // const { showErrorMessage } = popUpSlice[0];
+  const { showErrorMessage } = popUpSlice[0];
 
   let [payLoad, setPayLoad] = useState(payloadData);
   const [filterType, setFilterType] = useState(0);
@@ -108,6 +109,10 @@ const NationalityReportView = (props) => {
 
   const handleNaltionalityListDownload = () => {
 
+    if (!appointeeDetails || appointeeDetails.length === 0) {
+      showErrorMessage(reportGenarate)
+      return; 
+    }
     const tableHeadList = nationalityReportTableHeadCell.map(({ label }) => {
       return {
         title: label,

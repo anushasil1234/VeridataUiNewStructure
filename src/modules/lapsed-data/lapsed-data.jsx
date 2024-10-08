@@ -14,6 +14,7 @@ import {
   lapsedListPdfTableHeadCell,
   lapsedListTableHeadCell,
   toLapseddata,
+  reportGenarate
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -35,9 +36,9 @@ import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 const UnwrappedLapseddata = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
-
+  const popUpSlice = useSelector((state) => state.popUpSlice);
   let noOfDays = 0;
-
+  const {showErrorMessage} =popUpSlice[0]
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
@@ -144,6 +145,10 @@ const UnwrappedLapseddata = (props) => {
     setTableRows(payLoad);
   };
   const handleDownload = () => {
+if(!responseList || responseList.length === 0){
+  showErrorMessage(reportGenarate)
+  return;
+}
 
     const tableHeadList = lapsedListPdfTableHeadCell.map(({ label }) => {
       return {

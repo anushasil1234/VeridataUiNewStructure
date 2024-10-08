@@ -11,6 +11,7 @@ import {
   consoidateApiCountHeadCell,
   generateAppointeeCountReportDesc,
   toApiCountReport,
+  reportGenarate
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -26,7 +27,7 @@ import { removeActionRoute } from "store/slices/action-route-slice";
 
 const UnwrappedReport = (props) => {
   const { hasPermission } = props;
-
+  const popUpSlice = useSelector(state => state.popUpSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
   const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(
@@ -41,6 +42,7 @@ const UnwrappedReport = (props) => {
   const [rows, setRows] = useState([]);
   const [apiCountList, setApiCountList] = useState();
   const [apiConsolidateCountList, setApiConsolidateCountList] = useState();
+  const {showErrorMessage} =popUpSlice[0]
   const setTableRows = async (fromDate = null, toDate = null) => {
     const response = await getApiCounterReport(fromDate, toDate);
 
@@ -118,6 +120,10 @@ const UnwrappedReport = (props) => {
   //   jsPDFReportTemplate({ tableObj, tableObjConsolidate });
   // };
   const handleApiCountDownload = async () => {
+    if(!apiConsolidateCountList || apiConsolidateCountList.length === 0){
+      showErrorMessage(reportGenarate)
+      return;
+    }
     const tableHeadList = apiCountHeadCell.map(({ label }) => ({ title: label }));
     const consolidateTableHeadList = consoidateApiCountHeadCell.map(({ label }) => ({ title: label }));
 
