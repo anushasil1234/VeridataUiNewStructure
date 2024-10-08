@@ -3081,33 +3081,11 @@ const AppointeeRegister = () => {
   };
 
   const handleSaveClick = () => {
+    let dialogContentText
 
-    // Check if the user has not selected a value for UAN number
-    if (!uanNumberAvailable) {
-      // If no value is selected for UAN number, show a message
-      let dialogContentText = (
-        <Typography>
-          {selectUANmessage("whether you have a UAN number (Yes or No)")},then save the details
-        </Typography>
-      );
-      openUploadDocInfoModel(dialogContentText);
-      return; // Prevent further execution
-    }
-    // Check if file upload is needed and not provided
-    if (isTrustEpfoAvailable === 'Y' && !hasTrustEpfoUpload()) {
-      // If Trust EPFO is selected but no file uploaded, show the message immediately
-      let dialogContentText = (
-        <>
-          <Typography>
-            {uploadFileMessage("trust epfo passbook")}, then save the details
-          </Typography>
-        </>
-      );
-      openUploadDocInfoModel(dialogContentText); // Show file upload message
-    }
     if (isPhysicallyHandicap === 'Y' && !hasHandicapUpload()) {
       // If Trust EPFO is selected but no file uploaded, show the message immediately
-      let dialogContentText = (
+      dialogContentText = (
         <>
           <Typography>
             {uploadFileMessage("handicap certificate")}, then save the details
@@ -3115,38 +3093,79 @@ const AppointeeRegister = () => {
         </>
       );
       openUploadDocInfoModel(dialogContentText); // Show file upload message
+      return;
     }
-    if (passportAvailable === 'Y' && !hasPassportUpload()) {
+    // Check if file upload is needed and not provided
+    if (isTrustEpfoAvailable === 'Y' && !hasTrustEpfoUpload()) {
       // If Trust EPFO is selected but no file uploaded, show the message immediately
-      let dialogContentText = (
+      dialogContentText = (
         <>
           <Typography>
-            {uploadFileMessage("passport file")}, then save the details
+            {uploadFileMessage("trust epfo passbook")}, then save the details
           </Typography>
         </>
       );
       openUploadDocInfoModel(dialogContentText); // Show file upload message
+      return;
+    }
+    // Check if the user has not selected a value for UAN number
+    if (!uanNumberAvailable) {
+      // If no value is selected for UAN number, show a message
+      dialogContentText = (
+        <Typography>
+          {selectUANmessage("whether you have a UAN number (Yes or No)")},then save the details
+        </Typography>
+      );
+      openUploadDocInfoModel(dialogContentText);
+      return; // Prevent further execution
+    }
+
+    if (
+      hasValue(countryOfOrigin) &&
+      (countryOfOrigin === "India" ||
+        countryOfOrigin === "Nepal" ||
+        countryOfOrigin === "Bhutan")
+
+    ) {
+      if (passportAvailable === 'Y' && !hasPassportUpload()) {
+        // If Trust EPFO is selected but no file uploaded, show the message immediately
+        dialogContentText = (
+          <>
+            <Typography>
+              {uploadFileMessage("passport file")}, then save the details
+            </Typography>
+          </>
+        );
+        openUploadDocInfoModel(dialogContentText); // Show file upload message
+        return;
+      }
     }
     if (
+
       hasValue(countryOfOrigin) &&
       (countryOfOrigin !== "India" ||
         countryOfOrigin !== "Nepal" ||
-        countryOfOrigin !== "Bhutan") &&
-      !passportFileName
+        countryOfOrigin !== "Bhutan")
+
     ) {
-
-      let dialogContentText = (
-        <>
-          <Typography>{uploadFileMessage("visa")} , then submit details</Typography>
-          {dialogContentText}
-        </>
-      );
+      if (passportAvailable === 'Y' && !hasPassportUpload()) {
+        // If Trust EPFO is selected but no file uploaded, show the message immediately
+        dialogContentText = (
+          <>
+            <Typography>
+              {uploadFileMessage("visa")}, then save the details
+            </Typography>
+          </>
+        );
+        openUploadDocInfoModel(dialogContentText); // Show file upload message
+        return;
+      }
     }
 
-    else {
-      // If all conditions are met, open the confirmation modal
-      handleOpenModal(); // Trigger "Are you sure" modal
-    }
+
+    // If all conditions are met, open the confirmation modal
+    handleOpenModal(); // Trigger "Are you sure" modal
+
   };
 
   const handleConfirmSave = async () => {
@@ -3640,6 +3659,8 @@ const AppointeeRegister = () => {
     }
   };
 
+  console.log("isUanVarified", isUanVarified)
+
   const resetPassportDetails = () => {
     setisInterNationalWorker("N");
     setCountryOfOrigin("");
@@ -3728,9 +3749,11 @@ const AppointeeRegister = () => {
 
   return (
     <CardLayout>
+    {currentPageNo === 2 && (
       <Typography sx={{ ...heading2, mb: 3 }}>
         Your personal details must match with your Aadhaar details
       </Typography>
+    )}
       {/* <NonLinearStepper/> */}
       <Box sx={{ width: '100%' }}>
         <Stepper activeStep={activeStep} alternativeLabel>
@@ -5049,7 +5072,7 @@ const AppointeeRegister = () => {
                           </Dialog>
                           <Button
                             sx={{ margin: "5px" }}
-                            disabled={isUanVarified}
+                            enabled={isUanVarified}
                             variant="contained"
                             onClick={handleEpfoButtonClick}
                             endIcon={<Autorenew />}

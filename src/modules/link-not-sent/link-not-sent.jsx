@@ -110,6 +110,7 @@ const UnwrapedLinkNotSent = (props) => {
             dialogContentText: notProcessedDataVerificationConfirmationMsg
         }
         openConfirmationModel(confirmationModelContent, startProcessRawData)
+        setSelected([]);
     }
     const handleSearch = () => {
         setTableRows(payLoad);
@@ -140,10 +141,12 @@ const UnwrapedLinkNotSent = (props) => {
     // }, [actionRouteSlice]);
   
     useEffect(() => {
+        console.log("selected",selected)
         if (selected.length > 0) {
             setIsStartVerificationBtnDisabled(false);
         } else {
             setIsStartVerificationBtnDisabled(true);
+            //setSelected([]);
         }
     }, [selected])
 
