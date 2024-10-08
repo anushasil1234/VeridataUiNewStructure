@@ -2725,7 +2725,10 @@ const AppointeeRegister = () => {
       }
       setFileUploaded(fileUploaded);
       setIsAppointeeUanAvailable(isUanAvailable);
-      setUanNumberAvailable(isUanAvailable ? "yes" : "no");
+      hasValue(isUanAvailable)
+        ? setUanNumberAvailable(isUanAvailable ? "yes" : "no")
+        : setUanNumberAvailable(null);
+      // setUanNumberAvailable(isUanAvailable ? "yes" : "no");
       hasValue(isTrustPassbook)
         ? setIsTrustEpfoAvailable(isTrustPassbook)
         : setIsTrustEpfoAvailable(true);
@@ -3096,7 +3099,7 @@ const AppointeeRegister = () => {
       return;
     }
     // Check if file upload is needed and not provided
-    if (isTrustEpfoAvailable === 'Y' && !hasTrustEpfoUpload()) {
+    if (isTrustEpfoAvailable === true && !hasTrustEpfoUpload()) {
       // If Trust EPFO is selected but no file uploaded, show the message immediately
       dialogContentText = (
         <>
@@ -3108,17 +3111,7 @@ const AppointeeRegister = () => {
       openUploadDocInfoModel(dialogContentText); // Show file upload message
       return;
     }
-    // Check if the user has not selected a value for UAN number
-    if (!uanNumberAvailable) {
-      // If no value is selected for UAN number, show a message
-      dialogContentText = (
-        <Typography>
-          {selectUANmessage("whether you have a UAN number (Yes or No)")},then save the details
-        </Typography>
-      );
-      openUploadDocInfoModel(dialogContentText);
-      return; // Prevent further execution
-    }
+
 
     if (
       hasValue(countryOfOrigin) &&
@@ -3160,6 +3153,18 @@ const AppointeeRegister = () => {
         openUploadDocInfoModel(dialogContentText); // Show file upload message
         return;
       }
+    }
+
+    // Check if the user has not selected a value for UAN number
+    if (!uanNumberAvailable) {
+      // If no value is selected for UAN number, show a message
+      dialogContentText = (
+        <Typography>
+          {selectUANmessage("whether you have a UAN number (Yes or No)")},then save the details
+        </Typography>
+      );
+      openUploadDocInfoModel(dialogContentText);
+      return; // Prevent further execution
     }
 
 
@@ -3749,11 +3754,11 @@ const AppointeeRegister = () => {
 
   return (
     <CardLayout>
-    {currentPageNo === 2 && (
-      <Typography sx={{ ...heading2, mb: 3 }}>
-        Your personal details must match with your Aadhaar details
-      </Typography>
-    )}
+      {currentPageNo === 2 && (
+        <Typography sx={{ ...heading2, mb: 3 }}>
+          Your personal details must match with your Aadhaar details
+        </Typography>
+      )}
       {/* <NonLinearStepper/> */}
       <Box sx={{ width: '100%' }}>
         <Stepper activeStep={activeStep} alternativeLabel>
