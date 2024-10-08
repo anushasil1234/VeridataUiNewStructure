@@ -114,6 +114,7 @@ export const tenthCertificateFileTypeAlias = "10THCERT";
 export const otherFileTypeAlias = "OTHID";
 export const handicapFileTypeAlias = "HANDCERT";
 export const aadharFileTypeAlias = "ADH";
+
 export const passportFileTypeAlias = "VISA";
 export const epfTypeAlias = "EPFPSBK";
 export const epfExcelTypeAlias = "EPFPSBKEXCL";

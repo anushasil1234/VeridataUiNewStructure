@@ -47,6 +47,8 @@ import {
   passportFileTypeAlias,
   handicapFileTypeAlias,
   trustEpfoFileTypeAlias,
+  tenthCertificateFileTypeAlias,
+  otherFileTypeAlias,
   remarksEmptyMsg,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
@@ -144,11 +146,13 @@ let AppointeeViewForm = ({
   const [nameAsOnAadhar, setNameAsOnAadhar] = useState(null);
   const [visaFile, setVisaFile] = useState();
   const [handicapFile, setHandicapFile] = useState();
+  const [tenFile, setTenFile] = useState();
+  const [otherFile, setOtherFile] = useState();
   const [trustPfFile, setTrustPfFile] = useState();
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
   const [isEmployementVarified, setIsEmployementVarified] = useState(null);
-  
+
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isAadharVerified, setIsAadharVerified] = useState(null);
   const [isPassportAvailable, setIsPassportAvailable] = useState(null);
@@ -251,7 +255,7 @@ let AppointeeViewForm = ({
           ? setIsPanVarified(isPanVarified)
           : setIsPanVarified(NA);
       isProcessed ? setIsProcessed(isProcessed) : setIsProcessed(false);
-      isEmployementVarified ? setIsEmployementVarified(isEmployementVarified) : setIsEmployementVarified(null);     
+      isEmployementVarified ? setIsEmployementVarified(isEmployementVarified) : setIsEmployementVarified(null);
       appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
       isUanVarified
         ? setIsUanVerified(isUanVarified)
@@ -357,6 +361,13 @@ let AppointeeViewForm = ({
             fileName,
           };
 
+          if (uploadTypeAlias === tenthCertificateFileTypeAlias) {
+            setTenFile(file);
+          }
+          if (uploadTypeAlias === otherFileTypeAlias) {
+            setOtherFile(file);
+          }
+
           if (uploadTypeAlias === passportFileTypeAlias) {
             setVisaFile(file);
           }
@@ -395,12 +406,12 @@ let AppointeeViewForm = ({
 
   // console.log("uanNumber",uanNumber)
 
-  console.log("isTrustPassbook",isTrustPassbook)
+  console.log("isTrustPassbook", isTrustPassbook)
   console.log("isUanVerified", isUanVerified)
 
   console.log("isPhysicallyHandicap", isPhysicallyHandicap)
 
-  console.log("isPassportAvailable",isPassportAvailable)
+  console.log("isPassportAvailable", isPassportAvailable)
 
   let verifyIconStyle;
   if (isdocumentVerified === null) {
@@ -565,8 +576,8 @@ let AppointeeViewForm = ({
                           label={"Employement Verification Pending"}
                           color={"warning"}
                         />
-                      ) 
-                      : null}
+                      )
+                        : null}
                     </>
                   ) : null}
                 </Box>
@@ -612,21 +623,21 @@ let AppointeeViewForm = ({
               />
               {isTrustPassbook === "Yes" && trustPfFile && (
                 <DocumentDetails
-                  fieldName={"Trust Pf File"}
+                  fieldName={"Trust PF File"}
                   fieldValue={
                     <DarkTooltip placement="right" title="View image" arrow>
 
-                    <img
-                      src={viewImage}
-                      alt="Trust Pf File"
-                      title="View image"
-                      style={{
-                        width: "2.5vw", // or use "5vw" to make it responsive to the viewport width
-                        height: "auto", // Keeps the aspect ratio intact
-                      }}
-                      //style={{ width: "30px", height: "30px" }} // Adjust size as needed
-                      onClick={() => openDocumentModel(trustPfFile, "Trust Pf")}
-                    />
+                      <img
+                        src={viewImage}
+                        alt="Trust Pf File"
+                        title="View image"
+                        style={{
+                          width: "2vw", // or use "5vw" to make it responsive to the viewport width
+                          height: "auto", // Keeps the aspect ratio intact
+                        }}
+                        //style={{ width: "30px", height: "30px" }} // Adjust size as needed
+                        onClick={() => openDocumentModel(trustPfFile, "Trust Pf")}
+                      />
                     </DarkTooltip>
 
                   }
@@ -665,17 +676,17 @@ let AppointeeViewForm = ({
                       fieldValue={
                         <DarkTooltip placement="right" title="View image" arrow>
 
-                        <img
-                          src={viewImage}
-                          alt="Passport File"
-                         
-                          style={{
-                            width: "2.5vw", // or use "5vw" to make it responsive to the viewport width
-                            height: "auto", // Keeps the aspect ratio intact
-                          }}
-                          // style={{ width: "30px", height: "30px" }} // Adjust size as needed
-                          onClick={() => openDocumentModel(visaFile, "Passport")}
-                        />
+                          <img
+                            src={viewImage}
+                            alt="Passport File"
+
+                            style={{
+                              width: "2vw", // or use "5vw" to make it responsive to the viewport width
+                              height: "auto", // Keeps the aspect ratio intact
+                            }}
+                            // style={{ width: "30px", height: "30px" }} // Adjust size as needed
+                            onClick={() => openDocumentModel(visaFile, "Passport")}
+                          />
                         </DarkTooltip>
 
                       }
@@ -708,7 +719,7 @@ let AppointeeViewForm = ({
                 />
                 <PersonalInformation fieldName={"Gender"} fieldValue={gender} />
                 <PersonalInformation
-                  fieldName={"Father's/ Husband's Name"}
+                  fieldName={"Father's / Husband's Name"}
                   fieldValue={member}
                 />
                 <PersonalInformation
@@ -746,18 +757,18 @@ let AppointeeViewForm = ({
                     fieldValue={
                       <DarkTooltip placement="right" title="View image" arrow>
 
-                      <img
-                        src={viewImage}
-                        alt="Handicap Certificate"
-                        style={{
-                          width: "2.5vw", // or use "5vw" to make it responsive to the viewport width
-                          height: "auto", // Keeps the aspect ratio intact
-                          marginLeft: "2%", // Relative margin for responsiveness
-                          marginTop: "0.5rem" // Responsive margin based on font size
-                        }}
-                        //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
-                        onClick={() => openDocumentModel(handicapFile, "Handicap")}
-                      />
+                        <img
+                          src={viewImage}
+                          alt="Handicap Certificate"
+                          style={{
+                            width: "2vw", // or use "5vw" to make it responsive to the viewport width
+                            height: "auto", // Keeps the aspect ratio intact
+                            marginLeft: "2%", // Relative margin for responsiveness
+                            marginTop: "0.5rem" // Responsive margin based on font size
+                          }}
+                          //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
+                          onClick={() => openDocumentModel(handicapFile, "Handicap Certificate")}
+                        />
                       </DarkTooltip>
 
                     }
@@ -775,6 +786,49 @@ let AppointeeViewForm = ({
                 <PersonalInformation
                   fieldName={"Date of Joining"}
                   fieldValue={dateOfJoining}
+                />
+                <PersonalInformation
+                  fieldName={"10th Pass Certificate"}
+                  fieldValue={
+                    <DarkTooltip placement="right" title="View image" arrow>
+
+                      <img
+                        src={viewImage}
+                        alt="10th Pass Certificate"
+                        style={{
+                          width: "2vw", // or use "5vw" to make it responsive to the viewport width
+                          height: "auto", // Keeps the aspect ratio intact
+                          marginLeft: "5%", // Relative margin for responsiveness
+                          marginTop: "0.5rem" // Responsive margin based on font size
+                        }}
+                        //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
+                        onClick={() => openDocumentModel(tenFile, "10th Pass Certificate")}
+                      />
+                    </DarkTooltip>
+
+                  }
+                />
+
+                <PersonalInformation
+                  fieldName={"Father's Name Verification Document"}
+                  fieldValue={
+                    <DarkTooltip placement="right" title="View image" arrow>
+
+                      <img
+                        src={viewImage}
+                        alt="Father's name Verification Document"
+                        style={{
+                          width: "2vw", // or use "5vw" to make it responsive to the viewport width
+                          height: "auto", // Keeps the aspect ratio intact
+                          marginLeft: "5%", // Relative margin for responsiveness
+                          marginTop: "0.8rem" // Responsive margin based on font size
+                        }}
+                        //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
+                        onClick={() => openDocumentModel(otherFile, "Father's name Verification Document")}
+                      />
+                    </DarkTooltip>
+
+                  }
                 />
               </Grid>
             </Box>
