@@ -93,7 +93,8 @@ let AppStyle = createTheme({
     button: {
       // Here is where you can customise the button
 
-      fontWeight: 700
+      fontWeight: 500,
+      fontSize: '0.875rem!important',
     },
     th: {
       fontWeight: 700
@@ -582,21 +583,24 @@ export const searchContainer = {
 };
 //######## Page general setup start
 // step heading starts
-export const stepContainerStyle = {
+export const dividerStyle = {
   flexDirection: "row",
-  alignItems: "start",
-
-  height: { xs: "45px", md: "58px" },
   borderBottom: "1px solid #C7C8D0",
   marginBottom: "5px"
+}
+const stepHeadingStyleCommon = {
+  ...dividerStyle,
+  height: { xs: "45px", md: "58px" }
+}
+
+export const stepContainerStyle = {
+  ...stepHeadingStyleCommon,
+  alignItems: "start"
 };
 
 export const stepContainerStyleHeading = {
-  flexDirection: "row",
-  alignItems: "center",
-  height: { xs: "45px", md: "58px" },
-  borderBottom: "1px solid #C7C8D0",
-  marginBottom: "5px"
+  ...stepHeadingStyleCommon,
+  alignItems: "center"
 };
 const circleDiameter = { xs: "28px", md: "34px" };
 export const stepNumberContainerStyle = {
@@ -615,6 +619,14 @@ export const stepHeadingStyle = {
   marginLeft: ".8rem",
   marginTop: "5px"
 };
+export const activeStepStyle = {
+  '& > .MuiStepLabel-iconContainer': {
+    border: '3px solid white',
+    borderRadius: '50%',
+    borderSpacing: '15px',
+    outline: `2px solid ${AppStyle.palette.primary.main}`
+  }
+}
 // step heading ends
 
 export const casesyle = {
@@ -1007,6 +1019,9 @@ export const getStatusChipStyle = (status) => {
 };
 // chip style end
 // Upload file starts
+export const fileUploadSectionContainerStyle = {
+  margin: '10px!important'
+}
 export const uploadIconContainer = {
   backgroundColor: ThemeColorPalete.common.white,
   borderRadius: "50%",
@@ -1234,7 +1249,7 @@ export const menuDrawerBoxContainer = {
   flexShrink: 0,
   position: 'relative', //indra
   height: '100vh', //indra
-  '& .MuiPaper-root':{
+  '& .MuiPaper-root': {
     width: sidebarWidth,
   }
 }
@@ -1243,7 +1258,7 @@ export const sidebarDrawerPaperStyle = {
   width: sidebarWidth,
   boxShadow: AppStyle.shadows[8],
 
-} 
+}
 export const fileImageHeaderStyle = {
   flexDirection: "row",
   justifyContent: "space-between",
