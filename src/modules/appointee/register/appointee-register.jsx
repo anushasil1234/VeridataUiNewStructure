@@ -2317,6 +2317,9 @@ import {
 } from "@mui/material";
 import { InfoOutlined } from '@mui/icons-material';
 import {
+  activeStepStyle,
+  dividerStyle,
+  fileUploadSectionContainerStyle,
   genderSectionContainer,
   genderTypeStyle,
   heading2,
@@ -2324,6 +2327,7 @@ import {
   lable1Style,
   linkStyle,
   positionRelative,
+  stepContainerStyleHeading,
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -3732,8 +3736,8 @@ const AppointeeRegister = () => {
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label, index) => (
             <Step key={label} completed={activeStep > index}>
-              <StepLabel>
-                {label} {activeStep === index ? <Typography variant="caption">Current</Typography> : null}
+              <StepLabel sx={activeStep === index && activeStepStyle}>
+                {label}
               </StepLabel>
             </Step>
           ))}
@@ -4430,11 +4434,10 @@ const AppointeeRegister = () => {
                         xs={12}
                       >
                         <Grid item xs={12}>
-                          <FormHeading step={""} heading={""} />
+                          <Stack sx={{ ...dividerStyle, marginTop: '8px' }}></Stack>
+                          {/* <FormHeading step={""} heading={""} /> */}
                         </Grid>
-
                         <>
-
                           <Grid
                             container
                             rowSpacing={1}
@@ -4442,20 +4445,17 @@ const AppointeeRegister = () => {
                             item
                             xs={12}
                           >
-                            {isPhysicallyHandicap === 'Y' && (
+                            <Grid item xs={12}>
+                              <FormHeading
+                                step={"1"}
+                                heading={"Cerificate / File Upload"}
+                                info={"Upload your handicap file details ."}
 
-                              <Grid item xs={12}>
-                                <FormHeading
-                                  step={"1"}
-                                  heading={"Handicap Cerificate Upload"}
-                                  info={"Upload your handicap file details ."}
-
-                                // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
-                                //   <HelpOutline />
-                                // </IconButton>}
-                                />
-                              </Grid>
-                            )}
+                              // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
+                              //   <HelpOutline />
+                              // </IconButton>}
+                              />
+                            </Grid>
                             <Grid sx={positionRelative} item xs={12}>
                               {/* {isPhysicallyHandicap==='N' && <DisableSection />} */}
                               <Grid
@@ -4464,6 +4464,90 @@ const AppointeeRegister = () => {
                                 rowSpacing={1}
                                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                               >
+                                <Grid item xs={12} md={6}>
+                                  <Stack
+                                    flexDirection={"row"}
+                                    justifyContent={"space-between"}
+                                    alignItems={"center"}
+
+                                  >
+                                    <Box>
+                                      <Stack direction="row">
+                                        <Typography sx={{ ...lable1Style, display: 'flex', alignItems: 'center' }}>
+                                          {"10th pass certificate"}
+                                        </Typography>
+                                        <Tooltip arrow="bottom" title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO">
+                                          <IconButton disabled={isPreviousSectionDisabled}>
+                                            <InfoOutlined />
+                                          </IconButton>
+                                        </Tooltip>
+                                      </Stack>
+                                    </Box>
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                  {isTrustEpfoAvailable && (
+                                    <Box>
+                                      <Typography
+                                        sx={{ ...lable1Style, textAlign: "center" }}
+                                      >
+                                        Please upload 10th pass certificate
+                                        <span className="requiredField">*</span>
+                                      </Typography>
+                                      <Box sx={fileUploadSectionContainerStyle}>
+                                        <FileUploadSection
+                                          chooseFile={uploadTrustEPFOFile}
+                                          fileName={trustEpfoFileName}
+                                          accept={"image/png, image/jpeg"}
+                                          disabled={isPreviousSectionDisabled}
+                                        />
+                                      </Box>
+                                    </Box>
+                                  )}
+
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                  <Stack
+                                    flexDirection={"row"}
+                                    justifyContent={"space-between"}
+                                    alignItems={"center"}
+
+                                  >
+                                    <Box>
+                                      <Stack direction="row">
+                                        <Typography sx={{ ...lable1Style, display: 'flex', alignItems: 'center' }}>
+                                          {"Document with father's name attached"}
+                                        </Typography>
+                                        <Tooltip arrow="bottom" title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO">
+                                          <IconButton disabled={isPreviousSectionDisabled}>
+                                            <InfoOutlined />
+                                          </IconButton>
+                                        </Tooltip>
+                                      </Stack>
+                                    </Box>
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                  {isTrustEpfoAvailable && (
+                                    <Box>
+                                      <Typography
+                                        sx={{ ...lable1Style, textAlign: "center" }}
+                                      >
+                                        Please upload a docucment with father's name attached
+                                        <span className="requiredField">*</span>
+                                      </Typography>
+                                      <Box sx={fileUploadSectionContainerStyle}>
+                                        <FileUploadSection
+                                          chooseFile={uploadTrustEPFOFile}
+                                          fileName={trustEpfoFileName}
+                                          accept={"image/png, image/jpeg"}
+                                          disabled={isPreviousSectionDisabled}
+                                        />
+                                      </Box>
+                                    </Box>
+                                  )}
+
+                                </Grid>
                                 {isPhysicallyHandicap === 'Y' && (
                                   <Grid item xs={12} md={6}>
                                     <Typography sx={lable1Style}>
@@ -4483,7 +4567,6 @@ const AppointeeRegister = () => {
                                   </Grid>
                                 )}
                                 <Grid item xs={12} md={6}>
-
                                   {isPhysicallyHandicap === 'Y' && (
                                     <>
                                       <Typography
@@ -4492,16 +4575,16 @@ const AppointeeRegister = () => {
                                         Please upload your Handicap Certificate
                                         <span className="requiredField">*</span>
                                       </Typography>
-                                      <FileUploadSection
-                                        chooseFile={uploadHandicapFile}
-                                        fileName={handicapFileName}
-                                        accept={"image/png, image/jpeg"}
-                                        disabled={isPreviousSectionDisabled}
-                                      />
+                                      <Box sx={fileUploadSectionContainerStyle}>
+                                        <FileUploadSection
+                                          chooseFile={uploadHandicapFile}
+                                          fileName={handicapFileName}
+                                          accept={"image/png, image/jpeg"}
+                                          disabled={isPreviousSectionDisabled}
+                                        />
+                                      </Box>
                                     </>
                                   )}
-
-
                                 </Grid>
                               </Grid>
                             </Grid>
@@ -4612,13 +4695,6 @@ const AppointeeRegister = () => {
                               alignItems={"center"}
 
                             >
-                              {/* <Box mb={2}>
-                          <Typography variant="h6" sx={{ fontWeight: 'bold', ...lable1Style }}>
-                            Trust PF Details
-                          </Typography>
-                          <Divider sx={{ borderBottomWidth: 2, mt: 1 }} />
-                        </Box> */}
-                              {/* <Typography sx={lable1Style}>Passport Number</Typography> */}
                               <Box>
                                 <Stack direction="row">
                                   <Typography sx={{ ...lable1Style, display: 'flex', alignItems: 'center' }}>
@@ -4663,12 +4739,14 @@ const AppointeeRegister = () => {
                                   Please upload Trust PF Details
                                   <span className="requiredField">*</span>
                                 </Typography>
-                                <FileUploadSection
-                                  chooseFile={uploadTrustEPFOFile}
-                                  fileName={trustEpfoFileName}
-                                  accept={"image/png, image/jpeg"}
-                                  disabled={isPreviousSectionDisabled}
-                                />
+                                <Box sx={fileUploadSectionContainerStyle}>
+                                  <FileUploadSection
+                                    chooseFile={uploadTrustEPFOFile}
+                                    fileName={trustEpfoFileName}
+                                    accept={"image/png, image/jpeg"}
+                                    disabled={isPreviousSectionDisabled}
+                                  />
+                                </Box>
                               </Box>
                             )}
 
@@ -4716,8 +4794,6 @@ const AppointeeRegister = () => {
                             </DialogActions>
                           </Dialog>
                         </>
-
-
                       </Grid>
                     </Grid>
                   </form>
@@ -5018,8 +5094,6 @@ const AppointeeRegister = () => {
                   </Typography>
 
                 </form>
-
-
               ) : null}
               <form ref={formElement}>
                 <Grid
