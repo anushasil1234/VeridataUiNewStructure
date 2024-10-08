@@ -2938,8 +2938,7 @@ const AppointeeRegister = () => {
         submitDetails(true);
       }
     }
-    if  (isAadhaarVarified && isPanVarified && isUanVarified && hasValue(UAN) && isEmployementDataVarified)
-    {
+    if (isAadhaarVarified && isPanVarified && isUanVarified && hasValue(UAN) && isEmployementDataVarified) {
       submitDetails(true);
     }
   }, [isAadhaarVarified, isPanVarified, isEmployementDataVarified, isUanVarified, UAN]);
@@ -4463,7 +4462,7 @@ const AppointeeRegister = () => {
                           </Grid>
                         </Grid>
 
-                        <Stack flexDirection={"row"} ml={"25px"}>
+                        <Stack sx={{marginTop: '16px'}} flexDirection={"row"} ml={"25px"}>
                           <Button
                             xs={12}
                             name="save"
@@ -5142,12 +5141,6 @@ const AppointeeRegister = () => {
                           />
                         </Grid>
                       </Grid>
-
-
-
-
-
-
                       {isSubmitDisabled === false ?
                         <Button
                           name="submit"
@@ -5163,9 +5156,6 @@ const AppointeeRegister = () => {
                       }
                     </Grid>
                   </Grid>
-
-
-
                   <Typography
                     appointeeId={appointeeId}
                     onClick={() => setRemarks(appointeeId)}
@@ -5182,6 +5172,7 @@ const AppointeeRegister = () => {
                   container
                   rowSpacing={1}
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  
                 >
                   <Grid
                     container
@@ -5189,6 +5180,7 @@ const AppointeeRegister = () => {
                     columnSpacing={2.5}
                     item
                     xs={12}
+                    sx={{marginTop: '16px'}}
                   >
                     {(currentPageNo === 2 || currentPageNo === 3) && (
                       <>
