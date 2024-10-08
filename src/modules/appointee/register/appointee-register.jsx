@@ -2332,7 +2332,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Divider from '@mui/material/Divider';
-import { getHandicapTypeDescription } from "shared/constants/constants";
+import { getHandicapTypeDescription, otherFileTypeAlias, tenthCertificateFileTypeAlias } from "shared/constants/constants";
 import NonLinearStepper from "shared/components/Stepper/stepper";
 import {
   CardLayout,
@@ -2540,6 +2540,8 @@ const AppointeeRegister = () => {
   const [handicapFileName, setHandicapFileName] = useState();
   const [aadharXmlFileName, setAadharXmlFileName] = useState();
   const [passportFileName, setPassportFileName] = useState();
+  const [tenthCertificateFileName, setTenthCertificateFileName] = useState();
+  const [otherFileName, setOtherFileName] = useState();
   const [
     isRelationShipWithMemberDisabled,
     setIsRelationShipWithMemberDisabled,
@@ -2794,6 +2796,32 @@ const AppointeeRegister = () => {
     //   );
     return hasValue(uploadTypeAlias);
   };
+  const hasTenthPassCertificateUpload = () => {
+    const uploadTypeAlias =
+      uploadedFile &&
+      uploadedFile.find(
+        ({ uploadTypeAlias }) => uploadTypeAlias === tenthCertificateFileTypeAlias
+      );
+    // const uploadedTypeAlias =
+    // fileUploaded &&
+    // fileUploaded.find(
+    //     ({ uploadTypeAlias }) => uploadTypeAlias === trustEpfoFileTypeAlias
+    //   );
+    return hasValue(uploadTypeAlias);
+  };
+  const hasFathersDocCertificateUpload = () => {
+    const uploadTypeAlias =
+      uploadedFile &&
+      uploadedFile.find(
+        ({ uploadTypeAlias }) => uploadTypeAlias === otherFileTypeAlias
+      );
+    // const uploadedTypeAlias =
+    // fileUploaded &&
+    // fileUploaded.find(
+    //     ({ uploadTypeAlias }) => uploadTypeAlias === trustEpfoFileTypeAlias
+    //   );
+    return hasValue(uploadTypeAlias);
+  };
 
 
 
@@ -2910,6 +2938,10 @@ const AppointeeRegister = () => {
         submitDetails(true);
       }
     }
+    if  (isAadhaarVarified && isPanVarified && isUanVarified && hasValue(UAN) && isEmployementDataVarified)
+    {
+      submitDetails(true);
+    }
   }, [isAadhaarVarified, isPanVarified, isEmployementDataVarified, isUanVarified, UAN]);
 
 
@@ -3006,6 +3038,12 @@ const AppointeeRegister = () => {
   };
   const uploadPassportFile = ({ target }) => {
     uploadFile(target, passportFileTypeAlias, setPassportFileName);
+  };
+  const upload10thCertificateFile = ({ target }) => {
+    uploadFile(target, tenthCertificateFileTypeAlias, setTenthCertificateFileName);
+  };
+  const uploadFathersDocFile = ({ target }) => {
+    uploadFile(target, otherFileTypeAlias, setOtherFileName);
   };
   const verifyAadhar = async () => {
     // const payLoad = {
@@ -3166,7 +3204,26 @@ const AppointeeRegister = () => {
       openUploadDocInfoModel(dialogContentText);
       return; // Prevent further execution
     }
-
+    if (!hasTenthPassCertificateUpload()) {
+      // If no value is selected for UAN number, show a message
+      dialogContentText = (
+        <Typography>
+          {uploadFileMessage("10th pass certificate")}, then save the details
+        </Typography>
+      );
+      openUploadDocInfoModel(dialogContentText);
+      return; // Prevent further execution
+    }
+    if (!hasFathersDocCertificateUpload()) {
+      // If no value is selected for UAN number, show a message
+      dialogContentText = (
+        <Typography>
+          {uploadFileMessage("father's name attached certificate")}, then save the details
+        </Typography>
+      );
+      openUploadDocInfoModel(dialogContentText);
+      return; // Prevent further execution
+    }
 
     // If all conditions are met, open the confirmation modal
     handleOpenModal(); // Trigger "Are you sure" modal
@@ -4504,7 +4561,7 @@ const AppointeeRegister = () => {
                                         <Typography sx={{ ...lable1Style, display: 'flex', alignItems: 'center' }}>
                                           {"10th pass certificate"}
                                         </Typography>
-                                        <Tooltip arrow="bottom" title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO">
+                                        <Tooltip arrow="bottom" title="Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year.">
                                           <IconButton disabled={isPreviousSectionDisabled}>
                                             <InfoOutlined />
                                           </IconButton>
@@ -4514,25 +4571,23 @@ const AppointeeRegister = () => {
                                   </Stack>
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                  {isTrustEpfoAvailable && (
-                                    <Box>
-                                      <Typography
-                                        sx={{ ...lable1Style, textAlign: "center" }}
-                                      >
-                                        Please upload 10th pass certificate
-                                        <span className="requiredField">*</span>
-                                      </Typography>
-                                      <Box sx={fileUploadSectionContainerStyle}>
-                                        <FileUploadSection
-                                          chooseFile={uploadTrustEPFOFile}
-                                          fileName={trustEpfoFileName}
-                                          accept={"image/png, image/jpeg"}
-                                          disabled={isPreviousSectionDisabled}
-                                        />
-                                      </Box>
-                                    </Box>
-                                  )}
 
+                                  <Box>
+                                    <Typography
+                                      sx={{ ...lable1Style, textAlign: "center" }}
+                                    >
+                                      Please upload 10th pass certificate
+                                      <span className="requiredField">*</span>
+                                    </Typography>
+                                    <Box sx={fileUploadSectionContainerStyle}>
+                                      <FileUploadSection
+                                        chooseFile={upload10thCertificateFile}
+                                        fileName={tenthCertificateFileName}
+                                        accept={"image/png, image/jpeg"}
+                                        disabled={isPreviousSectionDisabled}
+                                      />
+                                    </Box>
+                                  </Box>
                                 </Grid>
                                 <Grid item xs={12} md={6}>
                                   <Stack
@@ -4546,7 +4601,7 @@ const AppointeeRegister = () => {
                                         <Typography sx={{ ...lable1Style, display: 'flex', alignItems: 'center' }}>
                                           {"Document with father's name attached"}
                                         </Typography>
-                                        <Tooltip arrow="bottom" title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO">
+                                        <Tooltip arrow="bottom" title="Upload a copy of the document with your father's name clearly mentioned. Examples of acceptable documents include birth certificates, national IDs, or other legal documents where both your name and your father's name are visible.">
                                           <IconButton disabled={isPreviousSectionDisabled}>
                                             <InfoOutlined />
                                           </IconButton>
@@ -4556,24 +4611,23 @@ const AppointeeRegister = () => {
                                   </Stack>
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                  {isTrustEpfoAvailable && (
-                                    <Box>
-                                      <Typography
-                                        sx={{ ...lable1Style, textAlign: "center" }}
-                                      >
-                                        Please upload a docucment with father's name attached
-                                        <span className="requiredField">*</span>
-                                      </Typography>
-                                      <Box sx={fileUploadSectionContainerStyle}>
-                                        <FileUploadSection
-                                          chooseFile={uploadTrustEPFOFile}
-                                          fileName={trustEpfoFileName}
-                                          accept={"image/png, image/jpeg"}
-                                          disabled={isPreviousSectionDisabled}
-                                        />
-                                      </Box>
+
+                                  <Box>
+                                    <Typography
+                                      sx={{ ...lable1Style, textAlign: "center" }}
+                                    >
+                                      Please upload a docucment with father's name attached
+                                      <span className="requiredField">*</span>
+                                    </Typography>
+                                    <Box sx={fileUploadSectionContainerStyle}>
+                                      <FileUploadSection
+                                        chooseFile={uploadFathersDocFile}
+                                        fileName={otherFileName}
+                                        accept={"image/png, image/jpeg"}
+                                        disabled={isPreviousSectionDisabled}
+                                      />
                                     </Box>
-                                  )}
+                                  </Box>
 
                                 </Grid>
                                 {isPhysicallyHandicap === 'Y' && (
@@ -4781,7 +4835,7 @@ const AppointeeRegister = () => {
                           </Grid>
 
                           <Grid item xs={12} md={6}>
-                            <Stack flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"}>
+                            <Stack flexDirection={"col"} justifyContent={"space-between"} alignItems={"start"}>
                               <Typography sx={{ ...lable1Style }}>
                                 {"Do you have UAN number"}
                               </Typography>
@@ -4794,7 +4848,6 @@ const AppointeeRegister = () => {
                               >
                                 <FormControlLabel value="no" control={<Radio />} label="No" disabled={isPreviousSectionDisabled} />
                                 <FormControlLabel value="yes" control={<Radio />} label="Yes" disabled={isPreviousSectionDisabled} />
-
                               </RadioGroup>
                             </Stack>
                           </Grid>
@@ -5165,8 +5218,6 @@ const AppointeeRegister = () => {
                         >
                           Save
                         </Button>
-
-
                         <Button
                           onClick={handleNext}
                           sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
@@ -5174,11 +5225,9 @@ const AppointeeRegister = () => {
                           variant="contained"
                           color="primary"
                           disabled={isthirdNextVisible === false}
-
                         >
                           Next
                         </Button>
-
                       </>
                     )}
                   </Grid>
@@ -5234,9 +5283,7 @@ const AppointeeRegister = () => {
               )} */}
 
             </Grid>
-
           </Grid>
-
         </Box>
         <FormDialog
           open={fetchUanConfirmation}
