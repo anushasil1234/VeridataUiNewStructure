@@ -259,7 +259,7 @@ export const verifiedListTableHeadCell = [
         type: "string",
         disablePadding: false,
         label: 'Is Passbook Verified',
-        enums: ['isPassbookVerified'],
+        enums: ['passbookVerifiedStatus'],
         component: {
             element: Typography
         }
