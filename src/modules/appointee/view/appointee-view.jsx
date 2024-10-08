@@ -382,7 +382,7 @@ let AppointeeViewForm = ({
     }
   };
 
-  console.log("isEmployementVarified",isEmployementVarified)
+  console.log("isEmployementVarified", isEmployementVarified)
   const setAppointeeActivity = async () => {
     const response = await getAppointeeActivity(appointeeId);
     if (response) {
@@ -540,44 +540,44 @@ let AppointeeViewForm = ({
                           color={"error"}
                         />
                       )
-                      : isEmployementVarified === false ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"Employement Verification failed"}
-                          color={"error"}
-                        />
-                       ) : isPanVarified === "N/A" ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"PAN Verification Pending"}
-                          color={"warning"}
-                        />
-                      ) : isAadharVerified === "N/A" ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"Aadhaar Verification Pending"}
-                          color={"warning"}
-                        />
-                      ) : isUanVerified === "N/A" ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"UAN Verification Pending"}
-                          color={"warning"}
-                        />
-                      ) : isUanVerified === true && (!hasValue(uanNumber)) ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"No UAN Available"}
-                          color={"success"}
-                        />
-                      ) : isUanVerified === true && (hasValue(uanNumber)) && (isEmployementVarified===null) ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"Employement Verification Pending"}
-                          color={"warning"}
-                        />
-                      )
-                        : null}
+                        : isEmployementVarified === false ? (
+                          <Chip
+                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                            label={"Employement Verification failed"}
+                            color={"error"}
+                          />
+                        ) : isPanVarified === "N/A" ? (
+                          <Chip
+                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                            label={"PAN Verification Pending"}
+                            color={"warning"}
+                          />
+                        ) : isAadharVerified === "N/A" ? (
+                          <Chip
+                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                            label={"Aadhaar Verification Pending"}
+                            color={"warning"}
+                          />
+                        ) : isUanVerified === "N/A" ? (
+                          <Chip
+                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                            label={"UAN Verification Pending"}
+                            color={"warning"}
+                          />
+                        ) : isUanVerified === true && (!hasValue(uanNumber)) ? (
+                          <Chip
+                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                            label={"No UAN Available"}
+                            color={"success"}
+                          />
+                        ) : isUanVerified === true && (hasValue(uanNumber)) && (isEmployementVarified === null) ? (
+                          <Chip
+                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                            label={"Employement Verification Pending"}
+                            color={"warning"}
+                          />
+                        )
+                          : null}
                     </>
                   ) : null}
                 </Box>
@@ -790,43 +790,55 @@ let AppointeeViewForm = ({
                 <PersonalInformation
                   fieldName={"10th Pass Certificate"}
                   fieldValue={
-                    <DarkTooltip placement="right" title="View image" arrow>
+                    tenFile ? (
+                      <DarkTooltip placement="right" title="View image" arrow>
+                        <img
+                          src={viewImage}
+                          alt="10th Pass Certificate"
+                          style={{
+                            width: "2vw", // Adjust as needed for responsiveness
+                            height: "auto", // Maintains aspect ratio
+                            marginLeft: "5%", // Responsive margin
+                            marginTop: "0.5rem" // Responsive margin
+                          }}
+                          onClick={() => openDocumentModel(tenFile, "10th Pass Certificate")}
+                        />
+                      </DarkTooltip>
+                    ) : (
+                      <Typography variant="subtitle2" color="black" style={{   marginLeft: "5%", fontSize: '1rem' }}>
+                        N/A
+                      </Typography>
 
-                      <img
-                        src={viewImage}
-                        alt="10th Pass Certificate"
-                        style={{
-                          width: "2vw", // or use "5vw" to make it responsive to the viewport width
-                          height: "auto", // Keeps the aspect ratio intact
-                          marginLeft: "5%", // Relative margin for responsiveness
-                          marginTop: "0.5rem" // Responsive margin based on font size
-                        }}
-                        //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
-                        onClick={() => openDocumentModel(tenFile, "10th Pass Certificate")}
-                      />
-                    </DarkTooltip>
-
+                    )
                   }
                 />
+
 
                 <PersonalInformation
                   fieldName={"Father's Name Verification Document"}
                   fieldValue={
-                    <DarkTooltip placement="right" title="View image" arrow>
+                    otherFile ? (
+                      <DarkTooltip placement="right" title="View image" arrow>
 
-                      <img
-                        src={viewImage}
-                        alt="Father's name Verification Document"
-                        style={{
-                          width: "2vw", // or use "5vw" to make it responsive to the viewport width
-                          height: "auto", // Keeps the aspect ratio intact
-                          marginLeft: "5%", // Relative margin for responsiveness
-                          marginTop: "0.8rem" // Responsive margin based on font size
-                        }}
-                        //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
-                        onClick={() => openDocumentModel(otherFile, "Father's name Verification Document")}
-                      />
-                    </DarkTooltip>
+                        <img
+                          src={viewImage}
+                          alt="Father's name Verification Document"
+                          style={{
+                            width: "2vw", // or use "5vw" to make it responsive to the viewport width
+                            height: "auto", // Keeps the aspect ratio intact
+                            marginLeft: "5%", // Relative margin for responsiveness
+                            marginTop: "0.8rem" // Responsive margin based on font size
+                          }}
+                          //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
+                          onClick={() => openDocumentModel(otherFile, "Father's name Verification Document")}
+                        />
+                      </DarkTooltip>
+                    ) : (
+                      <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%",  fontSize: '1rem' }}>
+                        N/A
+                      </Typography>
+
+                    )
 
                   }
                 />
