@@ -93,7 +93,8 @@ let AppStyle = createTheme({
     button: {
       // Here is where you can customise the button
 
-      fontWeight: 700
+      fontWeight: 500,
+      fontSize: '0.875rem!important',
     },
     th: {
       fontWeight: 700
