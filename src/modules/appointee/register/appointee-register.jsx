@@ -3740,7 +3740,7 @@ const AppointeeRegister = () => {
         </Stepper>
 
         <Box my={"20px"}>
-          <Grid   container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid
               container
               rowSpacing={1}
@@ -3748,7 +3748,7 @@ const AppointeeRegister = () => {
               item
               xs={12}
               md={12}
-           
+
             >
               {currentPageNo === 1 ? (
                 <>
@@ -4414,103 +4414,27 @@ const AppointeeRegister = () => {
                 </>
               ) : null}
               {currentPageNo === 2 ? (
-
-                <Box sx={{width: '100%'}}>
-                <form ref={formElement}>
-                  <Grid
-                    sx={{ paddingLeft: "20px" }}
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
+                <Box sx={{ width: '100%' }}>
+                  <form ref={formElement}>
                     <Grid
+                      sx={{ paddingLeft: "20px" }}
                       container
-                      rowSpacing={2}
-                      columnSpacing={2.5}
-                      item
-                      xs={12}
+                      rowSpacing={1}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                     >
-                      <Grid item xs={12}>
-                        <FormHeading step={""} heading={""} />
-                      </Grid>
-
-                      <>
-
-                        <Grid
-                          container
-                          rowSpacing={1}
-                          columnSpacing={2.5}
-                          item
-                          xs={12}
-                        >
-                          {isPhysicallyHandicap === 'Y' && (
-
-                            <Grid item xs={12}>
-                              <FormHeading
-                                step={"1"}
-                                heading={"Handicap Cerificate Upload"}
-                                info={"Upload your handicap file details ."}
-
-                              // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
-                              //   <HelpOutline />
-                              // </IconButton>}
-                              />
-                            </Grid>
-                          )}
-                          <Grid sx={positionRelative} item xs={12}>
-                            {/* {isPhysicallyHandicap==='N' && <DisableSection />} */}
-                            <Grid
-                              mt={3}
-                              container
-                              rowSpacing={1}
-                              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                            >
-                              {isPhysicallyHandicap === 'Y' && (
-                                <Grid item xs={12} md={6}>
-                                  <Typography sx={lable1Style}>
-                                    Handicap Type
-                                  </Typography>
-
-                                  <TextField
-                                    style={inputFieldStyle}
-                                    type="text"
-                                    variant="outlined"
-                                    className="customeTextField"
-                                    value={getHandicapTypeDescription(handicapType)}
-                                    defaultValue={""}
-                                    disabled={isPreviousSectionDisabled}
-                                  />
-
-                                </Grid>
-                              )}
-                              <Grid item xs={12} md={6}>
-
-                                {isPhysicallyHandicap === 'Y' && (
-                                  <>
-                                    <Typography
-                                      sx={{ ...lable1Style, textAlign: "center" }}
-                                    >
-                                      Please upload your Handicap Certificate
-                                      <span className="requiredField">*</span>
-                                    </Typography>
-                                    <FileUploadSection
-                                      chooseFile={uploadHandicapFile}
-                                      fileName={handicapFileName}
-                                      accept={"image/png, image/jpeg"}
-                                      disabled={isPreviousSectionDisabled}
-                                    />
-                                  </>
-                                )}
-
-
-                              </Grid>
-                            </Grid>
-                          </Grid>
+                      <Grid
+                        container
+                        rowSpacing={2}
+                        columnSpacing={2.5}
+                        item
+                        xs={12}
+                      >
+                        <Grid item xs={12}>
+                          <FormHeading step={""} heading={""} />
                         </Grid>
 
-                        {hasValue(countryOfOrigin) &&
-                          (countryOfOrigin !== "Nepal" ||
-                            countryOfOrigin !== "Bhutan") ? (
+                        <>
+
                           <Grid
                             container
                             rowSpacing={1}
@@ -4518,210 +4442,285 @@ const AppointeeRegister = () => {
                             item
                             xs={12}
                           >
-                            <Grid item xs={12}>
-                              <FormHeading
-                                step={"2"}
-                                heading={"Passport Verification"}
-                                info={"Enter your Passport file number to verify also see the help sign (?) to see how to find passport file number ."}
+                            {isPhysicallyHandicap === 'Y' && (
 
-                                Children={<IconButton onClick={handlePassporFileNumbertHelp}>
-                                  <HelpOutline />
-                                </IconButton>}
-                              />
-                            </Grid>
+                              <Grid item xs={12}>
+                                <FormHeading
+                                  step={"1"}
+                                  heading={"Handicap Cerificate Upload"}
+                                  info={"Upload your handicap file details ."}
+
+                                // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
+                                //   <HelpOutline />
+                                // </IconButton>}
+                                />
+                              </Grid>
+                            )}
                             <Grid sx={positionRelative} item xs={12}>
-
-                              {!passportAvailable && <DisableSection />}
+                              {/* {isPhysicallyHandicap==='N' && <DisableSection />} */}
                               <Grid
                                 mt={3}
                                 container
                                 rowSpacing={1}
                                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                               >
-                                <Grid item xs={12} md={6}>
-                                  <Typography sx={lable1Style}>
-                                    Passport Number
-                                  </Typography>
+                                {isPhysicallyHandicap === 'Y' && (
+                                  <Grid item xs={12} md={6}>
+                                    <Typography sx={lable1Style}>
+                                      Handicap Type
+                                    </Typography>
 
-                                  <TextField
-                                    style={inputFieldStyle}
-                                    type="text"
-                                    variant="outlined"
-                                    className="customeTextField"
-                                    value={passportNo}
-                                    defaultValue={""}
-                                    disabled={isPreviousSectionDisabled}
-                                  />
-                                  {countryOfOrigin === "India" && (
-                                    <>
-                                      <Button
-                                        sx={{ margin: "5px" }}
-                                        variant="contained"
-                                        disabled={isPassportVerifyBtnDisabled}
-                                        onClick={handlePassportVerification}
-                                        endIcon={<Autorenew />}
-                                      >
-                                        Verify
-                                      </Button>
-                                      <VerificationStatusSection
-                                        docType={passportstatusMessage}
-                                      />
-                                    </>
-                                  )}
-                                </Grid>
+                                    <TextField
+                                      style={inputFieldStyle}
+                                      type="text"
+                                      variant="outlined"
+                                      className="customeTextField"
+                                      value={getHandicapTypeDescription(handicapType)}
+                                      defaultValue={""}
+                                      disabled={isPreviousSectionDisabled}
+                                    />
+
+                                  </Grid>
+                                )}
                                 <Grid item xs={12} md={6}>
-                                  {countryOfOrigin === "India" ? (
-                                    <>
-                                      <Typography sx={lable1Style}>
-                                        Passport File Number
-                                      </Typography>
-                                      <TextField
-                                        style={inputFieldStyle}
-                                        type="text"
-                                        variant="outlined"
-                                        onChange={handlePassFileNumberOnChange}
-                                        className="customeTextField"
-                                        value={passportFileNumber}
-                                        defaultValue={""}
-                                        disabled={isPreviousSectionDisabled}
-                                      />
-                                    </>
-                                  ) : (
+
+                                  {isPhysicallyHandicap === 'Y' && (
                                     <>
                                       <Typography
                                         sx={{ ...lable1Style, textAlign: "center" }}
                                       >
-                                        Please upload your Visa Details
+                                        Please upload your Handicap Certificate
                                         <span className="requiredField">*</span>
                                       </Typography>
                                       <FileUploadSection
-                                        chooseFile={uploadPassportFile}
-                                        fileName={passportFileName}
+                                        chooseFile={uploadHandicapFile}
+                                        fileName={handicapFileName}
+                                        accept={"image/png, image/jpeg"}
                                         disabled={isPreviousSectionDisabled}
                                       />
                                     </>
                                   )}
+
+
                                 </Grid>
                               </Grid>
                             </Grid>
                           </Grid>
-                        ) : null}
-                        <Grid item xs={12} md={6}>
-                          <Stack
-                            flexDirection={"row"}
-                            justifyContent={"space-between"}
-                            alignItems={"center"}
 
-                          >
-                            {/* <Box mb={2}>
+                          {hasValue(countryOfOrigin) &&
+                            (countryOfOrigin !== "Nepal" ||
+                              countryOfOrigin !== "Bhutan") ? (
+                            <Grid
+                              container
+                              rowSpacing={1}
+                              columnSpacing={2.5}
+                              item
+                              xs={12}
+                            >
+                              <Grid item xs={12}>
+                                <FormHeading
+                                  step={"2"}
+                                  heading={"Passport Verification"}
+                                  info={"Enter your Passport file number to verify also see the help sign (?) to see how to find passport file number ."}
+
+                                  Children={<IconButton onClick={handlePassporFileNumbertHelp}>
+                                    <HelpOutline />
+                                  </IconButton>}
+                                />
+                              </Grid>
+                              <Grid sx={positionRelative} item xs={12}>
+
+                                {!passportAvailable && <DisableSection />}
+                                <Grid
+                                  mt={3}
+                                  container
+                                  rowSpacing={1}
+                                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                                >
+                                  <Grid item xs={12} md={6}>
+                                    <Typography sx={lable1Style}>
+                                      Passport Number
+                                    </Typography>
+
+                                    <TextField
+                                      style={inputFieldStyle}
+                                      type="text"
+                                      variant="outlined"
+                                      className="customeTextField"
+                                      value={passportNo}
+                                      defaultValue={""}
+                                      disabled={isPreviousSectionDisabled}
+                                    />
+                                    {countryOfOrigin === "India" && (
+                                      <>
+                                        <Button
+                                          sx={{ margin: "5px" }}
+                                          variant="contained"
+                                          disabled={isPassportVerifyBtnDisabled}
+                                          onClick={handlePassportVerification}
+                                          endIcon={<Autorenew />}
+                                        >
+                                          Verify
+                                        </Button>
+                                        <VerificationStatusSection
+                                          docType={passportstatusMessage}
+                                        />
+                                      </>
+                                    )}
+                                  </Grid>
+                                  <Grid item xs={12} md={6}>
+                                    {countryOfOrigin === "India" ? (
+                                      <>
+                                        <Typography sx={lable1Style}>
+                                          Passport File Number
+                                        </Typography>
+                                        <TextField
+                                          style={inputFieldStyle}
+                                          type="text"
+                                          variant="outlined"
+                                          onChange={handlePassFileNumberOnChange}
+                                          className="customeTextField"
+                                          value={passportFileNumber}
+                                          defaultValue={""}
+                                          disabled={isPreviousSectionDisabled}
+                                        />
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Typography
+                                          sx={{ ...lable1Style, textAlign: "center" }}
+                                        >
+                                          Please upload your Visa Details
+                                          <span className="requiredField">*</span>
+                                        </Typography>
+                                        <FileUploadSection
+                                          chooseFile={uploadPassportFile}
+                                          fileName={passportFileName}
+                                          disabled={isPreviousSectionDisabled}
+                                        />
+                                      </>
+                                    )}
+                                  </Grid>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                          ) : null}
+                          <Grid item xs={12} md={6}>
+                            <Stack
+                              flexDirection={"row"}
+                              justifyContent={"space-between"}
+                              alignItems={"center"}
+
+                            >
+                              {/* <Box mb={2}>
                           <Typography variant="h6" sx={{ fontWeight: 'bold', ...lable1Style }}>
                             Trust PF Details
                           </Typography>
                           <Divider sx={{ borderBottomWidth: 2, mt: 1 }} />
                         </Box> */}
-                            {/* <Typography sx={lable1Style}>Passport Number</Typography> */}
-                            <Box>
-                              <Stack direction="row">
-                                <Typography sx={{ ...lable1Style, display: 'flex', alignItems: 'center' }}>
-                                  {"Do you have PF under any Trust, in the past or present"}
-                                </Typography>
-                                <Tooltip arrow="bottom" title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO">
-                                  <IconButton disabled={isPreviousSectionDisabled}>
-                                    <InfoOutlined />
-                                  </IconButton>
-                                </Tooltip>
-                              </Stack>
-                              <FormControl sx={{ marginLeft: '17px' }}>
-                                <Stack
-                                  direction="row"
-                                  spacing={1}
-                                  justifyContent={"end"}
-                                  alignItems="center"
-                                  width={'auto'}
-                                >
-                                  <Typography>No</Typography>
-                                  <Switch
-                                    onChange={({ target }) =>
-                                      setIsTrustEpfoAvailable(target.checked)
-                                    }
-                                    checked={isTrustEpfoAvailable}
-                                    color="secondary"
-                                    disabled={isPreviousSectionDisabled}
-                                    sx={{ borderColor: '2px' }}
-                                  />
-                                  <Typography>Yes</Typography>
+                              {/* <Typography sx={lable1Style}>Passport Number</Typography> */}
+                              <Box>
+                                <Stack direction="row">
+                                  <Typography sx={{ ...lable1Style, display: 'flex', alignItems: 'center' }}>
+                                    {"Do you have PF under any Trust, in the past or present"}
+                                  </Typography>
+                                  <Tooltip arrow="bottom" title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO">
+                                    <IconButton disabled={isPreviousSectionDisabled}>
+                                      <InfoOutlined />
+                                    </IconButton>
+                                  </Tooltip>
                                 </Stack>
-                              </FormControl>
-                            </Box>
-                          </Stack>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          {isTrustEpfoAvailable && (
-                            <Box>
-                              <Typography
-                                sx={{ ...lable1Style, textAlign: "center" }}
-                              >
-                                Please upload Trust PF Details
-                                <span className="requiredField">*</span>
+                                <FormControl sx={{ marginLeft: '17px' }}>
+                                  <Stack
+                                    direction="row"
+                                    spacing={1}
+                                    justifyContent={"end"}
+                                    alignItems="center"
+                                    width={'auto'}
+                                  >
+                                    <Typography>No</Typography>
+                                    <Switch
+                                      onChange={({ target }) =>
+                                        setIsTrustEpfoAvailable(target.checked)
+                                      }
+                                      checked={isTrustEpfoAvailable}
+                                      color="secondary"
+                                      disabled={isPreviousSectionDisabled}
+                                      sx={{ borderColor: '2px' }}
+                                    />
+                                    <Typography>Yes</Typography>
+                                  </Stack>
+                                </FormControl>
+                              </Box>
+                            </Stack>
+                          </Grid>
+                          <Grid item xs={12} md={6}>
+                            {isTrustEpfoAvailable && (
+                              <Box>
+                                <Typography
+                                  sx={{ ...lable1Style, textAlign: "center" }}
+                                >
+                                  Please upload Trust PF Details
+                                  <span className="requiredField">*</span>
+                                </Typography>
+                                <FileUploadSection
+                                  chooseFile={uploadTrustEPFOFile}
+                                  fileName={trustEpfoFileName}
+                                  accept={"image/png, image/jpeg"}
+                                  disabled={isPreviousSectionDisabled}
+                                />
+                              </Box>
+                            )}
+
+                          </Grid>
+
+                          <Grid item xs={12} md={6}>
+                            <Stack flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"}>
+                              <Typography sx={{ ...lable1Style }}>
+                                {"Do you have UAN number"}
                               </Typography>
-                              <FileUploadSection
-                                chooseFile={uploadTrustEPFOFile}
-                                fileName={trustEpfoFileName}
-                                accept={"image/png, image/jpeg"}
-                                disabled={isPreviousSectionDisabled}
-                              />
-                            </Box>
-                          )}
+                              <RadioGroup
+                                row
+                                value={uanNumberAvailable}
+                                onChange={handleChange}
+                                sx={{ marginLeft: 2 }} // Adjust margin as needed
 
-                        </Grid>
+                              >
+                                <FormControlLabel value="no" control={<Radio />} label="No" disabled={isPreviousSectionDisabled} />
+                                <FormControlLabel value="yes" control={<Radio />} label="Yes" disabled={isPreviousSectionDisabled} />
 
-                        <Grid item xs={12} md={6}>
-                          <Stack flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"}>
-                            <Typography sx={{ ...lable1Style }}>
-                              {"Do you have UAN number"}
-                            </Typography>
-                            <RadioGroup
-                              row
-                              value={uanNumberAvailable}
-                              onChange={handleChange}
-                              sx={{ marginLeft: 2 }} // Adjust margin as needed
-
-                            >
-                              <FormControlLabel value="no" control={<Radio />} label="No" disabled={isPreviousSectionDisabled} />
-                              <FormControlLabel value="yes" control={<Radio />} label="Yes" disabled={isPreviousSectionDisabled} />
-
-                            </RadioGroup>
-                          </Stack>
-                        </Grid>
-                        <Dialog
-                          open={isModalOpen}
-                          onClose={handleCloseModal}
-                          aria-labelledby="confirm-save-title"
-                          aria-describedby="confirm-save-description"
-                        >
-                          <DialogTitle id="confirm-save-title">
-                            {"Are you sure you want to save the details?"}
-                          </DialogTitle>
-                          <DialogContent>
-                            <DialogContentText id="confirm-save-description">
-                              Once saved, the details cannot be edited anymore. Do you want to proceed?
-                            </DialogContentText>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button onClick={handleCloseModal} color="secondary">
-                              No
-                            </Button>
-                            <Button onClick={handleConfirmSave} color="primary" autoFocus>
-                              Yes
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
-                      </>
+                              </RadioGroup>
+                            </Stack>
+                          </Grid>
+                          <Dialog
+                            open={isModalOpen}
+                            onClose={handleCloseModal}
+                            aria-labelledby="confirm-save-title"
+                            aria-describedby="confirm-save-description"
+                          >
+                            <DialogTitle id="confirm-save-title">
+                              {"Are you sure you want to save the details?"}
+                            </DialogTitle>
+                            <DialogContent>
+                              <DialogContentText id="confirm-save-description">
+                                Once saved, the details cannot be edited anymore. Do you want to proceed?
+                              </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button onClick={handleCloseModal} color="secondary">
+                                No
+                              </Button>
+                              <Button onClick={handleConfirmSave} color="primary" autoFocus>
+                                Yes
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
+                        </>
 
 
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </form>
+                  </form>
                 </Box>
               ) : null}
 
@@ -5022,26 +5021,22 @@ const AppointeeRegister = () => {
 
 
               ) : null}
-
-              {(currentPageNo === 2 || currentPageNo === 3) && (
-
-                <form ref={formElement}>
-
+              <form ref={formElement}>
+                <Grid
+                  sx={{ paddingLeft: "20px" }}
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                >
                   <Grid
-                    sx={{ paddingLeft: "20px" }}
                     container
                     rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    columnSpacing={2.5}
+                    item
+                    xs={12}
                   >
-                    <Grid
-                      container
-                      rowSpacing={1}
-                      columnSpacing={2.5}
-                      item
-                      xs={12}
-                    >
+                    {(currentPageNo === 2 || currentPageNo === 3) && (
                       <>
-
                         <Button
                           //onClick={() => setCurrentPageNo(1)}
                           onClick={handleBack}
@@ -5052,31 +5047,42 @@ const AppointeeRegister = () => {
                         >
                           {previousButton}
                         </Button>
-
-
-
+                      </>
+                    )}
+                    {currentPageNo === 2 && (
+                      <>
                         <Button
-                          name="dashboard"
+                          name="save"
                           // disabled={isSubmitDisabled}
-                          onClick={() => navigate(toDashboard)}
-                          //sx={{ m: "15px 5px", ml: 3 }}
+                          onClick={handleSaveClick}
+                          //sx={{ m: "15px 25px", ml: 3 }}
                           sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
                           variant="contained"
                           color="primary"
+                          disabled={isPreviousSectionDisabled}
                         >
-                          Go to Dashboard
+                          Save
                         </Button>
+
+
+                        <Button
+                          onClick={handleNext}
+                          sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
+                          //sx={{ m: "15px 25px", ml: 3 }}
+                          variant="contained"
+                          color="primary"
+                          disabled={isthirdNextVisible === false}
+
+                        >
+                          Next
+                        </Button>
+
                       </>
-
-                    </Grid>
-
-
+                    )}
                   </Grid>
-                </form>
-
-              )}
-
-              {currentPageNo === 2 && (
+                </Grid>
+              </form>
+              {/* {currentPageNo === 2 && (
                 <form ref={formElement}>
 
                   <Grid
@@ -5123,7 +5129,7 @@ const AppointeeRegister = () => {
                     </Grid>
                   </Grid>
                 </form>
-              )}
+              )} */}
 
             </Grid>
 
