@@ -12,6 +12,7 @@ export const invalidUserCodeMsg = `User code should contain alphabet's and numbe
 export const defaultUploadFormat = `Accepted format: pdf, jpg, png`;
 export const noRemarks = `No Remarks Available`;
 export const noPassBookMsg = `Passbook not available`;
+export const noEmployementMsg = `Employment History not available`;
 export const configurationSuccessMsg = `Configuration updated`;
 export const userCreationSuccessMsg = `User has been created successfully`;
 export const userUpdateSuccessMsg = `User has been updated successfully`;
@@ -59,7 +60,7 @@ export const invalidProfilePasswordMsg = `Password is not valid, please retry`;
 export const passwordCreationSuccessMsg = `Password has been created successfully`;
 export const passwordChangeSuccessMsg = `Password has been changed successfully`;
 export const generateNoMovementReportDesc = (days) => {
-    return `This report provides an overview and analysis of appointees who have made no progress for ${days} days during a specified period. It includes detailed information about these candidates to help stakeholders understand progress patterns, identify issues, and may indicate that the candidate are not interest in joining .`;
+    return `This report provides an overview and analysis of appointees who have made no progress for${days > 0 ? ` ${days} days ` : ""} during a specified period. It includes detailed information about these candidates to help stakeholders understand progress patterns, identify issues, and may indicate that the candidate are not interest in joining .`;
 };
 export const generateAppointeeCountReportDesc = `The purpose of this report is to provide an overview and analysis of the appointee count added to the system on a daily basis during a specified period. This report includes details such as the total number of appointees added each day, the total number of links sent, and the total number of links not sent. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
 export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;

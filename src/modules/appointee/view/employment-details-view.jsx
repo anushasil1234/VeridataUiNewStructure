@@ -16,7 +16,7 @@ import {
   listHeadingConteinerStyle,
   listHeadingStyle,
 } from "app";
-import { NA, noPassBookMsg } from "shared/constants/constants";
+import { NA, noEmployementMsg, noPassBookMsg } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import { useSelector } from "react-redux";
@@ -82,8 +82,7 @@ let EmploymentViewDetails = ({ appointeeId }) => {
 
   const setTableRows = async (appointeeId) => {
     const response = await getEmployementDetails(appointeeId);
-    const { dob, fatherName, fullName, pfUan, companies } =
-      response.responseInfo;
+    const { dob, fatherName, fullName, pfUan, companies } = response?.responseInfo || {};
     if (pfUan && companies) {
       dob ? setDob(dob) : setDob(NA);
       fatherName ? setFatherName(fatherName) : setFatherName(NA);
@@ -92,7 +91,7 @@ let EmploymentViewDetails = ({ appointeeId }) => {
       companies && companies[0] ? setCompanies(companies) : setCompanies(NA);
     } else {
       closeEmploymentViewModel();
-      showErrorMessage(noPassBookMsg);
+      showErrorMessage(noEmployementMsg);
     }
   };
   const handleDownload = async () => {

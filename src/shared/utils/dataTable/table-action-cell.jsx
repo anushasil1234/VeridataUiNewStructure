@@ -31,9 +31,6 @@ import downloadFile from "../associate/download-file";
 export const TableActionCell = (props1, props2) => {
   const { actionList, rowAttribute, actionPermissionList, setTableRows } = props1;
   const { appointeeId, userId: id, isPassbookVerified, uanNo } = rowAttribute;
-  console.log('rowAttribute1234', rowAttribute);
-  // console.log('props12121', props1);
-
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);

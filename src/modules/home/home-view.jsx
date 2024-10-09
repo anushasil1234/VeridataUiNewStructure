@@ -36,7 +36,6 @@ import SmallListTable from "shared/utils/small-list-table/small-list-table";
 import PrerequisiteInformation from "shared/components/display-information/prerequisite-information";
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
 import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
-import CloseIcon from '@mui/icons-material/Close';
 
 const HomeView = () => {
   const commonHooksFunctionSlice = useSelector(
@@ -45,7 +44,6 @@ const HomeView = () => {
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const userDetails = loggedInData[0];
-  console.log("loggedInData", userDetails)
   const dropdownList = useSelector((state) => state.dropdownList);
 
   const { days } = dropdownList.length > 0 && dropdownList[0];
@@ -54,7 +52,6 @@ const HomeView = () => {
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getDashboardWidgetCardData, getRemarks, getAppointeeDetails, postAppointeePrerequisiteStatus } = apiSlice[0];
   const { userTypeId, appointeeId, userName, emailId, phone, status,isProcessed } = loggedInData[0];
-  console.log("loggedInData**", loggedInData)
   const [isPrerequisiteDataAvailable, setIsPrerequisiteDataAvailable] = useState(prerquistdata)
   const [loading, setLoading] = useState(false);
 
@@ -74,7 +71,6 @@ const HomeView = () => {
   const functionSlice = useSelector(state => state.functionSlice);
   const { openViewModel, openConsentModal, openInfoModel, openConfirmationYesNoModal } = functionSlice[0];
   const consentStatus = loggedInData[0]?.consentStatus;
-  console.log("consentStatus", consentStatus)
   const dispatch = useDispatch();
   const setDashboardWidgetCardData = async (dayRange) => {
     startLoader();
