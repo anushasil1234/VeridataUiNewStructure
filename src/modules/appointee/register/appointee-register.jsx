@@ -3124,6 +3124,27 @@ const AppointeeRegister = () => {
   const handleSaveClick = () => {
     let dialogContentText
 
+    if (!hasTenthPassCertificateUpload()) {
+      // If no value is selected for UAN number, show a message
+      dialogContentText = (
+        <Typography>
+          {uploadFileMessage("10th pass certificate")}, then save the details
+        </Typography>
+      );
+      openUploadDocInfoModel(dialogContentText);
+      return; // Prevent further execution
+    }
+    if (!hasFathersDocCertificateUpload()) {
+      // If no value is selected for UAN number, show a message
+      dialogContentText = (
+        <Typography>
+          {uploadFileMessage("father's name attached certificate")}, then save the details
+        </Typography>
+      );
+      openUploadDocInfoModel(dialogContentText);
+      return; // Prevent further execution
+    }
+
     if (isPhysicallyHandicap === 'Y' && !hasHandicapUpload()) {
       // If Trust EPFO is selected but no file uploaded, show the message immediately
       dialogContentText = (
@@ -3204,26 +3225,7 @@ const AppointeeRegister = () => {
       openUploadDocInfoModel(dialogContentText);
       return; // Prevent further execution
     }
-    if (!hasTenthPassCertificateUpload()) {
-      // If no value is selected for UAN number, show a message
-      dialogContentText = (
-        <Typography>
-          {uploadFileMessage("10th pass certificate")}, then save the details
-        </Typography>
-      );
-      openUploadDocInfoModel(dialogContentText);
-      return; // Prevent further execution
-    }
-    if (!hasFathersDocCertificateUpload()) {
-      // If no value is selected for UAN number, show a message
-      dialogContentText = (
-        <Typography>
-          {uploadFileMessage("father's name attached certificate")}, then save the details
-        </Typography>
-      );
-      openUploadDocInfoModel(dialogContentText);
-      return; // Prevent further execution
-    }
+    
 
     // If all conditions are met, open the confirmation modal
     handleOpenModal(); // Trigger "Are you sure" modal
@@ -3348,6 +3350,7 @@ const AppointeeRegister = () => {
 
   const handleAppointeeFormPage1Save = async (formElement) => {
     formElement.preventDefault();
+    const loginUserData = getLocalStorageItem("pfc-user");
     let payLoad = {
       appointeeDetailsId: appointeeDetailsId,
       appointeeId: appointeeId,
@@ -3394,6 +3397,17 @@ const AppointeeRegister = () => {
     }
     const response = await postAppointeeDetails(payLoad);
     if (response) {
+      setLocalStorageItem("pfc-user", {
+                ...loginUserData,
+                //isSubmit: true,
+                status: 'Ongoing'
+              });
+              dispatch(removeLoggedinData());
+              dispatch(storeLoggedinData({
+                ...loginUserData,
+                //isSubmit: true,
+                status: 'Ongoing'
+              }))
       if (clickedButton === "N") {
         //setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, steps.length - 1));
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
