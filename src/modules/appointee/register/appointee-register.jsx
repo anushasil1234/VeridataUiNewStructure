@@ -2879,6 +2879,7 @@ const AppointeeRegister = () => {
         countryList?.find(({ value }) => value?.toUpperCase() === "INDIA")?.value;
       setDefaultCountry(defaultCountry);
 
+
       setAppointeeDetails(appointeeId);
     }
   }, [countryList]);
@@ -3807,7 +3808,7 @@ const AppointeeRegister = () => {
     //   </InputAdornment>
     // ),
   }
-
+  { console.log('currentPageNo', currentPageNo) }
   return (
     <CardLayout>
       {currentPageNo === 2 && (
@@ -4462,7 +4463,7 @@ const AppointeeRegister = () => {
                           </Grid>
                         </Grid>
 
-                        <Stack sx={{marginTop: '16px'}} flexDirection={"row"} ml={"25px"}>
+                        <Stack sx={{ marginTop: '16px' }} flexDirection={"row"} ml={"25px"}>
                           <Button
                             xs={12}
                             name="save"
@@ -4881,298 +4882,337 @@ const AppointeeRegister = () => {
               ) : null}
 
               {currentPageNo === 3 ? (
-                <form ref={formElement}>
-                  <Grid
-                    sx={{ paddingLeft: "20px" }}
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
-
+                <Box sx={{ width: '100%' }}>
+                  <form ref={formElement}>
                     <Grid
+                      sx={{ paddingLeft: "20px" }}
                       container
                       rowSpacing={1}
-                      columnSpacing={2.5}
-                      item
-                      xs={12}
+                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                     >
-                      <Grid item xs={12}>
-                        <FormHeading step={"4"}
-                          heading={"Aadhaar Verification"}
-                          info={"Enter Adhar data to verify, see more info in the below link."}
-                        />
-                        <Grid item xs={12} md={12}>
-                          <Typography sx={{ ...lable1Style, fontWeight: 500, fontSize: 18 }}>
-                            As part of onboarding process,
-                            Please generate your offline kyc verification file and upload it here.
-                            To see the details steps,
-                            {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
+
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={2.5}
+                        item
+                        xs={12}
+                      >
+                        <Grid item xs={12}>
+                          <FormHeading step={"4"}
+                            heading={"Aadhaar Verification"}
+                            info={"Enter Adhar data to verify, see more info in the below link."}
+                          />
+                          <Grid item xs={12} md={12}>
+                            <Typography sx={{ ...lable1Style, fontWeight: 500, fontSize: 18 }}>
+                              As part of onboarding process,
+                              Please generate your offline kyc verification file and upload it here.
+                              To see the details steps,
+                              {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
                           Aadhaar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
-                            <Link sx={{ cursor: 'pointer' }} onClick={() => openOfflineKycInfoModel()} > Click here</Link>
+                              <Link sx={{ cursor: 'pointer' }} onClick={() => openOfflineKycInfoModel()} > Click here</Link>
+                            </Typography>
+                            {isAadhaarVarified ?
+                              <FormControlLabel control={
+                                <Checkbox
+                                  disabled
+                                  checked
+                                  inputProps={{ 'aria-label': 'controlled' }}
+
+                                />
+                              } label="I have downloaded the aadhar offline kyc file"
+                              />
+                              :
+
+                              <FormControlLabel control={
+                                <Checkbox
+                                  checked={isOfflineXmlDownloaded}
+                                  onChange={handleIsOfflineXmlDownloadedOnChange}
+                                  inputProps={{ 'aria-label': 'controlled' }}
+
+                                />
+                              } label="I have downloaded the aadhar offline kyc file"
+                              />
+                            }
+                            {/* {<Checkbox  onChange={handleIsOfflineXmlDownloadedOnChange} />}  /> */}
+                          </Grid>
+                        </Grid>
+                        <Grid sx={positionRelative} item xs={12}>
+                          <Grid
+                            mt={3}
+                            container
+                            rowSpacing={1}
+                            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                          >
+                            {!isOfflineXmlDownloaded && <DisableSection />}
+                            <Grid item xs={12} md={6}>
+                              <Typography sx={lable1Style}>
+                                Name On Aadhaar
+                              </Typography>
+
+                              <TextField
+                                style={inputFieldStyle}
+                                type="text"
+                                variant="outlined"
+                                className="customeTextField"
+                                onChange={(e) => {
+                                  setNameAsOnAadhar(e.target.value.toUpperCase());
+                                }}
+                                value={nameAsOnAadhar}
+                                //defaultValue={" "}
+                                disabled={true}
+                              /> <Typography sx={lable1Style}>
+                                Share Code (to be provided after uploading)
+                              </Typography>
+
+                              <TextField
+                                style={inputFieldStyle}
+                                type="text"
+                                variant="outlined"
+                                className="customeTextField"
+                                onChange={(e) => {
+                                  setAadharShareCode(e.target.value);
+                                }}
+                                value={aadharShareCode}
+                                defaultValue={" "}
+                                disabled={disabledAadharInput || !isAadhaarXmlUploaded}
+                              />
+                              <Button
+                                sx={{ margin: "5px" }}
+                                disabled={isAadhaarVarified}
+                                variant="contained"
+                                onClick={handleAadharVerifiaction}
+                                endIcon={<Autorenew />}
+                              >
+                                Verify
+                              </Button>
+                              <VerificationStatusSection
+                                docType={aadharstatusMessage}
+                              />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+
+                              <FileUploadSection
+                                chooseFile={uploadAadharXmlFile}
+                                fileName={aadharXmlFileName}
+                                accept={'.rar, .zip'}
+                                disabled={isAadhaarVarified}
+                              />
+                            </Grid>
+
+                          </Grid>
+                        </Grid>
+                        {/* </Grid> */}
+                      </Grid>
+                      <Grid
+                        container
+                        rowSpacing={2}
+                        columnSpacing={2.5}
+                        item
+                        xs={12}
+                      >
+                        <Grid item xs={12}>
+                          <FormHeading step={"5"} heading={"PAN Verification"} info={"Enter your Pan Numebr to verify."}
+                          />
+                        </Grid>{" "}
+                      </Grid>
+                      <Grid
+                        container
+                        rowSpacing={2}
+                        sx={positionRelative}
+                        item xs={12}
+                      >
+                        {/* {isPanSectionDisabled && <DisableSection />} */}
+                        <Grid item xs={12} md={6} paddingRight={3}>
+                          <Typography sx={lable1Style}>
+                            PAN Number
+                            <span className="requiredField">*</span>
                           </Typography>
-                          {isAadhaarVarified ?
-                            <FormControlLabel control={
-                              <Checkbox
-                                disabled
-                                checked
-                                inputProps={{ 'aria-label': 'controlled' }}
-
-                              />
-                            } label="I have downloaded the aadhar offline kyc file"
-                            />
-                            :
-
-                            <FormControlLabel control={
-                              <Checkbox
-                                checked={isOfflineXmlDownloaded}
-                                onChange={handleIsOfflineXmlDownloadedOnChange}
-                                inputProps={{ 'aria-label': 'controlled' }}
-
-                              />
-                            } label="I have downloaded the aadhar offline kyc file"
-                            />
-                          }
-                          {/* {<Checkbox  onChange={handleIsOfflineXmlDownloadedOnChange} />}  /> */}
+                          <TextField
+                            style={inputFieldStyle}
+                            type="text"
+                            variant="outlined"
+                            className="customeTextField"
+                            onChange={(e) => {
+                              setPan(e.target.value.toUpperCase());
+                            }}
+                            value={pan}
+                            defaultValue={" "}
+                            inputProps={{ maxLength: 10 }}
+                            disabled={disabledPanInput}
+                          />
+                          <Button
+                            sx={{ margin: "5px" }}
+                            disabled={isPanVarified}
+                            variant="contained"
+                            onClick={handlePanVerifiaction}
+                            endIcon={<Autorenew />}
+                          >
+                            Verify
+                          </Button>
+                          <Dialog
+                            open={isPANModalOpen}
+                            onClose={handleDialogCancel}
+                          >
+                            <DialogTitle>PAN Verified</DialogTitle>
+                            <DialogContent>
+                              <DialogContentText>
+                                Your PAN is successfully verified. To fetch and verify UAN automatically please click on OK.
+                              </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button onClick={handleDialogConfirm} color="primary" autoFocus>
+                                OK
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
+                          <VerificationStatusSection docType={panstatusMessage} />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <Typography sx={lable1Style}>
+                            Name on PAN
+                            <span className="requiredField">*</span>
+                          </Typography>
+                          <TextField
+                            style={inputFieldStyle}
+                            type="text"
+                            variant="outlined"
+                            className="customeTextField"
+                            onChange={(e) => {
+                              setNameAsOnPan(e.target.value.toUpperCase());
+                            }}
+                            value={nameAsOnPan}
+                            defaultValue={" "}
+                            disabled={true}
+                          />
                         </Grid>
                       </Grid>
-                      <Grid sx={positionRelative} item xs={12}>
+                      <Grid item xs={12}>
+                        <FormHeading step={"6"} heading={"UAN Verification"} info={"Enter your Universal Account Number(UAN) to verify."} />
+                      </Grid>
+                      <Grid item xs={12}>
                         <Grid
+                          item
+                          md={6}
                           mt={3}
                           container
                           rowSpacing={1}
                           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                         >
-                          {!isOfflineXmlDownloaded && <DisableSection />}
-                          <Grid item xs={12} md={6}>
+                          <Grid sx={positionRelative} item xs={12} md={6}>
+                            {isEpfoSectionDisabled && <DisableSection />}
                             <Typography sx={lable1Style}>
-                              Name On Aadhaar
+                              Universal Account Number(UAN)
                             </Typography>
-
                             <TextField
+                              onChange={(e) => {
+                                setUAN(e.target.value);
+                              }}
                               style={inputFieldStyle}
                               type="text"
-                              variant="outlined"
                               className="customeTextField"
-                              onChange={(e) => {
-                                setNameAsOnAadhar(e.target.value.toUpperCase());
-                              }}
-                              value={nameAsOnAadhar}
-                              //defaultValue={" "}
-                              disabled={true}
-                            /> <Typography sx={lable1Style}>
-                              Share Code (to be provided after uploading)
-                            </Typography>
-
-                            <TextField
-                              style={inputFieldStyle}
-                              type="text"
                               variant="outlined"
-                              className="customeTextField"
-                              onChange={(e) => {
-                                setAadharShareCode(e.target.value);
-                              }}
-                              value={aadharShareCode}
                               defaultValue={" "}
-                              disabled={disabledAadharInput || !isAadhaarXmlUploaded}
+                              value={UAN}
                             />
+
+                            <Dialog open={isUANModalOpen} onClose={() => setIsUANModalOpen(false)}>
+                              <DialogTitle>Verification Successful</DialogTitle>
+                              <DialogContent>
+                                <DialogContentText>
+                                  Your data is successfully verified. Please proceed with employment verification to complete your process.
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button onClick={handleDialogOk} color="primary">
+                                  OK
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
                             <Button
                               sx={{ margin: "5px" }}
-                              disabled={isAadhaarVarified}
+                              enabled={isUanVarified}
                               variant="contained"
-                              onClick={handleAadharVerifiaction}
+                              onClick={handleEpfoButtonClick}
                               endIcon={<Autorenew />}
                             >
-                              Verify
+                              {epfoButton}
                             </Button>
                             <VerificationStatusSection
-                              docType={aadharstatusMessage}
+                              docType={epfostatusMessage}
                             />
                           </Grid>
-                          <Grid item xs={12} md={6}>
-
-                            <FileUploadSection
-                              chooseFile={uploadAadharXmlFile}
-                              fileName={aadharXmlFileName}
-                              accept={'.rar, .zip'}
-                              disabled={isAadhaarVarified}
-                            />
-                          </Grid>
-
                         </Grid>
-                      </Grid>
-                      {/* </Grid> */}
-                    </Grid>
-                    <Grid
-                      container
-                      rowSpacing={2}
-                      columnSpacing={2.5}
-                      item
-                      xs={12}
-                    >
-                      <Grid item xs={12}>
-                        <FormHeading step={"5"} heading={"PAN Verification"} info={"Enter your Pan Numebr to verify."}
-                        />
-                      </Grid>{" "}
-                    </Grid>
-                    <Grid
-                      container
-                      rowSpacing={2}
-                      sx={positionRelative}
-                      item xs={12}
-                    >
-                      {/* {isPanSectionDisabled && <DisableSection />} */}
-                      <Grid item xs={12} md={6} paddingRight={3}>
-                        <Typography sx={lable1Style}>
-                          PAN Number
-                          <span className="requiredField">*</span>
-                        </Typography>
-                        <TextField
-                          style={inputFieldStyle}
-                          type="text"
-                          variant="outlined"
-                          className="customeTextField"
-                          onChange={(e) => {
-                            setPan(e.target.value.toUpperCase());
-                          }}
-                          value={pan}
-                          defaultValue={" "}
-                          inputProps={{ maxLength: 10 }}
-                          disabled={disabledPanInput}
-                        />
-                        <Button
-                          sx={{ margin: "5px" }}
-                          disabled={isPanVarified}
-                          variant="contained"
-                          onClick={handlePanVerifiaction}
-                          endIcon={<Autorenew />}
-                        >
-                          Verify
-                        </Button>
-                        <Dialog
-                          open={isPANModalOpen}
-                          onClose={handleDialogCancel}
-                        >
-                          <DialogTitle>PAN Verified</DialogTitle>
-                          <DialogContent>
-                            <DialogContentText>
-                              Your PAN is successfully verified. To fetch and verify UAN automatically please click on OK.
-                            </DialogContentText>
-                          </DialogContent>
-                          <DialogActions>
-                            <Button onClick={handleDialogConfirm} color="primary" autoFocus>
-                              OK
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
-                        <VerificationStatusSection docType={panstatusMessage} />
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Typography sx={lable1Style}>
-                          Name on PAN
-                          <span className="requiredField">*</span>
-                        </Typography>
-                        <TextField
-                          style={inputFieldStyle}
-                          type="text"
-                          variant="outlined"
-                          className="customeTextField"
-                          onChange={(e) => {
-                            setNameAsOnPan(e.target.value.toUpperCase());
-                          }}
-                          value={nameAsOnPan}
-                          defaultValue={" "}
-                          disabled={true}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormHeading step={"6"} heading={"UAN Verification"} info={"Enter your Universal Account Number(UAN) to verify."} />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid
-                        item
-                        md={6}
-                        mt={3}
-                        container
-                        rowSpacing={1}
-                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                      >
-                        <Grid sx={positionRelative} item xs={12} md={6}>
-                          {isEpfoSectionDisabled && <DisableSection />}
-                          <Typography sx={lable1Style}>
-                            Universal Account Number(UAN)
-                          </Typography>
-                          <TextField
-                            onChange={(e) => {
-                              setUAN(e.target.value);
-                            }}
-                            style={inputFieldStyle}
-                            type="text"
-                            className="customeTextField"
-                            variant="outlined"
-                            defaultValue={" "}
-                            value={UAN}
-                          />
-
-                          <Dialog open={isUANModalOpen} onClose={() => setIsUANModalOpen(false)}>
-                            <DialogTitle>Verification Successful</DialogTitle>
-                            <DialogContent>
-                              <DialogContentText>
-                                Your data is successfully verified. Please proceed with employment verification to complete your process.
-                              </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                              <Button onClick={handleDialogOk} color="primary">
-                                OK
-                              </Button>
-                            </DialogActions>
-                          </Dialog>
+                        {isSubmitDisabled === false ?
                           <Button
-                            sx={{ margin: "5px" }}
-                            enabled={isUanVarified}
+                            name="submit"
+                            // disabled={isSubmitDisabled}
+                            onClick={() => submitDetails(false)}
+                            sx={{ m: "15px 5px" }}
                             variant="contained"
-                            onClick={handleEpfoButtonClick}
-                            endIcon={<Autorenew />}
+                            color="primary"
                           >
-                            {epfoButton}
+                            {submitButton}
                           </Button>
-                          <VerificationStatusSection
-                            docType={epfostatusMessage}
-                          />
-                        </Grid>
+                          : null
+                        }
                       </Grid>
-                      {isSubmitDisabled === false ?
-                        <Button
-                          name="submit"
-                          // disabled={isSubmitDisabled}
-                          onClick={() => submitDetails(false)}
-                          sx={{ m: "15px 5px" }}
-                          variant="contained"
-                          color="primary"
-                        >
-                          {submitButton}
-                        </Button>
-                        : null
-                      }
+                    </Grid>
+                    <Typography
+                      appointeeId={appointeeId}
+                      onClick={() => setRemarks(appointeeId)}
+                      sx={{ linkStyle, marginLeft: '25rem' }}
+                    >
+                      To know the remarks Click here{" "}
+                    </Typography>
+
+                  </form>
+                </Box>
+              ) : null}
+              {/* <form ref={formElement}>
+                <Grid sx={positionRelative} item xs={12}>
+                  <Grid
+                    mt={3}
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    paddingLeft={{ xs: 3, md: 'auto' }}
+                    item
+                  >
+                    <Grid item xs={12} md={6}>
+                      <Button
+                        //onClick={() => setCurrentPageNo(1)}
+                        onClick={handleBack}
+                        //sx={{ m: "15px 5px", ml: 3 }}
+                        sx={{ m: { xs: '10px 0', sm: '15px 0' } }}
+                        variant="contained"
+                        color="primary"
+                      >
+                        {previousButton}
+                      </Button>
                     </Grid>
                   </Grid>
-                  <Typography
-                    appointeeId={appointeeId}
-                    onClick={() => setRemarks(appointeeId)}
-                    sx={{ linkStyle, marginLeft: '25rem' }}
-                  >
-                    To know the remarks Click here{" "}
-                  </Typography>
+                </Grid>
 
-                </form>
-              ) : null}
+              </form> */}
               <form ref={formElement}>
+                <Grid sx={positionRelative} item xs={12}>
+                  <Grid
+                    mt={3}
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  >
+                    <Grid item xs={12} md={6}>
+                    </Grid>
+                  </Grid>
+                </Grid>
                 <Grid
                   sx={{ paddingLeft: "20px" }}
                   container
                   rowSpacing={1}
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  
+
                 >
                   <Grid
                     container
@@ -5180,48 +5220,49 @@ const AppointeeRegister = () => {
                     columnSpacing={2.5}
                     item
                     xs={12}
-                    sx={{marginTop: '16px'}}
                   >
-                    {(currentPageNo === 2 || currentPageNo === 3) && (
-                      <>
-                        <Button
-                          //onClick={() => setCurrentPageNo(1)}
-                          onClick={handleBack}
-                          //sx={{ m: "15px 5px", ml: 3 }}
-                          sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
-                          variant="contained"
-                          color="primary"
-                        >
-                          {previousButton}
-                        </Button>
-                      </>
-                    )}
-                    {currentPageNo === 2 && (
-                      <>
-                        <Button
-                          name="save"
-                          // disabled={isSubmitDisabled}
-                          onClick={handleSaveClick}
-                          //sx={{ m: "15px 25px", ml: 3 }}
-                          sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
-                          variant="contained"
-                          color="primary"
-                          disabled={isPreviousSectionDisabled}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          onClick={handleNext}
-                          sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
-                          //sx={{ m: "15px 25px", ml: 3 }}
-                          variant="contained"
-                          color="primary"
-                          disabled={isthirdNextVisible === false}
-                        >
-                          Next
-                        </Button>
-                      </>
-                    )}
+                    <Box sx={{ m: { xs: '10px 27px', sm: '15px 27px' } }}>
+                      {(currentPageNo === 2 || currentPageNo === 3) && (
+                        <>
+                          <Button
+                            //onClick={() => setCurrentPageNo(1)}
+                            onClick={handleBack}
+                            //sx={{ m: "15px 5px", ml: 3 }}
+                            sx={{ m: { xs: '10px 0', sm: '15px 0' } }}
+                            variant="contained"
+                            color="primary"
+                          >
+                            {previousButton}
+                          </Button>
+                        </>
+                      )}
+                      {currentPageNo === 2 && (
+                        <>
+                          <Button
+                            name="save"
+                            // disabled={isSubmitDisabled}
+                            onClick={handleSaveClick}
+                            //sx={{ m: "15px 25px", ml: 3 }}
+                            sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
+                            variant="contained"
+                            color="primary"
+                            disabled={isPreviousSectionDisabled}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            onClick={handleNext}
+                            sx={{ m: { xs: '10px 0', sm: '15px 5px' }, ml: { sm: 3 } }}
+                            //sx={{ m: "15px 25px", ml: 3 }}
+                            variant="contained"
+                            color="primary"
+                            disabled={isthirdNextVisible === false}
+                          >
+                            Next
+                          </Button>
+                        </>
+                      )}
+                    </Box>
                   </Grid>
                 </Grid>
               </form>

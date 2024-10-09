@@ -814,7 +814,7 @@ export const autocompleteStyle = {
 export const disableSectionStyle = {
   position: "absolute",
   left: "12px",
-  height: "90%",
+  height: { xs: '95%', md: "90%" },
   background: "black",
   opacity: "0.2",
   width: "100%",
