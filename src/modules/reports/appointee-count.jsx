@@ -228,6 +228,24 @@ const AppointeeCount = () => {
       });
 
     } else {
+      
+      entityList?.map((currEntity) => {
+        const companyWiseTable = appointeeCountListDetails.filter(({ companyId, companyName }) => {
+          return currEntity.id === companyId
+        });
+        if (companyWiseTable.length > 0) {
+          const tableBodyList = companyWiseTable.map((appointeeCount) => {
+            return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
+          });
+          tableObj = {
+            headerList: tableHeadList,
+            rows: tableBodyList,
+            tableName: "Appointee Details",
+            companyName: currEntity?.value ?? "",
+          };
+          totaltable.push(tableObj);
+        }
+      });
       const tableBodyList = appointeeCountListDetails.map((appointeeCount) => {
         return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
       });
