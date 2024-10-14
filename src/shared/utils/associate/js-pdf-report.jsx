@@ -56,7 +56,7 @@ const jsPDFReportDataTemplate = async ({ reportDetails = {}, tables = [] }) => {
 
     doc.addImage(logoDataUrl, 'PNG', xOffset, yOffset, logoWidthMM, logoHeightMM);
     const veridataText = "VERIDATA";
-    const fontSize = 25;
+    const fontSize = 24;
     const veridataXOffset = xOffset + logoWidthMM - 9; 
     const veridataYOffset = yOffset + logoHeightMM / 2+3; 
     doc.setFontSize(fontSize);
@@ -67,14 +67,14 @@ const jsPDFReportDataTemplate = async ({ reportDetails = {}, tables = [] }) => {
     const pageWidth = doc.internal.pageSize.width;
     
     const reportText = `Report: ${label}`;
-    doc.setFontSize(18);
+    doc.setFontSize(15);
     const reportTextWidth = doc.getTextWidth(reportText);
     const reportTextX = (pageWidth - reportTextWidth) / 2; 
     const reportTextY = yOffset + 16;
     doc.setTextColor(0,0,0)
     doc.text(reportText, reportTextX, reportTextY);
   
-    doc.setFontSize(14);
+    doc.setFontSize(12);
     let dateRangeText;
     if (formattedFromDate && formattedToDate) {
       dateRangeText = `From: ${formattedFromDate} - To: ${formattedToDate}`;
@@ -100,6 +100,7 @@ const jsPDFReportDataTemplate = async ({ reportDetails = {}, tables = [] }) => {
   
 
   const addFooter = (doc, companyName) => {
+    
     const pageCount = doc.internal.getNumberOfPages();
     const pageCurrent = doc.internal.getCurrentPageInfo().pageNumber;
     const pageWidth = doc.internal.pageSize.width;
@@ -124,23 +125,35 @@ const jsPDFReportDataTemplate = async ({ reportDetails = {}, tables = [] }) => {
     const logoHeight = 6;
     doc.addImage(goldenLogo, 'PNG', logoXPosition, logoYPosition, logoWidth, logoHeight);
   
-    const marginRight = 19;
+    const marginRight = 18;
     doc.setTextColor(0, 0, 0);
     const companyNameText = companyName || defaultCompanyName;
     const companyNameWidth = doc.getTextWidth(companyNameText);
+    
     const companyNameX = pageWidth - companyNameWidth - marginRight;
   
-    let fontSize = 13;
+    let fontSize = 12;
     while (companyNameWidth > (pageWidth - marginRight - 14) && fontSize > 6) {
       fontSize -= 1;
       doc.setFontSize(fontSize);
       companyNameWidth = doc.getTextWidth(companyNameText);
     }
-    doc.setFontSize(fontSize);
+    const labelFontSize = 14;
+    doc.setFontSize(labelFontSize); 
     doc.setFont("Helvetica", "bold");
-    doc.text(companyNameText, companyNameX, 15);
-  
+
+   
+    const labelYPosition = 15; 
+    doc.text("Company Name:", companyNameX, labelYPosition - 5);
+
     
+    const companyNameFontSize = 12; 
+    doc.setFontSize(companyNameFontSize);
+    doc.setFont("Helvetica", "bold"); 
+    
+    doc.text(companyNameText, companyNameX , labelYPosition); 
+
+   
     const dateXPosition = pageWidth - doc.getTextWidth(currentDate) - 14; 
     doc.setFontSize(10);
     doc.setTextColor(150);
@@ -148,8 +161,8 @@ const jsPDFReportDataTemplate = async ({ reportDetails = {}, tables = [] }) => {
     const reportDateWidth = doc.getTextWidth(reportDateText);
     const reportDateXPosition = dateXPosition - reportDateWidth - 1; 
     doc.text(reportDateText, reportDateXPosition, pageHeight - 5);
+
     
- 
     doc.text(currentDate, dateXPosition, pageHeight - 5);
   };
   
@@ -227,6 +240,7 @@ const jsPDFReportDataTemplate = async ({ reportDetails = {}, tables = [] }) => {
           addHeader(doc, label, formattedFromDate, formattedToDate, formattedReportDate);
           addFooter(doc, tableCompanyName || defaultCompanyName);
           startY = lineY + 10;
+          
         }
         const pageHeight = doc.internal.pageSize.height;
         const marginBottom = 20;
@@ -284,10 +298,11 @@ const jsPDFReportDataTemplate = async ({ reportDetails = {}, tables = [] }) => {
         //   startY = lineY + 10;
         // }
       });
-    };
+    }; 
 
     addHeader(doc, label, formattedFromDate, formattedToDate, formattedReportDate);
-    addFooter(doc, defaultCompanyName);
+    const companyNameToUse = tables[0]?.companyName || defaultCompanyName; 
+addFooter(doc, companyNameToUse);
   addContent();
 
   doc.save(`${fileName}.pdf`);
