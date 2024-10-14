@@ -8,6 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux';
 import { Box, Button } from '@mui/material';
+import { midiumFontSize, prereqModalShowMoreInfoStyle, prerequisiteListStyle } from 'app';
 
 const PrerequisiteInformation = () => {
     const functionSlice = useSelector(state => state.functionSlice);
@@ -20,7 +21,7 @@ const PrerequisiteInformation = () => {
                     <Avatar alt="Aadhaar" src="/static/images/avatar/3.jpg" />
                 </ListItemAvatar>
                 <ListItemText
-
+                    sx={prerequisiteListStyle}
                     primary="Aadhaar Number"
                     secondary={
                         <>
@@ -34,7 +35,7 @@ const PrerequisiteInformation = () => {
                             </Typography>
                             {' — If you dont have an addhar please contact with your Hr'}
                             <Box >
-                                <Button onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}>
+                                <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}>
                                     ...show more info
                                 </Button>
                             </Box>
@@ -85,7 +86,7 @@ const PrerequisiteInformation = () => {
                             </Typography>
                             {" — Please login to the epfo portal at least once and then try verifying you details."}
                             <Box >
-                                <Button onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "INACTUAN" })}
+                                <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "INACTUAN" })}
                                 >
                                     ...show more info
                                 </Button>
@@ -109,13 +110,13 @@ const PrerequisiteInformation = () => {
                                 variant="body2"
                                 color="text.primary"
                             >
-                                All verifications are mandatory 
+                                All verifications are mandatory
                             </Typography>
                             {" — Please complete all of them. Dont leave out any information asked for."}
                             <Box >
                                 {/* <Button onClick={() => openRemedyModel({remedyType: "OTH", remedySubType: "INACTUAN" })}
                                 > */}
-                                <Typography color="#1976d2">
+                                <Typography color="#1976d2" sx={midiumFontSize}>
                                     To know about the verification process in details, pls go to FAQ" and FAQ will have the above section on verification process
                                 </Typography>
                                 {/* </Button> */}

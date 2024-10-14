@@ -1,10 +1,10 @@
 import { Button } from '@mui/material'
-import { modelButtonStyle } from 'app'
+import { modelButtonStyle, responsiveBtnType1Style } from 'app'
 import React from 'react'
 
 const Button1 = (props) => {
     return (
-        <Button  {...props} sx={modelButtonStyle} variant="contained" hover color="primary">
+        <Button  {...props} sx={{...modelButtonStyle, ...responsiveBtnType1Style}} variant="contained" hover color="primary">
             {props.children}
         </Button>
     )
