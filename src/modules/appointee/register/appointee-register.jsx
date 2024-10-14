@@ -1,3 +1,5 @@
+
+
 import {
   Box,
   Button,
@@ -105,6 +107,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+
+import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
 
 const AppointeeRegister = () => {
   const steps = ["Step 1", "Step 2", "Step 3"];
@@ -219,6 +223,11 @@ const AppointeeRegister = () => {
   const [panstatusMessage, setPANStatusMessage] = useState(
     new VerificationStatus()
   );
+
+  const passportNumberInputProps = {
+    maxLength: 12,
+    ...inputFieldStyle,
+  };
 
   const [isPFVerificatoinReq, setIsPFVerificatoinReq] = useState(null);
   const [isAadhaarVarified, setisAadhaarVarified] = useState(null);
@@ -464,49 +473,21 @@ const AppointeeRegister = () => {
     };
     openConfirmationModel(submitconfModelContent, handleAppointeeFormPage2Save);
   };
-  const hasTrustEpfoUpload = () => {
+
+  const checkFileUpload = (fileTypeAlias) => {
     const uploadTypeAlias =
       uploadedFile &&
-      uploadedFile.find(
-        ({ uploadTypeAlias }) => uploadTypeAlias === trustEpfoFileTypeAlias
-      );
+      uploadedFile.find(({ uploadTypeAlias }) => uploadTypeAlias === fileTypeAlias);
     return hasValue(uploadTypeAlias);
   };
 
-  const hasHandicapUpload = () => {
-    const uploadTypeAlias =
-      uploadedFile &&
-      uploadedFile.find(
-        ({ uploadTypeAlias }) => uploadTypeAlias === handicapFileTypeAlias
-      );
-    return hasValue(uploadTypeAlias);
-  };
+  // Use the generic function for specific file types
+  const hasTrustEpfoUpload = () => checkFileUpload(trustEpfoFileTypeAlias);
+  const hasHandicapUpload = () => checkFileUpload(handicapFileTypeAlias);
+  const hasPassportUpload = () => checkFileUpload(passportFileTypeAlias);
+  const hasTenthPassCertificateUpload = () => checkFileUpload(tenthCertificateFileTypeAlias);
+  const hasFathersDocCertificateUpload = () => checkFileUpload(otherFileTypeAlias);
 
-  const hasPassportUpload = () => {
-    const uploadTypeAlias =
-      uploadedFile &&
-      uploadedFile.find(
-        ({ uploadTypeAlias }) => uploadTypeAlias === passportFileTypeAlias
-      );
-    return hasValue(uploadTypeAlias);
-  };
-  const hasTenthPassCertificateUpload = () => {
-    const uploadTypeAlias =
-      uploadedFile &&
-      uploadedFile.find(
-        ({ uploadTypeAlias }) =>
-          uploadTypeAlias === tenthCertificateFileTypeAlias
-      );
-    return hasValue(uploadTypeAlias);
-  };
-  const hasFathersDocCertificateUpload = () => {
-    const uploadTypeAlias =
-      uploadedFile &&
-      uploadedFile.find(
-        ({ uploadTypeAlias }) => uploadTypeAlias === otherFileTypeAlias
-      );
-    return hasValue(uploadTypeAlias);
-  };
 
   const openUploadDocInfoModel = (dialogContentText) => {
     openInfoModel({ dialogContentText });
@@ -647,7 +628,7 @@ const AppointeeRegister = () => {
     if (hasValue(isAppointeeUanAvailable)) {
       setIsPreviousSectionDisabled(true);
     }
-   
+
   }, [isAppointeeUanAvailable]);
 
   const generateRemarks = (remarks) => {
@@ -675,7 +656,7 @@ const AppointeeRegister = () => {
     if (isFileExists) {
       showErrorMessage(duplicateFiles);
     } else {
-      if (size <= 4000000) {
+      if (size <= FILE_SIZE_LIMIT) {
         setFileName(name);
         const { id } =
           fileTypeList &&
@@ -705,13 +686,10 @@ const AppointeeRegister = () => {
     const fileData = files[0];
 
     const { name, size, type } = fileData;
-    if (
-      type !== "application/x-zip-compressed" &&
-      type !== "application/x-compressed" &&
-      type !== "application/zip"
-    ) {
+
+    if (!validFileTypes.includes(type)) {
       showErrorMessage(uploadFormatErrorMsg);
-    } else if (size > 4000000) {
+    } else if (size > FILE_SIZE_LIMIT) {
       showErrorMessage(uploadSizeErrorMsg);
     } else {
       setAadharXmlFileName(name);
@@ -719,34 +697,18 @@ const AppointeeRegister = () => {
     }
     setIsAadhaarXmlUploaded(true);
   };
-  const uploadTrustEPFOFile = ({ target }) => {
-    uploadFile(target, trustEpfoFileTypeAlias, setTrustEpfoFileName);
+
+  const handleFileUpload = (fileTypeAlias, setFileName) => ({ target }) => {
+    uploadFile(target, fileTypeAlias, setFileName);
   };
 
-  const uploadHandicapFile = ({ target }) => {
-    uploadFile(target, handicapFileTypeAlias, setHandicapFileName);
-  };
-  const uploadPassportFile = ({ target }) => {
-    uploadFile(target, passportFileTypeAlias, setPassportFileName);
-  };
-  const upload10thCertificateFile = ({ target }) => {
-    uploadFile(
-      target,
-      tenthCertificateFileTypeAlias,
-      setTenthCertificateFileName
-    );
-  };
-  const uploadFathersDocFile = ({ target }) => {
-    uploadFile(target, otherFileTypeAlias, setOtherFileName);
-  };
+  const uploadTrustEPFOFile = handleFileUpload(trustEpfoFileTypeAlias, setTrustEpfoFileName);
+  const uploadHandicapFile = handleFileUpload(handicapFileTypeAlias, setHandicapFileName);
+  const uploadPassportFile = handleFileUpload(passportFileTypeAlias, setPassportFileName);
+  const upload10thCertificateFile = handleFileUpload(tenthCertificateFileTypeAlias, setTenthCertificateFileName);
+  const uploadFathersDocFile = handleFileUpload(otherFileTypeAlias, setOtherFileName);
+
   const verifyAadhar = async () => {
-    // const payLoad = {
-    //   appointeeId: appointeeId,
-    //   otp: otp,
-    //   client_id: clientId,
-    //   aadharName: nameAsOnAadhar,
-    //   userId: userId,
-    // };
     let formData = new FormData();
     formData.append("appointeeId", appointeeId);
     formData.append("aadharName", nameAsOnAadhar.trim());
@@ -804,112 +766,113 @@ const AppointeeRegister = () => {
     }
   };
 
-  const handleSaveClick = () => {
-    let dialogContentText;
-
+  // Check if 10th pass certificate is uploaded
+  const checkTenthPassCertificateUpload = () => {
     if (!hasTenthPassCertificateUpload()) {
-      // If no value is selected for UAN number, show a message
-      dialogContentText = (
-        <Typography>
-          {uploadFileMessage("10th pass certificate")}, then save the details
-        </Typography>
-      );
-      openUploadDocInfoModel(dialogContentText);
-      return; // Prevent further execution
+      showUploadMessage("10th pass certificate");
+      return false;
     }
+    return true;
+  };
+
+  // Check if father's doc certificate is uploaded
+  const checkFathersDocCertificateUpload = () => {
     if (!hasFathersDocCertificateUpload()) {
-      // If no value is selected for UAN number, show a message
-      dialogContentText = (
-        <Typography>
-          {uploadFileMessage("father's name attached certificate")}, then save the details
-        </Typography>
-      );
-      openUploadDocInfoModel(dialogContentText);
-      return; // Prevent further execution
+      showUploadMessage("father's name attached certificate");
+      return false;
     }
+    return true;
+  };
 
+  // Check if handicap certificate is uploaded (only if applicable)
+  const checkHandicapCertificateUpload = () => {
     if (isPhysicallyHandicap === "Y" && !hasHandicapUpload()) {
-      // If Trust EPFO is selected but no file uploaded, show the message immediately
-      dialogContentText = (
-        <>
-          <Typography>
-            {uploadFileMessage("handicap certificate")}, then save the details
-          </Typography>
-        </>
-      );
-      openUploadDocInfoModel(dialogContentText); // Show file upload message
-      return;
+      showUploadMessage("handicap certificate");
+      return false;
     }
-    // Check if file upload is needed and not provided
+    return true;
+  };
+
+  // Check if Trust EPFO is uploaded (only if applicable)
+  const checkTrustEpfoUpload = () => {
     if (isTrustEpfoAvailable === true && !hasTrustEpfoUpload()) {
-      // If Trust EPFO is selected but no file uploaded, show the message immediately
-      dialogContentText = (
-        <>
-          <Typography>
-            {uploadFileMessage("trust epfo passbook")}, then save the details
-          </Typography>
-        </>
-      );
-      openUploadDocInfoModel(dialogContentText); // Show file upload message
-      return;
+      showUploadMessage("trust epfo passbook");
+      return false;
     }
+    return true;
+  };
 
+  // Check if passport is uploaded for specific countries (India, Nepal, Bhutan)
+  const checkPassportUploadForSpecificCountries = () => {
     if (
       hasValue(countryOfOrigin) &&
-      (countryOfOrigin === "India" ||
-        countryOfOrigin === "Nepal" ||
-        countryOfOrigin === "Bhutan")
+      (countryOfOrigin === "India" || countryOfOrigin === "Nepal" || countryOfOrigin === "Bhutan")
     ) {
       if (passportAvailable === "Y" && !hasPassportUpload()) {
-        // If Trust EPFO is selected but no file uploaded, show the message immediately
-        dialogContentText = (
-          <>
-            <Typography>
-              {uploadFileMessage("passport file")}, then save the details
-            </Typography>
-          </>
-        );
-        openUploadDocInfoModel(dialogContentText); // Show file upload message
-        return;
+        showUploadMessage("passport file");
+        return false;
       }
     }
+    return true;
+  };
+
+  // Check if passport is uploaded for other countries
+  const checkPassportUploadForOtherCountries = () => {
     if (
       hasValue(countryOfOrigin) &&
-      (countryOfOrigin !== "India" ||
-        countryOfOrigin !== "Nepal" ||
-        countryOfOrigin !== "Bhutan")
+      (countryOfOrigin !== "India" && countryOfOrigin !== "Nepal" && countryOfOrigin !== "Bhutan")
     ) {
       if (passportAvailable === "Y" && !hasPassportUpload()) {
-        // If Trust EPFO is selected but no file uploaded, show the message immediately
-        dialogContentText = (
-          <>
-            <Typography>
-              {uploadFileMessage("visa")}, then save the details
-            </Typography>
-          </>
-        );
-        openUploadDocInfoModel(dialogContentText); // Show file upload message
-        return;
+        showUploadMessage("visa");
+        return false;
       }
     }
+    return true;
+  };
 
-    // Check if the user has not selected a value for UAN number
+  // Check if UAN number is selected
+  const checkUanNumber = () => {
     if (!uanNumberAvailable) {
-      // If no value is selected for UAN number, show a message
-      dialogContentText = (
-        <Typography>
-          {selectUANmessage("whether you have a UAN number (Yes or No)")},then
-          save the details
-        </Typography>
-      );
-      openUploadDocInfoModel(dialogContentText);
-      return; // Prevent further execution
+      showSelectUanMessage();
+      return false;
     }
+    return true;
+  };
 
+  // Function to show upload message
+  const showUploadMessage = (docType) => {
+    let dialogContentText = (
+      <Typography>
+        {uploadFileMessage(docType)}, then save the details
+      </Typography>
+    );
+    openUploadDocInfoModel(dialogContentText);
+  };
+
+  // Function to show UAN selection message
+  const showSelectUanMessage = () => {
+    let dialogContentText = (
+      <Typography>
+        {selectUANmessage("whether you have a UAN number (Yes or No)")}, then save the details
+      </Typography>
+    );
+    openUploadDocInfoModel(dialogContentText);
+  };
+
+  const handleSaveClick = () => {
+
+    if (!checkTenthPassCertificateUpload()) return;
+    if (!checkFathersDocCertificateUpload()) return;
+    if (!checkHandicapCertificateUpload()) return;
+    if (!checkTrustEpfoUpload()) return;
+    if (!checkPassportUploadForSpecificCountries()) return;
+    if (!checkPassportUploadForOtherCountries()) return;
+    if (!checkUanNumber()) return;
 
     // If all conditions are met, open the confirmation modal
     handleOpenModal(); // Trigger "Are you sure" modal
   };
+
 
   const handleConfirmSave = async () => {
     // Once the user confirms, save the details
@@ -919,21 +882,8 @@ const AppointeeRegister = () => {
     //setCurrentPageNo(3);
   };
 
-  const saveDetails = async () => {
-    let isUANAvailable = uanNumberAvailable === "yes" ? true : false;
-    setIsUANAvailableState(isUANAvailable);
 
-    // Proceed with the rest of the logic if verification passes
-    let payLoad = {
-      appointeeId: appointeeId,
-      userId: userId,
-      appointeeCode: userCode,
-      trustPassbookAvailable: isTrustEpfoAvailable,
-      IsUanAvailable: isUANAvailable,
-      FileDetails: fileDetails,
-      fileUploaded: uploadedFile,
-    };
-
+  const buildFormData = (payLoad) => {
     let formData = new FormData();
     for (const property in payLoad) {
       if (Object.hasOwnProperty.call(payLoad, property)) {
@@ -955,6 +905,47 @@ const AppointeeRegister = () => {
         }
       }
     }
+    return formData;
+  };
+
+  const saveDetails = async () => {
+    let isUANAvailable = uanNumberAvailable === "yes" ? true : false;
+    setIsUANAvailableState(isUANAvailable);
+
+    // Proceed with the rest of the logic if verification passes
+    let payLoad = {
+      appointeeId: appointeeId,
+      userId: userId,
+      appointeeCode: userCode,
+      trustPassbookAvailable: isTrustEpfoAvailable,
+      IsUanAvailable: isUANAvailable,
+      FileDetails: fileDetails,
+      fileUploaded: uploadedFile,
+    };
+    // Use the buildFormData helper function to create the formData
+    let formData = buildFormData(payLoad);
+
+    // let formData = new FormData();
+    // for (const property in payLoad) {
+    //   if (Object.hasOwnProperty.call(payLoad, property)) {
+    //     if (payLoad[property] === "") {
+    //       delete payLoad[property];
+    //     } else {
+    //       if (property === "fileUploaded") {
+    //         formData.append(`${property}`, JSON.stringify(payLoad[property]));
+    //       } else if (property === "FileDetails") {
+    //         if (payLoad?.FileDetails?.length > 0) {
+    //           // If FileDetails is not empty, append the first element
+    //           payLoad?.FileDetails?.forEach((element, index) => {
+    //             formData.append(`${property}`, payLoad[property][index]);
+    //           });
+    //         }
+    //       } else {
+    //         formData.append(`${property}`, payLoad[property]);
+    //       }
+    //     }
+    //   }
+    // }
 
     // Make the API call
     const response = await PostUpdatePfUanDetails(formData);
@@ -1102,24 +1093,26 @@ const AppointeeRegister = () => {
       FileDetails: fileDetails,
       fileUploaded: uploadedFile,
     };
-    let formData = new FormData();
-    for (const property in payLoad) {
-      if (Object.hasOwnProperty.call(payLoad, property)) {
-        if (payLoad[property] === "") {
-          delete payLoad[property];
-        } else {
-          if (property === "fileUploaded") {
-            formData.append(`${property}`, JSON.stringify(payLoad[property]));
-          } else if (property === "FileDetails") {
-            payLoad?.FileDetails.forEach((element) => {
-              formData.append("FileDetails", element);
-            });
-          } else {
-            formData.append(`${property}`, payLoad[property]);
-          }
-        }
-      }
-    }
+    // Use the buildFormData helper function to create the formData
+    let formData = buildFormData(payLoad);
+    // let formData = new FormData();
+    // for (const property in payLoad) {
+    //   if (Object.hasOwnProperty.call(payLoad, property)) {
+    //     if (payLoad[property] === "") {
+    //       delete payLoad[property];
+    //     } else {
+    //       if (property === "fileUploaded") {
+    //         formData.append(`${property}`, JSON.stringify(payLoad[property]));
+    //       } else if (property === "FileDetails") {
+    //         payLoad?.FileDetails.forEach((element) => {
+    //           formData.append("FileDetails", element);
+    //         });
+    //       } else {
+    //         formData.append(`${property}`, payLoad[property]);
+    //       }
+    //     }
+    //   }
+    // }
     const response = await postAppointeeFileDetails(formData);
     if (response) {
       setLocalStorageItem("pfc-user", {
@@ -1206,6 +1199,7 @@ const AppointeeRegister = () => {
       setEpfostatusMessage(epfostatusMessage);
     }
   };
+
 
   const handleDialogOk = () => {
     setIsUANModalOpen(false); // Close the dialog
@@ -1456,10 +1450,7 @@ const AppointeeRegister = () => {
   };
 
 
-  const passportNumberInputProps = {
-    maxLength: 12,
-    ...inputFieldStyle,
-  };
+
   return (
     <CardLayout>
       {currentPageNo === 2 && (

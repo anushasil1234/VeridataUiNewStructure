@@ -1930,3 +1930,12 @@ export const getHandicapTypeDescription = (type) => {
     }
 };
 
+
+export const FILE_SIZE_LIMIT = 4000000; // 4MB
+
+export const validFileTypes = [
+    "application/x-zip-compressed",
+    "application/x-compressed",
+    "application/zip",
+  ];
+

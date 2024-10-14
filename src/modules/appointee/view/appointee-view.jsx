@@ -1,3 +1,4 @@
+
 import { Grid, Typography, Chip } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
@@ -521,16 +522,16 @@ let AppointeeViewForm = ({
                 <Box>
                   {isSaveStep === 1 ? (
                     <>
-                      {isPanVarified === false ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"PAN Verification failed"}
-                          color={"error"}
-                        />
-                      ) : isAadharVerified === false ? (
+                      {isAadharVerified === false ? (
                         <Chip
                           sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
                           label={"Aadhaar Verification failed"}
+                          color={"error"}
+                        />
+                      ) : isPanVarified === false ? (
+                        <Chip
+                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                          label={"PAN Verification failed"}
                           color={"error"}
                         />
                       ) : isUanVerified === false ? (
@@ -546,16 +547,16 @@ let AppointeeViewForm = ({
                             label={"Employement Verification failed"}
                             color={"error"}
                           />
-                        ) : isPanVarified === "N/A" ? (
-                          <Chip
-                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                            label={"PAN Verification Pending"}
-                            color={"warning"}
-                          />
                         ) : isAadharVerified === "N/A" ? (
                           <Chip
                             sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
                             label={"Aadhaar Verification Pending"}
+                            color={"warning"}
+                          />
+                        ) : isPanVarified === "N/A" ? (
+                          <Chip
+                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
+                            label={"PAN Verification Pending"}
                             color={"warning"}
                           />
                         ) : isUanVerified === "N/A" ? (
@@ -805,7 +806,7 @@ let AppointeeViewForm = ({
                         />
                       </DarkTooltip>
                     ) : (
-                      <Typography variant="subtitle2" color="black" style={{   marginLeft: "5%", fontSize: '1rem' }}>
+                      <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>
                         N/A
                       </Typography>
 
@@ -834,7 +835,7 @@ let AppointeeViewForm = ({
                         />
                       </DarkTooltip>
                     ) : (
-                      <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%",  fontSize: '1rem' }}>
+                      <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>
                         N/A
                       </Typography>
 
