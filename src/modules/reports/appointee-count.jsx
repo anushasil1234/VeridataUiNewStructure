@@ -34,6 +34,7 @@ import {
   appointeeCountDetailsHeadCell,
   appointeeCountHeadCell,
   generateAppointeeCountReportDesc,
+  reportGenarate,
   toAppointeecount,
 } from "shared/constants/constants";
 import {
@@ -193,36 +194,52 @@ const AppointeeCount = () => {
     });
   };
   const handleAppointeeDetailsDownload = () => {
+
+    if (!appointeeCountDateWises || appointeeCountDateWises.length === 0) {
+      // showErrorMessage(reportGenarate);
+      return;
+    }
+    let totaltable = [];
+    let tableObj;
+
     const tableHeadList = appointeeCountDetailsHeadCell.map(({ label }) => {
       return {
         title: label,
       };
     });
-    const tableBodyList = appointeeCountListDetails.map((appointeeCount) => {
-      return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
-    });
+    if (entityId.length > 0) {
 
-    // const tableObj = {
-    //   headerList: tableHeadList,
-    //   rows: tableBodyList,
-    //   fileName: `_Appointee_Details_Count_${currentDate}`,
-    //   label: "Appointee Details Count",
-    //   tableName: "Appointee Details",
-    //   fromDate: fromDate,
-    //   toDate: toDate,
-    //   rptDesc: generateAppointeeCountReportDesc
-    // };
+      entityId.map((currEntityId) => {
+        const companyWiseTable = appointeeCountListDetails.filter(({ companyId, companyName }) => {
+          return currEntityId === companyId
+        });
+        if (companyWiseTable.length > 0) {
+          const tableBodyList = companyWiseTable.map((appointeeCount) => {
+            return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
+          });
+          tableObj = {
+            headerList: tableHeadList,
+            rows: tableBodyList,
+            tableName: "Appointee Details",
+            companyName: companyWiseTable[0]?.companyName ?? "",
+          };
+          totaltable.push(tableObj);
+        }
+      });
 
-    // jsPDFReportTemplate({ tableObj });
-
-    const tableObj = {
-      headerList: tableHeadList,
-      rows: tableBodyList,
-      tableName: "Appointee Details",
-      // companyName:entityId
-    };
-
-
+    } else {
+      const tableBodyList = appointeeCountListDetails.map((appointeeCount) => {
+        return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
+      });
+      tableObj = {
+        headerList: tableHeadList,
+        rows: tableBodyList,
+        tableName: "Appointee Details",
+        // companyName:entityId
+      };
+      totaltable.push(tableObj);
+    }
+    
     jsPDFReportDataTemplate({
       reportDetails: {
         fileName: `Appointee_Count_${currentDate}`,
@@ -232,7 +249,7 @@ const AppointeeCount = () => {
         rptDesc: generateAppointeeCountReportDesc,
         // companyName:entityId
       },
-      tables: [tableObj],
+      tables: totaltable,
     });
   };
   // const handleAppointeeDetailsDownload = () => {
@@ -395,39 +412,39 @@ const AppointeeCount = () => {
               <InputLabel id="demo-simple-select-label">Entity</InputLabel>
               {statusCode !== undefined &&
                 <Select
-                error={false}
-                labelId="demo-multiple-select-label"
-                id="demo-multiple-select"
-                className="customeTextField"
-                sx={inputFieldStyleAdded}
-                multiple
-                value={entityId} 
-                label="entityId"
-                inputProps={{
-                  style: inputPropsStyle
-                }}
-                defaultValue={[]}
-                onChange={(e) => {
-                  setEntityId(e.target.value)
-                }}
-                renderValue={(selected) => {
-                 
-                  return entityList
+                  error={false}
+                  labelId="demo-multiple-select-label"
+                  id="demo-multiple-select"
+                  className="customeTextField"
+                  sx={inputFieldStyleAdded}
+                  multiple
+                  value={entityId}
+                  label="entityId"
+                  inputProps={{
+                    style: inputPropsStyle
+                  }}
+                  defaultValue={[]}
+                  onChange={(e) => {
+                    setEntityId(e.target.value)
+                  }}
+                  renderValue={(selected) => {
+
+                    return entityList
                       .filter(element => selected.includes(element.id))
                       .map(element => element.value)
                       .join(', ');
-              }}
-              >
-                {entityList &&
-                  entityList.map((element, index) => {
-                    return (
-                      <MenuItem key={index} value={element.id}>
-                      <Checkbox checked={entityId.indexOf(element.id) > -1} />
-                      <ListItemText primary={element.value} />
-                  </MenuItem>
-                    );
-                  })}
-              </Select>}
+                  }}
+                >
+                  {entityList &&
+                    entityList.map((element, index) => {
+                      return (
+                        <MenuItem key={index} value={element.id}>
+                          <Checkbox checked={entityId.indexOf(element.id) > -1} />
+                          <ListItemText primary={element.value} />
+                        </MenuItem>
+                      );
+                    })}
+                </Select>}
             </FormControl>
           </Grid>
           <Grid item xs={4}>
