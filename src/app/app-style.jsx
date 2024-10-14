@@ -619,12 +619,21 @@ export const stepHeadingStyle = {
   marginLeft: ".8rem",
   marginTop: "5px"
 };
+
 export const activeStepStyle = {
   '& > .MuiStepLabel-iconContainer': {
     border: '3px solid white',
     borderRadius: '50%',
     borderSpacing: '15px',
     outline: `2px solid ${AppStyle.palette.primary.main}`
+  }
+}
+export const indActiveStepStyle = {
+  '& > .MuiStepLabel-iconContainer': {
+    border: '3px solid white',
+    borderRadius: '50%',
+    borderSpacing: '15px',
+    outline: `2px solid white`
   }
 }
 // step heading ends
@@ -1337,6 +1346,34 @@ export const downLoadListSx = {
   marginTop: 0,
 }
 export const genderIconStyle = { fontSize: "3rem" };
+
+export const infoDialogTitleStyle = {
+  '&.MuiTypography-root': {
+
+    // fontSize: {sm: '1rem!important', md: "1.25rem!important", lg: "1.5rem"},
+    fontSize: '1.1rem',
+  }
+}
+export const midiumFontSize = { fontSize: '0.9rem' };
+export const subHeadingContentTextStyle = {
+  ...midiumFontSize
+}
+
+export const prerequisiteListStyle = {
+  '& span': {
+    ...midiumFontSize
+  }
+}
+
+export const prereqModalShowMoreInfoStyle = {
+  fontSize: { xs: '.6rem', md: '.875rem' }
+}
+
+export const responsiveBtnType1Style = {
+  padding: { xs: '4px 8px', sm: '6px 16px' },
+  minWidth: { xs: '45px', sm: '65px' },
+  fontSize: { xs: '0.6rem', sm: '0.875rem' }
+}
 
 export const useStyles = makeStyles(() => ({
   cardTitle: {
