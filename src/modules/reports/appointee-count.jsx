@@ -53,7 +53,7 @@ import moment from "moment";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 const AppointeeCount = () => {
-
+  const popUpSlice = useSelector(state => state.popUpSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
   const dropdownList = useSelector((state) => state.dropdownList);
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
@@ -68,7 +68,7 @@ const AppointeeCount = () => {
   const [appointeeCountDateWises, setAppointeeCountDateWises] = useState();
   const [appointeeCountListDetails, setAppointeeCountListDetails] = useState();
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
-
+  const {showErrorMessage} =popUpSlice[0]
   const [appointeeName, setAppointeeName] = useState(null);
   const [statusCode, setStatusCode] = useState(null);
   const [entityId, setEntityId] = useState([]);
@@ -166,6 +166,10 @@ const AppointeeCount = () => {
   //   jsPDFReportTemplate({ tableObj });
   // };
   const handleAppointeeCountDownload = () => {
+    if (!appointeeCountDateWises || appointeeCountDateWises.length === 0) {
+      showErrorMessage(reportGenarate);
+     return;
+   }
     const tableHeadList = appointeeCountHeadCell.map(({ label }) => ({
       title: label,
     }));
@@ -178,7 +182,7 @@ const AppointeeCount = () => {
       headerList: tableHeadList,
       rows: tableBodyList,
       tableName: "Count Details",
-      // companyName:entityId
+      
     };
 
     jsPDFReportDataTemplate({
@@ -188,7 +192,7 @@ const AppointeeCount = () => {
         fromDate: fromDate,
         toDate: toDate,
         rptDesc: generateAppointeeCountReportDesc,
-        // companyName:entityId
+       
       },
       tables: [tableObj],
     });
@@ -196,7 +200,7 @@ const AppointeeCount = () => {
   const handleAppointeeDetailsDownload = () => {
 
     if (!appointeeCountDateWises || appointeeCountDateWises.length === 0) {
-      // showErrorMessage(reportGenarate);
+       showErrorMessage(reportGenarate);
       return;
     }
     let totaltable = [];
@@ -233,6 +237,7 @@ const AppointeeCount = () => {
         const companyWiseTable = appointeeCountListDetails.filter(({ companyId, companyName }) => {
           return currEntity.id === companyId
         });
+       
         if (companyWiseTable.length > 0) {
           const tableBodyList = companyWiseTable.map((appointeeCount) => {
             return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
@@ -246,16 +251,7 @@ const AppointeeCount = () => {
           totaltable.push(tableObj);
         }
       });
-      const tableBodyList = appointeeCountListDetails.map((appointeeCount) => {
-        return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
-      });
-      tableObj = {
-        headerList: tableHeadList,
-        rows: tableBodyList,
-        tableName: "Appointee Details",
-        // companyName:entityId
-      };
-      totaltable.push(tableObj);
+      
     }
     
     jsPDFReportDataTemplate({
@@ -265,7 +261,7 @@ const AppointeeCount = () => {
         fromDate: fromDate,
         toDate: toDate,
         rptDesc: generateAppointeeCountReportDesc,
-        // companyName:entityId
+       
       },
       tables: totaltable,
     });
