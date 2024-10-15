@@ -24,7 +24,7 @@ const FileUploadSection = ({ chooseFile, fileName, accept,disabled}) => {
                 </Typography>
                 {
                     !fileName &&
-                    <Typography fontSize={".7rem"} marginTop={.25}>
+                    <Typography fontSize={".7rem"} textAlign={'center'}  marginTop={.25}>
                        {accept ? fileType:  defaultUploadFormat }
                     </Typography>
                 }

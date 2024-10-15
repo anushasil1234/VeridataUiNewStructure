@@ -393,7 +393,7 @@ export const cardAppbar = {
 // Alert
 const alertStyle = {
   width: "100%",
-  fontSize: 18,
+  fontSize: {xs: 14, sm: 16, md: 18},
   alignItems: "center",
   color: ThemeColorPalete.common.black
 };

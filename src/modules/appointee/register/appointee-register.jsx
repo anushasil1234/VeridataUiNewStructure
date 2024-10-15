@@ -28,6 +28,7 @@ import {
   genderSectionContainer,
   genderTypeStyle,
   heading2,
+  indActiveStepStyle,
   inputFieldStyle,
   lable1Style,
   linkStyle,
@@ -38,6 +39,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getHandicapTypeDescription,
   otherFileTypeAlias,
+  stepperDefaultList,
   tenthCertificateFileTypeAlias,
 } from "shared/constants/constants";
 import {
@@ -269,6 +271,11 @@ const AppointeeRegister = () => {
   const [isNextVisible, setIsNextVisible] = useState(false);
   const [isthirdNextVisible, setIsThirdNextVisible] = useState(false);
   const [isDraft, setIsDraft] = useState(true);
+  const [stepsList, setStepsList] = useState(
+    // {personalDetails:, passportDetails:, othersDetails, cerificateFileUpload}
+    stepperDefaultList
+  );
+  const stepCounter = 4;
 
   const initialTimeOfOtpTimer = () => {
     setTimeoutTimer(10 * 60);
@@ -312,6 +319,7 @@ const AppointeeRegister = () => {
   };
 
   const setAppointeeDetails = async (appointeeId) => {
+
     const response = await getAppointeeDetails(appointeeId);
     if (response) {
       let {
@@ -427,6 +435,7 @@ const AppointeeRegister = () => {
       setisUanVarified(isUanVarified);
       setIsPanVarified(isPanVarified);
       setIsEmployementDataVarified(isEmployementVarified);
+
       if (hasValue(uanNumber) && isEmployementVarified === null) {
         epfostatusMessage.message = "N/A";
         //epfostatusMessage.color = "";
@@ -457,8 +466,76 @@ const AppointeeRegister = () => {
       hasValue(isTrustPassbook)
         ? setIsTrustEpfoAvailable(isTrustPassbook)
         : setIsTrustEpfoAvailable(true);
+      updateStep(
+        {
+          isHandicap: isHandicap,
+          isPassportAvailable: isPassportAvailable
+        }
+      );
+    };
+
+
+  }
+  console.log('stepList1', stepsList);
+  const updateStep = ({ isHandicap, isPassportAvailable }) => {
+    // setStepsList([...stepsList, step]);
+    // const testobject = { ...stepsList, [stepCode]: { ...rest } }
+    // console.log('updateStep', testobject);
+    let _steps = {};
+    let _stepCounter = stepCounter;
+    if (isHandicap === 'Y') {
+      _stepCounter = _stepCounter + 1;
+      _steps = {
+        ..._steps,
+        HV: {
+          step: _stepCounter,
+          name: 'Handicap verification'
+        }
+      }
     }
-  };
+    if (isPassportAvailable === 'Y') {
+      _stepCounter = _stepCounter + 1;
+      _steps = {
+        ..._steps,
+        PV: {
+          step: _stepCounter,
+          name: 'Passport verification'
+        }
+      }
+    }
+    _stepCounter = _stepCounter + 1;
+    _steps = {
+      ..._steps,
+      AV: {
+        step: _stepCounter,
+        name: 'Aadhaar Verification'
+      }
+    }
+    _stepCounter = _stepCounter + 1;
+    _steps = {
+      ..._steps,
+      PAV: {
+        step: _stepCounter,
+        name: 'PAN Verification'
+      }
+    }
+    _stepCounter = _stepCounter + 1;
+    _steps = {
+      ..._steps,
+      UAV: {
+        step: _stepCounter,
+        name: 'UAN Verification'
+      }
+    }
+    setStepsList({ ...stepsList, ..._steps })
+  }
+  console.log('stepsList', stepsList);
+
+  const selectStep = (currentCode) => {
+    console.log('stepsList.find', Object.values(stepsList));
+
+    // return  Object.values(stepsList).find(({ step }) => step === currentCode)?.step
+  }
 
   const fetchUanConfirmationSubmittion = (value) => {
     if (value === "Y") {
@@ -569,11 +646,6 @@ const AppointeeRegister = () => {
     }
   }, [isTrustEpfoAvailable]);
   useEffect(() => {
-    if (!isPhysicallyHandicap) {
-      clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
-    }
-  }, [isPhysicallyHandicap]);
-  useEffect(() => {
     if (
       isAadhaarVarified === true &&
       isPanVarified === true &&
@@ -630,6 +702,87 @@ const AppointeeRegister = () => {
     }
 
   }, [isAppointeeUanAvailable]);
+  console.log('isPhysicallyHandicap234234', isPhysicallyHandicap);
+
+
+  useEffect(() => {
+    if (gender === "M") {
+      setRelationshipWithMember("F");
+      setIsRelationShipWithMemberDisabled(true);
+    } else {
+      setIsRelationShipWithMemberDisabled(false);
+    }
+  }, [gender]);
+
+  useEffect(() => {
+    if (passportAvailable === "Y") {
+      const nationalityLower = nationality?.toLowerCase();
+      // determineIsInternationalWorker(nationalityLower, defaultCountry);
+      setCountryOfOriginBasedOnNationality(nationalityLower);
+    }
+  }, [nationality, passportAvailable]);
+
+  useEffect(() => {
+    updateStepCounter(isPhysicallyHandicap);
+    if (isPhysicallyHandicap === 'N') {
+      clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
+    }
+    // updateStepList(isPhysicallyHandicap, 'Handicap Verification');
+  }, [isPhysicallyHandicap])
+  useEffect(() => {
+    updateStepCounter(passportAvailable);
+    // updateStepList(isPhysicallyHandicap, 'Handicap Verification');
+  }, [passportAvailable])
+  const updateStepCounter = (value) => {
+    // if (value === 'Y') {
+    //   setStepCounter(stepCounter + 1);
+    // }
+    // if (value === 'N') {
+    //   setStepCounter(stepCounter - 1);
+    // }
+  }
+  console.log('stepCounter: ', stepCounter);
+
+  // useEffect(() => {
+  //   if (!isPhysicallyHandicap) {
+  //     clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
+  //   }
+  //   if (isPhysicallyHandicap === 'Y') {
+  //     // setStepsList([...stepsList, 'Handicap verification']);
+  //     setStepCounter(stepCounter + 1);
+  //   } else {
+  //     // const updatedStepList = stepsList.filter(item => item !== 'Handicap verification');
+  //     setStepCounter(stepCounter - 1);
+  //     // setStepsList(updatedStepList);
+  //   }
+  //   // updateStepList(isPhysicallyHandicap, 'Handicap Verification');
+  // }, [isPhysicallyHandicap])
+  // useEffect(() => {
+  //   if (isPassportVarified === 'Y') {
+  //     setStepsList([...stepsList, 'Passport Verification']);
+  //   } else {
+  //     const updatedStepList = stepsList.filter(item => item !== 'Passport Verification');
+  //     setStepsList(updatedStepList);
+  //   }
+  //   // updateStepList(isPassportVarified, 'Passport Verification');
+  // }, [isPassportVarified])
+  console.log('stepsList outside', stepsList);
+
+  const updateStepList = (stepStatus, stepName) => {
+    if (stepStatus === 'Y') {
+      setStepsList([...stepsList, stepName]);
+    } else {
+      const updatedStepList = stepsList.filter(item => item !== stepName);
+      setStepsList(updatedStepList);
+    }
+
+  }
+  const stepsNumber = (code) => {
+    console.log('stepsList inside stepnumber', stepsList);
+    // console.log('code13', code, stepsList.findIndex((element) => element === code) + 1);
+    // // console.log('stepsList.findIndex((element) => element === code) + 1', stepsList.findIndex((element) => element === code) + 1);
+    // return stepsList.findIndex((element) => element === code) + 1;
+  }
 
   const generateRemarks = (remarks) => {
     let remarksList = [];
@@ -1075,6 +1228,14 @@ const AppointeeRegister = () => {
         setCurrentPageNo(2);
         setIsNextVisible(true);
         setIsDraft(false);
+        console.log('passportAvailable', passportAvailable);
+
+        updateStep(
+          {
+            isHandicap: isPhysicallyHandicap,
+            isPassportAvailable: passportAvailable
+          }
+        );
       }
     }
   };
@@ -1399,23 +1560,6 @@ const AppointeeRegister = () => {
     }
   };
 
-  useEffect(() => {
-    if (gender === "M") {
-      setRelationshipWithMember("F");
-      setIsRelationShipWithMemberDisabled(true);
-    } else {
-      setIsRelationShipWithMemberDisabled(false);
-    }
-  }, [gender]);
-
-  useEffect(() => {
-    if (passportAvailable === "Y") {
-      const nationalityLower = nationality?.toLowerCase();
-      // determineIsInternationalWorker(nationalityLower, defaultCountry);
-      setCountryOfOriginBasedOnNationality(nationalityLower);
-    }
-  }, [nationality, passportAvailable]);
-
   const handlePassporNumbertHelp = () => {
     const passportHelpContent = {
       dialogContentText: "",
@@ -1463,7 +1607,7 @@ const AppointeeRegister = () => {
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label, index) => (
             <Step key={label} completed={activeStep > index}>
-              <StepLabel sx={activeStep === index && activeStepStyle}>
+              <StepLabel sx={activeStep === index ? activeStepStyle : indActiveStepStyle}>
                 {label}
               </StepLabel>
             </Step>
@@ -1503,8 +1647,8 @@ const AppointeeRegister = () => {
                         >
                           <Grid item xs={12}>
                             <FormHeading
-                              step={"1"}
-                              heading={"Personal Details"}
+                              step={stepsList.PD.step}
+                              heading={stepsList.PD.name}
                               info={
                                 "Enter all your Personal Details like Gender, DOB to verify with Adhar, PAN, UAN."
                               }
@@ -1843,8 +1987,8 @@ const AppointeeRegister = () => {
                             >
                               <Grid item xs={12}>
                                 <FormHeading
-                                  step={"2"}
-                                  heading={"Passport Details"}
+                                  step={stepsList.PassD.step}
+                                  heading={stepsList.PassD.name}
                                   info={
                                     "Enter your Passport details to verify its authenticity."
                                   }
@@ -2029,8 +2173,8 @@ const AppointeeRegister = () => {
                             >
                               <Grid item xs={12}>
                                 <FormHeading
-                                  step={"3"}
-                                  heading={"Others Details"}
+                                  step={stepsList.OD.step}
+                                  heading={stepsList.OD.name}
                                   info={
                                     "Enter your other information like handicap details ."
                                   }
@@ -2198,9 +2342,9 @@ const AppointeeRegister = () => {
                           >
                             <Grid item xs={12}>
                               <FormHeading
-                                step={"1"}
-                                heading={"Cerificate / File Upload"}
-                                info={"Upload your handicap file details ."}
+                                step={stepsList.CF.step}
+                                heading={stepsList.CF.name}
+                                info={"Upload file details ."}
 
                               // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
                               //   <HelpOutline />
@@ -2323,23 +2467,37 @@ const AppointeeRegister = () => {
                                   </Box>
                                 </Grid>
                                 {isPhysicallyHandicap === "Y" && (
-                                  <Grid item xs={12} md={6}>
-                                    <Typography sx={lable1Style}>
-                                      Handicap Type
-                                    </Typography>
+                                  <>
+                                    <Grid item xs={12}>
+                                      <FormHeading
+                                        step={stepsList?.HV?.step}
+                                        heading={stepsList?.HV?.name}
+                                        info={"Upload your handicap file details ."}
 
-                                    <TextField
-                                      style={inputFieldStyle}
-                                      type="text"
-                                      variant="outlined"
-                                      className="customeTextField"
-                                      value={getHandicapTypeDescription(
-                                        handicapType
-                                      )}
-                                      defaultValue={""}
-                                      disabled={isPreviousSectionDisabled}
-                                    />
-                                  </Grid>
+                                      // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
+                                      //   <HelpOutline />
+                                      // </IconButton>}
+                                      />
+                                    </Grid>
+
+                                    <Grid item xs={12} md={6}>
+                                      <Typography sx={lable1Style}>
+                                        Handicap Type
+                                      </Typography>
+
+                                      <TextField
+                                        style={inputFieldStyle}
+                                        type="text"
+                                        variant="outlined"
+                                        className="customeTextField"
+                                        value={getHandicapTypeDescription(
+                                          handicapType
+                                        )}
+                                        defaultValue={""}
+                                        disabled={isPreviousSectionDisabled}
+                                      />
+                                    </Grid>
+                                  </>
                                 )}
                                 <Grid item xs={12} md={6}>
                                   {isPhysicallyHandicap === "Y" && (
@@ -2380,8 +2538,8 @@ const AppointeeRegister = () => {
                             >
                               <Grid item xs={12}>
                                 <FormHeading
-                                  step={"2"}
-                                  heading={"Passport Verification"}
+                                  step={stepsList?.PV?.step}
+                                  heading={stepsList?.PV?.name}
                                   info={
                                     "Enter your Passport file number to verify also see the help sign (?) to see how to find passport file number ."
                                   }
@@ -2638,8 +2796,8 @@ const AppointeeRegister = () => {
                       >
                         <Grid item xs={12}>
                           <FormHeading
-                            step={"4"}
-                            heading={"Aadhaar Verification"}
+                            step={stepsList?.AV?.step}
+                            heading={stepsList?.AV?.name}
                             info={
                               "Enter Adhar data to verify, see more info in the below link."
                             }
@@ -2770,8 +2928,8 @@ const AppointeeRegister = () => {
                       >
                         <Grid item xs={12}>
                           <FormHeading
-                            step={"5"}
-                            heading={"PAN Verification"}
+                            step={stepsList?.PAV?.step}
+                            heading={stepsList?.PAV?.name}
                             info={"Enter your Pan Numebr to verify."}
                           />
                         </Grid>{" "}
@@ -2857,8 +3015,8 @@ const AppointeeRegister = () => {
                       </Grid>
                       <Grid item xs={12}>
                         <FormHeading
-                          step={"6"}
-                          heading={"UAN Verification"}
+                          step={stepsList?.UAV?.step}
+                          heading={stepsList?.UAV?.name}
                           info={
                             "Enter your Universal Account Number(UAN) to verify."
                           }
@@ -3021,10 +3179,7 @@ const AppointeeRegister = () => {
                             // disabled={isSubmitDisabled}
                             onClick={handleSaveClick}
                             //sx={{ m: "15px 25px", ml: 3 }}
-                            sx={{
-                              m: { xs: "10px 0", sm: "15px 5px" },
-                              ml: { sm: 3 },
-                            }}
+                            sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
                             variant="contained"
                             color="primary"
                             disabled={isPreviousSectionDisabled}
@@ -3033,10 +3188,7 @@ const AppointeeRegister = () => {
                           </Button>
                           <Button
                             onClick={handleNext}
-                            sx={{
-                              m: { xs: "10px 0", sm: "15px 5px" },
-                              ml: { sm: 3 },
-                            }}
+                            sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
                             //sx={{ m: "15px 25px", ml: 3 }}
                             variant="contained"
                             color="primary"

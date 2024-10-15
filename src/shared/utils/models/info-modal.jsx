@@ -1,6 +1,7 @@
 import React from 'react'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import Button1 from '../button/button1';
+import { infoDialogTitleStyle } from 'app';
 
 
 const InfoModel = ({ open, confirmationModelContent }) => {
@@ -9,7 +10,7 @@ const InfoModel = ({ open, confirmationModelContent }) => {
 
   return (
     <Dialog open={open} fullWidth={fullWidth} maxWidth={maxWidth} >
-      <DialogTitle>{dialogTitle}</DialogTitle>
+      <DialogTitle sx={infoDialogTitleStyle}>{dialogTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           {dialogContentText}
@@ -19,7 +20,7 @@ const InfoModel = ({ open, confirmationModelContent }) => {
 
       </DialogContent>
       <DialogActions >
-        <Button1 onClick={handleClickOnOk}>
+        <Button1  onClick={handleClickOnOk}>
           {btnName}
         </Button1>
       </DialogActions>

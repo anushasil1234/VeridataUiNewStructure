@@ -17,7 +17,8 @@ import {
   dashboardtextStyle,
   dropDownLableStyle,
   inputFieldStyle,
-  getStatusChipStyle 
+  getStatusChipStyle, 
+  subHeadingContentTextStyle
 } from "app";
 import { submitConfirmationMsg, toRegister } from "shared/constants/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -182,7 +183,7 @@ const HomeView = () => {
     } else {
       const prerequisiteModelContent = {
         dialogTitle: "Prerequisite Confirmation",
-        dialogContentText: <><Typography>Before verification there are some prerequisites, thats needs to be done...</Typography>
+        dialogContentText: <><Typography sx={subHeadingContentTextStyle}>Before verification there are some prerequisites, thats needs to be done...</Typography>
           <Typography></Typography></>,
         dialogContentComponent: <PrerequisiteInformation />,
         fullWidth: true,
