@@ -44,6 +44,7 @@ import {
 } from "shared/constants/constants";
 import {
   CardLayout,
+  CreateStepSequience,
   DateFormatYYYYMMDD,
   getLocalStorageItem,
   hasValue,
@@ -477,56 +478,8 @@ const AppointeeRegister = () => {
 
   }
   console.log('stepList1', stepsList);
-  const updateStep = ({ isHandicap, isPassportAvailable }) => {
-    // setStepsList([...stepsList, step]);
-    // const testobject = { ...stepsList, [stepCode]: { ...rest } }
-    // console.log('updateStep', testobject);
-    let _steps = {};
-    let _stepCounter = stepCounter;
-    if (isHandicap === 'Y') {
-      _stepCounter = _stepCounter + 1;
-      _steps = {
-        ..._steps,
-        HV: {
-          step: _stepCounter,
-          name: 'Handicap verification'
-        }
-      }
-    }
-    if (isPassportAvailable === 'Y') {
-      _stepCounter = _stepCounter + 1;
-      _steps = {
-        ..._steps,
-        PV: {
-          step: _stepCounter,
-          name: 'Passport verification'
-        }
-      }
-    }
-    _stepCounter = _stepCounter + 1;
-    _steps = {
-      ..._steps,
-      AV: {
-        step: _stepCounter,
-        name: 'Aadhaar Verification'
-      }
-    }
-    _stepCounter = _stepCounter + 1;
-    _steps = {
-      ..._steps,
-      PAV: {
-        step: _stepCounter,
-        name: 'PAN Verification'
-      }
-    }
-    _stepCounter = _stepCounter + 1;
-    _steps = {
-      ..._steps,
-      UAV: {
-        step: _stepCounter,
-        name: 'UAN Verification'
-      }
-    }
+  const updateStep = (param) => {
+    const _steps = CreateStepSequience({ ...param, stepCounter })
     setStepsList({ ...stepsList, ..._steps })
   }
   console.log('stepsList', stepsList);
