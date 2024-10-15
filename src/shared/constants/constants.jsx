@@ -5,7 +5,7 @@ import TableClickableCell from "shared/utils/dataTable/table-clickable-cell";
 import TableStatusCell from "shared/utils/dataTable/table-status-cell";
 
 // messages
-export const reportGenarate=`There is no data to download a report`
+export const reportGenarate = `There is no data to download a report`
 export const maxUploadSize = `Max size: 4mb`;
 export const emptyUserNameField = `Username can't be empty`;
 export const invalidUserCodeMsg = `User code should contain alphabet's and number only`;
@@ -1631,7 +1631,7 @@ export const nationalityReportTableHeadCell = [
         label: 'Mobile No',
         enums: ['mobileNo'],
 
-    }, 
+    },
     {
         type: "string",
         label: 'Nationality',
@@ -1754,6 +1754,47 @@ export const appointeeReportTableHeadCell = [
 
 ];
 // table headercell end
+// export const stepperDefaultList = [
+//     {
+//         code: 'PD',
+//         name: 'Personal Details',
+//         step: 1
+//     },
+//     {
+//         code: 'PassD',
+//         name: 'Passport Details',
+//         step: 2
+//     },
+//     {
+//         code: 'OD',
+//         name: 'Others Details',
+//         step: 3
+//     },
+//     {
+//         code: 'CF',
+//         name: 'Cerificate FileUpload',
+//         step: 4
+//     }
+// ]
+export const stepperDefaultList = {
+    PD: {
+        name: 'Personal Details',
+        step: 1
+    },
+    PassD: {
+        name: 'Passport Details',
+        step: 2
+    },
+    OD: {
+        name: 'Others Details',
+        step: 3
+    },
+    CF: {
+        name: 'Cerificate / File Upload',
+        step: 4
+    }
+}
+
 
 // Apis urls
 // const Api = `/api`;
@@ -1937,5 +1978,5 @@ export const validFileTypes = [
     "application/x-zip-compressed",
     "application/x-compressed",
     "application/zip",
-  ];
+];
 
