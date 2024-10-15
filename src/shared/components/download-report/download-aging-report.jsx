@@ -8,6 +8,7 @@ import {
   Select,
   Stack,
   TextField,
+  Hidden
 } from "@mui/material";
 import { inputFieldStyle, primaryFabStyle, ResponsiveFab } from "app";
 import React, { useState } from "react";
@@ -35,7 +36,7 @@ const DownloadAgingReport = ({
     (state) => state
   );
   const currentDate = moment();
-  const _currentDate = currentDate.format("DD-MMM-YYYY");
+  const _currentDate = currentDate.format("DD/MM/YYYY");
   const { showErrorMessage } = popUpSlice[0];
   const handleReportSearch = () => {
     if (filterType === 0) {
@@ -62,104 +63,146 @@ const DownloadAgingReport = ({
 
   return (
     <Box
-  my={2}
-  display="flex" 
-  direction="row"
-  justifyContent="flex-start"
-  alignItems="center"
-  spacing={2} 
->
-  
-  <Box mr={2}> 
-    <FormControl sx={{ minWidth: 180 }} size="large">
-      <InputLabel id="demo-select-small">Filter</InputLabel>
-      <Select
-        labelId="demo-select-small"
-        id="demo-select-small"
-        value={filterType}
-        label="Filter"
-        onChange={(e) => setFilterType(e.target.value)}
+      my={2}
+      display="flex"
+      flexWrap="wrap"  
+      justifyContent="flex-start"
+      alignItems="center"
+      sx={{ gap: { xs: 1, sm: 2 }, p: { xs: 1, sm: 2 } }}
+    >
+     
+      <Box 
+        sx={{ 
+          mr: { xs: 0, md: 2 }, 
+          width: { xs: '100%', sm: 'auto' }
+        }}
       >
-        <MenuItem value={0}>All</MenuItem>
-        <MenuItem value={1}>Custom</MenuItem>
-      </Select>
-    </FormControl>
-  </Box>
-
+        <FormControl sx={{ minWidth: 180 }} size="large">
+          <InputLabel id="demo-select-small">Filter</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={filterType}
+            label="Filter"
+            onChange={(e) => setFilterType(e.target.value)}
+          >
+            <MenuItem value={0}>All</MenuItem>
+            <MenuItem value={1}>Custom</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
   
-  {filterType !== 0 && (
-    <>
       
-      <Box mr={2}>
-        <DatePicker
-          label="From Date"
-          value={fromDate}
-          setValue={setFromDate}
-          disableFuture={true}
-        />
-      </Box>
-      <Box display="flex" alignItems="center" mr={2}>
-      <span style={{ marginRight: "0.5rem", whiteSpace: "nowrap" }}>
-          No of Days of Inactivity
-        </span>
-        <TextField
-          style={{ width: "100px" }} 
-          type="number"
-          variant="outlined"
-          value={noOfDays}
-          onChange={handleNoOfInactivityDaysChange}
-          placeholder="No of days"
-          InputProps={{ inputProps: { min: 0 } }} 
-          disabled={!hasValue(fromDate)}
-        />
-        <span style={{ marginLeft: "0.5rem" }}>
-          on {_currentDate}
-        </span>
-      </Box>
-    </>
-  )}
-
-  <Box display="flex" alignItems="center" ml={2}>
-    <DarkTooltip placement="top" title="Search" arrow>
-      <ResponsiveFab
-        variant="contained"
-        size="small"
-        button="N"
-        onClick={handleReportSearch}
-        sx={primaryFabStyle}
+      {filterType !== 0 && (
+        <>
+          
+          <Box 
+            sx={{ 
+              width: { xs: '100%', sm: '200px' }, 
+              mr: { xs: 0, sm: 2 }, 
+              mb: { xs: 2, sm: 0 }
+            }}
+          >
+            <DatePicker
+              label="From Date"
+              value={fromDate}
+              setValue={setFromDate}
+              disableFuture={true}
+            />
+          </Box>
+  
+         
+          <Box 
+            display="flex" 
+            alignItems="center" 
+            sx={{ 
+              width: { xs: '100%', sm: 'auto' }, 
+              flexWrap: 'wrap', 
+              mb: { xs: 2, sm: 0 },
+              mr: { xs: 0, sm: 3 }
+            }}
+          >
+            <span
+              style={{
+                marginRight: "auto",
+                whiteSpace: "normal",
+                wordBreak: "normal",
+                maxWidth: "100px"
+              }}
+              className="responsive-text"
+            >
+              No of Days of Inactivity
+            </span>
+            <TextField
+              style={{ 
+                width: "140px", 
+                marginLeft: "4px" 
+              }}
+              type="number"
+              variant="outlined"
+              value={noOfDays}
+              onChange={handleNoOfInactivityDaysChange}
+              placeholder="No of Days"
+              InputProps={{ inputProps: { min: 0 }, style: { fontSize: "16px",fontWeight: '1px' } }}
+              disabled={!hasValue(fromDate)}
+            />
+            <span style={{ marginLeft: "1rem" }}>
+              as on {_currentDate}
+            </span>
+          </Box>
+        </>
+      )}
+  
+      
+      <Box 
+        display="flex" 
+        alignItems="center" 
+        ml={1} 
+        sx={{ flexWrap: 'nowrap', gap: { xs: 1, sm: 0.4 } }} 
       >
-        <Search width={18} sx={{ color: "#fff" }} />
-      </ResponsiveFab>
-    </DarkTooltip>
-    
-    <DarkTooltip placement="top" title="Clear Search" arrow>
-      <ResponsiveFab
-        variant="contained"
-        size="small"
-        button="N"
-        onClick={clearSearch}
-        sx={{ ...primaryFabStyle }} 
-      >
-        <Refresh width={18} sx={{ color: "#fff" }} />
-      </ResponsiveFab>
-    </DarkTooltip>
-
-    {hasPermission && hasPermission["A008"] && (
-      <DarkTooltip placement="top" title="Download" arrow>
-        <ResponsiveFab
-          variant="contained"
-          size="small"
-          button="N"
-          onClick={handleDownload}
-          sx={{  ...primaryFabStyle }} 
-        >
-          <Download width={18} sx={{ color: "#fff" }} />
-        </ResponsiveFab>
-      </DarkTooltip>
-    )}
-  </Box>
-</Box>
+        <DarkTooltip placement="top" title="Search" arrow>
+          <ResponsiveFab
+            variant="contained"
+            size="small"
+            button="N"
+            onClick={handleReportSearch}
+            sx={{...primaryFabStyle}}
+          >
+            <Search width={18} sx={{ color: "#fff" }} />
+          </ResponsiveFab>
+        </DarkTooltip>
+  
+        <DarkTooltip placement="top" title="Clear Search" arrow>
+          <ResponsiveFab
+            variant="contained"
+            size="small"
+            button="N"
+            onClick={clearSearch}
+            sx={{...primaryFabStyle}}
+          >
+            <Refresh width={18} sx={{ color: "#fff" }} />
+          </ResponsiveFab>
+        </DarkTooltip>
+  
+        {hasPermission && hasPermission["A008"] && (
+          <DarkTooltip placement="top" title="Download" arrow>
+            <ResponsiveFab
+              variant="contained"
+              size="small"
+              button="N"
+              onClick={handleDownload}
+              sx={{...primaryFabStyle}}
+            >
+              <Download width={18} sx={{ color: "#fff" }} />
+            </ResponsiveFab>
+          </DarkTooltip>
+        )}
+      </Box>
+    </Box>
   );
+  
+  
+  
 };
 
 DownloadAgingReport.propTypes = {
