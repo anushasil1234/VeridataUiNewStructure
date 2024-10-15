@@ -775,6 +775,8 @@ export const greenFabStyle = {
 };
 export const primaryFabStyle = {
   ...actionIconStyle,
+   width: { xs: 40, sm: 40 }, 
+  height: { xs: 40, sm: 40 },
   bgcolor: ThemeColorPalete.primary.main,
   color: ThemeColorPalete.common.white,
   "&:hover": {
