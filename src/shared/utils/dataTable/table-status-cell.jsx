@@ -84,7 +84,7 @@ const TableStatusCell = (props) => {
       chipStyle = consetPendingChipStyle;
       chipIconStyle= <WatchLaterIcon color="white"/>
     }if (cellValue === 5) {
-      labelValue = "Prerequisite Data Not available";
+      labelValue = "No Prerequisite";
       chipStyle = consetDeclinedChipStyle;
       chipIconStyle= <CancelIcon color="white"/>
     }
@@ -112,7 +112,7 @@ const TableStatusCell = (props) => {
       chipStyle = consetPendingChipStyle;
       chipIconStyle= <WatchLaterIcon color="white"/>
     }if (cellValue === 5) {
-      labelValue = "Prerequisite Data Not available";
+      labelValue = "No Prerequisite";
       chipStyle = consetDeclinedChipStyle;
       chipIconStyle= <CancelIcon color="white"/>
     }
