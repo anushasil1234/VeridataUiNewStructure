@@ -1167,7 +1167,7 @@ export const appointeeCountDetailsHeadCell = [
         type: "string",
         enums: ['candidateId'],
         disablePadding: false,
-        label: 'Candidate Id',
+        label: 'Candidate ID',
         component: {
             element: Typography
         }
@@ -1325,7 +1325,7 @@ export const noResponseListTableHeadCell = [
         type: "string",
         enums: ['candidateId'],
         disablePadding: false,
-        label: 'Candidate Id',
+        label: 'Candidate ID',
         component: {
             element: Typography
         }
@@ -1368,7 +1368,7 @@ export const noResponseListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Activity Info',
+        label: 'Last Activity Info',
         enums: ['lastActivityDesc'],
         component: {
             element: Typography
@@ -1379,7 +1379,7 @@ export const noResponseListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Activity at',
+        label: 'Last  Activity Date',
         enums: ['lastActionDate'],
         component: {
             element: Typography
@@ -1416,7 +1416,7 @@ export const noMovementListTableHeadCell = [
         type: "string",
         enums: ['candidateId'],
         disablePadding: false,
-        label: 'Candidate Id',
+        label: 'Candidate ID',
         component: {
             element: Typography
         }
@@ -1459,7 +1459,7 @@ export const noMovementListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Activity Info',
+        label: 'Last Activity Info',
         enums: ['lastActivityDesc'],
         component: {
             element: Typography
@@ -1470,7 +1470,7 @@ export const noMovementListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Activity at',
+        label: 'Last Activity Date',
         enums: ['lastActionDate'],
         component: {
             element: Typography
@@ -1552,7 +1552,7 @@ export const nationalityListTableHeadCell = [
         type: "string",
         enums: ['candidateId'],
         disablePadding: false,
-        label: 'Candidate Id',
+        label: 'Candidate ID',
         component: {
             element: Typography
         }
@@ -1678,7 +1678,7 @@ export const appointeeListTableHeadCell = [
         type: "string",
         enums: ['candidateId'],
         disablePadding: false,
-        label: 'Candidate Id',
+        label: 'Candidate ID',
         component: {
             element: Typography
         }
