@@ -13,14 +13,16 @@ export const CreatePdfTableBody = (object, columnList) => {
                 mainValue = DDMMYYYY(mainValue);
             }
 
-            // Add additional values in parentheses if there are multiple
+           
             let additionalValues = values.slice(1).join(', ');
             let finalValue = additionalValues ? `${mainValue} (${additionalValues})` : mainValue;
-
+            
             tableBody.push(finalValue);
+       
         } else {
             tableBody.push(''); // Add empty string if no keys in enums are present in the object
         }
+        
     });
 
     return tableBody;
