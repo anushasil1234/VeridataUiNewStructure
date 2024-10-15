@@ -32,6 +32,7 @@ import {
   inputFieldStyle,
   lable1Style,
   linkStyle,
+  page3formContainerStyle,
   positionRelative,
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
@@ -2327,7 +2328,7 @@ const AppointeeRegister = () => {
                                             alignItems: "center",
                                           }}
                                         >
-                                          {"10th pass certificate"}
+                                          {"10th pass Certificate"}
                                         </Typography>
                                         <Tooltip
                                           arrow="bottom"
@@ -2419,6 +2420,7 @@ const AppointeeRegister = () => {
                                     </Box>
                                   </Box>
                                 </Grid>
+
                                 {isPhysicallyHandicap === "Y" && (
                                   <>
                                     <Grid item xs={12}>
@@ -2588,6 +2590,17 @@ const AppointeeRegister = () => {
                               </Grid>
                             </Grid>
                           ) : null}
+                          <Grid item xs={12}>
+                            <FormHeading
+                              step={stepsList.PFD.step}
+                              heading={stepsList.PFD.name}
+                              info={"Upload file details ."}
+
+                            // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
+                            //   <HelpOutline />
+                            // </IconButton>}
+                            />
+                          </Grid>
                           <Grid item xs={12} md={6}>
                             <Stack
                               flexDirection={"row"}
@@ -2662,7 +2675,6 @@ const AppointeeRegister = () => {
                               </Box>
                             )}
                           </Grid>
-
                           <Grid item xs={12} md={6}>
                             <Stack
                               flexDirection={"col"}
@@ -2732,7 +2744,7 @@ const AppointeeRegister = () => {
               ) : null}
 
               {currentPageNo === 3 ? (
-                <Box sx={{ width: "100%" }}>
+                <Box sx={page3formContainerStyle}>
                   <form ref={formElement}>
                     <Grid
                       sx={{ paddingLeft: "20px" }}
@@ -3050,14 +3062,20 @@ const AppointeeRegister = () => {
                         ) : null}
                       </Grid>
                     </Grid>
-                    <Typography
-                      appointeeId={appointeeId}
-                      onClick={() => setRemarks(appointeeId)}
-                      sx={{ linkStyle, marginLeft: "25rem" }}
-                    >
-                      To know the remarks Click here{" "}
-                    </Typography>
                   </form>
+                  <Typography
+                    appointeeId={appointeeId}
+                    sx={{ linkStyle }}
+                  >
+                    (To know the Remarks)
+                    <Link
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => setRemarks(appointeeId)}
+                    >
+                      Click here
+                    </Link>
+
+                  </Typography>
                 </Box>
               ) : null}
               {/* <form ref={formElement}>

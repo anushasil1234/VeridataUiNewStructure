@@ -393,7 +393,7 @@ export const cardAppbar = {
 // Alert
 const alertStyle = {
   width: "100%",
-  fontSize: {xs: 14, sm: 16, md: 18},
+  fontSize: { xs: 14, sm: 16, md: 18 },
   alignItems: "center",
   color: ThemeColorPalete.common.black
 };
@@ -775,7 +775,7 @@ export const greenFabStyle = {
 };
 export const primaryFabStyle = {
   ...actionIconStyle,
-   width: { xs: 40, sm: 40 }, 
+  width: { xs: 40, sm: 40 },
   height: { xs: 40, sm: 40 },
   bgcolor: ThemeColorPalete.primary.main,
   color: ThemeColorPalete.common.white,
@@ -1518,4 +1518,12 @@ export const datePickerstyle = {
   '& .MuiFormControl-root': {
     width: '100%',
   }
+}
+
+export const page3formContainerStyle = {
+  width: "100%",
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  cursor: 'pointer'
 }
