@@ -24,6 +24,14 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
     _stepCounter = _stepCounter + 1;
     _steps = {
         ..._steps,
+        PFD: {
+            step: _stepCounter,
+            name: 'PF Details'
+        },
+    }
+    _stepCounter = _stepCounter + 1;
+    _steps = {
+        ..._steps,
         AV: {
             step: _stepCounter,
             name: 'Aadhaar Verification'
@@ -45,5 +53,6 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
             name: 'UAN Verification'
         }
     }
+
     return _steps;
 }
