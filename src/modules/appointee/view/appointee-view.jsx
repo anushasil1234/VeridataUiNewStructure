@@ -51,6 +51,7 @@ import {
   tenthCertificateFileTypeAlias,
   otherFileTypeAlias,
   remarksEmptyMsg,
+  roleTypeEnums,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -65,6 +66,7 @@ import RemarksInputModel from "shared/utils/models/remarks-modal";
 import Button2 from "shared/utils/button/button2";
 import viewImage from 'assets/images/profile/view_image.png';
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
+
 
 const DocumentDetails = ({ fieldName, fieldValue, isVerified }) => {
   return (
@@ -164,6 +166,7 @@ let AppointeeViewForm = ({
   const [actionIconListDisplay, setActionIconListDisplay] = useState(false);
   const [isSaveStep, setIsSaveStep] = useState(null);
   const [isTrustPassbook, setIsTrustPassbook] = useState(null);
+
 
   const dispatch = useDispatch();
 
@@ -853,7 +856,7 @@ let AppointeeViewForm = ({
           </Grid>
         </Grid>
       </Box>
-      {userTypeId !== 3 ? (
+      {!roleTypeEnums.candidate.includes(userTypeId) ? (
         <Stack sx={floatingIconListStyle}>
           {appointeeStatus === "P" || appointeeStatus === "R" ? (
             <FabIcon

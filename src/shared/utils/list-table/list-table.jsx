@@ -2,6 +2,7 @@ import { Box, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableRo
 import { heading3 } from 'app';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+import { roleTypeEnums } from 'shared/constants/constants';
 
 
 const ListTable = ({ rows }) => {
@@ -60,7 +61,7 @@ const ListTable = ({ rows }) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {((userTypeId === 3)&& (noteList.length > 0 || issuesList.length > 0)) && (
+                {((roleTypeEnums.candidate.includes(userTypeId))&& (noteList.length > 0 || issuesList.length > 0)) && (
                     <Typography sx={{ mt: 2, color: 'gray' }}>
                         Please check Steps to Resolution in Dashboard to view more info.
                     </Typography>

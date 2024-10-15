@@ -24,6 +24,7 @@ import { removeSideMenuItems } from 'store/slices/side-menu-items-slice';
 import axios from "axios";
 import { toLogin } from 'shared/constants/constants';
 import { useNavigate } from 'react-router-dom';
+import { roleTypeEnums } from 'shared/constants/constants';
 
 const PfcRequest = (Component) => {
     const PfcRequestWrapper = () => {
@@ -87,8 +88,12 @@ const PfcRequest = (Component) => {
             }
         };
 
+        // const isAdmin = () => {
+        //     return userDetails.userTypeId !== 3;
+        // };
+
         const isAdmin = () => {
-            return userDetails.userTypeId !== 3;
+            return !roleTypeEnums.candidate.includes(userDetails.userTypeId);
         };
 
         const setupAxiosInterceptors = (api) => {
@@ -207,7 +212,7 @@ const PfcRequest = (Component) => {
         dispatch(storePopUpSetFunction({ showErrorMessage, showSuccessMessage }));
 
         useEffect(() => {
-            if (userDetails?.userTypeId === 3) {
+            if (roleTypeEnums.candidate.includes(userDetails?.userTypeId)) {
                 resetTimeout();
                 return () => {
                     if (timeoutRef.current) {

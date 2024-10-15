@@ -1980,3 +1980,10 @@ export const validFileTypes = [
     "application/zip",
 ];
 
+
+  export const roleTypeEnums = {
+    admin: [1, 2],     // userTypeId 1 or 2 is admin
+    candidate: [3],    // userTypeId 3 is candidate
+  };
+  
+

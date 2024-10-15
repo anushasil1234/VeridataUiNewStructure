@@ -18,6 +18,7 @@ import { removePopUpSetFunction } from "store/slices/popup-slice";
 import { storeLoggeoutData } from "store/slices/logout-slice";
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
 import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
+import { roleTypeEnums } from "shared/constants/constants";
 
 export const UserLoginView = () => {
   const [userName, setUserName] = useState("");
@@ -111,7 +112,7 @@ export const UserLoginView = () => {
       showErrorMessage(emptyPasswordField);
     } else {
       const payLoad = {
-        userCode: userName,
+        userCode: userName.trim(),
         password: password
       };
 
@@ -140,7 +141,7 @@ export const UserLoginView = () => {
               const { userName, consentStatus, userTypeId, isDefaultPassword, isPasswordExpire } = userDetails;
 
               // Show welcome message if needed
-              if (userTypeId === 3 && consentStatus === 0 && !isDefaultPassword && !isPasswordExpire) {
+              if (roleTypeEnums.candidate.includes(userTypeId) && consentStatus === 0 && !isDefaultPassword && !isPasswordExpire) {
                 const wellcomeMsgContent = {
                   dialogContentText: "",
                   dialogTitle: "",

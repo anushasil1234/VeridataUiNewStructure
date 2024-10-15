@@ -1,0 +1,230 @@
+import {
+    Box,
+    FormControl,
+    Grid,
+    MenuItem,
+    Select,
+    Typography,
+  } from "@mui/material";
+  
+
+  import React, { useEffect, useState } from "react";
+  import NoResponse from "./widget/no-response";
+  import {
+    dropDownLableStyle,
+    inputFieldStyle,
+     
+  } from "app";
+  import { submitConfirmationMsg, toRegister } from "shared/constants/constants";
+  import { useDispatch, useSelector } from "react-redux";
+  import { hasValue, PageLayout, setLocalStorageItem } from "shared/utils";
+  import {
+    CriticalRecruits,
+    Lapsed,
+    TotalOffer,
+    CumulativeStatus,
+    UnderProcess,
+    LinkNotSent,
+    Verified,
+    UpcomingRecruits,
+  } from "./widget";
+  import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
+  import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
+  
+  const AdminView = () => {
+
+    const apiSlice = useSelector((state) => state.apiSlice);
+    const loggedInData = useSelector((state) => state.loggedInData);
+    const dropdownList = useSelector((state) => state.dropdownList);
+  
+    const { days } = dropdownList.length > 0 && dropdownList[0];
+  
+
+    const { getDashboardWidgetCardData } = apiSlice[0];
+    const { userTypeId } = loggedInData[0];
+    const [loading, setLoading] = useState(false);
+  
+    const [filtertotaloffer, setfiltertotaloffer] = useState(null);
+    const [filterNoResponse, setfilterNoResponse] = useState(null);
+    const [filterValidate, setfilterValidate] = useState(null);
+    const [filterLapsed, setfilterLapsed] = useState(null);
+    const [filterUnderProcess, setfilterUnderProcess] = useState(null);
+    const [filterNotValidate, setfilterNotValidate] = useState(null);
+    const [dayRange, setDayRange] = useState(30);
+    const [dayRangePayLoad, setDayRangePayLoad] = useState();
+
+    const startLoader = () => setLoading(true);
+    const stopLoader = () => setLoading(false);
+
+    
+  
+    const setDashboardWidgetCardData = async (dayRange) => {
+      startLoader();
+      const isfilterd = !(dayRange === "A");
+      const filterday = dayRange === "A" ? 0 : dayRange;
+      const response = await getDashboardWidgetCardData(filterday, isfilterd);
+      if (response) {
+        const { responseInfos } = response;
+        responseInfos &&
+          responseInfos.length > 0 &&
+          responseInfos.forEach((widgetObject) => {
+            const { widgetTypeCode, widgetValue } = widgetObject;
+            // console.log("widgetTypeCode",widgetTypeCode)
+            // console.log("widgetTypeCode 1",widgetValue)
+            if (widgetTypeCode === "TOTLOFFR") {
+              setfiltertotaloffer(widgetValue);
+            }
+            if (widgetTypeCode === "NORES") {
+              setfilterNoResponse(widgetValue);
+            }
+            if (widgetTypeCode === "NTVRFD") {
+              setfilterNotValidate(widgetValue);
+            }
+            if (widgetTypeCode === "VIRFD") {
+              setfilterValidate(widgetValue);
+            }
+            if (widgetTypeCode === "UNDPRCS") {
+              setfilterUnderProcess(widgetValue);
+            }
+            if (widgetTypeCode === "LAPSED") {
+              setfilterLapsed(widgetValue);
+            }
+          });
+        // setLoading(false);
+      }
+      stopLoader();
+  
+    };
+  
+    useEffect(() => {
+      if (days) {
+        setDayRange(days[0].value);
+      }
+    }, [days]);
+    useEffect(() => {
+      if (dayRange !== undefined) {
+        setDashboardWidgetCardData(dayRange);
+        const dayRangePayLoad = dayRange !== "A" ? dayRange : false;
+        setDayRangePayLoad(dayRangePayLoad);
+      }
+    }, [dayRange]);
+  
+    return (
+      <>
+        {loading && <CircularIndeterminate />}
+        <PageLayout pageName={"Dashboard"}>
+          
+              <Box>
+                <Grid
+                  container
+                  spacing={{ xs: 2, md: 3 }}
+                  columns={{ xs: 4, sm: 8, md: 12 }}
+                >
+                  <Grid item xs={6} sm={4} md={3} lg={3}>
+                    <FormControl fullWidth>
+                      <Typography sx={{ ...dropDownLableStyle, ml: 0 }}>
+                        Select
+                      </Typography>
+                      {dayRange && (
+                        <Select
+                          error={false}
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={dayRange}
+                          className="customeTextField"
+                          sx={{ ...inputFieldStyle, bgcolor: "#fff", ml: 0 }}
+                          onChange={(event) => setDayRange(event.target.value)}
+                        >
+                          {days &&
+                            days.map((element, index) => {
+                              return (
+                                <MenuItem key={index} value={element.value}>
+                                  {element.lable}
+                                </MenuItem>
+                              );
+                            })}
+                        </Select>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={4}
+                    md={8}
+                    sx={{ marginBottom: "13px", alignSelf: "end" }} 
+                  >
+                    <TotalOffer
+                      wizValue={
+                        filtertotaloffer && filtertotaloffer.widgetTypeValue
+                      }
+                      wizName={filtertotaloffer && filtertotaloffer.widgetTypeName}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  spacing={{ xs: 2, md: 3 }}
+                  columns={{ xs: 4, sm: 8, md: 12 }}
+                >
+                  <Grid item xs={6} sm={4} md={2.4}>
+                    <LinkNotSent
+                      dayRangePayLoad={dayRangePayLoad}
+                      wizdata={filterNotValidate}
+                      fitToContaner={true}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={4} md={2.4}>
+                    <NoResponse
+                      dayRangePayLoad={dayRangePayLoad}
+                      wizdata={filterNoResponse}
+                      fitToContaner={true}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={4} md={2.4}>
+                    <UnderProcess
+                      dayRangePayLoad={dayRangePayLoad}
+                      wizdata={filterUnderProcess}
+                      fitToContaner={true}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={4} md={2.4}>
+                    <Lapsed
+                      dayRangePayLoad={dayRangePayLoad}
+                      wizdata={filterLapsed}
+                      fitToContaner={true}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={4} md={2.4}>
+                    <Verified
+                      dayRangePayLoad={dayRangePayLoad}
+                      wizdata={filterValidate}
+                      fitToContaner={true}
+                    />
+                  </Grid>
+  
+                  <Grid item xs={12} sm={6} md={12}>
+                    <Grid
+                      container
+                      spacing={{ xs: 2, md: 3 }}
+                      columns={{ xs: 4, sm: 8, md: 12 }}
+                    >
+                      <Grid item xs={12} sm={6} md={4}>
+                        <CumulativeStatus />
+                        <br />
+                        <CriticalRecruits />
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={8}>
+                        <UpcomingRecruits />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Box>
+
+        </PageLayout>
+      </>
+    );
+  };
+  
+  export default AdminView;

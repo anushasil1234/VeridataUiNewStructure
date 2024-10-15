@@ -16,6 +16,8 @@ import { useSelector } from 'react-redux';
 import { userNameTextStyle } from 'app';
 import { toHelp, toManageProfile } from 'shared/constants/constants';
 import { useMsal } from '@azure/msal-react';
+import { roleTypeEnums } from 'shared/constants/constants';
+
 const Profile = () => {
   const { instance } = useMsal(); // Get the MSAL instance
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -36,7 +38,7 @@ const Profile = () => {
   const { openConfirmationYesNoModal } = functionSlice[0];
 
   const handleLogout = () => {
-    if (userTypeId === 3 && (!(isSubmit === true || isProcessed === true))) {
+    if (roleTypeEnums.candidate.includes(userTypeId) && (!(isSubmit === true || isProcessed === true))) {
       const VerificationPendingModelContent = {
         dialogTitle: "Log out Confirmation",
         dialogContentText: <><Typography>Your verification is still not complete. If you don't/can't completed now, please check solutions/FAQ and come back later to complete the verification as soon as possible. Do you still want to logout.</Typography>
