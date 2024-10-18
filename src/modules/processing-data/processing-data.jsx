@@ -74,7 +74,7 @@ const UnWrappedProcessing = (props) => {
 
   const [responseList, setResponseList] = useState();
 
-  let [payLoad, setPayLoad] = useState({
+  let defaultPayload= {
     isFiltered: state && state.dayRangePayLoad ? true : false,
     noOfDays: state && state.dayRangePayLoad ? state.dayRangePayLoad : 0,
     filterType: state && state.filterType,
@@ -84,8 +84,8 @@ const UnWrappedProcessing = (props) => {
     statusCode: statusCode,
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
-  });
-
+  };
+const [payLoad,setPayLoad]=useState(defaultPayload)
   const setTableRows = async (payLoad) => {
     let currPageName = "Processing List";
     currPageName =
@@ -202,7 +202,7 @@ const UnWrappedProcessing = (props) => {
   useEffect(() => {
     dispatch(removeActionRoute());
     if (actionRouteSlice.length === 0 && hasPermission) {
-      setTableRows(payLoad);
+      setTableRows(defaultPayload);
     }
   }, [state, actionRouteSlice, hasPermission]);
 
