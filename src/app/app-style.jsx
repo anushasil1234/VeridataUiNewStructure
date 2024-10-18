@@ -621,21 +621,29 @@ export const stepHeadingStyle = {
 };
 
 export const activeStepStyle = {
+ 
   '& > .MuiStepLabel-iconContainer': {
     border: '3px solid white',
     borderRadius: '50%',
     borderSpacing: '15px',
-    outline: `2px solid ${AppStyle.palette.primary.main}`
+    outline: `2px solid ${AppStyle.palette.primary.main}`, 
+    transform: 'scale(1.3)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.6)',
   }
 }
+
 export const indActiveStepStyle = {
   '& > .MuiStepLabel-iconContainer': {
     border: '3px solid white',
     borderRadius: '50%',
     borderSpacing: '15px',
-    outline: `2px solid white`
+    outline: '2px solid white',
+    // transform: 'scale(1)',
+    // transition: 'transform 0.3s ease', 
   }
 }
+
 // step heading ends
 
 export const casesyle = {
@@ -740,6 +748,7 @@ export const whiteScreen = {
 // White screen ends
 
 export const dashboardtextStyle = {
+  fontFamily: AppStyle.typography.fontFamily,
   fontSize: { xs: '.9rem', md: '1.2rem' },
   textAlign: "left"
 };
