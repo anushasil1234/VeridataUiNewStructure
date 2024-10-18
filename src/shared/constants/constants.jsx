@@ -170,7 +170,7 @@ export const genders = [<Male />, <Female />, <Transgender />].map((genderIcon) 
 const rejetedListActions = ['VIEWDETAILS'];
 const latestAppointeeListActions = ['VIEWDETAILS'];
 const verifiedListActions = ['VIEWDETAILS', 'DWNLDPSSBK', 'DWNLDTRUSTPSSBK', 'VIEWPSSBK'];
-const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
+const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL','USERMAILRESEND'];
 const criticalListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
 const lapsedListActions = ['VIEWDETAILS', 'UPDTEAPNTEE'];
 const userListActions = ['VIEWUSERDETAILS', 'UPDATEUSER', 'CLOSEUSERDETAILS'];
@@ -1839,7 +1839,7 @@ export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointe
 export const PostAppointeeDetailsSave_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSave`;
 export const PostAppointeeSearch_URL = `${AppoienteeWorkFlow}/AppointeeSearch?appointeeName=`;
 export const PostAppointeeFileDetails_URL = `${AppoienteeWorkFlow}/PostAppointeeFileDetails`;
-export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdatePfUanDetails`;
+export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdateDocWithUanDetails`;
 export const PostAppointeeReprocess_URL = `${AppoienteeWorkFlow}/PostAppointeeReprocess`;
 export const GetAppointeeDetails_URL = `${AppoienteeWorkFlow}/GetAppointeeDetails?appointeeId=`;
 export const GetAppointeeActivity_URL = `${AppoienteeWorkFlow}/GetAppointeeActivity?appointeeId=`;
@@ -1856,6 +1856,7 @@ export const GetRemarksRemedyData_URL = `${AppoienteeWorkFlow}/GetRemarksRemedy`
 export const GetRemarks_URL = `${AppoienteeWorkFlow}/GetRemarks?AppointeeId=`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`;
 export const PostRemainderMail_URL = (appointeeId, userId) => `${AppoienteeWorkFlow}/PostRemainderMail?AppointeeId=${appointeeId}&UserId=${userId}`
+export const PostCandidateMailResend_URL = (appointeeId, userId) => `${AppoienteeWorkFlow}/PostCandidateMailResend?AppointeeId=${appointeeId}&UserId=${userId}`
 export const GetPfCreationApponteeReport_URL = `${AppointeeReports}/GetPfCreationApponteeReport`;
 export const downloadVerifiedList_URL = `${AppointeeReports}/ApprovedApponteeReport`;
 export const downloadPfCreationApponteeList_URL = `${AppointeeReports}/DownloadPfCreationApponteeReport`;
@@ -1908,6 +1909,7 @@ export const uploadFormatErrorMsg = `Upload valid formatted file`;
 export const verificationConfirmationMsg = `Are you sure you want to start the process?`;
 export const appointeerejetionConfirmationMsg = `Are you sure you want to reject?`;
 export const verificationRemiderMsg = `Reminder alert will be sent to appointee, asking them to complete the verification process. Do you want to continue?`;
+export const credentialRemiderMsg = `An alert with login credentials will be sent to the appointee to complete the verification process. Would you like to proceed?`;
 export const appointeeTerminationConfirmationMsg = `Do you want to terminate the process?`;
 export const notProcessedDataVerificationConfirmationMsg = `Do you want to send verification portal link to the appointees? [Note: Appointees will be removed from this page and moved to the "Processing" page]`;
 export const submitConfirmationMsg = `Your data will be submitted, you will no longer be able to verify your data. To re verify your data you have to contact the admin`;

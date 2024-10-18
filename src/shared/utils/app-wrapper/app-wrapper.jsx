@@ -99,7 +99,8 @@ import {
   ValidateUserByOtpForgetPassword_URL,
   ChangePasswordGenerateOTP_URL,
   AppointeeDataReport_URL,
-  UserSignInDetailsByEmail_URL
+  UserSignInDetailsByEmail_URL,
+  PostCandidateMailResend_URL
 
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
@@ -559,6 +560,9 @@ const AppWrapper = (App) => {
     const postRemainderMail = async (appointeeId, userId) => {
       return await PfcRequest(PostRemainderMail_URL(appointeeId, userId), "POST", {}, remiderSuccessMsg, true);
     };
+    const postResendCredMail = async (appointeeId, userId) => {
+      return await PfcRequest(PostCandidateMailResend_URL(appointeeId, userId), "POST", {}, remiderSuccessMsg, true);
+    };
     const appointeeDetailsUpdate = async (payLoad) => {
       return await PfcRequest(AppointeeDetailsUpdate_URL, "POST", payLoad, editSuccess);
     };
@@ -808,6 +812,7 @@ const AppWrapper = (App) => {
           getPassbookFileData,
           postAppointeeClose,
           postRemainderMail,
+          postResendCredMail,
           appointeeDetailsUpdate,
           postAppointeeSearch,
           getRemarksRemedyData,

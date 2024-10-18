@@ -7,6 +7,7 @@ import DarkTooltip from "../tooltip/dark-tooltip";
 import {
   Article,
   Cancel,
+  ContactMail,
   Download,
   Edit,
   Notifications,
@@ -19,6 +20,7 @@ import {
 } from "app";
 import { useSelector } from "react-redux";
 import {
+  credentialRemiderMsg,
   noPassBookMsg,
   toUpdateUser,
   verificationRemiderMsg,
@@ -47,6 +49,7 @@ export const TableActionCell = (props1, props2) => {
   const {
     getPassbookFileData,
     postRemainderMail,
+    postResendCredMail,
     deleteUserDetails,
   } = apiSlice[0];
   const { userId } = loggedInData[0];
@@ -83,6 +86,16 @@ export const TableActionCell = (props1, props2) => {
     openConfirmationModel(
       confirmationModelContent,
       async () => await postRemainderMail(appointeeId, userId)
+    );
+  };
+
+  const resendUserCredAppointee = async () => {
+    const confirmationModelContent = {
+      dialogContentText: credentialRemiderMsg,
+    };
+    openConfirmationModel(
+      confirmationModelContent,
+      async () => await postResendCredMail(appointeeId, userId)
     );
   };
 
@@ -158,6 +171,21 @@ export const TableActionCell = (props1, props2) => {
                 sx={primaryFabStyle}
               >
                 <Notifications width={18} />
+              </Fab>
+            </DarkTooltip>
+          ) : null}
+          {action === "USERMAILRESEND"  ? (
+            <DarkTooltip placement="top" title={"Resend appointee Login Info"} arrow>
+              <Fab
+                appointeeId={appointeeId}
+                mood="V"
+                variant="contained"
+                size="small"
+                button={"N"}
+                onClick={resendUserCredAppointee}
+                sx={primaryFabStyle}
+              >
+                <ContactMail width={18} />
               </Fab>
             </DarkTooltip>
           ) : null}
