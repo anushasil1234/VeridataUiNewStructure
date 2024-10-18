@@ -42,6 +42,9 @@ import {
   otherFileTypeAlias,
   stepperDefaultList,
   tenthCertificateFileTypeAlias,
+  passportFileTypeAlias,
+  handicapFileTypeAlias,
+  trustEpfoFileTypeAlias,
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -68,7 +71,6 @@ import {
   generateOtpSucces,
   invalidPanMsg,
   panVerifyFailedMsg,
-  passportFileTypeAlias,
   passportSuccessMsg,
   passportVerifyFailedMsg,
   previousButton,
@@ -78,8 +80,6 @@ import {
   submitButton,
   submitConfirmationMsg,
   toDashboard,
-  trustEpfoFileTypeAlias,
-  handicapFileTypeAlias,
   uanVerifyFailedMsg,
   uanVerifySuccessMsg,
   uploadSizeErrorMsg,
@@ -239,8 +239,8 @@ const AppointeeRegister = () => {
   const [isOfflineXmlDownloaded, setIsOfflineXmlDownloaded] = useState(false);
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isPassportVarified, setIsPassportVarified] = useState(false);
-  const [isEmployementDataVarified, setIsEmployementDataVarified] =
-    useState(null);
+  // const [isEmployementDataVarified, setIsEmployementDataVarified] =
+  //   useState(null);
   const [isUanVarified, setisUanVarified] = useState(null);
   const [epfoButton, setEpfoButton] = useState(null);
   const [disabledAadharInput, setDisabledAadharInput] = useState(false);
@@ -278,6 +278,7 @@ const AppointeeRegister = () => {
     stepperDefaultList
   );
   const stepCounter = 4;
+
 
   const initialTimeOfOtpTimer = () => {
     setTimeoutTimer(10 * 60);
@@ -358,7 +359,7 @@ const AppointeeRegister = () => {
         isPFverificationReq,
         isUanVarified,
         isAadhaarVarified,
-        isEmployementVarified,
+        //isEmployementVarified,
         isPanVarified,
         isPensionApplicable,
         saveStep,
@@ -436,9 +437,11 @@ const AppointeeRegister = () => {
       setIsPassportVarified(isPassportValid);
       setisUanVarified(isUanVarified);
       setIsPanVarified(isPanVarified);
-      setIsEmployementDataVarified(isEmployementVarified);
+      // setIsEmployementDataVarified(isEmployementVarified);
 
-      if (hasValue(uanNumber) && isEmployementVarified === null) {
+      if (hasValue(uanNumber)
+        //&& isEmployementVarified === null
+      ) {
         epfostatusMessage.message = "N/A";
         //epfostatusMessage.color = "";
         epfostatusMessage.success = null;
@@ -468,6 +471,33 @@ const AppointeeRegister = () => {
       hasValue(isTrustPassbook)
         ? setIsTrustEpfoAvailable(isTrustPassbook)
         : setIsTrustEpfoAvailable(true);
+
+      fileUploaded.forEach(
+        ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
+          const fileDetails = `data:${mimeType};base64,${fileData}`;
+          const file = {
+            fileDetails,
+            fileName,
+          };
+
+          if (uploadTypeAlias === tenthCertificateFileTypeAlias) {
+            setTenthCertificateFileName(file.fileName);
+          }
+          if (uploadTypeAlias === otherFileTypeAlias) {
+            setOtherFileName(file.fileName);
+          }
+
+          if (uploadTypeAlias === passportFileTypeAlias) {
+            setPassportFileName(file.fileName);
+          }
+          if (uploadTypeAlias === handicapFileTypeAlias) {
+            setHandicapFileName(file.fileName);
+          }
+          if (uploadTypeAlias === trustEpfoFileTypeAlias) {
+            setTrustEpfoFileName(file.fileName);
+          }
+        }
+      );
       updateStep(
         {
           isHandicap: isHandicap,
@@ -497,6 +527,8 @@ const AppointeeRegister = () => {
     }
     setFetchUanConfirmation(false);
   };
+
+  console.log("fileUploaded", fileUploaded)
 
   const openSubmitConfirmationModel = () => {
     const submitconfModelContent = {
@@ -603,8 +635,8 @@ const AppointeeRegister = () => {
     if (
       isAadhaarVarified === true &&
       isPanVarified === true &&
-      isUanVarified !== null &&
-      isEmployementDataVarified !== null
+      isUanVarified !== null
+      //&&      isEmployementDataVarified !== null
     ) {
       setIsSubmitDisabled(false);
     }
@@ -622,31 +654,33 @@ const AppointeeRegister = () => {
     if (isAadhaarVarified) {
       setDisabledAadharInput(true);
     }
-    if (isEmployementDataVarified === null && isSubmit === false) {
+    if (
+      //isEmployementDataVarified === null &&
+      isSubmit === false) {
       if (
         isAadhaarVarified &&
         isPanVarified &&
-        isUanVarified &&
-        !hasValue(UAN)
+        isUanVarified
+        //&& !hasValue(UAN)
       ) {
         submitDetails(true);
       }
     }
-    if (
-      isAadhaarVarified &&
-      isPanVarified &&
-      isUanVarified &&
-      hasValue(UAN) &&
-      isEmployementDataVarified
-    ) {
-      submitDetails(true);
-    }
+    // if (
+    //   isAadhaarVarified &&
+    //   isPanVarified &&
+    //   isUanVarified &&
+    //   hasValue(UAN) &&
+    //   isEmployementDataVarified
+    // ) {
+    //   submitDetails(true);
+    // }
   }, [
     isAadhaarVarified,
     isPanVarified,
-    isEmployementDataVarified,
+    //isEmployementDataVarified,
     isUanVarified,
-    UAN,
+    //UAN,
   ]);
 
   // useEffect to check if UAN appointee is available on page load
@@ -697,29 +731,7 @@ const AppointeeRegister = () => {
   }
   console.log('stepCounter: ', stepCounter);
 
-  // useEffect(() => {
-  //   if (!isPhysicallyHandicap) {
-  //     clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
-  //   }
-  //   if (isPhysicallyHandicap === 'Y') {
-  //     // setStepsList([...stepsList, 'Handicap verification']);
-  //     setStepCounter(stepCounter + 1);
-  //   } else {
-  //     // const updatedStepList = stepsList.filter(item => item !== 'Handicap verification');
-  //     setStepCounter(stepCounter - 1);
-  //     // setStepsList(updatedStepList);
-  //   }
-  //   // updateStepList(isPhysicallyHandicap, 'Handicap Verification');
-  // }, [isPhysicallyHandicap])
-  // useEffect(() => {
-  //   if (isPassportVarified === 'Y') {
-  //     setStepsList([...stepsList, 'Passport Verification']);
-  //   } else {
-  //     const updatedStepList = stepsList.filter(item => item !== 'Passport Verification');
-  //     setStepsList(updatedStepList);
-  //   }
-  //   // updateStepList(isPassportVarified, 'Passport Verification');
-  // }, [isPassportVarified])
+
   console.log('stepsList outside', stepsList);
 
   const updateStepList = (stepStatus, stepName) => {
@@ -750,9 +762,45 @@ const AppointeeRegister = () => {
     }
     return remarksList;
   };
+  // const uploadFile = ({ files }, uploadTypeAlias, setFileName) => {
+  //   const fileData = files[0];
+  //   const { name, size, type } = fileData;
+  //   const isFileExists = fileDetails.find((currentFileData) => {
+  //     return (
+  //       currentFileData.name === name &&
+  //       currentFileData.size === size &&
+  //       currentFileData.type === type
+  //     );
+  //   });
+  //   if (isFileExists) {
+  //     showErrorMessage(duplicateFiles);
+  //   } else {
+  //     if (size <= FILE_SIZE_LIMIT) {
+  //       setFileName(name);
+  //       const { id } =
+  //         fileTypeList &&
+  //         fileTypeList.length > 0 &&
+  //         fileTypeList.find(({ code }) => code === uploadTypeAlias);
+  //       const file = {
+  //         fileName: name,
+  //         mimeType: type,
+  //         fileLength: size,
+  //         uploadTypeId: id,
+  //         uploadTypeAlias: uploadTypeAlias,
+  //         isFileUploaded: true,
+  //       };
+  //       setUploadedFile([...uploadedFile, file]);
+  //       setFileDetails([...fileDetails, fileData]);
+  //     } else {
+  //       showErrorMessage(uploadSizeErrorMsg);
+  //     }
+  //   }
+  // };
+
   const uploadFile = ({ files }, uploadTypeAlias, setFileName) => {
     const fileData = files[0];
     const { name, size, type } = fileData;
+
     const isFileExists = fileDetails.find((currentFileData) => {
       return (
         currentFileData.name === name &&
@@ -760,15 +808,20 @@ const AppointeeRegister = () => {
         currentFileData.type === type
       );
     });
+
     if (isFileExists) {
       showErrorMessage(duplicateFiles);
     } else {
       if (size <= FILE_SIZE_LIMIT) {
         setFileName(name);
+
+        // Find the file type ID based on the uploadTypeAlias
         const { id } =
           fileTypeList &&
           fileTypeList.length > 0 &&
           fileTypeList.find(({ code }) => code === uploadTypeAlias);
+
+        // Create new file object
         const file = {
           fileName: name,
           mimeType: type,
@@ -777,13 +830,33 @@ const AppointeeRegister = () => {
           uploadTypeAlias: uploadTypeAlias,
           isFileUploaded: true,
         };
-        setUploadedFile([...uploadedFile, file]);
-        setFileDetails([...fileDetails, fileData]);
+
+        // Check if there's already a file with the same uploadTypeAlias
+        const existingFileIndex = uploadedFile.findIndex(
+          (uploadedFile) => uploadedFile.uploadTypeAlias === uploadTypeAlias
+        );
+
+        let updatedUploadedFileList = [...uploadedFile];
+        let updatedFileDetails = [...fileDetails];
+
+        if (existingFileIndex !== -1) {
+          // If a file with the same uploadTypeAlias exists, remove it
+          updatedUploadedFileList.splice(existingFileIndex, 1);
+          updatedFileDetails.splice(existingFileIndex, 1);
+        }
+
+        // Add the new file to the lists
+        setUploadedFile([...updatedUploadedFileList, file]);
+        setFileDetails([...updatedFileDetails, fileData]);
       } else {
         showErrorMessage(uploadSizeErrorMsg);
       }
     }
   };
+
+
+  console.log("fileDetails", uploadedFile)
+  console.log("fileDetails1", fileDetails)
 
   const uploadAadharXmlFile = ({ target }) => {
     // uploadFile(target, "ADH", setAadharXmlFileName);
@@ -875,34 +948,39 @@ const AppointeeRegister = () => {
 
   // Check if 10th pass certificate is uploaded
   const checkTenthPassCertificateUpload = () => {
-    if (!hasTenthPassCertificateUpload()) {
-      showUploadMessage("10th pass certificate");
-      return false;
-    }
-    return true;
+    const isUploaded = hasTenthPassCertificateUpload() || hasValue(tenthCertificateFileName);
+    if (!isUploaded) showUploadMessage("10th pass certificate");
+    return isUploaded;
   };
+
 
   // Check if father's doc certificate is uploaded
   const checkFathersDocCertificateUpload = () => {
-    if (!hasFathersDocCertificateUpload()) {
-      showUploadMessage("father's name attached certificate");
-      return false;
-    }
-    return true;
+    const isUploaded = hasFathersDocCertificateUpload() || hasValue(otherFileTypeAlias);
+    if (!isUploaded) showUploadMessage("father's name attached certificate");
+    return isUploaded;
   };
 
   // Check if handicap certificate is uploaded (only if applicable)
   const checkHandicapCertificateUpload = () => {
-    if (isPhysicallyHandicap === "Y" && !hasHandicapUpload()) {
+    if (
+      (isPhysicallyHandicap === "Y" && !hasHandicapUpload()) ||
+      !hasValue(handicapFileTypeAlias)
+    ) {
       showUploadMessage("handicap certificate");
       return false;
     }
     return true;
   };
 
+
   // Check if Trust EPFO is uploaded (only if applicable)
   const checkTrustEpfoUpload = () => {
-    if (isTrustEpfoAvailable === true && !hasTrustEpfoUpload()) {
+    if (
+     (isTrustEpfoAvailable === true && !hasTrustEpfoUpload()) ||
+     !hasValue(trustEpfoFileTypeAlias)
+    )
+      {
       showUploadMessage("trust epfo passbook");
       return false;
     }
@@ -915,7 +993,11 @@ const AppointeeRegister = () => {
       hasValue(countryOfOrigin) &&
       (countryOfOrigin === "India" || countryOfOrigin === "Nepal" || countryOfOrigin === "Bhutan")
     ) {
-      if (passportAvailable === "Y" && !hasPassportUpload()) {
+      if (
+      (passportAvailable === "Y" && !hasPassportUpload()) ||
+      !hasValue(passportFileTypeAlias)
+    )
+      {
         showUploadMessage("passport file");
         return false;
       }
@@ -929,7 +1011,11 @@ const AppointeeRegister = () => {
       hasValue(countryOfOrigin) &&
       (countryOfOrigin !== "India" && countryOfOrigin !== "Nepal" && countryOfOrigin !== "Bhutan")
     ) {
-      if (passportAvailable === "Y" && !hasPassportUpload()) {
+      if (
+      (passportAvailable === "Y" && !hasPassportUpload()) ||
+      !hasValue(passportFileTypeAlias)
+      ) 
+      {
         showUploadMessage("visa");
         return false;
       }
@@ -1015,6 +1101,40 @@ const AppointeeRegister = () => {
     return formData;
   };
 
+  const DraftSave = async () => {
+    let isUANAvailable = uanNumberAvailable === "yes" ? true : false;
+    setIsUANAvailableState(isUANAvailable);
+
+    // Proceed with the rest of the logic if verification passes
+    let payLoad = {
+      appointeeId: appointeeId,
+      userId: userId,
+      appointeeCode: userCode,
+      trustPassbookAvailable: isTrustEpfoAvailable,
+      IsUanAvailable: isUANAvailable,
+      FileDetails: fileDetails,
+      fileUploaded: uploadedFile,
+      IsFinalSubmit: false
+    };
+    // Use the buildFormData helper function to create the formData
+    let formData = buildFormData(payLoad);
+
+    // Make the API call
+    const response = await PostUpdatePfUanDetails(formData);
+    if (response) {
+      //handleNext();
+      //setIsPreviousSectionDisabled(true);
+      // setShowAdditionalSection(true);
+
+      //setIsUANappointeeAvailable(true)
+      clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
+      clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
+      clearFileVaribles(passportFileTypeAlias, setPassportFileName);
+    }
+  };
+
+  //console.log("tenthCertificateFileName",tenthCertificateFileName)
+
   const saveDetails = async () => {
     let isUANAvailable = uanNumberAvailable === "yes" ? true : false;
     setIsUANAvailableState(isUANAvailable);
@@ -1028,31 +1148,10 @@ const AppointeeRegister = () => {
       IsUanAvailable: isUANAvailable,
       FileDetails: fileDetails,
       fileUploaded: uploadedFile,
+      IsFinalSubmit: true
     };
     // Use the buildFormData helper function to create the formData
     let formData = buildFormData(payLoad);
-
-    // let formData = new FormData();
-    // for (const property in payLoad) {
-    //   if (Object.hasOwnProperty.call(payLoad, property)) {
-    //     if (payLoad[property] === "") {
-    //       delete payLoad[property];
-    //     } else {
-    //       if (property === "fileUploaded") {
-    //         formData.append(`${property}`, JSON.stringify(payLoad[property]));
-    //       } else if (property === "FileDetails") {
-    //         if (payLoad?.FileDetails?.length > 0) {
-    //           // If FileDetails is not empty, append the first element
-    //           payLoad?.FileDetails?.forEach((element, index) => {
-    //             formData.append(`${property}`, payLoad[property][index]);
-    //           });
-    //         }
-    //       } else {
-    //         formData.append(`${property}`, payLoad[property]);
-    //       }
-    //     }
-    //   }
-    // }
 
     // Make the API call
     const response = await PostUpdatePfUanDetails(formData);
@@ -1210,24 +1309,7 @@ const AppointeeRegister = () => {
     };
     // Use the buildFormData helper function to create the formData
     let formData = buildFormData(payLoad);
-    // let formData = new FormData();
-    // for (const property in payLoad) {
-    //   if (Object.hasOwnProperty.call(payLoad, property)) {
-    //     if (payLoad[property] === "") {
-    //       delete payLoad[property];
-    //     } else {
-    //       if (property === "fileUploaded") {
-    //         formData.append(`${property}`, JSON.stringify(payLoad[property]));
-    //       } else if (property === "FileDetails") {
-    //         payLoad?.FileDetails.forEach((element) => {
-    //           formData.append("FileDetails", element);
-    //         });
-    //       } else {
-    //         formData.append(`${property}`, payLoad[property]);
-    //       }
-    //     }
-    //   }
-    // }
+
     const response = await postAppointeeFileDetails(formData);
     if (response) {
       setLocalStorageItem("pfc-user", {
@@ -1298,7 +1380,7 @@ const AppointeeRegister = () => {
       if (isVarified) {
         setIsUANModalOpen(true); // Open the dialog when UAN is available
         setUAN(uanNumber); // Save the uanNumber to the existing state
-        setisUanVarified(true);
+        //setisUanVarified(true);
       } else if (
         isUANAvailableState === false &&
         !isUanAvailable &&
@@ -1306,8 +1388,9 @@ const AppointeeRegister = () => {
       ) {
         setisUanVarified(true);
         // setIsEmployementDataVarified(false);
-      } else {
-        setisUanVarified(false);
+      }
+      else {
+        //setisUanVarified(false);
         showErrorMessage(remarks);
       }
 
@@ -1373,7 +1456,8 @@ const AppointeeRegister = () => {
       const { remarks, isVarified } = response.responseInfo;
       if (isVarified) {
         showSuccessMessage(uanVerifySuccessMsg);
-        setIsEmployementDataVarified(true);
+        //setIsEmployementDataVarified(true);
+        setisUanVarified(true);
       } else {
         showErrorMessage(uanVerifyFailedMsg);
         if (hasValue(remarks)) {
@@ -1381,7 +1465,7 @@ const AppointeeRegister = () => {
           openRemarksModel(generatedRemarks);
         }
       }
-      setisUanVarified(isVarified);
+
       closeOtpSubmitionModel();
       setEpfostatusMessage(new VerificationStatus(isVarified, "V"));
     }
@@ -1419,7 +1503,7 @@ const AppointeeRegister = () => {
       () => validateUANOtp(UAN),
       "Generate OTP for PF Verification"
     );
-    setIsEmployementDataVarified(true);
+    //setIsEmployementDataVarified(true);
   };
 
   const formElement = useRef(null);
@@ -2358,6 +2442,11 @@ const AppointeeRegister = () => {
                                     <Box sx={fileUploadSectionContainerStyle}>
                                       <FileUploadSection
                                         chooseFile={upload10thCertificateFile}
+                                        // fileName={
+                                        //   fileUploaded.some(file => file.uploadTypeAlias === "10THCERT")
+                                        //     ? fileUploaded.find(file => file.uploadTypeAlias === "10THCERT").fileName
+                                        //     : tenthCertificateFileName
+                                        // }
                                         fileName={tenthCertificateFileName}
                                         accept={"image/png, image/jpeg"}
                                         disabled={isPreviousSectionDisabled}
@@ -2413,9 +2502,15 @@ const AppointeeRegister = () => {
                                     <Box sx={fileUploadSectionContainerStyle}>
                                       <FileUploadSection
                                         chooseFile={uploadFathersDocFile}
-                                        fileName={otherFileName}
+                                        fileName={
+                                          fileUploaded.some(file => file.uploadTypeAlias === "OTHID")
+                                            ? fileUploaded.find(file => file.uploadTypeAlias === "OTHID").fileName
+                                            : otherFileName
+                                        }
+                                        //fileName={otherFileName}
                                         accept={"image/png, image/jpeg"}
                                         disabled={isPreviousSectionDisabled}
+
                                       />
                                     </Box>
                                   </Box>
@@ -2469,9 +2564,15 @@ const AppointeeRegister = () => {
                                       <Box sx={fileUploadSectionContainerStyle}>
                                         <FileUploadSection
                                           chooseFile={uploadHandicapFile}
-                                          fileName={handicapFileName}
+                                          fileName={
+                                            fileUploaded.some(file => file.uploadTypeAlias === "HANDCERT")
+                                              ? fileUploaded.find(file => file.uploadTypeAlias === "HANDCERT").fileName
+                                              : handicapFileName
+                                          }
+                                          //fileName={handicapFileName}
                                           accept={"image/png, image/jpeg"}
                                           disabled={isPreviousSectionDisabled}
+
                                         />
                                       </Box>
                                     </>
@@ -2580,8 +2681,14 @@ const AppointeeRegister = () => {
                                         </Typography>
                                         <FileUploadSection
                                           chooseFile={uploadPassportFile}
-                                          fileName={passportFileName}
+                                          fileName={
+                                            fileUploaded.some(file => file.uploadTypeAlias === "VISA")
+                                              ? fileUploaded.find(file => file.uploadTypeAlias === "VISA").fileName
+                                              : passportFileName
+                                          }
+                                          //fileName={passportFileName}
                                           disabled={isPreviousSectionDisabled}
+
                                         />
                                       </>
                                     )}
@@ -2667,9 +2774,15 @@ const AppointeeRegister = () => {
                                 <Box sx={fileUploadSectionContainerStyle}>
                                   <FileUploadSection
                                     chooseFile={uploadTrustEPFOFile}
-                                    fileName={trustEpfoFileName}
+                                    fileName={
+                                      fileUploaded.some(file => file.uploadTypeAlias === "EPFPSBKTRUST")
+                                        ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSBKTRUST").fileName
+                                        : trustEpfoFileName
+                                    }
+                                    //fileName={trustEpfoFileName}
                                     accept={"image/png, image/jpeg"}
                                     disabled={isPreviousSectionDisabled}
+
                                   />
                                 </Box>
                               </Box>
@@ -3078,32 +3191,6 @@ const AppointeeRegister = () => {
                   </Typography>
                 </Box>
               ) : null}
-              {/* <form ref={formElement}>
-                <Grid sx={positionRelative} item xs={12}>
-                  <Grid
-                    mt={3}
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    paddingLeft={{ xs: 3, md: 'auto' }}
-                    item
-                  >
-                    <Grid item xs={12} md={6}>
-                      <Button
-                        //onClick={() => setCurrentPageNo(1)}
-                        onClick={handleBack}
-                        //sx={{ m: "15px 5px", ml: 3 }}
-                        sx={{ m: { xs: '10px 0', sm: '15px 0' } }}
-                        variant="contained"
-                        color="primary"
-                      >
-                        {previousButton}
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Grid>
-
-              </form> */}
               <form ref={formElement}>
                 <Grid sx={positionRelative} item xs={12}>
                   <Grid
@@ -3148,6 +3235,18 @@ const AppointeeRegister = () => {
                           <Button
                             name="save"
                             // disabled={isSubmitDisabled}
+                            onClick={DraftSave}
+                            //sx={{ m: "15px 25px", ml: 3 }}
+                            sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
+                            variant="contained"
+                            color="primary"
+                          //disabled={isPreviousSectionDisabled}
+                          >
+                            Save as Draft
+                          </Button>
+                          <Button
+                            name="save"
+                            // disabled={isSubmitDisabled}
                             onClick={handleSaveClick}
                             //sx={{ m: "15px 25px", ml: 3 }}
                             sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
@@ -3189,3 +3288,7 @@ const AppointeeRegister = () => {
 };
 
 export default AppointeeRegister;
+
+
+
+

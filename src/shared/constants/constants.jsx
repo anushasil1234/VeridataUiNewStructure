@@ -1839,7 +1839,7 @@ export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointe
 export const PostAppointeeDetailsSave_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSave`;
 export const PostAppointeeSearch_URL = `${AppoienteeWorkFlow}/AppointeeSearch?appointeeName=`;
 export const PostAppointeeFileDetails_URL = `${AppoienteeWorkFlow}/PostAppointeeFileDetails`;
-export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdatePfUanDetails`;
+export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdateDocWithUanDetails`;
 export const PostAppointeeReprocess_URL = `${AppoienteeWorkFlow}/PostAppointeeReprocess`;
 export const GetAppointeeDetails_URL = `${AppoienteeWorkFlow}/GetAppointeeDetails?appointeeId=`;
 export const GetAppointeeActivity_URL = `${AppoienteeWorkFlow}/GetAppointeeActivity?appointeeId=`;

@@ -16,7 +16,7 @@ const FileUploadSection = ({ chooseFile, fileName, accept,disabled}) => {
                     onChange={chooseFile}
                     disabled={disabled}
                 />
-                <UploadButton disabled={disabled}/>
+                <UploadButton disabled={disabled} fileName={fileName}/>
             </Box>
             <Stack alignItems={"center"}>
                 <Typography paddingX={"12px"} fontSize={".7rem"} marginTop={.25}>

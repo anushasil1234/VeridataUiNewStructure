@@ -154,7 +154,7 @@ let AppointeeViewForm = ({
   const [trustPfFile, setTrustPfFile] = useState();
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
-  const [isEmployementVarified, setIsEmployementVarified] = useState(null);
+  // const [isEmployementVarified, setIsEmployementVarified] = useState(null);
 
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isAadharVerified, setIsAadharVerified] = useState(null);
@@ -166,6 +166,8 @@ let AppointeeViewForm = ({
   const [actionIconListDisplay, setActionIconListDisplay] = useState(false);
   const [isSaveStep, setIsSaveStep] = useState(null);
   const [isTrustPassbook, setIsTrustPassbook] = useState(null);
+
+  console.log("appointeeStatus",appointeeStatus)
 
 
   const dispatch = useDispatch();
@@ -246,7 +248,7 @@ let AppointeeViewForm = ({
         isAadhaarVarified,
         isPanVarified,
         isUanVarified,
-        isEmployementVarified,
+       // isEmployementVarified,
         isProcessed,
         saveStep,
         isTrustPassbook
@@ -259,7 +261,7 @@ let AppointeeViewForm = ({
           ? setIsPanVarified(isPanVarified)
           : setIsPanVarified(NA);
       isProcessed ? setIsProcessed(isProcessed) : setIsProcessed(false);
-      isEmployementVarified ? setIsEmployementVarified(isEmployementVarified) : setIsEmployementVarified(null);
+      // isEmployementVarified ? setIsEmployementVarified(isEmployementVarified) : setIsEmployementVarified(null);
       appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
       isUanVarified
         ? setIsUanVerified(isUanVarified)
@@ -386,7 +388,7 @@ let AppointeeViewForm = ({
     }
   };
 
-  console.log("isEmployementVarified", isEmployementVarified)
+  // console.log("isEmployementVarified", isEmployementVarified)
   const setAppointeeActivity = async () => {
     const response = await getAppointeeActivity(appointeeId);
     if (response) {
@@ -475,6 +477,8 @@ let AppointeeViewForm = ({
     <Add />,
     "Open action"
   );
+
+
   const approveFabProps = new FabIconPropsModel(
     actionIconStyle,
     handleApprove,
@@ -544,13 +548,8 @@ let AppointeeViewForm = ({
                           color={"error"}
                         />
                       )
-                        : isEmployementVarified === false ? (
-                          <Chip
-                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                            label={"Employement Verification failed"}
-                            color={"error"}
-                          />
-                        ) : isAadharVerified === "N/A" ? (
+                        
+                         : isAadharVerified === "N/A" ? (
                           <Chip
                             sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
                             label={"Aadhaar Verification Pending"}
@@ -574,13 +573,7 @@ let AppointeeViewForm = ({
                             label={"No UAN Available"}
                             color={"success"}
                           />
-                        ) : isUanVerified === true && (hasValue(uanNumber)) && (isEmployementVarified === null) ? (
-                          <Chip
-                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                            label={"Employement Verification Pending"}
-                            color={"warning"}
-                          />
-                        )
+                        ) 
                           : null}
                     </>
                   ) : null}
@@ -940,3 +933,6 @@ const UnWrappedAppointeeView = (props) => {
 const AppointeeView = ActionPermission(UnWrappedAppointeeView);
 
 export default AppointeeView;
+
+
+

@@ -3,7 +3,7 @@ import { Button } from '@mui/material'
 import { uploadBtnStyle } from 'app'
 import React from 'react'
 
-const UploadButton = ({ disabled }) => {
+const UploadButton = ({ disabled,fileName }) => {
 
     return (
         disabled ?
@@ -13,10 +13,10 @@ const UploadButton = ({ disabled }) => {
                 variant="contained"
                 startIcon={<FileUpload />}
             >
-                Upload
+                 {fileName ? "Reupload" : "Upload"}
             </Button>
             : <Button startIcon={<FileUpload />} sx={uploadBtnStyle}>
-                Upload
+                {fileName ? "Reupload" : "Upload"}
             </Button>
     )
 }
