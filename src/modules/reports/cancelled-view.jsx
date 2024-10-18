@@ -89,7 +89,7 @@ const UnwrappedCancelled = (props) => {
   useEffect(() => {
     dispatch(removeActionRoute());
     if (actionRouteSlice.length === 0 && hasPermission) {
-      setTableRows(payLoad);
+      setTableRows(payloadData);
     }
   }, [actionRouteSlice, state, hasPermission]);
   useEffect(() => {
