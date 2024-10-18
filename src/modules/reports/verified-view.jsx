@@ -54,7 +54,7 @@ const UnWrappedVerified = (props) => {
     const { value } = e.target;
     setProcessStatus(value);
     const _processStatus = value === "All" ? null : value;
-    const _payLoad = {...payLoad, processStatus: _processStatus}
+    const _payLoad = {...payLoad, processStatus: _processStatus }
     setPayLoad(_payLoad);
   };
   const clearSearch = () => {
@@ -90,6 +90,7 @@ const UnWrappedVerified = (props) => {
         ? `verified List`
         : "verified List"
     );
+//console.log("india",payLoad)
     const response = await getVerifiedAppointeeList(payLoad);
     if (response) {
       const { responseInfos } = response;
@@ -99,12 +100,17 @@ const UnWrappedVerified = (props) => {
         null,
         hasPermission
       );
-      setRows({
+     // console.log("generatedCells",generatedCells)
+      const _rows = {
         tableHead: verifiedListTableHeadCell,
         tableRows: generatedCells,
+      }
+      setRows({
+        ..._rows
       });
     }
   };
+
   const updatDatePayLoad = (filePassword) => {
     const _payLoad = { ...payLoad, filePassword }
     setPayLoad(_payLoad);
@@ -113,25 +119,25 @@ const UnWrappedVerified = (props) => {
   useEffect(() => {
     dispatch(removeActionRoute());
     if (actionRouteSlice.length === 0 && hasPermission) {
-      setTableRows(payLoad);
+      setTableRows(payloadData);
     }
   }, [state, actionRouteSlice, hasPermission]);
- 
+
   useEffect(() => {
     const _payLoad = {
-      ...payLoad, 
+      ...payLoad,
       fromDate: DateFormatYYYYMMDD(fromDate?.toString()),
       toDate: DateFormatYYYYMMDD(toDate?.toString())
     }
 
     setPayLoad(_payLoad);
   }, [fromDate, toDate]);
-  
+
   useEffect(() => {
     dispatch(storeData({
       fileSubmitionPayLoad: payLoad
     }))
-    
+
   }, [payLoad])
 
   return (
