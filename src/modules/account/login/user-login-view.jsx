@@ -1,6 +1,6 @@
 import { Box, Button, Grid, IconButton, InputAdornment, Link, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { InputField, PageHeading1, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
+import { InputField, PageHeading1,PageHeading2, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
 import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle, logoImageStyle } from "app";
 import { useNavigate } from "react-router-dom";
 import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard, toForgotPassword, toSetPassword, welcomeMsg } from "shared/constants/constants";
@@ -237,7 +237,21 @@ export const UserLoginView = () => {
                   />
                 </Box>
                 <Box my={1.25}>
-                  <PageHeading1 heading={"sign in"} />
+                  <PageHeading1
+                    heading={
+                      <>
+                        {" VERIDATA"}
+                        <span style={{ fontSize: '0.8rem', verticalAlign: 'super' }}>® </span>
+                      </>
+                    }
+                  />
+                  <Box my={1}>
+                     <PageHeading2
+                    
+                    heading={"Your Onboarding Compliance Ally"}
+                      fontSize="166rem"
+                     />
+                  </Box>
                 </Box>
                 {/* </Grid> */}
                 <Box>
