@@ -209,7 +209,7 @@ if(!responseList || responseList.length === 0){
   useEffect(() => {
     dispatch(removeActionRoute());
     if (actionRouteSlice.length === 0 && hasPermission) {
-      setTableRows(payLoad);
+      setTableRows(payloadData);
     }
   }, [actionRouteSlice, state, hasPermission]);
   useEffect(() => {
