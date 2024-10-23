@@ -25,7 +25,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { inputFieldStyleAdded, primaryFabStyle,ResponsiveFab } from "app";
+import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab } from "app";
 import { Download, Refresh, Search } from "@mui/icons-material";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
@@ -37,7 +37,7 @@ const UnWrappedProcessing = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
   const popUpSlice = useSelector((state) => state.popUpSlice);
-  const {showErrorMessage} =popUpSlice[0]
+  const { showErrorMessage } = popUpSlice[0]
   let noOfDays = 0;
   let isFiltered = false;
 
@@ -71,10 +71,11 @@ const UnWrappedProcessing = (props) => {
   const [toDate, setToDate] = useState(_today);
   const [fromDate, setFromDate] = useState(_fromday);
   const [statusCode, setStatusCode] = useState("All");
+  const [passbookStatus, setPassbookStatus] = useState('All');
 
   const [responseList, setResponseList] = useState();
 
-  let defaultPayload= {
+  let defaultPayload = {
     isFiltered: state && state.dayRangePayLoad ? true : false,
     noOfDays: state && state.dayRangePayLoad ? state.dayRangePayLoad : 0,
     filterType: state && state.filterType,
@@ -84,8 +85,9 @@ const UnWrappedProcessing = (props) => {
     statusCode: statusCode,
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
+    IsManualPassbook: null,
   };
-const [payLoad,setPayLoad]=useState(defaultPayload)
+  const [payLoad, setPayLoad] = useState(defaultPayload)
   const setTableRows = async (payLoad) => {
     let currPageName = "Processing List";
     currPageName =
@@ -144,7 +146,7 @@ const [payLoad,setPayLoad]=useState(defaultPayload)
   //   jsPDFReportTemplate({ tableObj });
   // };
   const handleDownload = () => {
-    if(!responseList || responseList.length === 0){
+    if (!responseList || responseList.length === 0) {
       showErrorMessage(reportGenarate)
       return;
     }
@@ -153,16 +155,16 @@ const [payLoad,setPayLoad]=useState(defaultPayload)
         title: label,
       };
     });
-  
+
     const tableBodyList = responseList && responseList.map((tableRows) => {
       return CreatePdfTableBody(tableRows, processingListPdfTableHeadCell);
     });
-  
+
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
     };
-  
+
     // Call jsPDFReportTemplate with tableObj
     jsPDFReportDataTemplate({
       reportDetails: {
@@ -187,7 +189,8 @@ const [payLoad,setPayLoad]=useState(defaultPayload)
       appointeeName: null,
       candidateId: null,
       companyId: companyId,
-      isPfRequired: null
+      isPfRequired: null,
+      IsManualPassbook: null,
     };
     setTableRows(payLoad);
     navigateTo(toProcessing, { state: false });
@@ -198,6 +201,13 @@ const [payLoad,setPayLoad]=useState(defaultPayload)
   };
   const dispatch = useDispatch();
 
+  const handlePassbookStatusChange = async (e) => {
+    const { value } = e.target;
+    setPassbookStatus(value);
+     const _passbookStatus = value === "All" ? null : value;
+    const _payLoad = {...payLoad, IsManualPassbook: _passbookStatus }
+    setPayLoad(_payLoad);
+  };
 
   useEffect(() => {
     dispatch(removeActionRoute());
@@ -205,6 +215,8 @@ const [payLoad,setPayLoad]=useState(defaultPayload)
       setTableRows(defaultPayload);
     }
   }, [state, actionRouteSlice, hasPermission]);
+
+ 
 
   useEffect(() => {
     const _payLoad = {
@@ -229,8 +241,8 @@ const [payLoad,setPayLoad]=useState(defaultPayload)
   return (
     <PageLayout pageName={pageName}>
       <CardLayout>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
+        <Grid container spacing={1}>
+          <Grid item xs={2}>
             <DatePicker
               label={"From Date"}
               value={fromDate}
@@ -239,7 +251,7 @@ const [payLoad,setPayLoad]=useState(defaultPayload)
               disableFuture={true}
             />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             <DatePicker
               label={"To Date"}
               value={toDate}
@@ -273,7 +285,25 @@ const [payLoad,setPayLoad]=useState(defaultPayload)
               )}
             </FormControl>
           </Grid>
-
+          <Grid item xs={2}>
+            <FormControl sx={{ width: "100%" }} size="large">
+              <InputLabel id="demo-select-small" >Passbook Status</InputLabel>
+              {passbookStatus !== undefined && (
+                <Select
+                  sx={{ height: '57px' }}
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  value={passbookStatus}
+                  label="Passbook Status"
+                  onChange={handlePassbookStatusChange}
+                >
+                  <MenuItem value={'All'}>Select all</MenuItem>
+                  <MenuItem value={true}>Manual Passbook</MenuItem>
+                  <MenuItem value={false}>AutoFetch Passbook</MenuItem>
+                </Select>
+              )}
+            </FormControl>
+          </Grid>
           <Grid item xs={4}>
             <DarkTooltip placement="top" title={"Search"} arrow>
               <ResponsiveFab

@@ -1,7 +1,6 @@
 import { Download, Info, Refresh, Search } from "@mui/icons-material";
 import {
   Box,
-  Fab,
   FormControl,
   InputLabel,
   MenuItem,
@@ -14,20 +13,20 @@ import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
-import { addPassWordMsg, verifiedReportInfo } from "shared/constants/constants";
 import { hasValue } from "shared/utils";
 
 const DownloadReport = ({
   handleSearch,
   clearSearch,
   downloadApi,
-  payLoad,
   processStatus,
+  passbookStatus,
   toDate,
   setToDate,
   fromDate,
   setFromDate,
   handleProcessStatusChange,
+  handlePassbookStatusChange,
   isStatusFilter,
   hasPermission,
   infoDetails
@@ -40,9 +39,7 @@ const DownloadReport = ({
     loggedInData && loggedInData.length > 0 && loggedInData[0];
 
   const {
-    openPasswordSubmitionModel,
     openFilePasswordSubmitionModel,
-    closePasswordSubmitionModel,
   } = functionSlice[0];
   
   const handleSuccssCallBack = () => {
@@ -106,6 +103,27 @@ const DownloadReport = ({
               <MenuItem value={"All"}>Select all</MenuItem>
               <MenuItem value={"AP"}>Verified</MenuItem>
               <MenuItem value={"FA"}>Manual Override</MenuItem>
+            </Select>
+          )}
+        </FormControl>
+      ) : null}
+      </Box>
+      <Box display="flex" alignItems="center" spacing={1} >
+      {isStatusFilter && isStatusFilter === true ? (
+        <FormControl sx={{ m: 1, minWidth: 180, }} size="small">
+          <InputLabel id="demo-select-small" >Passbook Status</InputLabel>
+          {passbookStatus !== undefined && (
+            <Select
+            sx={{height:'57px'}}
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={passbookStatus}
+              label="Passbook Status"
+              onChange={handlePassbookStatusChange}
+            >
+              <MenuItem value={'All'}>Select all</MenuItem>
+              <MenuItem value={true}>Manual Passbook</MenuItem>
+              <MenuItem value={false}>AutoFetch Passbook</MenuItem>
             </Select>
           )}
         </FormControl>

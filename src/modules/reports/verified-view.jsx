@@ -34,6 +34,7 @@ const UnWrappedVerified = (props) => {
   const [toDate, setToDate] = useState(_today);
   const [fromDate, setFromDate] = useState(_fromday);
   const [processStatus, setProcessStatus] = useState("All");
+  const [passbookStatus, setPassbookStatus] = useState('All');
 
   let payloadData = {
     isFiltered: state && state.dayRangePayLoad ? true : false,
@@ -44,7 +45,8 @@ const UnWrappedVerified = (props) => {
     isPfRequired: null,
     processStatus: null,
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
-    toDate: toDate && DateFormatYYYYMMDD(toDate?.toString())
+    toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
+    IsManualPassbook: null,
   }
 
   let [payLoad, setPayLoad] = useState(payloadData);
@@ -57,10 +59,19 @@ const UnWrappedVerified = (props) => {
     const _payLoad = {...payLoad, processStatus: _processStatus }
     setPayLoad(_payLoad);
   };
+  const handlePassbookStatusChange = async (e) => {
+    const { value } = e.target;
+    setPassbookStatus(value);
+     const _passbookStatus = value === "All" ? null : value;
+    const _payLoad = {...payLoad, IsManualPassbook: _passbookStatus }
+    setPayLoad(_payLoad);
+  };
+
   const clearSearch = () => {
     setFromDate(null);
     setToDate(null);
     setProcessStatus('All');
+    setPassbookStatus('All');
     const payLoad = {
       isFiltered: false,
       noOfDays: 0,
@@ -68,7 +79,8 @@ const UnWrappedVerified = (props) => {
       appointeeName: null,
       candidateId: null,
       isPfRequired: null,
-      processStatus: null
+      processStatus: null,
+      IsManualPassbook:null
     }
     setPayLoad(payLoad);
     setTableRows(payLoad);
@@ -150,11 +162,13 @@ const UnWrappedVerified = (props) => {
           downloadApi={downloadVerifiedList_URL}
           updatDatePayLoad={updatDatePayLoad}
           processStatus={processStatus}
+          passbookStatus={passbookStatus}
           toDate={toDate}
           setToDate={setToDate}
           fromDate={fromDate}
           setFromDate={setFromDate}
           handleProcessStatusChange={handleProcessStatusChange}
+          handlePassbookStatusChange={handlePassbookStatusChange}
           isStatusFilter={true}
           hasPermission={hasPermission}
           infoDetails={verifiedReportInfo}

@@ -260,12 +260,12 @@ export const verifiedListTableHeadCell = [
         }
     },
     {
-        id: 'isManualPassbook',
+        id: 'passbookStatus',
         numeric: true,
         type: "string",
         disablePadding: false,
         label: 'Passbook status',
-        enums: ['isManualPassbook'],
+        enums: ['passbookStatus'],
         component: {
             element: Typography
         }
@@ -783,6 +783,17 @@ export const processingListTableHeadCell = [
         component: {
             element: (props) => TableStatusCell(props),
             attribute: ['appointeeId']
+        }
+    },
+    {
+        id: 'passbookStatus',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Passbook status',
+        enums: ['passbookStatus'],
+        component: {
+            element: Typography
         }
     },
     {
