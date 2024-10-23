@@ -643,6 +643,8 @@ let AppointeeViewForm = ({
               <Stack sx={listHeadingConteinerStyle}>
                 <Typography sx={listHeadingStyle}>Passport Details</Typography>
               </Stack>
+              {console.log('isPassportAvailable', isPassportAvailable)
+              }
               {isPassportAvailable === "Y" ? (
                 <>
                   <DocumentDetails
@@ -690,7 +692,7 @@ let AppointeeViewForm = ({
               ) : (
                 <DocumentDetails
                   fieldName={"Passport Available"}
-                  fieldValue="No"
+                  fieldValue={isPassportAvailable}
                 />
               )}
             </Box>
