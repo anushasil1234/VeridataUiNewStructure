@@ -264,7 +264,7 @@ export const verifiedListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Passbook status',
+        label: 'Passbook Status',
         enums: ['passbookStatus'],
         component: {
             element: Typography
@@ -790,7 +790,7 @@ export const processingListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Passbook status',
+        label: 'Passbook Status',
         enums: ['passbookStatus'],
         component: {
             element: Typography
