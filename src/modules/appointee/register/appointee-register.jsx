@@ -585,7 +585,7 @@ const AppointeeRegister = () => {
 
   const submitDetails = (autoSubmit) => {
     if (autoSubmit) {
-      handleAppointeeFormPage2Save();
+      handleAppointeeFormPage2Save({ isUanVerificationProcessManual: false });
     } else {
       openSubmitConfirmationModel();
     }
@@ -1365,7 +1365,7 @@ const AppointeeRegister = () => {
   };
   const dispatch = useDispatch();
 
-  const handleAppointeeFormPage2Save = async ({ isUanVerificationProcessManual = false }) => {
+  const handleAppointeeFormPage2Save = async () => {
     const loginUserData = getLocalStorageItem("pfc-user");
     let payLoad = {
       // appointeeDetailsId: appointeeDetailsId,
@@ -1464,7 +1464,7 @@ const AppointeeRegister = () => {
         // setIsUANModalOpen(true); // Open the dialog when UAN is available
         setUAN(uanNumber); // Save the uanNumber to the existing state
         //setisUanVarified(true);
-        generateUANOTPDialog();
+        generateUANOTPDialog(uanNumber);
       } else if (
         isUANAvailableState === false &&
         !isUanAvailable &&
@@ -1483,7 +1483,7 @@ const AppointeeRegister = () => {
   };
 
 
-  const generateUANOTPDialog = () => {
+  const generateUANOTPDialog = (UAN) => {
     // Perform the below actions using the already existing 'uan' state
     setEpfoButton("Auto UAN Verification");
     setDisabledPanInput(true);
@@ -1491,7 +1491,6 @@ const AppointeeRegister = () => {
     //epfostatusMessage.color = "";
     epfostatusMessage.success = null;
     setEpfostatusMessage(epfostatusMessage);
-
     // Proceed to open OTP form for UAN verification
     openOtpForm(
       UAN,
@@ -1584,6 +1583,8 @@ const AppointeeRegister = () => {
   };
 
   const handleEpfoVerifiaction = () => {
+    console.log('UAN', UAN);
+
     openOtpForm(
       UAN,
       "UAN Number",
@@ -1740,7 +1741,6 @@ const AppointeeRegister = () => {
             </Step>
           ))}
         </Stepper>
-
         <Box my={"20px"}>
           <Grid
             container
