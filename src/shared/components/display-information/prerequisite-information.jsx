@@ -125,6 +125,50 @@ const PrerequisiteInformation = () => {
                     }
                 />
             </ListItem>
+            <Divider variant="inset" component="li" />
+            <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                    <Avatar alt="Tenth Pass Certificate" src="/static/images/avatar/2.jpg" />
+                </ListItemAvatar>
+                <ListItemText
+                    primary="Tenth Pass Certificate"
+                    secondary={
+                        <>
+                            <Typography
+                                sx={{ display: 'inline' }}
+                                component="span"
+                                variant="body2"
+                                color="text.primary"
+                            >
+                                Please have your 10th Pass Certificate before continuing.
+                            </Typography>
+                            {" —  If you dont have an  10th Pass Certificate please contact with your Hr."}
+                        </>
+                    }
+                />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+            <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                    <Avatar alt="Father's name Certificate" src="/static/images/avatar/2.jpg" />
+                </ListItemAvatar>
+                <ListItemText
+                    primary="Father's name Certificate"
+                    secondary={
+                        <>
+                            <Typography
+                                sx={{ display: 'inline' }}
+                                component="span"
+                                variant="body2"
+                                color="text.primary"
+                            >
+                                Please have a certificate which has your Father's name before continuing.
+                            </Typography>
+                            {" —  If you dont have an Father's name Certificate please contact with your Hr."}
+                        </>
+                    }
+                />
+            </ListItem>
 
         </List>
     )
