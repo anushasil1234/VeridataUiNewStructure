@@ -72,7 +72,6 @@ const NoResponse = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     const action = wizName ? (
         <ResponsiveFab
             onClick={() => navigateTo(toProcessing, { state: { dayRangePayLoad, filterType: "NORES" } })}
-            //size="small"
             sx={dashBoardwidget}
         >
             <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '80%', height: 'auto' }} />

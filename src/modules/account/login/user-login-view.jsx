@@ -230,7 +230,6 @@ export const UserLoginView = () => {
               <Box>
                 <Box sx={imageContainer}>
                   <img
-                    // style={{ height: "50%", width: "50%", objectFit: "contain" }}
                     style={logoImageStyle}
                     src={logo}
                     alt="text"

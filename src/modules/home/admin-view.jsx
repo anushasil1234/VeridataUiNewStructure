@@ -69,8 +69,7 @@ import {
           responseInfos.length > 0 &&
           responseInfos.forEach((widgetObject) => {
             const { widgetTypeCode, widgetValue } = widgetObject;
-            // console.log("widgetTypeCode",widgetTypeCode)
-            // console.log("widgetTypeCode 1",widgetValue)
+
             if (widgetTypeCode === "TOTLOFFR") {
               setfiltertotaloffer(widgetValue);
             }
@@ -90,7 +89,6 @@ import {
               setfilterLapsed(widgetValue);
             }
           });
-        // setLoading(false);
       }
       stopLoader();
   

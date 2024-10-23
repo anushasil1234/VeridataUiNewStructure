@@ -181,30 +181,7 @@ if(!responseList || responseList.length === 0){
       tables: [tableObj],
     });
   };
-  // const handleDownload = () => {
-  //   const tableHeadList = lapsedListPdfTableHeadCell.map(({ label }) => {
-  //     return {
-  //       title: label,
-  //     };
-  //   });
-  //   const tableBodyList = responseList && responseList.map(
-  //     (tableRows) => {
-  //       return CreatePdfTableBody(tableRows, lapsedListPdfTableHeadCell);
-  //     }
-  //   );
-  //   const tableObj = {
-  //     headerList: tableHeadList,
-  //     rows: tableBodyList,
-  //     fileName: `_Lapsed_List_${currentDate}`,
-  //     label: "Lapsed List",
-  //     fromDate: fromDate,
-  //     toDate: toDate,
-  //     tableName: "Appointee details",
-  //     rptDesc: generateLapsedAppointeeReportDesc
-  //   };
 
-  //   jsPDFReportTemplate({ tableObj });
-  // };
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(removeActionRoute());

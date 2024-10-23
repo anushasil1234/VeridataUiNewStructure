@@ -359,13 +359,11 @@ export const inputFieldStyle = {
   width: "100%",
   margin: "10px",
   padding: 0,
-  // height: "50px" 
 };
 export const inputFieldStyle2 = {
   width: "100%",
   margin: "10px 0px",
   padding: 0,
-  // height: "50px" 
 };
 export const inputFieldStyleAdded = {
   width: "100%",
@@ -465,19 +463,14 @@ export const tableHeader = {
 
 export const styles = {
   paperStyle: {
-    width: '100%',  //indra
+    width: '100%',
     height: { xs: '100vh', md: 'auto' },
-    maxWidth: { xs: '100vw', sm: '95vw', md: '90vw', lg: '85vw', xl: '75vw' },//indra
-    padding: { xs: '10px', md: '20px', lg: '30px' }, //indra
-    boxSizing: 'border-box',//indra
-    margin: '0 auto',//indra
+    maxWidth: { xs: '100vw', sm: '95vw', md: '90vw', lg: '85vw', xl: '75vw' },
+    padding: { xs: '10px', md: '20px', lg: '30px' },
+    boxSizing: 'border-box',
+    margin: '0 auto'
   },
-  // paperStyle: {
-  //   padding: 20,
-  //   height: "80vh",
-  //   width: "80vw",
-  //   margin: "20px auto"
-  // },
+
   btnstyle: {
     margin: "8px 0",
     "&:hover": {
@@ -485,27 +478,21 @@ export const styles = {
     }
   },
   stackimageContainer: {
-    // flexDirection: "row",
-    // backgroundColor: "#8029bb29"
-    display: 'flex',//indra
-    flexDirection: { xs: 'column', md: 'row' },//indra
+    display: 'flex',
+    flexDirection: { xs: 'column', md: 'row' },
     backgroundColor: "#8029bb29",
-    justifyContent: 'center',//indra
-    alignItems: 'center',//indra
-    width: '100%',//indra
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
     height: { xs: '100%', md: 'auto' }
   },
-  // loginsection: {
-  //   padding: 4,
-  //   alignItems: "center",
-  //   justifyContent: "center"
-  // }
+
   loginsection: {
-    display: 'flex',//indra
-    flexDirection: 'column',//indra
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
-    padding: { xs: '10px', sm: '20px', md: '30px' },//indra
-    flex: 1,//indra
+    padding: { xs: '10px', sm: '20px', md: '30px' },
+    flex: 1,
     justifyContent: 'center'
   },
   containerStyles: {
@@ -518,7 +505,7 @@ export const styles = {
     },
     margin: '0 auto',
     boxSizing: 'border-box',
-  },//new add indra for mother container
+  },
 };
 export const imageContainer = {
   width: { xs: '300px', sm: '360px', md: '200px' },
@@ -530,17 +517,11 @@ export const imageContainer = {
   height: 'auto',
 };
 export const logoImageStyle = {
-  // height: { xs: "100%", md: "50%" },
-  // width: { xs: "100%", md: "50%" },
-  // objectFit: "contain"
   height: "auto",
   width: "50%",
   objectFit: "contain"
 }
-// export const imageContainer = {
-//   width: "150px",
-//   height: "150px"
-// };
+
 // horizontal and vertical centering
 export const centerAbsoluteItem = {
   top: "50%",
@@ -562,14 +543,12 @@ export const loaderStyle = {
   borderRadius: "50%"
 };
 export const backgroundOverLay = {
-  // zIndex: 1300,
   zIndex: 1400,
   width: "100vw",
   height: "100vh",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  // position: "absolute",
   position: "fixed",
   background: "rgba(26, 67, 119, 0.5)",
   backdropFilter: "blur(5px)"
@@ -645,9 +624,7 @@ export const indActiveStepStyle = {
     border: '3px solid white',
     borderRadius: '50%',
     borderSpacing: '15px',
-    outline: '2px solid white',
-    // transform: 'scale(1)',
-    // transition: 'transform 0.3s ease', 
+    outline: '2px solid white'
   }
 }
 
@@ -681,7 +658,6 @@ export const lable1Style = {
 };
 export const lable1CopyStyle = {
   ...lableCommonStyle,
-  // marginLeft: "10px",
   padding: "0px !important"
 };
 
@@ -698,7 +674,6 @@ export const lableRedStyle = {
   color: ThemeColorPalete.red.main,
 };
 export const inputPropsStyle = {
-  // height: "0.438em"
   //todo
 }
 export const labelDividerStyle = {}
@@ -732,9 +707,7 @@ export const smallTableContainer = {
   maxHeight: "65vh",
   overflowX: 'auto'
 }
-export const smallTableStyle = {
-  // minWidth: 750
-}
+
 export const smallTableHeaderCellStyle = {
   fontFamily: AppStyle.typography.fontFamily,
   textAlign: "center",
@@ -778,7 +751,6 @@ export const tableActionIconListStylesx = {
   zIndex: "1000"
 };
 export const actionIconStyle = {
-  // marginRight: "1rem",
   margin: ".5rem ",
 };
 export const _addFabStyle = {
@@ -859,11 +831,7 @@ export const autocompleteStyle = {
 export const disableSectionStyle = {
   position: "absolute",
   left: { xs: "4px", md: "12px" },
-  // left: "0px",
-  // top:"0px",
   top: "5px",
-  // height: { xs: '95%', md: "90%" },
-  // height: { xs: '95%', md: "100%" },
   height: '100%',
   background: "black",
   opacity: "0.2",
@@ -1099,9 +1067,7 @@ export const fileInputs = {
     zIndex: 2,
     cursor: "pointer",
     height: "46px",
-    // maxWidth: "200px", 
     maxWidth: "120px"
-
   },
 
   "& button": {
@@ -1269,7 +1235,6 @@ export const infoButtonStyle = {
 }
 
 export const fileInputboxContainerStyle = {
-  // flexDirection: "row",
   alignItems: "center",
   justifyContent: "center",
   height: "159px",
@@ -1285,23 +1250,20 @@ export const menuFooterTextStyle = {
   fontWeight: 500
 }
 export const sidebarContainerStyle = {
-  // width: {xs:'80vw', md:'10vw'},
   boxSizing: 'border-box',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
   height: '100%',
-  // width: {xs: '77%', md: 'auto'}
 }
 export const sidebarWidth = { xs: '80vw', sm: '27vw', md: '20vw', lg: '18vw' };
-// export const sidebarWidth = { xs: '18vw' };
 export const menuDrawerBoxContainer = {
   width: sidebarWidth,
   flexShrink: 0,
-  position: 'relative', //indra
-  height: '100vh', //indra
+  position: 'relative',
+  height: '100vh',
   '& .MuiPaper-root': {
-    width: sidebarWidth,
+    width: sidebarWidth
   }
 }
 
@@ -1391,8 +1353,6 @@ export const genderIconStyle = { fontSize: "3rem" };
 
 export const infoDialogTitleStyle = {
   '&.MuiTypography-root': {
-
-    // fontSize: {sm: '1rem!important', md: "1.25rem!important", lg: "1.5rem"},
     fontSize: '1.1rem',
   }
 }
@@ -1430,11 +1390,8 @@ export const useStyles = makeStyles(() => ({
 export const ResponsiveFab = styled(Fab)(({ backgroundColor, hoverColor }) => ({
   backgroundColor: backgroundColor || AppStyle.palette.yellow1.light,
   color: AppStyle.palette.common.white,
-  padding: '0.5rem', // Use rem for padding
+  padding: '0.5rem',
   borderRadius: '50%',
-  //fontSize: '1rem', // Default font size in rem
-
-  // Media queries for different screen sizes
   [AppStyle.breakpoints.down('sm')]: {
     width: '2rem',
     height: '2rem',

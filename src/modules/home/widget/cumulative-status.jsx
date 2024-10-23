@@ -112,9 +112,7 @@ const CumulativeStatus = () => {
                     <Box sx={{ minWidth: 0, mt: 2, ml: 2 }}>
 
                         <Typography
-                            //variant={isSmallScreen ? 'h6' : 'h6'}
                             variant="subtitle2" fontWeight="530"
-                        //className={classes.cardTitle}
                         >
                             {title}
                         </Typography>

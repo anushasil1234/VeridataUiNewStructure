@@ -66,10 +66,6 @@ const UnwrapedLinkNotSent = (props) => {
 
     let [payLoad, setPayLoad] = useState(payloadData);
 
-    // useEffect(() => {
-    //     setTableRows(payloadData)
-    // }, [state]);
-
     const generateDisableRow = (tableCellDataObj) => {
         const isPastDate = checkPastDay(new Date(tableCellDataObj.tableRow.dateOfJoining))
         return isPastDate
@@ -133,31 +129,14 @@ const UnwrapedLinkNotSent = (props) => {
     }
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch(removeActionRoute());
-    //     if (actionRouteSlice.length === 0) {
-    //         setTableRows(payLoad);
-    //     }
-    // }, [actionRouteSlice]);
-  
     useEffect(() => {
-        console.log("selected",selected)
         if (selected.length > 0) {
             setIsStartVerificationBtnDisabled(false);
         } else {
             setIsStartVerificationBtnDisabled(true);
-            //setSelected([]);
         }
     }, [selected])
 
-    // useEffect(() => {
-    //     payLoad.fromDate = DateFormatYYYYMMDD(fromDate?.toString());
-    //     setPayLoad(payLoad);
-    // }, [fromDate]);
-    // useEffect(() => {
-    //     payLoad.toDate = DateFormatYYYYMMDD(toDate?.toString());
-    //     setPayLoad(payLoad);
-    // }, [toDate]);
     useEffect(() => {
         dispatch(removeActionRoute());
        if (actionRouteSlice.length === 0 ) {

@@ -2,15 +2,13 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import { useTheme } from '@mui/material/styles';
-import {useMediaQuery } from '@mui/material';
-import { Stack, Typography, Fab } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { WidgetCard } from '.';
 import { toProcessing } from 'shared/constants/constants';
 import { useSelector } from 'react-redux';
 import RectangleSkelton1 from 'shared/utils/skeltons/rectangular-skelton/rectangular-skelton1';
 import CircelSkelton1 from 'shared/utils/skeltons/circel-skelton/circel-skelton1';
 import RectangularSkelton2 from 'shared/utils/skeltons/rectangular-skelton/rectangular-skelton2';
-// import {getUnderProcessFabStyle} from 'app'
 import { ResponsiveFab } from 'app';
 const UnderProcess = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     const theme = useTheme();
@@ -70,7 +68,6 @@ const UnderProcess = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
     const action = wizName ? (
         <ResponsiveFab
             onClick={() => navigateTo(toProcessing, { state: { dayRangePayLoad, filterType: "UNDPRCS" } })}
-            //size="small"
             sx={dashBoardwidget}
         >
             <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '80%', height: 'auto' }}/>

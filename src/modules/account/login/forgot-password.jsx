@@ -12,8 +12,6 @@ import { AccountCircle } from "@mui/icons-material";
 
 export const ForgotPasswordView = () => {
   const [userName, setUserName] = useState("");
-  const [timeoutTimer, setTimeoutTimer] = useState();
-
   const navigate = useNavigate();
 
 
@@ -34,12 +32,9 @@ export const ForgotPasswordView = () => {
 
 
   const apiSlice = useSelector(state => state.apiSlice);
-  const functionSlice = useSelector(state => state.functionSlice);
   const popUpSlice = useSelector(state => state.popUpSlice);
   const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
   const { ChangePasswordGenerateOTP } = apiSlice[0];
-  // const { openOtpSubmitionModel, closeOtpSubmitionModel } = functionSlice[0];
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,12 +49,9 @@ export const ForgotPasswordView = () => {
       if (response) {
         const { responseInfo } = response;
         const { clientId, dbUserType, userId } = responseInfo;
-        const data = { userId, clientId, userCode: userName, dbUserType }; // Example data
+        const data = { userId, clientId, userCode: userName, dbUserType };
         navigate(`${toReSetPassword}`, { state: data });
-        //showSuccessMessage(setPasswordOtpToMailMsg);
-      } else {
-        //navigate("/");
-      }
+      } 
     }
   };
 

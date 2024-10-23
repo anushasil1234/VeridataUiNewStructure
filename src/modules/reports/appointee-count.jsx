@@ -266,37 +266,7 @@ const AppointeeCount = () => {
       tables: totaltable,
     });
   };
-  // const handleAppointeeDetailsDownload = () => {
-  //   const tableHeadList = appointeeCountDetailsHeadCell.map(({ label }) => {
-  //     return {
-  //       title: label,
-  //     };
-  //   });
 
-  //   console.log("tableHeadList",tableHeadList)
-  //   const tableBodyList = appointeeCountListDetails?.map(({ appointeeCount }) =>
-  //     CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell)
-  //   ) || [];
-  //   console.log("tableBodyList",tableBodyList)
-
-  //   const tableObj = {
-  //     headerList: tableHeadList,
-  //     rows: tableBodyList,
-  //     tableName: "Appointee Details",
-  //   };
-  //   console.log("tableObj",tableObj)
-
-  //   jsPDFReportDataTemplate({
-  //     reportDetails: {
-  //       fileName: `_Appointee_Details_Count_${currentDate}`,
-  //       label: "Appointee Details Data",
-  //       fromDate: fromDate,
-  //       toDate: toDate, // If you have an end date, include it here
-  //       rptDesc: generateAppointeeCountReportDesc,
-  //     },
-  //     tables: [tableObj]
-  //   });
-  // };
   const handleSearch = () => {
 
     const payLoad = {

@@ -73,8 +73,6 @@ const LinkNotSent = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
       }
       backgroundColor={linknotsentColour}
       hoverColor={secondary} // Pass the desired hover color
-      //color="secondary"
-      //size="small"
       sx={{ ...dashBoardwidget }}
     >
       <img src={"./playground_assets/redirect.svg"} alt="YourSVG"   style={{ width: '80%', height: 'auto' }}/> 

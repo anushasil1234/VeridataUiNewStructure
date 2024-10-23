@@ -1,8 +1,7 @@
-import { Accordion, AccordionDetails, AccordionSummary, Fade, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import ArrowDropDownIcon from '@mui/icons-material/ExpandMore';
-// import { useLocation } from "react-router-dom";
 import parse from "html-react-parser";
 
 const Help = () => {

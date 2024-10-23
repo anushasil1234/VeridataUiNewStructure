@@ -1,6 +1,6 @@
 import { Info } from "@mui/icons-material";
 import { Box, IconButton, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Tooltip, Typography } from "@mui/material";
-import { dashboardtextStyle, infoButtonStyle, smallTableContainer, smallTableHeaderCellStyle, smallTableStyle, tableHeadRowStyle } from "app";
+import { dashboardtextStyle, infoButtonStyle, smallTableContainer, smallTableHeaderCellStyle, tableHeadRowStyle } from "app";
 import PropTypes from "prop-types";
 import { visuallyHidden } from '@mui/utils';  // remove and this line and test 
 import { otherAlias } from "shared/constants/constants";
@@ -77,7 +77,6 @@ const SmallListTable = ({ rows }) => {
         <TableContainer sx={smallTableContainer}>
 
             <Table
-                sx={smallTableStyle}
                 aria-labelledby="tableTitle"
                 size={'medium'}
             >

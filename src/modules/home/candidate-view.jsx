@@ -1,9 +1,7 @@
 import {
     Box,
     Button,
-
     Grid,
-
     Typography,
     Chip,
     Tooltip
@@ -54,7 +52,6 @@ const CandidateView = () => {
     const { openViewModel, openConsentModal, openInfoModel, openConfirmationYesNoModal } = functionSlice[0];
     const consentStatus = loggedInData[0]?.consentStatus;
 
-    console.log("consentStatus", consentStatus);
     const dispatch = useDispatch();
 
     const handlePrerequisite = (statusId, statusCode) => {
@@ -73,17 +70,14 @@ const CandidateView = () => {
         }
         const response = await postAppointeePrerequisiteStatus(postConsentpayLoad);
         setIsPrerequisiteDataAvailable(consentStatusCode === 'PREREQCNFYES');
-        // console.log("isPrerequisiteDataAvailable", consentStatusCode === 'PREREQCNFYES')
         if (response) {
             const { responseInfo } = response;
             if (responseInfo === 'success') {
                 setLocalStorageItem("pfc-user", {
                     ...userDetails,
                     isPrerequisiteDataAvailable: consentStatusCode === 'PREREQCNFYES',
-                    // IsConsentProcessed: isConsentProcessed,
                 });
                 dispatch(removeLoggedinData());
-                // userDetails.consentStatus = consentStatusId;
                 dispatch(storeLoggedinData({
                     ...userDetails,
                     isPrerequisiteDataAvailable: consentStatusCode === 'PREREQCNFYES',
@@ -98,7 +92,6 @@ const CandidateView = () => {
 
         if (isPrerequisiteDataAvailable && consentStatus !== 1) {
             handleConsent();
-            //to do
         } else if (consentStatus === 1) {
             navigateTo(toRegister);
         }
@@ -120,7 +113,6 @@ const CandidateView = () => {
                 dialogComponent: <PrerequisiteInformation />,
                 firstButtonName: "I do",
                 secondButtonName: "I don't have prerequisites",
-                // thirdButtonName: "Close",
                 fullWidth: true,
                 mxWidth: 'md',
 
@@ -215,7 +207,6 @@ const CandidateView = () => {
                                             sx={{
                                                 ...getStatusChipStyle(status),
 
-                                                // fontWeight: "bold",
                                                 marginLeft: "8px",
                                             }}
                                             size="small"
@@ -231,7 +222,6 @@ const CandidateView = () => {
                                         variant="contained"
                                         color="primary"
                                         onClick={() => openViewModel(appointeeId)}
-                                        //disabled={status === "No Response"}
                                         disabled={consentStatus === 0 || consentStatus === 5}
                                     >
                                         My Info
@@ -254,10 +244,8 @@ const CandidateView = () => {
                                                 onClick={appointeeVerification}
                                                 disabled={!isPrerequisiteDataAvailable}
                                                 sx={{
-                                                    //ml: 6,
                                                     boxShadow: 10, // Elevation effect
                                                     fontSize: '1rem', // Larger font for emphasis
-                                                    //padding: '10px 20px', // Increased padding for a bigger button
                                                     border: '2px solid rgba(255, 255, 255, 0.8)', // White border for emphasis
                                                     borderRadius: '8px', // Rounded corners for a modern look
                                                     '&:hover': {

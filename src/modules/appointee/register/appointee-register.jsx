@@ -532,17 +532,9 @@ const AppointeeRegister = () => {
 
 
   }
-  console.log('stepList1', stepsList);
   const updateStep = (param) => {
     const _steps = CreateStepSequience({ ...param, stepCounter })
     setStepsList({ ...stepsList, ..._steps })
-  }
-  console.log('stepsList', stepsList);
-
-  const selectStep = (currentCode) => {
-    console.log('stepsList.find', Object.values(stepsList));
-
-    // return  Object.values(stepsList).find(({ step }) => step === currentCode)?.step
   }
 
   const fetchUanConfirmationSubmittion = (value) => {
@@ -553,7 +545,6 @@ const AppointeeRegister = () => {
   };
 
 
-  console.log("fileUploaded", fileUploaded)
 
   const openSubmitConfirmationModel = () => {
     const submitconfModelContent = {
@@ -563,8 +554,6 @@ const AppointeeRegister = () => {
   };
 
   const checkFileUpload = (fileTypeAlias) => {
-    console.log('uploadedFile', uploadedFile);
-
     const uploadTypeAlias =
       uploadedFile &&
       uploadedFile.find(({ uploadTypeAlias }) => uploadTypeAlias === fileTypeAlias);
@@ -644,7 +633,6 @@ const AppointeeRegister = () => {
       setEpfoButton("Fetch N Verify UAN");
     } else {
       setEpfoButton("Auto UAN Verification");
-      // setDisabledAadharInput(true);
     }
   }, [UAN]);
   useEffect(() => {
@@ -728,8 +716,6 @@ const AppointeeRegister = () => {
     }
 
   }, [isAppointeeUanAvailable]);
-  console.log('isPhysicallyHandicap234234', isPhysicallyHandicap);
-
 
   useEffect(() => {
     if (gender === "M") {
@@ -777,10 +763,6 @@ const AppointeeRegister = () => {
     //   setStepCounter(stepCounter - 1);
     // }
   }
-  console.log('stepCounter: ', stepCounter);
-
-
-  console.log('stepsList outside', stepsList);
 
   const updateStepList = (stepStatus, stepName) => {
     if (stepStatus === 'Y') {
@@ -790,12 +772,6 @@ const AppointeeRegister = () => {
       setStepsList(updatedStepList);
     }
 
-  }
-  const stepsNumber = (code) => {
-    console.log('stepsList inside stepnumber', stepsList);
-    // console.log('code13', code, stepsList.findIndex((element) => element === code) + 1);
-    // // console.log('stepsList.findIndex((element) => element === code) + 1', stepsList.findIndex((element) => element === code) + 1);
-    // return stepsList.findIndex((element) => element === code) + 1;
   }
 
   const generateRemarks = (remarks) => {
@@ -903,8 +879,6 @@ const AppointeeRegister = () => {
   };
 
 
-  console.log("fileDetails", uploadedFile)
-  console.log("fileDetails1", fileDetails)
 
   const uploadAadharXmlFile = ({ target }) => {
     // uploadFile(target, "ADH", setAadharXmlFileName);
@@ -1018,7 +992,6 @@ const AppointeeRegister = () => {
 
   // Check if handicap certificate is uploaded (only if applicable)
   const checkHandicapCertificateUpload = () => {
-    console.log('hasHandicapUpload', hasHandicapUpload());
     if (isPhysicallyHandicap != "Y") {
       return true;
     } else {
@@ -1113,8 +1086,6 @@ const AppointeeRegister = () => {
       return false;
     }
     if (!checkEPFOPassbookDocCertificateUpload()) {
-      console.log('checkEPFOPassbookDocCertificateUpload');
-
       return false
     }
     return true;
@@ -1235,8 +1206,6 @@ const AppointeeRegister = () => {
 
     }
   };
-
-  //console.log("tenthCertificateFileName",tenthCertificateFileName)
 
   const saveDetails = async () => {
     let isUANAvailable = uanNumberAvailable === "yes" ? true : false;
@@ -1385,8 +1354,6 @@ const AppointeeRegister = () => {
         setCurrentPageNo(2);
         setIsNextVisible(true);
         setIsDraft(false);
-        console.log('passportAvailable', passportAvailable);
-
         updateStep(
           {
             isHandicap: isPhysicallyHandicap,

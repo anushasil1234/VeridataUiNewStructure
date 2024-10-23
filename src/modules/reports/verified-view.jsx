@@ -102,7 +102,6 @@ const UnWrappedVerified = (props) => {
         ? `verified List`
         : "verified List"
     );
-//console.log("india",payLoad)
     const response = await getVerifiedAppointeeList(payLoad);
     if (response) {
       const { responseInfos } = response;
@@ -112,7 +111,6 @@ const UnWrappedVerified = (props) => {
         null,
         hasPermission
       );
-     // console.log("generatedCells",generatedCells)
       const _rows = {
         tableHead: verifiedListTableHeadCell,
         tableRows: generatedCells,

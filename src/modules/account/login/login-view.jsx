@@ -1,9 +1,9 @@
-import { Box, Button, Grid, Link, Paper, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Button, Grid, Paper } from "@mui/material";
+import React from "react";
 import { PageHeading1, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
 import { styles, imageContainer, loginImageStyle } from "app";
 import { useNavigate } from "react-router-dom";
-import { toDashboard, toLogin, toForgotPassword } from "shared/constants/constants";
+import { toDashboard, toLogin } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
 import logo from 'assets/images/logos/pfc_logo1.png';
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
@@ -25,15 +25,11 @@ export const LoginView = () => {
   const dispatch = useDispatch();
   const apiSlice = useSelector(state => state.apiSlice);
   const functionSlice = useSelector(state => state.functionSlice);
-  const popUpSlice = useSelector(state => state.popUpSlice);
 
 
   const { postLoginByEmailDetails } = apiSlice[0];
   const { setDropdownList } = functionSlice[0];
-  const [loading, setLoading] = useState(false);
 
-  const startLoader = () => setLoading(true);
-  const stopLoader = () => setLoading(false);
 
   const handleClickOnLogout = () => {
     localStorage.clear();
@@ -52,12 +48,10 @@ export const LoginView = () => {
 
   const handleGetUserDetails = async (username) => {
     // Start the loader before making the API call
-    startLoader();
     const response = await postLoginByEmailDetails(username);
     if (response) {
       const { responseInfo } = response;
       const { userDetails, tokenDetails } = responseInfo;
-      // const { isDefaultPassword, isPasswordExpire } = userDetails;
       setLocalStorageItem("pfc-user", userDetails);
       setLocalStorageItem("pfc-token", tokenDetails);
       dispatch(storeLoggedinData(userDetails));
@@ -66,9 +60,7 @@ export const LoginView = () => {
       dispatch(storeLoggeoutData({ handleClickOnLogout }));
       await setDropdownList();
       navigate(`${toDashboard}`)
-      stopLoader();
     } else {
-      stopLoader();
       navigate("/");
     }
   }
@@ -78,10 +70,8 @@ export const LoginView = () => {
     } else {
       instance.loginPopup(loginRequest)
         .then((response) => {
-          //   console.log("Logged in", response);
           //  Handle successful login, navigate to a secure page
           handleGetUserDetails(response.account.username);
-          //  handleGetUserDetails(userName);
         })
         .catch((e) => {
           alert("SSO Login failed, please try Again", e);

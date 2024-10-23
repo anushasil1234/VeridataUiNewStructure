@@ -86,8 +86,6 @@ const Verified = ({ fitToContaner, wizdata, dayRangePayLoad }) => {
       }
       backgroundColor={verifiedColour}
       hoverColor = {verifiedColourdark}
-      //color="secondary"
-      //size="small"
       sx={{ ...dashBoardwidget }}
     >
       <img src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '80%', height: 'auto' }}/>

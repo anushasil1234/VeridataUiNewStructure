@@ -170,9 +170,6 @@ let AppointeeViewForm = ({
   const [isTrustPassbook, setIsTrustPassbook] = useState(null);
   const [isManualPassbook, setIsManualPassbook] = useState(null);
 
-  console.log("appointeeStatus", appointeeStatus)
-
-
   const dispatch = useDispatch();
 
   const actionsAfterProcess = (actionRoute) => {
@@ -396,7 +393,6 @@ let AppointeeViewForm = ({
     }
   };
 
-  // console.log("isEmployementVarified", isEmployementVarified)
   const setAppointeeActivity = async () => {
     const response = await getAppointeeActivity(appointeeId);
     if (response) {
@@ -417,15 +413,6 @@ let AppointeeViewForm = ({
       openRemarksModel(remarks);
     }
   };
-
-  // console.log("uanNumber",uanNumber)
-
-  console.log("isTrustPassbook", isTrustPassbook)
-  console.log("isUanVerified", isUanVerified)
-
-  console.log("isPhysicallyHandicap", isPhysicallyHandicap)
-
-  console.log("isPassportAvailable", isPassportAvailable)
 
   let verifyIconStyle;
   if (isdocumentVerified === null) {
@@ -623,7 +610,6 @@ let AppointeeViewForm = ({
                           width: "2vw", // or use "5vw" to make it responsive to the viewport width
                           height: "auto", // Keeps the aspect ratio intact
                         }}
-                        //style={{ width: "30px", height: "30px" }} // Adjust size as needed
                         onClick={() => openDocumentModel(trustPfFile, "Trust Pf")}
                       />
                     </DarkTooltip>
@@ -645,7 +631,6 @@ let AppointeeViewForm = ({
                           width: "2vw", // or use "5vw" to make it responsive to the viewport width
                           height: "auto", // Keeps the aspect ratio intact
                         }}
-                        //style={{ width: "30px", height: "30px" }} // Adjust size as needed
                         onClick={() => openDocumentModel(manualPassbookFile, "Epfo passbook file")}
                       />
                     </DarkTooltip>
@@ -694,7 +679,6 @@ let AppointeeViewForm = ({
                               width: "2vw", // or use "5vw" to make it responsive to the viewport width
                               height: "auto", // Keeps the aspect ratio intact
                             }}
-                            // style={{ width: "30px", height: "30px" }} // Adjust size as needed
                             onClick={() => openDocumentModel(visaFile, "Passport")}
                           />
                         </DarkTooltip>
@@ -782,7 +766,6 @@ let AppointeeViewForm = ({
                                   marginLeft: "2%", // Relative margin for responsiveness
                                   marginTop: "0.5rem" // Responsive margin based on font size
                                 }}
-                                //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
                                 onClick={() => openDocumentModel(handicapFile, "Handicap Certificate")}
                               />
                             </DarkTooltip>
@@ -845,7 +828,6 @@ let AppointeeViewForm = ({
                             marginLeft: "5%", // Relative margin for responsiveness
                             marginTop: "0.8rem" // Responsive margin based on font size
                           }}
-                          //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
                           onClick={() => openDocumentModel(otherFile, "Father's name Verification Document")}
                         />
                       </DarkTooltip>

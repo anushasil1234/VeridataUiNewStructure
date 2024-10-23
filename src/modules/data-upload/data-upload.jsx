@@ -1,85 +1,3 @@
-// import { React, useState } from 'react';
-// import { useSelector } from 'react-redux';
-// import { CardLayout, PageLayout } from 'shared/utils';
-// import { sampleDownLoadLinkContainerStyle } from 'app';
-// import { DownloadSampleXlsFile_URL } from 'shared/constants/constants';
-// import ActionPermission from 'shared/components/action-permission/action-permission';
-// import FileUpload from 'shared/components/file-upload/file-upload';
-// import { Typography, Box,Fab } from '@mui/material';
-// import { Download, Info, Refresh, Search } from "@mui/icons-material";
-// import { primaryFabStyle } from "app";
-// import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
-
-// const UnWrrappedDataUpload = (props) => {
-//     const { hasPermission } = props;
-//     const apiSlice = useSelector(state => state.apiSlice)
-//     const { downloadReport } = apiSlice[0];
-
-//     const [files, setFiles] = useState([])
-//     const [tableFileUpload, setTableFileUpload] = useState({
-//         tableHeading: "List of Files Upload",
-//         rows: [
-//             {
-//                 id: 1,
-//                 col1: null,
-//             },
-//         ],
-//         columns: [
-//             { id: "col1", label: 'File Name', minWidth: 100 },
-
-//         ]
-//     })
-//     const removeFile = (filename) => {
-//         setFiles(files.filter(file => file.name !== filename))
-//     }
-
-//     const [tableData, setTableData] = useState({
-//         tableHeaders: [
-//             "Error Messages",
-//             "Data"
-//         ],
-//         rows: []
-//     })
-
-//     return (
-//         <PageLayout pageName={"File Upload"}>
-//             <CardLayout>
-//                 <Box sx={sampleDownLoadLinkContainerStyle}>
-//                     <Typography onClick={() => downloadReport(DownloadSampleXlsFile_URL)} >Download New Appointee Template</Typography>
-//                 </Box>
-//                 {
-//                     hasPermission && hasPermission['A006'] &&
-//                     <Box mt={3}>
-//                         <FileUpload
-//                             setTableData={setTableData}
-//                             tableData={tableData}
-//                             tableFileUpload={tableFileUpload}
-//                             setFileName={setTableFileUpload}
-//                             files={files}
-//                             setFiles={setFiles}
-//                             removeFile={removeFile}
-//                             hasPermission={hasPermission}
-//                         />
-//                     </Box>
-//                 }
-//                 <DarkTooltip placement="right" arrow>
-//                     <Fab
-//                         variant="contained"
-//                         size="small"
-//                         button={"N"}
-//                         sx={primaryFabStyle}
-//                     >
-//                         <Info width={18} sx={{ color: "#fff" }} />
-//                     </Fab>
-//                 </DarkTooltip>
-//             </CardLayout>
-//         </PageLayout>
-//     );
-// }
-// const DataUpload = ActionPermission(UnWrrappedDataUpload)
-// export default DataUpload
-
-
 import { React, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CardLayout, PageLayout } from 'shared/utils';
@@ -92,9 +10,8 @@ import { Info, Close } from "@mui/icons-material";
 import { primaryFabStyle } from "app";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 
-// Import your local image
-//'assets/images/profile/user-2.jpg';
-import myImage from 'assets/images/profile/candidateUploadTemplate.jpg'; // Update the path as necessary
+
+import myImage from 'assets/images/profile/candidateUploadTemplate.jpg';
 
 const UnWrrappedDataUpload = (props) => {
     const { hasPermission } = props;
@@ -152,7 +69,6 @@ const UnWrrappedDataUpload = (props) => {
                                 variant="contained"
                                 size="small"
                                 onClick={handleOpenModal} // Open modal on click
-                                //sx={primaryFabStyle}
                                 sx={{ ...primaryFabStyle, ml: 5 }}
                             >
                                 <Info width={18} sx={{ color: "#fff" }} />
@@ -166,8 +82,8 @@ const UnWrrappedDataUpload = (props) => {
                 <Dialog
                     open={openModal}
                     onClose={handleCloseModal}
-                    maxWidth="lg" // Set maxWidth to "lg" for larger size
-                    fullWidth // Make the modal take the full width available
+                    maxWidth="lg"
+                    fullWidth 
                 >
                     <DialogTitle>
                         Sample Template for Data Upload

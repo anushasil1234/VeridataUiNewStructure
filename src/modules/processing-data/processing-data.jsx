@@ -119,32 +119,7 @@ const UnWrappedProcessing = (props) => {
 
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
-
-  // const handleDownload = () => {
-  //   const tableHeadList = processingListPdfTableHeadCell.map(({ label }) => {
-  //     return {
-  //       title: label,
-  //     };
-  //   });
-  //   const tableBodyList = responseList && responseList.map(
-  //     (tableRows) => {
-  //       return CreatePdfTableBody(tableRows, processingListPdfTableHeadCell);
-  //     }
-  //   );
-
-  //   const tableObj = {
-  //     headerList: tableHeadList,
-  //     rows: tableBodyList,
-  //     fileName: `_Processing_List_${currentDate}`,
-  //     label: "Processing List",
-  //     fromDate: fromDate,
-  //     toDate: toDate,
-  //     tableName: "Appointee details",
-  //     rptDesc: generateProcessingAppointeeReportDesc
-  //   };
-
-  //   jsPDFReportTemplate({ tableObj });
-  // };
+ 
   const handleDownload = () => {
     if (!responseList || responseList.length === 0) {
       showErrorMessage(reportGenarate)

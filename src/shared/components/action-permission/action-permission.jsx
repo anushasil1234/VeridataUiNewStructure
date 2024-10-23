@@ -10,7 +10,6 @@ const ActionPermission = (Component) => {
         const { pathname } = useLocation();
         const sideMenuItemsSlice = useSelector((state) => state.sideMenuItemsSlice);
         const menuItems = sideMenuItemsSlice[0] && sideMenuItemsSlice[0].menuItems;
-        // console.log("hasPermission1",menuItems)
         const [hasPermission, setHasPermission] = useState();
         useEffect(() => {
             if (menuItems) {

@@ -125,7 +125,6 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
     // }, [newPassword])
 
     useEffect(() => {
-        // console.log('q', newPassword)
         if (hasValue(newPassword) && newPassword.length >= 8) {
             const trimmedPassword = newPassword.trim();
             if (isPaswordValid(trimmedPassword)) {

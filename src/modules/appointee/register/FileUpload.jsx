@@ -115,8 +115,6 @@ import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
 const FileUpload = ({ stepsList, mode }) => {
     const steps = ["Step 1", "Step 2", "Step 3"];
 
-    console.log("mode", mode)
-
     // Function to retrieve saved step from localStorage
     const [activeStep, setActiveStep] = useState(0);
     const dropdownList = useSelector((state) => state.dropdownList);
@@ -419,7 +417,6 @@ const FileUpload = ({ stepsList, mode }) => {
 
             if (hasValue(uanNumber) && isEmployementVarified === null) {
                 epfostatusMessage.message = "N/A";
-                //epfostatusMessage.color = "";
                 epfostatusMessage.success = null;
                 setEpfostatusMessage(epfostatusMessage);
             } else {
@@ -452,17 +449,6 @@ const FileUpload = ({ stepsList, mode }) => {
 
 
     }
-    console.log('stepList1', stepsList);
-
-
-
-    const selectStep = (currentCode) => {
-        console.log('stepsList.find', Object.values(stepsList));
-
-        // return  Object.values(stepsList).find(({ step }) => step === currentCode)?.step
-    }
-
-
 
     const openSubmitConfirmationModel = () => {
         const submitconfModelContent = {
@@ -557,8 +543,6 @@ const FileUpload = ({ stepsList, mode }) => {
         }
 
     }, [isAppointeeUanAvailable]);
-    console.log('isPhysicallyHandicap234234', isPhysicallyHandicap);
-
 
     useEffect(() => {
         if (gender === "M") {
@@ -576,9 +560,6 @@ const FileUpload = ({ stepsList, mode }) => {
             setCountryOfOriginBasedOnNationality(nationalityLower);
         }
     }, [nationality, passportAvailable]);
-
-    console.log('stepsList outside', stepsList);
-
 
 
     const generateRemarks = (remarks) => {
@@ -652,7 +633,6 @@ const FileUpload = ({ stepsList, mode }) => {
 
     const handleBack = () => {
         if (activeStep > 0) {
-            // setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
             setActiveStep(activeStep - 1);
             setCurrentPageNo(currentPageNo - 1);
         }
@@ -771,7 +751,6 @@ const FileUpload = ({ stepsList, mode }) => {
         await saveDetails();
         handleCloseModal(); // Close the confirmation modal after saving
         setIsThirdNextVisible(true);
-        //setCurrentPageNo(3);
     };
 
 
@@ -828,9 +807,6 @@ const FileUpload = ({ stepsList, mode }) => {
         if (response) {
             handleNext();
             setIsPreviousSectionDisabled(true);
-            // setShowAdditionalSection(true);
-
-            //setIsUANappointeeAvailable(true)
             clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
             clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
             clearFileVaribles(passportFileTypeAlias, setPassportFileName);
@@ -848,8 +824,6 @@ const FileUpload = ({ stepsList, mode }) => {
             appointeeDetailsId: appointeeDetailsId,
             appointeeId: appointeeId,
             appointeeCode: userCode,
-            // trustPassbookAvailable: isTrustEpfoAvailable,
-            //trustPensionAvailable: isTrustPensionAvailable,
             isSubmit: true,
             userId: userId,
             FileDetails: fileDetails,
@@ -857,24 +831,6 @@ const FileUpload = ({ stepsList, mode }) => {
         };
         // Use the buildFormData helper function to create the formData
         let formData = buildFormData(payLoad);
-        // let formData = new FormData();
-        // for (const property in payLoad) {
-        //   if (Object.hasOwnProperty.call(payLoad, property)) {
-        //     if (payLoad[property] === "") {
-        //       delete payLoad[property];
-        //     } else {
-        //       if (property === "fileUploaded") {
-        //         formData.append(`${property}`, JSON.stringify(payLoad[property]));
-        //       } else if (property === "FileDetails") {
-        //         payLoad?.FileDetails.forEach((element) => {
-        //           formData.append("FileDetails", element);
-        //         });
-        //       } else {
-        //         formData.append(`${property}`, payLoad[property]);
-        //       }
-        //     }
-        //   }
-        // }
         const response = await postAppointeeFileDetails(formData);
         if (response) {
             setLocalStorageItem("pfc-user", {
@@ -991,8 +947,6 @@ const FileUpload = ({ stepsList, mode }) => {
 
         if (value === "Y") {
             const nationalityLower = nationality?.toLowerCase();
-
-            // determineIsInternationalWorker(nationalityLower, defaultCountry);
             setCountryOfOriginBasedOnNationality(nationalityLower);
         } else if (value === "N") {
             resetPassportDetails();
@@ -1021,11 +975,6 @@ const FileUpload = ({ stepsList, mode }) => {
 
     return (
         <CardLayout>
-
-
-
-
-
 
             <Box sx={{ width: "100%" }}>
                 <form ref={formElement}>
@@ -1061,14 +1010,9 @@ const FileUpload = ({ stepsList, mode }) => {
                                             step={stepsList.CF.step}
                                             heading={stepsList.CF.name}
                                             info={"Upload file details ."}
-
-                                        // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
-                                        //   <HelpOutline />
-                                        // </IconButton>}
                                         />
                                     </Grid>
                                     <Grid sx={positionRelative} item xs={12}>
-                                        {/* {isPhysicallyHandicap==='N' && <DisableSection />} */}
                                         <Grid
                                             mt={3}
                                             container
@@ -1197,10 +1141,6 @@ const FileUpload = ({ stepsList, mode }) => {
                                                             step={stepsList?.HV?.step}
                                                             heading={stepsList?.HV?.name}
                                                             info={"Upload your handicap file details ."}
-
-                                                        // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
-                                                        //   <HelpOutline />
-                                                        // </IconButton>}
                                                         />
                                                     </Grid>
 
@@ -1365,10 +1305,6 @@ const FileUpload = ({ stepsList, mode }) => {
                                         step={stepsList.PFD.step}
                                         heading={stepsList.PFD.name}
                                         info={"Upload file details ."}
-
-                                    // Children={<IconButton onClick={handlePassporFileNumbertHelp}>
-                                    //   <HelpOutline />
-                                    // </IconButton>}
                                     />
                                 </Grid>
                                 )}
@@ -1523,9 +1459,6 @@ const FileUpload = ({ stepsList, mode }) => {
                 </form>
             </Box>
 
-
-
-
             <form ref={formElement}>
                 <Grid sx={positionRelative} item xs={12}>
                     <Grid
@@ -1554,9 +1487,7 @@ const FileUpload = ({ stepsList, mode }) => {
 
                             <>
                                 <Button
-                                    //onClick={() => setCurrentPageNo(1)}
                                     onClick={handleBack}
-                                    //sx={{ m: "15px 5px", ml: 3 }}
                                     sx={{ m: { xs: "10px 0", sm: "15px 0" } }}
                                     variant="contained"
                                     color="primary"
@@ -1569,9 +1500,7 @@ const FileUpload = ({ stepsList, mode }) => {
 
                                 <Button
                                     name="save"
-                                    // disabled={isSubmitDisabled}
                                     onClick={handleSaveClick}
-                                    //sx={{ m: "15px 25px", ml: 3 }}
                                     sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
                                     variant="contained"
                                     color="primary"
@@ -1582,7 +1511,6 @@ const FileUpload = ({ stepsList, mode }) => {
                                 <Button
                                     onClick={handleNext}
                                     sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
-                                    //sx={{ m: "15px 25px", ml: 3 }}
                                     variant="contained"
                                     color="primary"
                                     disabled={isthirdNextVisible === false}
@@ -1595,11 +1523,6 @@ const FileUpload = ({ stepsList, mode }) => {
                     </Grid>
                 </Grid>
             </form>
-
-
-
-
-
         </CardLayout>
     );
 };

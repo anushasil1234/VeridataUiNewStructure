@@ -1,16 +1,14 @@
 import { React, useState } from "react";
-//import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 import { CardLayout, PageLayout } from "shared/utils";
 import { sampleDownLoadLinkContainerStyle } from "app";
 import { DownloadUpdateSampleXlsFile_URL } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import FileUpdate from "shared/components/file-update/file-update";
-//import { Typography } from "@mui/material";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { Typography, Box, Fab, Dialog, DialogContent, Button, DialogTitle, DialogActions } from '@mui/material';
 import { primaryFabStyle } from "app";
-import { Info, Close } from "@mui/icons-material";
+import { Info } from "@mui/icons-material";
 import myImage from 'assets/images/profile/candidateUpdateTemplate.jpg';
 
 const UnWrrappedDataUpdate = (props) => {

@@ -16,12 +16,8 @@ import { removeApi } from "store/slices/api-slice";
 import { removeFunction } from "store/slices/function-slice";
 import { removePopUpSetFunction } from "store/slices/popup-slice";
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
-//import { PublicClientApplication } from '@azure/msal-browser';
-//import { MsalProvider } from '@azure/msal-react';
-//import { msalConfig } from '../authConfig';
 
 const App = () => {
-  //const msalInstance = new PublicClientApplication(msalConfig);
   const routing = useRoutes(CustomRouter);
   const dispatch = useDispatch();
   const loginData = getLocalStorageItem("pfc-user");
@@ -59,9 +55,7 @@ const App = () => {
   return (
     <ThemeProvider theme={AppStyle}>
       <LoadingContextProvider>
-        {/* <MsalProvider instance={msalInstance}> */}
-          {routing}
-        {/* </MsalProvider> */}
+        {routing}
       </LoadingContextProvider>
     </ThemeProvider>
   );

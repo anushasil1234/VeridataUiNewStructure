@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent, Typography, Grid, Box, Tooltip, useMediaQuery } from '@mui/material';
 import { CardLayout } from 'shared/utils';
 import { useStyles } from 'app'; // Adjust the path as needed
-// import { makeStyles } from '@mui/styles';
+
 const WidgetCard = ({
     title,
     subtitle,
