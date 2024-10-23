@@ -7,7 +7,7 @@ import { roleTypeEnums } from 'shared/constants/constants';
 
 const ListTable = ({ rows }) => {
     const loggedInData = useSelector((state) => state.loggedInData);
-    const { userTypeId } = loggedInData[0];
+    const userTypeId = loggedInData[0] && loggedInData[0]?.userTypeId;
 
     let issuesList = [];
     let noteList = [];

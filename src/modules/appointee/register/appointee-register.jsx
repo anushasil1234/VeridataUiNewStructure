@@ -1375,7 +1375,7 @@ const AppointeeRegister = () => {
       userId: userId,
       FileDetails: fileDetails,
       fileUploaded: uploadedFile,
-      IsManualPassbookUploaded: isUanVerificationProcessManual
+      IsManualPassbookUploaded: isUanVerificationProcessManual === 'auto' ? false : true
     };
     // Use the buildFormData helper function to create the formData
     let formData = buildFormData(payLoad);

@@ -692,7 +692,7 @@ let AppointeeViewForm = ({
               ) : (
                 <DocumentDetails
                   fieldName={"Passport Available"}
-                  fieldValue={isPassportAvailable === 'N'? 'NO' : NA}
+                  fieldValue={isPassportAvailable === 'N'? 'No' : NA}
                 />
               )}
             </Box>
