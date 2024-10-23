@@ -60,7 +60,7 @@ const PrerequisiteInformation = () => {
                                 variant="body2"
                                 color="text.primary"
                             >
-                                Check if the given mobile is pinned with aadhar.
+                                Check if the given mobile is pinned with Aadhaar.
                             </Typography>
                             {" — Other wise contact with respective hr to update mobile number. "}
                         </>

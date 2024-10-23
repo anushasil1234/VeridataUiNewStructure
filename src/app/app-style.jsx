@@ -275,6 +275,7 @@ export const downLoadNameStyle = {
   fontWeight: "bold",
   color: "#0044cc"
 }
+export const fontSizeType1 = { fontSize: { xs: ".75rem!important", md: "1rem!important" } };
 export const downLoadLinkContainer = {
   cursor: "pointer",
   mr: 4
@@ -357,6 +358,12 @@ export const datepickerpx = {
 export const inputFieldStyle = {
   width: "100%",
   margin: "10px",
+  padding: 0,
+  // height: "50px" 
+};
+export const inputFieldStyle2 = {
+  width: "100%",
+  margin: "10px 0px",
   padding: 0,
   // height: "50px" 
 };
@@ -672,6 +679,12 @@ export const lable1Style = {
   ...lableCommonStyle,
   marginLeft: "5px"
 };
+export const lable1CopyStyle = {
+  ...lableCommonStyle,
+  // marginLeft: "10px",
+  padding: "0px !important"
+};
+
 export const lable2Style = {
   ...lableCommonStyle
 };
@@ -815,6 +828,18 @@ export const genderTypeStyle = {
   fontWeight: 500
 };
 
+export const headingType1 = {
+  ...lable1CopyStyle,
+  fontWeight: 500,
+  ...fontSizeType1
+}
+
+export const checkBoxLabelStyle = {
+  '&.MuiFormControlLabel-label': {
+    ...fontSizeType1,
+    backgroundColor: 'red!important'
+  }
+}
 export const genderSectionContainer = {
   flexDirection: "row",
   alignItems: "center",
@@ -833,8 +858,13 @@ export const autocompleteStyle = {
 // Disble section style
 export const disableSectionStyle = {
   position: "absolute",
-  left: "12px",
-  height: { xs: '95%', md: "90%" },
+  left: { xs: "4px", md: "12px" },
+  // left: "0px",
+  // top:"0px",
+  top: "5px",
+  // height: { xs: '95%', md: "90%" },
+  // height: { xs: '95%', md: "100%" },
+  height: '100%',
   background: "black",
   opacity: "0.2",
   width: "100%",
@@ -1041,7 +1071,7 @@ export const getStatusChipStyle = (status) => {
 // chip style end
 // Upload file starts
 export const fileUploadSectionContainerStyle = {
-  margin: '10px!important'
+  margin: '10px 0px!important'
 }
 export const uploadIconContainer = {
   backgroundColor: ThemeColorPalete.common.white,
@@ -1451,4 +1481,18 @@ export const page3formContainerStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   cursor: 'pointer'
+}
+
+export const candidateRegistrationFormContainerStyle = {
+  '& .customeTextField': {
+    // marginX: 0
+  }
+}
+
+export const formHeadingGridContainerStyle = {
+  marginX: '10px',
+}
+
+export const formHeadingContainerStyle = {
+  paddingLeft: '0px !important'
 }

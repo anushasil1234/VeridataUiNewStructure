@@ -52,6 +52,7 @@ import {
   otherFileTypeAlias,
   remarksEmptyMsg,
   roleTypeEnums,
+  epfoPassbookFileTypeAlias,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -152,6 +153,7 @@ let AppointeeViewForm = ({
   const [tenFile, setTenFile] = useState();
   const [otherFile, setOtherFile] = useState();
   const [trustPfFile, setTrustPfFile] = useState();
+  const [manualPassbookFile, setManualPassbookFile] = useState();
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
   // const [isEmployementVarified, setIsEmployementVarified] = useState(null);
@@ -166,8 +168,9 @@ let AppointeeViewForm = ({
   const [actionIconListDisplay, setActionIconListDisplay] = useState(false);
   const [isSaveStep, setIsSaveStep] = useState(null);
   const [isTrustPassbook, setIsTrustPassbook] = useState(null);
+  const [isManualPassbook, setIsManualPassbook] = useState(null);
 
-  console.log("appointeeStatus",appointeeStatus)
+  console.log("appointeeStatus", appointeeStatus)
 
 
   const dispatch = useDispatch();
@@ -248,11 +251,13 @@ let AppointeeViewForm = ({
         isAadhaarVarified,
         isPanVarified,
         isUanVarified,
-       // isEmployementVarified,
+        // isEmployementVarified,
         isProcessed,
         saveStep,
-        isTrustPassbook
+        isTrustPassbook,
+        isManualPassbook
       } = response.responseInfo;
+      setIsManualPassbook(isManualPassbook);
       maskedUANNumber ? setUAN(maskedUANNumber) : setUAN(NA);
       uanNumber ? setUanNumber(uanNumber) : setUanNumber(null)
       isPanVarified
@@ -383,6 +388,9 @@ let AppointeeViewForm = ({
           if (uploadTypeAlias === trustEpfoFileTypeAlias) {
             setTrustPfFile(file);
           }
+          if (uploadTypeAlias === epfoPassbookFileTypeAlias) {
+            setManualPassbookFile(file);
+          }
         }
       );
     }
@@ -511,6 +519,34 @@ let AppointeeViewForm = ({
     <Comment />,
     "Remarks"
   );
+  const getVerificationChip = () => {
+    const chipProps = {
+      sx: { mx: "3px", fontWeight: 500, color: "#ffffff" },
+    };
+
+    const { label, color } = isAadharVerified === false
+      ? { label: "Aadhaar Verification failed", color: "error" }
+      : isPanVarified === false
+        ? { label: "PAN Verification failed", color: "error" }
+        : isUanVerified === false && isManualPassbook === true
+          ? { label: "Manual Passbook Uploaded", color: "warning" }
+          : isUanVerified === false
+            ? { label: "UAN Verification failed", color: "error" }
+            : isAadharVerified === "N/A"
+              ? { label: "Aadhaar Verification Pending", color: "warning" }
+              : isPanVarified === "N/A"
+                ? { label: "PAN Verification Pending", color: "warning" }
+                : isUanVerified === "N/A"
+                  ? { label: "UAN Verification Pending", color: "warning" }
+                  : isUanVerified === true && !hasValue(uanNumber)
+                    ? { label: "No UAN Available", color: "success" }
+                    : { label: null, color: null };
+
+    return label ? <Chip {...chipProps} label={label} color={color} /> : null;
+  };
+
+
+
   return (
     <Box bgcolor={"#E2E8F0"} sx={{ position: "relative" }}>
       <Box sx={gridContainerStyle}>
@@ -529,52 +565,7 @@ let AppointeeViewForm = ({
                 <Box>
                   {isSaveStep === 1 ? (
                     <>
-                      {isAadharVerified === false ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"Aadhaar Verification failed"}
-                          color={"error"}
-                        />
-                      ) : isPanVarified === false ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"PAN Verification failed"}
-                          color={"error"}
-                        />
-                      ) : isUanVerified === false ? (
-                        <Chip
-                          sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                          label={"UAN Verification failed"}
-                          color={"error"}
-                        />
-                      )
-                        
-                         : isAadharVerified === "N/A" ? (
-                          <Chip
-                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                            label={"Aadhaar Verification Pending"}
-                            color={"warning"}
-                          />
-                        ) : isPanVarified === "N/A" ? (
-                          <Chip
-                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                            label={"PAN Verification Pending"}
-                            color={"warning"}
-                          />
-                        ) : isUanVerified === "N/A" ? (
-                          <Chip
-                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                            label={"UAN Verification Pending"}
-                            color={"warning"}
-                          />
-                        ) : isUanVerified === true && (!hasValue(uanNumber)) ? (
-                          <Chip
-                            sx={{ mx: "3px", fontWeight: 500, color: "#ffffff" }}
-                            label={"No UAN Available"}
-                            color={"success"}
-                          />
-                        ) 
-                          : null}
+                      {getVerificationChip()}
                     </>
                   ) : null}
                 </Box>
@@ -634,6 +625,28 @@ let AppointeeViewForm = ({
                         }}
                         //style={{ width: "30px", height: "30px" }} // Adjust size as needed
                         onClick={() => openDocumentModel(trustPfFile, "Trust Pf")}
+                      />
+                    </DarkTooltip>
+
+                  }
+                />
+              )}
+              {isManualPassbook === true && manualPassbookFile && (
+                <DocumentDetails
+                  fieldName={"Epfo passbook file"}
+                  fieldValue={
+                    <DarkTooltip placement="right" title="View image" arrow>
+
+                      <img
+                        src={viewImage}
+                        alt="Epfo passbook file"
+                        title="View image"
+                        style={{
+                          width: "2vw", // or use "5vw" to make it responsive to the viewport width
+                          height: "auto", // Keeps the aspect ratio intact
+                        }}
+                        //style={{ width: "30px", height: "30px" }} // Adjust size as needed
+                        onClick={() => openDocumentModel(manualPassbookFile, "Epfo passbook file")}
                       />
                     </DarkTooltip>
 
@@ -744,35 +757,41 @@ let AppointeeViewForm = ({
                   fieldName={"Physically Handicaped"}
                   fieldValue={isPhysicallyHandicap}
                 />
-                <PersonalInformation
-                  fieldName={"Handicap Type"}
-                  fieldValue={handicapType}
-                />
-                {isPhysicallyHandicap === "Yes" && handicapFile && (
-                  <PersonalInformation
-                    fieldName={"Handicap Certificate"}
-                    fieldValue={
-                      <DarkTooltip placement="right" title="View image" arrow>
+                {isPhysicallyHandicap === "Yes" && (
+                  <>
+                    <PersonalInformation
+                      fieldName={"Handicap Type"}
+                      fieldValue={
+                        handicapType ?
+                          handicapType : NA
+                      }
+                    />
 
-                        <img
-                          src={viewImage}
-                          alt="Handicap Certificate"
-                          style={{
-                            width: "2vw", // or use "5vw" to make it responsive to the viewport width
-                            height: "auto", // Keeps the aspect ratio intact
-                            marginLeft: "2%", // Relative margin for responsiveness
-                            marginTop: "0.5rem" // Responsive margin based on font size
-                          }}
-                          //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
-                          onClick={() => openDocumentModel(handicapFile, "Handicap Certificate")}
-                        />
-                      </DarkTooltip>
-
-                    }
-                  />
+                    <PersonalInformation
+                      fieldName={"Handicap Certificate"}
+                      fieldValue={
+                        handicapFile ?
+                          <>
+                            <DarkTooltip placement="right" title="View image" arrow>
+                              <img
+                                src={viewImage}
+                                alt="Handicap Certificate"
+                                style={{
+                                  width: "2vw", // or use "5vw" to make it responsive to the viewport width
+                                  height: "auto", // Keeps the aspect ratio intact
+                                  marginLeft: "2%", // Relative margin for responsiveness
+                                  marginTop: "0.5rem" // Responsive margin based on font size
+                                }}
+                                //style={{ width: "30px", height: "30px",marginLeft: "15px",marginTop:"5px" }} // Adjust size as needed
+                                onClick={() => openDocumentModel(handicapFile, "Handicap Certificate")}
+                              />
+                            </DarkTooltip>
+                          </> :
+                          NA
+                      }
+                    />
+                  </>
                 )}
-
-
               </Grid>
             </Box>
             <Box sx={cardStyle}>
@@ -893,7 +912,6 @@ let AppointeeViewForm = ({
                           }}
                         />
                       )}
-
                       {hasPermission && hasPermission["A010"] && (
                         <FabIcon
                           props={{

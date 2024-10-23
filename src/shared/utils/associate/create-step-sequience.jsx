@@ -7,7 +7,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
             ..._steps,
             HV: {
                 step: _stepCounter,
-                name: 'Handicap verification'
+                name: 'Handicap Verification'
             }
         }
     }
@@ -17,7 +17,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
             ..._steps,
             PV: {
                 step: _stepCounter,
-                name: 'Passport verification'
+                name: 'Passport Verification'
             }
         }
     }

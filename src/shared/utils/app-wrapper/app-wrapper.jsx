@@ -129,7 +129,7 @@ import ConfirmationYesNoModal from "../models/confirmation-modal-yes-no";
 
 const AppWrapper = (App) => {
   const Api = (props) => {
-    const { PfcRequest , startLoader, stopLoader} = props;
+    const { PfcRequest, startLoader, stopLoader } = props;
 
     const [isViewOpen, setIsViewOpen] = useState(false);
     const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);
@@ -407,7 +407,7 @@ const AppWrapper = (App) => {
       return await PfcRequest(url, "GET");
     };
     const getTotalWidgetData = async () => {
-      return await PfcRequest(GetTotalWidgetData_URL, "GET" , null, null, true);
+      return await PfcRequest(GetTotalWidgetData_URL, "GET", null, null, true);
     };
     const getMenuList = async (userId) => {
       const url = `${GetMenuListData_URL}${userId}`;
@@ -500,8 +500,8 @@ const AppWrapper = (App) => {
     const getEntityList = async () => {
       return await PfcRequest(`${GetMastarDropdowndata_URL}${ENTITY}`, "GET");
     };
-    const postAppointeeDetails = async (payLoad) => {
-      return await PfcRequest(PostAppointeeDetailsSave_URL, "POST", payLoad, formSaveSuccess);
+    const postAppointeeDetails = async (payLoad, successMsg) => {
+      return await PfcRequest(PostAppointeeDetailsSave_URL, "POST", payLoad, successMsg);
     };
     const getPassportDetails = async (payLoad) => {
       return await PfcRequest(VerifyPassportDetails_URL, "POST", payLoad);
@@ -516,11 +516,11 @@ const AppWrapper = (App) => {
       return await PfcRequest(PostAppointeeFileDetails_URL, "POST", payLoad, formSubmitionSuccess);
     };
 
-    const PostUpdatePfUanDetails = async (payLoad) => {
-      return await PfcRequest(PostUpdatePfUanDetails_URL, "POST", payLoad);
+    const PostUpdatePfUanDetails = async (payLoad, successMsg) => {
+      return await PfcRequest(PostUpdatePfUanDetails_URL, "POST", payLoad, successMsg);
     };
 
-    
+
     const getAppointeeDetails = async (appointeeId) => {
       return await PfcRequest(`${GetAppointeeDetails_URL}${appointeeId}`, "GET");
     };
@@ -666,7 +666,7 @@ const AppWrapper = (App) => {
       const roleList = await getRoleList();
       const reportFilterStatusList = await getReportFilterStatusList();
       const entityList = await getEntityList();
-      
+
       const dropdownList = {
         genderList: [
           { id: 1, code: "M", value: "MALE" },
@@ -749,7 +749,7 @@ const AppWrapper = (App) => {
       };
       stopLoader()
       dispatch(storeDropdownList(dropdownList));
-     
+
     };
 
     const setRemarks = async (appointeeId) => {

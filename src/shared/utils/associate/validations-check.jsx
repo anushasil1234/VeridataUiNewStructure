@@ -13,6 +13,9 @@ export const validationsCheck = (arrvalue, validation_type) => {
 
         case 'phnNumber':
             return /^[0-9]{10}$/.test(arrvalue);
+
+        case 'indPassport':
+            return /^[a-zA-Z0-9]{12}$/.test(arrvalue);
         default:
             return true;
     }

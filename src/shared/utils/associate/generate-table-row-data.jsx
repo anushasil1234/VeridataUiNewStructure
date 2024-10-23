@@ -12,7 +12,6 @@ export const generateTableRowData = (tableRowsObj, headCells, generateDisableRow
             component.attribute && component.attribute.length > 0 && component.attribute.forEach(elem => {
                 attributeData = {
                     ...attributeData,
-                    // [elem]: objProperty ? tableRow[objProperty][elem]:tableRow[elem]
                     [elem]: tableRow[elem]
                 }
             });

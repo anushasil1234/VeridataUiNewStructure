@@ -20,24 +20,24 @@ export const userDeletedSuccessMsg = `User has been deleted successfully`;
 export const invalidOtpMsg = `Otp must be of 6 digits`;
 export const emptyAadharMsg = `Aadhaar name is empty`;
 export const emptyShareCodeMsg = `Aadhaar share code is empty`;
-export const emptyPanMsg = `Pan number or name on Pan is missing`;
+export const emptyPanMsg = `PAN number or name on PAN is missing`;
 export const aadharVerifySuccessMsg = `Aadhaar has been verified successfully`;
 export const aadharVerifyFailedMsg = `Aadhaar has not been verified`;
 export const uanVerifyFailedMsg = `UAN has not been verified`;
 export const uanVerifySuccessMsg = `UAN has been verified successfully`;
 export const generateOtpRety = `Otp sending is unsuccessful, please retry`;
 export const generateOtpSucces = `OTP has sent successfully, Please fill the otp and submit`;
-export const aadharNoValidationError = `Your phone number is not linked with aadhar. Link your phone number then retry or submit anyway`;
-export const invalidPanMsg = `Pan number should be of 10 digits and properly formatted`;
+export const aadharNoValidationError = `Your phone number is not linked with Aadhaar. Link your phone number then retry or submit anyway`;
+export const invalidPanMsg = `PAN number should be of 10 digits and properly formatted`;
 export const invalidAadharMsg = `Aadhaar number should be of 12 digits`;
-export const emptyAadharFileMsg = `Please upload aadhar`;
+export const emptyAadharFileMsg = `Please upload Aadhaar`;
 export const emptyPasswordField = `password can't be empty`;
 export const fileUploadSuccess = `File upload completed`;
 export const duplicateData = `There is no unique data for processing`;
 export const processStarted = `Verification initiated  successfully`;
 export const duplicateFiles = `Both the files are same. Choose different one`;
 export const formSubmitionSuccess = `Form has been submitted successfully`;
-export const formSaveSuccess = `Form saved`;
+export const formSaveSuccess = `Form has been saved successfully`;
 export const appointeeApproveSuccess = `Appointee has been approved successfully`;
 export const appointeeRejectionSuccess = `Appointee has been Rejected`;
 export const appointeeReprocessSuccess = `Appointee has been sent for reprocessing`;
@@ -49,7 +49,7 @@ export const panSuccessMsg = `PAN details has been verified successfully`;
 export const panVerifyFailedMsg = `PAN has not been verified`;
 export const passportVerifyFailedMsg = `Passport details has not been verified`;
 export const passportExpireddMsg = `Your passport has expired. Please set the Date of Expiry to a future date or mark 'Is Passport Available' as 'No'`;
-export const fetchUanConfirmationtMsg = `Your aadhar or pan verification has failed. If you continue you will not be able to change your aadhar or pan.   want to continue?`;
+export const fetchUanConfirmationtMsg = `Your Aadhaar or PAN verification has failed. If you continue you will not be able to change your Aadhaar or PAN.   want to continue?`;
 export const remiderSuccessMsg = `A reminder has been sent successfully`;
 export const noRecordsMsg = `No records found`;
 export const noRemarksMsg = `No remarks available`;
@@ -59,6 +59,9 @@ export const invalidPasswordMsg = `Password should have length 6-10, containing 
 export const invalidProfilePasswordMsg = `Password is not valid, please retry`;
 export const passwordCreationSuccessMsg = `Password has been created successfully`;
 export const passwordChangeSuccessMsg = `Password has been changed successfully`;
+export const UANEmptyErrorMsg = `UAN number is required`;
+export const aadharVerificationErrorMsg = `Please verify your Aadhar before submit`;
+export const PANVerifictionErrorMsg = `Please verify your PAN before submit`;
 export const generateNoMovementReportDesc = (days) => {
     return `This report provides an overview and analysis of appointees who have made no progress for${days > 0 ? ` ${days} days ` : ""} during a specified period. It includes detailed information about these candidates to help stakeholders understand progress patterns, identify issues, and may indicate that the candidate are not interest in joining .`;
 };
@@ -111,6 +114,7 @@ export const fatherNameAlias = "101";
 export const dobAlias = "100";
 export const otherAlias = "107";
 export const trustEpfoFileTypeAlias = "EPFPSBKTRUST";
+export const epfoPassbookFileTypeAlias = "EPFPSSBKMNL";
 export const tenthCertificateFileTypeAlias = "10THCERT";
 export const otherFileTypeAlias = "OTHID";
 export const handicapFileTypeAlias = "HANDCERT";
@@ -170,7 +174,7 @@ export const genders = [<Male />, <Female />, <Transgender />].map((genderIcon) 
 const rejetedListActions = ['VIEWDETAILS'];
 const latestAppointeeListActions = ['VIEWDETAILS'];
 const verifiedListActions = ['VIEWDETAILS', 'DWNLDPSSBK', 'DWNLDTRUSTPSSBK', 'VIEWPSSBK'];
-const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL','USERMAILRESEND'];
+const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL', 'USERMAILRESEND'];
 const criticalListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
 const lapsedListActions = ['VIEWDETAILS', 'UPDTEAPNTEE'];
 const userListActions = ['VIEWUSERDETAILS', 'UPDATEUSER', 'CLOSEUSERDETAILS'];
@@ -236,7 +240,7 @@ export const verifiedListTableHeadCell = [
     {
         id: 'isPensionApplicable',
         numeric: true,
-        type: "string",
+        type: "boolean",
         disablePadding: false,
         label: 'Pension Applicable',
         enums: ['isPensionApplicable'],
@@ -256,12 +260,12 @@ export const verifiedListTableHeadCell = [
         }
     },
     {
-        id: 'isPassbookVerified',
+        id: 'isManualPassbook',
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Is Passbook Verified',
-        enums: ['passbookVerifiedStatus'],
+        label: 'Passbook status',
+        enums: ['isManualPassbook'],
         component: {
             element: Typography
         }
@@ -1838,7 +1842,7 @@ export const RawDataProcess_URL = `${AppoienteeWorkFlow}/RawDataProcess`;
 export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointeeDetailsUpdate`;
 export const PostAppointeeDetailsSave_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSave`;
 export const PostAppointeeSearch_URL = `${AppoienteeWorkFlow}/AppointeeSearch?appointeeName=`;
-export const PostAppointeeFileDetails_URL = `${AppoienteeWorkFlow}/PostAppointeeFileDetails`;
+export const PostAppointeeFileDetails_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSubmit`;
 export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdateDocWithUanDetails`;
 export const PostAppointeeReprocess_URL = `${AppoienteeWorkFlow}/PostAppointeeReprocess`;
 export const GetAppointeeDetails_URL = `${AppoienteeWorkFlow}/GetAppointeeDetails?appointeeId=`;
@@ -1905,6 +1909,7 @@ export const RemoveAdminUser_URL = (id, userId) => `${Users}/RemoveAdminUser?id=
 //Models messages starts
 export const approveConfirmation = `Candidate has not successfully completed verification process. Do you still want to approve?`;
 export const uploadSizeErrorMsg = `File upload size limit has exceeded`;
+export const passportFilePatternErrorMsg = 'Passport file number must be 12 digits alphanumeric code';
 export const uploadFormatErrorMsg = `Upload valid formatted file`;
 export const verificationConfirmationMsg = `Are you sure you want to start the process?`;
 export const appointeerejetionConfirmationMsg = `Are you sure you want to reject?`;
@@ -1945,7 +1950,7 @@ export const getStatusTooltip = (status) => {
         case "Submitted":
             return "Your data has been submitted successfully. HR Admin will take action accordingly.";
         case "Ongoing":
-            return "verification is in progress";
+            return "verification in progress";
         case "No Response":
             return "There has been no response yet.";
         case "Success":
@@ -1983,9 +1988,9 @@ export const validFileTypes = [
 ];
 
 
-  export const roleTypeEnums = {
+export const roleTypeEnums = {
     admin: [1, 2],     // userTypeId 1 or 2 is admin
     candidate: [3],    // userTypeId 3 is candidate
-  };
-  
+};
+
 
