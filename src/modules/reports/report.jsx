@@ -1,6 +1,8 @@
-import { Download, Refresh, Search } from "@mui/icons-material";
-import { Box, Stack } from "@mui/material";
-import { primaryFabStyle, ResponsiveFab } from "app";
+import { Download, Refresh, Search, Assessment, Summarize,} from "@mui/icons-material";
+import { Box, Stack , List,ListItemButton,Grid} from "@mui/material";
+import { primaryFabStyle, ResponsiveFab , downLoadListSx} from "app";
+import Button from '@mui/material/Button';
+
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +26,9 @@ import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { removeActionRoute } from "store/slices/action-route-slice";
+import ArticleIcon from '@mui/icons-material/Article';
+import downloadFile from "shared/utils/associate/download-file";
+import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
 
 const UnwrappedReport = (props) => {
   const { hasPermission } = props;
@@ -40,18 +45,20 @@ const UnwrappedReport = (props) => {
   const [toDate, setToDate] = useState();
   const [fromDate, setFromDate] = useState();
   const [rows, setRows] = useState([]);
+  const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
   const [apiCountList, setApiCountList] = useState();
   const [apiConsolidateCountList, setApiConsolidateCountList] = useState();
   const {showErrorMessage} =popUpSlice[0]
+  const [fileData, setFileData] = useState(null);
   const setTableRows = async (fromDate = null, toDate = null) => {
     const response = await getApiCounterReport(fromDate, toDate);
 
     if (response) {
       const { responseInfo } = response;
-      const { apiCountList, apiConsolidateCountList } = responseInfo;
+      const { apiCountList, apiConsolidateCountList ,filedata } = responseInfo;
       setApiConsolidateCountList(apiConsolidateCountList);
       setApiCountList(apiCountList);
-
+      setFileData(filedata);
       let generatedCells = generateTableRowData(
         apiCountList,
         apiCountDetailsHeadCell,
@@ -119,6 +126,20 @@ const UnwrappedReport = (props) => {
 
   //   jsPDFReportTemplate({ tableObj, tableObjConsolidate });
   // };
+  const handleDownload = () => {
+    if (fileData && typeof fileData === 'object') {
+        const base64String = fileData.fileData; 
+        const fileName = fileData.fileName || "appointee_data.xlsx"; 
+        const blob = generateBlobFromBase64(base64String);
+        const blobUrl = window.URL.createObjectURL(blob);
+        downloadFile(blobUrl, fileName);
+        window.URL.revokeObjectURL(blobUrl);
+    } 
+  };
+  const handleClickOnDownload = () => {
+    setIsDownloadListOpened(!isDownloadListOpened);
+  };
+
   const handleApiCountDownload = async () => {
     if(!apiConsolidateCountList || apiConsolidateCountList.length === 0){
       showErrorMessage(reportGenarate)
@@ -178,8 +199,8 @@ const UnwrappedReport = (props) => {
   return (
     <PageLayout pageName={"Api count report"}>
       <CardLayout>
-        <Stack flexDirection={"row"}>
-          <Box>
+        <Grid container spacing={1} alignItems="center"> 
+          <Grid item>
             <DatePicker
               label={"From Date"}
               value={fromDate}
@@ -187,8 +208,8 @@ const UnwrappedReport = (props) => {
               setValue={setFromDate}
               disableFuture={true}
             />
-          </Box>
-          <Box mx={"0.5rem"}>
+          </Grid>
+          <Grid item>
             <DatePicker
               label={"To Date"}
               clearable
@@ -197,45 +218,99 @@ const UnwrappedReport = (props) => {
               setValue={setToDate}
               disableFuture={true}
             />
-          </Box>
-          <DarkTooltip placement="top" title={"Search"} arrow>
-            <ResponsiveFab count report
-              variant="contained"
-              size="small"
-              button={"N"}
-              onClick={handleSearch}
-              sx={primaryFabStyle}
-            >
-              <Search width={18} sx={{ color: "#fff" }} />
-            </ResponsiveFab>
-          </DarkTooltip>
-          <DarkTooltip placement="top" title={"Clear Search"} arrow>
-            <ResponsiveFab
-              variant="contained"
-              size="small"
-              button={"N"}
-              onClick={clearSearch}
-              sx={primaryFabStyle}
-            >
-              <Refresh width={18} sx={{ color: "#fff" }} />
-            </ResponsiveFab>
-          </DarkTooltip>
-          <DarkTooltip placement="top" title={"Download Report"} arrow>
-            <ResponsiveFab
-              variant="contained"
-              size="small"
-              button={"N"}
-              onClick={handleApiCountDownload}
-              sx={primaryFabStyle}
-            >
-              <Download width={18} />
-            </ResponsiveFab>
-          </DarkTooltip>
-        </Stack>
+          </Grid>
+          <Grid item>
+            <DarkTooltip placement="top" title={"Search"} arrow>
+              <ResponsiveFab
+                variant="contained"
+                size="small"
+                button={"N"}
+                onClick={handleSearch}
+                sx={primaryFabStyle}
+              >
+                <Search width={18} sx={{ color: "#fff" }} />
+              </ResponsiveFab>
+            </DarkTooltip>
+          </Grid>
+          <Grid item>
+            <DarkTooltip placement="top" title={"Clear Search"} arrow>
+              <ResponsiveFab
+                variant="contained"
+                size="small"
+                button={"N"}
+                onClick={clearSearch}
+                sx={primaryFabStyle}
+              >
+                <Refresh width={18} sx={{ color: "#fff" }} />
+              </ResponsiveFab>
+            </DarkTooltip>
+          </Grid>
+          <Grid item sx={{ position: 'relative' }}>
+            <DarkTooltip placement="top" title={"Download Report"} arrow>
+              <ResponsiveFab
+                variant="contained"
+                size="small"
+                button={"N"}
+                onClick={handleClickOnDownload}
+                sx={primaryFabStyle}
+              >
+                <Download width={18} />
+              </ResponsiveFab>
+            </DarkTooltip>
+  
+            {isDownloadListOpened && (
+              <List
+                sx={{
+                  ...downLoadListSx,         
+                  zIndex: 1000,
+                }}
+              >
+                <ListItemButton component="a">
+                  <DarkTooltip
+                    placement="top"
+                    title={"Download pdf report"}
+                    arrow
+                  >
+                    {/* <ResponsiveFab
+                      variant="contained"
+                      size="small"
+                      button={"N"}
+                      onClick={handleApiCountDownload}
+                      sx={primaryFabStyle}
+                    >
+                      <Summarize width={18} />
+                    </ResponsiveFab> */}
+                    <Button variant="contained" onClick={handleApiCountDownload}>PDF</Button>
+                  </DarkTooltip>
+                </ListItemButton>
+                <ListItemButton component="a">
+                  <DarkTooltip
+                    placement="top"
+                    title={"Download xlsx report"}
+                    arrow
+                  >
+                    {/* <ResponsiveFab
+                      variant="contained"
+                      size="small"
+                      button={"N"}
+                      title="Download xlsx report"
+                      onClick={ handleDownload }
+                      sx={primaryFabStyle}
+                    >
+                      <ArticleIcon width={18} />
+                    </ResponsiveFab> */}
+                    <Button variant="contained" onClick={handleDownload}>XLSX</Button>
+                  </DarkTooltip>
+                </ListItemButton>
+              </List>
+            )}
+          </Grid>
+        </Grid>
         <DataTable rows={rows} setRows={setRows} headCells={apiCountHeadCell} />
       </CardLayout>
     </PageLayout>
   );
+  
 };
 
 //export default Report;
