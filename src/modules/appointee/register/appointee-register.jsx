@@ -1521,8 +1521,10 @@ const AppointeeRegister = () => {
   };
 
   const today = DateFormatYYYYMMDD(new Date());
-  const PasswordExpiryValidity = (e) => {
-    const expiryDate = e.target.value;
+  const PasswordExpiryValidity = (expiryDate) => {
+
+    // const expiryDate = e.target.value;
+
     if (expiryDate > StringToDate(new Date())) {
       setPassportValidTillDate(expiryDate);
     } else {
@@ -1790,33 +1792,41 @@ const AppointeeRegister = () => {
                             />
                           </Grid>
                           <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                          <FormControl sx={{...datePickerinputFieldStyle2}} fullWidth>
-                            <Typography sx={lable1CopyStyle}>
-                              Date Of Birth
-                              <span className="requiredField">*</span>
-                            </Typography>
-                            
+                            <FormControl sx={{ ...datePickerinputFieldStyle2 }} fullWidth>
+                              <Typography sx={lable1CopyStyle}>
+                                Date Of Birth
+                                <span className="requiredField">*</span>
+                              </Typography>
 
-                            <DatePicker
-                              disabled={isAadhaarVarified}
-                              style={{ ...datePickerinputFieldStyle2 }}
-                              //label="Date of Birth"
-                              value={dateOfBirth ? dayjs(dateOfBirth) : null}
-                              setValue={(newDate) => {
-                                if (newDate) {
-                                  setDateOfBirth(newDate.format('YYYY-MM-DD'));
-                                }
-                              }}
-                              disableFuture={true}
-                              maxDate={dayjs()}
-                              minDate={null}
-                            />
+
+                              <DatePicker
+                                disabled={isAadhaarVarified}
+                                style={{ ...datePickerinputFieldStyle2 }}
+                                //label="Date of Birth"
+                                value={dateOfBirth ? dayjs(dateOfBirth) : null}
+                                setValue={(newDate) => {
+                                  if (newDate) {
+                                    setDateOfBirth(newDate.format('YYYY-MM-DD'));
+                                  }
+                                }}
+                                disableFuture={true}
+                                maxDate={dayjs()}
+                                minDate={null}
+                              />
                             </FormControl>
 
                           </Grid>
-
-                          <Grid item xs={12} md={6}  sx={{ paddingLeft: '0px !important' }}>
-                            <Typography sx={lable1Style}>
+                        </Grid>
+                        <Grid
+                          container
+                          rowSpacing={1}
+                          columnSpacing={2.5}
+                          item
+                          xs={12}
+                          sx={formHeadingGridContainerStyle}
+                        >
+                          <Grid item xs={12} md={6} sx={{ paddingLeft: '0px !important' }}>
+                            <Typography sx={lable1CopyStyle}>
                               Father's/ Husband's Name
                               <span className="requiredField">*</span>
                             </Typography>
@@ -2208,59 +2218,53 @@ const AppointeeRegister = () => {
                               xs={12}
                               sx={formHeadingGridContainerStyle}
                             >
-                              <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                <FormControl fullWidth>
+                              <Grid item xs={12} md={6} sx={{ paddingLeft: '0px !important' }}>
+                                <FormControl sx={{ ...datePickerinputFieldStyle2 }} fullWidth>
                                   <Typography sx={lable1CopyStyle}>
                                     Date of Issue
                                     <span className="requiredField">*</span>
                                   </Typography>
-                                  <TextField
-                                    error={false}
-                                    id="date"
-                                    className="customeTextField"
-                                    type="date"
-                                    defaultValue="2017-05-24"
-                                    sx={inputFieldStyle2}
-                                    InputLabelProps={{
-                                      shrink: true,
-                                    }}
-                                    disabled={isPassportVarified}
-                                    InputProps={{
-                                      inputProps: { max: today },
-                                    }}
 
-                                    onChange={(e) => {
-                                      setPassportValidForDate(e.target.value);
+
+                                  <DatePicker
+                                    disabled={isPassportVarified}
+                                    style={{ ...datePickerinputFieldStyle2 }}
+                                    value={passportValidForDate ? dayjs(passportValidForDate) : null}
+                                    setValue={(newDate) => {
+                                      if (newDate) {
+                                        setPassportValidForDate(newDate.format('YYYY-MM-DD'));
+                                      }
                                     }}
-                                    value={passportValidForDate}
+                                    disableFuture={true}
+                                    maxDate={dayjs()}
+                                    minDate={null}
                                   />
                                 </FormControl>
                               </Grid>
+
                               <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                <FormControl fullWidth>
+                                <FormControl sx={{ ...datePickerinputFieldStyle2 }} fullWidth>
                                   <Typography sx={lable1CopyStyle}>
                                     Date of Expiry
                                     <span className="requiredField">*</span>
                                   </Typography>
-                                  <TextField
-                                    error={false}
-                                    id="date"
-                                    className="customeTextField"
-                                    type="date"
-                                    defaultValue="2017-05-24"
-                                    sx={inputFieldStyle2}
-                                    InputLabelProps={{
-                                      shrink: true,
-                                    }}
+
+
+                                  <DatePicker
                                     disabled={isPassportVarified}
-                                    //InputProps={{ inputProps: { min: today } }}
-                                    onChange={(e) => {
-                                      PasswordExpiryValidity(e);
+                                    style={{ ...datePickerinputFieldStyle2 }}
+                                    value={passportValidTillDate ? dayjs(passportValidTillDate) : null}
+                                    setValue={(newDate) => {
+                                      if (newDate) {
+                                        PasswordExpiryValidity(newDate.format('YYYY-MM-DD'));
+                                      }
                                     }}
-                                    value={passportValidTillDate}
+                                    disableFuture={false}
+                                    minDate={dayjs()}
                                   />
                                 </FormControl>
                               </Grid>
+
                             </Grid>
                           </>
                         ) : null}
