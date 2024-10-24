@@ -22,17 +22,22 @@ import {
   FormControl,
   Grid,
   InputLabel,
+  List,
+  ListItemButton,
   MenuItem,
   Select,
 } from "@mui/material";
-import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab } from "app";
-import { Download, Refresh, Search } from "@mui/icons-material";
+import { inputFieldStyleAdded, primaryFabStyle,ResponsiveFab ,downLoadListSx} from "app";
+import { Assessment, Download, Refresh, Search, Summarize  } from "@mui/icons-material";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import moment from "moment";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-
+import ArticleIcon from '@mui/icons-material/Article';
+import Button from '@mui/material/Button';
+import downloadFile from "shared/utils/associate/download-file";
+import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
 const UnWrappedProcessing = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
@@ -50,6 +55,7 @@ const UnWrappedProcessing = (props) => {
 
   const { companyId } = loggedInData[0];
   const { getProessingDataList } = apiSlice[0];
+  const {GetUnderProcessReport}=apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
 
   if (state) {
@@ -74,6 +80,7 @@ const UnWrappedProcessing = (props) => {
   const [passbookStatus, setPassbookStatus] = useState('All');
 
   const [responseList, setResponseList] = useState();
+const [isDownloadListOpened, setIsDownloadListOpened]=useState(false)
 
   let defaultPayload = {
     isFiltered: state && state.dayRangePayLoad ? true : false,
@@ -87,7 +94,25 @@ const UnWrappedProcessing = (props) => {
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
     IsManualPassbook: null,
   };
-  const [payLoad, setPayLoad] = useState(defaultPayload)
+const [payLoad,setPayLoad]=useState(defaultPayload)
+const handleDownloade = (rf) => {
+  if (rf.fileData && typeof rf.fileData === 'string') {
+    const base64String = rf.fileData; 
+    const fileName = rf.fileName || "appointee_data.xlsx"; 
+    const blob = generateBlobFromBase64(base64String);
+    const blobUrl = window.URL.createObjectURL(blob);
+    downloadFile(blobUrl, fileName);
+    window.URL.revokeObjectURL(blobUrl);
+  } 
+};
+const handleClick = async () => {
+  const response = await GetUnderProcessReport(payLoad);
+  if (response) {
+    const { responseInfo } = response;
+    handleDownloade(responseInfo);
+  }
+};
+
   const setTableRows = async (payLoad) => {
     let currPageName = "Processing List";
     currPageName =
@@ -111,6 +136,7 @@ const UnWrappedProcessing = (props) => {
         tableHead: processingListTableHeadCell,
         tableRows: generatedCells,
       });
+   
     }
   };
 
@@ -170,7 +196,9 @@ const UnWrappedProcessing = (props) => {
     setTableRows(payLoad);
     navigateTo(toProcessing, { state: false });
   };
-
+  const handleExalListDownload=()=>{
+    setIsDownloadListOpened(!isDownloadListOpened)
+  }
   const handleSearch = () => {
     setTableRows(payLoad);
   };
@@ -216,8 +244,8 @@ const UnWrappedProcessing = (props) => {
   return (
     <PageLayout pageName={pageName}>
       <CardLayout>
-        <Grid container spacing={1}>
-          <Grid item xs={2}>
+        <Grid container spacing={1} alignItems="center"> 
+          <Grid item xs={3}>
             <DatePicker
               label={"From Date"}
               value={fromDate}
@@ -278,42 +306,84 @@ const UnWrappedProcessing = (props) => {
                 </Select>
               )}
             </FormControl>
-          </Grid>
-          <Grid item xs={4}>
-            <DarkTooltip placement="top" title={"Search"} arrow>
-              <ResponsiveFab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={handleSearch}
-                sx={primaryFabStyle}
-              >
-                <Search width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>
-            </DarkTooltip>
-            <DarkTooltip placement="top" title={"Clear Search"} arrow>
-              <ResponsiveFab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={clearSearch}
-                sx={primaryFabStyle}
-              >
-                <Refresh width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>
-            </DarkTooltip>
-            {hasPermission && hasPermission["A008"] && (
-              <DarkTooltip placement="top" title={"Download"} arrow>
-                <ResponsiveFab List
+          </Grid>  
+          <Grid item xs={4} container alignItems="center" spacing={1}> 
+            <Grid item>
+              <DarkTooltip placement="top" title={"Search"} arrow>
+                <ResponsiveFab
                   variant="contained"
                   size="small"
                   button={"N"}
-                  onClick={handleDownload}
+                  onClick={handleSearch}
                   sx={primaryFabStyle}
                 >
-                  <Download width={18} sx={{ color: "#fff" }} />
+                  <Search width={18} sx={{ color: "#fff" }} />
                 </ResponsiveFab>
               </DarkTooltip>
+            </Grid>
+            <Grid item>
+              <DarkTooltip placement="top" title={"Clear Search"} arrow>
+                <ResponsiveFab
+                  variant="contained"
+                  size="small"
+                  button={"N"}
+                  onClick={clearSearch}
+                  sx={primaryFabStyle}
+                >
+                  <Refresh width={18} sx={{ color: "#fff" }} />
+                </ResponsiveFab>
+              </DarkTooltip>
+            </Grid>
+            {hasPermission && hasPermission["A008"] && (
+              <Grid item sx={{ position: 'relative' }}>
+                <DarkTooltip placement="top" title={"Download Report"} arrow>
+                  <ResponsiveFab
+                    variant="contained"
+                    size="small"
+                    button={"N"}
+                    onClick={handleExalListDownload} 
+                    sx={primaryFabStyle}
+                  >
+                    <Download width={18} sx={{ color: "#fff" }} />
+                  </ResponsiveFab>
+                </DarkTooltip>
+                {isDownloadListOpened && (
+                  <List
+                    sx={{
+                      ...downLoadListSx, 
+                      zIndex: 1000,
+                    }}
+                  >
+                    <ListItemButton component="a" >
+                      <DarkTooltip placement="top" title={"Download PDF Report"} arrow>
+                        {/* <ResponsiveFab
+                          variant="contained"
+                          size="small"
+                          button={"N"}
+                          sx={primaryFabStyle}
+                          onClick={handleDownload}
+                        >
+                          <Summarize width={18} sx={{ color: "#fff" }} />
+                        </ResponsiveFab> */}
+                        <Button variant="contained" onClick={handleDownload}>PDF</Button>
+                      </DarkTooltip>
+                    </ListItemButton>
+                    <ListItemButton component="a">
+                      <DarkTooltip placement="top" title={"Download XLSX Report"} arrow>
+                        {/* <ResponsiveFab
+                          variant="contained"
+                          size="small"
+                          button={"N"}
+                          sx={primaryFabStyle}
+                        >
+                          <ArticleIcon width={18} sx={{ color: "#fff" }} />
+                        </ResponsiveFab> */}
+                        <Button variant="contained" onClick={handleClick}>XLSX</Button>
+                      </DarkTooltip>
+                    </ListItemButton>
+                  </List>
+                )}
+              </Grid>
             )}
           </Grid>
         </Grid>
