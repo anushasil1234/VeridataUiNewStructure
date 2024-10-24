@@ -1,8 +1,10 @@
-import { Download, Refresh, Search } from "@mui/icons-material";
+import { Download, Refresh, Search, Summarize } from "@mui/icons-material";
 import {
   FormControl,
   Grid,
   InputLabel,
+  List,
+  ListItemButton,
   MenuItem,
   Select,
 } from "@mui/material";
@@ -27,12 +29,15 @@ import {
 import DatePicker from "shared/utils/date-picker/date-picker";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import dayjs from "dayjs";
-import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab } from "app";
+import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab,downLoadListSx } from "app";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import moment from "moment";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-
+import ArticleIcon from '@mui/icons-material/Article';
+import Button from '@mui/material/Button';
+import downloadFile from "shared/utils/associate/download-file";
+import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
 const UnwrappedLapseddata = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
@@ -48,6 +53,7 @@ const UnwrappedLapseddata = (props) => {
 
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getLapsedDataList } = apiSlice[0];
+  const {GetLapsedDataReport}=apiSlice[0]
   const { companyId } = loggedInData[0];
 
   if (state) {
@@ -69,7 +75,7 @@ const UnwrappedLapseddata = (props) => {
   const [fromDate, setFromDate] = useState(_fromday);
   const [responseList, setResponseList] = useState();
   const [statusCode, setStatusCode] = useState("All");
-
+  const [isDownloadListOpened, setDownloadListOpened] = useState(false);
   const payloadData = {
     isFiltered: state && state.dayRangePayLoad ? true : false,
     noOfDays: state && state.dayRangePayLoad ? state.dayRangePayLoad : 0,
@@ -85,7 +91,24 @@ const UnwrappedLapseddata = (props) => {
   let [payLoad, setPayLoad] = useState(payloadData);
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
-
+  const handleDownloade = (rf) => {
+    if (rf.fileData && typeof rf.fileData === 'string') {
+      const base64String = rf.fileData; 
+      const fileName = rf.fileName || "appointee_data.xlsx"; 
+      const blob = generateBlobFromBase64(base64String);
+      const blobUrl = window.URL.createObjectURL(blob);
+      downloadFile(blobUrl, fileName);
+      window.URL.revokeObjectURL(blobUrl);
+    } 
+  };
+  const handleClick = async (payLoad) => {
+    const response = await GetLapsedDataReport(payLoad);
+    if (response) {
+      const { responseInfo } = response;
+      handleDownloade(responseInfo);
+    }
+  };
+  
   const setTableRows = async (payLoad) => {
     let noOfDays = 0;
     let isFiltered = false;
@@ -122,6 +145,10 @@ const UnwrappedLapseddata = (props) => {
         tableRows: generatedCells,
       });
     }
+  };
+
+  const handleDownloadExal = () => {
+    setDownloadListOpened(!isDownloadListOpened);
   };
 
   const clearSearch = () => {
@@ -205,7 +232,7 @@ if(!responseList || responseList.length === 0){
   return (
     <PageLayout pageName={pageName}>
       <CardLayout>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}alignItems="center" >
           <Grid item xs={3}>
             <DatePicker
               label={"From Date"}
@@ -249,8 +276,9 @@ if(!responseList || responseList.length === 0){
               )}
             </FormControl>
           </Grid>
-
-          <Grid item xs={4}>
+  
+        
+          <Grid item xs={4} display="flex" justifyContent="flex-start" alignItems="center">
             <DarkTooltip placement="top" title={"Search"} arrow>
               <ResponsiveFab
                 variant="contained"
@@ -273,18 +301,57 @@ if(!responseList || responseList.length === 0){
                 <Refresh width={18} sx={{ color: "#fff" }} />
               </ResponsiveFab>
             </DarkTooltip>
+  
             {hasPermission && hasPermission["A008"] && (
-              <DarkTooltip placement="top" title={"Download"} arrow>
-                <ResponsiveFab
-                  variant="contained"
-                  size="small"
-                  button={"N"}
-                  onClick={handleDownload}
-                  sx={primaryFabStyle}
-                >
-                  <Download width={18} sx={{ color: "#fff" }} />
-                </ResponsiveFab>
-              </DarkTooltip>
+              <Grid item sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <DarkTooltip placement="top" title={"Download Report"} arrow>
+                  <ResponsiveFab
+                    variant="contained"
+                    size="small"
+                    button={"N"}
+                    onClick={handleDownloadExal}
+                    sx={primaryFabStyle}
+                  >
+                    <Download width={18} sx={{ color: "#fff" }} />
+                  </ResponsiveFab>
+                </DarkTooltip>
+                {isDownloadListOpened && (
+                  <List
+                    sx={{
+                      ...downLoadListSx,
+                      zIndex: 1000,
+                    }}
+                  >
+                    <ListItemButton component="a" >
+                      <DarkTooltip placement="top" title={"Download PDF Report"} arrow>
+                        {/* <ResponsiveFab
+                          variant="contained"
+                          size="small"
+                          button={"N"}
+                          sx={primaryFabStyle}
+                          onClick={handleDownload}
+                        >
+                          <Summarize width={18} sx={{ color: "#fff" }} />
+                        </ResponsiveFab> */}
+                          <Button variant="contained" onClick={handleDownload}>PDF</Button>
+                      </DarkTooltip>
+                    </ListItemButton>
+                    <ListItemButton component="a">
+                      <DarkTooltip placement="top" title={"Download XLSX Report"} arrow>
+                        {/* <ResponsiveFab
+                          variant="contained"
+                          size="small"
+                          button={"N"}
+                          sx={primaryFabStyle}
+                        >
+                          <ArticleIcon width={18} sx={{ color: "#fff" }} />
+                        </ResponsiveFab> */}
+                         <Button variant="contained" onClick={()=>handleClick(payLoad)}>XLSX</Button>
+                      </DarkTooltip>
+                    </ListItemButton>
+                  </List>
+                )}
+              </Grid>
             )}
           </Grid>
         </Grid>
