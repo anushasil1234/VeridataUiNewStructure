@@ -10,9 +10,9 @@ import { removeData } from 'store/slices/data-slice';
 
 let UnWrappedFilePasswordFormSubmitionForm = (
     props
-    ) => {
-const { filePasswordSubmitionProps, closeFilePasswordSubmitionModel }  =props ;
-    const { downloadApi } = filePasswordSubmitionProps;
+) => {
+    const { filePasswordSubmitionProps, closeFilePasswordSubmitionModel } = props;
+    const { downloadApi, payLoad } = filePasswordSubmitionProps;
 
     const apiSlice = useSelector((state) => state.apiSlice);
     const DataSlice = useSelector((state) => state.DataSlice);
@@ -20,25 +20,26 @@ const { filePasswordSubmitionProps, closeFilePasswordSubmitionModel }  =props ;
     const dispatch = useDispatch();
 
     const fileSubmitionPayLoad = DataSlice[0] && DataSlice[0].fileSubmitionPayLoad;
+
     const { downloadReport } = apiSlice && apiSlice[0];
-  
+
     const [filePassword, setFilePassword] = useState();
     const [displayfilePassword, setDisplayfilePassword] = useState();
     const [submitButtonStatus, setSubmitButtonStatus] = useState(true);
-    const handlePasswordsubmition = async() => {
-        const payLoad = {
-            ...fileSubmitionPayLoad,
+    const handlePasswordsubmition = async () => {
+        const _payLoad = {
+            ...payLoad,
             filePassword
         }
-        await downloadReport(downloadApi, payLoad);
+        await downloadReport(downloadApi, _payLoad);
         closeFilePasswordSubmitionModel();
         // dispatch(removeData())
     }
 
-    const handlePasswordChange = async ({target})=>{
+    const handlePasswordChange = async ({ target }) => {
         try {
             const { value } = target;
-             const encryptedPassword = await encryptedData(value);
+            const encryptedPassword = await encryptedData(value);
             setFilePassword(encryptedPassword);
             setDisplayfilePassword(value);
         } catch (error) {
@@ -50,9 +51,9 @@ const { filePasswordSubmitionProps, closeFilePasswordSubmitionModel }  =props ;
         if (filePassword) {
             setSubmitButtonStatus(false);
         }
-    
+
     }, [filePassword])
-    
+
     return (
         <Box my={"20px"}>
 

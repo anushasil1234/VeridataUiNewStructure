@@ -29,7 +29,8 @@ const DownloadReport = ({
   handlePassbookStatusChange,
   isStatusFilter,
   hasPermission,
-  infoDetails
+  infoDetails,
+  payLoad
 }) => {
   const { functionSlice, popUpSlice, loggedInData } = useSelector(
     (state) => state
@@ -45,6 +46,7 @@ const DownloadReport = ({
   const handleSuccssCallBack = () => {
     const filePasswordSubmitModelProps = {
       downloadApi,
+      payLoad: payLoad
     };
     openFilePasswordSubmitionModel(filePasswordSubmitModelProps);
   };
