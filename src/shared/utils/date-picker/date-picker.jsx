@@ -17,7 +17,7 @@ const DatePicker = ({ label, value, setValue, disableFuture, maxDate, minDate })
         disableFuture={disableFuture}
         maxDate={maxDate}
         minDate={minDate}
-        views={['day', 'month', 'year']}
+        views={['year', 'month', 'day']}
         openTo="day"
         renderInput={(params) => <TextField size="small" sx={{ width: "100%" }} {...params} />}
       />
