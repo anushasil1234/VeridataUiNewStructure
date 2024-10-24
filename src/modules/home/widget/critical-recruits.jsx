@@ -22,7 +22,7 @@ const CriticalRecruits = () => {
     const primary = theme.palette.secondary.main;
     const criticalColor = '#ca5180e3';
     const attention_light = theme.palette.error.main;
-    const attention_dark = theme.palette.error.main;
+    const attention_dark = theme.palette.error.dark;
 
     const [critical, setcritical] = useState(null);
     const optionscolumnchart = {
