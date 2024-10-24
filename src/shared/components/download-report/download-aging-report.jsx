@@ -1,4 +1,4 @@
-import { Download, Refresh, Search } from "@mui/icons-material";
+import { Download, Refresh, Search,Summarize  } from "@mui/icons-material";
 import {
   Box,
   Fab,
@@ -8,9 +8,11 @@ import {
   Select,
   Stack,
   TextField,
-  Hidden
+  Hidden,
+  List,
+  ListItemButton
 } from "@mui/material";
-import { inputFieldStyle, primaryFabStyle, ResponsiveFab } from "app";
+import { downLoadListSx, inputFieldStyle, primaryFabStyle, ResponsiveFab } from "app";
 import React, { useState } from "react";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
@@ -18,7 +20,8 @@ import { useSelector } from "react-redux";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { DateFormatYYYYMMDD, hasValue } from "shared/utils";
 import moment from "moment";
-
+import ArticleIcon from '@mui/icons-material/Article';
+import Button from '@mui/material/Button';
 const DownloadAgingReport = ({
   filterType,
   setFilterType,
@@ -31,6 +34,7 @@ const DownloadAgingReport = ({
   noOfDays,
   handleNoOfDaysChange,
   hasPermission,
+  handelxlsxDownload
 }) => {
   const { popUpSlice } = useSelector(
     (state) => state
@@ -38,6 +42,10 @@ const DownloadAgingReport = ({
   const currentDate = moment();
   const _currentDate = currentDate.format("DD/MM/YYYY");
   const { showErrorMessage } = popUpSlice[0];
+  const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
+  const handleDownloadClick = () => {
+    setIsDownloadListOpened(!isDownloadListOpened);
+  };
   const handleReportSearch = () => {
     if (filterType === 0) {
       setFromDate(null);
@@ -184,18 +192,60 @@ const DownloadAgingReport = ({
           </ResponsiveFab>
         </DarkTooltip>
   
+       
         {hasPermission && hasPermission["A008"] && (
-          <DarkTooltip placement="top" title="Download" arrow>
-            <ResponsiveFab
-              variant="contained"
-              size="small"
-              button="N"
-              onClick={handleDownload}
-              sx={{...primaryFabStyle}}
-            >
-              <Download width={18} sx={{ color: "#fff" }} />
-            </ResponsiveFab>
-          </DarkTooltip>
+          <Box sx={{ position: 'relative' }}>
+            <DarkTooltip placement="top" title="Download Report" arrow>
+              <ResponsiveFab
+                variant="contained"
+                size="small"
+                button="N"
+                onClick={handleDownloadClick}
+                sx={{...primaryFabStyle}}
+              >
+                <Download width={18} sx={{ color: "#fff" }} />
+              </ResponsiveFab>
+            </DarkTooltip>
+
+            {isDownloadListOpened && (
+              <List
+                sx={{
+                  ...downLoadListSx,
+                  zIndex: 1000,
+                }}
+              >
+                <ListItemButton component="a" >
+                  <DarkTooltip placement="top" title="Download PDF Report" arrow>
+                    {/* <ResponsiveFab
+                      variant="contained"
+                      size="small"
+                      button="N"
+                      sx={primaryFabStyle}
+                      onClick={handleDownload}
+                    >
+                      <Summarize  width={18} sx={{ color: "#fff" }} />
+                    </ResponsiveFab> */}
+                    <Button variant="contained" onClick={handleDownload}>PDF</Button>
+                  </DarkTooltip>
+                </ListItemButton>
+
+                <ListItemButton component="a">
+                  <DarkTooltip placement="top" title="Download XLSX Report" arrow>
+                    {/* <ResponsiveFab
+                      variant="contained"
+                      size="small"
+                      button="N"
+                      onClick={ handelxlsxDownload}
+                      sx={primaryFabStyle}
+                    >
+                      <ArticleIcon width={18} sx={{ color: "#fff" }} />
+                    </ResponsiveFab> */}
+                      <Button variant="contained" onClick={ handelxlsxDownload}>XLSX</Button>
+                  </DarkTooltip>
+                </ListItemButton>
+              </List>
+            )}
+          </Box>
         )}
       </Box>
     </Box>

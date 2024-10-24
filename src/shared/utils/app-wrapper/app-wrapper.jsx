@@ -16,6 +16,7 @@ import {
   GetCriticalAppointeeData_URL,
   GetDashboardWidgetCardData_URL,
   GetExpiredProcessFileData_URL,
+  downloadLapsedList_URL ,
   GetMastarDropdowndata_URL,
   GetMenuListData_URL,
   VerifyPassportDetails_URL,
@@ -100,8 +101,8 @@ import {
   ChangePasswordGenerateOTP_URL,
   AppointeeDataReport_URL,
   UserSignInDetailsByEmail_URL,
-  PostCandidateMailResend_URL
-
+  PostCandidateMailResend_URL,
+  downloadProcessingList_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -454,6 +455,10 @@ const AppWrapper = (App) => {
       const responseInfo = await PfcRequest(GetExpiredProcessFileData_URL, "POST", payLoad, null, true);
       return responseInfo;
     };
+    const GetLapsedDataReport = async (payLoad) => {
+      const responseInfo = await PfcRequest( downloadLapsedList_URL , "POST", payLoad, null, true);
+      return responseInfo;
+    };
     const downloadReport = async (_url, payLoad) => {
       const response = await PfcRequest(_url, "POST", payLoad);
       if (response) {
@@ -645,6 +650,10 @@ const AppWrapper = (App) => {
     const ValidateForgetPassweordUsrByOtp = async (payLoad) => {
       return await PfcRequest(ValidateUserByOtpForgetPassword_URL, "POST", payLoad);
     };
+    const GetUnderProcessReport = async (payLoad) => {
+      const responseInfo=await PfcRequest(downloadProcessingList_URL, "POST", payLoad, null, true);
+      return responseInfo
+    };
 
     // const getAppointeeAgingFilterReport = async (payLoad) => {
     //   return await PfcRequest(AppointeeAgingFilterReport_URL, "POST", payLoad);
@@ -804,6 +813,7 @@ const AppWrapper = (App) => {
           getLinkNotSentList,
           getProessingDataList,
           getLapsedDataList,
+          GetLapsedDataReport,
           verifyAadharDetails,
           generateUANOtp,
           submitUANOTP,
@@ -839,7 +849,8 @@ const AppWrapper = (App) => {
           getAppointeeDataReport,
           ChangePasswordGenerateOTP,
           ValidateForgetPassweordUsrByOtp,
-          downloadAgingExelReport
+          downloadAgingExelReport,
+          GetUnderProcessReport
         })
       );
     }

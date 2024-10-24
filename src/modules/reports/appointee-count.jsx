@@ -51,7 +51,9 @@ import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 import moment from "moment";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-
+import ArticleIcon from '@mui/icons-material/Article';
+import downloadFile from "shared/utils/associate/download-file";
+import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
 const AppointeeCount = () => {
   const popUpSlice = useSelector(state => state.popUpSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -59,7 +61,7 @@ const AppointeeCount = () => {
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
 
   const { navigateTo } = commonHooksFunctionSlice[0];
-
+ 
   const { getAppointeeCounterReport } = apiSlice[0];
   const { reportFilterStatusList, entityList } = dropdownList && dropdownList.length > 0 && dropdownList[0];
   const [toDate, setToDate] = useState(null);
@@ -68,12 +70,13 @@ const AppointeeCount = () => {
   const [appointeeCountDateWises, setAppointeeCountDateWises] = useState();
   const [appointeeCountListDetails, setAppointeeCountListDetails] = useState();
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
+  const[isExalListOpened,setisExalListOpened]=useState(false)
   const {showErrorMessage} =popUpSlice[0]
   const [appointeeName, setAppointeeName] = useState(null);
   const [statusCode, setStatusCode] = useState(null);
   const [entityId, setEntityId] = useState([]);
 
-
+  const [fileData, setFileData] = useState(null);
 
   const payLoadData = {
     appointeeName: appointeeName,
@@ -96,11 +99,14 @@ const AppointeeCount = () => {
     const response = await getAppointeeCounterReport(payLoad);
 
     if (response) {
+     
       const { responseInfo } = response;
-      const { appointeeCountDateWises, appointeeCountListDetails } =
-        responseInfo;
+      const { appointeeCountDateWises, appointeeCountListDetails, filedata } =
+        responseInfo; 
+        console.log("fileData", filedata)
       setAppointeeCountDateWises(appointeeCountDateWises);
       setAppointeeCountListDetails(appointeeCountListDetails);
+      setFileData(filedata);
       let generatedCells = generateTableRowData(
         appointeeCountDateWises,
         appointeeCountHeadCell,
@@ -137,34 +143,32 @@ const AppointeeCount = () => {
   const handleClickOnDownload = () => {
     setIsDownloadListOpened(!isDownloadListOpened);
   };
+  const handleExalListDownload=()=>{
+    setisExalListOpened(!isExalListOpened)
+  }
   var date = moment();
   var currentDate = date?.format("DDMMYYYY");
+//   const generateBlobFromBase64 = (base64String) => {
+//     const byteCharacters = atob(base64String);
+//     const byteNumbers = new Uint8Array(byteCharacters.length);
+//     for (let i = 0; i < byteCharacters.length; i++) {
+//         byteNumbers[i] = byteCharacters.charCodeAt(i);
+//     }
+//     return new Blob([byteNumbers], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+// };
 
-  // const handleAppointeeCountDownload = () => {
+const handleDownload = () => {
+  if (fileData && typeof fileData === 'object') {
+      const base64String = fileData.fileData; 
+      const fileName = fileData.fileName || "appointee_data.xlsx"; 
+      const blob = generateBlobFromBase64(base64String);
+      const blobUrl = window.URL.createObjectURL(blob);
+      downloadFile(blobUrl, fileName);
+      window.URL.revokeObjectURL(blobUrl);
+      console.log("Downloaded Blob for:", fileName); 
+  } 
+};
 
-  //   const tableHeadList = appointeeCountHeadCell.map(({ label }) => {
-  //     return {
-  //       title: label,
-  //     };
-  //   });
-  //   const tableBodyList = appointeeCountDateWises && appointeeCountDateWises.map(
-  //     ({ appointeeTotalCount }) => {
-  //       return CreatePdfTableBody(appointeeTotalCount, appointeeCountHeadCell);
-  //     }
-  //   );
-  //   const tableObj = {
-  //     headerList: tableHeadList,
-  //     rows: tableBodyList,
-  //     fileName: `_Appointee_Count_${currentDate}`,
-  //     label: "Appointee Count",
-  //     tableName: "Count Details",
-  //     fromDate: fromDate,
-  //     toDate: toDate,
-  //     rptDesc: generateAppointeeCountReportDesc
-  //   };
-
-  //   jsPDFReportTemplate({ tableObj });
-  // };
   const handleAppointeeCountDownload = () => {
     if (!appointeeCountDateWises || appointeeCountDateWises.length === 0) {
       showErrorMessage(reportGenarate);
@@ -356,40 +360,6 @@ const AppointeeCount = () => {
                 </Select>}
             </FormControl>
           </Grid>
-          {/* <Grid item xs={4}>
-            <FormControl sx={{ width: "100%" }} size="large">
-
-              <InputLabel id="demo-simple-select-label">Entity</InputLabel>
-              {statusCode !== undefined &&
-                <Select
-                  error={false}
-                  labelId="demo-multiple-select-label"
-                  id="demo-multiple-select"
-                  className="customeTextField"
-                  sx={inputFieldStyleAdded}
-                  multiple
-                  value={entityId}
-                  label="entityId"
-                  inputProps={{
-                    style: inputPropsStyle
-                  }}
-                  defaultValue={[]}
-                  onChange={(e) => {
-                    setEntityId(e.target.value)
-                  }}
-                >
-                  {entityList &&
-                    entityList.map((element, index) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          value={element.id}
-                        >{`${element.value}`}</MenuItem>
-                      );
-                    })}
-                </Select>}
-            </FormControl>
-          </Grid> */}
           <Grid item xs={4}>
             <FormControl sx={{ width: "100%" }} size="large">
 
@@ -481,7 +451,7 @@ const AppointeeCount = () => {
                 </ResponsiveFab>
               </DarkTooltip>
               <Box sx={{ position: 'relative' }}>
-                <DarkTooltip placement="top" title={"Download Report"} arrow>
+                <DarkTooltip placement="top" title={"Download Report(pdf)"} arrow>
                   <ResponsiveFab
                     variant="contained"
                     size="small"
@@ -527,10 +497,30 @@ const AppointeeCount = () => {
                           <Assessment width={18} />
                         </ResponsiveFab>
                       </DarkTooltip>
+                     
+                    </ListItemButton>
+                    <ListItemButton component="a">
+                      <DarkTooltip
+                        placement="top"
+                        title={"Download Appointee Count(xlsx)"}
+                        arrow
+                      >
+                        <ResponsiveFab
+                          variant="contained"
+                          size="small"
+                          button={"N"}
+                          onClick={handleDownload}
+                          sx={primaryFabStyle}
+                        >
+                          <ArticleIcon width={18} />
+                        </ResponsiveFab>
+                      </DarkTooltip>
+                     
                     </ListItemButton>
                   </List>
                 )}
               </Box>
+              
             </Box>
           </Grid>
 

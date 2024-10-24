@@ -1,15 +1,18 @@
-import { Download, Refresh, Search } from "@mui/icons-material";
+import { Download, Refresh, Search, Summarize } from "@mui/icons-material";
 import {
   Box,
   Fab,
   FormControl,
   InputLabel,
+  List,
+  ListItemButton,
   MenuItem,
   Select,
   Stack,
   TextField,
+  useTheme
 } from "@mui/material";
-import { inputFieldStyle, primaryFabStyle,ResponsiveFab } from "app";
+import { downLoadListSx, inputFieldStyle, primaryFabStyle,ResponsiveFab } from "app";
 import React, { useState } from "react";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
@@ -17,7 +20,8 @@ import { useSelector } from "react-redux";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { DateFormatYYYYMMDD, hasValue } from "shared/utils";
 import moment from "moment";
-
+import ArticleIcon from '@mui/icons-material/Article';
+import Button from '@mui/material/Button';
 const DownloadReportFilter = ({
   filterType,
   setFilterType,
@@ -36,9 +40,15 @@ const DownloadReportFilter = ({
   const { popUpSlice } = useSelector(
     (state) => state
   );
+ 
+  
   const currentDate = moment();
   const _currentDate = currentDate.format("DD-MMM-YYYY");
   const { showErrorMessage } = popUpSlice[0];
+  const[isDownloadListOpened,setIsDownloadListOpened]=useState(false);
+  const handleDownloadClick =()=>{
+    setIsDownloadListOpened(!isDownloadListOpened);
+  }
   const handleReportSearch = () => {
     if (filterType === 0) {
       setFromDate(null);
@@ -55,7 +65,7 @@ const DownloadReportFilter = ({
 
 
   return (
-      <Box my={2} display="flex" direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
+      <Box my={2} display="flex" direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
         <Box sx={{ marginRight: 2 }}>
           <FormControl sx={{ minWidth: 180 }} size="large">
             <InputLabel id="demo-select-small">Filter</InputLabel>
@@ -155,18 +165,60 @@ const DownloadReportFilter = ({
             </ResponsiveFab>
           </DarkTooltip>
           {hasPermission && hasPermission["A008"] && (
-            <DarkTooltip placement="top" title="Download" arrow>
+          <Box sx={{ position: 'relative' }}>
+            <DarkTooltip placement="top" title="Download Report" arrow>
               <ResponsiveFab
                 variant="contained"
                 size="small"
                 button="N"
-                onClick={handleDownload}
-                sx={primaryFabStyle}
+                onClick={handleDownloadClick}
+                sx={{...primaryFabStyle}}
               >
                 <Download width={18} sx={{ color: "#fff" }} />
               </ResponsiveFab>
             </DarkTooltip>
-          )}
+
+            {isDownloadListOpened && (
+              <List
+                sx={{
+                  ...downLoadListSx,   
+                  left:'-16px',
+                  zIndex: 1000,    
+                }}
+           
+              >
+                <ListItemButton component="a" >
+                  <DarkTooltip placement="top" title="Download PDF Report" arrow>
+                    {/* <ResponsiveFab
+                      variant="contained"
+                      size="small"
+                      button="N"
+                      sx={primaryFabStyle}
+                      onClick={handleDownload}
+                    >
+                      <Summarize  width={18} sx={{ color: "#fff" }} />
+                    </ResponsiveFab> */}
+                      <Button variant="contained" onClick={ handleDownload}>PDF</Button>
+                  </DarkTooltip>
+                </ListItemButton>
+
+                <ListItemButton component="a">
+                  <DarkTooltip placement="top" title="Download XLSX Report" arrow>
+                    {/* <ResponsiveFab
+                      variant="contained"
+                      size="small"
+                      button="N"
+                      sx={primaryFabStyle}
+                    >
+                      <ArticleIcon width={18} sx={{ color: "#fff" }} />
+                    </ResponsiveFab> */}
+                      <Button variant="contained">XLSX</Button>
+                  </DarkTooltip>
+                </ListItemButton>
+              </List>
+            )}
+          </Box>
+        )}
         </Box>
       </Box>
     );

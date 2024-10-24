@@ -7,7 +7,8 @@ import DownloadAgingReport from "shared/components/download-report/download-agin
 import { generateNoMovementReportDesc, noResponseListTableHeadCell, noResponseReportTableHeadCell,reportGenarate, toNoResponseAgingReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-
+import downloadFile from "shared/utils/associate/download-file";
+import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
 
 const NoResponseAgingReportView = (props) => {
   const { hasPermission } = props;
@@ -19,7 +20,7 @@ const NoResponseAgingReportView = (props) => {
   const apiSlice = useSelector(state => state.apiSlice);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
-
+  const [fileData, setFileData] = useState(null);
   const { getAppointeeAgingFilterReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   let payloadData = {
@@ -63,8 +64,9 @@ const NoResponseAgingReportView = (props) => {
     const response = await getAppointeeAgingFilterReport(payLoad);
     if (response) {
       const { responseInfo } = response;
+      const {filedata } =responseInfo
       setAppointeeDetails(responseInfo?.appointeeDetails);
-
+      setFileData(filedata)
       let generatedCells = generateTableRowData(
         responseInfo?.appointeeDetails,
         noResponseListTableHeadCell,
@@ -104,6 +106,18 @@ const NoResponseAgingReportView = (props) => {
     setPayLoad(_payLoad);
   }, [fromDate]);
 
+
+  const handleDownload = () => {
+    if (fileData && typeof fileData === 'object') {
+        const base64String = fileData.fileData; 
+        const fileName = fileData.fileName || "appointee_data.xlsx"; 
+        const blob = generateBlobFromBase64(base64String);
+        const blobUrl = window.URL.createObjectURL(blob);
+        downloadFile(blobUrl, fileName);
+        window.URL.revokeObjectURL(blobUrl);
+        console.log("Downloaded Blob for:", fileName); 
+    } 
+  };
   const handleAppointeeCountDownload = () => {
     if(!appointeeDetails || appointeeDetails.length === 0 ){
       showErrorMessage(reportGenarate)
@@ -186,6 +200,7 @@ const NoResponseAgingReportView = (props) => {
           clearSearch={clearSearch}
           payLoad={payLoad}
           handleDownload={handleAppointeeCountDownload}
+          handelxlsxDownload={handleDownload }
           fromDate={fromDate}
           setFromDate={setFromDate}
           noOfDays={noOfDays}
