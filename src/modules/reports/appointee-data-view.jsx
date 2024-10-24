@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
-import { appointeeListTableHeadCell, appointeeReportTableHeadCell,  toAppointeeReport,  toNationalityReport,reportGenarate } from "shared/constants/constants";
+import { appointeeListTableHeadCell, appointeeReportTableHeadCell, toAppointeeReport, reportGenarate } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
-import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 
@@ -18,7 +17,7 @@ const AppointeeDataReportView = (props) => {
   const [statusCode, setStatusCode] = useState('All');
   const [appointeeDetails, setAppointeeDetails] = useState();
   const apiSlice = useSelector(state => state.apiSlice);
-   const popUpSlice = useSelector(state => state.popUpSlice);
+  const popUpSlice = useSelector(state => state.popUpSlice);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
@@ -61,7 +60,6 @@ const AppointeeDataReportView = (props) => {
   var currentDate = date.format("DDMMYYYY");
 
   const setTableRows = async (payLoad) => {
-
     const response = await getAppointeeDataReport(payLoad);
     if (response) {
       const { responseInfos } = response;
@@ -107,37 +105,10 @@ const AppointeeDataReportView = (props) => {
     setPayLoad(_payLoad);
   }, [fromDate, toDate]);
 
-
-
-  // const handleAppointeeListDownload = () => {
-  //   const tableHeadList = appointeeReportTableHeadCell.map(({ label }) => {
-  //     return {
-  //       title: label,
-  //     };
-  //   });
-  //   const tableBodyList = appointeeDetails && appointeeDetails.map(
-  //     (tableRows) => {
-
-  //       return CreatePdfTableBody(tableRows, appointeeReportTableHeadCell);
-  //     }
-  //   );
-  //   const tableObj = {
-  //     headerList: tableHeadList,
-  //     rows: tableBodyList,
-  //     fileName: `Appointee_Data_${currentDate}`,
-  //     label: "Appointee Data",
-  //     fromDate: fromDate,
-  //     toDate: toDate,
-  //     tableName: "Appointee Data",
-  //     rptDesc: ""
-  //   };
-
-  //   jsPDFReportTemplate({ tableObj });
-  // };
   const handleAppointeeListDownload = () => {
-    if (!appointeeDetails|| appointeeDetails.length === 0) {
+    if (!appointeeDetails || appointeeDetails.length === 0) {
       showErrorMessage(reportGenarate)
-      return; 
+      return;
     }
     const tableHeadList = appointeeReportTableHeadCell.map(({ label }) => {
       return {
@@ -167,6 +138,7 @@ const AppointeeDataReportView = (props) => {
       tables: [tableObj]
     });
   };
+
   const handleReportSearch = () => {
     if (filterType === 0) {
       const _payLoad = {
@@ -177,10 +149,11 @@ const AppointeeDataReportView = (props) => {
       }
       setTableRows(_payLoad);
     }
-    else{
+    else {
       setTableRows(payLoad)
     }
   };
+
   return (
     <PageLayout pageName={"Appointee Data"}>
       <CardLayout>

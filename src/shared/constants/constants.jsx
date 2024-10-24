@@ -5,7 +5,7 @@ import TableClickableCell from "shared/utils/dataTable/table-clickable-cell";
 import TableStatusCell from "shared/utils/dataTable/table-status-cell";
 
 // messages
-export const reportGenarate = `There is no data to download a report`
+export const reportGenarate = `There is no data to export a report`
 export const maxUploadSize = `Max size: 4mb`;
 export const emptyUserNameField = `Username can't be empty`;
 export const invalidUserCodeMsg = `User code should contain alphabet's and number only`;

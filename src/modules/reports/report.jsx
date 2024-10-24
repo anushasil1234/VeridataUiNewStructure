@@ -127,6 +127,10 @@ const UnwrappedReport = (props) => {
   //   jsPDFReportTemplate({ tableObj, tableObjConsolidate });
   // };
   const handleDownload = () => {
+    if (!fileData || fileData.length === 0) {
+      showErrorMessage(reportGenarate);
+      return;
+    }
     if (fileData && typeof fileData === 'object') {
         const base64String = fileData.fileData; 
         const fileName = fileData.fileName || "appointee_data.xlsx"; 

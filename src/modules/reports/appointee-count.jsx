@@ -103,7 +103,6 @@ const AppointeeCount = () => {
       const { responseInfo } = response;
       const { appointeeCountDateWises, appointeeCountListDetails, filedata } =
         responseInfo;
-      console.log("fileData", filedata)
       setAppointeeCountDateWises(appointeeCountDateWises);
       setAppointeeCountListDetails(appointeeCountListDetails);
       setFileData(filedata);

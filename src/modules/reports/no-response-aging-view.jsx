@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadAgingReport from "shared/components/download-report/download-aging-report";
-import { generateNoMovementReportDesc, noResponseListTableHeadCell, noResponseReportTableHeadCell,reportGenarate, toNoResponseAgingReport } from "shared/constants/constants";
+import { generateNoMovementReportDesc, noResponseListTableHeadCell, noResponseReportTableHeadCell, reportGenarate, toNoResponseAgingReport } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import downloadFile from "shared/utils/associate/download-file";
@@ -28,7 +28,7 @@ const NoResponseAgingReportView = (props) => {
     reportType: 'PINORS',
     noOfDays: noOfDays ?? 0,
   }
-   const { showErrorMessage } = popUpSlice[0];
+  const { showErrorMessage } = popUpSlice[0];
 
   let [payLoad, setPayLoad] = useState(payloadData);
   const [filterType, setFilterType] = useState(0);
@@ -64,7 +64,7 @@ const NoResponseAgingReportView = (props) => {
     const response = await getAppointeeAgingFilterReport(payLoad);
     if (response) {
       const { responseInfo } = response;
-      const {filedata } =responseInfo
+      const { filedata } = responseInfo || {}
       setAppointeeDetails(responseInfo?.appointeeDetails);
       setFileData(filedata)
       let generatedCells = generateTableRowData(
@@ -108,21 +108,24 @@ const NoResponseAgingReportView = (props) => {
 
 
   const handleDownload = () => {
+    if (!fileData || fileData.length === 0) {
+      showErrorMessage(reportGenarate);
+      return;
+    }
     if (fileData && typeof fileData === 'object') {
-        const base64String = fileData.fileData; 
-        const fileName = fileData.fileName || "appointee_data.xlsx"; 
-        const blob = generateBlobFromBase64(base64String);
-        const blobUrl = window.URL.createObjectURL(blob);
-        downloadFile(blobUrl, fileName);
-        window.URL.revokeObjectURL(blobUrl);
-        console.log("Downloaded Blob for:", fileName); 
-    } 
+      const base64String = fileData.fileData;
+      const fileName = fileData.fileName || "appointee_data.xlsx";
+      const blob = generateBlobFromBase64(base64String);
+      const blobUrl = window.URL.createObjectURL(blob);
+      downloadFile(blobUrl, fileName);
+      window.URL.revokeObjectURL(blobUrl);
+    }
   };
   const handleAppointeeCountDownload = () => {
-    if(!appointeeDetails || appointeeDetails.length === 0 ){
+    if (!appointeeDetails || appointeeDetails.length === 0) {
       showErrorMessage(reportGenarate)
       return;
-     }
+    }
     const tableHeadList = noResponseReportTableHeadCell.map(({ label }) => {
       return {
         title: label,
@@ -200,7 +203,7 @@ const NoResponseAgingReportView = (props) => {
           clearSearch={clearSearch}
           payLoad={payLoad}
           handleDownload={handleAppointeeCountDownload}
-          handelxlsxDownload={handleDownload }
+          handelxlsxDownload={handleDownload}
           fromDate={fromDate}
           setFromDate={setFromDate}
           noOfDays={noOfDays}

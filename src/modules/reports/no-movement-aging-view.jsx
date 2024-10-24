@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadAgingReport from "shared/components/download-report/download-aging-report";
-import { generateNoMovementReportDesc, noMovementListTableHeadCell, noResponseListTableHeadCell, noResponseReportTableHeadCell, toNoMovementAgingReport ,reportGenarate} from "shared/constants/constants";
+import { generateNoMovementReportDesc, noMovementListTableHeadCell, noResponseListTableHeadCell, noResponseReportTableHeadCell, toNoMovementAgingReport, reportGenarate } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import downloadFile from "shared/utils/associate/download-file";
@@ -29,7 +29,7 @@ const NoMovementAgingReportView = (props) => {
     reportType: '',
     noOfDays: noOfDays ?? 0,
   }
-   const { showErrorMessage } = popUpSlice[0];
+  const { showErrorMessage } = popUpSlice[0];
 
   let [payLoad, setPayLoad] = useState(payloadData);
   const [filterType, setFilterType] = useState(0);
@@ -49,7 +49,7 @@ const NoMovementAgingReportView = (props) => {
     setFilterType(0);
     const payLoad = {
       startDate: null,
-      noOfDays:  0,
+      noOfDays: 0,
       reportType: '',
 
     }
@@ -65,7 +65,7 @@ const NoMovementAgingReportView = (props) => {
     const response = await getAppointeeAgingFilterReport(payLoad);
     if (response) {
       const { responseInfo } = response;
-      const {filedata}=responseInfo
+      const { filedata } = responseInfo || {}
       setAppointeeDetails(responseInfo?.appointeeDetails);
       setFileData(filedata)
       let generatedCells = generateTableRowData(
@@ -108,21 +108,25 @@ const NoMovementAgingReportView = (props) => {
   }, [fromDate]);
 
   const handleDownload = () => {
+    if (!fileData || fileData.length === 0) {
+      showErrorMessage(reportGenarate);
+      return;
+    }
     if (fileData && typeof fileData === 'object') {
-        const base64String = fileData.fileData; 
-        const fileName = fileData.fileName || "appointee_data.xlsx"; 
-        const blob = generateBlobFromBase64(base64String);
-        const blobUrl = window.URL.createObjectURL(blob);
-        downloadFile(blobUrl, fileName);
-        window.URL.revokeObjectURL(blobUrl);
-        
-    } 
+      const base64String = fileData.fileData;
+      const fileName = fileData.fileName || "appointee_data.xlsx";
+      const blob = generateBlobFromBase64(base64String);
+      const blobUrl = window.URL.createObjectURL(blob);
+      downloadFile(blobUrl, fileName);
+      window.URL.revokeObjectURL(blobUrl);
+
+    }
   };
   const handleAppointeeCountDownload = () => {
-   if(!appointeeDetails || appointeeDetails.length === 0 ){
-    showErrorMessage(reportGenarate)
-    return;
-   }
+    if (!appointeeDetails || appointeeDetails.length === 0) {
+      showErrorMessage(reportGenarate)
+      return;
+    }
 
     const tableHeadList = noResponseReportTableHeadCell.map(({ label }) => {
       return {
@@ -186,7 +190,7 @@ const NoMovementAgingReportView = (props) => {
       }
       setTableRows(_payLoad);
     }
-    else{
+    else {
       setTableRows(payLoad)
     }
   };
@@ -200,7 +204,7 @@ const NoMovementAgingReportView = (props) => {
           clearSearch={clearSearch}
           payLoad={payLoad}
           handleDownload={handleAppointeeCountDownload}
-          handelxlsxDownload={ handleDownload}
+          handelxlsxDownload={handleDownload}
           fromDate={fromDate}
           setFromDate={setFromDate}
           noOfDays={noOfDays}
