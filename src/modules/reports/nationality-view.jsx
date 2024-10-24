@@ -16,7 +16,7 @@ const NationalityReportView = (props) => {
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
   const [nationalityType, setNationalityType] = useState(null);
-  const [appointeeDetails, setAppointeeDetails] = useState();
+  const [nationalityDetails, setNationalityDetails] = useState();
   const apiSlice = useSelector(state => state.apiSlice);
    const popUpSlice = useSelector(state => state.popUpSlice);
    
@@ -64,25 +64,26 @@ const NationalityReportView = (props) => {
 
     const response = await getAppointeeNationalityReport(payLoad);
     if (response) {
-      const { responseInfos } = response;
-      setAppointeeDetails(responseInfos);
+      const { appointeeDetails,Filedata } = response?.responseInfo;
+      setNationalityDetails(appointeeDetails);
 
       let generatedCells = generateTableRowData(
-        responseInfos,
+        appointeeDetails,
         nationalityListTableHeadCell,
         null,
         hasPermission
       );
 
-      responseInfos && responseInfos?.forEach(({ appointee }, index) => {
+      appointeeDetails && appointeeDetails?.forEach(({ appointee }, index) => {
         const detailsCells = generateTableRowData(
           appointee,
           nationalityListTableHeadCell,
           null
         );
+
         generatedCells[index].detailsCells = detailsCells;
       });
-
+      
       setRows({
         tableHead: nationalityListTableHeadCell,
         tableRows: generatedCells,
@@ -109,7 +110,7 @@ const NationalityReportView = (props) => {
 
   const handleNaltionalityListDownload = () => {
 
-    if (!appointeeDetails || appointeeDetails.length === 0) {
+    if (!nationalityDetails || nationalityDetails.length === 0) {
       showErrorMessage(reportGenarate)
       return; 
     }
@@ -120,7 +121,7 @@ const NationalityReportView = (props) => {
     });
    
  
-    const tableBodyList = appointeeDetails && appointeeDetails.map((tableRows) => {
+    const tableBodyList = nationalityDetails && nationalityDetails.map((tableRows) => {
       return CreatePdfTableBody(tableRows, nationalityReportTableHeadCell);
     });
  

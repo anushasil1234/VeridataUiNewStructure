@@ -674,8 +674,7 @@ const AppointeeRegister = () => {
         isUanVarified
         //&& !hasValue(UAN)
       ) {
-        const Ismanual = hasValue(UAN) ? false : null;
-        submitDetails(true, Ismanual);
+        submitDetails(true, false);
       }
     }
 
@@ -1270,6 +1269,7 @@ const AppointeeRegister = () => {
       fileUploaded: uploadedFile,
       IsManualPassbookUploaded: isUanManualUpload
     };
+    console.log(payLoad)
     // Use the buildFormData helper function to create the formData
     let formData = buildFormData(payLoad);
 
