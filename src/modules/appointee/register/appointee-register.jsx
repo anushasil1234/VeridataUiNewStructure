@@ -686,9 +686,7 @@ const AppointeeRegister = () => {
   }, [
     isAadhaarVarified,
     isPanVarified,
-    //isEmployementDataVarified,
     isUanVarified,
-    //UAN,
   ]);
 
   // useEffect to check if UAN appointee is available on page load
