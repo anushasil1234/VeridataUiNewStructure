@@ -3,36 +3,22 @@
 import {
     Box,
     Button,
-    Checkbox,
     FormControl,
     FormControlLabel,
     Grid,
     IconButton,
-    Link,
-    MenuItem,
-    Select,
     Stack,
     Switch,
     TextField,
     Typography,
     Tooltip,
-    Stepper,
-    Step,
-    StepLabel,
 } from "@mui/material";
 import { InfoOutlined } from "@mui/icons-material";
 import {
-    activeStepStyle,
     dividerStyle,
     fileUploadSectionContainerStyle,
-    genderSectionContainer,
-    genderTypeStyle,
-    heading2,
-    indActiveStepStyle,
     inputFieldStyle,
     lable1Style,
-    linkStyle,
-    page3formContainerStyle,
     positionRelative,
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
@@ -40,60 +26,37 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     getHandicapTypeDescription,
     otherFileTypeAlias,
-    stepperDefaultList,
     tenthCertificateFileTypeAlias,
 } from "shared/constants/constants";
 import {
     CardLayout,
-    CreateStepSequience,
     DateFormatYYYYMMDD,
     getLocalStorageItem,
     hasValue,
-    patternChecking,
     setLocalStorageItem,
-    StringToDate,
     trimmedDate,
 } from "shared/utils";
 import FormHeading from "./form-heading";
 import {
-    aadharVerifyFailedMsg,
-    aadharVerifySuccessMsg,
     congratulationDialogContentTitle,
-    emptyAadharMsg,
-    emptyShareCodeMsg,
-    emptyPanMsg,
-    fetchUanConfirmationtMsg,
     genders,
-    generateOtpRety,
-    generateOtpSucces,
-    invalidPanMsg,
-    panVerifyFailedMsg,
     passportFileTypeAlias,
     passportSuccessMsg,
     passportVerifyFailedMsg,
     previousButton,
     registrationSuccessDialogContentText,
-    saveAndNextbutton,
-    saveButton,
-    submitButton,
     submitConfirmationMsg,
     toDashboard,
     trustEpfoFileTypeAlias,
     handicapFileTypeAlias,
-    uanVerifyFailedMsg,
-    uanVerifySuccessMsg,
     uploadSizeErrorMsg,
     duplicateFiles,
-    uploadFormatErrorMsg,
-    passportExpireddMsg,
 } from "shared/constants/constants";
 import { DisableSection } from "shared/components/disble-section/disble-section";
 import VerificationStatus from "../../../shared/components/verification/verification-status";
 import { Autorenew, HelpOutline } from "@mui/icons-material";
 import { VerificationStatusSection } from "../../../shared/components/verification/verification-status-section";
-import FormDialog from "shared/utils/models/form-dialog";
 import FileUploadSection from "shared/components/file-upload-section/file-upload-section";
-import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import uploadFileMessage from "shared/utils/associate/upload-file-message";
 import selectUANmessage from "shared/utils/associate/select-uan-message";
 import PassportFileNoSample from "assets/images/backgrounds/file-number-in-indian-passport.png";
@@ -110,10 +73,9 @@ import {
     DialogTitle,
 } from "@mui/material";
 
-import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
+import { FILE_SIZE_LIMIT } from "shared/constants/constants";
 
 const FileUpload = ({ stepsList, mode }) => {
-    const steps = ["Step 1", "Step 2", "Step 3"];
 
     // Function to retrieve saved step from localStorage
     const [activeStep, setActiveStep] = useState(0);
@@ -126,23 +88,13 @@ const FileUpload = ({ stepsList, mode }) => {
     const functionSlice = useSelector((state) => state.functionSlice);
     const popUpSlice = useSelector((state) => state.popUpSlice);
     const {
-        openOtpForm,
-        closeOtpForm,
-        openOtpSubmitionModel,
-        closeOtpSubmitionModel,
         openRemarksModel,
-        openConfirmationModel,
         openInfoModel,
-        setRemarks,
     } = functionSlice[0];
     const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
     const {
         countryList,
         nationalityList,
-        relationList,
-        qualificationList,
-        disabilityList,
-        maritalStatusList,
         fileTypeList,
     } = dropdownList && dropdownList.length > 0 && dropdownList[0];
     const genderDropdownList =
@@ -151,16 +103,10 @@ const FileUpload = ({ stepsList, mode }) => {
         dropdownList[0] &&
         dropdownList[0].genderList;
     const {
-        postAppointeeDetails,
         getAppointeeDetails,
         getPassportDetails,
         postAppointeeFileDetails,
         PostUpdatePfUanDetails,
-        getUANNumber,
-        verifyAadharDetails,
-        generateUANOtp,
-        submitUANOTP,
-        verifyPANDetails,
     } = apiSlice[0];
     const { navigateTo } = commonHooksFunctionSlice[0];
     const { userId, appointeeId, userCode } = loggedInData[0];
@@ -226,10 +172,6 @@ const FileUpload = ({ stepsList, mode }) => {
         new VerificationStatus()
     );
 
-    const passportNumberInputProps = {
-        maxLength: 12,
-        ...inputFieldStyle,
-    };
 
     const [isPFVerificatoinReq, setIsPFVerificatoinReq] = useState(null);
     const [isAadhaarVarified, setisAadhaarVarified] = useState(null);
@@ -272,11 +214,7 @@ const FileUpload = ({ stepsList, mode }) => {
     const [isthirdNextVisible, setIsThirdNextVisible] = useState(false);
     const [isDraft, setIsDraft] = useState(true);
 
-    const stepCounter = 4;
 
-    const initialTimeOfOtpTimer = () => {
-        setTimeoutTimer(10 * 60);
-    };
     const clearFileVaribles = (fileTypeAllias, setFileName) => {
         let updatedFileDetails = [];
         let updatedFileUploaded = [];
@@ -450,12 +388,6 @@ const FileUpload = ({ stepsList, mode }) => {
 
     }
 
-    const openSubmitConfirmationModel = () => {
-        const submitconfModelContent = {
-            dialogContentText: submitConfirmationMsg,
-        };
-        openConfirmationModel(submitconfModelContent, handleAppointeeFormPage2Save);
-    };
 
     const checkFileUpload = (fileTypeAlias) => {
         const uploadTypeAlias =
@@ -477,13 +409,6 @@ const FileUpload = ({ stepsList, mode }) => {
     };
 
 
-    const submitDetails = (autoSubmit) => {
-        if (autoSubmit) {
-            handleAppointeeFormPage2Save();
-        } else {
-            openSubmitConfirmationModel();
-        }
-    };
     const selectGender = (genderCode) => {
         const selectedGender = genderCode;
         const updatedGender =
@@ -818,55 +743,12 @@ const FileUpload = ({ stepsList, mode }) => {
 
     const dispatch = useDispatch();
 
-    const handleAppointeeFormPage2Save = async () => {
-        const loginUserData = getLocalStorageItem("pfc-user");
-        let payLoad = {
-            appointeeDetailsId: appointeeDetailsId,
-            appointeeId: appointeeId,
-            appointeeCode: userCode,
-            isSubmit: true,
-            userId: userId,
-            FileDetails: fileDetails,
-            fileUploaded: uploadedFile,
-        };
-        // Use the buildFormData helper function to create the formData
-        let formData = buildFormData(payLoad);
-        const response = await postAppointeeFileDetails(formData);
-        if (response) {
-            setLocalStorageItem("pfc-user", {
-                ...loginUserData,
-                isSubmit: true,
-                status: "Submitted",
-            });
-            dispatch(removeLoggedinData());
-            dispatch(
-                storeLoggedinData({
-                    ...loginUserData,
-                    isSubmit: true,
-                    status: "Submitted",
-                })
-            );
-
-            const registrationSuccessContent = {
-                dialogContentText: registrationSuccessDialogContentText,
-                dialogTitle: congratulationDialogContentTitle,
-                maxWidth: "sm",
-                btnName: "Go to Dashboard",
-            };
-            openInfoModel(registrationSuccessContent, () => navigateTo(toDashboard));
-        }
-        //}
-    };
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setCurrentPageNo(3);
     };
 
-    const handleSecondNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setCurrentPageNo(2);
-    };
 
     const handleChange = (event) => {
         const value = event.target.value;
@@ -932,26 +814,7 @@ const FileUpload = ({ stepsList, mode }) => {
     };
 
 
-    const resetPassportDetails = () => {
-        setisInterNationalWorker("N");
-        setCountryOfOrigin("");
-        setPassportNo("");
-        setPassportValidForDate("");
-        setPassportValidTillDate("");
-        setDisabledIsInterNationalWorker(false); // Optional: enable the field if "No" is selected
-    };
 
-    const handleIsPassportAvailableOnChange = (e) => {
-        const { value } = e.target;
-        setPassportAvailable(value);
-
-        if (value === "Y") {
-            const nationalityLower = nationality?.toLowerCase();
-            setCountryOfOriginBasedOnNationality(nationalityLower);
-        } else if (value === "N") {
-            resetPassportDetails();
-        }
-    };
 
 
     const handlePassporFileNumbertHelp = () => {

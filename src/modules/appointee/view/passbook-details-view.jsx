@@ -83,7 +83,8 @@ let PassbookViewDetails = ({ appointeeId }) => {
     const response = await getPassbookDetails(appointeeId);
     const { dob, fatherName, fullName, pfUan, companies } =
       response.responseInfo;
-    if (pfUan && companies) {
+
+    if (pfUan && companies.length > 0) {
       dob ? setDob(dob) : setDob(NA);
       fatherName ? setFatherName(fatherName) : setFatherName(NA);
       fullName ? setFullName(fullName) : setFullName(NA);
@@ -137,7 +138,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
                 </Typography>
               </Stack>
               {companies &&
-                companies.map((companyitem, index) => (
+                companies?.map((companyitem, index) => (
                   <Accordion
                     key={index}
                     expanded={expanded === "panel1"}

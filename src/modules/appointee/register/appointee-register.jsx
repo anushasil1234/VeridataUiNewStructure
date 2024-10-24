@@ -25,9 +25,7 @@ import {
   activeStepStyle,
   candidateRegistrationFormContainerStyle,
   checkBoxLabelStyle,
-  dividerStyle,
   fileUploadSectionContainerStyle,
-  fontSizeType1,
   formHeadingContainerStyle,
   formHeadingGridContainerStyle,
   genderSectionContainer,
@@ -37,8 +35,6 @@ import {
   indActiveStepStyle,
   inputFieldStyle2,
   lable1CopyStyle,
-  linkStyle,
-  page3formContainerStyle,
   positionRelative,
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
@@ -91,7 +87,6 @@ import {
   registrationSuccessDialogContentText,
   saveAndNextbutton,
   saveButton,
-  submitButton,
   submitConfirmationMsg,
   toDashboard,
   uanVerifyFailedMsg,
@@ -150,7 +145,6 @@ const AppointeeRegister = () => {
     openRemarksModel,
     openConfirmationModel,
     openInfoModel,
-    setRemarks,
   } = functionSlice[0];
   const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
   const {
@@ -550,7 +544,7 @@ const AppointeeRegister = () => {
     const submitconfModelContent = {
       dialogContentText: submitConfirmationMsg,
     };
-    openConfirmationModel(submitconfModelContent, handleAppointeeFormPage2Save);
+    openConfirmationModel(submitconfModelContent, () => handleAppointeeFormPage2Save({ isUanManualUpload: true, status: "Submitted" }));
   };
 
   const checkFileUpload = (fileTypeAlias) => {
@@ -583,11 +577,11 @@ const AppointeeRegister = () => {
     openInfoModel(offlineKycContent);
   };
 
-  const submitDetails = (autoSubmit) => {
+  const submitDetails = (autoSubmit, isManual) => {
     if (autoSubmit) {
-      handleAppointeeFormPage2Save({ isUanVerificationProcessManual: false });
+      handleAppointeeFormPage2Save({ isUanManualUpload: isManual, status: "Approved" });
     } else {
-      openSubmitConfirmationModel();
+      handleAppointeeFormPage3Save();
     }
   };
   const selectGender = (genderCode) => {
@@ -640,23 +634,14 @@ const AppointeeRegister = () => {
       selectGender(gender);
     }
   }, [genderDropdownList, gender]);
-  useEffect(() => {
-    setUploadedFile([]);
-  }, [isUanVerificationProcessManual])
 
-  // useEffect(() => {
-  //   if (isUanVerificationProcessManual === 'manual') {
-  //     setIsEpfoSectionDisabled(true);
-  //   } else {
-  //     setIsEpfoSectionDisabled(false);
-  //   }
-  // }, [isUanVerificationProcessManual]);
 
   useEffect(() => {
     if (!isTrustEpfoAvailable) {
       clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
     }
   }, [isTrustEpfoAvailable]);
+
   useEffect(() => {
     if (
       isAadhaarVarified === true &&
@@ -689,18 +674,11 @@ const AppointeeRegister = () => {
         isUanVarified
         //&& !hasValue(UAN)
       ) {
-        submitDetails(true);
+        const Ismanual = hasValue(UAN) ? false : null;
+        submitDetails(true, Ismanual);
       }
     }
-    // if (
-    //   isAadhaarVarified &&
-    //   isPanVarified &&
-    //   isUanVarified &&
-    //   hasValue(UAN) &&
-    //   isEmployementDataVarified
-    // ) {
-    //   submitDetails(true);
-    // }
+
   }, [
     isAadhaarVarified,
     isPanVarified,
@@ -729,50 +707,29 @@ const AppointeeRegister = () => {
   useEffect(() => {
     if (passportAvailable === "Y") {
       const nationalityLower = nationality?.toLowerCase();
-      // determineIsInternationalWorker(nationalityLower, defaultCountry);
       setCountryOfOriginBasedOnNationality(nationalityLower);
     }
   }, [nationality, passportAvailable]);
 
   useEffect(() => {
-    updateStepCounter(isPhysicallyHandicap);
+    // updateStepCounter(isPhysicallyHandicap);
     if (isPhysicallyHandicap === 'N') {
       clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
     }
-    // updateStepList(isPhysicallyHandicap, 'Handicap Verification');
   }, [isPhysicallyHandicap])
+
+  useEffect(() => {
+    // updateStepCounter(passportAvailable);
+  }, [passportAvailable])
+
   useEffect(() => {
     if (isUanVerificationProcessManual === 'auto') {
       clearFileVaribles(epfoPassbookFileTypeAlias, setEpfoPassBookFile);
     }
-    // updateStepList(isPhysicallyHandicap, 'Handicap Verification');
-  }, [isUanVerificationProcessManual])
-  useEffect(() => {
-    updateStepCounter(passportAvailable);
-    // updateStepList(isPhysicallyHandicap, 'Handicap Verification');
-  }, [passportAvailable])
-  useEffect(() => {
     setUploadedFile([]);
     setFileDetails([]);
   }, [isUanVerificationProcessManual])
-  const updateStepCounter = (value) => {
-    // if (value === 'Y') {
-    //   setStepCounter(stepCounter + 1);
-    // }
-    // if (value === 'N') {
-    //   setStepCounter(stepCounter - 1);
-    // }
-  }
 
-  const updateStepList = (stepStatus, stepName) => {
-    if (stepStatus === 'Y') {
-      setStepsList([...stepsList, stepName]);
-    } else {
-      const updatedStepList = stepsList.filter(item => item !== stepName);
-      setStepsList(updatedStepList);
-    }
-
-  }
 
   const generateRemarks = (remarks) => {
     let remarksList = [];
@@ -786,40 +743,6 @@ const AppointeeRegister = () => {
     }
     return remarksList;
   };
-  // const uploadFile = ({ files }, uploadTypeAlias, setFileName) => {
-  //   const fileData = files[0];
-  //   const { name, size, type } = fileData;
-  //   const isFileExists = fileDetails.find((currentFileData) => {
-  //     return (
-  //       currentFileData.name === name &&
-  //       currentFileData.size === size &&
-  //       currentFileData.type === type
-  //     );
-  //   });
-  //   if (isFileExists) {
-  //     showErrorMessage(duplicateFiles);
-  //   } else {
-  //     if (size <= FILE_SIZE_LIMIT) {
-  //       setFileName(name);
-  //       const { id } =
-  //         fileTypeList &&
-  //         fileTypeList.length > 0 &&
-  //         fileTypeList.find(({ code }) => code === uploadTypeAlias);
-  //       const file = {
-  //         fileName: name,
-  //         mimeType: type,
-  //         fileLength: size,
-  //         uploadTypeId: id,
-  //         uploadTypeAlias: uploadTypeAlias,
-  //         isFileUploaded: true,
-  //       };
-  //       setUploadedFile([...uploadedFile, file]);
-  //       setFileDetails([...fileDetails, fileData]);
-  //     } else {
-  //       showErrorMessage(uploadSizeErrorMsg);
-  //     }
-  //   }
-  // };
 
   const uploadFile = ({ files }, uploadTypeAlias, setFileName) => {
     const fileData = files[0];
@@ -999,13 +922,6 @@ const AppointeeRegister = () => {
       if (!isUploaded) showUploadMessage("handicap certificate");
       return isUploaded;
     }
-    // if (
-    //   (isPhysicallyHandicap === "Y" && !hasHandicapUpload()) || hasValue(handicapFileName)
-    // ) {
-    //   showUploadMessage("handicap certificate");
-    //   return false;
-    // }
-    // return true;
   };
 
 
@@ -1018,32 +934,9 @@ const AppointeeRegister = () => {
       if (!isUploaded) showUploadMessage("trust epfo passbook");
       return isUploaded;
     }
-    // if (
-    //   (isTrustEpfoAvailable === true && !hasTrustEpfoUpload()) ||
-    //   !hasValue(trustEpfoFileName)
-    // ) {
-    //   showUploadMessage("trust epfo passbook");
-    //   return false;
-    // }
-    // return true;
+
   };
 
-  // Check if passport is uploaded for specific countries (India, Nepal, Bhutan)
-  // const checkPassportUploadForSpecificCountries = () => {
-  //   if (
-  //     hasValue(countryOfOrigin) &&
-  //     (countryOfOrigin === "India" || countryOfOrigin === "Nepal" || countryOfOrigin === "Bhutan")
-  //   ) {
-  //     if (
-  //       (passportAvailable === "Y" && !hasPassportUpload()) ||
-  //       !hasValue(passportFileName)
-  //     ) {
-  //       showUploadMessage("passport file");
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  // };
 
   // Check if passport is uploaded for other countries
   const checkPassportUploadForOtherCountries = () => {
@@ -1365,7 +1258,7 @@ const AppointeeRegister = () => {
   };
   const dispatch = useDispatch();
 
-  const handleAppointeeFormPage2Save = async () => {
+  const handleAppointeeFormPage2Save = async ({ isUanManualUpload, status }) => {
     const loginUserData = getLocalStorageItem("pfc-user");
     let payLoad = {
       // appointeeDetailsId: appointeeDetailsId,
@@ -1375,7 +1268,7 @@ const AppointeeRegister = () => {
       userId: userId,
       FileDetails: fileDetails,
       fileUploaded: uploadedFile,
-      IsManualPassbookUploaded: isUanVerificationProcessManual === 'auto' ? false : true
+      IsManualPassbookUploaded: isUanManualUpload
     };
     // Use the buildFormData helper function to create the formData
     let formData = buildFormData(payLoad);
@@ -1385,14 +1278,14 @@ const AppointeeRegister = () => {
       setLocalStorageItem("pfc-user", {
         ...loginUserData,
         isSubmit: true,
-        status: "Submitted",
+        status: status,
       });
       dispatch(removeLoggedinData());
       dispatch(
         storeLoggedinData({
           ...loginUserData,
           isSubmit: true,
-          status: "Submitted",
+          status: status,
         })
       );
 
@@ -1408,16 +1301,18 @@ const AppointeeRegister = () => {
   };
 
   const handleAppointeeFormPage3Save = () => {
-    if (!checkUANVerificationRequiredDoc()) {
-      return
-    }
     if (!checkAadharVerification()) {
       return
     }
     if (!checkPANVerification()) {
       return
     }
-    handleAppointeeFormPage2Save({ isUanVerificationProcessManual: true });
+    if (!checkUANVerificationRequiredDoc()) {
+      return
+    }
+    openSubmitConfirmationModel();
+
+
   }
 
   const handleNext = () => {
@@ -1470,6 +1365,7 @@ const AppointeeRegister = () => {
         !isUanAvailable &&
         !hasValue(uanNumber)
       ) {
+        setUAN(null);
         setisUanVarified(true);
         // setIsEmployementDataVarified(false);
       }
@@ -3350,7 +3246,6 @@ const AppointeeRegister = () => {
                         {isEpfoSectionDisabled && <DisableSection />}
 
                         <Grid item xs={12} md={6} sx={{ paddingLeft: '0px !important' }}>
-                          {/* {isUanVerificationProcessManual === 'manual' && <DisableSection />} */}
                           <Typography sx={lable1CopyStyle}>
                             Universal Account Number(UAN)
                           </Typography>
@@ -3365,27 +3260,6 @@ const AppointeeRegister = () => {
                             defaultValue={" "}
                             value={UAN}
                           />
-                          {/* <Dialog
-                            open={isUANModalOpen}
-                            onClose={() => setIsUANModalOpen(false)}
-                          >
-                            <DialogTitle>Verification Successful</DialogTitle>
-                            <DialogContent>
-                              <DialogContentText>
-                                Your data is successfully verified. Please
-                                proceed with employment verification to
-                                complete your process.
-                              </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                              <Button
-                                onClick={handleDialogOk}
-                                color="primary"
-                              >
-                                OK
-                              </Button>
-                            </DialogActions>
-                          </Dialog> */}
                           <Button
                             sx={{ margin: "5px 0" }}
                             enabled={isUanVarified}
@@ -3469,349 +3343,6 @@ const AppointeeRegister = () => {
                   </form>
                 </Box>
               ) : null}
-              {/* 
-              {currentPageNo === 3 ? (
-                <Box sx={page3formContainerStyle}>
-                  <form ref={formElement}>
-                    <Grid
-                      sx={{ paddingLeft: "20px" }}
-                      container
-                      rowSpacing={1}
-                      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                      <Grid
-                        container
-                        rowSpacing={1}
-                        columnSpacing={2.5}
-                        item
-                        xs={12}
-                        sx={formHeadingGridContainerStyle}
-                      >
-                        <Grid item xs={12} sx={formHeadingContainerStyle}>
-                          <FormHeading
-                            step={stepsList?.AV?.step}
-                            heading={stepsList?.AV?.name}
-                            info={
-                              "Enter Adhar data to verify, see more info in the below link."
-                            }
-                          />
-                          <Grid item xs={12} md={12}>
-                            <Typography
-                              sx={{
-                                ...lable1CopyStyle,
-                                fontWeight: 500,
-                                fontSize: 18,
-                              }}
-                            >
-                              As part of onboarding process, Please generate
-                              your offline KYC verification file and upload it
-                              here. To see the details steps,
-
-                              <Link
-                                sx={{ cursor: "pointer" }}
-                                onClick={() => openOfflineKycInfoModel()}
-                              >
-                                {" "}
-                                Click here
-                              </Link>
-                            </Typography>
-                            {isAadhaarVarified ? (
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    disabled
-                                    checked
-                                    inputProps={{ "aria-label": "controlled" }}
-                                  />
-                                }
-                                label="I have downloaded the aadhar offline KYC file"
-                              />
-                            ) : (
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={isOfflineXmlDownloaded}
-                                    onChange={
-                                      handleIsOfflineXmlDownloadedOnChange
-                                    }
-                                    inputProps={{ "aria-label": "controlled" }}
-                                  />
-                                }
-                                label="I have downloaded the aadhar offline KYC file"
-                              />
-                            )}
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid
-                        container
-                        rowSpacing={1}
-                        columnSpacing={2.5}
-                        item
-                        xs={12}
-                        sx={formHeadingGridContainerStyle}
-                      >
-                        <Grid sx={positionRelative} item xs={12}>
-                          <Grid
-                            mt={3}
-                            container
-                            rowSpacing={1}
-                            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                          >
-                            {!isOfflineXmlDownloaded && <DisableSection />}
-                            <Grid item xs={12} md={6}>
-                              <Typography sx={lable1CopyStyle}>
-                                Name On Aadhaar
-                              </Typography>
-                              <TextField
-                                style={inputFieldStyle2}
-                                type="text"
-                                variant="outlined"
-                                className="customeTextField"
-                                onChange={(e) => {
-                                  setNameAsOnAadhar(
-                                    e.target.value.toUpperCase()
-                                  );
-                                }}
-                                value={nameAsOnAadhar}
-                                //defaultValue={" "}
-                                disabled={true}
-                              />{" "}
-                              <Typography sx={lable1CopyStyle}>
-                                Share Code (to be provided after uploading)
-                              </Typography>
-                              <TextField
-                                style={inputFieldStyle2}
-                                type="text"
-                                variant="outlined"
-                                className="customeTextField"
-                                onChange={(e) => {
-                                  setAadharShareCode(e.target.value);
-                                }}
-                                value={aadharShareCode}
-                                defaultValue={" "}
-                                disabled={
-                                  disabledAadharInput || !isAadhaarXmlUploaded
-                                }
-                              />
-                              <Button
-                                sx={{ margin: "5px" }}
-                                disabled={isAadhaarVarified}
-                                variant="contained"
-                                onClick={handleAadharVerifiaction}
-                                endIcon={<Autorenew />}
-                              >
-                                Verify
-                              </Button>
-                              <VerificationStatusSection
-                                docType={aadharstatusMessage}
-                              />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                              <FileUploadSection
-                                chooseFile={uploadAadharXmlFile}
-                                fileName={aadharXmlFileName}
-                                accept={".rar, .zip"}
-                                disabled={isAadhaarVarified}
-                              />
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid
-                        container
-                        rowSpacing={2}
-                        columnSpacing={2.5}
-                        item
-                        xs={12}
-                        sx={formHeadingGridContainerStyle}
-                      >
-                        <Grid item xs={12} sx={formHeadingContainerStyle}>
-                          <FormHeading
-                            step={stepsList?.PAV?.step}
-                            heading={stepsList?.PAV?.name}
-                            info={"Enter your Pan Numebr to verify."}
-                          />
-                        </Grid>{" "}
-                      </Grid>
-                      <Grid
-                        container
-                        rowSpacing={2}
-                        sx={positionRelative}
-                        item
-                        xs={12}
-                      >
-                        <Grid item xs={12} md={6} paddingRight={3}>
-                          <Typography sx={lable1CopyStyle}>
-                            PAN Number
-                            <span className="requiredField">*</span>
-                          </Typography>
-                          <TextField
-                            style={inputFieldStyle2}
-                            type="text"
-                            variant="outlined"
-                            className="customeTextField"
-                            onChange={(e) => {
-                              setPan(e.target.value.toUpperCase());
-                            }}
-                            value={pan}
-                            defaultValue={" "}
-                            inputProps={{ maxLength: 10 }}
-                            disabled={disabledPanInput}
-                          />
-                          <Button
-                            sx={{ margin: "5px" }}
-                            disabled={isPanVarified}
-                            variant="contained"
-                            onClick={handlePanVerifiaction}
-                            endIcon={<Autorenew />}
-                          >
-                            Verify
-                          </Button>
-                          <Dialog
-                            open={isPANModalOpen}
-                            onClose={handleDialogCancel}
-                          >
-                            <DialogTitle>PAN Verified</DialogTitle>
-                            <DialogContent>
-                              <DialogContentText>
-                                Your PAN is successfully verified. To fetch and
-                                verify UAN automatically please click on OK.
-                              </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                              <Button
-                                onClick={handleDialogConfirm}
-                                color="primary"
-                                autoFocus
-                              >
-                                OK
-                              </Button>
-                            </DialogActions>
-                          </Dialog>
-                          <VerificationStatusSection
-                            docType={panstatusMessage}
-                          />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <Typography sx={lable1CopyStyle}>
-                            Name on PAN
-                            <span className="requiredField">*</span>
-                          </Typography>
-                          <TextField
-                            style={inputFieldStyle2}
-                            type="text"
-                            variant="outlined"
-                            className="customeTextField"
-                            onChange={(e) => {
-                              setNameAsOnPan(e.target.value.toUpperCase());
-                            }}
-                            value={nameAsOnPan}
-                            defaultValue={" "}
-                            disabled={true}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12} sx={formHeadingContainerStyle}>
-                        <FormHeading
-                          step={stepsList?.UAV?.step}
-                          heading={stepsList?.UAV?.name}
-                          info={
-                            "Enter your Universal Account Number(UAN) to verify."
-                          }
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Grid
-                          item
-                          md={6}
-                          mt={3}
-                          container
-                          rowSpacing={1}
-                          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                        >
-                          <Grid sx={positionRelative} item xs={12} md={6}>
-                            {isEpfoSectionDisabled && <DisableSection />}
-                            <Typography sx={lable1CopyStyle}>
-                              Universal Account Number(UAN)
-                            </Typography>
-                            <TextField
-                              onChange={(e) => {
-                                setUAN(e.target.value);
-                              }}
-                              style={inputFieldStyle2}
-                              type="text"
-                              className="customeTextField"
-                              variant="outlined"
-                              defaultValue={" "}
-                              value={UAN}
-                            />
-
-                            <Dialog
-                              open={isUANModalOpen}
-                              onClose={() => setIsUANModalOpen(false)}
-                            >
-                              <DialogTitle>Verification Successful</DialogTitle>
-                              <DialogContent>
-                                <DialogContentText>
-                                  Your data is successfully verified. Please
-                                  proceed with employment verification to
-                                  complete your process.
-                                </DialogContentText>
-                              </DialogContent>
-                              <DialogActions>
-                                <Button
-                                  onClick={handleDialogOk}
-                                  color="primary"
-                                >
-                                  OK
-                                </Button>
-                              </DialogActions>
-                            </Dialog>
-                            <Button
-                              sx={{ margin: "5px" }}
-                              enabled={isUanVarified}
-                              variant="contained"
-                              onClick={handleEpfoButtonClick}
-                              endIcon={<Autorenew />}
-                            >
-                              {epfoButton}
-                            </Button>
-                            <VerificationStatusSection
-                              docType={epfostatusMessage}
-                            />
-                          </Grid>
-                        </Grid>
-                        {isSubmitDisabled === false ? (
-                          <Button
-                            name="submit"
-                            // disabled={isSubmitDisabled}
-                            onClick={() => submitDetails(false)}
-                            sx={{ m: "15px 5px" }}
-                            variant="contained"
-                            color="primary"
-                          >
-                            {submitButton}
-                          </Button>
-                        ) : null}
-                      </Grid>
-                    </Grid>
-                  </form>
-                  <Typography
-                    appointeeId={appointeeId}
-                    sx={{ linkStyle }}
-                  >
-                    To know the Remarks, &nbsp;
-                    <Link
-                      sx={{ cursor: "pointer" }}
-                      onClick={() => setRemarks(appointeeId)}
-                    >
-                      Click here
-                    </Link>
-
-                  </Typography>
-                </Box>
-              ) : null} */}
               <form ref={formElement}>
                 <Grid sx={positionRelative} item xs={12}>
                   <Grid
@@ -3855,7 +3386,7 @@ const AppointeeRegister = () => {
                         <>
                           <Button
                             //onClick={() => setCurrentPageNo(1)}
-                            onClick={handleAppointeeFormPage3Save}
+                            onClick={() => submitDetails(false, true)}
                             //sx={{ m: "15px 5px", ml: 3 }}
                             sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
                             variant="contained"

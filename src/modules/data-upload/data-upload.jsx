@@ -6,7 +6,7 @@ import { DownloadSampleXlsFile_URL } from 'shared/constants/constants';
 import ActionPermission from 'shared/components/action-permission/action-permission';
 import FileUpload from 'shared/components/file-upload/file-upload';
 import { Typography, Box, Fab, Dialog, DialogContent, Button, DialogTitle, DialogActions } from '@mui/material';
-import { Info, Close } from "@mui/icons-material";
+import { Info } from "@mui/icons-material";
 import { primaryFabStyle } from "app";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 

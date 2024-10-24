@@ -12,6 +12,7 @@ import { storeData } from "store/slices/data-slice";
 
 const UnWrappedVerified = (props) => {
   const { hasPermission } = props;
+  
   const { state } = useLocation();
   let noOfDays = 0;
   let isFiltered = false;

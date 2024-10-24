@@ -25,7 +25,7 @@ import { FabIcon } from "shared/utils";
 import moment from "moment";
 import jsPDFEmploymentHistTemplate from "shared/utils/associate/js-pdf-employmenthist";
 
-let EmploymentViewDetails = ({ appointeeId }) => {
+let EmploymentViewDetails = ({ appointeeId, userId }) => {
 
   const apiSlice = useSelector((state) => state.apiSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -80,10 +80,12 @@ let EmploymentViewDetails = ({ appointeeId }) => {
 
   const { showErrorMessage } = popUpSlice[0];
 
-  const setTableRows = async (appointeeId) => {
-    const response = await getEmployementDetails(appointeeId);
+  const setTableRows = async (appointeeId, userId) => {
+    const response = await getEmployementDetails(appointeeId, userId);
+
+
     const { dob, fatherName, fullName, pfUan, companies } = response?.responseInfo || {};
-    if (pfUan && companies) {
+    if (pfUan && companies.length > 0) {
       dob ? setDob(dob) : setDob(NA);
       fatherName ? setFatherName(fatherName) : setFatherName(NA);
       fullName ? setFullName(fullName) : setFullName(NA);
@@ -122,7 +124,7 @@ let EmploymentViewDetails = ({ appointeeId }) => {
     "Employement Report"
   );
   useEffect(() => {
-    setTableRows(appointeeId);
+    setTableRows(appointeeId, userId);
   }, []);
   return (
     <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%" }}>
@@ -175,7 +177,7 @@ let EmploymentViewDetails = ({ appointeeId }) => {
                 </Typography>
               </Stack>
               {companies &&
-                companies.map((companyitem, index) => (
+                companies?.map((companyitem, index) => (
                   <Accordion
                     key={index}
                     expanded={expanded === "panel1"}

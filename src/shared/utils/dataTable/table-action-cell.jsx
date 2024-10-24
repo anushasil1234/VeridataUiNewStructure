@@ -232,7 +232,7 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] && isPassbookVerified ? (
+          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012']  ? (
             <DarkTooltip placement="top" title={"EPFO Passbook"} arrow>
               <Fab
                 variant="contained"
@@ -251,7 +251,7 @@ export const TableActionCell = (props1, props2) => {
                 variant="contained"
                 size="small"
                 button={"N"}
-                onClick={() => openEmploymentViewModel(appointeeId)}
+                onClick={() => openEmploymentViewModel(appointeeId, userId)}
                 sx={primaryFabStyle}
               >
                 <Article width={18} />

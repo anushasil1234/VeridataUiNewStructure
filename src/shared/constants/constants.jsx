@@ -1893,8 +1893,11 @@ export const ApiCounterReport_URL = (fromDate, toDate) => {
     return ApiCounterReportUrl
 };
 export const PassbookDetails_URL = `${AppoienteeWorkFlow}/GetPassbookDetails?AppointeeId=`;
-export const EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails?AppointeeId=`;
-
+// export const EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails?AppointeeId=`;
+export const EmployementDetails_URL = (AppointeeId, userId) => {
+    let _EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails`
+    return `${_EmployementDetails_URL}?AppointeeId=${AppointeeId}&userId=${userId}`;
+};
 
 export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetails`;
 export const VerifyPanDetails_URL = `${AadhaarValidate}/VerifyPanDetails`;

@@ -315,8 +315,9 @@ const AppWrapper = (App) => {
     const closePassbookViewModel = () => {
       setPassbookIsViewOpen(false);
     };
-    const openEmploymentViewModel = (appointeeId) => {
+    const openEmploymentViewModel = (appointeeId, userId) => {
       setAppointeeId(appointeeId);
+      setUserId(userId);
       setEmploymentIsViewOpen(true);
     };
     const closeEmploymentViewModel = () => {
@@ -603,8 +604,8 @@ const AppWrapper = (App) => {
     const getPassbookDetails = async (Id) => {
       return await PfcRequest(`${PassbookDetails_URL}${Id}`, "POST");
     };
-    const getEmployementDetails = async (Id) => {
-      return await PfcRequest(`${EmployementDetails_URL}${Id}`, "POST");
+    const getEmployementDetails = async (appointeeId, userId) => {
+      return await PfcRequest(EmployementDetails_URL(appointeeId, userId), "POST");
     };
 
     const postProfilePassword = async (payLoad) => {
@@ -911,6 +912,7 @@ const AppWrapper = (App) => {
         <EmploymentView
           openViewModel={openEmploymentViewModel}
           appointeeId={appointeeId}
+          userId={userId}
           closeViewModel={closeEmploymentViewModel}
           openView={isEmploymentViewOpen}
         />
