@@ -360,10 +360,16 @@ export const inputFieldStyle = {
   margin: "10px",
   padding: 0,
 };
+ 
 export const inputFieldStyle2 = {
   width: "100%",
   margin: "10px 0px",
-  padding: 0,
+  padding: 0
+};
+export const datePickerinputFieldStyle2 = {
+  '& .MuiFormControl-root':{
+    ...inputFieldStyle2
+  }
 };
 export const inputFieldStyleAdded = {
   width: "100%",

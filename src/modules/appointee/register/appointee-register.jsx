@@ -25,6 +25,7 @@ import {
   activeStepStyle,
   candidateRegistrationFormContainerStyle,
   checkBoxLabelStyle,
+  datePickerinputFieldStyle2,
   fileUploadSectionContainerStyle,
   formHeadingContainerStyle,
   formHeadingGridContainerStyle,
@@ -33,8 +34,10 @@ import {
   heading2,
   headingType1,
   indActiveStepStyle,
+  inputFieldStyle,
   inputFieldStyle2,
   lable1CopyStyle,
+  lable1Style,
   positionRelative,
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
@@ -96,6 +99,8 @@ import {
   uploadFormatErrorMsg,
   passportExpireddMsg,
 } from "shared/constants/constants";
+import DatePicker from "shared/utils/date-picker/date-picker";
+import dayjs from 'dayjs';
 import { DisableSection } from "shared/components/disble-section/disble-section";
 import VerificationStatus from "../../../shared/components/verification/verification-status";
 import { Autorenew, HelpOutline } from "@mui/icons-material";
@@ -126,7 +131,7 @@ import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
 
 const AppointeeRegister = () => {
   const steps = ["Step 1", "Step 2", "Step 3"];
-
+  //const today = dayjs(); 
   // Function to retrieve saved step from localStorage
   const [activeStep, setActiveStep] = useState(0);
   const dropdownList = useSelector((state) => state.dropdownList);
@@ -1787,40 +1792,33 @@ const AppointeeRegister = () => {
                             />
                           </Grid>
                           <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
+                          <FormControl sx={{...datePickerinputFieldStyle2}} fullWidth>
                             <Typography sx={lable1CopyStyle}>
                               Date Of Birth
                               <span className="requiredField">*</span>
                             </Typography>
+                            
 
-                            <TextField
-                              onChange={(e) => {
-                                setDateOfBirth(e.target.value);
-                              }}
-                              error={false}
-                              id="date"
-                              className="customeTextField"
-                              type="date"
-                              defaultValue="yyy-mm-dd"
-                              value={dateOfBirth}
+                            <DatePicker
                               disabled={isAadhaarVarified}
-                              sx={{ ...inputFieldStyle2 }}
-                              InputLabelProps={{
-                                shrink: true,
+                              style={{ ...datePickerinputFieldStyle2 }}
+                              //label="Date of Birth"
+                              value={dateOfBirth ? dayjs(dateOfBirth) : null}
+                              setValue={(newDate) => {
+                                if (newDate) {
+                                  setDateOfBirth(newDate.format('YYYY-MM-DD'));
+                                }
                               }}
-                              InputProps={{ inputProps: { max: today } }}
+                              disableFuture={true}
+                              maxDate={dayjs()}
+                              minDate={null}
                             />
+                            </FormControl>
+
                           </Grid>
-                        </Grid>
-                        <Grid
-                          container
-                          rowSpacing={1}
-                          columnSpacing={2.5}
-                          item
-                          xs={12}
-                          sx={formHeadingGridContainerStyle}
-                        >
-                          <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                            <Typography sx={lable1CopyStyle}>
+
+                          <Grid item xs={12} md={6}  sx={{ paddingLeft: '0px !important' }}>
+                            <Typography sx={lable1Style}>
                               Father's/ Husband's Name
                               <span className="requiredField">*</span>
                             </Typography>
