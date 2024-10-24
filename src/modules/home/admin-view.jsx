@@ -130,7 +130,7 @@ import {
                           id="demo-simple-select"
                           value={dayRange}
                           className="customeTextField"
-                          sx={{ ...inputFieldStyle, bgcolor: "#fff", ml: 0 }}
+                          sx={{ ...inputFieldStyle, bgcolor: "#fff", md:6 ,ml:0,height:'49px' }}
                           onChange={(event) => setDayRange(event.target.value)}
                         >
                           {days &&
