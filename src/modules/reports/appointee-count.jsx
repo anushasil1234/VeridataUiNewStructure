@@ -61,7 +61,7 @@ const AppointeeCount = () => {
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
 
   const { navigateTo } = commonHooksFunctionSlice[0];
- 
+
   const { getAppointeeCounterReport } = apiSlice[0];
   const { reportFilterStatusList, entityList } = dropdownList && dropdownList.length > 0 && dropdownList[0];
   const [toDate, setToDate] = useState(null);
@@ -70,8 +70,8 @@ const AppointeeCount = () => {
   const [appointeeCountDateWises, setAppointeeCountDateWises] = useState();
   const [appointeeCountListDetails, setAppointeeCountListDetails] = useState();
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
-  const[isExalListOpened,setisExalListOpened]=useState(false)
-  const {showErrorMessage} =popUpSlice[0]
+  const [isExalListOpened, setisExalListOpened] = useState(false)
+  const { showErrorMessage } = popUpSlice[0]
   const [appointeeName, setAppointeeName] = useState(null);
   const [statusCode, setStatusCode] = useState(null);
   const [entityId, setEntityId] = useState([]);
@@ -99,11 +99,11 @@ const AppointeeCount = () => {
     const response = await getAppointeeCounterReport(payLoad);
 
     if (response) {
-     
+
       const { responseInfo } = response;
       const { appointeeCountDateWises, appointeeCountListDetails, filedata } =
-        responseInfo; 
-        console.log("fileData", filedata)
+        responseInfo;
+      console.log("fileData", filedata)
       setAppointeeCountDateWises(appointeeCountDateWises);
       setAppointeeCountListDetails(appointeeCountListDetails);
       setFileData(filedata);
@@ -143,37 +143,33 @@ const AppointeeCount = () => {
   const handleClickOnDownload = () => {
     setIsDownloadListOpened(!isDownloadListOpened);
   };
-  const handleExalListDownload=()=>{
+  const handleExalListDownload = () => {
     setisExalListOpened(!isExalListOpened)
   }
   var date = moment();
   var currentDate = date?.format("DDMMYYYY");
-//   const generateBlobFromBase64 = (base64String) => {
-//     const byteCharacters = atob(base64String);
-//     const byteNumbers = new Uint8Array(byteCharacters.length);
-//     for (let i = 0; i < byteCharacters.length; i++) {
-//         byteNumbers[i] = byteCharacters.charCodeAt(i);
-//     }
-//     return new Blob([byteNumbers], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-// };
 
-const handleDownload = () => {
-  if (fileData && typeof fileData === 'object') {
-      const base64String = fileData.fileData; 
-      const fileName = fileData.fileName || "appointee_data.xlsx"; 
+
+  const handleDownload = () => {
+    if (!fileData || fileData.length === 0) {
+      showErrorMessage(reportGenarate);
+      return;
+    }
+    if (fileData && typeof fileData === 'object') {
+      const base64String = fileData.fileData;
+      const fileName = fileData.fileName || "appointee_data.xlsx";
       const blob = generateBlobFromBase64(base64String);
       const blobUrl = window.URL.createObjectURL(blob);
       downloadFile(blobUrl, fileName);
       window.URL.revokeObjectURL(blobUrl);
-      console.log("Downloaded Blob for:", fileName); 
-  } 
-};
+    }
+  };
 
   const handleAppointeeCountDownload = () => {
     if (!appointeeCountDateWises || appointeeCountDateWises.length === 0) {
       showErrorMessage(reportGenarate);
-     return;
-   }
+      return;
+    }
     const tableHeadList = appointeeCountHeadCell.map(({ label }) => ({
       title: label,
     }));
@@ -186,7 +182,7 @@ const handleDownload = () => {
       headerList: tableHeadList,
       rows: tableBodyList,
       tableName: "Count Details",
-      
+
     };
 
     jsPDFReportDataTemplate({
@@ -196,7 +192,7 @@ const handleDownload = () => {
         fromDate: fromDate,
         toDate: toDate,
         rptDesc: generateAppointeeCountReportDesc,
-       
+
       },
       tables: [tableObj],
     });
@@ -204,7 +200,7 @@ const handleDownload = () => {
   const handleAppointeeDetailsDownload = () => {
 
     if (!appointeeCountDateWises || appointeeCountDateWises.length === 0) {
-       showErrorMessage(reportGenarate);
+      showErrorMessage(reportGenarate);
       return;
     }
     let totaltable = [];
@@ -236,12 +232,12 @@ const handleDownload = () => {
       });
 
     } else {
-      
+
       entityList?.map((currEntity) => {
         const companyWiseTable = appointeeCountListDetails.filter(({ companyId, companyName }) => {
           return currEntity.id === companyId
         });
-       
+
         if (companyWiseTable.length > 0) {
           const tableBodyList = companyWiseTable.map((appointeeCount) => {
             return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
@@ -255,9 +251,9 @@ const handleDownload = () => {
           totaltable.push(tableObj);
         }
       });
-      
+
     }
-    
+
     jsPDFReportDataTemplate({
       reportDetails: {
         fileName: `Appointee_Count_${currentDate}`,
@@ -265,7 +261,7 @@ const handleDownload = () => {
         fromDate: fromDate,
         toDate: toDate,
         rptDesc: generateAppointeeCountReportDesc,
-       
+
       },
       tables: totaltable,
     });
@@ -497,7 +493,7 @@ const handleDownload = () => {
                           <Assessment width={18} />
                         </ResponsiveFab>
                       </DarkTooltip>
-                     
+
                     </ListItemButton>
                     <ListItemButton component="a">
                       <DarkTooltip
@@ -515,12 +511,12 @@ const handleDownload = () => {
                           <ArticleIcon width={18} />
                         </ResponsiveFab>
                       </DarkTooltip>
-                     
+
                     </ListItemButton>
                   </List>
                 )}
               </Box>
-              
+
             </Box>
           </Grid>
 
