@@ -10,6 +10,8 @@ import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import { removeActionRoute } from "store/slices/action-route-slice";
 
 import {generatenationlityReportDesc } from "shared/constants/constants"
+import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
+import downloadFile from "shared/utils/associate/download-file";
 const NationalityReportView = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
@@ -17,6 +19,7 @@ const NationalityReportView = (props) => {
   const [toDate, setToDate] = useState(null);
   const [nationalityType, setNationalityType] = useState(null);
   const [nationalityDetails, setNationalityDetails] = useState();
+  const[fileData,setFiledata]=useState(null)
   const apiSlice = useSelector(state => state.apiSlice);
    const popUpSlice = useSelector(state => state.popUpSlice);
    
@@ -64,8 +67,10 @@ const NationalityReportView = (props) => {
 
     const response = await getAppointeeNationalityReport(payLoad);
     if (response) {
-      const { appointeeDetails,Filedata } = response?.responseInfo;
+      const { appointeeDetails,filedata } = response?.responseInfo;
       setNationalityDetails(appointeeDetails);
+      setFiledata(filedata)
+   
 
       let generatedCells = generateTableRowData(
         appointeeDetails,
@@ -143,7 +148,20 @@ const NationalityReportView = (props) => {
       tables: [tableObj],                               
     });
   };
-
+  const handleDownloadxlsx = () => {
+    if (!fileData || fileData.length === 0) {
+      showErrorMessage(reportGenarate);
+      return;
+    }
+    if (fileData && typeof fileData === 'object') {
+        const base64String = fileData.fileData; 
+        const fileName = fileData.fileName || "appointee_data.xlsx"; 
+        const blob = generateBlobFromBase64(base64String);
+        const blobUrl = window.URL.createObjectURL(blob);
+        downloadFile(blobUrl, fileName);
+        window.URL.revokeObjectURL(blobUrl);
+    } 
+  };
   // const handleNaltionalityListDownload = () => {
   //   const tableHeadList = nationalityReportTableHeadCell.map(({ label }) => {
   //     return {
@@ -201,6 +219,7 @@ const NationalityReportView = (props) => {
           dropdownFilterType={nationalityType}
           dropdownFilterTypeChange={handleNationalityChange}
           hasPermission={hasPermission}
+          handleDownloadxlsx={handleDownloadxlsx}
         />
 
         <DataTable

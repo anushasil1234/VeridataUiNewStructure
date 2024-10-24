@@ -36,6 +36,7 @@ const DownloadReportFilter = ({
   dropdownFilterTypeChange,
   filterCode,
   hasPermission,
+  handleDownloadxlsx
 }) => {
   const { popUpSlice } = useSelector(
     (state) => state
@@ -212,7 +213,7 @@ const DownloadReportFilter = ({
                     >
                       <ArticleIcon width={18} sx={{ color: "#fff" }} />
                     </ResponsiveFab> */}
-                      <Button variant="contained">XLSX</Button>
+                      <Button variant="contained" onClick={handleDownloadxlsx}>XLSX</Button>
                   </DarkTooltip>
                 </ListItemButton>
               </List>
