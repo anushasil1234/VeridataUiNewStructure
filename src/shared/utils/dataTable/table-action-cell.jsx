@@ -134,7 +134,7 @@ export const TableActionCell = (props1, props2) => {
       return (
         <>
           {action === "VIEWDETAILS" && actionPermissionList && actionPermissionList['A001'] ? (
-            <DarkTooltip placement="top" title={"Open details"} arrow>
+            <DarkTooltip placement="top" title={"Open Details"} arrow>
               <Fab
                 mood="V"
                 variant="contained"
@@ -147,7 +147,7 @@ export const TableActionCell = (props1, props2) => {
             </DarkTooltip>
           ) : null}
           {action === "VIEWUSERDETAILS" && actionPermissionList && actionPermissionList['A001'] ? (
-            <DarkTooltip placement="top" title={"Open details"} arrow>
+            <DarkTooltip placement="top" title={"Open Details"} arrow>
               <Fab
                 mood="V"
                 variant="contained"
@@ -160,7 +160,7 @@ export const TableActionCell = (props1, props2) => {
             </DarkTooltip>
           ) : null}
           {action === "NOTIFYMAIL" && actionPermissionList && actionPermissionList['A005'] ? (
-            <DarkTooltip placement="top" title={"Notify appointee"} arrow>
+            <DarkTooltip placement="top" title={"Notify Appointee"} arrow>
               <Fab
                 appointeeId={appointeeId}
                 mood="V"
@@ -175,7 +175,7 @@ export const TableActionCell = (props1, props2) => {
             </DarkTooltip>
           ) : null}
           {action === "USERMAILRESEND"  ? (
-            <DarkTooltip placement="top" title={"Resend appointee Login Info"} arrow>
+            <DarkTooltip placement="top" title={"Resend Appointee Login Info"} arrow>
               <Fab
                 appointeeId={appointeeId}
                 mood="V"
@@ -277,7 +277,7 @@ export const TableActionCell = (props1, props2) => {
             </DarkTooltip>
           ) : null}
           {action === "UPDTEAPNTEE" && actionPermissionList && actionPermissionList['A007'] ? (
-            <DarkTooltip placement="top" title={"Edit appointee"} arrow>
+            <DarkTooltip placement="top" title={"Edit Appointee"} arrow>
               <Fab
                 variant="contained"
                 size="small"
@@ -289,7 +289,7 @@ export const TableActionCell = (props1, props2) => {
             </DarkTooltip>
           ) : null}
           {action === "UPDATEUSER" && actionPermissionList && actionPermissionList['A007'] ? (
-            <DarkTooltip placement="top" title={"Edit user"} arrow>
+            <DarkTooltip placement="top" title={"Edit User"} arrow>
               <Fab
                 variant="contained"
                 size="small"
