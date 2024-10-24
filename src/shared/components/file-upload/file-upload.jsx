@@ -96,7 +96,7 @@ const FileUpload = ({ modalConfirmation, SetFileId, files, setFiles, removeFile,
         <div>
             <Stack sx={fileCard}>
                 <Typography>
-                    Choose a XLS file to upload:
+                    Choose a .XLSX file to upload:
                 </Typography>
                 <Stack ml={2}>
                     <Box sx={fileInputs}>

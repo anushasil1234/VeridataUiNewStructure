@@ -97,7 +97,7 @@ const FileUpdate = ({ files, setFiles, removeFile,
         <div>
             <Stack sx={fileCard}>
                 <Typography>
-                    Choose a XLS file to update:
+                    Choose a .XLSX file to update:
                 </Typography>
                 <Stack ml={2}>
                     <Box sx={fileInputs}>
