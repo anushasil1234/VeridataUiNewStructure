@@ -922,6 +922,7 @@ export const memberNameStyle = {
 };
 export const appointeeImageViewStyle = {
   width: { xs: '6vw', md: '2vw' },
+  cursor: "pointer"
 }
 export const displayImageStyle = {
   height: 'auto',
@@ -1142,7 +1143,7 @@ export const otpInputSeperatorSx = {
 // Full screen model starts
 export const fullScreenListItemStyle = {
   paddingY: "20px",
-  paddingX: { xs: "3px", md: "16px" }
+  paddingX: { xs: "16px", md: "24px" }
 };
 // status chart style start
 const secondary = ThemeColorPalete.secondary.main;
@@ -1309,7 +1310,7 @@ export const fileImageStyle = {
 export const imageFileContainerStackStyle = {
   mt: 2,
   justifyItems: "center",
-  width: "500px"
+  width: { md:"500px", xl: "900px"}
 }
 
 export const button2 = {
