@@ -1,0 +1,40 @@
+import { Divider, List, ListItem, ListItemText } from '@mui/material'
+import { prerequisiteListStyle, stepModelDividerStyle } from 'app'
+import React from 'react'
+import StepModelSecondaryText from './StepModelSecondaryText'
+import StepCount from './StepCount'
+
+const Steps = ({ stepList }) => {
+
+    return (
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            {
+                stepList?.map(({ StepNumber, primaryHeading, secondaryText, secondaryComponent }) => {
+                    return (
+                        <>
+                            <ListItem alignItems="flex-start">
+                                <StepCount stepNumber={StepNumber} />
+                                <ListItemText
+                                    sx={prerequisiteListStyle}
+                                    primary={primaryHeading}
+                                    secondary={
+                                        <>
+                                            <StepModelSecondaryText>
+                                                {secondaryText && secondaryText}
+                                            </StepModelSecondaryText>
+                                            {secondaryComponent && secondaryComponent}
+                                        </>
+                                    }
+                                />
+                            </ListItem>
+                            <Divider sx={stepModelDividerStyle} variant="inset" component="li" />
+                        </>
+                    )
+                })
+            }
+
+        </List>
+    )
+}
+
+export default Steps
