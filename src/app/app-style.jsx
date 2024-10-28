@@ -1312,7 +1312,9 @@ export const imageFileContainerStackStyle = {
   justifyItems: "center",
   width: { md:"500px", xl: "900px"}
 }
-
+export const listTableBoxContainerStyle = {
+  width: "100%"
+}
 export const button2 = {
   bgcolor: ThemeColorPalete.primary.main,
   color: ThemeColorPalete.common.white,
