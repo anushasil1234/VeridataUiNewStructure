@@ -1310,7 +1310,7 @@ export const fileImageStyle = {
 export const imageFileContainerStackStyle = {
   mt: 2,
   justifyItems: "center",
-  width: { md:"500px", xl: "900px"}
+  width: { md: "500px", xl: "900px" }
 }
 export const listTableBoxContainerStyle = {
   width: "100%"
@@ -1485,4 +1485,16 @@ export const stepAvataContainerStyle = {
 
 export const stepModelDividerStyle = {
   marginLeft: { xs: '63px', md: '72px' }
+}
+
+export const submitBtnStyle = {
+  width: 'fit-content',
+  height: 'fit-content',
+  marginTop: '10px',
+  marginBottom: '10px',
+  marginRight:  '24px'
+}
+
+export const submitBtnContainerStyle = {
+  flexDirection: { xs: 'column', md: 'row' }
 }

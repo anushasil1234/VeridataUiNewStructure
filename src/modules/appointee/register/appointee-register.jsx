@@ -40,6 +40,8 @@ import {
   lable1Style,
   positionRelative,
   subHeadingContentTextStyle,
+  submitBtnContainerStyle,
+  submitBtnStyle,
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -2415,44 +2417,50 @@ const AppointeeRegister = () => {
                           </Grid>
                         ) : null}
                         {/* ###### Others Details Section End ###### */}
-                        <Stack
-                          sx={{ marginTop: "16px" }}
-                          flexDirection={"row"}
-                          ml={"25px"}
+                        <Grid
+                          container
+                          rowSpacing={1}
+                          columnSpacing={2.5}
+                          item
+                          xs={12}
+                          sx={formHeadingGridContainerStyle}
                         >
-                          <Button
-                            xs={12}
-                            name="save"
-                            onClick={() => setClickedButton("S")}
-                            type="submit"
-                            sx={{ m: "10px 5px" }}
-                            variant="contained"
-                            color="primary"
-                            disabled={!isDraft} // Hide saveButton when clickedButton is "N"
-                          >
-                            {saveButton}
-                          </Button>
-                          <Button
-                            name="save_and_next"
-                            onClick={() => setClickedButton("N")}
-                            type="submit"
-                            sx={{ m: "10px 5px" }}
-                            variant="contained"
-                            color="primary"
-                          >
-                            {saveAndNextbutton}
-                          </Button>
-
-                          <Button
-                            onClick={handleSecondNext}
-                            sx={{ m: "10px 5px" }}
-                            variant="contained"
-                            color="primary"
-                            disabled={isDraft} // Show Next button only when clickedButton is "N"
-                          >
-                            Next
-                          </Button>
-                        </Stack>
+                          <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
+                            <Stack sx={submitBtnContainerStyle}>
+                              <Button
+                                xs={12}
+                                name="save"
+                                onClick={() => setClickedButton("S")}
+                                type="submit"
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={!isDraft} // Hide saveButton when clickedButton is "N"
+                              >
+                                {saveButton}
+                              </Button>
+                              <Button
+                                name="save_and_next"
+                                onClick={() => setClickedButton("N")}
+                                type="submit"
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                              >
+                                {saveAndNextbutton}
+                              </Button>
+                              <Button
+                                onClick={handleSecondNext}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={isDraft} // Show Next button only when clickedButton is "N"
+                              >
+                                Next
+                              </Button>
+                            </Stack>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </form>
                   </Box>
@@ -2545,7 +2553,6 @@ const AppointeeRegister = () => {
                               maxUploadSize={imgAndPdfMaxSize}
                             />
                           </Box>
-
                         </Grid>
                       </Grid>
                       <Grid
@@ -2961,6 +2968,65 @@ const AppointeeRegister = () => {
                         </Grid>
                       </Grid>
                       {/* ######  UAN number Section End ###### */}
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={2.5}
+                        item
+                        xs={12}
+                        sx={formHeadingGridContainerStyle}
+                      >
+                        <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
+                          <Stack sx={submitBtnContainerStyle}>
+                            <Stack flexDirection={'row'}>
+                              <Button
+                                //onClick={() => setCurrentPageNo(1)}
+                                onClick={handleBack}
+                                //sx={{ m: "15px 5px", ml: 3 }}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                              >
+                                {previousButton}
+                              </Button>
+                              <Button
+                                name="save"
+                                // disabled={isSubmitDisabled}
+                                onClick={DraftSave}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={isPreviousSectionDisabled}
+                              >
+                                Save as Draft
+                              </Button>
+                            </Stack>
+                            <Stack flexDirection={'row'}>
+                              <Button
+                                name="save"
+                                // disabled={isSubmitDisabled}
+                                onClick={handleSaveClick}
+                                //sx={{ m: "15px 25px", ml: 3 }}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={isPreviousSectionDisabled}
+                              >
+                                Save
+                              </Button>
+                              <Button
+                                onClick={handleNext}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={isthirdNextVisible === false}
+                              >
+                                Next
+                              </Button>
+                            </Stack>
+                          </Stack>
+                        </Grid>
+                      </Grid>
                     </Grid>
                     <Dialog
                       open={isModalOpen}
@@ -3061,7 +3127,7 @@ const AppointeeRegister = () => {
                                     disabled
                                     checked
                                     inputProps={{ "aria-label": "controlled" }}
-                                    sx={{paddingLeft: 0}}
+                                    sx={{ paddingLeft: 0 }}
                                   />
                                 }>
                               </FormControlLabel>
@@ -3076,7 +3142,7 @@ const AppointeeRegister = () => {
                                 control={
                                   <Checkbox
                                     checked={isOfflineXmlDownloaded}
-                                    sx={{paddingLeft: 0}}
+                                    sx={{ paddingLeft: 0 }}
                                     onChange={
                                       handleIsOfflineXmlDownloadedOnChange
                                     }
@@ -3381,11 +3447,50 @@ const AppointeeRegister = () => {
                         </Grid>
                       </Grid>
                       {/* ######  UAN Verification Section End ###### */}
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={2.5}
+                        item
+                        xs={12}
+                        sx={formHeadingGridContainerStyle}
+                      >
+                        <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
+                          <Stack flexDirection={'row'}>
+                            <Button
+                              //onClick={() => setCurrentPageNo(1)}
+                              onClick={handleBack}
+                              //sx={{ m: "15px 5px", ml: 3 }}
+                              sx={submitBtnStyle}
+                              variant="contained"
+                              color="primary"
+                            >
+                              {previousButton}
+                            </Button>
+
+                            {(isUanVerificationProcessManual === 'manual') && (
+                              <>
+                                <Button
+                                  //onClick={() => setCurrentPageNo(1)}
+                                  onClick={() => submitDetails(false, true)}
+                                  //sx={{ m: "15px 5px", ml: 3 }}
+                                  sx={submitBtnStyle}
+                                  variant="contained"
+                                  color="primary"
+                                >
+                                  {'Submit'}
+                                </Button>
+                              </>
+                            )}
+                          </Stack>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </form>
                 </Box>
               ) : null}
-              <form ref={formElement}>
+
+              {/* <form ref={formElement}>
                 <Grid sx={positionRelative} item xs={12}>
                   <Grid
                     mt={3}
@@ -3479,7 +3584,7 @@ const AppointeeRegister = () => {
                     </Box>
                   </Grid>
                 </Grid>
-              </form>
+              </form> */}
             </Grid>
           </Grid>
         </Box>
