@@ -813,10 +813,8 @@ export const headingType1 = {
 }
 
 export const checkBoxLabelStyle = {
-  '&.MuiFormControlLabel-label': {
-    ...fontSizeType1,
-    backgroundColor: 'red!important'
-  }
+  ...lable1CopyStyle,
+  margin: 'auto'
 }
 export const genderSectionContainer = {
   flexDirection: "row",

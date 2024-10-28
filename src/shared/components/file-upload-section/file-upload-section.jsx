@@ -4,8 +4,8 @@ import React from 'react'
 import { maxUploadSize, defaultUploadFormat } from 'shared/constants/constants'
 import UploadButton from '../upload-button.jsx/upload-button'
 
-const FileUploadSection = ({ chooseFile, fileName, accept,disabled}) => {
-    const fileType =  `Accepted format: ${accept}`;
+const FileUploadSection = ({ chooseFile, fileName, accept, disabled, maxUploadSize }) => {
+    const fileType = `Accepted format: ${accept}`;
     return (
         <Stack sx={fileInputboxContainerStyle}>
             <Box sx={fileInputs}>
@@ -16,16 +16,16 @@ const FileUploadSection = ({ chooseFile, fileName, accept,disabled}) => {
                     onChange={chooseFile}
                     disabled={disabled}
                 />
-                <UploadButton disabled={disabled} fileName={fileName}/>
+                <UploadButton disabled={disabled} fileName={fileName} />
             </Box>
             <Stack alignItems={"center"}>
                 <Typography paddingX={"12px"} fontSize={".7rem"} marginTop={.25}>
-                    {fileName ? fileName : maxUploadSize}
+                    {fileName ? fileName : maxUploadSize ? `maxsize: ${maxUploadSize}` : null}
                 </Typography>
                 {
                     !fileName &&
-                    <Typography fontSize={".7rem"} textAlign={'center'}  marginTop={.25}>
-                       {accept ? fileType:  defaultUploadFormat }
+                    <Typography fontSize={".7rem"} textAlign={'center'} marginTop={.25}>
+                        {accept ? fileType : defaultUploadFormat}
                     </Typography>
                 }
             </Stack>
