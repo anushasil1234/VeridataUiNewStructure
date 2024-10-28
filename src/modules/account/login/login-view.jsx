@@ -116,7 +116,7 @@ export const LoginView = () => {
                   style={styles.btnstyle}
                   fullWidth
                   onClick={handleSSOLogin}
-                >Admin User Sign in
+                >Admin User Sign In
                 </Button>
               </Grid>
             </Grid>
