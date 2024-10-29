@@ -47,6 +47,7 @@ const AppointeeDataReportView = (props) => {
 
   const clearSearch = () => {
     setFromDate(null);
+    setToDate(null);
     setStatusCode('All');
     setFilterType(0);
     const payLoad = {
