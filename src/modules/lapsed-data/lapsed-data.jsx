@@ -1,5 +1,6 @@
 import { Download, Refresh, Search, Summarize } from "@mui/icons-material";
 import {
+  Box,
   FormControl,
   Grid,
   InputLabel,
@@ -29,7 +30,7 @@ import {
 import DatePicker from "shared/utils/date-picker/date-picker";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import dayjs from "dayjs";
-import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab,downLoadListSx } from "app";
+import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab,downLoadListSx, datePickerstyle } from "app";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import moment from "moment";
@@ -234,6 +235,7 @@ if(!responseList || responseList.length === 0){
       <CardLayout>
         <Grid container spacing={1}alignItems="center" >
           <Grid item xs={3}>
+            <Box sx={{ ...datePickerstyle }}>
             <DatePicker
               label={"From Date"}
               value={fromDate}
@@ -241,8 +243,10 @@ if(!responseList || responseList.length === 0){
               setValue={setFromDate}
               disableFuture={true}
             />
+            </Box>
           </Grid>
           <Grid item xs={3}>
+          <Box sx={{ ...datePickerstyle }}>
             <DatePicker
               label={"To Date"}
               value={toDate}
@@ -250,6 +254,7 @@ if(!responseList || responseList.length === 0){
               setValue={setToDate}
               disableFuture={true}
             />
+             </Box>
           </Grid>
           <Grid item xs={2}>
             <FormControl sx={{ width: "100%" }} size="large">

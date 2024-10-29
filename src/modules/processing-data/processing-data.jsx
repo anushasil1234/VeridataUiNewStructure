@@ -19,6 +19,7 @@ import {
 } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import {
+  Box,
   FormControl,
   Grid,
   InputLabel,
@@ -27,7 +28,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { inputFieldStyleAdded, primaryFabStyle,ResponsiveFab ,downLoadListSx} from "app";
+import { inputFieldStyleAdded, primaryFabStyle,ResponsiveFab ,downLoadListSx, datePickerstyle} from "app";
 import { Assessment, Download, Refresh, Search, Summarize  } from "@mui/icons-material";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
@@ -244,8 +245,10 @@ const handleClick = async () => {
   return (
     <PageLayout pageName={pageName}>
       <CardLayout>
-        <Grid container spacing={1} alignItems="center"> 
-          <Grid item xs={3}>
+        <Grid container  spacing={1} alignItems="center"> 
+      
+          <Grid item xs={3} spacing={1}>
+          <Box sx={{ ...datePickerstyle }}>
             <DatePicker
               label={"From Date"}
               value={fromDate}
@@ -253,8 +256,10 @@ const handleClick = async () => {
               setValue={setFromDate}
               disableFuture={true}
             />
+            </Box>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3} spacing={1}>
+          <Box sx={{ ...datePickerstyle }}>
             <DatePicker
               label={"To Date"}
               value={toDate}
@@ -262,8 +267,10 @@ const handleClick = async () => {
               setValue={setToDate}
               disableFuture={true}
             />
+          </Box>
           </Grid>
-          <Grid item xs={2}>
+          
+          <Grid item xs={3} spacing={1}>
             <FormControl sx={{ width: "100%" }} size="large">
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               {statusCode !== undefined && (
@@ -288,7 +295,7 @@ const handleClick = async () => {
               )}
             </FormControl>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3} spacing={1}>
             <FormControl sx={{ width: "100%" }} size="large">
               <InputLabel id="demo-select-small" >Passbook Status</InputLabel>
               {passbookStatus !== undefined && (
