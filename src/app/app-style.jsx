@@ -1420,7 +1420,13 @@ export const subHeadingContentTextStyle = {
 
 export const prerequisiteListStyle = {
   '& span': {
-    ...midiumFontSize
+    ...midiumFontSize,
+  },
+  '& >span': {
+    color: '#9A208C'
+  },
+  '&>p': {
+    marginTop: '5px'
   }
 }
 

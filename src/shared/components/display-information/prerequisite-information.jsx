@@ -73,7 +73,6 @@ const PrerequisiteInformation = () => {
                         {/* </Button> */}
                     </Box>
                 </>
-
         },
         {
             StepNumber: 'Tenth Pass Certificate',
@@ -95,7 +94,7 @@ const PrerequisiteInformation = () => {
         }
     ]
     return (
-            <Steps stepList={stepList} />
+        <Steps stepList={stepList} />
     )
 }
 
