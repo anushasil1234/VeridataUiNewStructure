@@ -1,6 +1,7 @@
 import { Download, Refresh, Search, Summarize } from "@mui/icons-material";
 import {
   Box,
+  Grid,
   Fab,
   FormControl,
   InputLabel,
@@ -12,7 +13,7 @@ import {
   TextField,
   useTheme
 } from "@mui/material";
-import { downLoadListSx, inputFieldStyle, primaryFabStyle,ResponsiveFab } from "app";
+import { datePickerstyle, downLoadListSx, inputFieldStyle, primaryFabStyle,ResponsiveFab } from "app";
 import React, { useState } from "react";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
@@ -66,83 +67,94 @@ const DownloadReportFilter = ({
 
 
   return (
-      <Box my={2} display="flex" direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-        <Box sx={{ marginRight: 2 }}>
-          <FormControl sx={{ minWidth: 180 }} size="large">
-            <InputLabel id="demo-select-small">Filter</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={filterType}
-              label="Filter"
-              onChange={(e) => setFilterType(e.target.value)}
-            >
-              <MenuItem value={0}>All</MenuItem>
-              <MenuItem value={1}>Custom</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-    
-        {filterType !== 0 && (
-          <>
-            <Box display="flex" alignItems="center" spacing={2}>
-              <Box sx={{ marginRight: 2 }}>
-                <DatePicker
-                  label="From Date"
-                  value={fromDate}
-                  setValue={setFromDate}
-                  disableFuture={true}
-                />
-              </Box>
-              <Box sx={{ marginRight: 2 }}>
-                <DatePicker
-                  label="To Date"
-                  value={toDate}
-                  setValue={setToDate}
-                  disableFuture={true}
-                />
-              </Box>
-              <Box display="flex" alignItems="center" spacing={1}>
-                {filterCode === 'NATNLTY' ? (
-                  <FormControl sx={{ minWidth: 180 }} size="large">
-                    <InputLabel id="demo-select-small">Nationality</InputLabel>
-                    <Select
-                      labelId="demo-select-small"
-                      id="demo-select-small"
-                      value={dropdownFilterType}
-                      label="Nationality"
-                      onChange={(e) => dropdownFilterTypeChange(e.target.value)}
-                    >
-                      <MenuItem value="All">Select all</MenuItem>
-                      <MenuItem value="IN">Indian</MenuItem>
-                      <MenuItem value="OTH">Foreigner</MenuItem>
-                    </Select>
-                  </FormControl>
-                ) : filterCode === 'APPNTE' ? (
-                  <FormControl sx={{ minWidth: 180 }} size="large">
-                    <InputLabel id="demo-select-small">Status</InputLabel>
-                    <Select
-                      labelId="demo-select-small"
-                      id="demo-select-small"
-                      value={dropdownFilterType}
-                      label="Status"
-                      onChange={(e) => dropdownFilterTypeChange(e.target.value)}
-                    >
-                      <MenuItem value="All">Select all</MenuItem>
-                      <MenuItem value="001">Under Process</MenuItem>
-                      <MenuItem value="003">Verified</MenuItem>
-                      <MenuItem value="004">Rejected</MenuItem>
-                      <MenuItem value="005">Lapsed</MenuItem>
-                    </Select>
-                  </FormControl>
-                ) : null}
-              </Box>
+    <Grid
+      container
+      spacing={2}
+      alignItems="center"
+      justifyContent="flex-start"
+      my={2}
+    >
+      <Grid item xs={12} sm={6} md={3} >
+        <FormControl fullWidth size="large">
+          <InputLabel id="demo-select-small">Filter</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={filterType}
+            label="Filter"
+            onChange={(e) => setFilterType(e.target.value)}
+          >
+            <MenuItem value={0}>All</MenuItem>
+            <MenuItem value={1}>Custom</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+  
+      {filterType !== 0 && (
+        <>
+          <Grid item xs={12} sm={6} md={3} >
+          <Box sx={{ ...datePickerstyle }}>
+            <DatePicker
+              label="From Date"
+              value={fromDate}
+              setValue={setFromDate}
+              disableFuture={true}
+              sx={{ width: '100%' }}
+            />
             </Box>
-          </>
-        )}
-    
-        {/* Action Buttons */}
-        <Box display="flex" alignItems="center" spacing={1}>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3} >
+          <Box sx={{ ...datePickerstyle }}>
+            <DatePicker
+              label="To Date"
+              value={toDate}
+              setValue={setToDate}
+              disableFuture={true}
+              sx={{ width: '100%' }}
+            />
+            </Box>
+          </Grid>
+  
+          <Grid item xs={12} sm={6} md={3}>
+            {filterCode === 'NATNLTY' ? (
+              <FormControl fullWidth size="large">
+                <InputLabel id="nationality-select">Nationality</InputLabel>
+                <Select
+                  labelId="nationality-select"
+                  id="nationality-select"
+                  value={dropdownFilterType}
+                  label="Nationality"
+                  onChange={(e) => dropdownFilterTypeChange(e.target.value)}
+                >
+                  <MenuItem value="All">Select all</MenuItem>
+                  <MenuItem value="IN">Indian</MenuItem>
+                  <MenuItem value="OTH">Foreigner</MenuItem>
+                </Select>
+              </FormControl>
+            ) : filterCode === 'APPNTE' ? (
+              <FormControl fullWidth size="large">
+                <InputLabel id="status-select">Status</InputLabel>
+                <Select
+                  labelId="status-select"
+                  id="status-select"
+                  value={dropdownFilterType}
+                  label="Status"
+                  onChange={(e) => dropdownFilterTypeChange(e.target.value)}
+                >
+                  <MenuItem value="All">Select all</MenuItem>
+                  <MenuItem value="001">Under Process</MenuItem>
+                  <MenuItem value="003">Verified</MenuItem>
+                  <MenuItem value="004">Rejected</MenuItem>
+                  <MenuItem value="005">Lapsed</MenuItem>
+                </Select>
+              </FormControl>
+            ) : null}
+          </Grid>
+        </>
+      )}
+  
+      <Grid item xs={12} sm={6} md={3}  container spacing={1} justifyContent="flex-start">
+        <Grid item>
           <DarkTooltip placement="top" title="Search" arrow>
             <ResponsiveFab
               variant="contained"
@@ -154,6 +166,8 @@ const DownloadReportFilter = ({
               <Search width={18} sx={{ color: "#fff" }} />
             </ResponsiveFab>
           </DarkTooltip>
+        </Grid>
+        <Grid item>
           <DarkTooltip placement="top" title="Clear Search" arrow>
             <ResponsiveFab
               variant="contained"
@@ -165,64 +179,41 @@ const DownloadReportFilter = ({
               <Refresh width={18} sx={{ color: "#fff" }} />
             </ResponsiveFab>
           </DarkTooltip>
-          {hasPermission && hasPermission["A008"] && (
-          <Box sx={{ position: 'relative' }}>
+        </Grid>
+        {hasPermission && hasPermission["A008"] && (
+          <Grid item>
             <DarkTooltip placement="top" title="Download Report" arrow>
               <ResponsiveFab
                 variant="contained"
                 size="small"
                 button="N"
                 onClick={handleDownloadClick}
-                sx={{...primaryFabStyle}}
+                sx={primaryFabStyle}
               >
                 <Download width={18} sx={{ color: "#fff" }} />
               </ResponsiveFab>
             </DarkTooltip>
-
+  
             {isDownloadListOpened && (
-              <List
-                sx={{
-                  ...downLoadListSx,   
-                  left:'-16px',
-                  zIndex: 1000,    
-                }}
-           
-              >
-                <ListItemButton component="a" >
+              <List sx={{ ...downLoadListSx, left: '-16px', zIndex: 1000 }}>
+                <ListItemButton component="a">
                   <DarkTooltip placement="top" title="Download PDF Report" arrow>
-                    {/* <ResponsiveFab
-                      variant="contained"
-                      size="small"
-                      button="N"
-                      sx={primaryFabStyle}
-                      onClick={handleDownload}
-                    >
-                      <Summarize  width={18} sx={{ color: "#fff" }} />
-                    </ResponsiveFab> */}
-                      <Button variant="contained" onClick={ handleDownload}>PDF</Button>
+                    <Button variant="contained" onClick={handleDownload}>PDF</Button>
                   </DarkTooltip>
                 </ListItemButton>
-
                 <ListItemButton component="a">
                   <DarkTooltip placement="top" title="Download XLSX Report" arrow>
-                    {/* <ResponsiveFab
-                      variant="contained"
-                      size="small"
-                      button="N"
-                      sx={primaryFabStyle}
-                    >
-                      <ArticleIcon width={18} sx={{ color: "#fff" }} />
-                    </ResponsiveFab> */}
-                      <Button variant="contained" onClick={handleDownloadxlsx}>XLSX</Button>
+                    <Button variant="contained" onClick={handleDownloadxlsx}>XLSX</Button>
                   </DarkTooltip>
                 </ListItemButton>
               </List>
             )}
-          </Box>
+          </Grid>
         )}
-        </Box>
-      </Box>
-    );
+      </Grid>
+    </Grid>
+  );
+  
     
 };
 
