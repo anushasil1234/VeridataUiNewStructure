@@ -49,6 +49,7 @@ const NationalityReportView = (props) => {
 
   const clearSearch = () => {
     setFromDate(null);
+    setToDate(null);
     setNationalityType(null);
     setFilterType(0);
     const payLoad = {
