@@ -15,11 +15,11 @@ let UnWrappedFilePasswordFormSubmitionForm = (
     const { downloadApi, payLoad } = filePasswordSubmitionProps;
 
     const apiSlice = useSelector((state) => state.apiSlice);
-    const DataSlice = useSelector((state) => state.DataSlice);
+    // const DataSlice = useSelector((state) => state.DataSlice);
 
-    const dispatch = useDispatch();
+    //    const dispatch = useDispatch();
 
-    const fileSubmitionPayLoad = DataSlice[0] && DataSlice[0].fileSubmitionPayLoad;
+    // const fileSubmitionPayLoad = DataSlice[0] && DataSlice[0].fileSubmitionPayLoad;
 
     const { downloadReport } = apiSlice && apiSlice[0];
 
