@@ -74,7 +74,7 @@ const DownloadReportFilter = ({
       justifyContent="flex-start"
       my={2}
     >
-      <Grid item xs={12} sm={6} md={3} >
+      <Grid item xs={12} sm={6} md={3} lg={2} >
         <FormControl fullWidth size="large">
           <InputLabel id="demo-select-small">Filter</InputLabel>
           <Select
@@ -92,7 +92,7 @@ const DownloadReportFilter = ({
   
       {filterType !== 0 && (
         <>
-          <Grid item xs={12} sm={6} md={3} >
+          <Grid item xs={12} sm={6} md={3} lg={2} >
           <Box sx={{ ...datePickerstyle }}>
             <DatePicker
               label="From Date"
@@ -103,7 +103,7 @@ const DownloadReportFilter = ({
             />
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={3} >
+          <Grid item xs={12} sm={6} md={3} lg={2}>
           <Box sx={{ ...datePickerstyle }}>
             <DatePicker
               label="To Date"
@@ -115,7 +115,7 @@ const DownloadReportFilter = ({
             </Box>
           </Grid>
   
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3} lg={2}>
             {filterCode === 'NATNLTY' ? (
               <FormControl fullWidth size="large">
                 <InputLabel id="nationality-select">Nationality</InputLabel>
@@ -153,7 +153,7 @@ const DownloadReportFilter = ({
         </>
       )}
   
-      <Grid item xs={12} sm={6} md={3}  container spacing={1} justifyContent="flex-start">
+      <Grid item xs={12} sm={6} md={3} lg={3} container spacing={1} justifyContent="flex-start">
         <Grid item>
           <DarkTooltip placement="top" title="Search" arrow>
             <ResponsiveFab
