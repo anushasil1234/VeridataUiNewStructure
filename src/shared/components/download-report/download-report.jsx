@@ -1,13 +1,16 @@
 import { Download, Info, Refresh, Search } from "@mui/icons-material";
 import {
   Box,
+  Fab,
   FormControl,
+  Grid,
   InputLabel,
   MenuItem,
   Select,
   Stack,
+  Tooltip,
 } from "@mui/material";
-import { primaryFabStyle,ResponsiveFab } from "app";
+import { datePickerstyle, primaryFabStyle, ResponsiveFab } from "app";
 import React from "react";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
@@ -42,7 +45,7 @@ const DownloadReport = ({
   const {
     openFilePasswordSubmitionModel,
   } = functionSlice[0];
-  
+
   const handleSuccssCallBack = () => {
     const filePasswordSubmitModelProps = {
       downloadApi,
@@ -68,120 +71,136 @@ const DownloadReport = ({
     // }
   };
   return (
-    <Stack my={2} direction="row" justifyContent={"left"} alignItems={"center"}>
-      <Box>
-        <DatePicker
-          label={"From Date"}
-          value={fromDate}
-          maxDate={toDate}
-          setValue={setFromDate}
-          disableFuture={true}
-        />
-      </Box>
-      <Box mx={"0.5rem"}>
-        <DatePicker
-          label={"To Date"}
-          clearable
-          clearText="Clear me"
-          value={toDate}
-          minDate={fromDate}
-          setValue={setToDate}
-          disableFuture={true}
-        />
-      </Box>
-      <Box display="flex" alignItems="center" spacing={1} >
+    <Grid container spacing={2} alignItems="center">
+      <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ ...datePickerstyle }}>
+          <DatePicker
+            label="From Date"
+            value={fromDate}
+            maxDate={toDate}
+            setValue={setFromDate}
+            disableFuture={true}
+          />
+        </Box>
+      </Grid>
+      <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ ...datePickerstyle }}>
+          <DatePicker
+            label="To Date"
+            clearable
+            clearText="Clear me"
+            value={toDate}
+            minDate={fromDate}
+            setValue={setToDate}
+            disableFuture={true}
+          />
+        </Box>
+      </Grid>
       {isStatusFilter && isStatusFilter === true ? (
-        <FormControl sx={{ m: 1, minWidth: 180, }} size="small">
-          <InputLabel id="demo-select-small" >Status</InputLabel>
-          {processStatus !== undefined && (
-            <Select
-            sx={{height:'57px'}}
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={processStatus}
-              label="Status"
-              onChange={handleProcessStatusChange}
-            >
-              <MenuItem value={"All"}>Select all</MenuItem>
-              <MenuItem value={"AP"}>Verified</MenuItem>
-              <MenuItem value={"FA"}>Manual Override</MenuItem>
-            </Select>
-          )}
-        </FormControl>
-      ) : null}
-      </Box>
-      <Box display="flex" alignItems="center" spacing={1} >
+      <Grid item xs={12} sm={6} md={3}>
+          <FormControl sx={{ width: "100%" }} size="small">
+            <InputLabel id="demo-select-small" >Status</InputLabel>
+            {processStatus !== undefined && (
+              <Select
+                sx={{ height: '57px' }}
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={processStatus}
+                label="Status"
+                onChange={handleProcessStatusChange}
+              >
+                <MenuItem value={"All"}>Select all</MenuItem>
+                <MenuItem value={"AP"}>Verified</MenuItem>
+                <MenuItem value={"FA"}>Manual Override</MenuItem>
+              </Select>
+            )}
+          </FormControl>
+        
+      </Grid>
+       ) : null}
+
       {isStatusFilter && isStatusFilter === true ? (
-        <FormControl sx={{ m: 1, minWidth: 180, }} size="small">
-          <InputLabel id="demo-select-small" >Passbook Status</InputLabel>
-          {passbookStatus !== undefined && (
-            <Select
-            sx={{height:'57px'}}
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={passbookStatus}
-              label="Passbook Status"
-              onChange={handlePassbookStatusChange}
+      <Grid item xs={12} sm={6} md={3}>
+          <FormControl sx={{ width: "100%" }} size="small">
+            <InputLabel id="demo-select-small" >Passbook Status</InputLabel>
+            {passbookStatus !== undefined && (
+              <Select
+                sx={{ height: '57px' }}
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={passbookStatus}
+                label="Passbook Status"
+                onChange={handlePassbookStatusChange}
+              >
+                <MenuItem value={'All'}>Select all</MenuItem>
+                <MenuItem value={true}>Manual Passbook</MenuItem>
+                <MenuItem value={false}>AutoFetch Passbook</MenuItem>
+              </Select>
+            )}
+          </FormControl>
+       
+      </Grid>
+        ) : null}
+      <Grid item container xs={12} sm={6} md={4} spacing={0.5} alignItems="center" justifyContent="flex-start">
+        <Grid item >
+          <DarkTooltip placement="top" title={"Search"} arrow>
+            <ResponsiveFab Movement
+              variant="contained"
+              size="small"
+              button={"N"}
+              onClick={handleSearch}
+              sx={{ ...primaryFabStyle }}
             >
-              <MenuItem value={'All'}>Select all</MenuItem>
-              <MenuItem value={true}>Manual Passbook</MenuItem>
-              <MenuItem value={false}>AutoFetch Passbook</MenuItem>
-            </Select>
-          )}
-        </FormControl>
-      ) : null}
-      </Box>
-      <DarkTooltip placement="top" title={"Search"} arrow>
-        <ResponsiveFab  Movement
-          variant="contained"
-          size="small"
-          button={"N"}
-          onClick={handleSearch}
-          // backgroundColor={downloadcolor}
-          // hoverColor={secondary}
-          sx={primaryFabStyle}
-        >
-          <Search width={18} sx={{ color: "#fff" }} />
-        </ResponsiveFab>
-      </DarkTooltip>
-      <DarkTooltip placement="top" title={"Clear Search"} arrow>
-        <ResponsiveFab 
-          variant="contained"
-          size="small"
-          button={"N"}
-          onClick={clearSearch}
-          sx={primaryFabStyle}
-        >
-          <Refresh width={18} sx={{ color: "#fff" }} />
-        </ResponsiveFab>
-      </DarkTooltip>
-      {hasPermission && hasPermission["A008"] && (
-        <DarkTooltip placement="top" title={"Download"} arrow>
-          <ResponsiveFab 
-            variant="contained"
-            size="small"
-            button={"N"}
-            onClick={handleDownload}
-            sx={primaryFabStyle}
-          >
-            <Download width={18} sx={{ color: "#fff" }} />
-          </ResponsiveFab>
-        </DarkTooltip>
-      )}
-      {infoDetails && hasValue(infoDetails) ?
-        <DarkTooltip placement="right" title={infoDetails} arrow>
-          <ResponsiveFab 
-            variant="contained"
-            size="small"
-            button={"N"}
-            sx={primaryFabStyle}
-          >
-            <Info width={18} sx={{ color: "#fff" }} />
-          </ResponsiveFab>
-        </DarkTooltip>
-        : null
-        }
-    </Stack>
+              <Search width={18} sx={{ color: "#fff" }} />
+            </ResponsiveFab>
+          </DarkTooltip>
+        </Grid>
+        <Grid item>
+          <DarkTooltip placement="top" title={"Clear Search"} arrow>
+            <ResponsiveFab
+              variant="contained"
+              size="small"
+              button={"N"}
+              onClick={clearSearch}
+              sx={{ ...primaryFabStyle }}
+            >
+              <Refresh width={18} sx={{ color: "#fff" }} />
+            </ResponsiveFab>
+          </DarkTooltip>
+        </Grid>
+        {hasPermission && hasPermission["A008"] && (
+          <Grid item >
+            <DarkTooltip placement="top" title={"Download"} arrow>
+              <ResponsiveFab
+                variant="contained"
+                size="small"
+                button={"N"}
+                onClick={handleDownload}
+                sx={{ ...primaryFabStyle }}
+              >
+                <Download width={18} sx={{ color: "#fff" }} />
+              </ResponsiveFab>
+            </DarkTooltip>
+          </Grid>
+        )}
+       
+        <Grid item>
+            {infoDetails && hasValue(infoDetails) ?
+            <DarkTooltip placement="right" title={infoDetails} arrow>
+              <ResponsiveFab
+                variant="contained"
+                size="small"
+                button={"N"}
+                sx={{ ...primaryFabStyle }}
+              >
+                <Info width={18} sx={{ color: "#fff" }} />
+              </ResponsiveFab>
+            </DarkTooltip>
+             : null}
+        </Grid>
+        
+      </Grid>
+    </Grid>
   );
 };
 
