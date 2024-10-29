@@ -247,7 +247,7 @@ const handleClick = async () => {
       <CardLayout>
         <Grid container  spacing={1} alignItems="center"> 
       
-          <Grid item xs={3} spacing={1}>
+          <Grid item xs={12} sm={6} md={3} lg={2} spacing={1}>
           <Box sx={{ ...datePickerstyle }}>
             <DatePicker
               label={"From Date"}
@@ -258,7 +258,7 @@ const handleClick = async () => {
             />
             </Box>
           </Grid>
-          <Grid item xs={3} spacing={1}>
+          <Grid item xs={12} sm={6} md={3} lg={2} spacing={1}>
           <Box sx={{ ...datePickerstyle }}>
             <DatePicker
               label={"To Date"}
@@ -270,7 +270,7 @@ const handleClick = async () => {
           </Box>
           </Grid>
           
-          <Grid item xs={3} spacing={1}>
+          <Grid item xs={12} sm={6} md={3} lg={2} spacing={1}>
             <FormControl sx={{ width: "100%" }} size="large">
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               {statusCode !== undefined && (
@@ -295,7 +295,7 @@ const handleClick = async () => {
               )}
             </FormControl>
           </Grid>
-          <Grid item xs={3} spacing={1}>
+          <Grid item xs={12} sm={6} md={3} lg={2} spacing={1}>
             <FormControl sx={{ width: "100%" }} size="large">
               <InputLabel id="demo-select-small" >Passbook Status</InputLabel>
               {passbookStatus !== undefined && (
@@ -314,7 +314,7 @@ const handleClick = async () => {
               )}
             </FormControl>
           </Grid>  
-          <Grid item xs={4} container alignItems="center" spacing={1}> 
+          <Grid item xs={12} sm={6} md={3} lg={2} container alignItems="center" spacing={1}> 
             <Grid item>
               <DarkTooltip placement="top" title={"Search"} arrow>
                 <ResponsiveFab
