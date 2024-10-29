@@ -144,12 +144,12 @@ const UnWrappedVerified = (props) => {
     setPayLoad(_payLoad);
   }, [fromDate, toDate]);
 
-  useEffect(() => {
-    dispatch(storeData({
-      fileSubmitionPayLoad: payLoad
-    }))
+  // useEffect(() => {
+  //   dispatch(storeData({
+  //     fileSubmitionPayLoad: payLoad
+  //   }))
 
-  }, [payLoad])
+  // }, [payLoad])
 
   return (
     <PageLayout pageName={pageName}>
