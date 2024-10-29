@@ -255,12 +255,9 @@ const CandidateView = () => {
                                                     transition: 'box-shadow 0.3s, transform 0.3s', // Smooth transition for elevation and scale
                                                 }}
                                             >
-                                                {(consentStatus === 4 || consentStatus === 0 || consentStatus === 5) && isProcessed !== true ? "Start Verification" : "Pending Verification"}
-
+                                                {(consentStatus === 4 || consentStatus === 0 || consentStatus === 5) &&
+                                                    isProcessed !== true ? "Start Verification" : "Pending Verification"}
                                             </Button>
-
-
-
                                         </>
                                     ) : null}
                                 </Grid>

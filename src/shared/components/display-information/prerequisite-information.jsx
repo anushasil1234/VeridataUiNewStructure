@@ -12,10 +12,10 @@ const PrerequisiteInformation = () => {
         {
             StepNumber: 'Aadhaar',
             primaryHeading: 'Aadhaar Number',
-            secondaryText: 'Please have your addhar and pan card  before continuing.',
+            secondaryText: 'Please have your Addhar and PAN card  before continuing.',
             secondaryComponent:
                 <>
-                    {' — If you dont have an addhar please contact with your HR'}
+                    {' — If you dont have an Addhar please contact with your HR'}
                     <Box >
                         {/* <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}> */}
                         <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}>
@@ -47,7 +47,7 @@ const PrerequisiteInformation = () => {
             secondaryText: 'If you have a UAN account, make sure you have a activate it.',
             secondaryComponent:
                 <>
-                    {" — Please login to the epfo portal at least once and then try verifying you details."}
+                    {" — Please login to the EPFO portal at least once and then try verifying you details."}
                     <Box >
                         <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "INACTUAN" })}
                         >
@@ -77,7 +77,7 @@ const PrerequisiteInformation = () => {
         },
         {
             StepNumber: 'Tenth Pass Certificate',
-            primaryHeading: 'Tenth Pass Certificate',
+            primaryHeading: '10th Pass Certificate',
             secondaryText: ' Please have your 10th Pass Certificate before continuing.',
             secondaryComponent:
                 <>

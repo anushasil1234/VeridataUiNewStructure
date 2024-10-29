@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material'
-import { fileInputboxContainerStyle, fileInputs } from 'app'
+import { fileInputboxContainerStyle, fileInputs, fileNameStyle } from 'app'
 import React from 'react'
 import { maxUploadSize, defaultUploadFormat } from 'shared/constants/constants'
 import UploadButton from '../upload-button.jsx/upload-button'
@@ -19,15 +19,15 @@ const FileUploadSection = ({ chooseFile, fileName, accept, disabled, maxUploadSi
                 <UploadButton disabled={disabled} fileName={fileName} />
             </Box>
             <Stack alignItems={"center"}>
-                <Typography paddingX={"12px"} fontSize={".7rem"} marginTop={.25}>
-                    {fileName ? fileName : maxUploadSize ? `maxsize: ${maxUploadSize}` : null}
+                <Typography sx={fileNameStyle}>
+                    {fileName ? fileName : maxUploadSize ? `Maximum upload file size: ${maxUploadSize}` : accept ? fileType : defaultUploadFormat}
                 </Typography>
-                {
+                {/* {
                     !fileName &&
-                    <Typography fontSize={".7rem"} textAlign={'center'} marginTop={.25}>
-                        {accept ? fileType : defaultUploadFormat}
+                    <Typography sx={fileNameStyle}>
+                        
                     </Typography>
-                }
+                } */}
             </Stack>
         </Stack>
     )

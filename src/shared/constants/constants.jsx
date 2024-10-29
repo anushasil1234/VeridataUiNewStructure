@@ -1932,7 +1932,7 @@ export const credentialRemiderMsg = `An alert with login credentials will be sen
 export const appointeeTerminationConfirmationMsg = `Do you want to terminate the process?`;
 export const notProcessedDataVerificationConfirmationMsg = `Do you want to send verification portal link to the appointees? [Note: Appointees will be removed from this page and moved to the "Processing" page]`;
 export const submitConfirmationMsg = `Your data will be submitted, you will no longer be able to verify your data. To re verify your data you have to contact the admin`;
-export const epfoPassfileUploadeConfirmationMsg = `Please upload your trust epfo passbook before submition`;
+export const epfoPassfileUploadeConfirmationMsg = `Please upload your trust EPFO passbook before submition`;
 export const visafileUploadeConfirmationMsg = `You must upload your visa before submition`;
 export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details  has been verified and submited successfully. you have completed your verification process. Please wait for the hr to reply for further processing of your application`;
 export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you.\n
@@ -1966,7 +1966,7 @@ export const getStatusTooltip = (status) => {
         case "Submitted":
             return "Your data has been submitted successfully. HR Admin will take action accordingly.";
         case "Ongoing":
-            return "verification in progress";
+            return "Verification in progress";
         case "No Response":
             return "There has been no response yet.";
         case "Success":

@@ -5,6 +5,7 @@ import {
   otpInputSize,
   hideBoxSx,
   otpModalTextStyle,
+  otpTextFieldStyle,
 } from "app";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -150,7 +151,7 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
     <Box my={"20px"}>
       <form onSubmit={handleOtpSubmition}>
         <Typography
-        sx={otpModalTextStyle}
+          sx={otpModalTextStyle}
         >
           Type OTP - Copy/Paste is disabled
         </Typography>
@@ -160,10 +161,10 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
           alignItems={"center"}
           direction={"row"}
         >
-          <Box sx={otpInputSize}>
+          <Box sx={{ ...otpInputSize, marginLeft: 0 }}>
             <TextField
               error={false}
-              style={{ width: "100%", margin: "5px" }}
+              style={otpTextFieldStyle}
               type="text"
               label=""
               variant="outlined"
@@ -179,7 +180,7 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
           <Box sx={otpInputSize}>
             <TextField
               error={false}
-              style={{ width: "100%", margin: "5px" }}
+              style={otpTextFieldStyle}
               type="text"
               label=""
               variant="outlined"
@@ -195,7 +196,7 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
           <Box sx={otpInputSize}>
             <TextField
               error={false}
-              style={{ width: "100%", margin: "5px" }}
+              style={otpTextFieldStyle}
               type="text"
               label=""
               variant="outlined"
@@ -211,7 +212,7 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
           <Box sx={otpInputSize}>
             <TextField
               error={false}
-              style={{ width: "100%", margin: "5px" }}
+              style={otpTextFieldStyle}
               type="text"
               label=""
               variant="outlined"
@@ -227,7 +228,7 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
           <Box sx={otpInputSize}>
             <TextField
               error={false}
-              style={{ width: "100%", margin: "5px" }}
+              style={otpTextFieldStyle}
               type="text"
               label=""
               variant="outlined"
@@ -243,7 +244,7 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
           <Box sx={otpInputSize}>
             <TextField
               error={false}
-              style={{ width: "100%", margin: "5px" }}
+              style={otpTextFieldStyle}
               type="text"
               label=""
               variant="outlined"

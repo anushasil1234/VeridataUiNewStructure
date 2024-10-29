@@ -593,7 +593,7 @@ const FileUpload = ({ stepsList, mode }) => {
     // Check if Trust EPFO is uploaded (only if applicable)
     const checkTrustEpfoUpload = () => {
         if (isTrustEpfoAvailable === true && !hasTrustEpfoUpload()) {
-            showUploadMessage("trust epfo passbook");
+            showUploadMessage("trust EPFO passbook");
             return false;
         }
         return true;

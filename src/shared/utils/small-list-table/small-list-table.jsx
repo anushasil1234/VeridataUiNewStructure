@@ -36,7 +36,7 @@ const EnhancedTableHead = (props) => {
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align="center"
+                        align="left"
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -100,7 +100,7 @@ const SmallListTable = ({ rows }) => {
                                         >
                                             <TableCell sx={dashboardtextStyle}>{row.remarks}</TableCell>
                                             <TableCell sx={dashboardtextStyle}>
-                                                <Stack flexDirection={"row"} justifyContent={"center"}>
+                                                <Stack flexDirection={"row"} justifyContent={"start"}>
                                                     <Tooltip title="View Details" arrow>
 
                                                         <IconButton disabled={otherRemarks} sx={infoButtonStyle}>
