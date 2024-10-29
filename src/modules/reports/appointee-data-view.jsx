@@ -6,6 +6,8 @@ import ActionPermission from "shared/components/action-permission/action-permiss
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
 import { appointeeListTableHeadCell, appointeeReportTableHeadCell, toAppointeeReport, reportGenarate } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
+import downloadFile from "shared/utils/associate/download-file";
+import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 
@@ -16,6 +18,7 @@ const AppointeeDataReportView = (props) => {
   const [toDate, setToDate] = useState(null);
   const [statusCode, setStatusCode] = useState('All');
   const [appointeeDetails, setAppointeeDetails] = useState();
+  const[fileData,setFiledata]=useState(null)
   const apiSlice = useSelector(state => state.apiSlice);
   const popUpSlice = useSelector(state => state.popUpSlice);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
@@ -62,17 +65,18 @@ const AppointeeDataReportView = (props) => {
   const setTableRows = async (payLoad) => {
     const response = await getAppointeeDataReport(payLoad);
     if (response) {
-      const { responseInfos } = response;
-      setAppointeeDetails(responseInfos);
-
+      const {appointeeDetails,filedata } = response?.responseInfo;
+      setAppointeeDetails(appointeeDetails);
+      setFiledata(filedata)
+      
       let generatedCells = generateTableRowData(
-        responseInfos,
+        appointeeDetails,
         appointeeListTableHeadCell,
         null,
         hasPermission
       );
 
-      responseInfos && responseInfos?.forEach(({ appointee }, index) => {
+       appointeeDetails && appointeeDetails.forEach(({ appointee }, index) => {
         const detailsCells = generateTableRowData(
           appointee,
           appointeeListTableHeadCell,
@@ -138,6 +142,20 @@ const AppointeeDataReportView = (props) => {
       tables: [tableObj]
     });
   };
+  const handleDownloadxlsx = () => {
+    if (!fileData || fileData.length === 0) {
+      showErrorMessage(reportGenarate);
+      return;
+    }
+    if (fileData && typeof fileData === 'object') {
+        const base64String = fileData.fileData; 
+        const fileName = fileData.fileName || "appointee_data.xlsx"; 
+        const blob = generateBlobFromBase64(base64String);
+        const blobUrl = window.URL.createObjectURL(blob);
+        downloadFile(blobUrl, fileName);
+        window.URL.revokeObjectURL(blobUrl);
+    } 
+  };
 
   const handleReportSearch = () => {
     if (filterType === 0) {
@@ -172,6 +190,7 @@ const AppointeeDataReportView = (props) => {
           dropdownFilterType={statusCode}
           dropdownFilterTypeChange={handleStatusChange}
           hasPermission={hasPermission}
+          handleDownloadxlsx={handleDownloadxlsx}
         />
 
         <DataTable

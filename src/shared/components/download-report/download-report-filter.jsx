@@ -181,7 +181,7 @@ const DownloadReportFilter = ({
           </DarkTooltip>
         </Grid>
         {hasPermission && hasPermission["A008"] && (
-          <Grid item>
+          <Grid item sx={{position:'relative'}}>
             <DarkTooltip placement="top" title="Download Report" arrow>
               <ResponsiveFab
                 variant="contained"
@@ -193,8 +193,9 @@ const DownloadReportFilter = ({
                 <Download width={18} sx={{ color: "#fff" }} />
               </ResponsiveFab>
             </DarkTooltip>
-  
+
             {isDownloadListOpened && (
+              
               <List sx={{ ...downLoadListSx, left: '-16px', zIndex: 1000 }}>
                 <ListItemButton component="a">
                   <DarkTooltip placement="top" title="Download PDF Report" arrow>
@@ -214,7 +215,7 @@ const DownloadReportFilter = ({
     </Grid>
   );
   
-    
+  
 };
 
 DownloadReportFilter.propTypes = {
