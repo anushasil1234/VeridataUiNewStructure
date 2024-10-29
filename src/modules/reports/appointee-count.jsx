@@ -302,7 +302,7 @@ const AppointeeCount = () => {
     <PageLayout pageName={"Appointee count"}>
       <CardLayout sx={{ width: "100%" }}>
         <Grid container spacing={2}>
-          <Grid item xs={4} >
+          <Grid item xs={12} sm={8} md={4}>
             <Box sx={{ ...datePickerstyle }}>
               <DatePicker
                 label={"From Date"}
