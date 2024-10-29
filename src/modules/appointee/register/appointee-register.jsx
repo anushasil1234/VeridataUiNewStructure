@@ -42,6 +42,7 @@ import {
   subHeadingContentTextStyle,
   submitBtnContainerStyle,
   submitBtnStyle,
+  verificationBtnStyle,
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -939,7 +940,7 @@ const AppointeeRegister = () => {
       return true;
     } else {
       const isUploaded = hasTrustEpfoUpload() || hasValue(trustEpfoFileName);
-      if (!isUploaded) showUploadMessage("trust epfo passbook");
+      if (!isUploaded) showUploadMessage("trust EPFO passbook");
       return isUploaded;
     }
 
@@ -2427,28 +2428,30 @@ const AppointeeRegister = () => {
                         >
                           <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
                             <Stack sx={submitBtnContainerStyle}>
-                              <Button
-                                xs={12}
-                                name="save"
-                                onClick={() => setClickedButton("S")}
-                                type="submit"
-                                sx={submitBtnStyle}
-                                variant="contained"
-                                color="primary"
-                                disabled={!isDraft} // Hide saveButton when clickedButton is "N"
-                              >
-                                {saveButton}
-                              </Button>
-                              <Button
-                                name="save_and_next"
-                                onClick={() => setClickedButton("N")}
-                                type="submit"
-                                sx={submitBtnStyle}
-                                variant="contained"
-                                color="primary"
-                              >
-                                {saveAndNextbutton}
-                              </Button>
+                              <Stack flexDirection={'row'} >
+                                <Button
+                                  xs={12}
+                                  name="save"
+                                  onClick={() => setClickedButton("S")}
+                                  type="submit"
+                                  sx={submitBtnStyle}
+                                  variant="contained"
+                                  color="primary"
+                                  disabled={!isDraft} // Hide saveButton when clickedButton is "N"
+                                >
+                                  {saveButton}
+                                </Button>
+                                <Button
+                                  name="save_and_next"
+                                  onClick={() => setClickedButton("N")}
+                                  type="submit"
+                                  sx={submitBtnStyle}
+                                  variant="contained"
+                                  color="primary"
+                                >
+                                  {saveAndNextbutton}
+                                </Button>
+                              </Stack>
                               <Button
                                 onClick={handleSecondNext}
                                 sx={submitBtnStyle}
@@ -3368,7 +3371,7 @@ const AppointeeRegister = () => {
                             value={UAN}
                           />
                           <Button
-                            sx={{ margin: "5px 0" }}
+                            sx={verificationBtnStyle}
                             enabled={isUanVarified}
                             variant="contained"
                             onClick={handleEpfoButtonClick}

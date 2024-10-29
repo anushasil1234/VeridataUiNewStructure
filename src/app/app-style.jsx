@@ -3,6 +3,8 @@ import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import Fab from "@mui/material/Fab"; // Import Fab component from MUI
 
+
+
 let AppStyle = createTheme({
   palette: {
     success: {
@@ -94,7 +96,7 @@ let AppStyle = createTheme({
       // Here is where you can customise the button
 
       fontWeight: 500,
-      fontSize: '0.875rem!important',
+      fontSize: '0.875rem',
     },
     th: {
       fontWeight: 700
@@ -135,10 +137,25 @@ let AppStyle = createTheme({
     toolbar: {
       minHeight: 48
     }
-  }
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+      399: 399,
+    },
+  },
 });
 
-
+const buttonfontSize = {
+  [AppStyle.breakpoints.between('xs', '399')]:
+  {
+    fontSize: { xs: '0.697rem!important', 399: '0.875rem!important' }
+  }
+}
 export const listitemTextstyle = {
   fontSize: '.5rem',
   display: 'block',
@@ -716,7 +733,7 @@ export const smallTableContainer = {
 
 export const smallTableHeaderCellStyle = {
   fontFamily: AppStyle.typography.fontFamily,
-  textAlign: "center",
+  textAlign: "left",
   fontSize: { xs: '.9rem', md: '1.2rem' },
   fontWeight: 600,
   color: "#000",
@@ -1053,6 +1070,11 @@ export const getStatusChipStyle = (status) => {
 export const fileUploadSectionContainerStyle = {
   margin: '10px 0px!important'
 }
+export const fileNameStyle = {
+  fontSize: ".7rem",
+  textAlign: 'center',
+  marginTop: '6px'
+}
 export const uploadIconContainer = {
   backgroundColor: ThemeColorPalete.common.white,
   borderRadius: "50%",
@@ -1103,17 +1125,31 @@ export const fileInputs = {
   }
 
 };
+
+export const uploadBtnCommonStyle = {
+  margin: "5px",
+  height: 'fit-content',
+  padding: '0 10px',
+  width: 'fit-content!important',
+  maxWidth: 'fit-content!important'
+}
+
 export const uploadBtnStyle = {
+  ...uploadBtnCommonStyle,
   bgcolor: ThemeColorPalete.primary.main,
   "&:hover": {
     bgcolor: ThemeColorPalete.primary.dark
-  }
+  },
+  // ...buttonfontSize
 };
 
 export const otpInputSize = {
-  // width: { xs: "35px", md: '40px' },
-  width: { xs: "35px", sm: '40px' },
+  width: { xs: "37px", sm: '40px' },
   marginX: "5px"
+};
+export const otpTextFieldStyle = {
+  width: "100%",
+  margin: "5px"
 };
 export const otpModalTextStyle = {
   fontWeight: "bold",
@@ -1384,7 +1420,13 @@ export const subHeadingContentTextStyle = {
 
 export const prerequisiteListStyle = {
   '& span': {
-    ...midiumFontSize
+    ...midiumFontSize,
+  },
+  '& >span': {
+    color: '#9A208C'
+  },
+  '&>p': {
+    marginTop: '5px'
   }
 }
 
@@ -1395,7 +1437,7 @@ export const prereqModalShowMoreInfoStyle = {
 export const responsiveBtnType1Style = {
   padding: { xs: '4px 8px', sm: '6px 16px' },
   minWidth: { xs: '45px', sm: '65px' },
-  fontSize: { xs: '0.6rem', sm: '0.875rem' }
+  ...buttonfontSize
 }
 
 export const useStyles = makeStyles(() => ({
@@ -1487,14 +1529,25 @@ export const stepModelDividerStyle = {
   marginLeft: { xs: '63px', md: '72px' }
 }
 
-export const submitBtnStyle = {
+const submitButtonCommonStyle = {
   width: 'fit-content',
   height: 'fit-content',
+  ...buttonfontSize
+}
+export const submitBtnStyle = {
   marginTop: '10px',
   marginBottom: '10px',
-  marginRight:  '24px'
+  marginRight: '24px',
+  ...submitButtonCommonStyle,
 }
 
+export const verificationBtnStyle = {
+  margin: "5px 0",
+  ...submitButtonCommonStyle
+}
 export const submitBtnContainerStyle = {
   flexDirection: { xs: 'column', md: 'row' }
 }
+// export const submitButtonSubcontainerStyle = {
+//   flexDirection: {399:'column'},
+// }

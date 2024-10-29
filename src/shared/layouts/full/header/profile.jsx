@@ -102,14 +102,14 @@ const Profile = () => {
         }}
       >
 
-        <Box display="flex" alignItems="center" sx={{ml:2}}>
+        <MenuItem
+          style={{ cursor: 'text' }}
+        >
           <ListItemIcon>
             <AccountCircle width={20} />
           </ListItemIcon>
           <ListItemText sx={userNameTextStyle}>{`${userName} (${roleName})`}</ListItemText>
-        </Box>
-
-
+        </MenuItem>
         <MenuItem
           onClick={() => {
             handleClose2(); // Close the menu
