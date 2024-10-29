@@ -4,6 +4,7 @@ import {
   otpInputSeperatorSx,
   otpInputSize,
   hideBoxSx,
+  otpModalTextStyle,
 } from "app";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -149,10 +150,7 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
     <Box my={"20px"}>
       <form onSubmit={handleOtpSubmition}>
         <Typography
-          fontWeight={"bold"}
-          fontSize={20}
-          m={"20px"}
-          textAlign={"center"}
+        sx={otpModalTextStyle}
         >
           Type OTP - Copy/Paste is disabled
         </Typography>

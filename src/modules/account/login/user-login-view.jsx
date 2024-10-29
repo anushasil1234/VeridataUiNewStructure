@@ -264,7 +264,7 @@ export const UserLoginView = () => {
                       style={styles.btnstyle}
                       fullWidth
                     >
-                      Sign in
+                      Sign In
                     </Button>
                   </form>
                   <hr />

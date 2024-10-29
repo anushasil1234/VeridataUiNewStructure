@@ -360,14 +360,14 @@ export const inputFieldStyle = {
   margin: "10px",
   padding: 0,
 };
- 
+
 export const inputFieldStyle2 = {
   width: "100%",
   margin: "10px 0px",
   padding: 0
 };
 export const datePickerinputFieldStyle2 = {
-  '& .MuiFormControl-root':{
+  '& .MuiFormControl-root': {
     ...inputFieldStyle2
   }
 };
@@ -613,12 +613,12 @@ export const stepHeadingStyle = {
 };
 
 export const activeStepStyle = {
- 
+
   '& > .MuiStepLabel-iconContainer': {
     border: '3px solid white',
     borderRadius: '50%',
     borderSpacing: '15px',
-    outline: `2px solid ${AppStyle.palette.primary.main}`, 
+    outline: `2px solid ${AppStyle.palette.primary.main}`,
     transform: 'scale(1.3)',
     transition: 'transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.6)',
@@ -813,10 +813,8 @@ export const headingType1 = {
 }
 
 export const checkBoxLabelStyle = {
-  '&.MuiFormControlLabel-label': {
-    ...fontSizeType1,
-    backgroundColor: 'red!important'
-  }
+  ...lable1CopyStyle,
+  margin: 'auto'
 }
 export const genderSectionContainer = {
   flexDirection: "row",
@@ -922,6 +920,14 @@ export const memberNameStyle = {
   fontSize: "1.5rem",
   textAlign: "center"
 };
+export const appointeeImageViewStyle = {
+  width: { xs: '6vw', md: '2vw' },
+  cursor: "pointer"
+}
+export const displayImageStyle = {
+  height: 'auto',
+  width: '100%'
+}
 export const floatingIconListStyle = {
   position: "fixed",
   top: 100,
@@ -1105,9 +1111,16 @@ export const uploadBtnStyle = {
 };
 
 export const otpInputSize = {
-  width: { xs: "40px" },
+  // width: { xs: "35px", md: '40px' },
+  width: { xs: "35px", sm: '40px' },
   marginX: "5px"
 };
+export const otpModalTextStyle = {
+  fontWeight: "bold",
+  fontSize: { xs: '0.9rem', md: '1.25rem' },
+  m: "20px",
+  textAlign: "center"
+}
 export const modelButtonStyle = {
   m: "10px 5px",
   backgroundColor: ThemeColorPalete.primary.main,
@@ -1130,7 +1143,7 @@ export const otpInputSeperatorSx = {
 // Full screen model starts
 export const fullScreenListItemStyle = {
   paddingY: "20px",
-  paddingX: { xs: "3px", md: "16px" }
+  paddingX: { xs: "16px", md: "24px" }
 };
 // status chart style start
 const secondary = ThemeColorPalete.secondary.main;
@@ -1297,9 +1310,11 @@ export const fileImageStyle = {
 export const imageFileContainerStackStyle = {
   mt: 2,
   justifyItems: "center",
-  width: "500px"
+  width: { md: "500px", xl: "900px" }
 }
-
+export const listTableBoxContainerStyle = {
+  width: "100%"
+}
 export const button2 = {
   bgcolor: ThemeColorPalete.primary.main,
   color: ThemeColorPalete.common.white,
@@ -1458,4 +1473,28 @@ export const formHeadingGridContainerStyle = {
 
 export const formHeadingContainerStyle = {
   paddingLeft: '0px !important'
+}
+const stepSize = { xs: '30px', md: '40px' };
+export const stepAvataContainerStyle = {
+  '& .MuiAvatar-root': {
+    width: { ...stepSize },
+    height: { ...stepSize }
+  },
+  minWidth: { xs: '46px', md: '56px' }
+}
+
+export const stepModelDividerStyle = {
+  marginLeft: { xs: '63px', md: '72px' }
+}
+
+export const submitBtnStyle = {
+  width: 'fit-content',
+  height: 'fit-content',
+  marginTop: '10px',
+  marginBottom: '10px',
+  marginRight:  '24px'
+}
+
+export const submitBtnContainerStyle = {
+  flexDirection: { xs: 'column', md: 'row' }
 }

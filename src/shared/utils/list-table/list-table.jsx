@@ -1,5 +1,5 @@
 import { Box, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
-import { heading3 } from 'app';
+import { heading3, listTableBoxContainerStyle } from 'app';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { roleTypeEnums } from 'shared/constants/constants';
@@ -21,7 +21,7 @@ const ListTable = ({ rows }) => {
     });
 
     return (
-        <Stack>
+        <Stack sx={listTableBoxContainerStyle}>
             <Box>
                 {issuesList.length > 0 && <Typography sx={heading3}>Issues</Typography>}
                 <TableContainer component={Paper}>
@@ -61,7 +61,7 @@ const ListTable = ({ rows }) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {((roleTypeEnums.candidate.includes(userTypeId))&& (noteList.length > 0 || issuesList.length > 0)) && (
+                {((roleTypeEnums.candidate.includes(userTypeId)) && (noteList.length > 0 || issuesList.length > 0)) && (
                     <Typography sx={{ mt: 2, color: 'gray' }}>
                         Please check Steps to Resolution in Dashboard to view more info.
                     </Typography>

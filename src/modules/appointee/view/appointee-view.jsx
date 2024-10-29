@@ -26,7 +26,9 @@ import {
   _addFabStyle,
   actionIconListStyle,
   actionIconStyle,
+  appointeeImageViewStyle,
   cardStyle,
+  displayImageStyle,
   documentListItemStyle,
   documentListStyle,
   floatingIconListStyle,
@@ -601,17 +603,17 @@ let AppointeeViewForm = ({
                   fieldName={"Trust PF File"}
                   fieldValue={
                     <DarkTooltip placement="right" title="View image" arrow>
-
-                      <img
-                        src={viewImage}
-                        alt="Trust Pf File"
-                        title="View image"
-                        style={{
-                          width: "2vw", // or use "5vw" to make it responsive to the viewport width
-                          height: "auto", // Keeps the aspect ratio intact
-                        }}
-                        onClick={() => openDocumentModel(trustPfFile, "Trust Pf")}
-                      />
+                      <Box sx={appointeeImageViewStyle}>
+                        <img
+                          src={viewImage}
+                          alt="Trust Pf File"
+                          title="View image"
+                          style={{
+                            ...displayImageStyle
+                          }}
+                          onClick={() => openDocumentModel(trustPfFile, "Trust Pf")}
+                        />
+                      </Box>
                     </DarkTooltip>
 
                   }
@@ -622,17 +624,17 @@ let AppointeeViewForm = ({
                   fieldName={"Epfo passbook file"}
                   fieldValue={
                     <DarkTooltip placement="right" title="View image" arrow>
-
-                      <img
-                        src={viewImage}
-                        alt="Epfo passbook file"
-                        title="View image"
-                        style={{
-                          width: "2vw", // or use "5vw" to make it responsive to the viewport width
-                          height: "auto", // Keeps the aspect ratio intact
-                        }}
-                        onClick={() => openDocumentModel(manualPassbookFile, "Epfo passbook file")}
-                      />
+                      <Box sx={appointeeImageViewStyle}>
+                        <img
+                          src={viewImage}
+                          alt="Epfo passbook file"
+                          title="View image"
+                          style={{
+                            ...displayImageStyle
+                          }}
+                          onClick={() => openDocumentModel(manualPassbookFile, "Epfo passbook file")}
+                        />
+                      </Box>
                     </DarkTooltip>
 
                   }
@@ -672,17 +674,17 @@ let AppointeeViewForm = ({
                       fieldName={"Passport File"}
                       fieldValue={
                         <DarkTooltip placement="right" title="View image" arrow>
+                          <Box sx={appointeeImageViewStyle}>
+                            <img
+                              src={viewImage}
+                              alt="Passport File"
 
-                          <img
-                            src={viewImage}
-                            alt="Passport File"
-
-                            style={{
-                              width: "2vw", // or use "5vw" to make it responsive to the viewport width
-                              height: "auto", // Keeps the aspect ratio intact
-                            }}
-                            onClick={() => openDocumentModel(visaFile, "Passport")}
-                          />
+                              style={{
+                                ...displayImageStyle // Keeps the aspect ratio intact
+                              }}
+                              onClick={() => openDocumentModel(visaFile, "Passport")}
+                            />
+                          </Box>
                         </DarkTooltip>
 
                       }
@@ -692,7 +694,7 @@ let AppointeeViewForm = ({
               ) : (
                 <DocumentDetails
                   fieldName={"Passport Available"}
-                  fieldValue={isPassportAvailable === 'N'? 'No' : NA}
+                  fieldValue={isPassportAvailable === 'N' ? 'No' : NA}
                 />
               )}
             </Box>
@@ -759,17 +761,18 @@ let AppointeeViewForm = ({
                         handicapFile ?
                           <>
                             <DarkTooltip placement="right" title="View image" arrow>
-                              <img
-                                src={viewImage}
-                                alt="Handicap Certificate"
-                                style={{
-                                  width: "2vw", // or use "5vw" to make it responsive to the viewport width
-                                  height: "auto", // Keeps the aspect ratio intact
-                                  marginLeft: "2%", // Relative margin for responsiveness
-                                  marginTop: "0.5rem" // Responsive margin based on font size
-                                }}
-                                onClick={() => openDocumentModel(handicapFile, "Handicap Certificate")}
-                              />
+                              <Box sx={appointeeImageViewStyle}>
+                                <img
+                                  src={viewImage}
+                                  alt="Handicap Certificate"
+                                  style={{
+                                    ...displayImageStyle, // Keeps the aspect ratio intact
+                                    marginLeft: "2%", // Relative margin for responsiveness
+                                    marginTop: "0.5rem" // Responsive margin based on font size
+                                  }}
+                                  onClick={() => openDocumentModel(handicapFile, "Handicap Certificate")}
+                                />
+                              </Box>
                             </DarkTooltip>
                           </> :
                           NA
@@ -793,17 +796,18 @@ let AppointeeViewForm = ({
                   fieldValue={
                     tenFile ? (
                       <DarkTooltip placement="right" title="View image" arrow>
-                        <img
-                          src={viewImage}
-                          alt="10th Pass Certificate"
-                          style={{
-                            width: "2vw", // Adjust as needed for responsiveness
-                            height: "auto", // Maintains aspect ratio
-                            marginLeft: "5%", // Responsive margin
-                            marginTop: "0.5rem" // Responsive margin
-                          }}
-                          onClick={() => openDocumentModel(tenFile, "10th Pass Certificate")}
-                        />
+                        <Box sx={appointeeImageViewStyle}>
+                          <img
+                            src={viewImage}
+                            alt="10th Pass Certificate"
+                            style={{
+                              ...displayImageStyle,
+                              marginLeft: "5%", // Responsive margin
+                              marginTop: "0.5rem" // Responsive margin
+                            }}
+                            onClick={() => openDocumentModel(tenFile, "10th Pass Certificate")}
+                          />
+                        </Box>
                       </DarkTooltip>
                     ) : (
                       <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>
@@ -820,18 +824,18 @@ let AppointeeViewForm = ({
                   fieldValue={
                     otherFile ? (
                       <DarkTooltip placement="right" title="View image" arrow>
-
-                        <img
-                          src={viewImage}
-                          alt="Father's name Verification Document"
-                          style={{
-                            width: "2vw", // or use "5vw" to make it responsive to the viewport width
-                            height: "auto", // Keeps the aspect ratio intact
-                            marginLeft: "5%", // Relative margin for responsiveness
-                            marginTop: "0.8rem" // Responsive margin based on font size
-                          }}
-                          onClick={() => openDocumentModel(otherFile, "Father's name Verification Document")}
-                        />
+                        <Box sx={appointeeImageViewStyle}>
+                          <img
+                            src={viewImage}
+                            alt="Father's name Verification Document"
+                            style={{
+                              ...displayImageStyle,
+                              marginLeft: "5%", // Relative margin for responsiveness
+                              marginTop: "0.8rem" // Responsive margin based on font size
+                            }}
+                            onClick={() => openDocumentModel(otherFile, "Father's name Verification Document")}
+                          />
+                        </Box>
                       </DarkTooltip>
                     ) : (
                       <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>

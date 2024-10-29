@@ -39,6 +39,9 @@ import {
   lable1CopyStyle,
   lable1Style,
   positionRelative,
+  subHeadingContentTextStyle,
+  submitBtnContainerStyle,
+  submitBtnStyle,
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,6 +60,8 @@ import {
   aadharVerificationErrorMsg,
   PANVerifictionErrorMsg,
   passportFilePatternErrorMsg,
+  imgAndPdfMaxSize,
+  imgAndPdfMaxSizeValue,
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -127,6 +132,7 @@ import {
 } from "@mui/material";
 
 import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
+import UANPrerequisiteInformation from "./uan-prerequiestic-info";
 
 
 const AppointeeRegister = () => {
@@ -746,7 +752,7 @@ const AppointeeRegister = () => {
     return remarksList;
   };
 
-  const uploadFile = ({ files }, uploadTypeAlias, setFileName) => {
+  const uploadFile = ({ files }, uploadTypeAlias, setFileName, fileSize = null) => {
     const fileData = files[0];
     const { name, size, type } = fileData;
 
@@ -761,7 +767,7 @@ const AppointeeRegister = () => {
     if (isFileExists) {
       showErrorMessage(duplicateFiles);
     } else {
-      if (size <= FILE_SIZE_LIMIT) {
+      if (size <= imgAndPdfMaxSizeValue) {
         setFileName(name);
 
         // Find the file type ID based on the uploadTypeAlias
@@ -1621,7 +1627,25 @@ const AppointeeRegister = () => {
     openInfoModel(passportHelpContent);
   };
 
+  const handleChangeUanVerification = ({ target }) => {
+    const value = target.value;
+    setIsUanVerificationProcessManual(value);
+    if (value === 'manual') {
 
+      const prerequisiteModelContent = {
+        dialogTitle: (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography>Prerequisite Informatiton for mannual upload</Typography>
+          </div>
+        ),
+        dialogContentText: <><Typography sx={subHeadingContentTextStyle}>Before verification there are some prerequisites, thats needs to be done...</Typography>
+          <Typography> </Typography></>,
+        dialogContentComponent: <UANPrerequisiteInformation />,
+        fullWidth: false,
+      };
+      openInfoModel(prerequisiteModelContent);
+    }
+  }
 
 
   return (
@@ -2393,44 +2417,50 @@ const AppointeeRegister = () => {
                           </Grid>
                         ) : null}
                         {/* ###### Others Details Section End ###### */}
-                        <Stack
-                          sx={{ marginTop: "16px" }}
-                          flexDirection={"row"}
-                          ml={"25px"}
+                        <Grid
+                          container
+                          rowSpacing={1}
+                          columnSpacing={2.5}
+                          item
+                          xs={12}
+                          sx={formHeadingGridContainerStyle}
                         >
-                          <Button
-                            xs={12}
-                            name="save"
-                            onClick={() => setClickedButton("S")}
-                            type="submit"
-                            sx={{ m: "10px 5px" }}
-                            variant="contained"
-                            color="primary"
-                            disabled={!isDraft} // Hide saveButton when clickedButton is "N"
-                          >
-                            {saveButton}
-                          </Button>
-                          <Button
-                            name="save_and_next"
-                            onClick={() => setClickedButton("N")}
-                            type="submit"
-                            sx={{ m: "10px 5px" }}
-                            variant="contained"
-                            color="primary"
-                          >
-                            {saveAndNextbutton}
-                          </Button>
-
-                          <Button
-                            onClick={handleSecondNext}
-                            sx={{ m: "10px 5px" }}
-                            variant="contained"
-                            color="primary"
-                            disabled={isDraft} // Show Next button only when clickedButton is "N"
-                          >
-                            Next
-                          </Button>
-                        </Stack>
+                          <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
+                            <Stack sx={submitBtnContainerStyle}>
+                              <Button
+                                xs={12}
+                                name="save"
+                                onClick={() => setClickedButton("S")}
+                                type="submit"
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={!isDraft} // Hide saveButton when clickedButton is "N"
+                              >
+                                {saveButton}
+                              </Button>
+                              <Button
+                                name="save_and_next"
+                                onClick={() => setClickedButton("N")}
+                                type="submit"
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                              >
+                                {saveAndNextbutton}
+                              </Button>
+                              <Button
+                                onClick={handleSecondNext}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={isDraft} // Show Next button only when clickedButton is "N"
+                              >
+                                Next
+                              </Button>
+                            </Stack>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </form>
                   </Box>
@@ -2520,9 +2550,9 @@ const AppointeeRegister = () => {
                               fileName={tenthCertificateFileName}
                               accept={"image/png, image/jpeg"}
                               disabled={isPreviousSectionDisabled}
+                              maxUploadSize={imgAndPdfMaxSize}
                             />
                           </Box>
-
                         </Grid>
                       </Grid>
                       <Grid
@@ -2580,6 +2610,7 @@ const AppointeeRegister = () => {
                               fileName={otherFileName}
                               accept={"image/png, image/jpeg"}
                               disabled={isPreviousSectionDisabled}
+                              maxUploadSize={imgAndPdfMaxSize}
 
                             />
                           </Box>
@@ -2652,6 +2683,7 @@ const AppointeeRegister = () => {
                                   fileName={handicapFileName}
                                   accept={"image/png, image/jpeg"}
                                   disabled={isPreviousSectionDisabled}
+                                  maxUploadSize={imgAndPdfMaxSize}
 
                                 />
                               </Box>
@@ -2775,7 +2807,7 @@ const AppointeeRegister = () => {
                                     // }
                                     fileName={passportFileName}
                                     disabled={isPreviousSectionDisabled}
-
+                                    maxUploadSize={imgAndPdfMaxSize}
                                   />
                                 </>
                               )}
@@ -2886,6 +2918,7 @@ const AppointeeRegister = () => {
                                   fileName={trustEpfoFileName}
                                   accept={"image/png, image/jpeg"}
                                   disabled={isPreviousSectionDisabled}
+                                  maxUploadSize={imgAndPdfMaxSize}
 
                                 />
                               </Box>
@@ -2935,6 +2968,65 @@ const AppointeeRegister = () => {
                         </Grid>
                       </Grid>
                       {/* ######  UAN number Section End ###### */}
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={2.5}
+                        item
+                        xs={12}
+                        sx={formHeadingGridContainerStyle}
+                      >
+                        <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
+                          <Stack sx={submitBtnContainerStyle}>
+                            <Stack flexDirection={'row'}>
+                              <Button
+                                //onClick={() => setCurrentPageNo(1)}
+                                onClick={handleBack}
+                                //sx={{ m: "15px 5px", ml: 3 }}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                              >
+                                {previousButton}
+                              </Button>
+                              <Button
+                                name="save"
+                                // disabled={isSubmitDisabled}
+                                onClick={DraftSave}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={isPreviousSectionDisabled}
+                              >
+                                Save as Draft
+                              </Button>
+                            </Stack>
+                            <Stack flexDirection={'row'}>
+                              <Button
+                                name="save"
+                                // disabled={isSubmitDisabled}
+                                onClick={handleSaveClick}
+                                //sx={{ m: "15px 25px", ml: 3 }}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={isPreviousSectionDisabled}
+                              >
+                                Save
+                              </Button>
+                              <Button
+                                onClick={handleNext}
+                                sx={submitBtnStyle}
+                                variant="contained"
+                                color="primary"
+                                disabled={isthirdNextVisible === false}
+                              >
+                                Next
+                              </Button>
+                            </Stack>
+                          </Stack>
+                        </Grid>
+                      </Grid>
                     </Grid>
                     <Dialog
                       open={isModalOpen}
@@ -3025,32 +3117,47 @@ const AppointeeRegister = () => {
                             Click here
                           </Link>
                         </Typography>
-                        {isAadhaarVarified ? (
-                          <FormControlLabel
-                            sx={checkBoxLabelStyle}
-                            control={
-                              <Checkbox
-                                disabled
-                                checked
-                                inputProps={{ "aria-label": "controlled" }}
-                              />
-                            }
-                            label="I have downloaded the Aadhar offline KYC file"
-                          />
-                        ) : (
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                checked={isOfflineXmlDownloaded}
-                                onChange={
-                                  handleIsOfflineXmlDownloadedOnChange
+                        <FormControl sx={{ flexDirection: 'row' }}>
+                          {isAadhaarVarified ? (
+                            <>
+                              <FormControlLabel
+                                sx={checkBoxLabelStyle}
+                                control={
+                                  <Checkbox
+                                    disabled
+                                    checked
+                                    inputProps={{ "aria-label": "controlled" }}
+                                    sx={{ paddingLeft: 0 }}
+                                  />
+                                }>
+                              </FormControlLabel>
+                              <Typography
+                                onClick={() => setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)}
+                                sx={checkBoxLabelStyle}
+                              >I have downloaded the Aadhar offline KYC file</Typography>
+                            </>
+                          ) : (
+                            <>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    checked={isOfflineXmlDownloaded}
+                                    sx={{ paddingLeft: 0 }}
+                                    onChange={
+                                      handleIsOfflineXmlDownloadedOnChange
+                                    }
+                                    inputProps={{ "aria-label": "controlled" }}
+                                  />
                                 }
-                                inputProps={{ "aria-label": "controlled" }}
-                              />
-                            }
-                            label="I have downloaded the Aadhar offline KYC file"
-                          />
-                        )}
+                              >
+                              </FormControlLabel>
+                              <Typography
+                                onClick={() => setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)}
+                                sx={checkBoxLabelStyle}
+                              >I have downloaded the Aadhar offline KYC file</Typography>
+                            </>
+                          )}
+                        </FormControl>
                       </Grid>
                       <Grid
                         container
@@ -3292,7 +3399,7 @@ const AppointeeRegister = () => {
                               <RadioGroup
                                 row
                                 value={isUanVerificationProcessManual}
-                                onChange={({ target }) => setIsUanVerificationProcessManual(target.value)}
+                                onChange={handleChangeUanVerification}
                               >
                                 <FormControlLabel
                                   value={'auto'}
@@ -3332,6 +3439,7 @@ const AppointeeRegister = () => {
                                   // }
                                   fileName={epfoPassBookFile}
                                   accept={"image/png, image/jpeg"}
+                                  maxUploadSize={imgAndPdfMaxSize}
                                 />
                               </Box>
                             </Grid>
@@ -3339,11 +3447,50 @@ const AppointeeRegister = () => {
                         </Grid>
                       </Grid>
                       {/* ######  UAN Verification Section End ###### */}
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={2.5}
+                        item
+                        xs={12}
+                        sx={formHeadingGridContainerStyle}
+                      >
+                        <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
+                          <Stack flexDirection={'row'}>
+                            <Button
+                              //onClick={() => setCurrentPageNo(1)}
+                              onClick={handleBack}
+                              //sx={{ m: "15px 5px", ml: 3 }}
+                              sx={submitBtnStyle}
+                              variant="contained"
+                              color="primary"
+                            >
+                              {previousButton}
+                            </Button>
+
+                            {(isUanVerificationProcessManual === 'manual') && (
+                              <>
+                                <Button
+                                  //onClick={() => setCurrentPageNo(1)}
+                                  onClick={() => submitDetails(false, true)}
+                                  //sx={{ m: "15px 5px", ml: 3 }}
+                                  sx={submitBtnStyle}
+                                  variant="contained"
+                                  color="primary"
+                                >
+                                  {'Submit'}
+                                </Button>
+                              </>
+                            )}
+                          </Stack>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </form>
                 </Box>
               ) : null}
-              <form ref={formElement}>
+
+              {/* <form ref={formElement}>
                 <Grid sx={positionRelative} item xs={12}>
                   <Grid
                     mt={3}
@@ -3437,7 +3584,7 @@ const AppointeeRegister = () => {
                     </Box>
                   </Grid>
                 </Grid>
-              </form>
+              </form> */}
             </Grid>
           </Grid>
         </Box>

@@ -6,7 +6,7 @@ import TableStatusCell from "shared/utils/dataTable/table-status-cell";
 
 // messages
 export const reportGenarate = `There is no data to export a report`
-export const maxUploadSize = `Max size: 4mb`;
+export const maxUploadSize = `Max size: 2mb`;
 export const emptyUserNameField = `Username can't be empty`;
 export const invalidUserCodeMsg = `User code should contain alphabet's and number only`;
 export const defaultUploadFormat = `Accepted format: pdf, jpg, png`;
@@ -1955,6 +1955,8 @@ export const contactNoEmptyMsg = `Contact no can't be empty`;
 export const invalidcontactNoMsg = `Phone no should have 10 digits`;
 export const roleEmptyMsg = `Role can't be empty`;
 export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
+export const timeOutMsg = `Server is down, Please try again.`;
+
 // Models messages ends
 
 export const getStatusTooltip = (status) => {
@@ -1994,6 +1996,8 @@ export const getHandicapTypeDescription = (type) => {
 
 
 export const FILE_SIZE_LIMIT = 4000000; // 4MB
+export const imgAndPdfMaxSize = '2mb'; 
+export const imgAndPdfMaxSizeValue =  2000000; 
 
 export const validFileTypes = [
     "application/x-zip-compressed",
