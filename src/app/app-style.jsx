@@ -288,6 +288,10 @@ export const downLoadIconStyle = {
   color: downLoadLinkColor,
   ml: 1
 }
+export const userLoginErrorModel = {
+  userName: false,
+  password: false
+}
 export const downLoadNameStyle = {
   fontWeight: "bold",
   color: "#0044cc"
@@ -833,7 +837,12 @@ export const headingType1 = {
 
 export const checkBoxLabelStyle = {
   ...lable1CopyStyle,
-  margin: 'auto'
+  margin: 'auto',
+}
+export const checkBoxStyle = {
+  '& .css-j204z7-MuiFormControlLabel-root': {
+    marginLeft: 0,
+  },
 }
 export const genderSectionContainer = {
   flexDirection: "row",

@@ -39,6 +39,7 @@ export const duplicateFiles = `Both the files are same. Choose different one`;
 export const formSubmitionSuccess = `Form has been submitted successfully`;
 export const formSaveSuccess = `Form has been saved successfully`;
 export const appointeeApproveSuccess = `Appointee has been approved successfully`;
+export const appointeePensionUpdateSuccess = `Appointee Pension details has been updated successfully`;
 export const appointeeRejectionSuccess = `Appointee has been Rejected`;
 export const appointeeReprocessSuccess = `Appointee has been sent for reprocessing`;
 export const aadharVerificationSuccess = `Aadhaar verified`;
@@ -1863,6 +1864,7 @@ export const GetUnderProcessFileData_URL = `${AppoienteeWorkFlow}/GetUnderProces
 export const GetRejectedFileData_URL = `${AppoienteeWorkFlow}/GetRejectedFileData`;
 export const PostAppointeeRejected_URL = `${AppoienteeWorkFlow}/PostAppointeeRejected`;
 export const PostAppointeeApproved_URL = `${AppoienteeWorkFlow}/PostAppointeeApproved`;
+export const PostAppointeePensionAvailable_URL = `${AppoienteeWorkFlow}/PostAppointeePensionVerification`;
 export const GetProcessedEPFOData_URL = `${AppoienteeWorkFlow}/GetVerifiedData`;
 export const GetUnProcessedFileData_URL = `${AppoienteeWorkFlow}/GetUnProcessedFileData`;
 export const GetProcessedMISData_URL = `${AppoienteeWorkFlow}/GetProcessedMISData`;
@@ -1923,6 +1925,7 @@ export const RemoveAdminUser_URL = (id, userId) => `${Users}/RemoveAdminUser?id=
 //Models messages starts
 export const aaddharNumberverify=`Please complete Aadhaar verification before proceeding.`
 export const approveConfirmation = `Candidate has not successfully completed verification process. Do you still want to approve?`;
+export const pensionConfirmation = `Does appointee have Pension under EPFO? Yes / No"?`;
 export const uploadSizeErrorMsg = `File upload size limit has exceeded`;
 export const passportFilePatternErrorMsg = 'Passport file number must be 12 digits alphanumeric code';
 export const uploadFormatErrorMsg = `Upload valid formatted file`;

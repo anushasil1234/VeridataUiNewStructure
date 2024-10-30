@@ -25,6 +25,7 @@ import {
   activeStepStyle,
   candidateRegistrationFormContainerStyle,
   checkBoxLabelStyle,
+  checkBoxStyle,
   datePickerinputFieldStyle2,
   fileUploadSectionContainerStyle,
   formHeadingContainerStyle,
@@ -210,6 +211,7 @@ const AppointeeRegister = () => {
   const [disabledIsInterNationalWorker, setDisabledIsInterNationalWorker] =
     useState(false);
   const [passportAvailable, setPassportAvailable] = useState("");
+  const [isPassportAvailableDisable, setIsPassportAvailableDisable] = useState(false);
   const [countryOfOrigin, setCountryOfOrigin] = useState("");
   const [passportNo, setPassportNo] = useState(null);
   const [passportValidForDate, setPassportValidForDate] = useState("");
@@ -719,6 +721,7 @@ const AppointeeRegister = () => {
       const nationalityLower = nationality?.toLowerCase();
       setCountryOfOriginBasedOnNationality(nationalityLower);
     }
+
   }, [nationality, passportAvailable]);
 
   useEffect(() => {
@@ -1439,6 +1442,17 @@ const AppointeeRegister = () => {
       setPassportStatusMessage(new VerificationStatus(isValid, "V"));
     }
   };
+  const handleNationalityChange = ({ target }) => {
+    const value = target.value;
+    setNationality(value);
+    if (value.toLowerCase() !== "indian" && value.toLowerCase() !== "nepalese" && value.toLowerCase() !== "bhutanese") {
+      setPassportAvailable('Y');
+      setIsPassportAvailableDisable(true);
+    }else {
+      setIsPassportAvailableDisable(false);
+      setPassportAvailable('');
+    }
+  }
 
   const verifyUAN = async (otp, clientId) => {
     const payLoad = {
@@ -1985,9 +1999,7 @@ const AppointeeRegister = () => {
                                   sx={inputFieldStyle2}
                                   value={nationality}
                                   className="customeTextField"
-                                  onChange={(e) => {
-                                    setNationality(e.target.value);
-                                  }}
+                                  onChange={handleNationalityChange}
                                 >
                                   {nationalityList &&
                                     nationalityList.map((element) => {
@@ -2135,6 +2147,7 @@ const AppointeeRegister = () => {
                                     handleIsPassportAvailableOnChange
                                   }
                                   value={passportAvailable}
+                                  disabled={isPassportAvailableDisable}
                                 >
                                   <MenuItem value={"Y"}>Yes</MenuItem>
                                   <MenuItem value={"N"}>No</MenuItem>
@@ -3135,7 +3148,7 @@ const AppointeeRegister = () => {
                                     disabled
                                     checked
                                     inputProps={{ "aria-label": "controlled" }}
-                                    sx={{ paddingLeft: 0 }}
+                                    sx={checkBoxStyle}
                                   />
                                 }>
                               </FormControlLabel>
