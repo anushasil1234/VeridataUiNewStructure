@@ -2276,6 +2276,8 @@ const AppointeeRegister = () => {
                                     setValue={(newDate) => {
                                       if (newDate) {
                                         setPassportValidForDate(newDate.format('YYYY-MM-DD'));
+                                        const expiryDate = newDate.add(10, 'year').subtract(1, 'day').format('YYYY-MM-DD');
+                                       setPassportValidTillDate(expiryDate);
                                       }
                                     }}
                                     disableFuture={true}
