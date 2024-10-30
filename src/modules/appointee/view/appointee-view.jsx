@@ -37,6 +37,7 @@ import {
   listHeadingStyle,
   memberNameStyle,
   notVerifySuccessIconStyle,
+  subHeadingContentTextStyle,
   verifyFailedIconStyle,
   verifySuccessIconStyle,
 } from "app";
@@ -55,6 +56,7 @@ import {
   remarksEmptyMsg,
   roleTypeEnums,
   epfoPassbookFileTypeAlias,
+  pensionConfirmation,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -106,6 +108,7 @@ let AppointeeViewForm = ({
     setRemarks,
     openRemarksInputModel,
     closeRemarksInputModel,
+    openConfirmationYesNoModal,
     openDocumentModel
   } = functionSlice[0];
   const {
@@ -122,6 +125,7 @@ let AppointeeViewForm = ({
   const {
     postAppointeeRejected,
     postAppointeeApproved,
+    postAppointeePensionApplicable,
     getAppointeeDetails,
     getAppointeeActivity,
     getRemarks
@@ -171,6 +175,7 @@ let AppointeeViewForm = ({
   const [isSaveStep, setIsSaveStep] = useState(null);
   const [isTrustPassbook, setIsTrustPassbook] = useState(null);
   const [isManualPassbook, setIsManualPassbook] = useState(null);
+  const [isPensionApplicable, setIsPensionApplicable] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -214,7 +219,25 @@ let AppointeeViewForm = ({
       showErrorMessage(remarksEmptyMsg);
     }
   };
+  const handleYes = () => isPensionApplicableUpdate(true);
+  const handleNo = () => isPensionApplicableUpdate(false);
 
+  const isPensionApplicableUpdate = async (isPension) => {
+    showErrorMessage();
+    setIsPensionApplicable(isPension);
+    if (hasValue(isPension)) {
+      const payLoad = {
+        appointeeId: appointeeId,
+        userId: userId,
+        IsPensionApplicable: isPension
+      };
+      const response = await postAppointeePensionApplicable(payLoad);
+      if (response) {
+        //  actionsAfterProcess("approve");
+        handleApproveModal();
+      }
+    }
+  };
 
 
   const setAppointeeDetails = async () => {
@@ -250,6 +273,7 @@ let AppointeeViewForm = ({
         isAadhaarVarified,
         isPanVarified,
         isUanVarified,
+        isPensionApplicable,
         // isEmployementVarified,
         isProcessed,
         saveStep,
@@ -362,7 +386,7 @@ let AppointeeViewForm = ({
       } else {
         setIsTrustPassbook(NA);
       }
-
+      setIsPensionApplicable(isPensionApplicable);
       fileUploaded.forEach(
         ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
           const fileDetails = `data:${mimeType};base64,${fileData}`;
@@ -438,6 +462,31 @@ let AppointeeViewForm = ({
   };
 
   const handleApprove = async () => {
+
+    if (hasValue(uanNumber) && isManualPassbook === true && isPensionApplicable === null) {
+      const pensionConfirmationModelContent = {
+        dialogTitle: (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography>Pension Confirmation</Typography>
+
+          </div>
+        ),
+        dialogContentText: <><Typography sx={subHeadingContentTextStyle}>{pensionConfirmation}</Typography>
+          <Typography> </Typography></>,
+        // dialogComponent: <PrerequisiteInformation />,
+        // firstButtonName: "Yes",
+        // secondButtonName: "No",
+        fullWidth: true,
+        mxWidth: 'md',
+
+      };
+      openConfirmationYesNoModal(pensionConfirmationModelContent, handleYes, handleNo);
+    } else {
+      handleApproveModal();
+    }
+  };
+
+  const handleApproveModal = async () => {
     const confirmationModelContent = {
       dialogContentText: approveConfirmation,
       dialogComponent: <RemarksInputModel />,

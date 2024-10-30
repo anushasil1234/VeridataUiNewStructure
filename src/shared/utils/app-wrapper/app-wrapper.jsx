@@ -32,6 +32,7 @@ import {
   MAR,
   NAT,
   PostAppointeeApproved_URL,
+  PostAppointeePensionAvailable_URL,
   PostAppointeeDetailsSave_URL,
   PostAppointeeFileDetails_URL,
   PostUpdatePfUanDetails_URL,
@@ -59,6 +60,7 @@ import {
   PostRemainderMail_URL,
   remiderSuccessMsg,
   appointeeApproveSuccess,
+  appointeePensionUpdateSuccess,
   appointeeRejectionSuccess,
   noRemarks,
   formSubmitionSuccess,
@@ -542,6 +544,9 @@ const AppWrapper = (App) => {
     const postAppointeeApproved = async (payLoad) => {
       return await PfcRequest(PostAppointeeApproved_URL, "POST", payLoad, appointeeApproveSuccess, true);
     };
+     const postAppointeePensionApplicable = async (payLoad) => {
+      return await PfcRequest(PostAppointeePensionAvailable_URL, "POST", payLoad, appointeePensionUpdateSuccess, true);
+    };
     const getUANNumber = async (payLoad) => {
       return await PfcRequest(GetUANNumber_URL, "POST", payLoad);
     };
@@ -806,6 +811,7 @@ const AppWrapper = (App) => {
           PostUpdatePfUanDetails,
           postAppointeeRejected,
           postAppointeeApproved,
+          postAppointeePensionApplicable,
           getUANNumber,
           getRejectedAppointeeList,
           getCriticalAppointeeList,
@@ -899,6 +905,7 @@ const AppWrapper = (App) => {
         <ConfirmationYesNoModal
           open={confirmationYesNoModelOpen}
           confirmationYesNoModelContent={confirmationYesNoModelContent}
+          handleClose={closeConfirmationYesNoModel}
         />
         <ConsentModal
           open={consentModalOpen}
