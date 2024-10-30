@@ -1921,6 +1921,7 @@ export const RemoveAdminUser_URL = (id, userId) => `${Users}/RemoveAdminUser?id=
 //Apis urls
 
 //Models messages starts
+export const aaddharNumberverify=`Please complete Aadhaar verification before proceeding.`
 export const approveConfirmation = `Candidate has not successfully completed verification process. Do you still want to approve?`;
 export const uploadSizeErrorMsg = `File upload size limit has exceeded`;
 export const passportFilePatternErrorMsg = 'Passport file number must be 12 digits alphanumeric code';
