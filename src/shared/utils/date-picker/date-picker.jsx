@@ -6,10 +6,11 @@ import { dateFormat } from 'shared/constants/constants';
 import PropTypes from "prop-types";
 import 'dayjs/locale/en-gb';
 
-const DatePicker = ({ label, value, setValue, disableFuture, maxDate, minDate }) => {
+const DatePicker = ({ label, value, setValue, disableFuture, maxDate, minDate, disabled=false }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
       <DesktopDatePicker
+        disabled={disabled}
         label={label}
         inputFormat={dateFormat}
         value={value}
