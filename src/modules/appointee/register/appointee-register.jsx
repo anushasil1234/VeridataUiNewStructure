@@ -63,6 +63,7 @@ import {
   passportFilePatternErrorMsg,
   imgAndPdfMaxSize,
   imgAndPdfMaxSizeValue,
+  aaddharNumberverify,
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -1180,6 +1181,10 @@ const AppointeeRegister = () => {
   };
 
   const handlePanVerifiaction = () => {
+    if (!isAadhaarVarified) {
+      showErrorMessage(aaddharNumberverify);
+      return; 
+    }
     if (pan === null || nameAsOnPan === null || nameAsOnPan === "") {
       showErrorMessage(emptyPanMsg);
     } else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
@@ -3264,8 +3269,12 @@ const AppointeeRegister = () => {
                             type="text"
                             variant="outlined"
                             className="customeTextField"
-                            onChange={(e) => {
-                              setPan(e.target.value.toUpperCase());
+                            onChange={(e) => {  
+                              if (isAadhaarVarified) { 
+                                setPan(e.target.value.toUpperCase());
+                              } else {
+                                showErrorMessage(aaddharNumberverify)
+                              }
                             }}
                             value={pan}
                             defaultValue={" "}
