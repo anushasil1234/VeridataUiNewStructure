@@ -475,7 +475,9 @@ export const clickableCell = {
   textOverflow: "ellipsis",
   cursor: "pointer",
   color: "#e82e27",
-  marginLeft: "12px"
+  marginLeft: "12px",
+  textDecoration: "underline" ,
+  marginLeft:'-2px'
 }
 export const tableHeader = {
   fontFamily: AppStyle.typography.fontFamily,
