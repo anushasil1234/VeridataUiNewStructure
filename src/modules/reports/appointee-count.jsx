@@ -302,7 +302,7 @@ const AppointeeCount = () => {
     <PageLayout pageName={"Appointee count"}>
       <CardLayout sx={{ width: "100%" }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={8} md={4}>
+          <Grid item xs={12} sm={6} md={4} lg={3}>
             <Box sx={{ ...datePickerstyle }}>
               <DatePicker
                 label={"From Date"}
@@ -313,7 +313,7 @@ const AppointeeCount = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={6} md={4} lg={3}>
             <Box sx={{ ...datePickerstyle }}>
               <DatePicker
                 label={"To Date"}
@@ -325,7 +325,7 @@ const AppointeeCount = () => {
               />
             </Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormControl sx={{ width: "100%" }} size="large">
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               {statusCode !== undefined &&
@@ -355,7 +355,7 @@ const AppointeeCount = () => {
                 </Select>}
             </FormControl>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormControl sx={{ width: "100%" }} size="large">
 
               <InputLabel id="demo-simple-select-label">Entity</InputLabel>
@@ -396,7 +396,7 @@ const AppointeeCount = () => {
                 </Select>}
             </FormControl>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={6} md={4} lg={3}>
             <TextField
               error={/[^\w\s]/.test(appointeeName)}
               style={inputFieldStyleAdded}
@@ -421,7 +421,7 @@ const AppointeeCount = () => {
 
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={6} md={4} lg={3}>
             <Box sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
               <DarkTooltip placement="top" title={"Search"} arrow>
                 <ResponsiveFab
