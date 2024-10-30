@@ -76,12 +76,17 @@ const CumulativeStatus = () => {
             show: true,
             position: 'right', // Position the legends at the bottom
             horizontalAlign: 'center', // Align the legends horizontally in the center
-            fontSize: '14px', // Make sure text size is appropriate
+            fontSize: '14px',
+            fontFamily:'Montserrat, Anuphan',
+            fontWeight:'500',
+        
             itemMargin: {
                 horizontal: 0,
                 vertical: 0 // Adjust vertical margin to fit better
-            }
+            },
+            offsetY: -5,
         },
+       
         responsive: [
             {
                 breakpoint: 991,
