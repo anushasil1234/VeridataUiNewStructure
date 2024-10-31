@@ -21,6 +21,8 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
     const [remainingTime, setRemainingTime] = useState(300); // 5 minutes in seconds
     const [showResendButton, setShowResendButton] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [passwordErrorMsg, setPasswordErrorMsg] = useState(false);
+    const [confirmPasswordErrorMsg, setConfirmPasswordErrorMsg] = useState(false);
 
 
     const popUpSlice = useSelector(state => state.popUpSlice);
@@ -128,11 +130,12 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
         if (hasValue(newPassword) && newPassword.length >= 8) {
             const trimmedPassword = newPassword.trim();
             if (isPaswordValid(trimmedPassword)) {
-
-                setIsConfPasswrdDisable(false)
+                setIsConfPasswrdDisable(false);
+                setPasswordErrorMsg(false);
             } else {
                 showErrorMessage(passwordPattern);
                 setIsConfPasswrdDisable(true);
+                setPasswordErrorMsg(true);
             }
         } else {
             setIsConfPasswrdDisable(true);
@@ -144,9 +147,11 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
             if (isPaswordValid(trimmedPassword)) {
                 if (trimmedPassword === confirmPassword.trim()) {
                     setIsOTPDisable(false);
+                    setConfirmPasswordErrorMsg(false);
                 } else {
                     showErrorMessage(passwordNotMsg);
                     setIsOTPDisable(true);
+                    setConfirmPasswordErrorMsg(true);
                     // setConfirmPassword('');
                 }
             } else {
@@ -223,10 +228,10 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
                 </Grid>
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     <Grid item xs={12} md={3}>
-                        <InputField props={newPasswordInput} />
+                        <InputField error={passwordErrorMsg} props={newPasswordInput} />
                     </Grid>
                     <Grid item xs={12} md={3}>
-                        <InputField inputProps={passwordInputProps} props={confirmPasswordInput} disabled={isConfPasswrdDisable} />
+                        <InputField error={confirmPasswordErrorMsg} inputProps={passwordInputProps} props={confirmPasswordInput} disabled={isConfPasswrdDisable} />
                     </Grid>
                     <Grid item xs={12} md={2}>
                         <InputField props={newOtpInput} disabled={isOTPDisable} />

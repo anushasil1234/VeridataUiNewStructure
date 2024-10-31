@@ -27,6 +27,7 @@ import {
   actionIconListStyle,
   actionIconStyle,
   appointeeImageViewStyle,
+  appointeeVerificationStatusChipPropsStyle,
   cardStyle,
   displayImageStyle,
   documentListItemStyle,
@@ -558,9 +559,6 @@ let AppointeeViewForm = ({
     "Remarks"
   );
   const getVerificationChip = () => {
-    const chipProps = {
-      sx: { mx: "3px", fontWeight: 500, color: "#ffffff" },
-    };
 
     const { label, color } = isAadharVerified === false
       ? { label: "Aadhaar Verification failed", color: "error" }
@@ -580,7 +578,7 @@ let AppointeeViewForm = ({
                     ? { label: "No UAN Available", color: "success" }
                     : { label: null, color: null };
 
-    return label ? <Chip {...chipProps} label={label} color={color} /> : null;
+    return label ? <Chip {...appointeeVerificationStatusChipPropsStyle} label={label} color={color} /> : null;
   };
 
 
@@ -759,10 +757,12 @@ let AppointeeViewForm = ({
                 <PersonalInformation
                   fieldName={"Name"}
                   fieldValue={appointeeName}
+                  badge={isAadharVerified}
                 />
                 <PersonalInformation
                   fieldName={"Date of Birth"}
                   fieldValue={dateOfBirth}
+                  badge={isAadharVerified}
                 />
                 <PersonalInformation fieldName={"Gender"} fieldValue={gender} />
                 <PersonalInformation
