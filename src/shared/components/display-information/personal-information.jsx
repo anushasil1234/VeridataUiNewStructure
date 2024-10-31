@@ -102,20 +102,24 @@ export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge
             </Grid>
             <Grid container item xs={12} sm={6} md={7} lg={8} sx={listStyle}>
 
-                <Grid item xs={5}>
-                    <FieldValue fieldValue={fieldValue} />
-                </Grid>
                 {
-                    badge &&
-                    <Grid item xs={5}>
-                        <Chip
-                            icon={<TaskAlt sx={xsChipIconCommonStyle} color="#2e7d32" />}
-                            sx={successGreenXsOutlineStyle}
-                            size="small"
-                            label={'AADHAR Verified'}
-                        />
-                    </Grid>
+                    badge ?
+                        <>
+                            <Grid item xs={6} md={5}>
+                                <FieldValue fieldValue={fieldValue} />
+                            </Grid>
+                            <Grid item xs={6} md={5}>
+                                <Chip
+                                    icon={<TaskAlt sx={xsChipIconCommonStyle} color="#2e7d32" />}
+                                    sx={successGreenXsOutlineStyle}
+                                    size="small"
+                                    label={'AADHAR Verified'}
+                                />
+                            </Grid>
+                        </> :
+                        <FieldValue fieldValue={fieldValue} />
                 }
+
             </Grid>
         </>
     );
