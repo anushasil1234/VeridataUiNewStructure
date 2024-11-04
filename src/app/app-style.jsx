@@ -1104,7 +1104,8 @@ export const fileUploadSectionContainerStyle = {
 export const fileNameStyle = {
   fontSize: ".7rem",
   textAlign: 'center',
-  marginTop: '6px'
+  marginTop: '6px',
+  texWrap: 'nowrap'
 }
 export const uploadIconContainer = {
   backgroundColor: ThemeColorPalete.common.white,

@@ -627,7 +627,6 @@ let AppointeeViewForm = ({
                 fieldName={"Aadhaar Number"}
                 fieldValue={aadhar}
               />
-
               <DocumentDetails
                 isVerified={isUanVerified}
                 fieldName={"UAN Number"}
@@ -654,6 +653,7 @@ let AppointeeViewForm = ({
                     <FileViewComponent
                       fileType={"Trust Pf File"}
                       file={trustPfFile}
+                      width="50px"
                     />
                   }
                 />
@@ -665,6 +665,7 @@ let AppointeeViewForm = ({
                     <FileViewComponent
                       fileType={"Epfo passbook file"}
                       file={manualPassbookFile}
+                      width="50px"
                     />
                   }
                 />
@@ -681,22 +682,28 @@ let AppointeeViewForm = ({
                   <DocumentDetails
                     fieldName={"International Worker"}
                     fieldValue={isInterNationalWorker}
+                    width="50px"
                   />
                   <DocumentDetails
                     fieldName={"Country of Origin"}
                     fieldValue={countryOfOrigin}
+                    width="50px"
+
                   />
                   <DocumentDetails
                     fieldName={"Passport Number"}
                     fieldValue={passportNo}
+                    width="50px"
                   />
                   <DocumentDetails
                     fieldName={"Passport Issue Date"}
                     fieldValue={passportValidFromDate}
+                    width="50px"
                   />
                   <DocumentDetails
                     fieldName={"Passport Expiry Date"}
                     fieldValue={passportValidTillDate}
+                    width="50px"
                   />
                   {visaFile &&
                     <DocumentDetails
@@ -705,6 +712,7 @@ let AppointeeViewForm = ({
                         <FileViewComponent
                           fileType={"Passport File"}
                           file={visaFile}
+                          width="50px"
                         />
                       }
                     />
@@ -714,6 +722,7 @@ let AppointeeViewForm = ({
                 <DocumentDetails
                   fieldName={"Passport Available"}
                   fieldValue={isPassportAvailable === 'N' ? 'No' : NA}
+                  width="50px"
                 />
               )}
             </Box>
@@ -831,9 +840,7 @@ let AppointeeViewForm = ({
                       <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>
                         N/A
                       </Typography>
-
                     )
-
                   }
                 />
               </Grid>

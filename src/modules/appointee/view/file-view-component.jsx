@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 
 
-export const FileViewComponent = ({ file, fileType }) => {
+export const FileViewComponent = ({ file, fileType, width = '100%' }) => {
     const functionSlice = useSelector((state) => state.functionSlice);
     const {
         openDocumentModel
@@ -27,7 +27,7 @@ export const FileViewComponent = ({ file, fileType }) => {
                 />
             </Box>
         </DarkTooltip>
-        <Typography sx={{width: '50px', ...fileNameStyle}}>{file.fileName}</Typography>
+        <Typography sx={{width: width, ...fileNameStyle}}>{file.fileName}</Typography>
     </Box>
     )
 }
