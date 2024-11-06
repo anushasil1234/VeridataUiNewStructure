@@ -150,31 +150,12 @@ const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
           variant="text"
           color="primary"
           onClick={handleShowMoreRows}
-          sx={{ marginTop: 2 }}
+          sx={{ marginTop: 2, 
+            textDecoration: 'underline', 
+           }}
         >
           Show more rows
         </Button>
-        {/* Alternatively, use Box with improved styling and logging */}
-        
-        {/* <Box
-          sx={{
-            ...sampleDownLoadLinkContainerStyle,
-            marginTop: 2,
-            cursor: "pointer",
-            color: "primary.main",
-            textDecoration: "underline",
-          }}
-          onClick={handleShowMoreRows}
-          role="button"
-          tabIndex={0}
-          onKeyPress={(e) => {
-            if (e.key === "Enter") handleShowMoreRows();
-          }}
-          aria-label="Show more rows"
-        >
-          Show more rows
-        </Box> */}
-       
       </Box>
     </WidgetCard>
   );

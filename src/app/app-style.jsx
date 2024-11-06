@@ -288,10 +288,9 @@ export const downLoadIconStyle = {
   color: downLoadLinkColor,
   ml: 1
 }
-export const userLoginErrorModel = {
-  userName: false,
-  password: false
-}
+
+
+
 export const downLoadNameStyle = {
   fontWeight: "bold",
   color: "#0044cc"
@@ -480,8 +479,8 @@ export const clickableCell = {
   cursor: "pointer",
   color: "#e82e27",
   marginLeft: "12px",
-  textDecoration: "underline" ,
-  marginLeft:'-2px'
+  textDecoration: "underline",
+  marginLeft: '-2px'
 }
 export const tableHeader = {
   fontFamily: AppStyle.typography.fontFamily,
@@ -995,6 +994,12 @@ export const modelToolbar = {
   minHeight: { xs: "48px" }
 };
 // chip style start
+
+export const appointeeVerificationStatusChipPropsStyle = {
+  mx: "3px",
+  fontWeight: 500,
+  color: "#ffffff"
+}
 const chipStyle = {
   px: "4px",
   color: "#fff",
@@ -1042,6 +1047,19 @@ export const successStyle = {
   ...chipStyle,
   backgroundColor: ThemeColorPalete.success.main
 };
+export const xsChipIconCommonStyle = {
+  width: '12px', height: '12px'
+}
+export const successGreenXsOutlineStyle = {
+
+  color: "#2e7d32",
+  backgroundColor: "transparent",
+  border: "1px solid #2e7d32",
+  fontSize: '.6rem',
+  '&.MuiChip-root': {
+    height: '18px'
+  }
+}
 export const cancelledStyle = {
   ...chipStyle,
   backgroundColor: ThemeColorPalete.error.main
@@ -1050,6 +1068,8 @@ export const lapsedStyle = {
   ...chipStyle,
   backgroundColor: ThemeColorPalete.error.main
 };
+
+
 export const getStatusChipStyle = (status) => {
   switch (status) {
     case "Submitted":
@@ -1084,7 +1104,8 @@ export const fileUploadSectionContainerStyle = {
 export const fileNameStyle = {
   fontSize: ".7rem",
   textAlign: 'center',
-  marginTop: '6px'
+  marginTop: '6px',
+  texWrap: 'nowrap'
 }
 export const uploadIconContainer = {
   backgroundColor: ThemeColorPalete.common.white,

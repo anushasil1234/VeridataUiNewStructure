@@ -7,7 +7,8 @@ import {
   toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent,
   toLogin, toForgotPassword, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData,
   toUserlist, toVerified, toHelp, toSetPassword, toReSetPassword, toNoMovementAgingReport, toNoResponseAgingReport, toNationalityReport, toAppointeeReport,
-  toUserLogin
+  toUserLogin,
+  topfPension
 } from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 import { MsalProvider } from '@azure/msal-react';
@@ -50,7 +51,8 @@ const AppointeeNationalityReport = Loadable(lazy(() => import('../../modules/rep
 const AppointeeReport = Loadable(lazy(() => import('../../modules/reports/appointee-data-view')));
 const ForgotPassword = Loadable(lazy(() => import('../../modules/account/login/forgot-password')));
 const UserLogin = Loadable(lazy(() => import('../../modules/account/login/user-login-view')));
-
+// const PfPension=Loadable(lazy(()=>import('../../modules/reports/pf-pension')))
+const PfPension =Loadable(lazy(()=>import('../../modules/reports/pf-pension')));
 const CustomRouter = [
   {
     path: '/',
@@ -80,6 +82,8 @@ const CustomRouter = [
       { path: toNoMovementAgingReport, exact: true, element: <AppointeeAgingReport /> },
       { path: toNationalityReport, exact: true, element: <AppointeeNationalityReport /> },
       { path: toAppointeeReport, exact: true, element: <AppointeeReport /> },
+      // {path: topfPension,exact:true,element:<PfPension/>}
+      {path:topfPension,exact:true,element:<PfPension/>}
     ],
   },
   {

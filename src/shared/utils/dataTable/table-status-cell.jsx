@@ -1,4 +1,4 @@
-import { Chip } from "@mui/material";
+import { Chip} from "@mui/material";
 import {
   cancelledStyle,
   consetDeclinedChipStyle,
@@ -19,6 +19,7 @@ import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {getStatusTooltip } from "shared/constants/constants";
+import { hasValue } from "..";
 
 const TableStatusCell = (props) => {
 
@@ -87,6 +88,33 @@ const TableStatusCell = (props) => {
       labelValue = "Prerequisite NA";
       chipStyle = consetDeclinedChipStyle;
       chipIconStyle= <CancelIcon color="white"/>
+    }
+  }
+  if (cellName==="trustPassBookStatus"){
+    if(hasValue(cellValue)){
+      labelValue = (
+        <DarkTooltip title="Trust Passbook Status Submitted"  placement="top" arrow>
+          <span>{cellValue}</span>
+        </DarkTooltip>
+      );
+      chipStyle =  submittedStyle;
+    }
+  }
+  if (cellName==="epfoPassBookStatus"){
+    if(hasValue(cellValue)){
+      labelValue = (
+        <DarkTooltip title="EPFO Passbook Status Submitted"  placement="top" arrow>
+          <span>{cellValue}</span>
+        </DarkTooltip>
+      );
+      chipStyle =  submittedStyle;
+    }else{
+      labelValue = (
+        <DarkTooltip title="No UAN Available"  placement="top" arrow>
+          <span>No UAN</span>
+        </DarkTooltip>
+      );
+      chipStyle =noResponseStyle;
     }
   }
   

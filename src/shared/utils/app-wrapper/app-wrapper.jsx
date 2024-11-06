@@ -104,7 +104,8 @@ import {
   AppointeeDataReport_URL,
   UserSignInDetailsByEmail_URL,
   PostCandidateMailResend_URL,
-  downloadProcessingList_URL
+  downloadProcessingList_URL,
+  downloadpfReport_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -432,6 +433,9 @@ const AppWrapper = (App) => {
     };
     const getVerifiedAppointeeList = async (payLoad) => {
       return await PfcRequest(GetProcessedEPFOData_URL, "POST", payLoad, null, true);
+    };
+    const AppointeeDataPfFilteRList = async (payLoad) => {
+      return await PfcRequest( downloadpfReport_URL , "POST", payLoad, null, true);
     };
     const getRejectedAppointeeList = async (payLoad) => {
       const responseInfo = await PfcRequest(GetRejectedFileData_URL, "POST", payLoad, null, true);
@@ -791,6 +795,7 @@ const AppWrapper = (App) => {
           postLoginByEmailDetails,
           postLoginDetails,
           getVerifiedAppointeeList,
+          AppointeeDataPfFilteRList ,
           downloadReport,
           getLatestAppointees,
           configerationSetUp,
