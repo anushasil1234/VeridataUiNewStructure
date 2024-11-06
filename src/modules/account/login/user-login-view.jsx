@@ -1,9 +1,9 @@
 import { Box, Button, Grid, IconButton, InputAdornment, Link, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { InputField, PageHeading1,PageHeading2, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
-import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle, logoImageStyle } from "app";
+import { InputField, PageHeading1, PageHeading2, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
+import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle, logoImageStyle, userLoginErrorModel } from "app";
 import { useNavigate } from "react-router-dom";
-import { emptyPasswordField, emptyUserNameField, otpToMailMsg, toDashboard, toForgotPassword, toSetPassword, welcomeMsg } from "shared/constants/constants";
+import { emptyPasswordField, emptyUserNameField, otpToMailMsg, passwordMaxFieldErrorMsg, toDashboard, toForgotPassword, toSetPassword, welcomeMsg } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
 import logo from 'assets/images/logos/pfc_logo1.png';
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
@@ -21,8 +21,20 @@ import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
 import { roleTypeEnums } from "shared/constants/constants";
 
 export const UserLoginView = () => {
+  const apiSlice = useSelector(state => state.apiSlice);
+  const functionSlice = useSelector(state => state.functionSlice);
+  const popUpSlice = useSelector(state => state.popUpSlice);
+
+  const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+  const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
+
+  const { postLoginCredDetails, postLoginDetails, postLoginByEmailDetails } = apiSlice[0];
+  const { setDropdownList, openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } = functionSlice[0];
+
+  const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
   const [passwordType, setPasswordType] = useState("password");
   const [isPasswordVisibilityOn, setIsPasswordVisibilityOn] = useState(false);
   const [passwordFieldIcon, setPasswordFieldIcon] = useState(<VisibilityOff sx={loginFieldIconStyle} />);
@@ -33,15 +45,7 @@ export const UserLoginView = () => {
   const handlePasswordVisibility = () => {
     setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
   }
-  useEffect(() => {
-    if (isPasswordVisibilityOn) {
-      setPasswordType("text");
-      setPasswordFieldIcon(<Visibility sx={loginFieldIconStyle} />);
-    } else {
-      setPasswordType("password");
-      setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
-    }
-  }, [isPasswordVisibilityOn])
+
   const userNameInput = new InputFieldProps(
     setUserName,
     "Username",
@@ -55,8 +59,12 @@ export const UserLoginView = () => {
       </InputAdornment>
     ),
   }
+  const handlePassword = (value) => {
+    setPasswordError(false);
+    setPassword(value);
+  }
   const passwordInput = new InputFieldProps(
-    setPassword,
+    handlePassword,
     "password",
     null,
     passwordType
@@ -74,17 +82,6 @@ export const UserLoginView = () => {
     ),
   }
 
-
-  const apiSlice = useSelector(state => state.apiSlice);
-  const functionSlice = useSelector(state => state.functionSlice);
-  const popUpSlice = useSelector(state => state.popUpSlice);
-
-  const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-  const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
-
-  const { postLoginCredDetails, postLoginDetails, postLoginByEmailDetails } = apiSlice[0];
-  const { setDropdownList, openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } = functionSlice[0];
-  const [loading, setLoading] = useState(false);
 
   const startLoader = () => setLoading(true);
   const stopLoader = () => setLoading(false);
@@ -108,9 +105,20 @@ export const UserLoginView = () => {
 
     if (userName === "") {
       showErrorMessage(emptyUserNameField);
-    } else if (password === "") {
+      return
+    }
+    if (password === "") {
       showErrorMessage(emptyPasswordField);
-    } else {
+      setPasswordError(true);
+      return
+    }
+    if (password.length > 12) {
+      showErrorMessage(passwordMaxFieldErrorMsg);
+      setPasswordError(true);
+      return
+    }
+
+    else {
       const payLoad = {
         userCode: userName.trim(),
         password: password.trim()
@@ -210,7 +218,15 @@ export const UserLoginView = () => {
       }
     }
   };
-
+  useEffect(() => {
+    if (isPasswordVisibilityOn) {
+      setPasswordType("text");
+      setPasswordFieldIcon(<Visibility sx={loginFieldIconStyle} />);
+    } else {
+      setPasswordType("password");
+      setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
+    }
+  }, [isPasswordVisibilityOn])
 
   return (
     <>
@@ -245,18 +261,18 @@ export const UserLoginView = () => {
                     }
                   />
                   <Box my={1}>
-                     <PageHeading2
-                    
-                    heading={"Your Onboarding Compliance Ally"}
+                    <PageHeading2
+
+                      heading={"Your Onboarding Compliance Ally"}
                       fontSize="166rem"
-                     />
+                    />
                   </Box>
                 </Box>
                 {/* </Grid> */}
                 <Box>
                   <form onSubmit={handleSubmit}>
                     <InputField inputProps={userNameInputProps} props={userNameInput} />
-                    <InputField inputProps={passwordInputProps} props={passwordInput} />
+                    <InputField error={passwordError} inputProps={passwordInputProps} props={passwordInput} />
                     <Button
                       type="submit"
                       color="primary"

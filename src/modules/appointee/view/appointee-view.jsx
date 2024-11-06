@@ -27,6 +27,7 @@ import {
   actionIconListStyle,
   actionIconStyle,
   appointeeImageViewStyle,
+  appointeeVerificationStatusChipPropsStyle,
   cardStyle,
   displayImageStyle,
   documentListItemStyle,
@@ -69,8 +70,10 @@ import {
 } from "shared/components/display-information/personal-information";
 import RemarksInputModel from "shared/utils/models/remarks-modal";
 import Button2 from "shared/utils/button/button2";
-import viewImage from 'assets/images/profile/view_image.png';
+// import viewImage from 'assets/images/profile/view_image.png';
+import viewImage from 'assets/images/profile/file_upload_icon.png';
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
+import { FileViewComponent } from "./file-view-component";
 
 
 const DocumentDetails = ({ fieldName, fieldValue, isVerified }) => {
@@ -558,9 +561,6 @@ let AppointeeViewForm = ({
     "Remarks"
   );
   const getVerificationChip = () => {
-    const chipProps = {
-      sx: { mx: "3px", fontWeight: 500, color: "#ffffff" },
-    };
 
     const { label, color } = isAadharVerified === false
       ? { label: "Aadhaar Verification failed", color: "error" }
@@ -580,7 +580,7 @@ let AppointeeViewForm = ({
                     ? { label: "No UAN Available", color: "success" }
                     : { label: null, color: null };
 
-    return label ? <Chip {...chipProps} label={label} color={color} /> : null;
+    return label ? <Chip {...appointeeVerificationStatusChipPropsStyle} label={label} color={color} /> : null;
   };
 
 
@@ -627,7 +627,6 @@ let AppointeeViewForm = ({
                 fieldName={"Aadhaar Number"}
                 fieldValue={aadhar}
               />
-
               <DocumentDetails
                 isVerified={isUanVerified}
                 fieldName={"UAN Number"}
@@ -651,20 +650,11 @@ let AppointeeViewForm = ({
                 <DocumentDetails
                   fieldName={"Trust PF File"}
                   fieldValue={
-                    <DarkTooltip placement="right" title="View image" arrow>
-                      <Box sx={appointeeImageViewStyle}>
-                        <img
-                          src={viewImage}
-                          alt="Trust Pf File"
-                          title="View image"
-                          style={{
-                            ...displayImageStyle
-                          }}
-                          onClick={() => openDocumentModel(trustPfFile, "Trust Pf")}
-                        />
-                      </Box>
-                    </DarkTooltip>
-
+                    <FileViewComponent
+                      fileType={"Trust Pf File"}
+                      file={trustPfFile}
+                      width="50px"
+                    />
                   }
                 />
               )}
@@ -672,20 +662,11 @@ let AppointeeViewForm = ({
                 <DocumentDetails
                   fieldName={"Epfo passbook file"}
                   fieldValue={
-                    <DarkTooltip placement="right" title="View image" arrow>
-                      <Box sx={appointeeImageViewStyle}>
-                        <img
-                          src={viewImage}
-                          alt="Epfo passbook file"
-                          title="View image"
-                          style={{
-                            ...displayImageStyle
-                          }}
-                          onClick={() => openDocumentModel(manualPassbookFile, "Epfo passbook file")}
-                        />
-                      </Box>
-                    </DarkTooltip>
-
+                    <FileViewComponent
+                      fileType={"Epfo passbook file"}
+                      file={manualPassbookFile}
+                      width="50px"
+                    />
                   }
                 />
               )}
@@ -701,41 +682,38 @@ let AppointeeViewForm = ({
                   <DocumentDetails
                     fieldName={"International Worker"}
                     fieldValue={isInterNationalWorker}
+                    width="50px"
                   />
                   <DocumentDetails
                     fieldName={"Country of Origin"}
                     fieldValue={countryOfOrigin}
+                    width="50px"
+
                   />
                   <DocumentDetails
                     fieldName={"Passport Number"}
                     fieldValue={passportNo}
+                    width="50px"
                   />
                   <DocumentDetails
                     fieldName={"Passport Issue Date"}
                     fieldValue={passportValidFromDate}
+                    width="50px"
                   />
                   <DocumentDetails
                     fieldName={"Passport Expiry Date"}
                     fieldValue={passportValidTillDate}
+                    width="50px"
                   />
                   {visaFile &&
                     <DocumentDetails
                       fieldName={"Passport File"}
                       fieldValue={
-                        <DarkTooltip placement="right" title="View image" arrow>
-                          <Box sx={appointeeImageViewStyle}>
-                            <img
-                              src={viewImage}
-                              alt="Passport File"
-
-                              style={{
-                                ...displayImageStyle // Keeps the aspect ratio intact
-                              }}
-                              onClick={() => openDocumentModel(visaFile, "Passport")}
-                            />
-                          </Box>
-                        </DarkTooltip>
-
+                        <FileViewComponent
+                          fileType={"Passport File"}
+                          file={visaFile}
+                          width="50px"
+                        />
                       }
                     />
                   }
@@ -744,6 +722,7 @@ let AppointeeViewForm = ({
                 <DocumentDetails
                   fieldName={"Passport Available"}
                   fieldValue={isPassportAvailable === 'N' ? 'No' : NA}
+                  width="50px"
                 />
               )}
             </Box>
@@ -759,10 +738,12 @@ let AppointeeViewForm = ({
                 <PersonalInformation
                   fieldName={"Name"}
                   fieldValue={appointeeName}
+                  badge={isAadharVerified}
                 />
                 <PersonalInformation
                   fieldName={"Date of Birth"}
                   fieldValue={dateOfBirth}
+                  badge={isAadharVerified}
                 />
                 <PersonalInformation fieldName={"Gender"} fieldValue={gender} />
                 <PersonalInformation
@@ -808,22 +789,11 @@ let AppointeeViewForm = ({
                       fieldName={"Handicap Certificate"}
                       fieldValue={
                         handicapFile ?
-                          <>
-                            <DarkTooltip placement="right" title="View image" arrow>
-                              <Box sx={appointeeImageViewStyle}>
-                                <img
-                                  src={viewImage}
-                                  alt="Handicap Certificate"
-                                  style={{
-                                    ...displayImageStyle, // Keeps the aspect ratio intact
-                                    marginLeft: "2%", // Relative margin for responsiveness
-                                    marginTop: "0.5rem" // Responsive margin based on font size
-                                  }}
-                                  onClick={() => openDocumentModel(handicapFile, "Handicap Certificate")}
-                                />
-                              </Box>
-                            </DarkTooltip>
-                          </> :
+                          <FileViewComponent
+                            fileType={"Handicap Certificate"}
+                            file={handicapFile}
+                          />
+                          :
                           NA
                       }
                     />
@@ -844,20 +814,10 @@ let AppointeeViewForm = ({
                   fieldName={"10th Pass Certificate"}
                   fieldValue={
                     tenFile ? (
-                      <DarkTooltip placement="right" title="View image" arrow>
-                        <Box sx={appointeeImageViewStyle}>
-                          <img
-                            src={viewImage}
-                            alt="10th Pass Certificate"
-                            style={{
-                              ...displayImageStyle,
-                              marginLeft: "5%", // Responsive margin
-                              marginTop: "0.5rem" // Responsive margin
-                            }}
-                            onClick={() => openDocumentModel(tenFile, "10th Pass Certificate")}
-                          />
-                        </Box>
-                      </DarkTooltip>
+                      <FileViewComponent
+                        fileType={"10th Pass Certificate"}
+                        file={tenFile}
+                      />
                     ) : (
                       <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>
                         N/A
@@ -872,27 +832,15 @@ let AppointeeViewForm = ({
                   fieldName={"Father's Name Verification Document"}
                   fieldValue={
                     otherFile ? (
-                      <DarkTooltip placement="right" title="View image" arrow>
-                        <Box sx={appointeeImageViewStyle}>
-                          <img
-                            src={viewImage}
-                            alt="Father's name Verification Document"
-                            style={{
-                              ...displayImageStyle,
-                              marginLeft: "5%", // Relative margin for responsiveness
-                              marginTop: "0.8rem" // Responsive margin based on font size
-                            }}
-                            onClick={() => openDocumentModel(otherFile, "Father's name Verification Document")}
-                          />
-                        </Box>
-                      </DarkTooltip>
+                      <FileViewComponent
+                        fileType={"Father's name Verification Document"}
+                        file={otherFile}
+                      />
                     ) : (
                       <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>
                         N/A
                       </Typography>
-
                     )
-
                   }
                 />
               </Grid>

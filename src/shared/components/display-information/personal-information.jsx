@@ -55,12 +55,13 @@
 //     );
 // };
 
-import { Info } from '@mui/icons-material';
-import { Box, Grid, Stack, Typography } from '@mui/material';
-import { fieldValueSx, iconStyle, listStyle } from 'app';
+import { Info, TaskAlt } from '@mui/icons-material';
+import { Box, Chip, Grid, Stack, Typography } from '@mui/material';
+import { fieldValueSx, iconStyle, listStyle, successGreenXsOutlineStyle, xsChipIconCommonStyle } from 'app';
 import React from 'react';
 import TextSkelton1 from 'shared/utils/skeltons/text-skelton/text-skelton1';
 import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export const FieldName = ({ fieldName, fieldValue, fieldTooltip }) => {
     return (
@@ -91,7 +92,7 @@ export const FieldValue = ({ fieldValue }) => {
     );
 };
 
-export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip }) => {
+export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge = null }) => {
     return (
         <>
             <Grid item xs={12} sm={6} md={5} lg={4} sx={listStyle}>
@@ -99,10 +100,26 @@ export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip }) => 
                     <FieldName fieldValue={fieldValue} fieldName={fieldName} fieldTooltip={fieldTooltip} />
                 </Box>
             </Grid>
-            <Grid item xs={12} sm={6} md={7} lg={8} sx={listStyle}>
-                <Box>
-                    <FieldValue fieldValue={fieldValue} />
-                </Box>
+            <Grid container item xs={12} sm={6} md={7} lg={8} sx={listStyle}>
+
+                {
+                    badge ?
+                        <>
+                            <Grid item xs={6} md={5}>
+                                <FieldValue fieldValue={fieldValue} />
+                            </Grid>
+                            <Grid item xs={6} md={5}>
+                                <Chip
+                                    icon={<TaskAlt sx={xsChipIconCommonStyle} color="#2e7d32" />}
+                                    sx={successGreenXsOutlineStyle}
+                                    size="small"
+                                    label={'AADHAR Verified'}
+                                />
+                            </Grid>
+                        </> :
+                        <FieldValue fieldValue={fieldValue} />
+                }
+
             </Grid>
         </>
     );

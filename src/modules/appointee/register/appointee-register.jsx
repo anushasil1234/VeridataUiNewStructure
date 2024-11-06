@@ -65,6 +65,8 @@ import {
   imgAndPdfMaxSize,
   imgAndPdfMaxSizeValue,
   aaddharNumberverify,
+  indianpassportFilePatternErrorMsg,
+  passportNoEmptyMsg,
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -194,6 +196,7 @@ const AppointeeRegister = () => {
   const [companyId, setCompanyId] = useState(0);
   const [defaultCountry, setDefaultCountry] = useState();
   const [passportFileNumber, setPassportFileNumber] = useState("");
+  const [passportFileNumberError, setPassportFileNumberError] = useState(false);
   const [UAN, setUAN] = useState("");
   const [memberName, setMemberName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
@@ -214,6 +217,7 @@ const AppointeeRegister = () => {
   const [isPassportAvailableDisable, setIsPassportAvailableDisable] = useState(false);
   const [countryOfOrigin, setCountryOfOrigin] = useState("");
   const [passportNo, setPassportNo] = useState(null);
+  const [passportNumberError, setPassportNumberError] = useState(false);
   const [passportValidForDate, setPassportValidForDate] = useState("");
   const [passportValidTillDate, setPassportValidTillDate] = useState("");
   const [isPhysicallyHandicap, setIsPhysicallyHandicap] = useState("");
@@ -229,6 +233,7 @@ const AppointeeRegister = () => {
   const [currentPageNo, setCurrentPageNo] = useState(null);
   const [clickedButton, setClickedButton] = useState(null);
   const [isAppointeeUanAvailable, setIsAppointeeUanAvailable] = useState(null);
+  const [passportNoMaxLength, setPassportNoMaxLength] = useState(null);
 
   const [uanNumberAvailable, setUanNumberAvailable] = useState("");
   const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] =
@@ -253,7 +258,7 @@ const AppointeeRegister = () => {
   );
 
   const passportNumberInputProps = {
-    maxLength: 12,
+    maxLength: passportNoMaxLength,
     ...inputFieldStyle2,
   };
 
@@ -302,6 +307,8 @@ const AppointeeRegister = () => {
     stepperDefaultList
   );
   const [isUanVerificationProcessManual, setIsUanVerificationProcessManual] = useState('auto');
+  const [panNumberError, setPanNumberError] = useState(false);
+
   const stepCounter = 4;
 
 
@@ -463,6 +470,9 @@ const AppointeeRegister = () => {
       setIsPassportVarified(isPassportValid);
       setisUanVarified(isUanVarified);
       setIsPanVarified(isPanVarified);
+      // (isPanVarified !== true) ?
+      //   setPanNumberError(true) :
+      //   setPanNumberError(false);
       hasValue(isManualPassbook)
         ? isManualPassbook === true ? setIsUanVerificationProcessManual('manual')
           : setIsUanVerificationProcessManual('auto')
@@ -492,6 +502,7 @@ const AppointeeRegister = () => {
         setActiveStep(saveStep);
         setCurrentPageNo(saveStep + 1);
       }
+      setPassPortMaxLength(nationality);
       setFileUploaded(fileUploaded);
       setIsAppointeeUanAvailable(isUanAvailable);
       hasValue(isUanAvailable)
@@ -731,9 +742,9 @@ const AppointeeRegister = () => {
     }
   }, [isPhysicallyHandicap])
 
-  useEffect(() => {
-    // updateStepCounter(passportAvailable);
-  }, [passportAvailable])
+  // useEffect(() => {
+  //   // updateStepCounter(passportAvailable);
+  // }, [passportAvailable])
 
   useEffect(() => {
     if (isUanVerificationProcessManual === 'auto') {
@@ -1161,8 +1172,9 @@ const AppointeeRegister = () => {
         //showSuccessMessage(panSuccessMsg);
         setIsPANModalOpen(true);
         //handleGetUANNumber();
+        // setPanNumberError(false);
       } else {
-        showErrorMessage(panVerifyFailedMsg);
+        displayPanError(panVerifyFailedMsg);
         if (hasValue(remarks)) {
           const generatedRemarks = generateRemarks(remarks);
           openRemarksModel(generatedRemarks);
@@ -1183,22 +1195,43 @@ const AppointeeRegister = () => {
     setIsPANModalOpen(false); // Just close the dialog without calling UAN
   };
 
+  const displayPanError = (msg, isValid) => {
+    showErrorMessage(msg);
+    setPanNumberError(true);
+  }
   const handlePanVerifiaction = () => {
     if (!isAadhaarVarified) {
       showErrorMessage(aaddharNumberverify);
-      return; 
+      setPanNumberError(true);
+      return;
     }
     if (pan === null || nameAsOnPan === null || nameAsOnPan === "") {
       showErrorMessage(emptyPanMsg);
+      setPanNumberError(true);
     } else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
       showErrorMessage(invalidPanMsg);
+      setPanNumberError(true);
     } else {
       verifyPAN();
     }
   };
 
   const handleAppointeeFormPage1Save = async (formElement) => {
+
     formElement.preventDefault();
+    if (passportAvailable === 'Y') {
+      if (!hasValue(passportNo)) {
+        setPassportNumberError(true);
+        showErrorMessage(passportNoEmptyMsg);
+        return;
+      }
+      if (nationality.toLowerCase() === 'indian' && passportNo.length !== 12) {
+        setPassportNumberError(true);
+        showErrorMessage(indianpassportFilePatternErrorMsg);
+        return
+      }
+
+    }
     const loginUserData = getLocalStorageItem("pfc-user");
     const formPostSuccessMessage = clickedButton === "S" ? formSaveSuccess : formSubmitionSuccess;
     let payLoad = {
@@ -1417,8 +1450,10 @@ const AppointeeRegister = () => {
   const handlePassportVerification = async () => {
     if (!validationsCheck(passportFileNumber, 'indPassport')) {
       showErrorMessage(passportFilePatternErrorMsg);
+      setPassportFileNumberError(true);
       return;
     }
+
     const payLoad = {
       appointeeId,
       userId,
@@ -1442,16 +1477,28 @@ const AppointeeRegister = () => {
       setPassportStatusMessage(new VerificationStatus(isValid, "V"));
     }
   };
+  const setPassPortMaxLength = (nationality) => {
+    if (!hasValue(nationality)) {
+      return
+    }
+    if (nationality.toLowerCase() === "indian") {
+      setPassportNoMaxLength(12);
+    } else {
+      setPassportNoMaxLength(20);
+    }
+  }
   const handleNationalityChange = ({ target }) => {
     const value = target.value;
     setNationality(value);
+    setPassportNo("");
     if (value.toLowerCase() !== "indian" && value.toLowerCase() !== "nepalese" && value.toLowerCase() !== "bhutanese") {
       setPassportAvailable('Y');
       setIsPassportAvailableDisable(true);
-    }else {
+    } else {
       setIsPassportAvailableDisable(false);
       setPassportAvailable('');
     }
+    setPassPortMaxLength(value);
   }
 
   const verifyUAN = async (otp, clientId) => {
@@ -1524,7 +1571,7 @@ const AppointeeRegister = () => {
   const handlePassFileNumberOnChange = (e) => {
     const { value } = e.target;
     setPassportFileNumber(value);
-
+    setPassportFileNumberError(false);
   };
   const handleIsOfflineXmlDownloadedOnChange = (e) => {
     setIsOfflineXmlDownloaded(e.target.checked);
@@ -1603,6 +1650,7 @@ const AppointeeRegister = () => {
   const handleIsPassportAvailableOnChange = (e) => {
     const { value } = e.target;
     setPassportAvailable(value);
+    setPassportNumberError(false);
 
     if (value === "Y") {
       const nationalityLower = nationality?.toLowerCase();
@@ -1664,6 +1712,22 @@ const AppointeeRegister = () => {
         fullWidth: false,
       };
       openInfoModel(prerequisiteModelContent);
+    }
+  }
+
+  const handlePassportNoChange = ({ target }) => {
+    setPassportNumberError(false);
+    setPassportNo(target.value);
+  }
+
+  const handelPANNumberChange = ({ target }) => {
+
+    const { value } = target;
+    setPanNumberError(false);
+    if (isAadhaarVarified) {
+      setPan(value.toUpperCase());
+    } else {
+      showErrorMessage(aaddharNumberverify)
     }
   }
 
@@ -1841,7 +1905,6 @@ const AppointeeRegister = () => {
                                 Date Of Birth
                                 <span className="requiredField">*</span>
                               </Typography>
-
 
                               <DatePicker
                                 disabled={isAadhaarVarified}
@@ -2237,14 +2300,12 @@ const AppointeeRegister = () => {
                                     <span className="requiredField">*</span>
                                   </Typography>
                                   <TextField
-                                    error={false}
+                                    error={passportNumberError}
                                     style={inputFieldStyle2}
                                     type="text"
                                     className="customeTextField"
                                     variant="outlined"
-                                    onChange={(e) =>
-                                      setPassportNo(e.target.value)
-                                    }
+                                    onChange={handlePassportNoChange}
                                     value={passportNo}
                                     disabled={isPassportVarified}
                                     defaultValue={" "}
@@ -2277,7 +2338,7 @@ const AppointeeRegister = () => {
                                       if (newDate) {
                                         setPassportValidForDate(newDate.format('YYYY-MM-DD'));
                                         const expiryDate = newDate.add(10, 'year').subtract(1, 'day').format('YYYY-MM-DD');
-                                       setPassportValidTillDate(expiryDate);
+                                        setPassportValidTillDate(expiryDate);
                                       }
                                     }}
                                     disableFuture={true}
@@ -2804,6 +2865,7 @@ const AppointeeRegister = () => {
                                     }
                                     className="customeTextField"
                                     value={passportFileNumber}
+                                    error={passportFileNumberError}
                                     defaultValue={""}
                                     disabled={isPassportVerifyBtnDisabled}
                                   />
@@ -3258,6 +3320,7 @@ const AppointeeRegister = () => {
                         xs={12}
                         sx={formHeadingGridContainerStyle}
                       >
+
                         <Grid item xs={12} sx={formHeadingContainerStyle}>
                           <FormHeading
                             step={stepsList?.PAV?.step}
@@ -3274,6 +3337,7 @@ const AppointeeRegister = () => {
                         xs={12}
                         sx={formHeadingGridContainerStyle}
                       >
+
                         <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
                           <Typography sx={lable1CopyStyle}>
                             PAN Number
@@ -3284,17 +3348,12 @@ const AppointeeRegister = () => {
                             type="text"
                             variant="outlined"
                             className="customeTextField"
-                            onChange={(e) => {  
-                              if (isAadhaarVarified) { 
-                                setPan(e.target.value.toUpperCase());
-                              } else {
-                                showErrorMessage(aaddharNumberverify)
-                              }
-                            }}
+                            onChange={handelPANNumberChange}
                             value={pan}
                             defaultValue={" "}
                             inputProps={{ maxLength: 10 }}
                             disabled={disabledPanInput}
+                            error={panNumberError}
                           />
                           <Button
                             sx={{ margin: "5px 0" }}
