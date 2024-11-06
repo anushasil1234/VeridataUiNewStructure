@@ -91,6 +91,12 @@ const Menuitems = [
     href: '/verified',
   },
   {
+    id:uniqueId(),
+    title:'PF',
+    icon: WidgetsIcon,
+    href: '/PfPension',
+  },
+  {
     id: uniqueId(),
     title: 'Cancelled',
     icon: WidgetsIcon,

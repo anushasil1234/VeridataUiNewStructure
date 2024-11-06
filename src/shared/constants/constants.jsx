@@ -70,6 +70,7 @@ export const generateAppointeeCountReportDesc = `The purpose of this report is t
 export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
 export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
 export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns,identify any issues, and improve the efficiency of the API system.`;
+export const pfPensionReportDesc = `The purpose of this report is to provide a comprehensive overview of PF and Pension information for appointees within a specified date range. This report includes detailed fields such as appointee name, Aadhaar number, UAN number, joining date, PF and pension status, and passbook status (manual or automatic). The objective is to help stakeholders monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
 export const generatenationlityReportDesc = (type) => {
     switch (type) {
         case 'All':
@@ -147,6 +148,7 @@ export const toCreateUser = "/createuser";
 export const toUpdateUser = "/updateuser";
 export const toUserlist = "/userlist";
 export const toAppointeecount = "/appointeecount";
+export const topfPension="/PfPension";
 export const toDataUploaded = "/datauploaded";
 export const toLogin = "/auth/login";
 export const toUserLogin = "/auth/userlogin";
@@ -554,6 +556,91 @@ export const rejectedListTableHeadCell = [
             attribute: ['appointeeId']
         }
     }
+]
+export const pfPensionTableHeadCell = [
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'emailId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'adhaarNo',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Aadhaar No',
+        enums: ['aadharNumber'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'uanNo',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'UAN Number ',
+        enums: ['uan'],
+        component: {
+            element: Typography
+        }
+    },
+    
+   
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Joining Date ',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
+    },
+   
+    {
+        id: 'pfinfo',
+        numeric: true,
+        type: "badge",
+        disablePadding: false,
+        label: 'Pf Info',
+        enums: ['trustPassBookStatus','epfoPassBookStatus'],
+        component: {
+            element: (props) => TableStatusCell(props ),
+            attribute: ['appointeeId']
+        }
+    },
+    
+    {
+        id: 'pensioninfo',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Pension Info',
+        enums: ['pensionStatus'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'isManual',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Passbook Status',
+        enums: ['isManual'],
+        component: {
+            element: Typography
+        }
+    },
+    
 ]
 export const LinkNotSentTableHeadCell = [
     {
@@ -1881,7 +1968,7 @@ export const downloadRejectedList_URL = `${AppointeeReports}/RejectedApponteeRep
 export const downloadProcessingList_URL = `${AppointeeReports}/GetUnderProcessReport`;
 export const downloadLapsedList_URL = `${AppointeeReports}/GetLapsedDataReport`;
 export const downloadApiCounterReport_URL = `${AppointeeReports}/ApiCounterReport`;
-
+export const downloadpfReport_URL = `${AppointeeReports}/AppointeeDataPfFilterReport`;
 
 export const AppointeeAgingFilterReport_URL = `${AppointeeReports}/AppointeeAgingFilterReport`
 export const AppointeeNationalityReport_URL = `${AppointeeReports}/NationalityFilterReport`
