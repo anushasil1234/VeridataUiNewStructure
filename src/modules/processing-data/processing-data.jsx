@@ -7,7 +7,8 @@ import {
   processingListPdfTableHeadCell,
   processingListTableHeadCell,
   toProcessing,
-  reportGenarate
+  reportGenarate,
+  issueFilterList
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -28,8 +29,8 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { inputFieldStyleAdded, primaryFabStyle,ResponsiveFab ,downLoadListSx, datePickerstyle} from "app";
-import { Assessment, Download, Refresh, Search, Summarize  } from "@mui/icons-material";
+import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab, downLoadListSx, datePickerstyle } from "app";
+import { Assessment, Download, Refresh, Search, Summarize } from "@mui/icons-material";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
@@ -56,7 +57,7 @@ const UnWrappedProcessing = (props) => {
 
   const { companyId } = loggedInData[0];
   const { getProessingDataList } = apiSlice[0];
-  const {GetUnderProcessReport}=apiSlice[0];
+  const { GetUnderProcessReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
 
   if (state) {
@@ -79,9 +80,9 @@ const UnWrappedProcessing = (props) => {
   const [fromDate, setFromDate] = useState(_fromday);
   const [statusCode, setStatusCode] = useState("All");
   const [passbookStatus, setPassbookStatus] = useState('All');
-
   const [responseList, setResponseList] = useState();
-const [isDownloadListOpened, setIsDownloadListOpened]=useState(false)
+  const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
+  const [issueFilter, setIssueFilter] = useState("All");
 
   let defaultPayload = {
     isFiltered: state && state.dayRangePayLoad ? true : false,
@@ -95,24 +96,24 @@ const [isDownloadListOpened, setIsDownloadListOpened]=useState(false)
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
     IsManualPassbook: null,
   };
-const [payLoad,setPayLoad]=useState(defaultPayload)
-const handleDownloade = (rf) => {
-  if (rf.fileData && typeof rf.fileData === 'string') {
-    const base64String = rf.fileData; 
-    const fileName = rf.fileName || "appointee_data.xlsx"; 
-    const blob = generateBlobFromBase64(base64String);
-    const blobUrl = window.URL.createObjectURL(blob);
-    downloadFile(blobUrl, fileName);
-    window.URL.revokeObjectURL(blobUrl);
-  } 
-};
-const handleClick = async () => {
-  const response = await GetUnderProcessReport(payLoad);
-  if (response) {
-    const { responseInfo } = response;
-    handleDownloade(responseInfo);
-  }
-};
+  const [payLoad, setPayLoad] = useState(defaultPayload)
+  const handleDownloade = (rf) => {
+    if (rf.fileData && typeof rf.fileData === 'string') {
+      const base64String = rf.fileData;
+      const fileName = rf.fileName || "appointee_data.xlsx";
+      const blob = generateBlobFromBase64(base64String);
+      const blobUrl = window.URL.createObjectURL(blob);
+      downloadFile(blobUrl, fileName);
+      window.URL.revokeObjectURL(blobUrl);
+    }
+  };
+  const handleClick = async () => {
+    const response = await GetUnderProcessReport(payLoad);
+    if (response) {
+      const { responseInfo } = response;
+      handleDownloade(responseInfo);
+    }
+  };
 
   const setTableRows = async (payLoad) => {
     let currPageName = "Processing List";
@@ -137,16 +138,14 @@ const handleClick = async () => {
         tableHead: processingListTableHeadCell,
         tableRows: generatedCells,
       });
-   
+
     }
   };
 
 
-
-
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
- 
+
   const handleDownload = () => {
     if (!responseList || responseList.length === 0) {
       showErrorMessage(reportGenarate)
@@ -193,23 +192,33 @@ const handleClick = async () => {
       companyId: companyId,
       isPfRequired: null,
       IsManualPassbook: null,
+      IssueFilter: null
     };
     setTableRows(payLoad);
     navigateTo(toProcessing, { state: false });
   };
-  const handleExalListDownload=()=>{
+  const handleExalListDownload = () => {
     setIsDownloadListOpened(!isDownloadListOpened)
   }
   const handleSearch = () => {
     setTableRows(payLoad);
   };
+
+  const handleIssueChange = ({ target }) => {
+    console.log('target', target);
+    const { value } = target;
+    setIssueFilter(value);
+    const _issueFilter = value === "All" ? null : value;
+    const _payload = { ...payLoad, IssueFilter: _issueFilter };
+    setPayLoad(_payload);
+  }
   const dispatch = useDispatch();
 
   const handlePassbookStatusChange = async (e) => {
     const { value } = e.target;
     setPassbookStatus(value);
-     const _passbookStatus = value === "All" ? null : value;
-    const _payLoad = {...payLoad, IsManualPassbook: _passbookStatus }
+    const _passbookStatus = value === "All" ? null : value;
+    const _payLoad = { ...payLoad, IsManualPassbook: _passbookStatus }
     setPayLoad(_payLoad);
   };
 
@@ -220,7 +229,7 @@ const handleClick = async () => {
     }
   }, [state, actionRouteSlice, hasPermission]);
 
- 
+
 
   useEffect(() => {
     const _payLoad = {
@@ -245,31 +254,31 @@ const handleClick = async () => {
   return (
     <PageLayout pageName={pageName}>
       <CardLayout>
-        <Grid container  spacing={1} alignItems="center"> 
-      
+        <Grid container spacing={1} alignItems="center">
+
           <Grid item xs={12} sm={6} md={3} lg={3} spacing={1}>
-          <Box sx={{ ...datePickerstyle }}>
-            <DatePicker
-              label={"From Date"}
-              value={fromDate}
-              maxDate={toDate}
-              setValue={setFromDate}
-              disableFuture={true}
-            />
+            <Box sx={{ ...datePickerstyle }}>
+              <DatePicker
+                label={"From Date"}
+                value={fromDate}
+                maxDate={toDate}
+                setValue={setFromDate}
+                disableFuture={true}
+              />
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3} spacing={1}>
-          <Box sx={{ ...datePickerstyle }}>
-            <DatePicker
-              label={"To Date"}
-              value={toDate}
-              minDate={fromDate}
-              setValue={setToDate}
-              disableFuture={true}
-            />
-          </Box>
+            <Box sx={{ ...datePickerstyle }}>
+              <DatePicker
+                label={"To Date"}
+                value={toDate}
+                minDate={fromDate}
+                setValue={setToDate}
+                disableFuture={true}
+              />
+            </Box>
           </Grid>
-          
+
           <Grid item xs={12} sm={6} md={3} lg={3} spacing={1}>
             <FormControl sx={{ width: "100%" }} size="large">
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
@@ -313,8 +322,28 @@ const handleClick = async () => {
                 </Select>
               )}
             </FormControl>
-          </Grid>  
-          <Grid item xs={12} sm={6} md={3} lg={3} container alignItems="center" spacing={1}> 
+          </Grid>
+          <Grid item xs={12} sm={6} md={3} lg={3} spacing={1}>
+            <FormControl sx={{ width: "100%" }} size="large">
+              <InputLabel id="demo-select-small" >Issue</InputLabel>
+              <Select
+                sx={{ height: '57px' }}
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={issueFilter}
+                label="Issue"
+                onChange={handleIssueChange}
+              >
+                {/* <MenuItem value={'All'}>Select all</MenuItem> */}
+                {issueFilterList.map(({ value, label }, index) => {
+                  return (
+                    <MenuItem key={index} value={value}>{label}</MenuItem>
+                  )
+                })}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3} lg={3} container alignItems="center" spacing={1}>
             <Grid item>
               <DarkTooltip placement="top" title={"Search"} arrow>
                 <ResponsiveFab
@@ -348,7 +377,7 @@ const handleClick = async () => {
                     variant="contained"
                     size="small"
                     button={"N"}
-                    onClick={handleExalListDownload} 
+                    onClick={handleExalListDownload}
                     sx={primaryFabStyle}
                   >
                     <Download width={18} sx={{ color: "#fff" }} />
@@ -357,7 +386,7 @@ const handleClick = async () => {
                 {isDownloadListOpened && (
                   <List
                     sx={{
-                      ...downLoadListSx, 
+                      ...downLoadListSx,
                       zIndex: 1000,
                     }}
                   >

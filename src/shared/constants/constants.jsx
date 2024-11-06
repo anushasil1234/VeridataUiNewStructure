@@ -117,6 +117,7 @@ export const dobAlias = "100";
 export const otherAlias = "107";
 export const trustEpfoFileTypeAlias = "EPFPSBKTRUST";
 export const epfoPassbookFileTypeAlias = "EPFPSSBKMNL";
+export const epfoServiceHistoryFileTypeAlias = "EPFPSHF";
 export const tenthCertificateFileTypeAlias = "10THCERT";
 export const otherFileTypeAlias = "OTHID";
 export const handicapFileTypeAlias = "HANDCERT";
@@ -2010,7 +2011,7 @@ export const RemoveAdminUser_URL = (id, userId) => `${Users}/RemoveAdminUser?id=
 //Apis urls
 
 //Models messages starts
-export const aaddharNumberverify=`Please complete Aadhaar verification before proceeding.`
+export const aaddharNumberverify = `Please complete Aadhaar verification before proceeding.`
 export const approveConfirmation = `Candidate has not successfully completed verification process. Do you still want to approve?`;
 export const pensionConfirmation = `Does appointee have Pension under EPFO? Yes / No"?`;
 export const uploadSizeErrorMsg = `File upload size limit has exceeded`;
@@ -2038,6 +2039,7 @@ export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
 export const OtpEmptyMsg = `Otp cant not be empty`;
 export const passwordNotMsg = `Password not matched`;
+export const confirmpasswordNotMsg = `Confirm password is not matched with password`;
 export const passwordPattern = `Password should be of atleast 8 - 12 characters long, with atleast 1 UPPER CASE, 1 lower case, 1 number, and one special charecter`;
 export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
 export const remarksEmptyMsg = `Remarks cant not be empty`;
@@ -2090,8 +2092,8 @@ export const getHandicapTypeDescription = (type) => {
 
 
 export const FILE_SIZE_LIMIT = 4000000; // 4MB
-export const imgAndPdfMaxSize = '2mb'; 
-export const imgAndPdfMaxSizeValue =  2000000; 
+export const imgAndPdfMaxSize = '2mb';
+export const imgAndPdfMaxSizeValue = 2000000;
 
 export const validFileTypes = [
     "application/x-zip-compressed",
@@ -2104,5 +2106,20 @@ export const roleTypeEnums = {
     admin: [1, 2],     // userTypeId 1 or 2 is admin
     candidate: [3],    // userTypeId 3 is candidate
 };
+
+export const issueFilterList = [
+    {
+        value: 'All',
+        label: 'Select All'
+    },
+    {
+        value: true,
+        label: 'Candidates with issues'
+    },
+    {
+        value: false,
+        label: 'Candidates without issues'
+    }
+]
 
 
