@@ -68,6 +68,14 @@ let PassbookViewDetails = ({ appointeeId }) => {
       headerAlign: "center",
       align: "center",
     },
+    {
+      field: "ispensionContributed",
+      headerName: "Pension",
+      type: "string",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+    },
   ];
 
   const [expanded, setExpanded] = useState(false);
@@ -184,6 +192,15 @@ let PassbookViewDetails = ({ appointeeId }) => {
                                   fieldName={"Last Pension Date"}
                                   fieldValue={companyitem.lastPensionDate}
                                 />
+                              </Stack><Stack direction="row" spacing={2}>
+                                <PersonalInformation
+                                  fieldName={"Pension Gap Identified"}
+                                  fieldValue={companyitem.isPensionGap}
+                                />
+                                {/* <PersonalInformation
+                                  fieldName={"Last Pension Date"}
+                                  fieldValue={companyitem.lastPensionDate}
+                                /> */}
                               </Stack>
                             </>
                           </Box>
