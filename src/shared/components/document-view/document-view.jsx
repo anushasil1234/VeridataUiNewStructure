@@ -1,6 +1,6 @@
 import { Download } from '@mui/icons-material';
 import { Box, Stack, Typography } from '@mui/material';
-import { actionIconStyle, fileImageHeaderStyle, fileImageStyle, fileTypeStyle, imageFileContainerStackStyle, imageFileContainerStyle } from 'app';
+import { actionIconStyle, fileImageHeaderStyle, fileImageStyle, fileTypeStyle, imageFileContainerStackStyle, imageFileContainerStyle, pdfFileContainerStyle } from 'app';
 import React from 'react'
 import { FabIcon } from 'shared/utils';
 import downloadFile from 'shared/utils/associate/download-file';
@@ -10,6 +10,7 @@ import FullScreenModel from 'shared/utils/models/fullscreen-modal'
 const UnWrappedDocumentView = ({ documentModelProps }) => {
     const { file, fileType } = documentModelProps;
     const { fileName, fileDetails } = file;
+    const mimeType = fileDetails.split(';')[0].split(':')[1];
     const downloadFabProps = new FabIconPropsModel(
         actionIconStyle,
         ()=> downloadFile(fileDetails, fileName),
@@ -32,8 +33,11 @@ const UnWrappedDocumentView = ({ documentModelProps }) => {
                 />
             </Stack>
             <Stack sx={imageFileContainerStackStyle}>
-                <Box sx={imageFileContainerStyle}>
-                    <img src={fileDetails} style={fileImageStyle} alt={fileName}/>
+                <Box sx={mimeType === 'application/pdf' ? pdfFileContainerStyle : imageFileContainerStyle}>
+                    {mimeType === 'application/pdf' ? 
+                    <iframe src={fileDetails} height="500" width='100%' ></iframe>
+                    :
+                    <img src={fileDetails} style={fileImageStyle} alt={fileName}/>}
                 </Box>
             </Stack>
         </Stack>

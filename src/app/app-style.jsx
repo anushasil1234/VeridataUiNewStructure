@@ -1371,6 +1371,10 @@ export const imageFileContainerStyle = {
   width: "70%",
   margin: "auto"
 }
+export const pdfFileContainerStyle = {
+  width: "100%",
+  margin: "auto"
+}
 export const fileImageStyle = {
   margin: "auto",
   width: "100%"
