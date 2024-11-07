@@ -141,7 +141,7 @@ import {
 import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
 import UANPrerequisiteInformation from "./uan-prerequiestic-info";
 import GenderSelection from "shared/utils/associate/gender-selection";
-import CandidateRegisterFirstPage from "./candidate-register-first-page";
+// import CandidateRegisterFirstPage from "./candidate-register-first-page";
 
 
 const AppointeeRegister = () => {
