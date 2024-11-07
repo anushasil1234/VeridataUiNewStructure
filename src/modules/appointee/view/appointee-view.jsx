@@ -11,6 +11,7 @@ import {
   Add,
   TaskAlt,
   WarningAmber,
+  PermMedia,
 } from "@mui/icons-material";
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
 import {
@@ -58,6 +59,7 @@ import {
   roleTypeEnums,
   epfoPassbookFileTypeAlias,
   pensionConfirmation,
+  epfoServiceHistoryFileTypeAlias,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -163,6 +165,7 @@ let AppointeeViewForm = ({
   const [otherFile, setOtherFile] = useState();
   const [trustPfFile, setTrustPfFile] = useState();
   const [manualPassbookFile, setManualPassbookFile] = useState();
+  const [EPFOServiceHistoryFile, setEPFOServiceHistoryFile] = useState();
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
   // const [isEmployementVarified, setIsEmployementVarified] = useState(null);
@@ -417,6 +420,9 @@ let AppointeeViewForm = ({
           if (uploadTypeAlias === epfoPassbookFileTypeAlias) {
             setManualPassbookFile(file);
           }
+          if (uploadTypeAlias === epfoServiceHistoryFileTypeAlias) {
+            setEPFOServiceHistoryFile(file);
+          }
         }
       );
     }
@@ -442,6 +448,10 @@ let AppointeeViewForm = ({
       openRemarksModel(remarks);
     }
   };
+
+  const handleClickOnMannualUpload = () => {
+
+  }
 
   let verifyIconStyle;
   if (isdocumentVerified === null) {
@@ -560,6 +570,14 @@ let AppointeeViewForm = ({
     <Comment />,
     "Remarks"
   );
+  const mannualUploadFabProps = new FabIconPropsModel(
+    actionIconStyle,
+    handleClickOnMannualUpload,
+    "warning",
+    "mannualUpload",
+    <PermMedia />,
+    "Mannual upload"
+  );
   const getVerificationChip = () => {
 
     const { label, color } = isAadharVerified === false
@@ -665,6 +683,18 @@ let AppointeeViewForm = ({
                     <FileViewComponent
                       fileType={"Epfo passbook file"}
                       file={manualPassbookFile}
+                      width="50px"
+                    />
+                  }
+                />
+              )}
+              {isManualPassbook === true && EPFOServiceHistoryFile && (
+                <DocumentDetails
+                  fieldName={"Epfo service history"}
+                  fieldValue={
+                    <FileViewComponent
+                      fileType={"Epfo service history"}
+                      file={EPFOServiceHistoryFile}
                       width="50px"
                     />
                   }
@@ -911,6 +941,9 @@ let AppointeeViewForm = ({
                   <FabIcon
                     props={{ ...remarksFabProps, selectedIndex: 4, index: 4 }}
                   />
+                  {/* <FabIcon
+                    props={{ ...mannualUploadFabProps, selectedIndex: 5, index: 5 }}
+                  /> */}
                 </Stack>
               ) : null}
             </>
