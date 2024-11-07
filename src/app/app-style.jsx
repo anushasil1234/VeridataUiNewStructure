@@ -931,6 +931,13 @@ export const listHeadingConteinerStyle = {
   justifyContent: "center",
   alignItems: "center"
 };
+export const listHeadingConteinerStylesx = {
+  flexDirection: "row",
+  ...listStyle,
+  justifyContent: "start",
+  alignItems: "center"
+};
+
 export const documentListStyle = {
   ...listStyle,
   flexDirection: "row",

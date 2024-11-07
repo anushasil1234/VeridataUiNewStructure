@@ -12,6 +12,8 @@ import {
   TaskAlt,
   WarningAmber,
   PermMedia,
+  NewReleases,
+  NewReleasesOutlined,
 } from "@mui/icons-material";
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
 import {
@@ -61,6 +63,7 @@ import {
   pensionConfirmation,
   epfoServiceHistoryFileTypeAlias,
 } from "shared/constants/constants";
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
 import { storeActionRoute } from "store/slices/action-route-slice";
@@ -114,7 +117,8 @@ let AppointeeViewForm = ({
     openRemarksInputModel,
     closeRemarksInputModel,
     openConfirmationYesNoModal,
-    openDocumentModel
+    openDocumentModel,
+    openVerify
   } = functionSlice[0];
   const {
     relationList,
@@ -169,7 +173,9 @@ let AppointeeViewForm = ({
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
   // const [isEmployementVarified, setIsEmployementVarified] = useState(null);
-
+  const [isManualVerifiedViewOpen, setIsManualVerifiedViewOpen] = useState(false);
+  const openManualVerifiedView = () => setIsManualVerifiedViewOpen(true);
+const closeManualVerifiedView = () => setIsManualVerifiedViewOpen(false);
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isAadharVerified, setIsAadharVerified] = useState(null);
   const [isPassportAvailable, setIsPassportAvailable] = useState(null);
@@ -244,7 +250,7 @@ let AppointeeViewForm = ({
       }
     }
   };
-
+const [details,setDetails]=useState(null)
 
   const setAppointeeDetails = async () => {
     const response = await getAppointeeDetails(appointeeId);
@@ -286,6 +292,7 @@ let AppointeeViewForm = ({
         isTrustPassbook,
         isManualPassbook
       } = response.responseInfo;
+      setDetails(response);
       setIsManualPassbook(isManualPassbook);
       maskedUANNumber ? setUAN(maskedUANNumber) : setUAN(NA);
       uanNumber ? setUanNumber(uanNumber) : setUanNumber(null)
@@ -452,6 +459,9 @@ let AppointeeViewForm = ({
   const handleClickOnMannualUpload = () => {
 
   }
+  const handelclick =()=>{
+    openVerify(appointeeId)
+  }
 
   let verifyIconStyle;
   if (isdocumentVerified === null) {
@@ -527,6 +537,9 @@ let AppointeeViewForm = ({
   };
   const handleRprocess = () => {
   };
+  const handleClickOnManualPassbook = () => {
+    openManualVerifiedView();
+  };
 
   const addFabProps = new FabIconPropsModel(
     addFabStyle,
@@ -577,6 +590,14 @@ let AppointeeViewForm = ({
     "mannualUpload",
     <PermMedia />,
     "Mannual upload"
+  );
+  const verifyFabProps = new FabIconPropsModel(
+    actionIconStyle,
+    handelclick,
+    "warning",          
+    "verify",
+    <NewReleasesOutlined/>,   
+    "Verify"             
   );
   const getVerificationChip = () => {
 
@@ -895,6 +916,7 @@ let AppointeeViewForm = ({
                 size: "small",
               }}
             />
+
           ) : (
             <>
               <FabIcon props={{ ...addFabProps, selectedIndex: 1, index: 1 }} />
@@ -927,6 +949,7 @@ let AppointeeViewForm = ({
                           }}
                         />
                       )}
+
                       {hasPermission && hasPermission["A010"] && (
                         <FabIcon
                           props={{
@@ -936,14 +959,18 @@ let AppointeeViewForm = ({
                           }}
                         />
                       )}
+
                     </>
                   ) : null}
                   <FabIcon
                     props={{ ...remarksFabProps, selectedIndex: 4, index: 4 }}
                   />
-                  {/* <FabIcon
-                    props={{ ...mannualUploadFabProps, selectedIndex: 5, index: 5 }}
-                  /> */}
+                  {isManualPassbook && (
+                    <FabIcon
+                      props={{ ...verifyFabProps, selectedIndex: 4, index: 4 }}
+                    />
+                  )}
+                  
                 </Stack>
               ) : null}
             </>

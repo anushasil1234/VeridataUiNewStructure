@@ -110,6 +110,7 @@ import {
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
 import AppointeeView from "modules/appointee/view/appointee-view";
+import ManualverifidView from "modules/appointee/view/manual-verified-details-view"
 import ConfirmationModel from "../models/confirmation-modal";
 import ConsentModal from "../models/consent-modal";
 import InfoModel from "../models/info-modal";
@@ -136,6 +137,7 @@ const AppWrapper = (App) => {
     const { PfcRequest, startLoader, stopLoader } = props;
 
     const [isViewOpen, setIsViewOpen] = useState(false);
+    const [isManualVerificationViewOpen, setIsManualVerificationViewOpen] = useState(false);
     const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);
     const [isEmploymentViewOpen, setEmploymentIsViewOpen] = useState(false);
     const [appointeeId, setAppointeeId] = useState();
@@ -311,6 +313,13 @@ const AppWrapper = (App) => {
       setAppointeeId(appointeeId);
       setIsViewOpen(true);
     };
+    const openVerify=()=>{
+      setAppointeeId(appointeeId);
+      setIsManualVerificationViewOpen(true);
+    }
+    const closeVerify=()=>{
+      setIsManualVerificationViewOpen(false)
+    }
     const openPassbookViewModel = (appointeeId) => {
       setAppointeeId(appointeeId);
       setPassbookIsViewOpen(true);
@@ -870,6 +879,7 @@ const AppWrapper = (App) => {
         storeFunction({
           setDropdownList,
           openViewModel,
+          openVerify,
           openPassbookViewModel,
           closePassbookViewModel,
           openEmploymentViewModel,
@@ -925,6 +935,12 @@ const AppWrapper = (App) => {
           appointeeId={appointeeId}
           closeViewModel={closeViewModel}
           openView={isViewOpen}
+        />
+         <ManualverifidView
+          openViewModel={openVerify}
+          appointeeId={appointeeId}
+          closeViewModel={closeVerify}
+          openView={isManualVerificationViewOpen}
         />
         <PassbookView
           openViewModel={openPassbookViewModel}
