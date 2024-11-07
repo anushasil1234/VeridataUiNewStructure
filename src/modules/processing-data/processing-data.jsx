@@ -205,7 +205,6 @@ const UnWrappedProcessing = (props) => {
   };
 
   const handleIssueChange = ({ target }) => {
-    console.log('target', target);
     const { value } = target;
     setIssueFilter(value);
     const _issueFilter = value === "All" ? null : value;

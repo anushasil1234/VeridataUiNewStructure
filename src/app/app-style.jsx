@@ -931,6 +931,13 @@ export const listHeadingConteinerStyle = {
   justifyContent: "center",
   alignItems: "center"
 };
+export const listHeadingConteinerStylesx = {
+  flexDirection: "row",
+  ...listStyle,
+  justifyContent: "start",
+  alignItems: "center"
+};
+
 export const documentListStyle = {
   ...listStyle,
   flexDirection: "row",
@@ -1101,11 +1108,17 @@ export const getStatusChipStyle = (status) => {
 export const fileUploadSectionContainerStyle = {
   margin: '10px 0px!important'
 }
+const fileUploadSectionTextMargin = '6px';
 export const fileNameStyle = {
   fontSize: ".7rem",
   textAlign: 'center',
-  marginTop: '6px',
+  marginTop: fileUploadSectionTextMargin,
   texWrap: 'nowrap'
+}
+export const filenameContainer = {
+  flexDirection: 'row',
+  marginTop: '10px',
+  padding: '0 10px',
 }
 export const uploadIconContainer = {
   backgroundColor: ThemeColorPalete.common.white,

@@ -112,7 +112,7 @@ export const UserLoginView = () => {
       setPasswordError(true);
       return
     }
-    if (password.length > 12) {
+    if (password.trim().length > 12) {
       showErrorMessage(passwordMaxFieldErrorMsg);
       setPasswordError(true);
       return

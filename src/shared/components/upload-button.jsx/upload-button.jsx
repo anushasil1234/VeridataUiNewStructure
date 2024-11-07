@@ -13,10 +13,10 @@ const UploadButton = ({ disabled, fileName }) => {
                 variant="contained"
                 startIcon={<FileUpload />}
             >
-                {fileName ? "Reupload" : "Upload"}
+                {(Array.isArray(fileName) && fileName.length>0) ? "Reupload" : "Upload"}
             </Button>
             : <Button startIcon={<FileUpload />} sx={uploadBtnStyle}>
-                {fileName ? "Reupload" : "Upload"}
+                {(Array.isArray(fileName) && fileName.length>0) ? "Reupload" : "Upload"}
             </Button>
     )
 }

@@ -510,7 +510,7 @@ const FileUpload = ({ stepsList, mode }) => {
             );
         });
         if (isFileExists) {
-            showErrorMessage(duplicateFiles);
+            showErrorMessage(`${name} ${duplicateFiles}`);
         } else {
             if (size <= FILE_SIZE_LIMIT) {
                 setFileName(name);

@@ -1,0 +1,21 @@
+import { genderSectionContainer } from 'app';
+
+const GenderSelection = (selected, isAadhaarVarified) => {
+    const selectedGenderColor = selected
+    ? "#b049c0"
+    : "#C7C7D2";
+  const currentGenderSectionContainer = {
+    ...genderSectionContainer,
+    color: selectedGenderColor,
+    bgcolor: selected ? "#f6dff9" : "#F4F6FA",
+    cursor: isAadhaarVarified
+      ? "cursor"
+      : "pointer",
+    border: `2px solid ${selectedGenderColor}`,
+  };
+  return (
+    {currentGenderSectionContainer}
+  )
+}
+
+export default GenderSelection

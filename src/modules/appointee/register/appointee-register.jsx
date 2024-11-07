@@ -67,6 +67,7 @@ import {
   aaddharNumberverify,
   indianpassportFilePatternErrorMsg,
   passportNoEmptyMsg,
+  epfoServiceHistoryFileTypeAlias,
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -75,6 +76,7 @@ import {
   getLocalStorageItem,
   hasValue,
   patternChecking,
+  removeFile,
   setLocalStorageItem,
   StringToDate,
   trimmedDate,
@@ -138,6 +140,8 @@ import {
 
 import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
 import UANPrerequisiteInformation from "./uan-prerequiestic-info";
+import GenderSelection from "shared/utils/associate/gender-selection";
+// import CandidateRegisterFirstPage from "./candidate-register-first-page";
 
 
 const AppointeeRegister = () => {
@@ -287,7 +291,8 @@ const AppointeeRegister = () => {
   const [fileDetails, setFileDetails] = useState([]);
   const [trustEpfoFileName, setTrustEpfoFileName] = useState();
   const [handicapFileName, setHandicapFileName] = useState();
-  const [epfoPassBookFile, setEpfoPassBookFile] = useState();
+  const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
+  const [epfoServiceHistoryFile, setEpfoServiceHistoryFile] = useState();
   const [aadharXmlFileName, setAadharXmlFileName] = useState();
   const [passportFileName, setPassportFileName] = useState();
   const [tenthCertificateFileName, setTenthCertificateFileName] = useState();
@@ -538,7 +543,10 @@ const AppointeeRegister = () => {
             setTrustEpfoFileName(file.fileName);
           }
           if (uploadTypeAlias === epfoPassbookFileTypeAlias) {
-            setEpfoPassBookFile(file.fileName);
+            setEpfoPassBookFiles(file.fileName);
+          }
+          if (uploadTypeAlias === epfoServiceHistoryFileTypeAlias) {
+            setEpfoServiceHistoryFile(file.fileName);
           }
         }
       );
@@ -587,6 +595,7 @@ const AppointeeRegister = () => {
   const hasTenthPassCertificateUpload = () => checkFileUpload(tenthCertificateFileTypeAlias);
   const hasFathersDocCertificateUpload = () => checkFileUpload(otherFileTypeAlias);
   const hasEPFOPassbookUpload = () => checkFileUpload(epfoPassbookFileTypeAlias);
+  const hasEPFOServiceHistoryUpload = () => checkFileUpload(epfoServiceHistoryFile);
 
 
   const openUploadDocInfoModel = (dialogContentText) => {
@@ -748,7 +757,8 @@ const AppointeeRegister = () => {
 
   useEffect(() => {
     if (isUanVerificationProcessManual === 'auto') {
-      clearFileVaribles(epfoPassbookFileTypeAlias, setEpfoPassBookFile);
+      clearFileVaribles(epfoPassbookFileTypeAlias, setEpfoPassBookFiles);
+      clearFileVaribles(epfoServiceHistoryFileTypeAlias, setEpfoServiceHistoryFile);
     }
     setUploadedFile([]);
     setFileDetails([]);
@@ -768,64 +778,162 @@ const AppointeeRegister = () => {
     return remarksList;
   };
 
-  const uploadFile = ({ files }, uploadTypeAlias, setFileName, fileSize = null) => {
-    const fileData = files[0];
-    const { name, size, type } = fileData;
+  // const uploadFile = ({ files }, uploadTypeAlias, setFileName, fileSize = null) => {
+  //   const fileData = files[0];
+  //   const { name, size, type } = fileData;
 
-    const isFileExists = fileDetails.find((currentFileData) => {
-      return (
-        currentFileData.name === name &&
-        currentFileData.size === size &&
-        currentFileData.type === type
-      );
-    });
+  //   const isFileExists = fileDetails.find((currentFileData) => {
+  //     return (
+  //       currentFileData.name === name &&
+  //       currentFileData.size === size &&
+  //       currentFileData.type === type
+  //     );
+  //   });
 
-    if (isFileExists) {
-      showErrorMessage(duplicateFiles);
-    } else {
-      if (size <= imgAndPdfMaxSizeValue) {
-        setFileName(name);
+  //   if (isFileExists) {
+  //     showErrorMessage(duplicateFiles);
+  //   } else {
+  //     if (size <= imgAndPdfMaxSizeValue) {
+  //       setFileName(name);
 
-        // Find the file type ID based on the uploadTypeAlias
-        const { id } =
-          fileTypeList &&
-          fileTypeList.length > 0 &&
-          fileTypeList.find(({ code }) => code === uploadTypeAlias);
+  //       // Find the file type ID based on the uploadTypeAlias
+  //       const { id } =
+  //         fileTypeList &&
+  //         fileTypeList.length > 0 &&
+  //         fileTypeList.find(({ code }) => code === uploadTypeAlias);
 
-        // Create new file object
-        const file = {
-          fileName: name,
-          mimeType: type,
-          fileLength: size,
-          uploadTypeId: id,
-          uploadTypeAlias: uploadTypeAlias,
-          isFileUploaded: true,
-        };
+  //       // Create new file object
+  //       const file = {
+  //         fileName: name,
+  //         mimeType: type,
+  //         fileLength: size,
+  //         uploadTypeId: id,
+  //         uploadTypeAlias: uploadTypeAlias,
+  //         isFileUploaded: true,
+  //       };
 
-        // Check if there's already a file with the same uploadTypeAlias
-        const existingFileIndex = uploadedFile.findIndex(
-          (uploadedFile) => uploadedFile.uploadTypeAlias === uploadTypeAlias
-        );
+  //       // Check if there's already a file with the same uploadTypeAlias
+  //       const existingFileIndex = uploadedFile.findIndex(
+  //         (uploadedFile) => uploadedFile.uploadTypeAlias === uploadTypeAlias
+  //       );
 
-        let updatedUploadedFileList = [...uploadedFile];
-        let updatedFileDetails = [...fileDetails];
+  //       let updatedUploadedFileList = [...uploadedFile];
+  //       let updatedFileDetails = [...fileDetails];
 
-        if (existingFileIndex !== -1) {
-          // If a file with the same uploadTypeAlias exists, remove it
-          updatedUploadedFileList.splice(existingFileIndex, 1);
-          updatedFileDetails.splice(existingFileIndex, 1);
+  //       if (existingFileIndex !== -1) {
+  //         // If a file with the same uploadTypeAlias exists, remove it
+  //         updatedUploadedFileList.splice(existingFileIndex, 1);
+  //         updatedFileDetails.splice(existingFileIndex, 1);
+  //       }
+
+  //       // Add the new file to the lists
+  //       setUploadedFile([...updatedUploadedFileList, file]);
+  //       setFileDetails([...updatedFileDetails, fileData]);
+  //     } else {
+  //       showErrorMessage(uploadSizeErrorMsg);
+  //     }
+  //   }
+  // };
+
+  const uploadFile = ({ files }, uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single') => {
+    let isFileExists;
+    let fileNameList = _filenameList;
+    let updatedUploadedFileList = [...uploadedFile];
+    let updatedFileDetails = [...fileDetails];
+
+    for (let index = 0; index < files.length; index++) {
+      const { name, size, type } = files[index];
+      // isFileExists = fileDetails.find((currentFileData) => {
+      //   return (
+      //     currentFileData.name === name &&
+      //     currentFileData.size === size &&
+      //     currentFileData.type === type
+      //   );
+      // });
+      // isFileExists = uploadedFile.find((currentFileData) => {
+      //   return (
+      //     currentFileData.name === name &&
+      //     currentFileData.size === size &&
+      //     currentFileData.type === type
+      //   );
+      // });
+      let isFileExists = false;
+      let isFileOfSameTypeExists = false;
+      for (let index = 0; index < uploadedFile.length; index++) {
+        const { fileLength, fileName, mimeType, uploadTypeAlias: _uploadTypeAlias } = uploadedFile[index];
+        if (name === fileName && size === fileLength && mimeType === type) {
+          isFileExists = true;
+          if (_uploadTypeAlias === uploadTypeAlias) {
+            isFileOfSameTypeExists = true;
+          }
         }
+      }
+      if (isFileExists) {
+        showErrorMessage(`${name} ${duplicateFiles}`);
+        if (isFileOfSameTypeExists && uploadType === 'single') {
+          fileNameList = [name];
+        }
+      }
+      else {
+        if (size <= imgAndPdfMaxSizeValue) {
+          // Find the file type ID based on the uploadTypeAlias
+          const { id } =
+            fileTypeList &&
+            fileTypeList.length > 0 &&
+            fileTypeList.find(({ code }) => code === uploadTypeAlias);
+          // Create new file object
+          const file = {
+            fileName: name,
+            mimeType: type,
+            fileLength: size,
+            uploadTypeId: id,
+            uploadTypeAlias: uploadTypeAlias,
+            isFileUploaded: true,
+          };
 
-        // Add the new file to the lists
-        setUploadedFile([...updatedUploadedFileList, file]);
-        setFileDetails([...updatedFileDetails, fileData]);
-      } else {
-        showErrorMessage(uploadSizeErrorMsg);
+          if (uploadType === 'single') {
+            const { updatedUploadedFileList: _updatedUploadedFileList, updatedFileDetails: _updatedFileDetails } = removeFile({
+              uploadedFile: updatedUploadedFileList,
+              fileDetails: updatedFileDetails,
+              uploadTypeAlias: uploadTypeAlias,
+              fileNameList: fileNameList,
+              uploadType: uploadType
+            });
+            fileNameList = [name];
+            updatedUploadedFileList = [..._updatedUploadedFileList, file];
+            updatedFileDetails = [..._updatedFileDetails, files[index]];
+          } else {
+            fileNameList = [...fileNameList, name];
+            updatedUploadedFileList = [...updatedUploadedFileList, file];
+            updatedFileDetails = [...updatedFileDetails, files[index]];
+          }
+
+        } else {
+          showErrorMessage(uploadSizeErrorMsg);
+        }
       }
     }
+
+    setUploadedFile([...updatedUploadedFileList]);
+    setFileDetails([...updatedFileDetails]);
+    setFileName(fileNameList);
   };
 
+  const removeEPFOPassbookFile = (currentFileName) => {
+    const {
+      fileNameList: _fileNameList,
+      updatedUploadedFileList: _updatedUploadedFileList,
+      updatedFileDetails: _updatedFileDetails
+    } = removeFile({
+      uploadedFile: uploadedFile, fileDetails: fileDetails,
+      uploadTypeAlias: epfoPassbookFileTypeAlias, fileNameList: epfoPassBookFiles,
+      currentFileName: currentFileName, uploadType: 'multiple'
+    });
 
+    setEpfoPassBookFiles(_fileNameList);
+    setUploadedFile(_updatedUploadedFileList);
+    setFileDetails(_updatedFileDetails);
+  }
 
   const uploadAadharXmlFile = ({ target }) => {
     // uploadFile(target, "ADH", setAadharXmlFileName);
@@ -847,13 +955,14 @@ const AppointeeRegister = () => {
     setIsAadhaarXmlUploaded(true);
   };
 
-  const handleFileUpload = (fileTypeAlias, setFileName) => ({ target }) => {
-    uploadFile(target, fileTypeAlias, setFileName);
+  const handleFileUpload = (fileTypeAlias, setFileName, fileNameList = [], uploadType) => ({ target }) => {
+    uploadFile(target, fileTypeAlias, setFileName, fileNameList, uploadType);
   };
 
   const uploadTrustEPFOFile = handleFileUpload(trustEpfoFileTypeAlias, setTrustEpfoFileName);
   const uploadHandicapFile = handleFileUpload(handicapFileTypeAlias, setHandicapFileName);
-  const uploadEpfoPassBookFile = handleFileUpload(epfoPassbookFileTypeAlias, setEpfoPassBookFile);
+  const uploadEpfoPassBookFile = handleFileUpload(epfoPassbookFileTypeAlias, setEpfoPassBookFiles, epfoPassBookFiles, 'multiple');
+  const uploadEpfoServiceHistoryFile = handleFileUpload(epfoServiceHistoryFileTypeAlias, setEpfoServiceHistoryFile, epfoServiceHistoryFile, 'single');
   const uploadPassportFile = handleFileUpload(passportFileTypeAlias, setPassportFileName);
   const upload10thCertificateFile = handleFileUpload(tenthCertificateFileTypeAlias, setTenthCertificateFileName);
   const uploadFathersDocFile = handleFileUpload(otherFileTypeAlias, setOtherFileName);
@@ -932,8 +1041,14 @@ const AppointeeRegister = () => {
   };
   const checkEPFOPassbookDocCertificateUpload = () => {
 
-    const isUploaded = hasEPFOPassbookUpload() || hasValue(epfoPassBookFile);
+    const isUploaded = hasEPFOPassbookUpload() || hasValue(epfoPassBookFiles);
     if (!isUploaded) showUploadMessage("EPFO Passbook file");
+    return isUploaded;
+  };
+  const checkEPFOServiceHistoryDocCertificateUpload = () => {
+
+    const isUploaded = hasEPFOServiceHistoryUpload() || hasValue(epfoServiceHistoryFile);
+    if (!isUploaded) showUploadMessage("EPFO Service History file");
     return isUploaded;
   };
 
@@ -1001,6 +1116,9 @@ const AppointeeRegister = () => {
     if (!hasValue(UAN)) {
       showErrorMessage(UANEmptyErrorMsg);
       return false;
+    }
+    if (!checkEPFOServiceHistoryDocCertificateUpload()) {
+      return false
     }
     if (!checkEPFOPassbookDocCertificateUpload()) {
       return false
@@ -1320,7 +1438,6 @@ const AppointeeRegister = () => {
       fileUploaded: uploadedFile,
       IsManualPassbookUploaded: isUanManualUpload
     };
-    console.log(payLoad)
     // Use the buildFormData helper function to create the formData
     let formData = buildFormData(payLoad);
 
@@ -1362,8 +1479,6 @@ const AppointeeRegister = () => {
       return
     }
     openSubmitConfirmationModel();
-
-
   }
 
   const handleNext = () => {
@@ -1555,8 +1670,6 @@ const AppointeeRegister = () => {
   };
 
   const handleEpfoVerifiaction = () => {
-    console.log('UAN', UAN);
-
     openOtpForm(
       UAN,
       "UAN Number",
@@ -1765,8 +1878,36 @@ const AppointeeRegister = () => {
               md={12}
               sx={candidateRegistrationFormContainerStyle}
             >
+
               {currentPageNo === 1 ? (
                 <>
+                  {/* <CandidateRegisterFirstPage
+                    handleOnSubmit={handleAppointeeFormPage1Save}
+                    stepsList={stepsList}
+                    fathersOrHusbandName={fathersOrHusbandName}
+                    setFathersOrHusbandName={setFathersOrHusbandName}
+                    gender={gender}
+                    setGender={setGender}
+                    isAadhaarVarified={isAadhaarVarified}
+                    dateOfBirth={dateOfBirth}
+                    setDateOfBirth={setDateOfBirth}
+                    relationshipWithMember={relationshipWithMember}
+                    setRelationshipWithMember={setRelationshipWithMember}
+                    mobileNo={mobileNo}
+                    setMobileNo={setMobileNo}
+                    email={email}
+                    setEmail={setEmail}
+                    nationality={nationality}
+                    setNationality={setNationality}
+                    setPassportNo={setPassportNo}
+                    setPassportAvailable={setPassportAvailable}
+                    setIsPassportAvailableDisable={setIsPassportAvailableDisable}
+                    setPassPortMaxLength={setPassPortMaxLength}
+                    qualification={qualification}
+                    setQualification={setQualification}
+                    maritalStatus={maritalStatus}
+                    setMaritalStatus={setMaritalStatus}
+                  /> */}
                   <Box sx={{ marginTop: "1.8rem" }}>
                     <form onSubmit={handleAppointeeFormPage1Save}>
                       <Grid
@@ -1813,20 +1954,7 @@ const AppointeeRegister = () => {
                                   code,
                                   selectGender,
                                 } = gender;
-                                const selectedGenderColor = selected
-                                  ? "#b049c0"
-                                  : "#C7C7D2";
-                                const bgcolor = selected ? "#f6dff9" : "#F4F6FA";
-                                const currentGenderSectionContainer = {
-                                  ...genderSectionContainer,
-                                  color: selectedGenderColor,
-                                  bgcolor: bgcolor,
-                                  cursor: isAadhaarVarified
-                                    ? "cursor"
-                                    : "pointer",
-                                  border: `2px solid ${selectedGenderColor}`,
-                                };
-
+                                const { currentGenderSectionContainer } = GenderSelection(selected, isAadhaarVarified);
                                 return (
                                   <Grid sx={{ padding: 0 }} key={index} item xs={12} md={4}>
                                     {isAadhaarVarified ? (
@@ -1954,6 +2082,7 @@ const AppointeeRegister = () => {
                               inputProps={{ maxLength: 50 }}
                             />
                           </Grid>
+
                           <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
                             <FormControl fullWidth>
                               <Typography sx={lable1CopyStyle}>
@@ -2635,6 +2764,7 @@ const AppointeeRegister = () => {
                               accept={"image/png, image/jpeg"}
                               disabled={isPreviousSectionDisabled}
                               maxUploadSize={imgAndPdfMaxSize}
+                            // handleRemoveFile={remove10thPassCertificate}
                             />
                           </Box>
                         </Grid>
@@ -2695,7 +2825,7 @@ const AppointeeRegister = () => {
                               accept={"image/png, image/jpeg"}
                               disabled={isPreviousSectionDisabled}
                               maxUploadSize={imgAndPdfMaxSize}
-
+                            // handleRemoveFile={removeFathersDocCertificate}
                             />
                           </Box>
                         </Grid>
@@ -3504,30 +3634,60 @@ const AppointeeRegister = () => {
                           </Grid>
                           {
                             isUanVerificationProcessManual === 'manual' &&
-                            <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
+                            <Grid>
+                              <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
 
-                              <Typography
-                                sx={{
-                                  ...lable1CopyStyle,
-                                  textAlign: "center",
-                                }}
-                              >
-                                Please upload your EPFO passbook
-                                <span className="requiredField">*</span>
-                              </Typography>
-                              <Box sx={fileUploadSectionContainerStyle}>
-                                <FileUploadSection
-                                  chooseFile={uploadEpfoPassBookFile}
-                                  // fileName={
-                                  //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSSBKMNL")
-                                  //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSSBKMNL").fileName
-                                  //     : handicapFileName
-                                  // }
-                                  fileName={epfoPassBookFile}
-                                  accept={"image/png, image/jpeg"}
-                                  maxUploadSize={imgAndPdfMaxSize}
-                                />
-                              </Box>
+                                <Typography
+                                  sx={{
+                                    ...lable1CopyStyle,
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  Please upload your EPFO Service History
+                                  <span className="requiredField">*</span>
+                                </Typography>
+                                <Box sx={fileUploadSectionContainerStyle}>
+                                  <FileUploadSection
+                                    chooseFile={uploadEpfoServiceHistoryFile}
+                                    // fileName={
+                                    //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSSBKMNL")
+                                    //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSSBKMNL").fileName
+                                    //     : handicapFileName
+                                    // }
+                                    fileName={epfoServiceHistoryFile}
+                                    accept={"image/png, image/jpeg"}
+                                    maxUploadSize={imgAndPdfMaxSize}
+                                  // handleRemoveFile={removeEPFOServiceHistory}
+                                  />
+                                </Box>
+                              </Grid>
+                              <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
+
+                                <Typography
+                                  sx={{
+                                    ...lable1CopyStyle,
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  Please upload your EPFO passbook
+                                  <span className="requiredField">*</span>
+                                </Typography>
+                                <Box sx={fileUploadSectionContainerStyle}>
+                                  <FileUploadSection
+                                    chooseFile={uploadEpfoPassBookFile}
+                                    handleRemoveFile={removeEPFOPassbookFile}
+                                    // fileName={
+                                    //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSSBKMNL")
+                                    //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSSBKMNL").fileName
+                                    //     : handicapFileName
+                                    // }
+                                    fileName={epfoPassBookFiles}
+                                    accept={"image/png, image/jpeg"}
+                                    maxUploadSize={imgAndPdfMaxSize}
+                                    multiple={true}
+                                  />
+                                </Box>
+                              </Grid>
                             </Grid>
                           }
                         </Grid>
