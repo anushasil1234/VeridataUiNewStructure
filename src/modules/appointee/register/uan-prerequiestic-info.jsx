@@ -40,13 +40,13 @@ const UANPrerequisiteInformation = () => {
         {
             StepNumber: '2',
             primaryHeading: 'Login',
-            secondaryText: 'Login with your creadential and download details.',
+            secondaryText: 'Login with your creadential and download "Employment Service History" and "Passbook".',
             secondaryComponent: null
 
         },
         {
             StepNumber: '3',
-            primaryHeading: 'Upload the details here',
+            primaryHeading: 'Upload the details here in respective uplload section.',
             secondaryText: null,
             secondaryComponent: null
         },
