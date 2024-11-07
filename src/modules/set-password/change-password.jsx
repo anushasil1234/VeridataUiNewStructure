@@ -3,7 +3,7 @@ import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/
 import { loginFieldIconStyle, lableRedStyle } from 'app';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { changePassword, OtpEmptyMsg, passwordChangeSuccessMsg, passwordEmptyMsg, passwordNotMsg, passwordPattern, setPasswordOtpToMailMsg } from 'shared/constants/constants';
+import { changePassword, confirmpasswordNotMsg, OtpEmptyMsg, passwordChangeSuccessMsg, passwordEmptyMsg, passwordNotMsg, passwordPattern, setPasswordOtpToMailMsg } from 'shared/constants/constants';
 import { CardLayout, InputField, InputFieldProps, hasValue } from 'shared/utils'
 import isPaswordValid from 'shared/utils/associate/is-pasword-valid';
 import CircularIndeterminate from 'shared/utils/loader/circularIndeterminate';
@@ -90,7 +90,6 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
         }
     }
 
-
     const handlePasswordVisibility = () => {
         setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
     }
@@ -127,11 +126,12 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
     // }, [newPassword])
 
     useEffect(() => {
-        if (hasValue(newPassword) && newPassword.length >= 8) {
-            const trimmedPassword = newPassword.trim();
+        const trimmedPassword = newPassword.trim();
+        if (hasValue(newPassword)) {
             if (isPaswordValid(trimmedPassword)) {
                 setIsConfPasswrdDisable(false);
                 setPasswordErrorMsg(false);
+                showErrorMessage();
             } else {
                 showErrorMessage(passwordPattern);
                 setIsConfPasswrdDisable(true);
@@ -140,16 +140,17 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
         } else {
             setIsConfPasswrdDisable(true);
         }
+    }, [newPassword])
 
-        
+    useEffect(() => {
+        const trimmedPassword = newPassword.trim();
         if (hasValue(newPassword) && hasValue(confirmPassword) && newPassword.length >= 8) {
-            const trimmedPassword = newPassword.trim();
             if (isPaswordValid(trimmedPassword)) {
                 if (trimmedPassword === confirmPassword.trim()) {
                     setIsOTPDisable(false);
                     setConfirmPasswordErrorMsg(false);
                 } else {
-                    showErrorMessage(passwordNotMsg);
+                    showErrorMessage(confirmpasswordNotMsg);
                     setIsOTPDisable(true);
                     setConfirmPasswordErrorMsg(true);
                     // setConfirmPassword('');
@@ -158,10 +159,11 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
                 showErrorMessage(passwordPattern);
                 setIsOTPDisable(true);
             }
-        } else {
+        } else { 
             setIsOTPDisable(true);
         }
-    }, [newPassword,confirmPassword])
+    }, [confirmPassword])
+    
 
     useEffect(() => {
         if (isPasswordVisibilityOn) {
@@ -216,12 +218,12 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
             <Box my={"20px"}>
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     <Grid item xs={12} md={6}>
-                        <Typography sx={{  paddingTop: 1 }}>
+                        <Typography sx={{ paddingTop: 1 }}>
                             ** {passwordPattern}
                         </Typography>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Typography sx={{  paddingTop: 1 }}>
+                        <Typography sx={{ paddingTop: 1 }}>
                             ** {setPasswordOtpToMailMsg}
                         </Typography>
                     </Grid>
