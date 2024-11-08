@@ -16,7 +16,7 @@ import {
   GetCriticalAppointeeData_URL,
   GetDashboardWidgetCardData_URL,
   GetExpiredProcessFileData_URL,
-  downloadLapsedList_URL ,
+  downloadLapsedList_URL,
   GetMastarDropdowndata_URL,
   GetMenuListData_URL,
   VerifyPassportDetails_URL,
@@ -106,7 +106,8 @@ import {
   PostCandidateMailResend_URL,
   downloadProcessingList_URL,
   downloadpfReport_URL,
-  Postfileupload_URL
+  Postfileupload_URL,
+  getUploadFileData_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -142,6 +143,7 @@ const AppWrapper = (App) => {
     const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);
     const [isEmploymentViewOpen, setEmploymentIsViewOpen] = useState(false);
     const [appointeeId, setAppointeeId] = useState();
+    const [appointeePersonalDetails, setAppointeePersonalDetails] = useState();
     const [confirmationModelOpen, setConfirmationModelOpen] = useState(false);
     const [confirmationModelContent, setConfirmationModelContent] = useState();
     const [confirmationYesNoModelOpen, setConfirmationYesNoModelOpen] = useState(false);
@@ -314,11 +316,11 @@ const AppWrapper = (App) => {
       setAppointeeId(appointeeId);
       setIsViewOpen(true);
     };
-    const openVerify=()=>{
-      setAppointeeId(appointeeId);
+    const openVerify = (personalDetails) => {
+      setAppointeePersonalDetails(personalDetails);
       setIsManualVerificationViewOpen(true);
     }
-    const closeVerify=()=>{
+    const closeVerify = () => {
       setIsManualVerificationViewOpen(false)
     }
     const openPassbookViewModel = (appointeeId) => {
@@ -447,7 +449,7 @@ const AppWrapper = (App) => {
       return await PfcRequest(GetProcessedEPFOData_URL, "POST", payLoad, null, true);
     };
     const AppointeeDataPfFilteRList = async (payLoad) => {
-      return await PfcRequest( downloadpfReport_URL , "POST", payLoad, null, true);
+      return await PfcRequest(downloadpfReport_URL, "POST", payLoad, null, true);
     };
     const getRejectedAppointeeList = async (payLoad) => {
       const responseInfo = await PfcRequest(GetRejectedFileData_URL, "POST", payLoad, null, true);
@@ -474,7 +476,7 @@ const AppWrapper = (App) => {
       return responseInfo;
     };
     const GetLapsedDataReport = async (payLoad) => {
-      const responseInfo = await PfcRequest( downloadLapsedList_URL , "POST", payLoad, null, true);
+      const responseInfo = await PfcRequest(downloadLapsedList_URL, "POST", payLoad, null, true);
       return responseInfo;
     };
     const downloadReport = async (_url, payLoad) => {
@@ -564,7 +566,7 @@ const AppWrapper = (App) => {
     const postAppointeeApproved = async (payLoad) => {
       return await PfcRequest(PostAppointeeApproved_URL, "POST", payLoad, appointeeApproveSuccess, true);
     };
-     const postAppointeePensionApplicable = async (payLoad) => {
+    const postAppointeePensionApplicable = async (payLoad) => {
       return await PfcRequest(PostAppointeePensionAvailable_URL, "POST", payLoad, appointeePensionUpdateSuccess, true);
     };
     const getUANNumber = async (payLoad) => {
@@ -676,9 +678,12 @@ const AppWrapper = (App) => {
       return await PfcRequest(ValidateUserByOtpForgetPassword_URL, "POST", payLoad);
     };
     const GetUnderProcessReport = async (payLoad) => {
-      const responseInfo=await PfcRequest(downloadProcessingList_URL, "POST", payLoad, null, true);
+      const responseInfo = await PfcRequest(downloadProcessingList_URL, "POST", payLoad, null, true);
       return responseInfo
     };
+    const getUploadFileData = async (appointeeId) => {
+      return await PfcRequest(`${getUploadFileData_URL}${appointeeId}`, "GET");
+    }
 
     // const getAppointeeAgingFilterReport = async (payLoad) => {
     //   return await PfcRequest(AppointeeAgingFilterReport_URL, "POST", payLoad);
@@ -811,7 +816,7 @@ const AppWrapper = (App) => {
           postLoginByEmailDetails,
           postLoginDetails,
           getVerifiedAppointeeList,
-          AppointeeDataPfFilteRList ,
+          AppointeeDataPfFilteRList,
           downloadReport,
           getLatestAppointees,
           configerationSetUp,
@@ -878,7 +883,8 @@ const AppWrapper = (App) => {
           ChangePasswordGenerateOTP,
           ValidateForgetPassweordUsrByOtp,
           downloadAgingExelReport,
-          GetUnderProcessReport
+          GetUnderProcessReport,
+          getUploadFileData
         })
       );
     }
@@ -944,9 +950,9 @@ const AppWrapper = (App) => {
           closeViewModel={closeViewModel}
           openView={isViewOpen}
         />
-         <ManualverifidView
+        <ManualverifidView
           openViewModel={openVerify}
-          appointeeId={appointeeId}
+          appointeePersonalDetails={appointeePersonalDetails}
           closeViewModel={closeVerify}
           openView={isManualVerificationViewOpen}
         />
@@ -1015,6 +1021,12 @@ const AppWrapper = (App) => {
           open={filePasswordSubmitionModelOpen}
           filePasswordSubmitionProps={filePasswordSubmitionProps}
           closeFilePasswordSubmitionModel={closeFilePasswordSubmitionModel}
+        />
+        <AppointeeView
+          openViewModel={openViewModel}
+          appointeeId={appointeeId}
+          closeViewModel={closeViewModel}
+          openView={isViewOpen}
         />
       </>
     );

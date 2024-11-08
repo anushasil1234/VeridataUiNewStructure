@@ -128,6 +128,9 @@ export const aadharFileTypeAlias = "ADH";
 export const passportFileTypeAlias = "VISA";
 export const epfTypeAlias = "EPFPSBK";
 export const epfExcelTypeAlias = "EPFPSBKEXCL";
+export const epfFileTypeAlias = "EPFO";
+export const epfFileCategoryTypeAlias = "EPFO";
+export const fatherFileCategoryTypeAlias = "FTHR";
 
 //Not Available
 export const NA = "N/A"
@@ -151,7 +154,7 @@ export const toCreateUser = "/createuser";
 export const toUpdateUser = "/updateuser";
 export const toUserlist = "/userlist";
 export const toAppointeecount = "/appointeecount";
-export const topfPension="/PfPension";
+export const topfPension = "/PfPension";
 export const toDataUploaded = "/datauploaded";
 export const toLogin = "/auth/login";
 export const toUserLogin = "/auth/userlogin";
@@ -594,8 +597,8 @@ export const pfPensionTableHeadCell = [
             element: Typography
         }
     },
-    
-   
+
+
     {
         id: 'dateOfJoining',
         numeric: true,
@@ -607,20 +610,20 @@ export const pfPensionTableHeadCell = [
             element: Typography
         }
     },
-   
+
     {
         id: 'pfinfo',
         numeric: true,
         type: "badge",
         disablePadding: false,
         label: 'Pf Info',
-        enums: ['trustPassBookStatus','epfoPassBookStatus'],
+        enums: ['trustPassBookStatus', 'epfoPassBookStatus'],
         component: {
-            element: (props) => TableStatusCell(props ),
+            element: (props) => TableStatusCell(props),
             attribute: ['appointeeId']
         }
     },
-    
+
     {
         id: 'pensioninfo',
         numeric: true,
@@ -643,7 +646,7 @@ export const pfPensionTableHeadCell = [
             element: Typography
         }
     },
-    
+
 ]
 export const LinkNotSentTableHeadCell = [
     {
@@ -1919,6 +1922,8 @@ export const DownloadUpdateSampleXlsFile_URL = `${FileUpload}/DownloadUpdateSamp
 export const UploadxlsFile_URL = `${FileUpload}/UploadxlsFile`;
 export const UploadUpdatexlsFile_URL = `${FileUpload}/UploadUpdatexlsFile`;
 export const DownloadPassbookFile_URL = `${FileUpload}/DownloadPassbookFile`;
+export const getUploadFileData_URL = `${FileUpload}/getUploadFileData?appointeeId=`;
+
 
 export const GetRawFileData_URL = (companyId, fileId) => `${FileUpload}/GetRawFileData?companyId=${companyId}&fileId=${fileId}`;
 
@@ -2122,6 +2127,61 @@ export const issueFilterList = [
     {
         value: false,
         label: 'Candidates without issues'
+    }
+]
+
+export const passbookCategoryTypeList = [
+    {
+        value: 'PASSBOOKSERVICEHIST',
+        label: 'Passbook Service History'
+    },
+    {
+        value: 'PASSBOOKMANUAL',
+        label: 'Passbook Manual Upload'
+    }
+]
+export const fatherDocCategoryTypeList = [
+    {
+        value: '10THCERTIFICATE',
+        label: '10th pass Certificate'
+    },
+    {
+        value: 'OTHERID',
+        label: 'Others Certificate'
+    }
+]
+export const verificationCategoryModel = {
+    'EPFO': passbookCategoryTypeList,
+    'FTHR': fatherDocCategoryTypeList
+}
+export const verificationTypeList = [
+    {
+        value: 'none',
+        label: 'None',
+        isDisabled: false
+    },
+    {
+        value: epfFileCategoryTypeAlias,
+        label: 'Passbook'
+    },
+    {
+        value: fatherFileCategoryTypeAlias,
+        label: `Father's name`
+    }
+]
+
+export const fileTypeList = [
+    {
+        value: 'All',
+        label: 'Select All'
+    },
+    {
+        value: 'Type 1',
+        label: 'Category 1'
+    },
+    {
+        value: 'Type 2',
+        label: 'Category 2'
     }
 ]
 

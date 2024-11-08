@@ -175,7 +175,7 @@ let AppointeeViewForm = ({
   const [isFnameVarified, setIsFnameVarified] = useState(null);
   const [isManualVerifiedViewOpen, setIsManualVerifiedViewOpen] = useState(false);
   const openManualVerifiedView = () => setIsManualVerifiedViewOpen(true);
-const closeManualVerifiedView = () => setIsManualVerifiedViewOpen(false);
+  const closeManualVerifiedView = () => setIsManualVerifiedViewOpen(false);
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isAadharVerified, setIsAadharVerified] = useState(null);
   const [isPassportAvailable, setIsPassportAvailable] = useState(null);
@@ -250,7 +250,7 @@ const closeManualVerifiedView = () => setIsManualVerifiedViewOpen(false);
       }
     }
   };
-const [details,setDetails]=useState(null)
+  const [appointeeDetailsResponse, setAppointeeDetailsResponse] = useState(null)
 
   const setAppointeeDetails = async () => {
     const response = await getAppointeeDetails(appointeeId);
@@ -292,7 +292,7 @@ const [details,setDetails]=useState(null)
         isTrustPassbook,
         isManualPassbook
       } = response.responseInfo;
-      setDetails(response);
+      setAppointeeDetailsResponse(response.responseInfo);
       setIsManualPassbook(isManualPassbook);
       maskedUANNumber ? setUAN(maskedUANNumber) : setUAN(NA);
       uanNumber ? setUanNumber(uanNumber) : setUanNumber(null)
@@ -469,8 +469,23 @@ const [details,setDetails]=useState(null)
   const handleClickOnMannualUpload = () => {
 
   }
-  const handelclick =()=>{
-    openVerify(appointeeId)
+  const handelclick = () => {
+    const personalInfo = {
+      appointeeId,
+      appointeeName,
+      dateOfBirth,
+      gender,
+      relationshipWithMember,
+      member,
+      handicapType,
+      isPhysicallyHandicap,
+      maritalStatus,
+      qualification,
+      email,
+      mobileNo,
+      nationality
+    }
+    openVerify(personalInfo);
   }
 
   let verifyIconStyle;
@@ -604,10 +619,10 @@ const [details,setDetails]=useState(null)
   const verifyFabProps = new FabIconPropsModel(
     actionIconStyle,
     handelclick,
-    "warning",          
+    "warning",
     "verify",
-    <NewReleasesOutlined/>,   
-    "Verify"             
+    <NewReleasesOutlined />,
+    "Verify"
   );
   const getVerificationChip = () => {
 
@@ -994,7 +1009,7 @@ const [details,setDetails]=useState(null)
                       props={{ ...verifyFabProps, selectedIndex: 4, index: 4 }}
                     />
                   )}
-                  
+
                 </Stack>
               ) : null}
             </>

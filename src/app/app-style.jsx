@@ -934,7 +934,7 @@ export const listHeadingConteinerStyle = {
 export const listHeadingConteinerStylesx = {
   flexDirection: "row",
   ...listStyle,
-  justifyContent: "start",
+  justifyContent: "space-between",
   alignItems: "center"
 };
 
@@ -1075,7 +1075,16 @@ export const lapsedStyle = {
   ...chipStyle,
   backgroundColor: ThemeColorPalete.error.main
 };
+export const candidatefileViewContainerStyle = {
+  // width: '100%',
+  overflowX: 'scroll',
+  width: '100%',
+  height: '300px',
+  margin: 'auto',
+  // backgroundColor: '',
+  border: "2px dashed #375993",
 
+}
 
 export const getStatusChipStyle = (status) => {
   switch (status) {
@@ -1605,8 +1614,16 @@ export const submitBtnStyle = {
   marginTop: '10px',
   marginBottom: '10px',
   marginRight: '24px',
+  backgroundColor: AppStyle.palette.primary.main,
   ...submitButtonCommonStyle,
 }
+export const rightMostBtnStyle = {
+  marginTop: '10px',
+  marginBottom: '10px',
+  backgroundColor: AppStyle.palette.primary.main,
+  ...submitButtonCommonStyle,
+}
+
 
 export const verificationBtnStyle = {
   margin: "5px 0",
