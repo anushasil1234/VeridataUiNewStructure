@@ -105,7 +105,8 @@ import {
   UserSignInDetailsByEmail_URL,
   PostCandidateMailResend_URL,
   downloadProcessingList_URL,
-  downloadpfReport_URL
+  downloadpfReport_URL,
+  Postfileupload_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -349,9 +350,9 @@ const AppWrapper = (App) => {
     const closeDocumentModel = () => {
       setDocumentModelOpen(false);
     };
-    const openDocumentModel = (file, fileType) => {
+    const openDocumentModel = (fileDetails, fileType) => {
       setDocumentModelOpen(true);
-      setDocumentModelProps({ file, fileType });
+      setDocumentModelProps({ fileDetails, fileType });
     };
     const openPasswordSubmitionModel = (passwordModelContent) => {
       setPasswordSubmitionModelOpen(true);
@@ -378,6 +379,7 @@ const AppWrapper = (App) => {
         closeConsentModal();
         closeRemarksModel();
         closeDocumentModel();
+
         closeInfoModel();
         closeSubmitModel();
         closeRemedyModel();
@@ -386,6 +388,7 @@ const AppWrapper = (App) => {
         closeFilePasswordSubmitionModel();
       }
     }, [pathname]);
+   
 
     // API FUNCTOINS STARTS
     const postExcel = async (payLoad) => {
@@ -544,6 +547,10 @@ const AppWrapper = (App) => {
 
     const getAppointeeDetails = async (appointeeId) => {
       return await PfcRequest(`${GetAppointeeDetails_URL}${appointeeId}`, "GET");
+    };
+
+    const GetUploadedFileDetailsById = async (payLoad) => {
+      return await PfcRequest(Postfileupload_URL, "POST",payLoad);
     };
     const getAppointeeActivity = async (appointeeId) => {
       return await PfcRequest(`${GetAppointeeActivity_URL}${appointeeId}`, "GET");
@@ -817,6 +824,7 @@ const AppWrapper = (App) => {
           getQualificationList,
           postAppointeeDetails,
           getAppointeeDetails,
+          GetUploadedFileDetailsById,
           getAppointeeActivity,
           postAppointeeReprocess,
           getPassportDetails,
@@ -997,6 +1005,7 @@ const AppWrapper = (App) => {
           documentModelProps={documentModelProps}
           closeDocumentModel={closeDocumentModel}
         />
+        
         <ProfilePasswordForm
           open={passwordSubmitionModelOpen}
           passwordSubmitionProps={passwordSubmitionProps}

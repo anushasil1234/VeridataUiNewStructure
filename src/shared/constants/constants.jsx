@@ -1946,6 +1946,7 @@ export const PostAppointeeFileDetails_URL = `${AppoienteeWorkFlow}/PostAppointee
 export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdateDocWithUanDetails`;
 export const PostAppointeeReprocess_URL = `${AppoienteeWorkFlow}/PostAppointeeReprocess`;
 export const GetAppointeeDetails_URL = `${AppoienteeWorkFlow}/GetAppointeeDetails?appointeeId=`;
+export const Postfileupload_URL=`${FileUpload}/GetUploadedFileDetailsById`
 export const GetAppointeeActivity_URL = `${AppoienteeWorkFlow}/GetAppointeeActivity?appointeeId=`;
 export const GetExpiredProcessFileData_URL = `${AppoienteeWorkFlow}/GetExpiredProcessFileData`;
 export const GetUnderProcessFileData_URL = `${AppoienteeWorkFlow}/GetUnderProcessFileData`;

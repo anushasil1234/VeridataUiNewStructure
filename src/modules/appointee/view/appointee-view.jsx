@@ -188,7 +188,7 @@ const closeManualVerifiedView = () => setIsManualVerifiedViewOpen(false);
   const [isTrustPassbook, setIsTrustPassbook] = useState(null);
   const [isManualPassbook, setIsManualPassbook] = useState(null);
   const [isPensionApplicable, setIsPensionApplicable] = useState(null);
-
+  const [filesByAlias, setFilesByAlias] = useState(new Map());
   const dispatch = useDispatch();
 
   const actionsAfterProcess = (actionRoute) => {
@@ -400,13 +400,22 @@ const [details,setDetails]=useState(null)
         setIsTrustPassbook(NA);
       }
       setIsPensionApplicable(isPensionApplicable);
+      const updatedFilesByAlias = new Map();
       fileUploaded.forEach(
-        ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
-          const fileDetails = `data:${mimeType};base64,${fileData}`;
+        ({ uploadTypeAlias, mimeType,  fileName,uploadDetailsId}) => {
+          //const fileDetails = `data:${mimeType};base64,${fileDataa}`;
           const file = {
-            fileDetails,
+            appointeeId ,
+            uploadDetailsId,
             fileName,
           };
+         
+          if (!updatedFilesByAlias.has(uploadTypeAlias)) {
+            updatedFilesByAlias.set(uploadTypeAlias, []);
+          }
+          updatedFilesByAlias.get(uploadTypeAlias).push(file);
+          
+
 
           if (uploadTypeAlias === tenthCertificateFileTypeAlias) {
             setTenFile(file);
@@ -430,6 +439,7 @@ const [details,setDetails]=useState(null)
           if (uploadTypeAlias === epfoServiceHistoryFileTypeAlias) {
             setEPFOServiceHistoryFile(file);
           }
+          setFilesByAlias(updatedFilesByAlias); 
         }
       );
     }
@@ -690,8 +700,9 @@ const [details,setDetails]=useState(null)
                   fieldName={"Trust PF File"}
                   fieldValue={
                     <FileViewComponent
-                      fileType={"Trust Pf File"}
+                      fileType={trustEpfoFileTypeAlias}
                       file={trustPfFile}
+                      filesByAlias={filesByAlias}
                       width="50px"
                     />
                   }
@@ -702,8 +713,9 @@ const [details,setDetails]=useState(null)
                   fieldName={"Epfo passbook file"}
                   fieldValue={
                     <FileViewComponent
-                      fileType={"Epfo passbook file"}
+                      fileType={epfoPassbookFileTypeAlias}
                       file={manualPassbookFile}
+                      filesByAlias={filesByAlias}
                       width="50px"
                     />
                   }
@@ -714,8 +726,9 @@ const [details,setDetails]=useState(null)
                   fieldName={"Epfo service history"}
                   fieldValue={
                     <FileViewComponent
-                      fileType={"Epfo service history"}
+                      fileType={epfoServiceHistoryFileTypeAlias}
                       file={EPFOServiceHistoryFile}
+                      filesByAlias={filesByAlias}
                       width="50px"
                     />
                   }
@@ -726,8 +739,6 @@ const [details,setDetails]=useState(null)
               <Stack sx={listHeadingConteinerStyle}>
                 <Typography sx={listHeadingStyle}>Passport Details</Typography>
               </Stack>
-              {console.log('isPassportAvailable', isPassportAvailable)
-              }
               {isPassportAvailable === "Y" ? (
                 <>
                   <DocumentDetails
@@ -761,9 +772,10 @@ const [details,setDetails]=useState(null)
                       fieldName={"Passport File"}
                       fieldValue={
                         <FileViewComponent
-                          fileType={"Passport File"}
+                          fileType={passportFileTypeAlias}
                           file={visaFile}
                           width="50px"
+                          filesByAlias={filesByAlias}
                         />
                       }
                     />
@@ -841,8 +853,9 @@ const [details,setDetails]=useState(null)
                       fieldValue={
                         handicapFile ?
                           <FileViewComponent
-                            fileType={"Handicap Certificate"}
+                            fileType={handicapFileTypeAlias}
                             file={handicapFile}
+                            filesByAlias={filesByAlias}
                           />
                           :
                           NA
@@ -866,8 +879,9 @@ const [details,setDetails]=useState(null)
                   fieldValue={
                     tenFile ? (
                       <FileViewComponent
-                        fileType={"10th Pass Certificate"}
+                        fileType={tenthCertificateFileTypeAlias}
                         file={tenFile}
+                        filesByAlias={filesByAlias}
                       />
                     ) : (
                       <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>
@@ -884,8 +898,9 @@ const [details,setDetails]=useState(null)
                   fieldValue={
                     otherFile ? (
                       <FileViewComponent
-                        fileType={"Father's name Verification Document"}
+                        fileType={otherFileTypeAlias}
                         file={otherFile}
+                        filesByAlias={filesByAlias}
                       />
                     ) : (
                       <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>

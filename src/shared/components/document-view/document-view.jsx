@@ -8,8 +8,8 @@ import FabIconPropsModel from 'shared/utils/fab-icon/fab-icon-model';
 import FullScreenModel from 'shared/utils/models/fullscreen-modal'
 
 const UnWrappedDocumentView = ({ documentModelProps }) => {
-    const { file, fileType } = documentModelProps;
-    const { fileName, fileDetails } = file;
+    const { fileDetails , fileType } = documentModelProps;
+    const { fileName } = fileDetails;
     const mimeType = fileDetails.split(';')[0].split(':')[1];
     const downloadFabProps = new FabIconPropsModel(
         actionIconStyle,

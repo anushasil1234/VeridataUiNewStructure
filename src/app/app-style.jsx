@@ -1103,6 +1103,24 @@ export const getStatusChipStyle = (status) => {
       return {};
   }
 };
+
+export const buttonStyle={
+  width: '80px',
+  height: '36px',
+  padding: '4px 0',
+  borderRadius: '8px',
+}
+
+export const popupStyle={
+  direction:"row",
+  alignItems:"center",
+  justifyContent:"flex-start",
+  flexWrap:"wrap" ,
+  cursor: 'pointer',
+ padding: '8px',
+ spacing:1
+            
+}
 // chip style end
 // Upload file starts
 export const fileUploadSectionContainerStyle = {
