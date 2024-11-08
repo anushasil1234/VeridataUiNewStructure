@@ -9,23 +9,34 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React, { useEffect, useState } from "react";
-import { Box, Stack } from "@mui/system";
+import { Box, padding, Stack } from "@mui/system";
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
+import DownloadIcon from "@mui/icons-material/Download";
 
 import {
+  _addFabStyle,
   cardStyle,
+  floatingIconListStyle,
   gridContainerStyle,
   listHeadingConteinerStyle,
   listHeadingStyle,
 } from "app";
-import { NA, noPassBookMsg } from "shared/constants/constants";
+import {
+  generateEmploymentHistoryReportDesc,
+  generatePassbookDetailsReportDesc,
+  NA,
+  noPassBookMsg,
+} from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import { useSelector } from "react-redux";
-import { DateFormatYYYYMMDD } from "shared/utils";
+import { DateFormatYYYYMMDD, FabIcon } from "shared/utils";
+import jsPDFEmploymentHistTemplate from "shared/utils/associate/js-pdf-employmenthist";
+import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
+import moment from "moment";
+import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 let PassbookViewDetails = ({ appointeeId }) => {
-
   const apiSlice = useSelector((state) => state.apiSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
@@ -77,6 +88,33 @@ let PassbookViewDetails = ({ appointeeId }) => {
       align: "center",
     },
   ];
+  const passbookTableHeadCell = [
+    {
+      type: "string",
+      label: "Approved On",
+      enums: ["approvedOn"],
+    },
+    {
+      type: "string",
+      label: "Description name",
+      enums: ["description"],
+    },
+    {
+      type: "string",
+      label: "Month",
+      enums: ["month"],
+    },
+    {
+      type: "string",
+      label: "Year",
+      enums: ["year"],
+    },
+    {
+      type: "string",
+      label: "Pension",
+      enums: ["ispensionContributed"],
+    },
+  ];
 
   const [expanded, setExpanded] = useState(false);
   const [dob, setDob] = useState();
@@ -84,14 +122,17 @@ let PassbookViewDetails = ({ appointeeId }) => {
   const [fullName, setFullName] = useState();
   const [pfUan, setPfUan] = useState();
   const [companies, setCompanies] = useState();
+  const [responseInfo, setResponseInfo] = useState([]);
 
   const { showErrorMessage } = popUpSlice[0];
 
   const setTableRows = async (appointeeId) => {
     const response = await getPassbookDetails(appointeeId);
-    const { dob, fatherName, fullName, pfUan, companies } =
-      response.responseInfo;
+    console.log("passbookDetails", response);
 
+    const { dob, fatherName, fullName, pfUan, companies } =
+      response?.responseInfo;
+    setResponseInfo(response?.responseInfo);
     if (pfUan && companies.length > 0) {
       dob ? setDob(dob) : setDob(NA);
       fatherName ? setFatherName(fatherName) : setFatherName(NA);
@@ -103,12 +144,62 @@ let PassbookViewDetails = ({ appointeeId }) => {
       showErrorMessage(noPassBookMsg);
     }
   };
+  const handleDownload = async () => {
+    var date = moment();
+    var currentDate = date.format("DDMMYYYY");
+    const personalInfo = {
+      name: fullName,
+      fathersName: fatherName,
+      dob: dob,
+      uanNumber: pfUan,
+      otherInfo: "",
+    };
+    const tableObj = {
+      companyData: companies,
+      personalData: personalInfo,
+      fileName: `_Employment_History_${currentDate}`,
+      label: "Employment History",
+    };
+    // jsPDFEmploymentHistTemplate({ tableObj });
+    console.log("resposneInfo1111", responseInfo);
+    jsPDFReportDataTemplate({
+      reportDetails: {
+        fileName: `_Passbook_Details_${currentDate}`,
+        label: "Passbook Details",
+        // fromDate: '',
+        //toDate: "",
+        rptDesc: generatePassbookDetailsReportDesc,
+      },
+      //tables: ''
+      responseInfo: responseInfo,
+    });
+  };
+
+  const downloadFabProps = new FabIconPropsModel(
+    _addFabStyle,
+    handleDownload,
+    "primary",
+    "download",
+    <DownloadIcon />,
+    "Passbook Report"
+  );
   useEffect(() => {
     setTableRows(appointeeId);
   }, []);
   return (
     <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%" }}>
       <Box sx={gridContainerStyle}>
+        <Stack sx={floatingIconListStyle}>
+          <FabIcon
+            props={{
+              ...downloadFabProps,
+              selectedIndex: 1,
+              index: 1,
+              placement: "left-end",
+              size: "small",
+            }}
+          />
+        </Stack>
         <Grid container spacing={1}>
           <Grid item xs={12} md={12} letterSpacing={12}>
             <Box sx={cardStyle}>
@@ -149,8 +240,8 @@ let PassbookViewDetails = ({ appointeeId }) => {
                 companies?.map((companyitem, index) => (
                   <Accordion
                     key={index}
-                    expanded={expanded === "panel1"}
-                    onChange={handleChange("panel1")}
+                    expanded={expanded === index}
+                    onChange={handleChange(index)}
                   >
                     <Card>
                       <AccordionSummary
@@ -159,7 +250,15 @@ let PassbookViewDetails = ({ appointeeId }) => {
                         id="panel1bh-header"
                       >
                         <Grid item xs={12} md={12} letterSpacing={12}>
-                          <Box>
+                          <Box
+                            sx={{
+                              mb: 1,mt:1,
+                              p: 2,
+                              border: "1px solid #ddd",
+                              borderRadius: "8px",
+                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Adds a subtle shadow
+                            }}
+                          >
                             <>
                               <Stack direction="row" spacing={2}>
                                 <PersonalInformation
@@ -192,15 +291,16 @@ let PassbookViewDetails = ({ appointeeId }) => {
                                   fieldName={"Last Pension Date"}
                                   fieldValue={companyitem.lastPensionDate}
                                 />
-                              </Stack><Stack direction="row" spacing={2}>
+                              </Stack>
+                              <Stack
+                                direction="row"
+                                spacing={2}
+                                style={{ width: "50%" }}
+                              >
                                 <PersonalInformation
                                   fieldName={"Pension Gap Identified"}
                                   fieldValue={companyitem.isPensionGap}
                                 />
-                                {/* <PersonalInformation
-                                  fieldName={"Last Pension Date"}
-                                  fieldValue={companyitem.lastPensionDate}
-                                /> */}
                               </Stack>
                             </>
                           </Box>
@@ -208,7 +308,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
                       </AccordionSummary>
                     </Card>
                     <AccordionDetails>
-                      <Box sx={{ height: 400, width: "100%" }}>
+                      <Box sx={{ height: 400, width: "100%" ,mt:'20px'}}>
                         <Stack>
                           <DataGrid
                             rows={companyitem.passbook}
@@ -228,7 +328,6 @@ let PassbookViewDetails = ({ appointeeId }) => {
                     </AccordionDetails>
                   </Accordion>
                 ))}
-
             </Box>
           </Grid>
         </Grid>
