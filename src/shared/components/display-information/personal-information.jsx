@@ -92,7 +92,7 @@ export const FieldValue = ({ fieldValue }) => {
     );
 };
 
-export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge = null }) => {
+export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge = null, badgeTitle=null }) => {
     return (
         <>
             <Grid item xs={12} sm={6} md={5} lg={4} sx={listStyle}>
@@ -113,7 +113,7 @@ export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge
                                     icon={<TaskAlt sx={xsChipIconCommonStyle} color="#2e7d32" />}
                                     sx={successGreenXsOutlineStyle}
                                     size="small"
-                                    label={'AADHAR Verified'}
+                                    label={badgeTitle}
                                 />
                             </Grid>
                         </> :

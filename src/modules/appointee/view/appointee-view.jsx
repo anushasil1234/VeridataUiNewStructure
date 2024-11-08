@@ -172,7 +172,7 @@ let AppointeeViewForm = ({
   const [EPFOServiceHistoryFile, setEPFOServiceHistoryFile] = useState();
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
-  // const [isEmployementVarified, setIsEmployementVarified] = useState(null);
+  const [isFnameVarified, setIsFnameVarified] = useState(null);
   const [isManualVerifiedViewOpen, setIsManualVerifiedViewOpen] = useState(false);
   const openManualVerifiedView = () => setIsManualVerifiedViewOpen(true);
 const closeManualVerifiedView = () => setIsManualVerifiedViewOpen(false);
@@ -286,7 +286,7 @@ const [details,setDetails]=useState(null)
         isPanVarified,
         isUanVarified,
         isPensionApplicable,
-        // isEmployementVarified,
+        isFnameVarified,
         isProcessed,
         saveStep,
         isTrustPassbook,
@@ -302,7 +302,7 @@ const [details,setDetails]=useState(null)
           ? setIsPanVarified(isPanVarified)
           : setIsPanVarified(NA);
       isProcessed ? setIsProcessed(isProcessed) : setIsProcessed(false);
-      // isEmployementVarified ? setIsEmployementVarified(isEmployementVarified) : setIsEmployementVarified(null);
+      isFnameVarified ? setIsFnameVarified(isFnameVarified) : setIsFnameVarified(null);
       appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
       isUanVarified
         ? setIsUanVerified(isUanVarified)
@@ -802,16 +802,25 @@ const [details,setDetails]=useState(null)
                   fieldName={"Name"}
                   fieldValue={appointeeName}
                   badge={isAadharVerified}
+                  badgeTitle={"AADHAR Verified"}
                 />
                 <PersonalInformation
                   fieldName={"Date of Birth"}
                   fieldValue={dateOfBirth}
                   badge={isAadharVerified}
+                  badgeTitle={"AADHAR Verified"}
                 />
-                <PersonalInformation fieldName={"Gender"} fieldValue={gender} />
+                <PersonalInformation
+                  fieldName={"Gender"}
+                  fieldValue={gender}
+                  badge={isAadharVerified}
+                  badgeTitle={"AADHAR Verified"}
+                />
                 <PersonalInformation
                   fieldName={"Father's / Husband's Name"}
                   fieldValue={member}
+                  badge={isFnameVarified}
+                  badgeTitle={"Verified"}
                 />
                 <PersonalInformation
                   fieldName={"Relationship with Member"}
