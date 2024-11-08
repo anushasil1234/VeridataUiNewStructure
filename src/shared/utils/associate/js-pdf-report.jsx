@@ -27,7 +27,6 @@ const jsPDFReportDataTemplate = async ({
   reportDetails = {},
   tables = [],
   responseInfo = [],
-  employmentHistoryResponse = []
 }) => {
   const {
     fileName = "Report",
@@ -397,28 +396,28 @@ const jsPDFReportDataTemplate = async ({
       isFirstCompany = false;
     });
   };
-  const addEmploymentHistory =(doc, employmentHistoryResponse) => {
-    const clientDetails = [
-      // { label: "Client ID:", value: responseInfo.clientId },
-      { label: "Full Name:", value: employmentHistoryResponse?.fullName },
-      { label: "Father's Name:", value: employmentHistoryResponse?.fatherName },
-      { label: "Date of Birth:", value: employmentHistoryResponse?.dob },
-      { label: "PF UAN:", value: employmentHistoryResponse?.pfUan },
-    ];
+  // const addEmploymentHistory =(doc, employmentHistoryResponse) => {
+  //   const clientDetails = [
+  //     // { label: "Client ID:", value: responseInfo.clientId },
+  //     { label: "Full Name:", value: employmentHistoryResponse?.fullName },
+  //     { label: "Father's Name:", value: employmentHistoryResponse?.fatherName },
+  //     { label: "Date of Birth:", value: employmentHistoryResponse?.dob },
+  //     { label: "PF UAN:", value: employmentHistoryResponse?.pfUan },
+  //   ];
 
-    doc.setFontSize(12);
-    doc.setFont("Helvetica", "bold");
+  //   doc.setFontSize(12);
+  //   doc.setFont("Helvetica", "bold");
 
-    doc.text("Employment History for:", 194, lineY + 10);
-    doc.setFont("Helvetica", "normal");
+  //   doc.text("Employment History for:", 194, lineY + 10);
+  //   doc.setFont("Helvetica", "normal");
 
-    let startY = lineY + 20;
-    clientDetails?.forEach((detail) => {
-      doc.text(`${detail?.label}`, 194, startY);
-      doc.text(`${detail?.value}`, 235, startY);
-      startY += 5;
-    });
-  }
+  //   let startY = lineY + 20;
+  //   clientDetails?.forEach((detail) => {
+  //     doc.text(`${detail?.label}`, 194, startY);
+  //     doc.text(`${detail?.value}`, 235, startY);
+  //     startY += 5;
+  //   });
+  // }
 
   const addFooter = (doc, companyName) => {
     const pageCount = doc.internal.getNumberOfPages();
@@ -643,7 +642,7 @@ const jsPDFReportDataTemplate = async ({
   );
   addContent();
   responseInfo && addClientDetails(doc, responseInfo);
-  employmentHistoryResponse && addEmploymentHistory(doc, employmentHistoryResponse);
+  //employmentHistoryResponse && addEmploymentHistory(doc, employmentHistoryResponse);
   responseInfo && addCompanyDetails(doc, responseInfo?.companies);
   const companyNameToUse = tables[0]?.companyName || defaultCompanyName;
   //addFooter(doc, companyNameToUse);
