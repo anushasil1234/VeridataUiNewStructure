@@ -72,6 +72,9 @@ let AppStyle = createTheme({
       light: "#ea9999",
       main: "#e06666"
     },
+    grey: {
+      light: ' #808080'
+    },
     tableHeader: {
       main: "#7BBFBA"
     }
@@ -360,6 +363,21 @@ export const heading5 = {
   fontWeight: 600
 }
 // heading ends
+
+export const useFileChipStyles = () => {
+  return (fileOption, viewedFiles) => ({
+    cursor: 'pointer',
+    backgroundColor: viewedFiles.some(file => file.fileName === fileOption.fileName)
+      ? ThemeColorPalete.primary.dark
+      : ThemeColorPalete.grey.light,
+    color: 'white',
+    border: '1px solid',
+    borderColor: viewedFiles.some(file => file.fileName === fileOption.fileName)
+      ? ThemeColorPalete.primary.dark
+      : ThemeColorPalete.grey.light,
+  });
+};
+
 
 // app lable style start
 export const dropDownLableStyle = {
@@ -1113,22 +1131,26 @@ export const getStatusChipStyle = (status) => {
   }
 };
 
-export const buttonStyle={
+export const buttonStyle = {
   width: '80px',
   height: '36px',
   padding: '4px 0',
   borderRadius: '8px',
+  bgcolor: ThemeColorPalete.primary.dark,
+  "&:hover": {
+    bgcolor: ThemeColorPalete.primary.light
+  },
 }
 
-export const popupStyle={
-  direction:"row",
-  alignItems:"center",
-  justifyContent:"flex-start",
-  flexWrap:"wrap" ,
+export const popupStyle = {
+  direction: "row",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  flexWrap: "wrap",
   cursor: 'pointer',
- padding: '8px',
- spacing:1
-            
+  padding: '8px',
+  spacing: 1
+
 }
 // chip style end
 // Upload file starts
@@ -1141,6 +1163,12 @@ export const fileNameStyle = {
   textAlign: 'center',
   marginTop: fileUploadSectionTextMargin,
   texWrap: 'nowrap'
+}
+export const PopupboxStyle = {
+  padding: '4px 8px',
+  borderRadius: '16px',
+  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+  display: 'inline-block'
 }
 export const filenameContainer = {
   flexDirection: 'row',
@@ -1422,7 +1450,16 @@ export const fileImageStyle = {
 export const imageFileContainerStackStyle = {
   mt: 2,
   justifyItems: "center",
-  width: { md: "500px", xl: "900px" }
+  width: { md: "650px", xl: "900px" }
+}
+
+export const zoomOutstackStyle = {
+  position: 'sticky',
+  top: '5%',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  zIndex: 10,
 }
 export const listTableBoxContainerStyle = {
   width: "100%"
