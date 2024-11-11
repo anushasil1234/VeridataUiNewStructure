@@ -7,21 +7,19 @@ import downloadFile from 'shared/utils/associate/download-file';
 import FabIconPropsModel from 'shared/utils/fab-icon/fab-icon-model';
 import FullScreenModel from 'shared/utils/models/fullscreen-modal'
 import  { useState } from 'react';
-import { handleZoom } from 'shared/utils/associate/Zoomin-out';
-// import { handleZoom } from 'shared/utils/associate/Zoomin-out';
+// import { Worker, Viewer } from '@react-pdf-viewer/core';
+// import '@react-pdf-viewer/core/lib/styles/index.css';
 const UnWrappedDocumentView = ({ documentModelProps }) => {
     const { fileDetails , fileType } = documentModelProps;
     const { fileName } = fileDetails;
     const mimeType = fileDetails.split(';')[0].split(':')[1];
     const [zoomLevel, setZoomLevel] = useState(1);
     const handleZoomIn = () => {
-        setZoomLevel(handleZoom('in'));
-      };
-    
-      const handleZoomOut = () => {
-        setZoomLevel(handleZoom('out')); 
-      };
-
+        setZoomLevel((prevZoom) => Math.min(prevZoom + 0.1, 3)); 
+    };
+    const handleZoomOut = () => {
+        setZoomLevel((prevZoom) => Math.max(prevZoom - 0.1, 0.5)); 
+    };
     const downloadFabProps = new FabIconPropsModel(
         actionIconStyle,
         ()=> downloadFile(fileDetails, fileType),
@@ -67,8 +65,11 @@ const UnWrappedDocumentView = ({ documentModelProps }) => {
                 }}
             >
                 {mimeType === 'application/pdf' ? 
-                    <iframe src={fileDetails} height="500" width="100%" style={{ transform: `scale(${zoomLevel})`, transformOrigin: 'center' }}></iframe>
-                :
+                    <embed src={`${fileDetails}#toolbar=0`} height="500" width="100%" style={{ transform: `scale(${zoomLevel})`, transformOrigin: 'center' }}></embed>
+    //                   <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.2.146/build/pdf.worker.min.js`}>
+    //     <Viewer fileUrl={fileUrl} />
+    //   </Worker>
+                    :
                     <img src={fileDetails} style={{ ...fileImageStyle, transform: `scale(${zoomLevel})`, transformOrigin: 'center' }} alt={fileName} />
                 }
             </Box>
