@@ -16,7 +16,7 @@ import {
   listHeadingConteinerStyle,
   listHeadingStyle,
 } from "app";
-import { NA, noEmployementMsg, noPassBookMsg } from "shared/constants/constants";
+import { generateEmploymentHistoryReportDesc, NA, noEmployementMsg, noPassBookMsg } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import { useSelector } from "react-redux";
@@ -24,13 +24,14 @@ import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import { FabIcon } from "shared/utils";
 import moment from "moment";
 import jsPDFEmploymentHistTemplate from "shared/utils/associate/js-pdf-employmenthist";
+import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
 let EmploymentViewDetails = ({ appointeeId, userId }) => {
 
   const apiSlice = useSelector((state) => state.apiSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
-
+  const [responseInfo, setResponseInfo] = useState([]);
   const { getEmployementDetails } = apiSlice[0];
   const { closeEmploymentViewModel } = functionSlice[0];
 
@@ -82,6 +83,7 @@ let EmploymentViewDetails = ({ appointeeId, userId }) => {
 
   const setTableRows = async (appointeeId, userId) => {
     const response = await getEmployementDetails(appointeeId, userId);
+    setResponseInfo(response?.responseInfo);
 
 
     const { dob, fatherName, fullName, pfUan, companies } = response?.responseInfo || {};
@@ -99,21 +101,39 @@ let EmploymentViewDetails = ({ appointeeId, userId }) => {
   const handleDownload = async () => {
     var date = moment();
     var currentDate = date.format("DDMMYYYY");
-    const personalInfo = {
-      name: fullName,
-      fathersName: fatherName,
-      dob: dob,
-      uanNumber: pfUan,
-      otherInfo: ""
-    }
-    const tableObj = {
-      companyData: companies,
-      personalData: personalInfo,
-      fileName: `_Employment_History_${currentDate}`,
-      label: "Employment History",
+    // const personalInfo = {
+    //   name: fullName,
+    //   fathersName: fatherName,
+    //   dob: dob,
+    //   uanNumber: pfUan,
+    //   otherInfo: ""
+    // }
+    // const tableObj = {
+    //   companyData: companies,
+    //   personalData: personalInfo,
+    //   fileName: `_Employment_History_${currentDate}`,
+    //   label: "Employment History",
 
-    };
-    jsPDFEmploymentHistTemplate({ tableObj });
+    // };
+    //jsPDFEmploymentHistTemplate({ tableObj });
+    // const tableObj = {
+    //   headerList: tableHeadList,
+    //   rows: tableBodyList,
+    //   tableName: "Appointee details",
+    //   rptDesc: "",
+    // };
+    console.log('resposneInfo1111',responseInfo)
+    jsPDFReportDataTemplate({
+      reportDetails: {
+        fileName: `_Employment_History_${currentDate}`,
+        label: "Employment History",
+        // fromDate: '',
+        //toDate: "",
+        rptDesc: generateEmploymentHistoryReportDesc,
+      },
+      responseInfo : responseInfo,
+      empFlag : true
+    });
   };
   const downloadFabProps = new FabIconPropsModel(
     _addFabStyle,
@@ -186,7 +206,12 @@ let EmploymentViewDetails = ({ appointeeId, userId }) => {
                     <Card>
 
                       <Grid item xs={12} md={12} letterSpacing={12}>
-                        <Box>
+                        <Box  sx={{
+                              m:2,p:1,
+                              border: "1px solid #ddd",
+                              borderRadius: "8px",
+                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Adds a subtle shadow
+                            }}>
                           <>
                             <Stack direction="row" spacing={2}>
                               <PersonalInformation
