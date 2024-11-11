@@ -7,17 +7,21 @@ import downloadFile from 'shared/utils/associate/download-file';
 import FabIconPropsModel from 'shared/utils/fab-icon/fab-icon-model';
 import FullScreenModel from 'shared/utils/models/fullscreen-modal'
 import  { useState } from 'react';
+import { handleZoom } from 'shared/utils/associate/Zoomin-out';
+// import { handleZoom } from 'shared/utils/associate/Zoomin-out';
 const UnWrappedDocumentView = ({ documentModelProps }) => {
     const { fileDetails , fileType } = documentModelProps;
     const { fileName } = fileDetails;
     const mimeType = fileDetails.split(';')[0].split(':')[1];
     const [zoomLevel, setZoomLevel] = useState(1);
     const handleZoomIn = () => {
-        setZoomLevel((prevZoom) => Math.min(prevZoom + 0.1, 3)); 
-    };
-    const handleZoomOut = () => {
-        setZoomLevel((prevZoom) => Math.max(prevZoom - 0.1, 0.5)); 
-    };
+        setZoomLevel(handleZoom('in'));
+      };
+    
+      const handleZoomOut = () => {
+        setZoomLevel(handleZoom('out')); 
+      };
+
     const downloadFabProps = new FabIconPropsModel(
         actionIconStyle,
         ()=> downloadFile(fileDetails, fileType),
