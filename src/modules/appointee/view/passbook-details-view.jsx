@@ -5,6 +5,7 @@ import {
   Card,
   AccordionSummary,
   AccordionDetails,
+  Fab,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -20,6 +21,7 @@ import {
   gridContainerStyle,
   listHeadingConteinerStyle,
   listHeadingStyle,
+  primaryFabStyle,
 } from "app";
 import {
   generateEmploymentHistoryReportDesc,
@@ -35,6 +37,7 @@ import jsPDFEmploymentHistTemplate from "shared/utils/associate/js-pdf-employmen
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import moment from "moment";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
+import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 
 let PassbookViewDetails = ({ appointeeId }) => {
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -81,40 +84,40 @@ let PassbookViewDetails = ({ appointeeId }) => {
     },
     {
       field: "ispensionContributed",
-      headerName: "Pension",
+      headerName: "Pension Contributed",
       type: "string",
       flex: 1,
       headerAlign: "center",
       align: "center",
     },
   ];
-  const passbookTableHeadCell = [
-    {
-      type: "string",
-      label: "Approved On",
-      enums: ["approvedOn"],
-    },
-    {
-      type: "string",
-      label: "Description name",
-      enums: ["description"],
-    },
-    {
-      type: "string",
-      label: "Month",
-      enums: ["month"],
-    },
-    {
-      type: "string",
-      label: "Year",
-      enums: ["year"],
-    },
-    {
-      type: "string",
-      label: "Pension",
-      enums: ["ispensionContributed"],
-    },
-  ];
+  // const passbookTableHeadCell = [
+  //   {
+  //     type: "string",
+  //     label: "Approved On",
+  //     enums: ["approvedOn"],
+  //   },
+  //   {
+  //     type: "string",
+  //     label: "Description name",
+  //     enums: ["description"],
+  //   },
+  //   {
+  //     type: "string",
+  //     label: "Month",
+  //     enums: ["month"],
+  //   },
+  //   {
+  //     type: "string",
+  //     label: "Year",
+  //     enums: ["year"],
+  //   },
+  //   {
+  //     type: "string",
+  //     label: "Pension Contributed",
+  //     enums: ["ispensionContributed"],
+  //   },
+  // ];
 
   const [expanded, setExpanded] = useState(false);
   const [dob, setDob] = useState();
@@ -245,14 +248,28 @@ let PassbookViewDetails = ({ appointeeId }) => {
                   >
                     <Card>
                       <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
+                        // expandIcon={<ExpandMoreIcon />}
+                        expandIcon={
+                          <DarkTooltip placement="top" title={expanded === index ? "Hide Details" : "Expand to View Details"} arrow>
+                            <Fab
+                              variant="contained"
+                              size="small"
+                              // onClick={handleOpenModal} // Open modal on click
+                              //sx={primaryFabStyle}
+                              sx={{ ...primaryFabStyle}}
+                            >
+                              <ExpandMoreIcon />
+                            </Fab>
+                          </DarkTooltip>
+                        }
                         aria-controls="panel1bh-content"
                         id="panel1bh-header"
                       >
                         <Grid item xs={12} md={12} letterSpacing={12}>
                           <Box
                             sx={{
-                              mb: 1,mt:1,
+                              mb: 1,
+                              mt: 1,
                               p: 2,
                               border: "1px solid #ddd",
                               borderRadius: "8px",
@@ -262,7 +279,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
                             <>
                               <Stack direction="row" spacing={2}>
                                 <PersonalInformation
-                                  fieldName={"Company Name"}
+                                  fieldName={`Company ${index+1} Name`}
                                   fieldValue={companyitem.companyName}
                                 />
                                 <PersonalInformation
@@ -308,7 +325,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
                       </AccordionSummary>
                     </Card>
                     <AccordionDetails>
-                      <Box sx={{ height: 400, width: "100%" ,mt:'20px'}}>
+                      <Box sx={{ height: 400, width: "100%", mt: "20px" }}>
                         <Stack>
                           <DataGrid
                             rows={companyitem.passbook}

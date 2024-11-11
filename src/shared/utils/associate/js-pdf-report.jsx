@@ -269,16 +269,18 @@ const jsPDFReportDataTemplate = async ({
       doc.setFontSize(12);
       doc.setFont("Helvetica", "bold");
       doc.setTextColor(0, 0, 0);
+      startY += 10;
+
       doc.text(`Company Details : `, 14, startY);
       startY += 10;
 
       // Draw a box around the company details
-      const boxX = 10; // X position of the box
+      const boxX = 14; // X position of the box
       const boxY = startY - boxMargin; // Y position of the box (adjust for margin)
 
       // Draw the box
       doc.setDrawColor(192, 192, 192); // Set box color (black)
-      doc.setTextColor(160, 160, 160);
+      doc.setTextColor(96, 96, 96);
       doc.rect(boxX, boxY, boxWidth, boxHeight, "S"); // Draw the rectangle (S for stroke)
 
       doc.setFontSize(12);
@@ -286,24 +288,24 @@ const jsPDFReportDataTemplate = async ({
 
       // Adjusting Y position after the company name
       let yPosition = startY + 5;
-      doc.text(`Company ${index + 1}`, 14, yPosition);
+      doc.text(`Company ${index + 1}`, 20, yPosition);
       yPosition += 5;
-      doc.text(`Company Name: ${company?.companyName}`, 14, yPosition);
+      doc.text(`Company Name: ${company?.companyName}`, 20, yPosition);
       yPosition += 5;
 
       doc.text(
         `Last Transaction Approved On: ${company?.lastTransactionApprovedOn}`,
-        14,
+        20,
         yPosition
       );
       yPosition += 5;
       doc.text(
         `Is Pension Applicable: ${company?.isPensionApplicable}`,
-        14,
+        20,
         yPosition
       );
       yPosition += 5;
-      doc.text(`Last Pension Date: ${company?.lastPensionDate}`, 14, yPosition);
+      doc.text(`Last Pension Date: ${company?.lastPensionDate}`, 20, yPosition);
       yPosition += 5;
 
       if (company.passbook && company.passbook.length > 0) {
@@ -361,7 +363,7 @@ const jsPDFReportDataTemplate = async ({
         autoTable(doc, {
           startY: startY,
           head: [
-            ["ID", "Approved On", "Description", "Month", "Year", "Pension"],
+            ["ID", "Approved On", "Description", "Month", "Year", "Pension Contributed"],
           ],
           body: passbookData,
           theme: "striped",
@@ -499,7 +501,6 @@ const jsPDFReportDataTemplate = async ({
     doc.text(reportNoteTitle, 14, startY);
     doc.setFont("Helvetica", "normal");
 
-    startY += 8;
 
     const pageWidth = doc.internal.pageSize.width;
 
@@ -531,6 +532,7 @@ const jsPDFReportDataTemplate = async ({
         }
         return lines;
       };
+    startY += 8;
 
       const splitDesc = splitTextIntoLines(rptDesc, availableWidth);
       const additionalSplitDesc = splitDesc.flatMap((line) =>
