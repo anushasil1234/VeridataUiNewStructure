@@ -10,8 +10,12 @@ import {
   ContactMail,
   Download,
   Edit,
+  ForwardToInbox,
+  ForwardToInboxOutlined,
   Notifications,
 } from "@mui/icons-material";
+
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import {
   greenFabStyle,
   primaryFabStyle,
@@ -185,7 +189,7 @@ export const TableActionCell = (props1, props2) => {
                 onClick={resendUserCredAppointee}
                 sx={primaryFabStyle}
               >
-                <ContactMail width={18} />
+                <MarkEmailReadIcon width={18} />
               </Fab>
             </DarkTooltip>
           ) : null}
