@@ -1,45 +1,27 @@
 import {
     Grid,
     Typography,
-    Accordion,
-    Card,
-    AccordionSummary,
-    AccordionDetails,
     Select,
     MenuItem,
     FormControl,
-    InputLabel,
-    Button,
     Divider,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
 
 import {
-    candidatefileViewContainerStyle,
     cardStyle,
-    formHeadingGridContainerStyle,
     gridContainerStyle,
     inputFieldStyle2,
-    inputFieldStyleAdded,
-    labelDividerStyle,
     lable1CopyStyle,
     listHeadingConteinerStyle,
-    listHeadingConteinerStylesx,
     listHeadingStyle,
-    rightMostBtnStyle,
-    submitBtnStyle,
 } from "app";
-import { categoryTypeList, fileTypeList, NA, noPassBookMsg, verificationTypeList } from "shared/constants/constants";
+import { NA, verificationTypeList } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
-import { FileViewComponent } from "./file-view-component";
 import SelectInput from "shared/components/input-fields/select-input";
-import { Category } from "@mui/icons-material";
-import demoImg from 'assets/images/demo3.jpeg';
 import FiledetailsSection from "./file-details-section";
 import filterDocVerificationList from "shared/utils/associate/filter-doc-verification-list";
 import { useSelector } from "react-redux";
