@@ -43,6 +43,7 @@ import demoImg from 'assets/images/demo3.jpeg';
 import FiledetailsSection from "./file-details-section";
 import filterDocVerificationList from "shared/utils/associate/filter-doc-verification-list";
 import { useSelector } from "react-redux";
+import GetImageSrc from "shared/utils/associate/get-image-src";
 
 const customeSelectInput = ({ itemList, label, onChange, value }) => {
     <FormControl fullWidth>
@@ -127,9 +128,8 @@ let ManualverifiedViewDetails = ({ details }) => {
     };
 
     const clearSubDropdownListofVerificationType = (currentValue) => {
-        setFile("");
+        clearCategoryRelatedVariables();
         setFiles([]);
-        setFileSrc("");
         if (currentValue === 'none') {
             setFileTypeCategory("");
             setVerificationCategoryList([]);
@@ -167,9 +167,8 @@ let ManualverifiedViewDetails = ({ details }) => {
         };
         const response = await GetUploadedFileDetailsById(payload);
         if (response && response.responseInfo) {
-            const { mimeType, fileData } = response.responseInfo;
-            const _fileSrc = `data:${mimeType};base64,${fileData}`;
-            setFileSrc(_fileSrc);
+            const { fileSrc } = GetImageSrc(response.responseInfo);
+            setFileSrc(fileSrc);
         }
     }
     const handleFileChange = async ({ target }) => {
