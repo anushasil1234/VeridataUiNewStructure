@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 import DarkTooltip from "../tooltip/dark-tooltip";
 import {
+  AccountBox,
   Article,
   Cancel,
   ContactMail,
@@ -12,6 +13,7 @@ import {
   Edit,
   ForwardToInbox,
   ForwardToInboxOutlined,
+  MenuBook,
   Notifications,
 } from "@mui/icons-material";
 
@@ -245,7 +247,8 @@ export const TableActionCell = (props1, props2) => {
                 onClick={() => openPassbookViewModel(appointeeId)}
                 sx={primaryFabStyle}
               >
-                <Article width={18} />
+                {/* <Article width={18} /> */}
+                <MenuBook width={18} />
               </Fab>
             </DarkTooltip>
           ) : null}
@@ -258,7 +261,7 @@ export const TableActionCell = (props1, props2) => {
                 onClick={() => openEmploymentViewModel(appointeeId, userId)}
                 sx={primaryFabStyle}
               >
-                <Article width={18} />
+                <AccountBox width={18} />
               </Fab>
             </DarkTooltip>
           ) : null}

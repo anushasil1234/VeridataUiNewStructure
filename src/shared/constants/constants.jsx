@@ -258,6 +258,17 @@ export const verifiedListTableHeadCell = [
         }
     },
     {
+        id: 'isPensionGap',
+        numeric: true,
+        type: "boolean",
+        disablePadding: false,
+        label: 'Pension Gap',
+        enums: ['isPensionGap'],
+        component: {
+            element: Typography
+        }
+    },
+    {
         id: 'status',
         numeric: true,
         type: "string",
