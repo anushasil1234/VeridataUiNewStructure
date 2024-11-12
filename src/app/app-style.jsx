@@ -2,6 +2,7 @@ import { alpha, createTheme } from "@mui/material/styles";
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import Fab from "@mui/material/Fab"; // Import Fab component from MUI
+import zIndex from "@mui/material/styles/zIndex";
 
 
 
@@ -807,6 +808,14 @@ export const _addFabStyle = {
 };
 export const greenFabStyle = {
   ...actionIconStyle,
+  zIndex:0,
+   position: "relative",
+  // right: "10px",
+  // top: "10px",
+  // width: { xs: 40, sm: 40 },
+  // height: { xs: 40, sm: 40 },
+  // width: { xs: 40, sm: 40 },
+  // height: { xs: 40, sm: 40 },
   bgcolor: ThemeColorPalete.green1.light,
   color: ThemeColorPalete.common.white,
   "&:hover": {
@@ -815,8 +824,14 @@ export const greenFabStyle = {
 };
 export const primaryFabStyle = {
   ...actionIconStyle,
-  width: { xs: 40, sm: 40 },
-  height: { xs: 40, sm: 40 },
+  zIndex:0,
+  position: "relative",
+  // right: "10px",
+  // top: "10px",
+  // width: { xs: 40, sm: 40 },
+  // height: { xs: 40, sm: 40 },
+  // width: { xs: 40, sm: 40 },
+  // height: { xs: 40, sm: 40 },
   bgcolor: ThemeColorPalete.primary.main,
   color: ThemeColorPalete.common.white,
   "&:hover": {
@@ -1489,6 +1504,15 @@ export const menuIconSx = {
 export const containerSx = {
   padding: { xs: "20px", md: "20px 16px 0 16px" }
 }
+export const ScrollableContainer = styled("div")(() => ({
+  height: "calc(100vh - 60px)", // Ensures enough height to scroll
+  width: "100%",                // Full width for horizontal scroll
+  overflowX: "auto",
+  overflowY: "auto",
+  whiteSpace: "nowrap",
+  backgroundColor: 'transparent',
+  zIndex: 1,
+}));
 export const smallFormModelHeadingSx = {
   fontWeight: "bold",
   fontSize: "20px",

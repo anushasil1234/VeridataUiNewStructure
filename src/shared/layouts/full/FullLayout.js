@@ -5,26 +5,26 @@ import Sidebar from "./sidebar/Sidebar";
 import ContentWrapper from "shared/utils/layout/content-wrapper";
 import CustomContainer from "shared/utils/layout/container";
 import Header from "./header/Header";
+import { ReactTableScroll } from 'react-table-scroll'
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
-  height: "100vh", 
+  height: "100vh",
   width: "100%",
 }));
 
 const PageWrapper = styled("div")(() => ({
   display: "flex",
-  paddingBottom: '60px',
+  marginBottom:"20px",
   zIndex: 1,
   backgroundColor: 'transparent',
   flexGrow: 1,
   flexDirection: "column",
   height: "100vh",
-  
   overflow: "hidden",
   overflowY: "auto",
-}));
 
+}));
 
 
 const FullLayout = ({ setToken }) => {
@@ -32,7 +32,7 @@ const FullLayout = ({ setToken }) => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <MainWrapper  className='mainwrapper'>
+    <MainWrapper className='mainwrapper'>
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         isMobileSidebarOpen={isMobileSidebarOpen}
@@ -44,14 +44,23 @@ const FullLayout = ({ setToken }) => {
           toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
           toggleMobileSidebar={() => setMobileSidebarOpen(true)}
         />
-         
-        <CustomContainer >
-        <Box sx={{ minHeight: 'calc(100vh - 170px)' }}>
-          <ContentWrapper>
-            <Outlet />
-          </ContentWrapper>
+        <ReactTableScroll style={{
+          display: 'block',
+          width: '100%',
+          position: 'relative',
+          zIndex:9999
+
+        }} >
+
+          <Box sx={{ minHeight: 'calc(100vh - 170px)', marginBottom:'40px' }}>
+            <CustomContainer >
+              <ContentWrapper>
+                <Outlet />
+              </ContentWrapper>
+            </CustomContainer>
           </Box>
-        </CustomContainer>
+
+        </ReactTableScroll>
       </PageWrapper>
     </MainWrapper>
   );
