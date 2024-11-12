@@ -49,7 +49,6 @@ const FullLayout = ({ setToken }) => {
           width: '100%',
           position: 'relative',
           zIndex:9999
-
         }} >
 
           <Box sx={{ minHeight: 'calc(100vh - 170px)', marginBottom:'40px' }}>
