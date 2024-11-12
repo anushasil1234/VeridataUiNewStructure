@@ -27,6 +27,8 @@ const jsPDFReportDataTemplate = async ({
   reportDetails = {},
   tables = [],
   responseInfo = [],
+  empFlag
+ // employmentHistoryResponse = []
 }) => {
   const {
     fileName = "Report",
@@ -125,21 +127,13 @@ const jsPDFReportDataTemplate = async ({
     doc.line(0, lineY, doc.internal.pageSize.width, lineY);
   };
 
-  // const addClientDetails = (doc, responseInfo) => {
-  //   doc.text(responseInfo.clientId);
-  //   doc.text(responseInfo.fullName);
-  //   doc.text(responseInfo.fatherName);
-  //   doc.text(responseInfo.dob);
-  //   doc.text(responseInfo.pfUan);
-
-  // }
   const addClientDetails = (doc, responseInfo) => {
     const clientDetails = [
       // { label: "Client ID:", value: responseInfo.clientId },
       { label: "Full Name:", value: responseInfo?.fullName },
       { label: "Father's Name:", value: responseInfo?.fatherName },
       { label: "Date of Birth:", value: responseInfo?.dob },
-      { label: "PF UAN:", value: responseInfo?.pfUan },
+      { label: "UAN Number:", value: responseInfo?.pfUan },
     ];
 
     doc.setFontSize(12);
@@ -232,17 +226,93 @@ const jsPDFReportDataTemplate = async ({
   //   })
 
   // }
-  const addCompanyDetails = (doc, companies) => {
+  const addCompanyDetails = (doc, companies,empFlag) => {
     let isFirstCompany = true;
     let isFirstPage = true;
     let startY = lineY + 50;
     const gapSize = 20; // Initial gap from the top
     const lineHeight = 10; // Space between each line
-    const boxMargin = 5; // Margin for the box around company details
-    const boxWidth = doc.internal.pageSize.width - 20; // Width of the box
-    const boxHeight = 35; // Height of the box (adjust as needed)
+    // const boxMargin = 5; // Margin for the box around company details
+    // const boxWidth = doc.internal.pageSize.width - 20; // Width of the box
+    // const boxHeight = 35; // Height of the box (adjust as needed)
 
-    companies?.map((company, index) => {
+    empFlag === true && companies && companies.length > 0 && companies.map((company, index) => {
+      const boxMargin = 5; // Margin for the box around company details
+      const boxWidth = doc.internal.pageSize.width - 20; // Width of the box
+      const boxHeight = 35; // Height of the box (adjust as needed)
+      // Set font and text color for company details
+      doc.setFontSize(12);
+      doc.setFont("Helvetica", "bold");
+      doc.setTextColor(0, 0, 0);
+      startY += 10; // Add some space before the company details
+    
+      doc.text(`Company Details:`, 14, startY);
+      startY += 10;
+    
+      // Draw a box around the company details
+      const boxX = 14; // X position of the box
+      const boxY = startY - boxMargin; // Y position of the box (adjust for margin)
+    
+      // Draw the box
+      doc.setDrawColor(192, 192, 192); // Set box color (gray)
+      doc.setTextColor(96, 96, 96);
+      doc.rect(boxX, boxY, boxWidth, boxHeight, "S"); // Draw the rectangle (S for stroke)
+    
+      // Set font for company details
+      doc.setFontSize(12);
+      doc.setFont("Helvetica", "normal");
+    
+      // Adjusting Y position after the company name
+      let yPosition = startY + 5; 
+      doc.text(`Company ${index + 1}`, 20, yPosition);
+      yPosition += 5;
+      doc.text(`Company Name: ${company?.companyName}`, 20, yPosition);
+      doc.text(`PF Account For: ${company?.workForYear} year ${company?.workForMonth} month`, 170, yPosition);
+      yPosition += 5; 
+      doc.text(`First Transaction: ${company?.firstTransactionMonth} ${company?.firstTransactionYear}`, 20, yPosition);
+      doc.text(`First Transaction Approved On: ${company?.firstTransactionApprovedOn}`, 170, yPosition);
+      yPosition += 5; 
+      doc.text(`Last Transaction: ${company?.lastTransactionMonth} ${company?.lastTransactionYear}`, 20, yPosition);
+      doc.text(`Last Transaction Approved On: ${company?.lastTransactionApprovedOn}`, 170, yPosition);
+      yPosition += 10; 
+
+    
+      // Check if the next content will exceed the page height
+      const pageHeight = doc.internal.pageSize.height;
+      const marginBottom = 20; // Space at the bottom of the page
+      const contentHeight = yPosition - startY + 10; // Calculate the height of the content added
+    
+      if (yPosition + contentHeight > pageHeight - marginBottom) {
+        // Add a new page
+        doc.addPage();
+        // addHeader(
+        //   doc,
+        //   label,
+        //   formattedFromDate,
+        //   formattedToDate,
+        //   formattedReportDate
+        // );
+       // addFooter(doc, defaultCompanyName);
+        startY = 30; // Reset startY for the new page
+      } else {
+        // Update startY for the next company
+        startY = yPosition; // Set startY to the last yPosition used
+      }
+      addHeader(
+        doc,
+        label,
+        formattedFromDate,
+        formattedToDate,
+        formattedReportDate
+      );
+      addFooter(doc, defaultCompanyName);
+      
+    });
+
+    empFlag === false && companies && companies.length>0 && companies?.map((company, index) => {
+      const boxMargin = 5;
+      const boxWidth = doc.internal.pageSize.width - 20;
+      const boxHeight = 35; 
       if (!isFirstCompany) {
         doc.addPage();
         addHeader(
@@ -254,7 +324,7 @@ const jsPDFReportDataTemplate = async ({
         );
         addFooter(doc, company?.companyName || defaultCompanyName);
 
-        startY = lineY + 10; // Reset startY for the new page (adjusted for header height)
+        startY = lineY + 10; // Reset startY for the new page (adjusted for header height) 
       } else {
         // For the first company, add the header
         addHeader(
@@ -276,10 +346,9 @@ const jsPDFReportDataTemplate = async ({
 
       // Draw a box around the company details
       const boxX = 14; // X position of the box
-      const boxY = startY - boxMargin; // Y position of the box (adjust for margin)
+      const boxY = startY - boxMargin; 
 
-      // Draw the box
-      doc.setDrawColor(192, 192, 192); // Set box color (black)
+      doc.setDrawColor(192, 192, 192);
       doc.setTextColor(96, 96, 96);
       doc.rect(boxX, boxY, boxWidth, boxHeight, "S"); // Draw the rectangle (S for stroke)
 
@@ -398,28 +467,6 @@ const jsPDFReportDataTemplate = async ({
       isFirstCompany = false;
     });
   };
-  // const addEmploymentHistory =(doc, employmentHistoryResponse) => {
-  //   const clientDetails = [
-  //     // { label: "Client ID:", value: responseInfo.clientId },
-  //     { label: "Full Name:", value: employmentHistoryResponse?.fullName },
-  //     { label: "Father's Name:", value: employmentHistoryResponse?.fatherName },
-  //     { label: "Date of Birth:", value: employmentHistoryResponse?.dob },
-  //     { label: "PF UAN:", value: employmentHistoryResponse?.pfUan },
-  //   ];
-
-  //   doc.setFontSize(12);
-  //   doc.setFont("Helvetica", "bold");
-
-  //   doc.text("Employment History for:", 194, lineY + 10);
-  //   doc.setFont("Helvetica", "normal");
-
-  //   let startY = lineY + 20;
-  //   clientDetails?.forEach((detail) => {
-  //     doc.text(`${detail?.label}`, 194, startY);
-  //     doc.text(`${detail?.value}`, 235, startY);
-  //     startY += 5;
-  //   });
-  // }
 
   const addFooter = (doc, companyName) => {
     const pageCount = doc.internal.getNumberOfPages();
@@ -644,15 +691,16 @@ const jsPDFReportDataTemplate = async ({
   );
   addContent();
   responseInfo && addClientDetails(doc, responseInfo);
+  responseInfo && addCompanyDetails(doc, responseInfo?.companies,empFlag);
   //employmentHistoryResponse && addEmploymentHistory(doc, employmentHistoryResponse);
-  responseInfo && addCompanyDetails(doc, responseInfo?.companies);
+
   const companyNameToUse = tables[0]?.companyName || defaultCompanyName;
   //addFooter(doc, companyNameToUse);
   //addFooter(doc, defaultCompanyName);
 
   // addHeader(doc, label, formattedFromDate, formattedToDate, formattedReportDate);
   // const companyNameToUse = tables[0]?.companyName || defaultCompanyName;
-  //addFooter(doc, companyNameToUse);
+  //addFooter(doc, companyNameToUse);c
 
   doc.save(`${fileName}.pdf`);
 };

@@ -173,8 +173,8 @@ let PassbookViewDetails = ({ appointeeId }) => {
         //toDate: "",
         rptDesc: generatePassbookDetailsReportDesc,
       },
-      //tables: ''
       responseInfo: responseInfo,
+      empFlag : false
     });
   };
 

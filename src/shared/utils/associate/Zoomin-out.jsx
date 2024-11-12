@@ -1,0 +1,10 @@
+export const handleZoom = (direction, prevZoom) => {
+    switch (direction) {
+        case 'in':
+            return (prevZoom) => Math.min(prevZoom + 0.1, 3);
+        case 'out':
+            return (prevZoom) => Math.max(prevZoom - 0.1, 0.5); 
+        default:
+            return prevZoom;
+    }
+};
