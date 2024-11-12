@@ -1,0 +1,9 @@
+const stringToBoolean = (str) => {
+    if (str === "true") return true;
+    if (str === "false") return false;
+    return str
+}
+
+export default stringToBoolean
+// Examples
+

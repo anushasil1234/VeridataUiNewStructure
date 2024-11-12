@@ -6,8 +6,8 @@ const filterDocVerificationList = (
         category: currentCategory,
         fileType: currentFileType
     }) => {
-    let _verificationDropdownCategoryList;
-    let verificationFilteredCategoryList;
+    let _verificationDropdownCategoryList = [];
+    let verificationFilteredCategoryList = [];
     let _filteredFileInfo;
     if (currentFileCategory) {
         console.log("uploadedFileData", uploadedFileData, currentFileCategory
@@ -20,6 +20,8 @@ const filterDocVerificationList = (
                 value: fileType
             })
         })
+        console.log("verificationFilteredCategoryList", verificationFilteredCategoryList);
+        
     }
     if (currentFileType) {
         // _verificationCategoryList?.filter(({filesInfo})=>)

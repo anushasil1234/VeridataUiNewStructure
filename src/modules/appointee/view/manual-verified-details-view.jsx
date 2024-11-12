@@ -18,7 +18,7 @@ import {
     listHeadingConteinerStyle,
     listHeadingStyle,
 } from "app";
-import { NA, verificationTypeList } from "shared/constants/constants";
+import { defaultVerificationQuestionSet, defaultVerificationUpdate, NA, verificationTypeList } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import SelectInput from "shared/components/input-fields/select-input";
@@ -26,6 +26,10 @@ import FiledetailsSection from "./file-details-section";
 import filterDocVerificationList from "shared/utils/associate/filter-doc-verification-list";
 import { useSelector } from "react-redux";
 import GetImageSrc from "shared/utils/associate/get-image-src";
+import stringToBoolean from "shared/utils/associate/string-top-boolean";
+import handleVerificationStatusChange from "shared/utils/associate/handle-verification-status-change";
+import upDateQuestionSet from "shared/utils/associate/update-question-set";
+import addNewQuestion from "shared/utils/associate/add-new-question";
 
 const customeSelectInput = ({ itemList, label, onChange, value }) => {
     <FormControl fullWidth>
@@ -53,19 +57,6 @@ const customeSelectInput = ({ itemList, label, onChange, value }) => {
 }
 
 let ManualverifiedViewDetails = ({ details }) => {
-    // const [appointeeName, setAppointeeName] = useState(null);
-    // const [dateOfBirth, setDateOfBirth] = useState(null);
-    // const [gender, setGender] = useState(null);
-    // const [member, setMember] = useState(null);
-    // const [relationshipWithMember, setRelationshipWithMember] = useState(null);
-    // const [mobileNo, setMobileNo] = useState(null);
-    // const [email, setEmail] = useState(null);
-    // const [nationality, setNationality] = useState(null);
-    // const [qualification, setQualification] = useState(null);
-    // const [maritalStatus, setMaritalStatus] = useState(null);
-    // const [handicapType, setHandicapType] = useState(null);
-    // const [handicapFile, setHandicapFile] = useState();
-    // const [isPhysicallyHandicap, setIsPhysicallyHandicap] = useState(null);
 
     const {
         appointeeId,
@@ -100,6 +91,9 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [files, setFiles] = useState([]);
     const [file, setFile] = useState("");
     const [fileSrc, setFileSrc] = useState("");
+    const [verificationQuestionSet, setVerificationQuestionSet] = useState(defaultVerificationQuestionSet);
+    const [verificationUpdate, setVerificationUpdate] = useState(defaultVerificationUpdate);
+    console.log("verificationUpdate", verificationUpdate);
 
     const zoomIn = () => {
         setZoom((prevZoom) => Math.min(prevZoom + 0.1, 6)); // max zoom level 3x
@@ -116,8 +110,6 @@ let ManualverifiedViewDetails = ({ details }) => {
             setFileTypeCategory("");
             setVerificationCategoryList([]);
         }
-        // setFileTypeCategory("");
-        // setUploadedFileData([]);
     }
 
     const handleChangeVerificationType = ({ target }) => {
@@ -128,6 +120,10 @@ let ManualverifiedViewDetails = ({ details }) => {
         if (currentValue !== 'none') {
             const { verificationCategoryList } = filterDocVerificationList({ fileCategory: currentValue, uploadedFileData: uploadedFileData });
             setVerificationCategoryList(verificationCategoryList);
+            const { updatedQuestionSet } = addNewQuestion({ verificationType: target, verificationQuestionSet: defaultVerificationQuestionSet });
+            const { updatedQuestionSet: _updatedQuestionSet } = upDateQuestionSet({ verificationQuestionSet: updatedQuestionSet, verificationUpdate: defaultVerificationUpdate, verificationType: target });
+            setVerificationQuestionSet(_updatedQuestionSet);
+            setVerificationUpdate(defaultVerificationUpdate);
         }
     }
     const clearCategoryRelatedVariables = () => {
@@ -164,6 +160,23 @@ let ManualverifiedViewDetails = ({ details }) => {
             setUploadedFileData(response.responseInfo);
         }
     }
+    const verificationOnChange = ({ target }, index) => {
+        const { name, value } = target;
+        setVerificationUpdate({ ...verificationUpdate, [name]: stringToBoolean(value) });
+    }
+
+    useEffect(() => {
+        if (verificationType.value !== 'none') {
+            const { updatedQuestionSet, updatedVerification } = handleVerificationStatusChange({
+                verificationQuestionSet,
+                verificationUpdate, verificationType
+            });
+            setVerificationQuestionSet(updatedQuestionSet);
+            setVerificationUpdate(updatedVerification);
+        }
+
+    }, [verificationUpdate.isDocComplete, verificationUpdate.isDocValid])
+
     useEffect(() => {
         setUploadedFileDataResponse();
     }, [])
@@ -263,108 +276,23 @@ let ManualverifiedViewDetails = ({ details }) => {
                                     />
                                 </Grid>
                             </Grid>
+                            <Divider />
                             {
-                                fileSrc &&
-                                <>
-                                    <Divider />
-                                    <FiledetailsSection
-                                        verificationType={verificationType}
-                                        fileSrc={fileSrc}
-                                    />
-                                </>
+                                verificationCategoryList && verificationCategoryList.length > 0 &&
+                                <FiledetailsSection
+                                    appointeeId={appointeeId}
+                                    verificationType={verificationType}
+                                    fileSrc={fileSrc}
+                                    verificationOnChange={verificationOnChange}
+                                    verificationUpdate={verificationUpdate}
+                                    verificationQuestionSet={verificationQuestionSet}
+                                />
                             }
-                            {/* 
-                            <Grid
-                                // sx={{ paddingLeft: "20px", width: "50%" }}
-                                container
-                                rowSpacing={1}
-                                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                                sx={{ paddingX: "1rem", marginTop: "2px" }}
-                            >
-                                <Grid
-                                    item
-                                    xs={12}
-                                    md={6}
-                                >
-                                    <Typography sx={{ ...listHeadingStyle, fontSize: '1rem', textAlign: "left" }}>
-                                        Father's Name Verification
-                                    </Typography>
-                                </Grid>
-                                <Grid
-                                    // sx={{ paddingLeft: "20px" }}
-                                    container
-                                    rowSpacing={1}
-                                    // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                                    item
-                                    xs={12}
-                                    md={6}
-                                >
-
-                                    <Grid item xs={12} md={6} >
-                                        <SelectInput
-                                            label={'Category'}
-                                            itemList={categoryTypeList}
-                                        // onChange={handleCategoryChange}
-                                        // value={Category}
-                                        />
-                                    </Grid>
-
-                                    <Grid sx={{ paddingLeft: { xs: 0, md: "20px" } }} item xs={12} md={6} >
-                                        <SelectInput
-                                            label={'File Type'}
-                                            itemList={fileTypeList}
-                                        // onChange={handleCategoryChange}
-                                        // value={Category}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </Grid> */}
-                            {/* <Grid container >
-                                <Grid item xs={12} md={8}>
-                                    <Box sx={candidatefileViewContainerStyle}>
-                                        <img style={{
-                                            transform: `scale(${zoom})`,
-                                            transition: 'transform 0.3s ease',
-                                            transformOrigin: 'center',
-                                            margin: 'auto',
-                                        }} src={demoImg} />
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                            <Grid container >
-                                <Grid item xs={12}>
-                                    <Stack sx={{ flexDirection: 'row', justifyContent: 'end' }}>
-                                        <Button
-                                            //onClick={() => setCurrentPageNo(1)}
-                                            // onClick={() => submitDetails(false, true)}
-                                            //sx={{ m: "15px 5px", ml: 3 }}
-                                            sx={submitBtnStyle}
-                                            variant="contained"
-                                            color="primary"
-                                        >
-                                            {'Submit'}
-                                        </Button>
-                                        <Button
-                                            //onClick={() => setCurrentPageNo(1)}
-                                            // onClick={() => submitDetails(false, true)}
-                                            //sx={{ m: "15px 5px", ml: 3 }}
-                                            sx={rightMostBtnStyle}
-                                            variant="contained"
-                                            color="primary"
-                                        >
-                                            {'Close'}
-                                        </Button>
-                                    </Stack>
-                                </Grid>
-                            </Grid> */}
                         </Box>
                     </Grid>
                 </Grid>
             </Box>
         </Box>
-
-
-
     );
 };
 

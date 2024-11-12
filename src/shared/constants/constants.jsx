@@ -1964,7 +1964,7 @@ export const PostAppointeeFileDetails_URL = `${AppoienteeWorkFlow}/PostAppointee
 export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdateDocWithUanDetails`;
 export const PostAppointeeReprocess_URL = `${AppoienteeWorkFlow}/PostAppointeeReprocess`;
 export const GetAppointeeDetails_URL = `${AppoienteeWorkFlow}/GetAppointeeDetails?appointeeId=`;
-export const Postfileupload_URL=`${FileUpload}/GetUploadedFileDetailsById`
+export const Postfileupload_URL = `${FileUpload}/GetUploadedFileDetailsById`
 export const GetAppointeeActivity_URL = `${AppoienteeWorkFlow}/GetAppointeeActivity?appointeeId=`;
 export const GetExpiredProcessFileData_URL = `${AppoienteeWorkFlow}/GetExpiredProcessFileData`;
 export const GetUnderProcessFileData_URL = `${AppoienteeWorkFlow}/GetUnderProcessFileData`;
@@ -2196,4 +2196,40 @@ export const fileTypeList = [
     }
 ]
 
+export const defaultVerificationUpdate ={
+    isDocComplete: undefined,
+    isDocValid: undefined
+}
+
+export const defaultVerificationQuestionSet = [
+    {
+        label: "Is the document complete?",
+        name: "isDocComplete",
+        disabled: false,
+    },
+    {
+        label: "Is the document valid?",
+        name: "isDocValid",
+        disabled: false,
+    },
+]
+export const fatherVerificationQuestionSet = [
+    {
+        label: "Is father's name matched?",
+        name: "isFnameVarified",
+        disabled: true
+    }
+]
+export const passbookVerificationQuestionSet = [
+    {
+        label: "Is pension applicable?",
+        name: "isPensionApplicable",
+        disabled: true
+    },
+    {
+        label: "Has pension gap?",
+        name: "isPensionGapFound",
+        disabled: true
+    },
+]
 

@@ -2,12 +2,19 @@ import { Box, Button, Grid, Stack, Typography } from '@mui/material'
 import { candidatefileViewContainerStyle, listHeadingStyle, rightMostBtnStyle, submitBtnStyle } from 'app'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import SelectInput from 'shared/components/input-fields/select-input'
-import { fileTypeList, passbookCategoryTypeList } from 'shared/constants/constants'
-import filterDocVerificationList from 'shared/utils/associate/filter-doc-verification-list'
+import VerificationQuiestions from './verification-quiestions'
+import GridContainer from 'shared/components/grid-container/grid-container'
+import { validationsCheck } from 'shared/utils'
 
-const FiledetailsSection = ({ verificationType, fileSrc }) => {
+const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, verificationOnChange, verificationQuestionSet, appointeeId }) => {
+
+    const loggedInData = useSelector((state) => state.loggedInData);
+    const { userId } = loggedInData[0];
     const [zoom, setZoom] = useState(1);
+    // const [verificationUpdate, setverificationUpdate] = useState({
+    //     fieldName: false,
+    // })
+
 
     const zoomIn = () => {
         setZoom((prevZoom) => Math.min(prevZoom + 0.1, 3)); // max zoom level 3x
@@ -19,17 +26,37 @@ const FiledetailsSection = ({ verificationType, fileSrc }) => {
 
     // useEffect(() => {
     // }, [])
+    const handleVerificationSubmit = () => {
 
+        for (let index = 0; index < verificationQuestionSet.length; index++) {
+            const {disabled, name} = verificationQuestionSet[index];
+            console.log("verificationUpdate[name]", verificationUpdate[name]);
+            
+            if (disabled === false) {
+                if (verificationUpdate[name]) {
+                    
+                }
+            }
+        }
+
+        const verificationUpdates = Object.entries(verificationUpdate).map(([key, value]) => ({
+            fieldName: key,
+            value: value
+        }));
+        const payload = {
+            appointeeId: appointeeId,
+            userId: userId,
+            verificationCategory: verificationType.value,
+            remarks: "",
+            verificationUpdates: verificationUpdates
+        }
+        console.log("payload12", payload);
+
+    }
 
     return (
         <>
-            <Grid
-                // sx={{ paddingLeft: "20px", width: "50%" }}
-                container
-                rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                sx={{ paddingX: "1rem", marginTop: "2px" }}
-            >
+            <GridContainer>
                 <Grid
                     item
                     xs={12}
@@ -39,29 +66,37 @@ const FiledetailsSection = ({ verificationType, fileSrc }) => {
                         {`${verificationType.label} Verification`}
                     </Typography>
                 </Grid>
-            </Grid>
-            <Grid container >
+            </GridContainer>
+            <GridContainer>
                 <Grid item xs={12} md={8}>
                     <Box sx={candidatefileViewContainerStyle}>
-                        <img style={{
-                            transform: `scale(${zoom})`,
-                            transition: 'transform 0.3s ease',
-                            transformOrigin: 'center',
-                            margin: 'auto',
-                        }}
-                            src={fileSrc}
-                        />
+                        {
+                            fileSrc &&
+                            <img style={{
+                                transform: `scale(${zoom})`,
+                                transition: 'transform 0.3s ease',
+                                transformOrigin: 'center',
+                                margin: 'auto',
+                            }}
+                                src={fileSrc}
+                            />
+                        }
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>
+                    <VerificationQuiestions
+                        verificationUpdate={verificationUpdate}
+                        verificationQuestionSet={verificationQuestionSet}
+                        verificationOnChange={verificationOnChange}
+                    />
                 </Grid>
-            </Grid>
-            <Grid container >
+            </GridContainer>
+            <GridContainer>
                 <Grid item xs={12}>
                     <Stack sx={{ flexDirection: 'row', justifyContent: 'end' }}>
                         <Button
                             //onClick={() => setCurrentPageNo(1)}
-                            // onClick={() => submitDetails(false, true)}
+                            onClick={handleVerificationSubmit}
                             //sx={{ m: "15px 5px", ml: 3 }}
                             sx={submitBtnStyle}
                             variant="contained"
@@ -81,7 +116,7 @@ const FiledetailsSection = ({ verificationType, fileSrc }) => {
                         </Button>
                     </Stack>
                 </Grid>
-            </Grid>
+            </GridContainer>
         </>
     )
 }

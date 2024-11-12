@@ -646,6 +646,16 @@ export const stepNumberContainerStyle = {
   border: "1px solid #C7C8D0",
   color: "#C7C8D0"
 };
+export const smallstepNumberContainerStyle = {
+  width: "20px",
+  height: "20px",
+  background: "#F4F6FA",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: "50%",
+  border: "1px solid #C7C8D0",
+  color: "#C7C8D0"
+};
 export const stepHeadingStyle = {
   fontWeight: 500,
   fontSize: { xs: ".75rem", md: "1rem" },
