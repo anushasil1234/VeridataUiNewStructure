@@ -25,7 +25,8 @@ export const FileViewComponent = ({ file, fileType, width = '100%', filesByAlias
          
             const { mimeType, fileData } = response.responseInfo;
             const fileDetails = `data:${mimeType};base64,${fileData}`;
-            openDocumentModel(fileDetails, fileType);
+            const filename=file.fileName
+            openDocumentModel(fileDetails, filename);
         }
     };
 

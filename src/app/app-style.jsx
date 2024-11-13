@@ -439,7 +439,19 @@ export const cardAppbar = {
 
 };
 // card ends
-
+export const zoombuttonStyle={
+  color: '#fff',
+  mr:"1rem",
+  backgroundColor: ThemeColorPalete.primary.main,
+  "&:hover": {
+    color: '#fff',
+    transform: 'scale(1.05)',
+    backgroundColor: ThemeColorPalete.primary.light,
+  },
+  boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.7)',
+    transition: 'transform 0.2s, background-color 0.2s', 
+    
+}
 // Alert
 const alertStyle = {
   width: "100%",
@@ -810,6 +822,20 @@ export const tableActionIconListStylesx = {
 export const actionIconStyle = {
   margin: ".5rem ",
 };
+export const downloadIconStyle = {
+  ...actionIconStyle,
+  color: "white",
+  bgcolor: ThemeColorPalete.primary.main,
+  '&:hover': {
+    bgcolor: ThemeColorPalete.primary.light,
+     transform: 'scale(1.05)'
+  },
+  borderRadius: "50%",
+  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.7)",
+  transition: 'transform 0.2s, background-color 0.2s', 
+  padding: "8px",
+  fontSize: "1.5rem",
+};
 export const _addFabStyle = {
   bgcolor: ThemeColorPalete.primary.main,
   "&:hover": {
@@ -1021,6 +1047,20 @@ export const listHeadingStyle = {
   fontWeight: "bold",
   fontSize: "1.2rem"
 };
+
+export const buttonStyleSx={
+    background: 'linear-gradient(45deg, #7851A9, #5E3D8D)', 
+    borderRadius: '25px', 
+    padding: '8px 20px', 
+    fontWeight: 'bold', 
+    color: 'white',
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+    transition: 'transform 0.2s, background-color 0.2s', 
+    '&:hover': {
+      backgroundColor: '#68439A',
+      transform: 'scale(1.05)', 
+    }
+}
 // appointee view page end
 // Acticvity log start
 
@@ -1188,6 +1228,12 @@ export const fileNameStyle = {
   fontSize: ".7rem",
   textAlign: 'center',
   marginTop: fileUploadSectionTextMargin,
+  texWrap: 'nowrap'
+}
+export const fileNameStyleinview = {
+  fontSize: "0.9rem",
+  textAlign: 'center',
+  marginTop: 0,
   texWrap: 'nowrap'
 }
 export const PopupboxStyle = {
@@ -1463,20 +1509,33 @@ export const fileTypeStyle = {
 }
 export const imageFileContainerStyle = {
   width: "70%",
-  margin: "auto"
+  justifyContent: "center",
+  display: "flex",
+  alignItems: "center",
+
 }
 export const pdfFileContainerStyle = {
   width: "100%",
   margin: "auto"
 }
 export const fileImageStyle = {
-  margin: "auto",
-  width: "100%"
+  mt: 2,
+  width: "100%",
+  justifyContent: "center",
+  display: "flex",
+  alignItems: "center",
+
 }
 export const imageFileContainerStackStyle = {
-  mt: 2,
-  justifyItems: "center",
-  width: { md: "650px", xl: "900px" }
+  justifyContent: "center",
+  display: "flex",
+  alignItems: "center",
+  width: { xs: "100%", md: "650px", xl: "900px" },
+  maxWidth: "100%",
+  border: "2px dashed #dbb4db",
+  overflow: "hidden",
+  overflowX:'auto',
+  overflowY:"auto" 
 }
 
 export const zoomOutstackStyle = {
