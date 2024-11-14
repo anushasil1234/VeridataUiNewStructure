@@ -703,8 +703,9 @@ export const lableStyle = {
   marginLeft: "5px"
 };
 const lableCommonStyle = {
-  fontWeight: 400,
-  fontSize: ".70rem",
+  fontWeight: 600,
+  // fontSize: ".70rem",
+  fontSize: "1rem",
   marginBottom: "2px",
   lineHeight: "1.4375em",
   paddingLeft: '12px'
@@ -963,7 +964,15 @@ export const cardStyle = {
   bgcolor: "white",
   padding: "1rem",
   borderRadius: "8px",
+  // margin: "1rem 0 "
   margin: "1rem 0 "
+};
+export const cardStyle2 = {
+  bgcolor: "white",
+  padding: "1rem",
+  borderRadius: "8px",
+  // margin: "1rem 0 "
+  // marginTop: "1rem"
 };
 export const listStyle = {
   borderBottom: "1px solid #E2E8F0",
@@ -1304,8 +1313,9 @@ export const otpInputSeperatorSx = {
 // otp forn ends
 // Full screen model starts
 export const fullScreenListItemStyle = {
-  paddingY: "20px",
-  paddingX: { xs: "16px", md: "24px" }
+  // paddingY: "20px",
+  // paddingX: { xs: "16px", md: "24px" }
+  height: 'fit-content'
 };
 // status chart style start
 const secondary = ThemeColorPalete.secondary.main;
