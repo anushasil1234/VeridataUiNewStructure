@@ -1,3 +1,5 @@
+import { fileVerificationEnums } from "shared/constants/constants";
+
 export const validationsCheck = (arrvalue, validation_type) => {
 
     switch (validation_type) {
@@ -16,6 +18,12 @@ export const validationsCheck = (arrvalue, validation_type) => {
 
         case 'indPassport':
             return /^[a-zA-Z0-9]{12}$/.test(arrvalue);
+        case fileVerificationEnums.docComplete:
+        case fileVerificationEnums.docValid:
+        case fileVerificationEnums.docFname:
+        case fileVerificationEnums.pensionApplicable:
+        case fileVerificationEnums.pensionGapFound:
+            return arrvalue !== undefined;
         default:
             return true;
     }

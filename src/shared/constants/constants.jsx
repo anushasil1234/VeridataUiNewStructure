@@ -28,6 +28,7 @@ export const uanVerifySuccessMsg = `UAN has been verified successfully`;
 export const generateOtpRety = `Otp sending is unsuccessful, please retry`;
 export const generateOtpSucces = `OTP has sent successfully, Please fill the otp and submit`;
 export const aadharNoValidationError = `Your phone number is not linked with Aadhaar. Link your phone number then retry or submit anyway`;
+export const remarksError = `Remarks should have at least 10 charecters long`;
 export const invalidPanMsg = `PAN number should be of 10 digits and properly formatted`;
 export const invalidAadharMsg = `Aadhaar number should be of 12 digits`;
 export const emptyAadharFileMsg = `Please upload Aadhaar`;
@@ -63,6 +64,7 @@ export const passwordChangeSuccessMsg = `Password has been changed successfully`
 export const UANEmptyErrorMsg = `UAN number is required`;
 export const aadharVerificationErrorMsg = `Please verify your Aadhar before submit`;
 export const PANVerifictionErrorMsg = `Please verify your PAN before submit`;
+export const dataSubmitionMsg = `Data submited successfully`;
 export const generateNoMovementReportDesc = (days) => {
     return `This report provides an overview and analysis of appointees who have made no progress for${days > 0 ? ` ${days} days ` : ""} during a specified period. It includes detailed information about these candidates to help stakeholders understand progress patterns, identify issues, and may indicate that the candidate are not interest in joining .`;
 };
@@ -2002,6 +2004,7 @@ export const ApiCounterReport_URL = (fromDate, toDate) => {
     return ApiCounterReportUrl
 };
 export const PassbookDetails_URL = `${AppoienteeWorkFlow}/GetPassbookDetails?AppointeeId=`;
+export const UpdateAppointeeManualVerification_URL = `${AppoienteeWorkFlow}/UpdateAppointeeManualVerification`;
 // export const EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails?AppointeeId=`;
 export const EmployementDetails_URL = (AppointeeId, userId) => {
     let _EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails`
@@ -2071,6 +2074,7 @@ export const invalidcontactNoMsg = `Phone no should have 10 digits`;
 export const roleEmptyMsg = `Role can't be empty`;
 export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
 export const timeOutMsg = `Server is down, Please try again.`;
+export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
 
 // Models messages ends
 
@@ -2165,19 +2169,22 @@ export const verificationCategoryModel = {
     'EPFO': passbookCategoryTypeList,
     'FTHR': fatherDocCategoryTypeList
 }
-export const verificationTypeList = [
+export const defaultVerificationTypeList = [
     {
         value: 'none',
         label: 'None',
-        isDisabled: false
+        isDisabled: false,
+        verificationFieldName: 'none',
     },
     {
         value: epfFileCategoryTypeAlias,
-        label: 'Passbook'
+        label: 'Passbook',
+        verificationFieldName: 'isUanVerified'
     },
     {
         value: fatherFileCategoryTypeAlias,
-        label: `Father's name`
+        label: `Father's name`,
+        verificationFieldName: 'isFnameVarified'
     }
 ]
 
@@ -2196,40 +2203,48 @@ export const fileTypeList = [
     }
 ]
 
-export const defaultVerificationUpdate ={
+export const defaultVerificationUpdate = {
     isDocComplete: undefined,
     isDocValid: undefined
+}
+
+export const fileVerificationEnums = {
+    docComplete: "isDocComplete",
+    docValid: "isDocValid",
+    docFname: "isFnameVarified",
+    pensionApplicable: "isPensionApplicable",
+    pensionGapFound: "isPensionGapFound"
 }
 
 export const defaultVerificationQuestionSet = [
     {
         label: "Is the document complete?",
-        name: "isDocComplete",
+        name: fileVerificationEnums.docComplete,
         disabled: false,
     },
     {
         label: "Is the document valid?",
-        name: "isDocValid",
+        name: fileVerificationEnums.docValid,
         disabled: false,
     },
 ]
 export const fatherVerificationQuestionSet = [
     {
         label: "Is father's name matched?",
-        name: "isFnameVarified",
+        name: fileVerificationEnums.docFname,
         disabled: true
     }
 ]
 export const passbookVerificationQuestionSet = [
     {
         label: "Is pension applicable?",
-        name: "isPensionApplicable",
+        name: fileVerificationEnums.pensionApplicable,
         disabled: true
     },
     {
         label: "Has pension gap?",
-        name: "isPensionGapFound",
+        name: fileVerificationEnums.pensionGapFound,
         disabled: true
-    },
+    }
 ]
 
