@@ -2809,8 +2809,8 @@ const AppointeeRegister = () => {
                               textAlign: "center",
                             }}
                           >
-                            Please upload a docucment with father's
-                            name attached
+                            Please upload a document mentioning father's
+                            name
                             <span className="requiredField">*</span>
                           </Typography>
                           <Box sx={fileUploadSectionContainerStyle}>
