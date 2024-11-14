@@ -1,5 +1,5 @@
 
-import { Grid, Typography, Chip } from "@mui/material";
+import { Grid, Typography, Chip, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import {
@@ -15,6 +15,7 @@ import {
   NewReleases,
   NewReleasesOutlined,
 } from "@mui/icons-material";
+import exclamation from "./exclamation.png"
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
 import {
   DATEDIFF,
@@ -31,6 +32,7 @@ import {
   actionIconStyle,
   appointeeImageViewStyle,
   appointeeVerificationStatusChipPropsStyle,
+  buttonStyleSx,
   cardStyle,
   displayImageStyle,
   documentListItemStyle,
@@ -402,19 +404,19 @@ let AppointeeViewForm = ({
       setIsPensionApplicable(isPensionApplicable);
       const updatedFilesByAlias = new Map();
       fileUploaded.forEach(
-        ({ uploadTypeAlias, mimeType,  fileName,uploadDetailsId}) => {
+        ({ uploadTypeAlias, mimeType, fileName, uploadDetailsId }) => {
           //const fileDetails = `data:${mimeType};base64,${fileDataa}`;
           const file = {
-            appointeeId ,
+            appointeeId,
             uploadDetailsId,
             fileName,
           };
-         
+
           if (!updatedFilesByAlias.has(uploadTypeAlias)) {
             updatedFilesByAlias.set(uploadTypeAlias, []);
           }
           updatedFilesByAlias.get(uploadTypeAlias).push(file);
-          
+
 
 
           if (uploadTypeAlias === tenthCertificateFileTypeAlias) {
@@ -439,7 +441,7 @@ let AppointeeViewForm = ({
           if (uploadTypeAlias === epfoServiceHistoryFileTypeAlias) {
             setEPFOServiceHistoryFile(file);
           }
-          setFilesByAlias(updatedFilesByAlias); 
+          setFilesByAlias(updatedFilesByAlias);
         }
       );
     }
@@ -616,14 +618,14 @@ let AppointeeViewForm = ({
     <PermMedia />,
     "Mannual upload"
   );
-  const verifyFabProps = new FabIconPropsModel(
-    actionIconStyle,
-    handelclick,
-    "warning",
-    "verify",
-    <NewReleasesOutlined />,
-    "Verify"
-  );
+  // const verifyFabProps = new FabIconPropsModel(
+  //   actionIconStyle,
+  //   handelclick,
+  //   "warning",
+  //   "verify",
+  //   <NewReleasesOutlined />,
+  //   "Verify"
+  // );
   const getVerificationChip = () => {
 
     const { label, color } = isAadharVerified === false
@@ -650,7 +652,7 @@ let AppointeeViewForm = ({
 
 
   return (
-    <Box bgcolor={"#E2E8F0"} sx={{ position: "relative" }}>
+    <Box bgcolor={"#E2E8F0"} sx={{ position: "relative" ,borderRadius:'8px'}}>
       <Box sx={gridContainerStyle}>
         <Grid container spacing={2}>
           <Grid
@@ -717,28 +719,32 @@ let AppointeeViewForm = ({
                     <FileViewComponent
                       fileType={trustEpfoFileTypeAlias}
                       file={trustPfFile}
+                      
                       filesByAlias={filesByAlias}
                       width="50px"
                     />
                   }
                 />
               )}
+       
               {isManualPassbook === true && manualPassbookFile && (
                 <DocumentDetails
-                  fieldName={"Epfo passbook file"}
+                  fieldName={"EPFO Passbook File"}
                   fieldValue={
                     <FileViewComponent
                       fileType={epfoPassbookFileTypeAlias}
                       file={manualPassbookFile}
                       filesByAlias={filesByAlias}
                       width="50px"
+                    
                     />
                   }
                 />
               )}
+             
               {isManualPassbook === true && EPFOServiceHistoryFile && (
                 <DocumentDetails
-                  fieldName={"Epfo service history"}
+                  fieldName={"EPFO Service History"}
                   fieldValue={
                     <FileViewComponent
                       fileType={epfoServiceHistoryFileTypeAlias}
@@ -937,6 +943,28 @@ let AppointeeViewForm = ({
             </Box>
           </Grid>
           <Grid item xs={12} md={3.5}>
+            {isManualPassbook && (
+              <Box sx={{
+                ...cardStyle,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }} >
+                <Button
+                  onClick={handelclick}
+                  variant="contained"
+                  sx={{...buttonStyleSx}}
+                  startIcon={ <img
+                    src={exclamation}
+                    alt="exclamation"
+                    style={{ width: 25, height: 25 , filter: 'invert(1) brightness(100%)'}}
+                  />}
+                >
+                  verify manually
+                </Button>
+
+              </Box>
+            )}
             <Box sx={{ margin: "1rem 0" }}>
               <ActivityLogDetails activityStatus={timelineStates} />
             </Box>
@@ -1004,11 +1032,11 @@ let AppointeeViewForm = ({
                   <FabIcon
                     props={{ ...remarksFabProps, selectedIndex: 4, index: 4 }}
                   />
-                  {isManualPassbook && (
+                  {/* {isManualPassbook && (
                     <FabIcon
                       props={{ ...verifyFabProps, selectedIndex: 4, index: 4 }}
                     />
-                  )}
+                  )} */}
 
                 </Stack>
               ) : null}
