@@ -4,13 +4,30 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import VerificationQuiestions from './verification-quiestions'
 import GridContainer from 'shared/components/grid-container/grid-container'
-import { validationsCheck } from 'shared/utils'
+import { hasValue, validationsCheck } from 'shared/utils'
+import validateQuestionSet from 'shared/utils/associate/validate-question-set'
+import TextAreaInput from 'shared/components/input-fields/text-input'
+import { manualSubmitConfirmatonMsg, remarksError } from 'shared/constants/constants'
 
-const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, verificationOnChange, verificationQuestionSet, appointeeId }) => {
+const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, 
+    verificationOnChange, verificationQuestionSet, appointeeId }) => {
 
     const loggedInData = useSelector((state) => state.loggedInData);
+    const popUpSlice = useSelector((state) => state.popUpSlice);
+    const apiSlice = useSelector((state) => state.apiSlice);
+    const functionSlice = useSelector((state) => state.functionSlice);
+
+
     const { userId } = loggedInData[0];
+    const { showErrorMessage } = popUpSlice[0];
+    const {
+        UpdateAppointeeManualVerification
+    } = apiSlice[0];
+    const { openConfirmationModel } = functionSlice[0];
+
+
     const [zoom, setZoom] = useState(1);
+    const [remarks, setRemarks] = useState("");
     // const [verificationUpdate, setverificationUpdate] = useState({
     //     fieldName: false,
     // })
@@ -26,32 +43,37 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, ver
 
     // useEffect(() => {
     // }, [])
-    const handleVerificationSubmit = () => {
+    const handleRemarksChanged = ({ target }) => {
+        setRemarks(target.value);
+    }
+    const handleVerificationSubmit = async () => {
 
-        for (let index = 0; index < verificationQuestionSet.length; index++) {
-            const {disabled, name} = verificationQuestionSet[index];
-            console.log("verificationUpdate[name]", verificationUpdate[name]);
-            
-            if (disabled === false) {
-                if (verificationUpdate[name]) {
-                    
-                }
-            }
+        const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
+        if (hasValue(error)) {
+            showErrorMessage(error);
+            return
         }
-
+        if (remarks.length <10) {
+            showErrorMessage(remarksError);
+            return
+        }
         const verificationUpdates = Object.entries(verificationUpdate).map(([key, value]) => ({
             fieldName: key,
             value: value
         }));
+
+        const submitconfModelContent = {
+            dialogContentText: manualSubmitConfirmatonMsg,
+        };
+
         const payload = {
             appointeeId: appointeeId,
             userId: userId,
             verificationCategory: verificationType.value,
-            remarks: "",
+            remarks: remarks,
             verificationUpdates: verificationUpdates
         }
-        console.log("payload12", payload);
-
+        openConfirmationModel(submitconfModelContent, async () => await UpdateAppointeeManualVerification(payload));
     }
 
     return (
@@ -88,6 +110,15 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, ver
                         verificationUpdate={verificationUpdate}
                         verificationQuestionSet={verificationQuestionSet}
                         verificationOnChange={verificationOnChange}
+                    />
+                </Grid>
+            </GridContainer>
+            <GridContainer>
+                <Grid item xs={12} md={8}>
+                    <TextAreaInput
+                        label={'Remarks'}
+                        value={remarks}
+                        onChange={handleRemarksChanged}
                     />
                 </Grid>
             </GridContainer>

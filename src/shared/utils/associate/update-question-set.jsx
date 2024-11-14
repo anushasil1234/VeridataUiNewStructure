@@ -1,3 +1,4 @@
+import { fileVerificationEnums } from "shared/constants/constants";
 
 const upDateQuestionSet = ({ verificationQuestionSet, verificationUpdate, verificationType }) => {
     if (verificationType.value !== 'none') {
@@ -8,7 +9,6 @@ const upDateQuestionSet = ({ verificationQuestionSet, verificationUpdate, verifi
                 return question
             })
         }
-
         if ((verificationUpdate && (verificationUpdate.isDocComplete !== true || verificationUpdate.isDocValid !== true)) &&
             verificationQuestionSet && verificationQuestionSet.length > 2) {
             updatedQuestionSet = updatedQuestionSet.map((question, index) => {
@@ -17,6 +17,19 @@ const upDateQuestionSet = ({ verificationQuestionSet, verificationUpdate, verifi
                 }
                 return question
             })
+        }
+        if (verificationUpdate.hasOwnProperty(fileVerificationEnums.pensionApplicable) &&
+            verificationUpdate[fileVerificationEnums.pensionApplicable] === false) {
+                
+            updatedQuestionSet = updatedQuestionSet.map((question) => {
+                if (question.name === fileVerificationEnums.pensionGapFound) {
+                    question.disabled = true;
+                }
+                return question
+            })
+            console.log("updatedQuestionSet", updatedQuestionSet);
+
+
         }
         return (
             { updatedQuestionSet }

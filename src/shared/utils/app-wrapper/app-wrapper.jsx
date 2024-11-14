@@ -107,7 +107,9 @@ import {
   downloadProcessingList_URL,
   downloadpfReport_URL,
   Postfileupload_URL,
-  getUploadFileData_URL
+  getUploadFileData_URL,
+  UpdateAppointeeManualVerification_URL,
+  dataSubmitionMsg
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -684,6 +686,9 @@ const AppWrapper = (App) => {
     const getUploadFileData = async (appointeeId) => {
       return await PfcRequest(`${getUploadFileData_URL}${appointeeId}`, "GET");
     }
+    const UpdateAppointeeManualVerification = async (payLoad) => {
+      return await PfcRequest(`${UpdateAppointeeManualVerification_URL}`, "POST",  payLoad, dataSubmitionMsg);
+    }
 
     // const getAppointeeAgingFilterReport = async (payLoad) => {
     //   return await PfcRequest(AppointeeAgingFilterReport_URL, "POST", payLoad);
@@ -884,7 +889,8 @@ const AppWrapper = (App) => {
           ValidateForgetPassweordUsrByOtp,
           downloadAgingExelReport,
           GetUnderProcessReport,
-          getUploadFileData
+          getUploadFileData,
+          UpdateAppointeeManualVerification
         })
       );
     }

@@ -7,8 +7,23 @@ const updateVerificationUpdate = ({ verificationUpdate, verificationQuestionSet,
                 return _verificationUpdate = { ..._verificationUpdate, [name]: verificationUpdate[name] }
             }
         })
-    } else {
-        _verificationUpdate = verificationUpdate;
+    }
+     else {
+        if (verificationUpdate.isDocComplete === true &&
+             verificationUpdate.isDocValid === true && 
+             verificationUpdate?.isPensionApplicable === false  
+            ) {
+                updatedQuestionSet.map(({ name }) => {
+                    if (_verificationUpdate.isPensionApplicable === false && name === 'isPensionGapFound' ) {
+                        return _verificationUpdate = { ..._verificationUpdate, [name]:false }
+                        
+                    }else {
+                        return _verificationUpdate = { ..._verificationUpdate, [name]: verificationUpdate[name] }
+                    }
+                })
+        }else {
+            _verificationUpdate = verificationUpdate;
+        }
     }
     return (
         { updatedVerification: _verificationUpdate }

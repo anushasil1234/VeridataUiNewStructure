@@ -485,7 +485,9 @@ let AppointeeViewForm = ({
       qualification,
       email,
       mobileNo,
-      nationality
+      nationality,
+      isFnameVarified,
+      isUanVerified
     }
     openVerify(personalInfo);
   }

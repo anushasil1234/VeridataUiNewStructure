@@ -12,13 +12,14 @@ import FullScreenModel from "shared/utils/models/fullscreen-modal";
 
 import {
     cardStyle,
+    cardStyle2,
     gridContainerStyle,
     inputFieldStyle2,
     lable1CopyStyle,
     listHeadingConteinerStyle,
     listHeadingStyle,
 } from "app";
-import { defaultVerificationQuestionSet, defaultVerificationUpdate, NA, verificationTypeList } from "shared/constants/constants";
+import { defaultVerificationQuestionSet, defaultVerificationUpdate, NA, defaultVerificationTypeList } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import SelectInput from "shared/components/input-fields/select-input";
@@ -30,30 +31,19 @@ import stringToBoolean from "shared/utils/associate/string-top-boolean";
 import handleVerificationStatusChange from "shared/utils/associate/handle-verification-status-change";
 import upDateQuestionSet from "shared/utils/associate/update-question-set";
 import addNewQuestion from "shared/utils/associate/add-new-question";
+import createVerificationTypeList from "shared/utils/associate/create-verification-type-list";
 
-const customeSelectInput = ({ itemList, label, onChange, value }) => {
-    <FormControl fullWidth>
-        <Typography sx={lable1CopyStyle}>
-            Relationship{" "}
-            <span className="requiredField">*</span>
-        </Typography>
-        <Select
-            error={false}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            className="customeTextField"
-            // disabled={isRelationShipWithMemberDisabled}
-            sx={inputFieldStyle2}
-            // onChange={(e) => {
-            //     setRelationshipWithMember(e.target.value);
-            // }}
-            value={'All'}
-        >
-            <MenuItem value="All">Select all</MenuItem>
-            <MenuItem value={"All"}>some</MenuItem>
-            <MenuItem value={"false"}>some 2</MenuItem>
-        </Select>
-    </FormControl>
+const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
+    return (
+        <Box sx={{ ...gridContainerStyle, paddingTop: "-5px", paddingBottom: "0px", ...sx }}>
+            <Grid container spacing={1}>
+                <Grid item xs={12} md={12} letterSpacing={10}>
+                    <Box sx={cardStyle2}>
+                        {children}
+                    </Box>
+                </Grid>
+            </Grid></Box>
+    )
 }
 
 let ManualverifiedViewDetails = ({ details }) => {
@@ -71,8 +61,16 @@ let ManualverifiedViewDetails = ({ details }) => {
         qualification,
         email,
         mobileNo,
-        nationality
+        nationality,
+        isFnameVarified,
+        isUanVerified
     } = details;
+
+    const verificationFieldSet = {
+        none: false,
+        isFnameVarified: isFnameVarified,
+        isUanVerified: isUanVerified
+    }
 
     const apiSlice = useSelector((state) => state.apiSlice);
     const {
@@ -84,7 +82,8 @@ let ManualverifiedViewDetails = ({ details }) => {
     //   //setTableRows(appointeeId);
     // }, []);
     const [zoom, setZoom] = useState(1);
-    const [verificationType, setVerificationType] = useState(verificationTypeList[0]);
+    const [verificationType, setVerificationType] = useState(defaultVerificationTypeList[0]);
+    const [verificationTypeList, setVerificationTypeList] = useState([]);
     const [uploadedFileData, setUploadedFileData] = useState([]);
     const [verificationCategoryList, setVerificationCategoryList] = useState([]);
     const [fileTypeCategory, setFileTypeCategory] = useState("");
@@ -114,7 +113,7 @@ let ManualverifiedViewDetails = ({ details }) => {
 
     const handleChangeVerificationType = ({ target }) => {
         const { value: currentValue } = target;
-        const selectedVerificationType = verificationTypeList.find(({ value }) => value === currentValue);
+        const selectedVerificationType = defaultVerificationTypeList.find(({ value }) => value === currentValue);
         setVerificationType(selectedVerificationType);
         clearSubDropdownListofVerificationType(currentValue);
         if (currentValue !== 'none') {
@@ -130,12 +129,20 @@ let ManualverifiedViewDetails = ({ details }) => {
         setFileSrc("");
         setFile("");
     }
-    const handleCategoryChange = ({ target }) => {
+    const _setFile = async (value) => {
+        setFile(value);
+        await setFileImage(value);
+    }
+    const handleCategoryChange = async ({ target }) => {
         const { value } = target;
         setFileTypeCategory(value);
         const { files } = filterDocVerificationList({ fileCategory: verificationType.value, uploadedFileData, fileType: value });
         setFiles(files);
-        clearCategoryRelatedVariables();
+        if (files.length === 1) {
+            await _setFile(files[0].value);
+        } else {
+            clearCategoryRelatedVariables();
+        }
     }
     const setFileImage = async (file) => {
         const payload = {
@@ -151,8 +158,7 @@ let ManualverifiedViewDetails = ({ details }) => {
     }
     const handleFileChange = async ({ target }) => {
         const { value } = target;
-        setFile(value);
-        await setFileImage(value);
+        await _setFile(value);
     }
     const setUploadedFileDataResponse = async () => {
         const response = await getUploadFileData(appointeeId);
@@ -175,50 +181,49 @@ let ManualverifiedViewDetails = ({ details }) => {
             setVerificationUpdate(updatedVerification);
         }
 
-    }, [verificationUpdate.isDocComplete, verificationUpdate.isDocValid])
+    }, [verificationUpdate.isDocComplete, verificationUpdate.isDocValid, verificationUpdate?.isPensionApplicable])
 
     useEffect(() => {
         setUploadedFileDataResponse();
+        const { verificationTypeList } = createVerificationTypeList(defaultVerificationTypeList, verificationFieldSet);
+        setVerificationTypeList(verificationTypeList);
     }, [])
 
     return (
-        <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%", paddingTop: "-5px" }}>
-            <Box sx={{ ...gridContainerStyle, paddingTop: "-5px", paddingBottom: "0px" }}>
+        <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%", padding: "1rem 0" }}>
+            <ManualVerifiedPageSectionContainer>
+                <Stack sx={listHeadingConteinerStyle}>
+                    <Typography sx={{ ...listHeadingStyle, fontSize: '1rem' }}>
+                        Personal Information
+                    </Typography>
+                </Stack>
+
                 <Grid container spacing={1}>
-                    <Grid item xs={12} md={12} letterSpacing={10}>
-                        <Box sx={cardStyle}>
-                            <Stack sx={listHeadingConteinerStyle}>
-                                <Typography sx={{ ...listHeadingStyle, fontSize: '1rem' }}>
-                                    Personal Information
-                                </Typography>
-                            </Stack>
+                    <Grid item xs={12} md={12} letterSpacing={5}>
+                        <Stack direction="row" spacing={-8}>
+                            <PersonalInformation fieldName={"Name"} fieldValue={appointeeName} />
+                            <PersonalInformation fieldName={"Date of Birth"} fieldValue={dateOfBirth} />
+                            <PersonalInformation fieldName={"Father's / Husband's Name"} fieldValue={member} />
+                        </Stack>
 
-                            <Grid container spacing={1}>
-                                <Grid item xs={12} md={12} letterSpacing={5}>
-                                    <Stack direction="row" spacing={-8}>
-                                        <PersonalInformation fieldName={"Name"} fieldValue={appointeeName} />
-                                        <PersonalInformation fieldName={"Date of Birth"} fieldValue={dateOfBirth} />
-                                        <PersonalInformation fieldName={"Father's / Husband's Name"} fieldValue={member} />
-                                    </Stack>
+                        <Stack direction="row" spacing={-8}>
+                            <PersonalInformation fieldName={"Relationship with Member"} fieldValue={relationshipWithMember} />
+                            <PersonalInformation fieldName={"Nationality"} fieldValue={nationality} />
+                            <PersonalInformation fieldName={"Mobile"} fieldValue={mobileNo} />
+                        </Stack>
 
-                                    <Stack direction="row" spacing={-8}>
-                                        <PersonalInformation fieldName={"Relationship with Member"} fieldValue={relationshipWithMember} />
-                                        <PersonalInformation fieldName={"Nationality"} fieldValue={nationality} />
-                                        <PersonalInformation fieldName={"Mobile"} fieldValue={mobileNo} />
-                                    </Stack>
+                        <Stack direction="row" spacing={-8}>
+                            <PersonalInformation fieldName={"Qualification"} fieldValue={qualification} />
+                            <PersonalInformation fieldName={"Marital Status"} fieldValue={maritalStatus} />
+                            <PersonalInformation fieldName={"Physically Handicapped"} fieldValue={isPhysicallyHandicap} />
+                            {isPhysicallyHandicap === "Yes" && (
+                                <>
+                                    <PersonalInformation
+                                        fieldName={"Handicap Type"}
+                                        fieldValue={handicapType ? handicapType : NA}
+                                    />
 
-                                    <Stack direction="row" spacing={-8}>
-                                        <PersonalInformation fieldName={"Qualification"} fieldValue={qualification} />
-                                        <PersonalInformation fieldName={"Marital Status"} fieldValue={maritalStatus} />
-                                        <PersonalInformation fieldName={"Physically Handicapped"} fieldValue={isPhysicallyHandicap} />
-                                        {isPhysicallyHandicap === "Yes" && (
-                                            <>
-                                                <PersonalInformation
-                                                    fieldName={"Handicap Type"}
-                                                    fieldValue={handicapType ? handicapType : NA}
-                                                />
-
-                                                {/* <PersonalInformation
+                                    {/* <PersonalInformation
                                                     fieldName={"Handicap Certificate"}
                                                 // fieldValue={handicapFile ? 
                                                 //     <FileViewComponent
@@ -227,78 +232,66 @@ let ManualverifiedViewDetails = ({ details }) => {
                                                 //     />
                                                 //     : NA}
                                                 /> */}
-                                            </>
-                                        )}
-                                    </Stack>
-                                </Grid>
-                            </Grid>
-                        </Box>
+                                </>
+                            )}
+                        </Stack>
                     </Grid>
                 </Grid>
-            </Box>
-            <Box sx={{ ...gridContainerStyle, paddingTop: "-5px", marginTop: 0 }}>
-                <Grid container spacing={1}>
-                    <Grid item xs={12} md={12} letterSpacing={10}>
-                        <Box sx={cardStyle}>
-                            <Grid
-                                // sx={{ paddingLeft: "20px", width: "50%" }}
-                                container
-                                rowSpacing={1}
-                                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                                sx={{ paddingX: "1rem" }}
-                            >
-                                <Grid
-                                    item
-                                    xs={12}
-                                    md={3}
-                                >
-                                    <SelectInput
-                                        label={'Verification type'}
-                                        itemList={verificationTypeList}
-                                        onChange={handleChangeVerificationType}
-                                        value={verificationType.value}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} md={3} >
-                                    <SelectInput
-                                        label={'Category'}
-                                        itemList={verificationCategoryList}
-                                        onChange={handleCategoryChange}
-                                        value={fileTypeCategory}
-                                    />
-                                </Grid>
-                                <Grid sx={{ paddingLeft: { xs: 0, md: "20px" } }} item xs={12} md={3} >
-                                    <SelectInput
-                                        label={'Files'}
-                                        itemList={files}
-                                        onChange={handleFileChange}
-                                        value={file}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Divider />
-                            {
-                                verificationCategoryList && verificationCategoryList.length > 0 &&
-                                <FiledetailsSection
-                                    appointeeId={appointeeId}
-                                    verificationType={verificationType}
-                                    fileSrc={fileSrc}
-                                    verificationOnChange={verificationOnChange}
-                                    verificationUpdate={verificationUpdate}
-                                    verificationQuestionSet={verificationQuestionSet}
-                                />
-                            }
-                        </Box>
+            </ManualVerifiedPageSectionContainer>
+            <ManualVerifiedPageSectionContainer sx={{ marginTop: '1rem' }}>
+                <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    sx={{ paddingX: "1rem" }}
+                >
+                    <Grid
+                        item
+                        xs={12}
+                        md={3}
+                    >
+                        <SelectInput
+                            label={'Verification Type'}
+                            itemList={verificationTypeList}
+                            onChange={handleChangeVerificationType}
+                            value={verificationType.value}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={3} >
+                        <SelectInput
+                            label={'Category'}
+                            itemList={verificationCategoryList}
+                            onChange={handleCategoryChange}
+                            value={fileTypeCategory}
+                        />
+                    </Grid>
+                    <Grid sx={{ paddingLeft: { xs: 0, md: "20px" } }} item xs={12} md={3} >
+                        <SelectInput
+                            label={'Files'}
+                            itemList={files}
+                            onChange={handleFileChange}
+                            value={file}
+                        />
                     </Grid>
                 </Grid>
-            </Box>
+                <Divider />
+                {
+                    verificationCategoryList && verificationCategoryList.length > 0 &&
+                    <FiledetailsSection
+                        appointeeId={appointeeId}
+                        verificationType={verificationType}
+                        fileSrc={fileSrc}
+                        verificationOnChange={verificationOnChange}
+                        verificationUpdate={verificationUpdate}
+                        verificationQuestionSet={verificationQuestionSet}
+                    />
+                }
+            </ManualVerifiedPageSectionContainer>
         </Box>
     );
 };
 
 const UnWrappedManualVerifiedView = (props) => {
-    console.log("UnWrappedManualVerifiedView", props);
-
     return (
         <FullScreenModel
             headerText={"Manual verified Details"}
