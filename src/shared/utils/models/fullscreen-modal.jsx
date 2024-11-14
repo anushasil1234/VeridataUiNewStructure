@@ -34,7 +34,7 @@ export default function FullScreenModel({ fullScreen, open, closeModel, content,
                     }
                 </Toolbar>
             </AppBar>
-            <List>
+            <List sx={{ height: 'fit-content' }}>
                 <ListItem sx={fullScreenListItemStyle} >
                     {content}
                 </ListItem>
