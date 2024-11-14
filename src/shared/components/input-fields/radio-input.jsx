@@ -1,5 +1,5 @@
 import { FormControlLabel, Radio, RadioGroup, Stack, Typography } from '@mui/material'
-import { lable1CopyStyle } from 'app'
+import { disableStyle, lable1CopyStyle } from 'app'
 import React from 'react'
 
 
@@ -7,7 +7,7 @@ import React from 'react'
 const RadioInput = ({ label, name, value, onChange, disabled = false, flexDirection = 'column', size = "medium" }) => {
     return (
         <Stack flexDirection={flexDirection}>
-            <Typography sx={{ ...lable1CopyStyle }}>
+            <Typography sx={disabled? {...disableStyle} : { ...lable1CopyStyle }}>
                 {label}
             </Typography>
             <RadioGroup

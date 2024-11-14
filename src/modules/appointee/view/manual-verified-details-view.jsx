@@ -19,7 +19,7 @@ import {
     listHeadingConteinerStyle,
     listHeadingStyle,
 } from "app";
-import { defaultVerificationQuestionSet, defaultVerificationUpdate, NA, defaultVerificationTypeList } from "shared/constants/constants";
+import { defaultVerificationUpdate, NA, defaultVerificationTypeList } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import SelectInput from "shared/components/input-fields/select-input";
@@ -90,7 +90,7 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [files, setFiles] = useState([]);
     const [file, setFile] = useState("");
     const [fileSrc, setFileSrc] = useState("");
-    const [verificationQuestionSet, setVerificationQuestionSet] = useState(defaultVerificationQuestionSet);
+    const [verificationQuestionSet, setVerificationQuestionSet] = useState([]);
     const [verificationUpdate, setVerificationUpdate] = useState(defaultVerificationUpdate);
     console.log("verificationUpdate", verificationUpdate);
 
@@ -119,7 +119,7 @@ let ManualverifiedViewDetails = ({ details }) => {
         if (currentValue !== 'none') {
             const { verificationCategoryList } = filterDocVerificationList({ fileCategory: currentValue, uploadedFileData: uploadedFileData });
             setVerificationCategoryList(verificationCategoryList);
-            const { updatedQuestionSet } = addNewQuestion({ verificationType: target, verificationQuestionSet: defaultVerificationQuestionSet });
+            const { updatedQuestionSet } = addNewQuestion({ verificationType: target, verificationQuestionSet: [] });
             const { updatedQuestionSet: _updatedQuestionSet } = upDateQuestionSet({ verificationQuestionSet: updatedQuestionSet, verificationUpdate: defaultVerificationUpdate, verificationType: target });
             setVerificationQuestionSet(_updatedQuestionSet);
             setVerificationUpdate(defaultVerificationUpdate);

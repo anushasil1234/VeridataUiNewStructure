@@ -2178,7 +2178,7 @@ export const defaultVerificationTypeList = [
     },
     {
         value: epfFileCategoryTypeAlias,
-        label: 'Passbook',
+        label: 'EPFO',
         verificationFieldName: 'isUanVerified'
     },
     {
@@ -2216,34 +2216,73 @@ export const fileVerificationEnums = {
     pensionGapFound: "isPensionGapFound"
 }
 
-export const defaultVerificationQuestionSet = [
-    {
-        label: "Is the document complete?",
-        name: fileVerificationEnums.docComplete,
-        disabled: false,
-    },
-    {
-        label: "Is the document valid?",
-        name: fileVerificationEnums.docValid,
-        disabled: false,
-    },
-]
+// export const defaultVerificationQuestionSet = [
+//     {
+//         label: "Completeness of  document?",
+//         name: fileVerificationEnums.docComplete,
+//         disabled: false,
+//     },
+//     {
+//         label: "Correctness of document?",
+//         name: fileVerificationEnums.docValid,
+//         disabled: false,
+//     },
+// ]
 export const fatherVerificationQuestionSet = [
     {
-        label: "Is father's name matched?",
+        label: "Completeness of  document?",
+        name: fileVerificationEnums.docComplete,
+        subCategory: fatherFileCategoryTypeAlias,
+        disabled: false,
+    },
+    {
+        label: "Correctness of document?",
+        name: fileVerificationEnums.docValid,
+        subCategory: fatherFileCategoryTypeAlias,
+        disabled: false,
+    },
+    {
+        label: "Document's Father's Name matches with Candidate provided Father's Name?",
         name: fileVerificationEnums.docFname,
+        subCategory: fatherFileCategoryTypeAlias,
         disabled: true
     }
 ]
 export const passbookVerificationQuestionSet = [
     {
+        label: "Completeness of Service History document?",
+        name: fileVerificationEnums.docComplete,
+        subCategory: epfoServiceHistoryFileTypeAlias,
+        disabled: false
+    },
+    {
+        label: "Correctness of Service History document?",
+        name: fileVerificationEnums.docValid,
+        subCategory: epfoServiceHistoryFileTypeAlias,
+        disabled: false,
+    },
+    {
+        label: "Completeness of Passbook document?",
+        name: fileVerificationEnums.docComplete,
+        subCategory: epfoPassbookFileTypeAlias,
+        disabled: false,
+    },
+    {
+        label: "Correctness of Passbook document?",
+        name: fileVerificationEnums.docValid,
+        subCategory: epfoPassbookFileTypeAlias,
+        disabled: false,
+    },
+    {
         label: "Is pension applicable?",
         name: fileVerificationEnums.pensionApplicable,
+        subCategory: epfoPassbookFileTypeAlias,
         disabled: true
     },
     {
         label: "Has pension gap?",
         name: fileVerificationEnums.pensionGapFound,
+        subCategory: epfoPassbookFileTypeAlias,
         disabled: true
     }
 ]

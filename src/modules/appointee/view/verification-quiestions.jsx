@@ -1,5 +1,5 @@
 import { Divider, Grid, Stack, Typography } from "@mui/material"
-import { listHeadingStyle, smallstepNumberContainerStyle } from "app"
+import { disableStyle, listHeadingStyle, smallstepNumberContainerStyle } from "app"
 import GridContainer from "shared/components/grid-container/grid-container"
 import RadioInput from "shared/components/input-fields/radio-input"
 
@@ -20,7 +20,7 @@ const VerificationQuiestions = ({ verificationOnChange, verificationQuestionSet,
                         <GridContainer key={index}>
                             <Grid container item xs={10}>
                                 <Grid container item xs={2}>
-                                    <Stack sx={{ ...smallstepNumberContainerStyle, marginRight: '2px' }}>
+                                    <Stack sx={{...smallstepNumberContainerStyle, marginRight: '2px' }}>
                                         <Typography fontWeight={500} sx={{ fontSize: '0.8rem' }}>{index + 1}</Typography>
                                     </Stack>
                                 </Grid>
