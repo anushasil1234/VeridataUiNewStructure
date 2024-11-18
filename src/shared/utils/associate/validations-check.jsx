@@ -1,4 +1,4 @@
-import { fileVerificationEnums } from "shared/constants/constants";
+import { epfoServiceHistoryFileTypeAlias, fatherFileCategoryTypeAlias, fileVerificationEnums } from "shared/constants/constants";
 
 export const validationsCheck = (arrvalue, validation_type) => {
 
@@ -18,9 +18,11 @@ export const validationsCheck = (arrvalue, validation_type) => {
 
         case 'indPassport':
             return /^[a-zA-Z0-9]{12}$/.test(arrvalue);
-        case fileVerificationEnums.docComplete:
-        case fileVerificationEnums.docValid:
-        case fileVerificationEnums.docFname:
+        case `${fileVerificationEnums.docComplete}_${epfoServiceHistoryFileTypeAlias}`:
+        case `${fileVerificationEnums.docValid}_${epfoServiceHistoryFileTypeAlias}`:
+        case `${fileVerificationEnums.docComplete}_${epfoServiceHistoryFileTypeAlias}`:
+        case `${fileVerificationEnums.docValid}_${epfoServiceHistoryFileTypeAlias}`:
+        case `${fileVerificationEnums.docFname}_${fatherFileCategoryTypeAlias}`:
         case fileVerificationEnums.pensionApplicable:
         case fileVerificationEnums.pensionGapFound:
             return arrvalue !== undefined;

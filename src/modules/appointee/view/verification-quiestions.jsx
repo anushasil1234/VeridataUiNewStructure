@@ -14,8 +14,8 @@ const VerificationQuiestions = ({ verificationOnChange, verificationQuestionSet,
                 <Divider sx={{ marginTop: "2px" }} />
             </Stack>
             {
-                verificationQuestionSet?.map(({ name, label, disabled = false }, index) => {
-                    
+                verificationQuestionSet?.map(({ name, label, disabled = false, subCategory }, index) => {
+                    const _name = `${name}_${subCategory}`;
                     return (
                         <GridContainer key={index}>
                             <Grid container item xs={10}>
@@ -27,8 +27,8 @@ const VerificationQuiestions = ({ verificationOnChange, verificationQuestionSet,
                                 <Grid container item xs={10}>
                                     <RadioInput
                                         label={label}
-                                        name={name}
-                                        value={verificationUpdate[name] !== undefined ? verificationUpdate[name] : null}
+                                        name={_name}
+                                        value={verificationUpdate[_name] !== undefined ? verificationUpdate[_name] : null}
                                         onChange={(element) => verificationOnChange(element, index)}
                                         disabled={disabled}
                                         size="small"

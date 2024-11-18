@@ -1,30 +1,37 @@
-const updateVerificationUpdate = ({ verificationUpdate, verificationQuestionSet, updatedQuestionSet }) => {
+const updateVerificationUpdate = ({ verificationUpdate, verificationQuestionSet, updatedQuestionSet, subCategory }) => {
+
+    const _isDocComplete = verificationUpdate[`isDocComplete_${subCategory}`];
+    const _isDocValid = verificationUpdate[`isDocValid_${subCategory}`];
+    const _isPensionApplicable = verificationUpdate?.[`isPensionApplicable_${subCategory}`];
     let _verificationUpdate = {};
-    if ((verificationUpdate.isDocComplete === false || verificationUpdate.isDocValid === false) &&
+    if ((_isDocComplete === false || _isDocValid === false) &&
         verificationQuestionSet.length > 2) {
-        updatedQuestionSet.map(({ name, disabled }) => {
+        updatedQuestionSet.map(({ name, disabled, subCategory }) => {
+            const _name = `${name}_${subCategory}`;
             if (disabled === false) {
-                return _verificationUpdate = { ..._verificationUpdate, [name]: verificationUpdate[name] }
+                return _verificationUpdate = { ..._verificationUpdate, [_name]: verificationUpdate[_name] }
             }
         })
     }
-     else {
-        if (verificationUpdate.isDocComplete === true &&
-             verificationUpdate.isDocValid === true && 
-             verificationUpdate?.isPensionApplicable === false  
-            ) {
-                updatedQuestionSet.map(({ name }) => {
-                    if (_verificationUpdate.isPensionApplicable === false && name === 'isPensionGapFound' ) {
-                        return _verificationUpdate = { ..._verificationUpdate, [name]:false }
-                        
-                    }else {
-                        return _verificationUpdate = { ..._verificationUpdate, [name]: verificationUpdate[name] }
-                    }
-                })
-        }else {
+    else {
+        if (_isDocComplete === true &&
+            _isDocValid === true &&
+            _isPensionApplicable === false
+        ) {
+            updatedQuestionSet.map(({ name, subCategory }) => {
+                const _name = `${name}_${subCategory}`;
+                if (_isPensionApplicable === false && _name === `isPensionGapFound_${subCategory}`) {
+                    return _verificationUpdate = { ..._verificationUpdate, [_name]: false }
+                } else {
+                    return _verificationUpdate = { ..._verificationUpdate, [_name]: verificationUpdate[_name] }
+                }
+            })
+        } else {
             _verificationUpdate = verificationUpdate;
         }
     }
+    console.log("updatedVerification", _verificationUpdate);
+
     return (
         { updatedVerification: _verificationUpdate }
     )

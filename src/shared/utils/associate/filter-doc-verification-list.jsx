@@ -1,3 +1,5 @@
+import { epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, fatherFileCategoryTypeAlias } from "shared/constants/constants";
+
 const filterDocVerificationList = (
     {
         uploadedFileData,
@@ -15,13 +17,22 @@ const filterDocVerificationList = (
 
         verificationFilteredCategoryList = uploadedFileData?.filter(({ fileCategory }) => fileCategory === currentFileCategory)[0]?.files;
         _verificationDropdownCategoryList = verificationFilteredCategoryList?.map(({ fileType }) => {
+            let subCategory;
+            if (fileType === '10th Certificate' || fileType === 'Other Govt.Proof') {
+                subCategory = fatherFileCategoryTypeAlias;
+            }
+            if (fileType === 'EPFO Service History') {
+                subCategory = epfoServiceHistoryFileTypeAlias;
+            }
+            if (fileType === 'PF Passbook(s)') {
+                subCategory = epfoPassbookFileTypeAlias;
+            }
             return ({
                 label: fileType,
-                value: fileType
+                value: fileType,
+                subCategory: subCategory
             })
         })
-        console.log("verificationFilteredCategoryList", verificationFilteredCategoryList);
-        
     }
     if (currentFileType) {
         // _verificationCategoryList?.filter(({filesInfo})=>)
@@ -33,12 +44,7 @@ const filterDocVerificationList = (
                     label: fileName
                 })
             })
-        console.log('_filteredFileInfo', _filteredFileInfo);
-
     }
-    console.log("verificationCategoryList23424", verificationFilteredCategoryList, _filteredFileInfo);
-    console.log("verificationCategoryList23424currentFileType", currentFileType);
-
     return { verificationCategoryList: _verificationDropdownCategoryList, files: _filteredFileInfo };
 }
 

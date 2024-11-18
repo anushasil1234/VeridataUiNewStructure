@@ -8,9 +8,11 @@ import { hasValue, validationsCheck } from 'shared/utils'
 import validateQuestionSet from 'shared/utils/associate/validate-question-set'
 import TextAreaInput from 'shared/components/input-fields/text-input'
 import { manualSubmitConfirmatonMsg, remarksError } from 'shared/constants/constants'
+import createVerificationUpdate from 'shared/utils/associate/create-verification-update'
 
-const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, 
+const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
     verificationOnChange, verificationQuestionSet, appointeeId }) => {
+    console.log("verificationUpdate", verificationUpdate);
 
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -47,31 +49,34 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
         setRemarks(target.value);
     }
     const handleVerificationSubmit = async () => {
-
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
-        if (hasValue(error)) {
-            showErrorMessage(error);
-            return
-        }
-        if (remarks.length <10) {
-            showErrorMessage(remarksError);
-            return
-        }
-        const verificationUpdates = Object.entries(verificationUpdate).map(([key, value]) => ({
-            fieldName: key,
-            value: value
-        }));
+        console.log("verificationUpdate", verificationUpdate);
+
+        // if (hasValue(error)) {
+        //     showErrorMessage(error);
+        //     return
+        // }
+        // if (remarks.length < 10) {
+        //     showErrorMessage(remarksError);
+        //     return
+        // }
+        // const verificationUpdates = Object.entries(verificationUpdate).map(([key, value]) => ({
+        //     fieldName: key,
+        //     value: value
+        // }));
 
         const submitconfModelContent = {
             dialogContentText: manualSubmitConfirmatonMsg,
         };
-
+        const { VerificationSubCategoryList } = createVerificationUpdate(verificationUpdate);
+        // console.log("VerificationSubCategoryList", _verificationUpdates);
+        
         const payload = {
             appointeeId: appointeeId,
             userId: userId,
             verificationCategory: verificationType.value,
             remarks: remarks,
-            verificationUpdates: verificationUpdates
+            VerificationSubCategoryList: VerificationSubCategoryList
         }
         openConfirmationModel(submitconfModelContent, async () => await UpdateAppointeeManualVerification(payload));
     }

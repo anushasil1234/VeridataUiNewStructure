@@ -87,6 +87,8 @@ export const generatenationlityReportDesc = (type) => {
             return "This report provides a comprehensive overview of individuals, including both Indian and foreign nationals, offering a complete view of all individuals.";
     }
 };
+export const EPFOVerificatypeSelectionMsg = "Please select and verify Fathers's name first";
+
 
 // Dropdown Types
 export const GEN = `GEN`;
@@ -2170,21 +2172,22 @@ export const verificationCategoryModel = {
     'FTHR': fatherDocCategoryTypeList
 }
 export const defaultVerificationTypeList = [
-    {
-        value: 'none',
-        label: 'None',
-        isDisabled: false,
-        verificationFieldName: 'none',
-    },
-    {
-        value: epfFileCategoryTypeAlias,
-        label: 'EPFO',
-        verificationFieldName: 'isUanVerified'
-    },
+    // {
+    //     value: 'none',
+    //     label: 'None',
+    //     isDisabled: false,
+    //     verificationFieldName: 'none',
+    // },
     {
         value: fatherFileCategoryTypeAlias,
         label: `Father's name`,
         verificationFieldName: 'isFnameVarified'
+    },
+    {
+        value: epfFileCategoryTypeAlias,
+        label: 'EPFO',
+        verificationFieldName: 'isUanVerified',
+        isDisabled: true
     }
 ]
 
@@ -2207,11 +2210,22 @@ export const defaultVerificationUpdate = {
     isDocComplete: undefined,
     isDocValid: undefined
 }
+export const defaultFnameVerificationUpdate = {
+    [`isDocComplete_${fatherFileCategoryTypeAlias}`]: undefined,
+    [`isDocValid_${fatherFileCategoryTypeAlias}`]: undefined
+}
+export const defaultEpfoPassbookVerificationUpdate = {
+    [`isDocComplete_${epfoServiceHistoryFileTypeAlias}`]: undefined,
+    [`isDocValid_${epfoServiceHistoryFileTypeAlias}`]: undefined,
+    // [`isDocComplete_${epfoPassbookFileTypeAlias}`]: undefined,
+    // [`isDocValid_${epfoPassbookFileTypeAlias}`]: undefined
+}
 
 export const fileVerificationEnums = {
     docComplete: "isDocComplete",
     docValid: "isDocValid",
     docFname: "isFnameVarified",
+    docEPFO: "isUanVerified",
     pensionApplicable: "isPensionApplicable",
     pensionGapFound: "isPensionGapFound"
 }
@@ -2230,22 +2244,26 @@ export const fileVerificationEnums = {
 // ]
 export const fatherVerificationQuestionSet = [
     {
-        label: "Completeness of  document?",
+        label: "Completeness of document?",
         name: fileVerificationEnums.docComplete,
         subCategory: fatherFileCategoryTypeAlias,
-        disabled: false,
+        type: "prerequisite", // Indicates it's a prerequisite for dependent questions
+        disabled: true,
     },
     {
         label: "Correctness of document?",
         name: fileVerificationEnums.docValid,
         subCategory: fatherFileCategoryTypeAlias,
-        disabled: false,
+        type: "prerequisite", // Indicates it's a prerequisite for dependent questions
+        disabled: true,
     },
     {
         label: "Document's Father's Name matches with Candidate provided Father's Name?",
         name: fileVerificationEnums.docFname,
         subCategory: fatherFileCategoryTypeAlias,
-        disabled: true
+        type: "dependent", // Indicates this depends on the prerequisites
+        dependsOn: [fileVerificationEnums.docComplete, fileVerificationEnums.docValid], // Links to prerequisites
+        disabled: true,
     }
 ]
 export const passbookVerificationQuestionSet = [

@@ -4,14 +4,25 @@ const addNewQuestion = ({
     verificationType,
     verificationQuestionSet
 }) => {
-
+    const _fatherVerificationQuestionSet = JSON.parse(JSON.stringify(fatherVerificationQuestionSet));
+    const _passbookVerificationQuestionSet = JSON.parse(JSON.stringify(passbookVerificationQuestionSet));
     let updatedQuestion;
     if (verificationType.value === fatherFileCategoryTypeAlias) {
-        updatedQuestion = fatherVerificationQuestionSet;
+        updatedQuestion = _fatherVerificationQuestionSet;
     }
     if (verificationType.value === epfFileCategoryTypeAlias) {
-        updatedQuestion = passbookVerificationQuestionSet;
+        updatedQuestion = _passbookVerificationQuestionSet;
     }
+    console.log('fatherVerificationQuestionSet1231', _fatherVerificationQuestionSet);
+
+    console.log("addNewQuestionupdatedQuestionSet", {
+        updatedQuestionSet:
+            [
+                ...verificationQuestionSet,
+                ...updatedQuestion
+            ]
+    });
+
     return (
         {
             updatedQuestionSet:

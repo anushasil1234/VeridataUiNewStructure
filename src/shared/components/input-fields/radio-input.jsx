@@ -4,10 +4,13 @@ import React from 'react'
 
 
 
-const RadioInput = ({ label, name, value, onChange, disabled = false, flexDirection = 'column', size = "medium" }) => {
+const RadioInput = ({ label, name, value, onChange,
+    disabled = false, subCategory, flexDirection = 'column', size = "medium", ...rest }) => {
+    console.log("name", "value", name, value);
+
     return (
         <Stack flexDirection={flexDirection}>
-            <Typography sx={disabled? {...disableStyle} : { ...lable1CopyStyle }}>
+            <Typography sx={disabled ? { ...disableStyle } : { ...lable1CopyStyle }}>
                 {label}
             </Typography>
             <RadioGroup
@@ -15,6 +18,7 @@ const RadioInput = ({ label, name, value, onChange, disabled = false, flexDirect
                 name={name}
                 value={value}
                 onChange={onChange}
+                {...rest}
                 sx={{ marginLeft: 2 }} // Adjust margin as needed
             >
                 <FormControlLabel

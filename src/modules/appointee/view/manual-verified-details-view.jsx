@@ -19,7 +19,7 @@ import {
     listHeadingConteinerStyle,
     listHeadingStyle,
 } from "app";
-import { defaultVerificationUpdate, NA, defaultVerificationTypeList } from "shared/constants/constants";
+import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import SelectInput from "shared/components/input-fields/select-input";
@@ -32,6 +32,8 @@ import handleVerificationStatusChange from "shared/utils/associate/handle-verifi
 import upDateQuestionSet from "shared/utils/associate/update-question-set";
 import addNewQuestion from "shared/utils/associate/add-new-question";
 import createVerificationTypeList from "shared/utils/associate/create-verification-type-list";
+import getFileCategoryByFileType from "shared/utils/associate/get-file-category";
+import isEPFOSelectionDisabled from "shared/utils/associate/is-epfo-disabled";
 
 const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
     return (
@@ -77,6 +79,9 @@ let ManualverifiedViewDetails = ({ details }) => {
         getUploadFileData,
         GetUploadedFileDetailsById
     } = apiSlice[0];
+    const popUpSlice = useSelector(state => state.popUpSlice);
+    const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+
     console.log("details", details)
     // useEffect(() => {
     //   //setTableRows(appointeeId);
@@ -91,8 +96,8 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [file, setFile] = useState("");
     const [fileSrc, setFileSrc] = useState("");
     const [verificationQuestionSet, setVerificationQuestionSet] = useState([]);
-    const [verificationUpdate, setVerificationUpdate] = useState(defaultVerificationUpdate);
-    console.log("verificationUpdate", verificationUpdate);
+    const [verificationUpdate, setVerificationUpdate] = useState({});
+    console.log("verificationQuestionSet", verificationQuestionSet);
 
     const zoomIn = () => {
         setZoom((prevZoom) => Math.min(prevZoom + 0.1, 6)); // max zoom level 3x
@@ -110,20 +115,56 @@ let ManualverifiedViewDetails = ({ details }) => {
             setVerificationCategoryList([]);
         }
     }
+    const selectDefaultVerificationType = (value, _uploadedFileData) => {
+        const target = { value };
+        handleChangeVerificationType({ target }, _uploadedFileData);
+    }
 
-    const handleChangeVerificationType = ({ target }) => {
+    const handleChangeVerificationType = ({ target }, _uploadedFileData) => {
+        console.log('target234234', target);
+
         const { value: currentValue } = target;
+        const isSelectedItemDisabled = verificationTypeList.find(({ isDisabled, value }) =>
+            value === currentValue && isDisabled === true);
+        if (isSelectedItemDisabled) {
+            return
+        }
         const selectedVerificationType = defaultVerificationTypeList.find(({ value }) => value === currentValue);
         setVerificationType(selectedVerificationType);
         clearSubDropdownListofVerificationType(currentValue);
-        if (currentValue !== 'none') {
-            const { verificationCategoryList } = filterDocVerificationList({ fileCategory: currentValue, uploadedFileData: uploadedFileData });
-            setVerificationCategoryList(verificationCategoryList);
-            const { updatedQuestionSet } = addNewQuestion({ verificationType: target, verificationQuestionSet: [] });
-            const { updatedQuestionSet: _updatedQuestionSet } = upDateQuestionSet({ verificationQuestionSet: updatedQuestionSet, verificationUpdate: defaultVerificationUpdate, verificationType: target });
-            setVerificationQuestionSet(_updatedQuestionSet);
-            setVerificationUpdate(defaultVerificationUpdate);
+
+        // if (currentValue !== 'none') {
+        console.log("uploadedFileData", currentValue);
+
+        const { verificationCategoryList } = filterDocVerificationList({
+            fileCategory: currentValue,
+            uploadedFileData: _uploadedFileData ? _uploadedFileData : uploadedFileData
+        });
+        console.log('verificationCategoryList', verificationCategoryList);
+
+        setVerificationCategoryList(verificationCategoryList);
+        // setFileTypeCategory(verificationCategoryList[0].value);
+        const { updatedQuestionSet } = addNewQuestion({ verificationType: target, verificationQuestionSet: [] });
+        console.log("updatedQuestionSet r234", updatedQuestionSet);
+        
+        let currentDefaultVerificationUpdate;
+        if (currentValue === fatherFileCategoryTypeAlias) {
+            currentDefaultVerificationUpdate = defaultFnameVerificationUpdate
         }
+        if (currentValue === epfFileTypeAlias) {
+            currentDefaultVerificationUpdate = defaultEpfoPassbookVerificationUpdate
+        }
+        const { updatedQuestionSet: _updatedQuestionSet } = upDateQuestionSet({
+            verificationQuestionSet: updatedQuestionSet,
+            verificationUpdate: currentDefaultVerificationUpdate,
+            verificationType: target,
+            fileSrc
+        });
+        console.log('_updatedQuestionSet', _updatedQuestionSet);
+
+        setVerificationQuestionSet(_updatedQuestionSet);
+        setVerificationUpdate({});
+        // }
     }
     const clearCategoryRelatedVariables = () => {
         setFileSrc("");
@@ -160,34 +201,77 @@ let ManualverifiedViewDetails = ({ details }) => {
         const { value } = target;
         await _setFile(value);
     }
-    const setUploadedFileDataResponse = async () => {
+    const setUploadedFileDataResponse = async (defaultVerificationType) => {
         const response = await getUploadFileData(appointeeId);
         if (response) {
+            console.log('response.responseInfo', response.responseInfo);
+            const _uploadedFileData = response.responseInfo;
             setUploadedFileData(response.responseInfo);
+            selectDefaultVerificationType(defaultVerificationType, _uploadedFileData);
         }
     }
     const verificationOnChange = ({ target }, index) => {
         const { name, value } = target;
+        console.log("target12323", target);
+
         setVerificationUpdate({ ...verificationUpdate, [name]: stringToBoolean(value) });
+    }
+    console.log("verificationUpdate", verificationUpdate);
+    const handleClickOnMenuItem = (value) => {
+        console.log('handleClickOnMenuItem', value);
+        if (value === epfFileCategoryTypeAlias &&
+            isEPFOSelectionDisabled({
+                verificationFieldName: fileVerificationEnums.docEPFO,
+                verificationFieldSet
+            })
+        ) {
+            showErrorMessage(EPFOVerificatypeSelectionMsg);
+        }
     }
 
     useEffect(() => {
-        if (verificationType.value !== 'none') {
+        // if (verificationType.value !== 'none') {
+            const { subCategory } = getFileCategoryByFileType(verificationCategoryList, fileTypeCategory);
+            console.log("subCategory", subCategory);
+
             const { updatedQuestionSet, updatedVerification } = handleVerificationStatusChange({
-                verificationQuestionSet,
-                verificationUpdate, verificationType
+                verificationQuestionSet, subCategory,
+                verificationUpdate, verificationType,
+                fileSrc
             });
+            console.log("updatedVerification", updatedVerification);
+            console.log("updatedQuestionSet", updatedQuestionSet);
+
             setVerificationQuestionSet(updatedQuestionSet);
             setVerificationUpdate(updatedVerification);
-        }
+        // }
 
-    }, [verificationUpdate.isDocComplete, verificationUpdate.isDocValid, verificationUpdate?.isPensionApplicable])
+    }, [
+        verificationUpdate?.[`${fileVerificationEnums.docComplete}_${fatherFileCategoryTypeAlias}`],
+        verificationUpdate?.[`${fileVerificationEnums.docValid}_${fatherFileCategoryTypeAlias}`],
+        verificationUpdate?.[`${fileVerificationEnums.docComplete}_${epfoServiceHistoryFileTypeAlias}`],
+        verificationUpdate?.[`${fileVerificationEnums.docValid}_${epfoServiceHistoryFileTypeAlias}`],
+        verificationUpdate?.[`${fileVerificationEnums.pensionApplicable}_${epfoServiceHistoryFileTypeAlias}`]
+    ])
 
     useEffect(() => {
-        setUploadedFileDataResponse();
         const { verificationTypeList } = createVerificationTypeList(defaultVerificationTypeList, verificationFieldSet);
+        setUploadedFileDataResponse(verificationTypeList[0].value);
         setVerificationTypeList(verificationTypeList);
+        console.log("verificationTypeList", verificationTypeList);
     }, [])
+    useEffect(() => {
+        const { updatedQuestionSet: _updatedQuestionSet } = upDateQuestionSet({
+            verificationQuestionSet: verificationQuestionSet,
+            // verificationUpdate: ,
+            verificationType: verificationType,
+            fileSrc
+        });
+        // console.log('_updatedQuestionSet', _updatedQuestionSet);
+
+    }, [fileSrc])
+
+    console.log("verificationCategoryList", verificationCategoryList);
 
     return (
         <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%", padding: "1rem 0" }}>
@@ -255,6 +339,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                             itemList={verificationTypeList}
                             onChange={handleChangeVerificationType}
                             value={verificationType.value}
+                            handleClickOnMenuItem={handleClickOnMenuItem}
                         />
                     </Grid>
                     <Grid item xs={12} md={3} >
