@@ -9,6 +9,7 @@ import { toDataUploaded } from 'shared/constants/constants';
 import Button1 from 'shared/utils/button/button1';
 import downloadFile from 'shared/utils/associate/download-file';
 import UploadButton from 'shared/components/upload-button.jsx/upload-button';
+import UploadButtonforxlsx from '../upload-xlsx/upload-xlsx';
 
 
 const dialogComponent =
@@ -106,7 +107,7 @@ const FileUpload = ({ modalConfirmation, SetFileId, files, setFiles, removeFile,
                             onClick={(e) => e.target.value = null}
                             onChange={handleInputChange}
                         />
-                        <UploadButton />
+                        <UploadButtonforxlsx />
 
                     </Box>
                 </Stack>
