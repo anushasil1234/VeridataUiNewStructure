@@ -1,24 +1,30 @@
-import { FileUpload } from '@mui/icons-material'
-import { Button } from '@mui/material'
-import { uploadBtnCommonStyle, uploadBtnStyle } from 'app'
+import { SaveAlt } from '@mui/icons-material'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
 
 const UploadButton = ({ disabled, fileName }) => {
+    const isReupload = Array.isArray(fileName) && fileName.length > 0;
+    const iconColor = disabled ? 'gray' : 'none';
+    const iconText = isReupload ? (
+        <Typography sx={{fontSize:"16px"}} >
+            Choose a file to <Typography component="span" sx={{ color: "#9A208C", fontWeight: 'bold' }}>Reupload</Typography>
+        </Typography>
+    ) : (
+        <Typography  sx={{fontSize:"16px"}}  >
+            Choose a file to <Typography component="span" sx={{ color: iconColor, fontWeight: 'bold' }}>Upload</Typography>
+        </Typography>
+    );
 
     return (
-        disabled ?
-            <Button
-                sx={uploadBtnCommonStyle}
-                disabled={true}
-                variant="contained"
-                startIcon={<FileUpload />}
-            >
-                {(Array.isArray(fileName) && fileName.length>0) ? "Reupload" : "Upload"}
-            </Button>
-            : <Button startIcon={<FileUpload />} sx={uploadBtnStyle}>
-                {(Array.isArray(fileName) && fileName.length>0) ? "Reupload" : "Upload"}
-            </Button>
-    )
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+            {disabled ? (
+                <SaveAlt sx={{ mb: 0.5, color: iconColor }} />
+            ) : (
+                <SaveAlt sx={{ mb: 0.5, color: iconColor }} />
+            )}
+            <Typography variant="body1" sx={{ color: iconColor }}>{iconText}</Typography>
+        </Box>
+    );
 }
 
 export default UploadButton

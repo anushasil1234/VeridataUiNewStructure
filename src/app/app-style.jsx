@@ -1170,13 +1170,33 @@ export const lapsedStyle = {
 };
 export const candidatefileViewContainerStyle = {
   // width: '100%',
-  overflowX: 'scroll',
-  width: '100%',
+  // overflowX: 'scroll',
+  width: '90%',
   height: '300px',
   margin: 'auto',
   // backgroundColor: '',
-  border: "2px dashed #375993",
+  border: "2px solid #375993",
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center'
 
+}
+export const imagestyleContainer ={
+  border: '2px dashed #ccc',
+  borderRadius: '8px',
+  padding: '16px',
+  margin: 'auto',
+  marginTop: '25px',
+  marginBottom:'25px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  overflow: 'hidden',
+  overflowX: 'auto',
+  overflowY: 'auto',
+  width: "85%"
 }
 
 export const getStatusChipStyle = (status) => {
@@ -1237,7 +1257,18 @@ export const fileNameStyle = {
   fontSize: ".7rem",
   textAlign: 'center',
   marginTop: fileUploadSectionTextMargin,
-  texWrap: 'nowrap'
+  texWrap: 'nowrap',
+ marginBottom:"20px"
+}
+export const boxStyle={
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  cursor: 'pointer',
+  backgroundColor: 'transparent',
+  zIndex: 1
 }
 export const fileNameStyleinview = {
   fontSize: "0.9rem",
@@ -1253,8 +1284,12 @@ export const PopupboxStyle = {
 }
 export const filenameContainer = {
   flexDirection: 'row',
-  marginTop: '10px',
+  // marginTop: '10px',
   padding: '0 10px',
+  paddingY:'15px',
+  marginBottom:"15px",
+  position: 'relative',
+  zIndex: 2
 }
 export const uploadIconContainer = {
   backgroundColor: ThemeColorPalete.common.white,
@@ -1275,6 +1310,8 @@ export const fileCard = {
 };
 export const fileInputs = {
   position: "relative",
+  marginTop:"-15px",
+  // marginBottom:"25px",
   "& input": {
     position: "relative",
     textAlign: "right",
@@ -1728,6 +1765,12 @@ export const candidateRegistrationFormContainerStyle = {
 
 export const formHeadingGridContainerStyle = {
   marginX: '10px',
+}
+export const divederStyle={
+  my: 2, 
+  borderBottom: '0.9px bold #000',
+  width: '90%',
+  mx: 'auto'
 }
 
 export const formHeadingContainerStyle = {

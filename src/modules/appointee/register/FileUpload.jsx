@@ -933,6 +933,7 @@ const FileUpload = ({ stepsList, mode }) => {
                                                             chooseFile={upload10thCertificateFile}
                                                             fileName={tenthCertificateFileName}
                                                             disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
+                                                            uploadTypeAlias={tenthCertificateFileTypeAlias}
                                                         />
                                                     </Box>
                                                 </Box>
@@ -992,6 +993,7 @@ const FileUpload = ({ stepsList, mode }) => {
                                                             fileName={otherFileName}
                                                             accept={"image/png, image/jpeg"}
                                                             disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
+                                                            uploadTypeAlias={otherFileTypeAlias}
                                                         />
                                                     </Box>
                                                 </Box>
@@ -1044,6 +1046,7 @@ const FileUpload = ({ stepsList, mode }) => {
                                                                 fileName={handicapFileName}
                                                                 accept={"image/png, image/jpeg"}
                                                                 disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
+                                                                uploadTypeAlias={handicapFileTypeAlias}
                                                             />
                                                         </Box>
                                                     </>
@@ -1154,6 +1157,7 @@ const FileUpload = ({ stepsList, mode }) => {
                                                                 chooseFile={uploadPassportFile}
                                                                 fileName={passportFileName}
                                                                 disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
+                                                                uploadTypeAlias={passportFileTypeAlias}
                                                             />
                                                         </>
                                                     )}
@@ -1247,6 +1251,7 @@ const FileUpload = ({ stepsList, mode }) => {
                                                         fileName={trustEpfoFileName}
                                                         accept={"image/png, image/jpeg"}
                                                         disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
+                                                        uploadTypeAlias={trustEpfoFileTypeAlias}
                                                     />
                                                 </Box>
                                             </Box>

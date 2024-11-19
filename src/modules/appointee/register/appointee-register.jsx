@@ -19,6 +19,7 @@ import {
   Stepper,
   Step,
   StepLabel,
+  Divider,
 } from "@mui/material";
 import { InfoOutlined } from "@mui/icons-material";
 import {
@@ -27,6 +28,7 @@ import {
   checkBoxLabelStyle,
   checkBoxStyle,
   datePickerinputFieldStyle2,
+  divederStyle,
   fileUploadSectionContainerStyle,
   formHeadingContainerStyle,
   formHeadingGridContainerStyle,
@@ -68,6 +70,7 @@ import {
   indianpassportFilePatternErrorMsg,
   passportNoEmptyMsg,
   epfoServiceHistoryFileTypeAlias,
+  aadharFileTypeAlias,
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -289,12 +292,12 @@ const AppointeeRegister = () => {
   const [uploadedFile, setUploadedFile] = useState([]);
   const [xmlFileUploaded, setXmlFileUploaded] = useState();
   const [fileDetails, setFileDetails] = useState([]);
-  const [trustEpfoFileName, setTrustEpfoFileName] = useState();
+  const [trustEpfoFileName, setTrustEpfoFileName] = useState([]);
   const [handicapFileName, setHandicapFileName] = useState();
   const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
   const [epfoServiceHistoryFile, setEpfoServiceHistoryFile] = useState();
   const [aadharXmlFileName, setAadharXmlFileName] = useState();
-  const [passportFileName, setPassportFileName] = useState();
+  const [passportFileName, setPassportFileName] = useState([]);
   const [tenthCertificateFileName, setTenthCertificateFileName] = useState();
   const [otherFileName, setOtherFileName] = useState();
   const [
@@ -934,7 +937,21 @@ const AppointeeRegister = () => {
     setUploadedFile(_updatedUploadedFileList);
     setFileDetails(_updatedFileDetails);
   }
+  const removeEPFOFile = (currentFileName) => {
+    const {
+      fileNameList: _fileNameList,
+      updatedUploadedFileList: _updatedUploadedFileList,
+      updatedFileDetails: _updatedFileDetails
+    } = removeFile({
+      uploadedFile: uploadedFile, fileDetails: fileDetails,
+      uploadTypeAlias: trustEpfoFileTypeAlias, fileNameList: trustEpfoFileName,
+      currentFileName: currentFileName, uploadType: 'multiple'
+    });
 
+    setTrustEpfoFileName(_fileNameList);
+    setUploadedFile(_updatedUploadedFileList);
+    setFileDetails(_updatedFileDetails);
+  }
   const uploadAadharXmlFile = ({ target }) => {
     // uploadFile(target, "ADH", setAadharXmlFileName);
     setXmlFileUploaded();
@@ -959,7 +976,7 @@ const AppointeeRegister = () => {
     uploadFile(target, fileTypeAlias, setFileName, fileNameList, uploadType);
   };
 
-  const uploadTrustEPFOFile = handleFileUpload(trustEpfoFileTypeAlias, setTrustEpfoFileName);
+  const uploadTrustEPFOFile = handleFileUpload(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName, 'multiple');
   const uploadHandicapFile = handleFileUpload(handicapFileTypeAlias, setHandicapFileName);
   const uploadEpfoPassBookFile = handleFileUpload(epfoPassbookFileTypeAlias, setEpfoPassBookFiles, epfoPassBookFiles, 'multiple');
   const uploadEpfoServiceHistoryFile = handleFileUpload(epfoServiceHistoryFileTypeAlias, setEpfoServiceHistoryFile, epfoServiceHistoryFile, 'single');
@@ -2764,6 +2781,7 @@ const AppointeeRegister = () => {
                               accept={"image/png, image/jpeg"}
                               disabled={isPreviousSectionDisabled}
                               maxUploadSize={imgAndPdfMaxSize}
+                              uploadTypeAlias={tenthCertificateFileTypeAlias}
                             // handleRemoveFile={remove10thPassCertificate}
                             />
                           </Box>
@@ -2825,6 +2843,7 @@ const AppointeeRegister = () => {
                               accept={"image/png, image/jpeg"}
                               disabled={isPreviousSectionDisabled}
                               maxUploadSize={imgAndPdfMaxSize}
+                              uploadTypeAlias={otherFileTypeAlias}
                             // handleRemoveFile={removeFathersDocCertificate}
                             />
                           </Box>
@@ -2898,7 +2917,7 @@ const AppointeeRegister = () => {
                                   accept={"image/png, image/jpeg"}
                                   disabled={isPreviousSectionDisabled}
                                   maxUploadSize={imgAndPdfMaxSize}
-
+                                  uploadTypeAlias={handicapFileTypeAlias}
                                 />
                               </Box>
                             </Grid>
@@ -3023,6 +3042,7 @@ const AppointeeRegister = () => {
                                     fileName={passportFileName}
                                     disabled={isPreviousSectionDisabled}
                                     maxUploadSize={imgAndPdfMaxSize}
+                                    uploadTypeAlias={passportFileTypeAlias}
                                   />
                                 </>
                               )}
@@ -3071,6 +3091,7 @@ const AppointeeRegister = () => {
                                     ...lable1CopyStyle,
                                     display: "flex",
                                     alignItems: "center",
+                                    marginRight:"-5px"
                                   }}
                                 >
                                   {
@@ -3083,6 +3104,10 @@ const AppointeeRegister = () => {
                                 >
                                   <IconButton
                                     disabled={isPreviousSectionDisabled}
+                                    sx={{
+                                      marginLeft: '-5px', // Moves the icon a bit to the left
+                                      marginTop: '-5px',  // Moves the icon a bit upwards
+                                    }}
                                   >
                                     <InfoOutlined />
                                   </IconButton>
@@ -3125,6 +3150,7 @@ const AppointeeRegister = () => {
                               <Box sx={fileUploadSectionContainerStyle}>
                                 <FileUploadSection
                                   chooseFile={uploadTrustEPFOFile}
+                                  handleRemoveFile={removeEPFOFile}
                                   // fileName={
                                   //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSBKTRUST")
                                   //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSBKTRUST").fileName
@@ -3134,13 +3160,15 @@ const AppointeeRegister = () => {
                                   accept={"image/png, image/jpeg"}
                                   disabled={isPreviousSectionDisabled}
                                   maxUploadSize={imgAndPdfMaxSize}
-
+                                  uploadTypeAlias={trustEpfoFileTypeAlias}
+                                  multiple={true}
                                 />
                               </Box>
                             </Box>
                           )}
                         </Grid>
                       </Grid>
+                      <Divider sx={{... divederStyle}} />
                       {/* ######  PF Verification Section End ###### */}
                       {/* ######  UAN number Section Start ###### */}
                       <Grid
@@ -3437,6 +3465,7 @@ const AppointeeRegister = () => {
                             fileName={aadharXmlFileName}
                             accept={".rar, .zip"}
                             disabled={isAadhaarVarified}
+                            uploadTypeAlias={aadharFileTypeAlias}
                           />
                         </Grid>
                       </Grid>
@@ -3657,6 +3686,7 @@ const AppointeeRegister = () => {
                                     fileName={epfoServiceHistoryFile}
                                     accept={"image/png, image/jpeg"}
                                     maxUploadSize={imgAndPdfMaxSize}
+                                    uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
                                   // handleRemoveFile={removeEPFOServiceHistory}
                                   />
                                 </Box>
@@ -3685,6 +3715,7 @@ const AppointeeRegister = () => {
                                     accept={"image/png, image/jpeg"}
                                     maxUploadSize={imgAndPdfMaxSize}
                                     multiple={true}
+                                    uploadTypeAlias={epfoPassbookFileTypeAlias}
                                   />
                                 </Box>
                               </Grid>

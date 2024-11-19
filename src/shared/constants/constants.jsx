@@ -6,7 +6,7 @@ import TableStatusCell from "shared/utils/dataTable/table-status-cell";
 
 // messages
 export const reportGenarate = `There is no data to export a report`
-export const maxUploadSize = `Max size: 2mb`;
+export const maxUploadSize = `Max size: 2MB`;
 export const emptyUserNameField = `Username can't be empty`;
 export const invalidUserCodeMsg = `User code should contain alphabet's and number only`;
 export const defaultUploadFormat = `Accepted format: pdf, jpg, png`;
@@ -2117,7 +2117,7 @@ export const getHandicapTypeDescription = (type) => {
 
 
 export const FILE_SIZE_LIMIT = 4000000; // 4MB
-export const imgAndPdfMaxSize = '2mb';
+export const imgAndPdfMaxSize = '2MB';
 export const imgAndPdfMaxSizeValue = 2000000;
 
 export const validFileTypes = [

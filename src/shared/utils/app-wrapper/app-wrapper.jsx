@@ -354,9 +354,9 @@ const AppWrapper = (App) => {
     const closeDocumentModel = () => {
       setDocumentModelOpen(false);
     };
-    const openDocumentModel = (fileDetails, fileType) => {
+    const openDocumentModel = (fileDetails, filename) => {
       setDocumentModelOpen(true);
-      setDocumentModelProps({ fileDetails, fileType });
+      setDocumentModelProps({ fileDetails, filename });
     };
     const openPasswordSubmitionModel = (passwordModelContent) => {
       setPasswordSubmitionModelOpen(true);
