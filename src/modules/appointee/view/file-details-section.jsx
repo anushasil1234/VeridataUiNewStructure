@@ -1,5 +1,5 @@
-import { Box, Button, Grid, Stack, Typography } from '@mui/material'
-import { candidatefileViewContainerStyle, listHeadingStyle, rightMostBtnStyle, submitBtnStyle } from 'app'
+import { Box, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material'
+import { candidatefileViewContainerStyle, imagestyleContainer, listHeadingStyle, rightMostBtnStyle, submitBtnStyle, zoombuttonStyle } from 'app'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import VerificationQuiestions from './verification-quiestions'
@@ -9,10 +9,13 @@ import validateQuestionSet from 'shared/utils/associate/validate-question-set'
 import TextAreaInput from 'shared/components/input-fields/text-input'
 import { manualSubmitConfirmatonMsg, remarksError } from 'shared/constants/constants'
 import createVerificationUpdate from 'shared/utils/associate/create-verification-update'
+import { Download, ZoomIn, ZoomOut } from '@mui/icons-material'
+import { handleZoom } from 'shared/utils/associate/Zoomin-out'
+import downloadFile from 'shared/utils/associate/download-file'
+
 
 const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
-    verificationOnChange, verificationQuestionSet, appointeeId }) => {
-    console.log("verificationUpdate", verificationUpdate);
+    verificationOnChange, verificationQuestionSet, appointeeId, fileName, categorySelected }) => {
 
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -26,21 +29,19 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
         UpdateAppointeeManualVerification
     } = apiSlice[0];
     const { openConfirmationModel } = functionSlice[0];
+    const [zoomLevel, setZoomLevel] = useState(1);
 
 
-    const [zoom, setZoom] = useState(1);
     const [remarks, setRemarks] = useState("");
     // const [verificationUpdate, setverificationUpdate] = useState({
     //     fieldName: false,
     // })
 
-
-    const zoomIn = () => {
-        setZoom((prevZoom) => Math.min(prevZoom + 0.1, 3)); // max zoom level 3x
+    const handleZoomIn = () => {
+        setZoomLevel(handleZoom('in'));
     };
-
-    const zoomOut = () => {
-        setZoom((prevZoom) => Math.max(prevZoom - 0.1, 1)); // min zoom level 1x (original size)
+    const handleZoomOut = () => {
+        setZoomLevel(handleZoom('out'));
     };
 
     // useEffect(() => {
@@ -96,42 +97,82 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
             </GridContainer>
             <GridContainer>
                 <Grid item xs={12} md={8}>
-                    <Box sx={candidatefileViewContainerStyle}>
-                        {
-                            fileSrc &&
-                            <img style={{
-                                transform: `scale(${zoom})`,
-                                transition: 'transform 0.3s ease',
-                                transformOrigin: 'center',
-                                margin: 'auto',
-                            }}
-                                src={fileSrc}
-                            />
-                        }
-                    </Box>
+                    <GridContainer>
+                        <Box sx={{ ...candidatefileViewContainerStyle }}>
+                            {categorySelected && fileSrc && (
+                                <Box
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '1px',
+                                        right: '1px',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                    }}
+                                >
+                                    <IconButton onClick={handleZoomOut} aria-label="zoom out">
+                                        <ZoomOut />
+                                    </IconButton>
+                                    <IconButton onClick={handleZoomIn} aria-label="zoom in">
+                                        <ZoomIn />
+                                    </IconButton>
+                                    <Tooltip title="Download File" arrow placement="right">
+                                        <IconButton onClick={() => downloadFile(fileSrc, fileName)} aria-label="download file">
+                                            <Download />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Box>
+                            )}
+                            {categorySelected ? (
+                                fileSrc && (
+                                    <Box sx={{ ...imagestyleContainer }}>
+                                        <img
+                                            style={{
+                                                transform: `scale(${zoomLevel})`,
+                                                transition: 'transform 0.3s ease',
+                                                transformOrigin: 'center',
+                                                maxWidth: '100%',
+                                                maxHeight: '100%',
+                                            }}
+                                            src={fileSrc}
+                                            alt="File Preview"
+                                        />
+                                    </Box>
+                                )
+                            ) : (
+                                <Typography sx={{ color: "gray", textAlign: "center", width: "100%" }}>
+                                    Please select a category and files to continue the verification process.
+                                </Typography>
+                            )}
+                        </Box>
+
+
+                    </GridContainer>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <VerificationQuiestions
-                        verificationUpdate={verificationUpdate}
-                        verificationQuestionSet={verificationQuestionSet}
-                        verificationOnChange={verificationOnChange}
-                    />
+                    <GridContainer>
+
+                        <VerificationQuiestions
+                            verificationUpdate={verificationUpdate}
+                            verificationQuestionSet={verificationQuestionSet}
+                            verificationOnChange={verificationOnChange}
+                        />
+                    </GridContainer>
                 </Grid>
+                <GridContainer>
+                    <Grid item xs={12} md={8}>
+                        <TextAreaInput
+                            label={'Remarks'}
+                            value={remarks}
+                            onChange={handleRemarksChanged}
+                        />
+                    </Grid>
+                </GridContainer>
             </GridContainer>
-            <GridContainer>
-                <Grid item xs={12} md={8}>
-                    <TextAreaInput
-                        label={'Remarks'}
-                        value={remarks}
-                        onChange={handleRemarksChanged}
-                    />
-                </Grid>
-            </GridContainer>
+
             <GridContainer>
                 <Grid item xs={12}>
                     <Stack sx={{ flexDirection: 'row', justifyContent: 'end' }}>
                         <Button
-                            //onClick={() => setCurrentPageNo(1)}
                             onClick={handleVerificationSubmit}
                             //sx={{ m: "15px 5px", ml: 3 }}
                             sx={submitBtnStyle}

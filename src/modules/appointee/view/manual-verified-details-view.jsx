@@ -95,8 +95,10 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [files, setFiles] = useState([]);
     const [file, setFile] = useState("");
     const [fileSrc, setFileSrc] = useState("");
+    const [fileName,setFilename]=useState("");
     const [verificationQuestionSet, setVerificationQuestionSet] = useState([]);
     const [verificationUpdate, setVerificationUpdate] = useState({});
+    const [categorySelected, setCategorySelected] = useState(false);
     console.log("verificationQuestionSet", verificationQuestionSet);
 
     const zoomIn = () => {
@@ -133,6 +135,8 @@ let ManualverifiedViewDetails = ({ details }) => {
         setVerificationType(selectedVerificationType);
         clearSubDropdownListofVerificationType(currentValue);
 
+        setCategorySelected(false);
+    
         // if (currentValue !== 'none') {
         console.log("uploadedFileData", currentValue);
 
@@ -177,6 +181,8 @@ let ManualverifiedViewDetails = ({ details }) => {
     const handleCategoryChange = async ({ target }) => {
         const { value } = target;
         setFileTypeCategory(value);
+        setCategorySelected(true);
+        console.log("uploadedFileData:", uploadedFileData);
         const { files } = filterDocVerificationList({ fileCategory: verificationType.value, uploadedFileData, fileType: value });
         setFiles(files);
         if (files.length === 1) {
@@ -194,7 +200,9 @@ let ManualverifiedViewDetails = ({ details }) => {
         const response = await GetUploadedFileDetailsById(payload);
         if (response && response.responseInfo) {
             const { fileSrc } = GetImageSrc(response.responseInfo);
-            setFileSrc(fileSrc);
+            const {fileName}=response.responseInfo
+            setFilename(fileName);
+            setFileSrc(fileSrc);           
         }
     }
     const handleFileChange = async ({ target }) => {
@@ -366,9 +374,11 @@ let ManualverifiedViewDetails = ({ details }) => {
                         appointeeId={appointeeId}
                         verificationType={verificationType}
                         fileSrc={fileSrc}
+                        fileName={fileName}
                         verificationOnChange={verificationOnChange}
                         verificationUpdate={verificationUpdate}
                         verificationQuestionSet={verificationQuestionSet}
+                        categorySelected={categorySelected}
                     />
                 }
             </ManualVerifiedPageSectionContainer>

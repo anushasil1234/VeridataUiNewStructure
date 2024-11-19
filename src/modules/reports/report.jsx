@@ -275,15 +275,7 @@ const UnwrappedReport = (props) => {
                     title={"Download pdf report"}
                     arrow
                   >
-                    {/* <ResponsiveFab
-                      variant="contained"
-                      size="small"
-                      button={"N"}
-                      onClick={handleApiCountDownload}
-                      sx={primaryFabStyle}
-                    >
-                      <Summarize width={18} />
-                    </ResponsiveFab> */}
+                   
                     <Button variant="contained" onClick={handleApiCountDownload}>PDF</Button>
                   </DarkTooltip>
                 </ListItemButton>
@@ -293,16 +285,7 @@ const UnwrappedReport = (props) => {
                     title={"Download xlsx report"}
                     arrow
                   >
-                    {/* <ResponsiveFab
-                      variant="contained"
-                      size="small"
-                      button={"N"}
-                      title="Download xlsx report"
-                      onClick={ handleDownload }
-                      sx={primaryFabStyle}
-                    >
-                      <ArticleIcon width={18} />
-                    </ResponsiveFab> */}
+                   
                     <Button variant="contained" onClick={handleDownload}>XLSX</Button>
                   </DarkTooltip>
                 </ListItemButton>
