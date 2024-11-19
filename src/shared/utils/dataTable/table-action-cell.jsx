@@ -1,4 +1,4 @@
-import { Fab, Stack, Typography } from "@mui/material";
+import { Button, Fab, Stack, Typography } from "@mui/material";
 import DarkTooltip from "../tooltip/dark-tooltip";
 import {
   AccountBox,
@@ -17,6 +17,7 @@ import {
 
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import {
+  buttonStyleSx,
   greenFabStyle,
   primaryFabStyle,
   redFabStyle,
@@ -35,6 +36,7 @@ import CloseAppointeeAddRemarks from "shared/components/form-dialog/close-appoin
 import { DDMMYYYY, filteredObjectProperty, GetAttribute, hasValue } from "..";
 import downloadFile from "../associate/download-file";
 import { useState } from "react";
+ import exclamation from "E:/Anusha/Veridata_12112024/veridataXmlUi/src/modules/appointee/view/exclamation.png"
 
 export const TableActionCell = (props1, props2) => {
   const { actionList, rowAttribute, actionPermissionList, setTableRows } =
@@ -323,10 +325,31 @@ export const TableActionCell = (props1, props2) => {
                 size="small"
                 button={"N"}
                 onClick={() => handleGetAppointeeDetails(appointeeId)}
-                sx={primaryFabStyle}
+                sx={{
+                  background: 'linear-gradient(45deg, #7851A9, #5E3D8D)',
+                  ...primaryFabStyle
+                }}
+             //   sx={ primaryFabStyle}
+                //sx={{...buttonStyleSx}}
               >
-                <VerifiedRounded width={18} />
+                <img
+                    src={exclamation}
+                    alt="exclamation"
+                    style={{ width: 20, height: 20 , filter: 'invert(1) brightness(100%)'}}
+                  />
               </Fab>
+              {/* <Button
+                //  onClick={handelclick}
+                  variant="contained"
+                  sx={{...buttonStyleSx}}
+                  startIcon={ <img
+                    src={exclamation}
+                    alt="exclamation"
+                    style={{ width: 25, height: 25 , filter: 'invert(1) brightness(100%)'}}
+                  />}
+                >
+                  verify manually
+                </Button> */}
             </DarkTooltip>
           ) : null}
           {action === "MANUALREVER"  ? (
@@ -339,9 +362,16 @@ export const TableActionCell = (props1, props2) => {
                 size="small"
                 button={"N"}
                 onClick={() => handleGetAppointeeDetails(appointeeId)}
-                sx={primaryFabStyle}
+                sx={{
+                  background: 'linear-gradient(45deg, #7851A9, #5E3D8D)',
+                  ...primaryFabStyle
+                }}
               >
-                <VerifiedRounded width={18} />
+                <img
+                    src={exclamation}
+                    alt="exclamation"
+                    style={{ width: 20, height: 20 , filter: 'invert(1) brightness(100%)'}}
+                  />
               </Fab>
             </DarkTooltip>
           ) : null}
