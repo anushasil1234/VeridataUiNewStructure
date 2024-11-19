@@ -8,7 +8,8 @@ import {
   toLogin, toForgotPassword, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData,
   toUserlist, toVerified, toHelp, toSetPassword, toReSetPassword, toNoMovementAgingReport, toNoResponseAgingReport, toNationalityReport, toAppointeeReport,
   toUserLogin,
-  topfPension
+  topfPension,
+  toMannualVerification
 } from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 import { MsalProvider } from '@azure/msal-react';
@@ -31,6 +32,7 @@ const Attention = Loadable(lazy(() => import('../../modules/attention/attention'
 const LinkNotSent = Loadable(lazy(() => import('../../modules/link-not-sent/link-not-sent')));
 const LapsedData = Loadable(lazy(() => import('../../modules/lapsed-data/lapsed-data')));
 const ProcessingData = Loadable(lazy(() => import('../../modules/processing-data/processing-data')));
+const MannualVerification = Loadable(lazy(() => import('../../modules/mannual-verification/mannual-verification')));
 const DataUpload = Loadable(lazy(() => import('../../modules/data-upload/data-upload')));
 const DataUpdata = Loadable(lazy(() => import('../../modules/data-update/data-update')));
 const UploadedData = Loadable(lazy(() => import('../../modules/uploaded-data/uploaded-data')));
@@ -68,6 +70,7 @@ const CustomRouter = [
       { path: toLinknotsent, exact: true, element: <LinkNotSent /> },
       { path: toLapseddata, exact: true, element: <LapsedData /> },
       { path: toProcessing, exact: true, element: <ProcessingData /> },
+      { path: toMannualVerification, exact: true, element: <MannualVerification /> },
       { path: toDataUploaded, exact: true, element: <UploadedData /> },
       { path: toUplodData, exact: true, element: <DataUpload /> },
       { path: toUpdateData, exact: true, element: <DataUpdata /> },

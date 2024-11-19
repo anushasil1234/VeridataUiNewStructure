@@ -151,6 +151,7 @@ export const toAttention = "/attention";
 export const toLinknotsent = "/linknotsent";
 export const toLapseddata = "/lapseddata";
 export const toProcessing = "/processing";
+export const toMannualVerification = "/manualverificationReport";
 export const toUplodData = "/uploddata";
 export const toUpdateData = "/updatedata";
 export const toApiCountReport = "/apicountreport";
@@ -188,6 +189,9 @@ const rejetedListActions = ['VIEWDETAILS'];
 const latestAppointeeListActions = ['VIEWDETAILS'];
 const verifiedListActions = ['VIEWDETAILS', 'DWNLDPSSBK', 'DWNLDTRUSTPSSBK', 'VIEWPSSBK'];
 const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL', 'USERMAILRESEND'];
+const mannualVerListActions = ['VIEWDETAILS','MANUALVER'];
+const mannualReverListActions = ['VIEWDETAILS','MANUALREVER'];
+const docReuploadListActions = ['VIEWDETAILS','NOTIFYMAIL'];
 const criticalListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
 const lapsedListActions = ['VIEWDETAILS', 'UPDTEAPNTEE'];
 const userListActions = ['VIEWUSERDETAILS', 'UPDATEUSER', 'CLOSEUSERDETAILS'];
@@ -825,7 +829,227 @@ export const processingListPdfTableHeadCell = [
         enums: ['status'],
     }
 ]
-
+export const mannualVerificationListTableHeadCell = [
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'appointeeEmailId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'createdDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Joining Date',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'status',
+        numeric: true,
+        type: "badge",
+        disablePadding: false,
+        label: 'Status',
+        enums: ['status', 'isNoIsuueinVerification', 'isReprocess'],
+        component: {
+            element: (props) => TableStatusCell(props),
+            attribute: ['appointeeId']
+        }
+    },
+    {
+        id: 'viewDetails',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Actions',
+        enums: ['viewDetails'],
+        component: {
+            element: (props) => TableActionCell({ actionList: mannualVerListActions, ...props }),
+            attribute: ['appointeeId']
+        }
+    }
+]
+export const mannualReverificationListTableHeadCell = [
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'appointeeEmailId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'createdDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Joining Date',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'isVerificationAttempt',
+        numeric: true,
+        type: "boolean",
+        disablePadding: false,
+        label: 'Verification Attempt',
+        enums: ['isVerificationAttempt'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'status',
+        numeric: true,
+        type: "badge",
+        disablePadding: false,
+        label: 'Status',
+        enums: ['status', 'isNoIsuueinVerification', 'isReprocess'],
+        component: {
+            element: (props) => TableStatusCell(props),
+            attribute: ['appointeeId']
+        }
+    },
+    {
+        id: 'viewDetails',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Actions',
+        enums: ['viewDetails'],
+        component: {
+            element: (props) => TableActionCell({ actionList: mannualReverListActions, ...props }),
+            attribute: ['appointeeId']
+        }
+    }
+]
+export const docReuploadListTableHeadCell = [
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'appointeeEmailId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'createdDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Joining Date',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'status',
+        numeric: true,
+        type: "badge",
+        disablePadding: false,
+        label: 'Status',
+        enums: ['status', 'isNoIsuueinVerification', 'isReprocess'],
+        component: {
+            element: (props) => TableStatusCell(props),
+            attribute: ['appointeeId']
+        }
+    },
+    {
+        id: 'viewDetails',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Actions',
+        enums: ['viewDetails'],
+        component: {
+            element: (props) => TableActionCell({ actionList: docReuploadListActions, ...props }),
+            attribute: ['appointeeId']
+        }
+    }
+]
 export const processingListTableHeadCell = [
     {
         id: 'appointeeName',
@@ -1812,7 +2036,7 @@ export const appointeeListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date ',
+        label: 'Joining Date',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -1982,6 +2206,7 @@ export const GetProcessedMISData_URL = `${AppoienteeWorkFlow}/GetProcessedMISDat
 export const GetCriticalAppointeeData_URL = `${AppoienteeWorkFlow}/GetCriticalAppointeeList`;
 export const GetRemarksRemedyData_URL = `${AppoienteeWorkFlow}/GetRemarksRemedy`;
 export const GetRemarks_URL = `${AppoienteeWorkFlow}/GetRemarks?AppointeeId=`;
+export const GetMannualVerificationData_URL = `${AppoienteeWorkFlow}/GetManualVeificationProcessData`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`;
 export const PostRemainderMail_URL = (appointeeId, userId) => `${AppoienteeWorkFlow}/PostRemainderMail?AppointeeId=${appointeeId}&UserId=${userId}`
 export const PostCandidateMailResend_URL = (appointeeId, userId) => `${AppoienteeWorkFlow}/PostCandidateMailResend?AppointeeId=${appointeeId}&UserId=${userId}`
@@ -1993,6 +2218,7 @@ export const downloadProcessingList_URL = `${AppointeeReports}/GetUnderProcessRe
 export const downloadLapsedList_URL = `${AppointeeReports}/GetLapsedDataReport`;
 export const downloadApiCounterReport_URL = `${AppointeeReports}/ApiCounterReport`;
 export const downloadpfReport_URL = `${AppointeeReports}/AppointeeDataPfFilterReport`;
+
 
 export const AppointeeAgingFilterReport_URL = `${AppointeeReports}/AppointeeAgingFilterReport`
 export const AppointeeNationalityReport_URL = `${AppointeeReports}/NationalityFilterReport`

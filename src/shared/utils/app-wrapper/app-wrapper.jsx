@@ -109,7 +109,8 @@ import {
   Postfileupload_URL,
   getUploadFileData_URL,
   UpdateAppointeeManualVerification_URL,
-  dataSubmitionMsg
+  dataSubmitionMsg,
+  GetMannualVerificationData_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -471,6 +472,10 @@ const AppWrapper = (App) => {
     };
     const getProessingDataList = async (payLoad) => {
       const responseInfo = await PfcRequest(GetUnderProcessFileData_URL, "POST", payLoad, null, true);
+      return responseInfo;
+    };
+    const getMannualVerificationDataList = async (payLoad) => {
+      const responseInfo = await PfcRequest(GetMannualVerificationData_URL, "POST", payLoad, null, true);
       return responseInfo;
     };
     const getLapsedDataList = async (payLoad) => {
@@ -850,6 +855,7 @@ const AppWrapper = (App) => {
           getPfCreationAppointeeReportList,
           getLinkNotSentList,
           getProessingDataList,
+          getMannualVerificationDataList,
           getLapsedDataList,
           GetLapsedDataReport,
           verifyAadharDetails,

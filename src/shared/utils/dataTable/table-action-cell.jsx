@@ -1,8 +1,4 @@
-import {
-  Fab,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Fab, Stack, Typography } from "@mui/material";
 import DarkTooltip from "../tooltip/dark-tooltip";
 import {
   AccountBox,
@@ -15,9 +11,11 @@ import {
   ForwardToInboxOutlined,
   MenuBook,
   Notifications,
+  Verified,
+  VerifiedRounded,
 } from "@mui/icons-material";
 
-import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import {
   greenFabStyle,
   primaryFabStyle,
@@ -27,30 +25,45 @@ import {
 import { useSelector } from "react-redux";
 import {
   credentialRemiderMsg,
+  NA,
   noPassBookMsg,
   toUpdateUser,
   verificationRemiderMsg,
 } from "shared/constants/constants";
 import UpdateAppointeeForm from "shared/components/form-dialog/update-appointee-data";
 import CloseAppointeeAddRemarks from "shared/components/form-dialog/close-appointee-add-Remarks";
-import { GetAttribute, hasValue } from "..";
+import { DDMMYYYY, filteredObjectProperty, GetAttribute, hasValue } from "..";
 import downloadFile from "../associate/download-file";
+import { useState } from "react";
 
 export const TableActionCell = (props1, props2) => {
-  const { actionList, rowAttribute, actionPermissionList, setTableRows } = props1;
+  const { actionList, rowAttribute, actionPermissionList, setTableRows } =
+    props1;
+  console.log("actionlist", rowAttribute);
   const { appointeeId, userId: id, isPassbookVerified, uanNo } = rowAttribute;
-  const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
+  const commonHooksFunctionSlice = useSelector(
+    (state) => state.commonHooksFunctionSlice
+  );
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const apiSlice = useSelector((state) => state.apiSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
+  const dropdownList = useSelector((state) => state.dropdownList);
 
+  const { getAppointeeDetails } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const { openConfirmationModel } = functionSlice[0];
+  const { openConfirmationModel, openVerify } = functionSlice[0];
   const { showErrorMessage } = popUpSlice[0];
   const { openViewModel, openUserViewModel } = functionSlice[0];
   const { openSubmitModel } = functionSlice[0];
   const { openPassbookViewModel, openEmploymentViewModel } = functionSlice[0];
+  const {
+    relationList,
+    qualificationList,
+    disabilityList,
+    maritalStatusList,
+    genderList,
+  } = dropdownList.length > 0 && dropdownList[0];
 
   const {
     getPassbookFileData,
@@ -131,7 +144,123 @@ export const TableActionCell = (props1, props2) => {
   const updateUser = (rowAttribute) => {
     navigateTo(toUpdateUser, { state: rowAttribute });
   };
+  const [_isManualPassbook,setIsManualPassbook] = useState()
+  const handleGetAppointeeDetails = async (appointeeId) => {
+    const response = await getAppointeeDetails(appointeeId);
+    console.log("res1111", response);
+    const {
+      appointeeName,
+      dateOfBirth,
+      gender,
+      memberName,
+      memberRelation,
+      handicapeType,
+      isHandicap,
+      maratialStatus,
+      qualification,
+      appointeeEmailId,
+      mobileNo,
+      nationality,
+      isFnameVarified,
+      isUanVarified,
+      isManualPassbook
+    } = response?.responseInfo;
+    setIsManualPassbook(isManualPassbook? isManualPassbook :NA)
+    const personalInfo = {
+      appointeeId,
+      appointeeName: appointeeName ? appointeeName : NA,
+      dateOfBirth: dateOfBirth ? DDMMYYYY(dateOfBirth) : NA,
+      gender: gender ? filteredObjectProperty(genderList, gender) : NA,
+      member: memberName ? memberName : NA,
+      relationshipWithMember: memberRelation
+        ? filteredObjectProperty(relationList, memberRelation)
+        : NA,
+      handicapType:
+        isHandicap === "N" || !isHandicap
+          ? NA
+          : filteredObjectProperty(disabilityList, handicapeType),
+      isPhysicallyHandicap: hasValue(isHandicap)
+        ? isHandicap === "Y"
+          ? "Yes"
+          : "No"
+        : NA,
+      maritalStatus: maratialStatus
+        ? filteredObjectProperty(maritalStatusList, maratialStatus)
+        : NA,
+      qualification: qualification
+        ? filteredObjectProperty(qualificationList, qualification)
+        : NA,
+      email: appointeeEmailId ? appointeeEmailId : NA,
+      mobileNo: mobileNo ? mobileNo : NA,
+      nationality: nationality ? nationality : NA,
+      isFnameVarified: isFnameVarified ? isFnameVarified : NA,
+      isUanVerified: isUanVarified
+        ? isUanVarified
+        : isUanVarified === false
+        ? isUanVarified
+        : NA,
+    };
+    console.log("personalInfo", response);
+    // const personalInfo = {
+    //   appointeeId,
+    //   appointeeName,
+    //   dateOfBirth,
+    //   gender,
+    //   relationshipWithMember,
+    //   member,
+    //   handicapType,
+    //   isPhysicallyHandicap,
+    //   maritalStatus,
+    //   qualification,
+    //   email,
+    //   mobileNo,
+    //   nationality,
+    //   isFnameVarified,
+    //   isUanVerified
+    // }
+    openVerify(personalInfo);
+  };
+  console.log("personalInfo", _isManualPassbook);
 
+  // const handleClick =(appointeeId)=>{
+  //   handleGetAppointeeDetails(appointeeId)
+  //   const personalInfo = {
+  //     appointeeId,
+  //     appointeeName: _appointeeName,
+  //     dateOfBirth :_dateOfBirth,
+  //     gender:_gender,
+  //     member: _member,
+  //     relationshipWithMember: _relationshipWithMember,
+  //     handicapType :_handicapType,
+  //     isPhysicallyHandicap :_isPhysicallyHandicap,
+  //     maritalStatus : _maritalStatus,
+  //     qualification : _qualification,
+  //     email :_email,
+  //     mobileNo : _mobileNo,
+  //     nationality :_nationality,
+  //     isFnameVarified :_isFnameVarified,
+  //     isUanVerified : _isUanVerified,
+  //   };
+  //   console.log('personalInfo',personalInfo)
+  //   // const personalInfo = {
+  //   //   appointeeId,
+  //   //   appointeeName,
+  //   //   dateOfBirth,
+  //   //   gender,
+  //   //   relationshipWithMember,
+  //   //   member,
+  //   //   handicapType,
+  //   //   isPhysicallyHandicap,
+  //   //   maritalStatus,
+  //   //   qualification,
+  //   //   email,
+  //   //   mobileNo,
+  //   //   nationality,
+  //   //   isFnameVarified,
+  //   //   isUanVerified
+  //   // }
+  //   openVerify(personalInfo);
+  // }
   let actionListData;
 
   actionListData =
@@ -139,7 +268,8 @@ export const TableActionCell = (props1, props2) => {
     actionList.map((action) => {
       return (
         <>
-          {action === "VIEWDETAILS" && actionPermissionList && actionPermissionList['A001'] ? (
+          {action === "VIEWDETAILS" ? (
+            // && actionPermissionList && actionPermissionList['A001']
             <DarkTooltip placement="top" title={"Open Details"} arrow>
               <Fab
                 mood="V"
@@ -152,7 +282,9 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "VIEWUSERDETAILS" && actionPermissionList && actionPermissionList['A001'] ? (
+          {action === "VIEWUSERDETAILS" &&
+          actionPermissionList &&
+          actionPermissionList["A001"] ? (
             <DarkTooltip placement="top" title={"Open Details"} arrow>
               <Fab
                 mood="V"
@@ -165,7 +297,8 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "NOTIFYMAIL" && actionPermissionList && actionPermissionList['A005'] ? (
+          {action === "NOTIFYMAIL" ? (
+            // && actionPermissionList && actionPermissionList['A005']
             <DarkTooltip placement="top" title={"Notify Appointee"} arrow>
               <Fab
                 appointeeId={appointeeId}
@@ -180,8 +313,44 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "USERMAILRESEND"  ? (
-            <DarkTooltip placement="top" title={"Resend Appointee Login Info"} arrow>
+          {action === "MANUALVER" ? (
+            // && actionPermissionList && actionPermissionList['A005']
+            <DarkTooltip placement="top" title={"Manual Verification"} arrow>
+              <Fab
+                appointeeId={appointeeId}
+                mood="V"
+                variant="contained"
+                size="small"
+                button={"N"}
+                onClick={() => handleGetAppointeeDetails(appointeeId)}
+                sx={primaryFabStyle}
+              >
+                <VerifiedRounded width={18} />
+              </Fab>
+            </DarkTooltip>
+          ) : null}
+          {action === "MANUALREVER"  ? (
+            // && actionPermissionList && actionPermissionList['A005']
+            <DarkTooltip placement="top" title={"Manual Re-Verification"} arrow>
+              <Fab
+                appointeeId={appointeeId}
+                mood="V"
+                variant="contained"
+                size="small"
+                button={"N"}
+                onClick={() => handleGetAppointeeDetails(appointeeId)}
+                sx={primaryFabStyle}
+              >
+                <VerifiedRounded width={18} />
+              </Fab>
+            </DarkTooltip>
+          ) : null}
+          {action === "USERMAILRESEND" ? (
+            <DarkTooltip
+              placement="top"
+              title={"Resend Appointee Login Info"}
+              arrow
+            >
               <Fab
                 appointeeId={appointeeId}
                 mood="V"
@@ -225,7 +394,9 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "DWNLDPSSBK" && actionPermissionList && actionPermissionList['A013'] ? (
+          {action === "DWNLDPSSBK" &&
+          actionPermissionList &&
+          actionPermissionList["A013"] ? (
             <DarkTooltip placement="top" title={"Download Passbook"} arrow>
               <Fab
                 variant="contained"
@@ -238,7 +409,9 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012']  ? (
+          {action === "VIEWPSSBK" &&
+          actionPermissionList &&
+          actionPermissionList["A012"] ? (
             <DarkTooltip placement="top" title={"EPFO Passbook"} arrow>
               <Fab
                 variant="contained"
@@ -252,8 +425,15 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "VIEWPSSBK" && actionPermissionList && actionPermissionList['A012'] && hasValue(uanNo) ? (
-            <DarkTooltip placement="top" title={"EPFO Employment History"} arrow>
+          {action === "VIEWPSSBK" &&
+          actionPermissionList &&
+          actionPermissionList["A012"] &&
+          hasValue(uanNo) ? (
+            <DarkTooltip
+              placement="top"
+              title={"EPFO Employment History"}
+              arrow
+            >
               <Fab
                 variant="contained"
                 size="small"
@@ -266,7 +446,7 @@ export const TableActionCell = (props1, props2) => {
             </DarkTooltip>
           ) : null}
           {(action === "DWNLDTRUSTPSSBK") &
-            (rowAttribute.isTrustPFApplicable === true) ? (
+          (rowAttribute.isTrustPFApplicable === true) ? (
             <DarkTooltip
               placement="top"
               title={"Download Trust Passbook"}
@@ -283,7 +463,9 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "UPDTEAPNTEE" && actionPermissionList && actionPermissionList['A007'] ? (
+          {action === "UPDTEAPNTEE" &&
+          actionPermissionList &&
+          actionPermissionList["A007"] ? (
             <DarkTooltip placement="top" title={"Edit Appointee"} arrow>
               <Fab
                 variant="contained"
@@ -295,7 +477,9 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "UPDATEUSER" && actionPermissionList && actionPermissionList['A007'] ? (
+          {action === "UPDATEUSER" &&
+          actionPermissionList &&
+          actionPermissionList["A007"] ? (
             <DarkTooltip placement="top" title={"Edit User"} arrow>
               <Fab
                 variant="contained"
