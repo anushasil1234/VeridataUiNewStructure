@@ -51,6 +51,9 @@ const TableStatusCell = (props) => {
     if (cellValue === "Lapsed") {
       chipStyle = lapsedStyle;
     }
+    if (cellValue === "Reupload Requested") {
+      chipStyle = ongoingStyle;
+    }
   }
   
   

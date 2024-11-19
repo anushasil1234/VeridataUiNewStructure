@@ -92,7 +92,7 @@ export const FieldValue = ({ fieldValue }) => {
     );
 };
 
-export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge = null, badgeTitle=null }) => {
+export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge = null, badgeTitle = null }) => {
     return (
         <>
             <Grid item xs={12} sm={6} md={5} lg={4} sx={listStyle}>
@@ -103,7 +103,7 @@ export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge
             <Grid container item xs={12} sm={6} md={7} lg={8} sx={listStyle}>
 
                 {
-                    badge ?
+                    badge === true ?
                         <>
                             <Grid item xs={6} md={5}>
                                 <FieldValue fieldValue={fieldValue} />
