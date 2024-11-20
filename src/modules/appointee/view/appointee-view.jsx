@@ -848,6 +848,8 @@ let AppointeeViewForm = ({
                 <PersonalInformation
                   fieldName={"Mobile"}
                   fieldValue={mobileNo}
+                  badge={isAadharVerified}
+                  badgeTitle={"AADHAR Verified"}
                 />
                 <PersonalInformation fieldName={"Email"} fieldValue={email} />
                 <PersonalInformation
