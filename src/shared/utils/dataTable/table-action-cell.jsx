@@ -36,7 +36,7 @@ import CloseAppointeeAddRemarks from "shared/components/form-dialog/close-appoin
 import { DDMMYYYY, filteredObjectProperty, GetAttribute, hasValue } from "..";
 import downloadFile from "../associate/download-file";
 import { useState } from "react";
- import exclamation from "E:/Anusha/Veridata_12112024/veridataXmlUi/src/modules/appointee/view/exclamation.png"
+ import exclamation from "assets/images/exclamation.png"
 
 export const TableActionCell = (props1, props2) => {
   const { actionList, rowAttribute, actionPermissionList, setTableRows } =

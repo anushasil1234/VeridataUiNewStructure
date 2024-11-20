@@ -12,10 +12,8 @@ import {
   TaskAlt,
   WarningAmber,
   PermMedia,
-  NewReleases,
-  NewReleasesOutlined,
 } from "@mui/icons-material";
-import exclamation from "./exclamation.png"
+import exclamation from "assets/images/exclamation.png"
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
 import {
   DATEDIFF,
@@ -30,11 +28,9 @@ import {
   _addFabStyle,
   actionIconListStyle,
   actionIconStyle,
-  appointeeImageViewStyle,
   appointeeVerificationStatusChipPropsStyle,
   buttonStyleSx,
   cardStyle,
-  displayImageStyle,
   documentListItemStyle,
   documentListStyle,
   floatingIconListStyle,
@@ -65,7 +61,6 @@ import {
   pensionConfirmation,
   epfoServiceHistoryFileTypeAlias,
 } from "shared/constants/constants";
-import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
 import { storeActionRoute } from "store/slices/action-route-slice";
@@ -76,10 +71,7 @@ import {
   PersonalInformation,
 } from "shared/components/display-information/personal-information";
 import RemarksInputModel from "shared/utils/models/remarks-modal";
-import Button2 from "shared/utils/button/button2";
 // import viewImage from 'assets/images/profile/view_image.png';
-import viewImage from 'assets/images/profile/file_upload_icon.png';
-import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { FileViewComponent } from "./file-view-component";
 
 
