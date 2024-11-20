@@ -797,6 +797,102 @@ export const criticalListTableHeadCell = [
         }
     }
 ]
+export const MVListPdfTableHeadCell = [
+    {
+        type: "string",
+        label: 'Name',
+        enums: ['appointeeName', 'candidateId'],
+    },
+    {
+        type: "string",
+        label: 'Mobile No',
+        enums: ['mobileNo'],
+    },
+    {
+        type: "string",
+        label: 'Email',
+        enums: ['appointeeEmailId'],
+    },
+    {
+        type: "date",
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+    },
+    {
+        type: "date",
+        label: 'Joining Date',
+        enums: ['dateOfJoining'],
+    },
+    {
+        type: "string",
+        label: 'Status',
+        enums: ['status'],
+    }
+]
+export const RDListPdfTableHeadCell = [
+    {
+        type: "string",
+        label: 'Name',
+        enums: ['appointeeName', 'candidateId'],
+    },
+    {
+        type: "string",
+        label: 'Mobile No',
+        enums: ['mobileNo'],
+    },
+    {
+        type: "string",
+        label: 'Email',
+        enums: ['appointeeEmailId'],
+    },
+    {
+        type: "date",
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+    },
+    {
+        type: "date",
+        label: 'Joining Date',
+        enums: ['dateOfJoining'],
+    },
+    {
+        type: "string",
+        label: 'Status',
+        enums: ['status'],
+    }
+]
+export const MRVListPdfTableHeadCell = [
+    {
+        type: "string",
+        label: 'Name',
+        enums: ['appointeeName', 'candidateId'],
+    },
+    {
+        type: "string",
+        label: 'Mobile No',
+        enums: ['mobileNo'],
+    },
+    {
+        type: "string",
+        label: 'Email',
+        enums: ['appointeeEmailId'],
+    },
+    {
+        type: "date",
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+    },
+    {
+        type: "date",
+        label: 'Joining Date',
+        enums: ['dateOfJoining'],
+    },
+    {
+        type: "string",
+        label: 'Status',
+        enums: ['status'],
+    }
+]
 export const processingListPdfTableHeadCell = [
     {
         type: "string",
@@ -805,7 +901,7 @@ export const processingListPdfTableHeadCell = [
     },
     {
         type: "string",
-        label: 'mobile No',
+        label: 'Mobile No',
         enums: ['mobileNo'],
     },
     {
@@ -945,12 +1041,12 @@ export const mannualReverificationListTableHeadCell = [
         }
     },
     {
-        id: 'isVerificationAttempt',
+        id: 'verificationAttempted',
         numeric: true,
         type: "boolean",
         disablePadding: false,
         label: 'Verification Attempt',
-        enums: ['isVerificationAttempt'],
+        enums: ['verificationAttempted'],
         component: {
             element: Typography
         }
