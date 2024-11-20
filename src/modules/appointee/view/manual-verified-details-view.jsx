@@ -264,7 +264,7 @@ let ManualverifiedViewDetails = ({ details }) => {
 
     useEffect(() => {
         const { verificationTypeList } = createVerificationTypeList(defaultVerificationTypeList, verificationFieldSet);
-        setUploadedFileDataResponse(verificationTypeList[0].value);
+        setUploadedFileDataResponse(verificationTypeList[0]?.value);
         setVerificationTypeList(verificationTypeList);
         console.log("verificationTypeList", verificationTypeList);
     }, [])

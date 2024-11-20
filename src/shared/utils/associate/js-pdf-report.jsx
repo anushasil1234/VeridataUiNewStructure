@@ -27,8 +27,9 @@ const jsPDFReportDataTemplate = async ({
   reportDetails = {},
   tables = [],
   responseInfo = [],
-  empFlag
- // employmentHistoryResponse = []
+  empFlag,
+  clientDetailsFlag,
+  countFlag // employmentHistoryResponse = []
 }) => {
   const {
     fileName = "Report",
@@ -127,7 +128,7 @@ const jsPDFReportDataTemplate = async ({
     doc.line(0, lineY, doc.internal.pageSize.width, lineY);
   };
 
-  const addClientDetails = (doc, responseInfo) => {
+  const addClientDetails = (doc, responseInfo, clientDetailsFlag) => {
     const clientDetails = [
       // { label: "Client ID:", value: responseInfo.clientId },
       { label: "Full Name:", value: responseInfo?.fullName },
@@ -139,11 +140,11 @@ const jsPDFReportDataTemplate = async ({
     doc.setFontSize(12);
     doc.setFont("Helvetica", "bold");
 
-    doc.text("Employment History for:", 194, lineY + 10);
+    clientDetailsFlag===true && doc.text("Employment History for:", 194, lineY + 10);
     doc.setFont("Helvetica", "normal");
 
     let startY = lineY + 20;
-    clientDetails && clientDetails?.forEach((detail) => {
+    clientDetailsFlag===true && clientDetails && clientDetails?.forEach((detail) => {
       doc.text(`${detail?.label}`, 194, startY);
       doc.text(`${detail?.value}`, 235, startY);
       startY += 5;
@@ -599,7 +600,9 @@ const jsPDFReportDataTemplate = async ({
 
       startY += splitDesc.length * lineHeight + 5;
     }
-
+    countFlag &&  doc.text(`Total Count : ${countFlag}`, 14, startY);
+    startY += 5;
+     
     tables &&
       tables.forEach((table, index) => {
         const {
@@ -623,6 +626,16 @@ const jsPDFReportDataTemplate = async ({
           );
           addFooter(doc, tableCompanyName || defaultCompanyName);
           startY = lineY + 10;
+        }
+        else{
+          addHeader(
+            doc,
+            label,
+            formattedFromDate,
+            formattedToDate,
+            formattedReportDate
+          );
+          addFooter(doc, tableCompanyName || defaultCompanyName);
         }
         const pageHeight = doc.internal.pageSize.height;
         const marginBottom = 20;
@@ -663,13 +676,13 @@ const jsPDFReportDataTemplate = async ({
             cellPadding: 3,
             fontSize: 8,
           },
-          // didDrawPage: (data) => {
+          didDrawPage: (data) => {
 
-          //   if (data.pageNumber > 1) {
-          //     addHeader(doc, label, formattedFromDate, formattedToDate, formattedReportDate);
-          //  //   addFooter(doc, tableCompanyName || defaultCompanyName);
-          //   }
-          // },
+            if (data.pageNumber > 1) {
+              addHeader(doc, label, formattedFromDate, formattedToDate, formattedReportDate);
+              addFooter(doc, tableCompanyName || defaultCompanyName);
+            }
+          },
         });
 
         startY = doc.autoTable.previous.finalY + 20;
@@ -690,7 +703,7 @@ const jsPDFReportDataTemplate = async ({
     formattedReportDate
   );
   addContent();
-  responseInfo && addClientDetails(doc, responseInfo);
+  responseInfo && addClientDetails(doc, responseInfo, clientDetailsFlag);
   responseInfo && addCompanyDetails(doc, responseInfo?.companies,empFlag);
   //employmentHistoryResponse && addEmploymentHistory(doc, employmentHistoryResponse);
 

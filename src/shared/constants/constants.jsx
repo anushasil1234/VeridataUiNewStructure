@@ -1045,7 +1045,7 @@ export const mannualReverificationListTableHeadCell = [
         numeric: true,
         type: "boolean",
         disablePadding: false,
-        label: 'Verification Attempt',
+        label: 'Verification Attempted',
         enums: ['verificationAttempted'],
         component: {
             element: Typography
