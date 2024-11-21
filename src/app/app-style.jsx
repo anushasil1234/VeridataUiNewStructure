@@ -1204,7 +1204,8 @@ export const imagestyleContainer ={
   overflow: 'hidden',
   overflowX: 'auto',
   overflowY: 'auto',
-  width: "85%"
+  width: "85%",
+  height:"100%"
 }
 
 export const getStatusChipStyle = (status) => {

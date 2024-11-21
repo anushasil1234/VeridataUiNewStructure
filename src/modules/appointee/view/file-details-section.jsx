@@ -1,6 +1,6 @@
 import { Box, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import { candidatefileViewContainerStyle, imagestyleContainer, listHeadingStyle, rightMostBtnStyle, submitBtnStyle, zoombuttonStyle } from 'app'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import VerificationQuiestions from './verification-quiestions'
 import GridContainer from 'shared/components/grid-container/grid-container'
@@ -12,6 +12,8 @@ import createVerificationUpdate from 'shared/utils/associate/create-verification
 import { Download, ZoomIn, ZoomOut } from '@mui/icons-material'
 import { handleZoom } from 'shared/utils/associate/Zoomin-out'
 import downloadFile from 'shared/utils/associate/download-file'
+import { calculateDragPosition } from 'shared/utils/associate/dragein'
+import { MouseEventHandler } from 'shared/utils/associate/dragable'
 
 
 const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
@@ -21,8 +23,9 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
     const popUpSlice = useSelector((state) => state.popUpSlice);
     const apiSlice = useSelector((state) => state.apiSlice);
     const functionSlice = useSelector((state) => state.functionSlice);
-
-
+    const [isDragging, setIsDragging] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
     const { userId } = loggedInData[0];
     const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
     const {
@@ -40,6 +43,21 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
     const handleRemarksChanged = ({ target }) => {
         setRemarks(target.value);
     }
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setLastMousePosition({ x: e.clientX, y: e.clientY });
+      };
+    
+      const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        const currentMousePosition = { x: e.clientX, y: e.clientY };
+        setPosition((prevPosition) =>
+            calculateDragPosition(isDragging, lastMousePosition, currentMousePosition, prevPosition)
+        );
+        setLastMousePosition(currentMousePosition);
+    };
+    
+      const handleMouseUp = () => setIsDragging(false);
     const callApiBasedOnSuccess = async (payload) => {
         {
             const { responseInfo } = await UpdateAppointeeManualVerification(payload);
@@ -49,6 +67,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
         }
         return false;
     };
+    
 
     const handleVerificationSubmit = async () => {
         let submitconfModelContent = {
@@ -144,14 +163,29 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
                             )}
                             {categorySelected ? (
                                 fileSrc && (
-                                    <Box sx={{ ...imagestyleContainer }}>
+                                    <Box  sx={{
+                                        ...imagestyleContainer,
+                                        position: 'relative',
+                                        overflow: 'hidden',
+                                        cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default', 
+                                    }}
+                                    {...MouseEventHandler({
+                                        zoomLevel,
+                                        handleMouseMove,
+                                        handleMouseUp,
+                                        handleMouseDown,
+                                    })}
+                                >
                                         <img
                                             style={{
+                                                 position: 'absolute',
                                                 transform: `scale(${zoomLevel})`,
                                                 transition: 'transform 0.3s ease',
                                                 transformOrigin: 'center',
                                                 maxWidth: '100%',
                                                 maxHeight: '100%',
+                                                left:  isDragging ? `${position.x}px` : 'auto', 
+                                                top: isDragging ? `${position.y}px` : 'auto', 
                                             }}
                                             src={fileSrc}
                                             alt="File Preview"

@@ -258,6 +258,13 @@ let ManualverifiedViewDetails = ({ details }) => {
     ])
     useEffect(() => {
         if (verificationType) {
+            let newFileSrc = ''; 
+        if (verificationType.value === fatherFileCategoryTypeAlias) {
+            newFileSrc = ''; 
+        } else if (verificationType.value === epfFileTypeAlias) {
+            newFileSrc = '';
+        }
+        setFileSrc(newFileSrc);
             const { verificationCategoryList } = filterDocVerificationList({
                 fileCategory: verificationType.value,
                 uploadedFileData,
