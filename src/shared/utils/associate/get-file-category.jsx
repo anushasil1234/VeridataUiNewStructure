@@ -1,8 +1,8 @@
-const getFileCategoryByFileType = (verificationCategoryList, fileTypeCategory) => {
-    console.log("verificationCategoryList", verificationCategoryList);
-
-    const subCategory = verificationCategoryList && verificationCategoryList.length > 0 &&
-        verificationCategoryList.filter(({ value }) => value === fileTypeCategory)[0]?.subCategory
-    return { subCategory }; // Return null if fileType is not found
+const getFileCategoryByFileType = (verificationCategoryList) => {
+    const subCategoryList = verificationCategoryList && verificationCategoryList.length > 0
+        ? verificationCategoryList.map(({ subCategory }) => subCategory)
+        : [];
+    return { subCategoryList }; 
 }
-export default getFileCategoryByFileType
+
+export default getFileCategoryByFileType;

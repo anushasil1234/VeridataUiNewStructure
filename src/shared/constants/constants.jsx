@@ -1,4 +1,4 @@
-import { Female, Male, Transgender } from "@mui/icons-material";
+import { Female, Male, Transgender, TroubleshootTwoTone } from "@mui/icons-material";
 import { Checkbox, Typography } from "@mui/material";
 import { TableActionCell } from "shared/utils/dataTable/table-action-cell";
 import TableClickableCell from "shared/utils/dataTable/table-clickable-cell";
@@ -28,7 +28,8 @@ export const uanVerifySuccessMsg = `UAN has been verified successfully`;
 export const generateOtpRety = `Otp sending is unsuccessful, please retry`;
 export const generateOtpSucces = `OTP has sent successfully, Please fill the otp and submit`;
 export const aadharNoValidationError = `Your phone number is not linked with Aadhaar. Link your phone number then retry or submit anyway`;
-export const remarksError = `Remarks should have at least 10 charecters long`;
+export const remarksError = `Remarks should have at least 15 charecters long`;
+export const remarksemptyerror=`Please provide your remarks before submitting.`;
 export const invalidPanMsg = `PAN number should be of 10 digits and properly formatted`;
 export const invalidAadharMsg = `Aadhaar number should be of 12 digits`;
 export const emptyAadharFileMsg = `Please upload Aadhaar`;
@@ -75,6 +76,8 @@ export const generateLapsedAppointeeReportDesc = `The purpose of this report is 
 export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
 export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns,identify any issues, and improve the efficiency of the API system.`;
 export const pfPensionReportDesc = `The purpose of this report is to provide a comprehensive overview of PF and Pension information for appointees within a specified date range. This report includes detailed fields such as appointee name, Aadhaar number, UAN number, joining date, PF and pension status, and passbook status (manual or automatic). The objective is to help stakeholders monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
+export const verificatiosucess=`Your verification has been successfully completed.`
+
 export const generatenationlityReportDesc = (type) => {
     switch (type) {
         case 'All':
@@ -2399,8 +2402,17 @@ export const roleEmptyMsg = `Role can't be empty`;
 export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
 export const timeOutMsg = `Server is down, Please try again.`;
 export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
-
-// Models messages ends
+export const ManualSubmitConfirmation = () => {
+    const manualSubmitConfirmatonMsgforfile = `You have not gone through all files, and there may be information that you have missed out.\nAre you sure you want to continue with the submission?`;
+  
+    return (
+      <div >
+        {manualSubmitConfirmatonMsgforfile.split("\n").map((line, index) => (
+          <p key={index}>{line}</p>
+        ))}
+      </div>
+    );
+  };
 
 export const getStatusTooltip = (status) => {
     switch (status) {
@@ -2502,7 +2514,7 @@ export const defaultVerificationTypeList = [
     // },
     {
         value: fatherFileCategoryTypeAlias,
-        label: `Father's name`,
+        label: `Father's Name`,
         verificationFieldName: 'isFnameVarified'
     },
     {
@@ -2539,8 +2551,8 @@ export const defaultFnameVerificationUpdate = {
 export const defaultEpfoPassbookVerificationUpdate = {
     [`isDocComplete_${epfoServiceHistoryFileTypeAlias}`]: undefined,
     [`isDocValid_${epfoServiceHistoryFileTypeAlias}`]: undefined,
-    // [`isDocComplete_${epfoPassbookFileTypeAlias}`]: undefined,
-    // [`isDocValid_${epfoPassbookFileTypeAlias}`]: undefined
+     [`isDocComplete_${epfoPassbookFileTypeAlias}`]: undefined,
+     [`isDocValid_${epfoPassbookFileTypeAlias}`]: undefined
 }
 
 export const fileVerificationEnums = {
@@ -2549,7 +2561,7 @@ export const fileVerificationEnums = {
     docFname: "isFnameVarified",
     docEPFO: "isUanVerified",
     pensionApplicable: "isPensionApplicable",
-    pensionGapFound: "isPensionGapFound"
+    pensionGapFound: "isPensionGapFound",
 }
 
 // export const defaultVerificationQuestionSet = [
@@ -2593,36 +2605,42 @@ export const passbookVerificationQuestionSet = [
         label: "Completeness of Service History document?",
         name: fileVerificationEnums.docComplete,
         subCategory: epfoServiceHistoryFileTypeAlias,
-        disabled: false
+        type: "prerequisite",
+        disabled: TroubleshootTwoTone
     },
     {
         label: "Correctness of Service History document?",
         name: fileVerificationEnums.docValid,
         subCategory: epfoServiceHistoryFileTypeAlias,
-        disabled: false,
+        type: "prerequisite",
+        disabled:true,
     },
     {
         label: "Completeness of Passbook document?",
         name: fileVerificationEnums.docComplete,
         subCategory: epfoPassbookFileTypeAlias,
-        disabled: false,
+        type: "prerequisite",
+        disabled: true,
     },
     {
         label: "Correctness of Passbook document?",
         name: fileVerificationEnums.docValid,
         subCategory: epfoPassbookFileTypeAlias,
-        disabled: false,
+        type: "prerequisite",
+        disabled:true,
     },
     {
         label: "Is pension applicable?",
         name: fileVerificationEnums.pensionApplicable,
         subCategory: epfoPassbookFileTypeAlias,
+        dependsOn: [fileVerificationEnums.docComplete, fileVerificationEnums.docValid,fileVerificationEnums.DocComplete,fileVerificationEnums.docValid],
         disabled: true
     },
     {
         label: "Has pension gap?",
         name: fileVerificationEnums.pensionGapFound,
         subCategory: epfoPassbookFileTypeAlias,
+        dependsOn: [fileVerificationEnums.docComplete, fileVerificationEnums.docValid,fileVerificationEnums.pensionApplicable],
         disabled: true
     }
 ]

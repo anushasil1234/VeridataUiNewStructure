@@ -7,7 +7,7 @@ import GridContainer from 'shared/components/grid-container/grid-container'
 import { hasValue, validationsCheck } from 'shared/utils'
 import validateQuestionSet from 'shared/utils/associate/validate-question-set'
 import TextAreaInput from 'shared/components/input-fields/text-input'
-import { manualSubmitConfirmatonMsg, remarksError } from 'shared/constants/constants'
+import { ManualSubmitConfirmation, manualSubmitConfirmatonMsg, remarksemptyerror, remarksError, verificatiosucess } from 'shared/constants/constants'
 import createVerificationUpdate from 'shared/utils/associate/create-verification-update'
 import { Download, ZoomIn, ZoomOut } from '@mui/icons-material'
 import { handleZoom } from 'shared/utils/associate/Zoomin-out'
@@ -15,7 +15,7 @@ import downloadFile from 'shared/utils/associate/download-file'
 
 
 const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
-    verificationOnChange, verificationQuestionSet, appointeeId, fileName, categorySelected }) => {
+    verificationOnChange, verificationQuestionSet, appointeeId, fileName,selectedFiles, files,setVerificationType, categorySelected, setVerificationCategoryList, verificationTypeList, setVerificationTypeList }) => {
 
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -24,64 +24,84 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
 
 
     const { userId } = loggedInData[0];
-    const { showErrorMessage } = popUpSlice[0];
+    const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
     const {
         UpdateAppointeeManualVerification
     } = apiSlice[0];
     const { openConfirmationModel } = functionSlice[0];
     const [zoomLevel, setZoomLevel] = useState(1);
-
-
     const [remarks, setRemarks] = useState("");
-    // const [verificationUpdate, setverificationUpdate] = useState({
-    //     fieldName: false,
-    // })
-
     const handleZoomIn = () => {
         setZoomLevel(handleZoom('in'));
     };
     const handleZoomOut = () => {
         setZoomLevel(handleZoom('out'));
     };
-
-    // useEffect(() => {
-    // }, [])
     const handleRemarksChanged = ({ target }) => {
         setRemarks(target.value);
     }
+    const callApiBasedOnSuccess = async (payload) => {
+        {
+            const { responseInfo } = await UpdateAppointeeManualVerification(payload);
+            if (responseInfo) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     const handleVerificationSubmit = async () => {
-        const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
-        console.log("verificationUpdate", verificationUpdate);
-
-        // if (hasValue(error)) {
-        //     showErrorMessage(error);
-        //     return
-        // }
-        // if (remarks.length < 10) {
-        //     showErrorMessage(remarksError);
-        //     return
-        // }
-        // const verificationUpdates = Object.entries(verificationUpdate).map(([key, value]) => ({
-        //     fieldName: key,
-        //     value: value
-        // }));
-
-        const submitconfModelContent = {
-            dialogContentText: manualSubmitConfirmatonMsg,
+        let submitconfModelContent = {
+            dialogContentText: "",
         };
+        if (!hasValue(remarks)) { 
+            showErrorMessage(remarksemptyerror); 
+            return;
+        }
+        if (remarks.length < 15) {
+            showErrorMessage(remarksError); 
+            return;
+        }
+        const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
+        if (error) {
+            showErrorMessage(error);
+            return;
+        }
+        if (selectedFiles.length !== files.length) {
+            submitconfModelContent.dialogContentText = <ManualSubmitConfirmation/>;
+        } else {
+            submitconfModelContent.dialogContentText =manualSubmitConfirmatonMsg;
+        }
+    
+        openConfirmationModel(submitconfModelContent);
+    
         const { VerificationSubCategoryList } = createVerificationUpdate(verificationUpdate);
-        // console.log("VerificationSubCategoryList", _verificationUpdates);
-        
         const payload = {
             appointeeId: appointeeId,
             userId: userId,
             verificationCategory: verificationType.value,
             remarks: remarks,
-            VerificationSubCategoryList: VerificationSubCategoryList
-        }
-        openConfirmationModel(submitconfModelContent, async () => await UpdateAppointeeManualVerification(payload));
-    }
+            VerificationSubCategoryList: VerificationSubCategoryList,
+        };
 
+        openConfirmationModel(submitconfModelContent, async () => {
+            const isSuccessful = await callApiBasedOnSuccess(payload);
+            if (isSuccessful) {
+                const updatedVerificationTypeList = verificationTypeList.filter(
+                    (type) => type.value !== verificationType.value
+                );
+                if (updatedVerificationTypeList.length > 0) {
+                    setVerificationTypeList(updatedVerificationTypeList)
+                    const nextVerificationType = updatedVerificationTypeList[0];
+                    setVerificationType(nextVerificationType);
+                } else {
+                    showSuccessMessage(verificatiosucess);
+                }
+                setVerificationCategoryList([]);
+            }
+        });
+    };
+   
     return (
         <>
             <GridContainer>

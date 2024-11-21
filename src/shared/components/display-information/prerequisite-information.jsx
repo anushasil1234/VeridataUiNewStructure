@@ -34,7 +34,7 @@ const PrerequisiteInformation = () => {
                     {" — Other wise contact with respective hr to update mobile number. "}
                     <Box >
                         {/* <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}> */}
-                        <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}>
+                        <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHARMBLE" })}>
                             ...show more info
                         </Button>
                     </Box>

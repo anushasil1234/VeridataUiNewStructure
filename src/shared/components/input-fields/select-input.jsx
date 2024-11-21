@@ -1,9 +1,8 @@
 import { FormControl, MenuItem, Select, Typography } from '@mui/material'
-import { inputFieldStyle2, lable1CopyStyle } from 'app'
+import { inputFieldStyle2, inputFieldStylesx, lable1CopyStyle } from 'app'
 
 const SelectInput = ({ itemList, label, onChange, value, required = false, disabled = false, handleClickOnMenuItem }) => {
-    console.log("SelectInput", itemList, value);
-
+  
     return (
         <FormControl fullWidth>
             <Typography sx={lable1CopyStyle}>
@@ -18,7 +17,7 @@ const SelectInput = ({ itemList, label, onChange, value, required = false, disab
                 id="demo-simple-select"
                 className="customeTextField"
                 disabled={disabled}
-                sx={inputFieldStyle2}
+                sx={{...inputFieldStylesx}}
                 onChange={onChange}
                 value={value}
             >
