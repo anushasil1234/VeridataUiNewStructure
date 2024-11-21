@@ -51,6 +51,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+
   const columns = [
     {
       field: "approvedOn",
@@ -134,7 +135,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
     console.log("passbookDetails", response);
 
     const { dob, fatherName, fullName, pfUan, companies } =
-      response?.responseInfo;
+      response?.responseInfo || {};
     setResponseInfo(response?.responseInfo);
     if (pfUan && companies.length > 0) {
       dob ? setDob(dob) : setDob(NA);
@@ -174,7 +175,8 @@ let PassbookViewDetails = ({ appointeeId }) => {
         rptDesc: generatePassbookDetailsReportDesc,
       },
       responseInfo: responseInfo,
-      empFlag : false
+      empFlag : false,
+      clientDetailsFlag: true
     });
   };
 
@@ -186,6 +188,7 @@ let PassbookViewDetails = ({ appointeeId }) => {
     <DownloadIcon />,
     "Passbook Report"
   );
+  //console.log('envvar',process.env.REACT_APP_COMPANY_NAME)
   useEffect(() => {
     setTableRows(appointeeId);
   }, []);

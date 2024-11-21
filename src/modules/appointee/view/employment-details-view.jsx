@@ -132,7 +132,9 @@ let EmploymentViewDetails = ({ appointeeId, userId }) => {
         rptDesc: generateEmploymentHistoryReportDesc,
       },
       responseInfo : responseInfo,
-      empFlag : true
+      empFlag : true,
+      clientDetailsFlag: true
+
     });
   };
   const downloadFabProps = new FabIconPropsModel(

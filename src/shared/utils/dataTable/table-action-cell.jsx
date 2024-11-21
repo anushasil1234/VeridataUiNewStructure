@@ -270,8 +270,9 @@ export const TableActionCell = (props1, props2) => {
     actionList.map((action) => {
       return (
         <>
-          {action === "VIEWDETAILS" ? (
-            // && actionPermissionList && actionPermissionList['A001']
+          {action === "VIEWDETAILS" 
+            //  && actionPermissionList && actionPermissionList['A001']
+             ? (
             <DarkTooltip placement="top" title={"Open Details"} arrow>
               <Fab
                 mood="V"
@@ -299,8 +300,9 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "NOTIFYMAIL" ? (
-            // && actionPermissionList && actionPermissionList['A005']
+          {action === "NOTIFYMAIL" 
+          // && actionPermissionList && actionPermissionList['A005']
+          ? (
             <DarkTooltip placement="top" title={"Notify Appointee"} arrow>
               <Fab
                 appointeeId={appointeeId}

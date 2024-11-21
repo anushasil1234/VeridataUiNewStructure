@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { CardLayout, DateFormatYYYYMMDD, PageLayout } from "shared/utils";
 import { Box, Button, Card, Grid, List, ListItemButton } from "@mui/material";
-import { primaryFabStyle, ResponsiveFab, datePickerstyle, downLoadListSx } from "app";
+import {
+  primaryFabStyle,
+  ResponsiveFab,
+  datePickerstyle,
+  downLoadListSx,
+} from "app";
 import { Download, Refresh, Search } from "@mui/icons-material";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
@@ -14,9 +19,12 @@ import CustomTab from "shared/utils/customTab/custom-tab";
 
 const UnWrappedMannualVerification = (props) => {
   console.log("props", props);
+  const { hasPermission } = props;
+
   const { state } = useLocation();
   console.log("state1111", state);
-
+  const [isDownload, setIsDownload] = useState(false);
+  const [isDownloadExcel, setIsDownloadExcel] = useState(false);
   let _fromday;
   let _today;
   const now = new Date();
@@ -36,7 +44,9 @@ const UnWrappedMannualVerification = (props) => {
     };
     setPayload(reqPayload);
   };
-
+  const handleExalListDownload = () => {
+    setIsDownloadListOpened(!isDownloadListOpened);
+  };
   const handleSearch = () => {
     const reqPayload = {
       fromDate: DateFormatYYYYMMDD(fromDate?.toString()),
@@ -47,12 +57,51 @@ const UnWrappedMannualVerification = (props) => {
   const tabs = {
     labelList: [
       "Manual Verification Required",
-      "Document Reupload Request",
       "Manual Re-Verification Required",
+      "Document Reupload Request",
     ],
-    pannelList: ["MV", "RD", "MRV"],
+    pannelList: ["MV", "MRV", "RD"],
+    isDownloadTab: false,
   };
   console.log("datatabs", tabs);
+
+  //   const handleDownloade = (rf) => {
+  //     if (rf.fileData && typeof rf.fileData === 'string') {
+  //       const base64String = rf.fileData;
+  //       const fileName = rf.fileName || "appointee_data.xlsx";
+  //       const blob = generateBlobFromBase64(base64String);
+  //       const blobUrl = window.URL.createObjectURL(blob);
+  //       downloadFile(blobUrl, fileName);
+  //       window.URL.revokeObjectURL(blobUrl);
+  //     }
+  //   };
+  //   const handleClick = async () => {
+  //     const response = await GetUnderProcessReport(payLoad);
+  //     if (response) {
+  //       const { responseInfo } = response;
+  //       handleDownloade(responseInfo);
+  //     }
+  //   };
+  const handleClickToDwnldExcl = () => {
+    setIsDownloadExcel(true);
+  };
+  const handleDownload = () => {
+    setIsDownload(true);
+  };
+  useEffect(() => {
+    if (isDownload) {
+      handleDownload();
+      setIsDownload(false);
+    }
+  }, [isDownload]);
+
+  useEffect(() => {
+    if (isDownloadExcel) {
+      handleClickToDwnldExcl();
+      setIsDownloadExcel(false);
+    }
+  }, [isDownloadExcel]);
+
   return (
     <PageLayout pageName={"Manual Verification"}>
       <CardLayout>
@@ -116,68 +165,74 @@ const UnWrappedMannualVerification = (props) => {
               </DarkTooltip>
             </Grid>
             {
-            //hasPermission && hasPermission["A008"] && (
-            //   <Grid item sx={{ position: 'relative' }}>
-            //     <DarkTooltip placement="top" title={"Download Report"} arrow>
-            //       <ResponsiveFab
-            //         variant="contained"
-            //         size="small"
-            //         button={"N"}
-            //         //onClick={handleExalListDownload}
-            //         sx={primaryFabStyle}
-            //       >
-            //         <Download width={18} sx={{ color: "#fff" }} />
-            //       </ResponsiveFab>
-            //     </DarkTooltip>
-            //     {
-            //     isDownloadListOpened && 
-            //     (
-            //       <List
-            //         sx={{
-            //           ...downLoadListSx,
-            //           zIndex: 1000,
-            //         }}
-            //       >
-            //         <ListItemButton component="a" >
-            //           <DarkTooltip placement="top" title={"Download PDF Report"} arrow>
-            //             {/* <ResponsiveFab
-            //               variant="contained"
-            //               size="small"
-            //               button={"N"}
-            //               sx={primaryFabStyle}
-            //               onClick={handleDownload}
-            //             >
-            //               <Summarize width={18} sx={{ color: "#fff" }} />
-            //             </ResponsiveFab> */}
-            //             <Button variant="contained" 
-            //            // onClick={handleDownload}
-            //             >PDF</Button>
-            //           </DarkTooltip>
-            //         </ListItemButton>
-            //         <ListItemButton component="a">
-            //           <DarkTooltip placement="top" title={"Download XLSX Report"} arrow>
-            //             {/* <ResponsiveFab
-            //               variant="contained"
-            //               size="small"
-            //               button={"N"}
-            //               sx={primaryFabStyle}
-            //             >
-            //               <ArticleIcon width={18} sx={{ color: "#fff" }} />
-            //             </ResponsiveFab> */}
-            //             <Button variant="contained" 
-            //             // onClick={handleClick}
-            //             >XLSX</Button>
-            //           </DarkTooltip>
-            //         </ListItemButton>
-            //       </List>
-            //     )}
-            //   </Grid>
-           // )}
-            }
+            //   hasPermission && hasPermission["A008"] && (
+              <Grid item sx={{ position: "relative" }}>
+                <DarkTooltip placement="top" title={"Download Report"} arrow>
+                  <ResponsiveFab
+                    variant="contained"
+                    size="small"
+                    button={"N"}
+                    onClick={handleExalListDownload}
+                    sx={primaryFabStyle}
+                  >
+                    <Download width={18} sx={{ color: "#fff" }} />
+                  </ResponsiveFab>
+                </DarkTooltip>
+                {isDownloadListOpened && (
+                  <List
+                    sx={{
+                      ...downLoadListSx,
+                      zIndex: 1000,
+                    }}
+                  >
+                    <ListItemButton component="a">
+                      <DarkTooltip
+                        placement="top"
+                        title={"Download PDF Report"}
+                        arrow
+                      >
+                        {/* <ResponsiveFab
+                          variant="contained"
+                          size="small"
+                          button={"N"}
+                          sx={primaryFabStyle}
+                          onClick={handleDownload}
+                        >
+                          <Summarize width={18} sx={{ color: "#fff" }} />
+                        </ResponsiveFab> */}
+                        <Button variant="contained" onClick={handleDownload}>
+                          PDF
+                        </Button>
+                      </DarkTooltip>
+                    </ListItemButton>
+                    <ListItemButton component="a">
+                      <DarkTooltip
+                        placement="top"
+                        title={"Download XLSX Report"}
+                        arrow
+                      >
+                        {/* <ResponsiveFab
+                          variant="contained"
+                          size="small"
+                          button={"N"}
+                          sx={primaryFabStyle}
+                        >
+                          <ArticleIcon width={18} sx={{ color: "#fff" }} />
+                        </ResponsiveFab> */}
+                        <Button variant="contained" onClick={handleClickToDwnldExcl}>
+                          XLSX
+                        </Button>
+                      </DarkTooltip>
+                    </ListItemButton>
+                  </List>
+                )}
+              </Grid>
+             // )}
+}
           </Grid>
         </Grid>
         <Card sx={{ border: 1, borderColor: "divider", marginTop: "23px" }}>
-          <CustomTab tabs={tabs} payload={payload} />
+          <CustomTab tabs={tabs} payload={payload} isDownload={isDownload} isDownloadExcel={isDownloadExcel}  />
         </Card>
       </CardLayout>
     </PageLayout>
