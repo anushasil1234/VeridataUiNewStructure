@@ -1,12 +1,33 @@
-import upDateQuestionSet from './update-question-set';
-import updateVerificationUpdate from './update-verification-update';
+import upDateQuestionSet from "./update-question-set";
+import updateVerificationUpdate from "./update-verification-update";
 
-const handleVerificationStatusChange = ({ verificationQuestionSet, verificationUpdate, verificationType, subCategory, fileSrc }) => {
+const handleVerificationStatusChange = ({ verificationQuestionSet, verificationUpdate, verificationType, subCategoryList, fileSrc }) => {
+  let updatedQuestionSet = verificationQuestionSet;
+  let updatedVerification = verificationUpdate;
 
-  const { updatedQuestionSet } = upDateQuestionSet({ verificationQuestionSet, verificationUpdate, verificationType, subCategory, fileSrc });
-  const { updatedVerification } = updateVerificationUpdate({ verificationUpdate, verificationQuestionSet, updatedQuestionSet, subCategory });
+  subCategoryList.forEach((subCategory) => {
+    const questionSetUpdate = upDateQuestionSet({
+      verificationQuestionSet: updatedQuestionSet,
+      verificationUpdate: updatedVerification,
+      verificationType,
+      subCategory,
+      fileSrc,
+    });
 
-  return ({ updatedQuestionSet, updatedVerification })
-}
+    updatedQuestionSet = questionSetUpdate.updatedQuestionSet;
 
-export default handleVerificationStatusChange
+    // Ensure verification updates accumulate for each subcategory
+    const verificationUpdateUpdate = updateVerificationUpdate({
+      verificationUpdate: updatedVerification,
+      verificationQuestionSet: updatedQuestionSet,
+      updatedQuestionSet,
+      subCategory,
+    });
+
+    updatedVerification = verificationUpdateUpdate.updatedVerification;
+  });
+
+  return { updatedQuestionSet, updatedVerification };
+};
+
+export default handleVerificationStatusChange;

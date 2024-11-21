@@ -405,6 +405,14 @@ export const inputFieldStyle2 = {
   margin: "10px 0px",
   padding: 0
 };
+export const inputFieldStylesx= {
+  width: "100%",
+  margin: "10px 0px",
+  padding: 0,
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: ThemeColorPalete.primary.main,
+       },
+};
 export const datePickerinputFieldStyle2 = {
   '& .MuiFormControl-root': {
     ...inputFieldStyle2
