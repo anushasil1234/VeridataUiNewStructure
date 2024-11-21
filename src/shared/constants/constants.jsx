@@ -2502,7 +2502,7 @@ export const defaultVerificationTypeList = [
     // },
     {
         value: fatherFileCategoryTypeAlias,
-        label: `Father's name`,
+        label: `Father's Name`,
         verificationFieldName: 'isFnameVarified'
     },
     {
