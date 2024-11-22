@@ -84,12 +84,12 @@ const PrerequisiteInformation = () => {
                 </>
         },
         {
-            StepNumber: `Father's name Certificate`,
-            primaryHeading: "Father's name Certificate",
+            StepNumber: `Father's Name Certificate`,
+            primaryHeading: "Father's Name Certificate",
             secondaryText: "Please have a certificate which has your Father's name before continuing.",
             secondaryComponent:
                 <>
-                    {" —  If you dont have an Father's name Certificate please contact with your HR."}
+                    {" —  If you don't have an Father's name Certificate please contact with your HR."}
                 </>
         }
     ]
