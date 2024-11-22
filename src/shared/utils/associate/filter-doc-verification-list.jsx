@@ -5,6 +5,7 @@ const filterDocVerificationList = (
         uploadedFileData,
         fileCategory: currentFileCategory,
         verificationCategoryList,
+        isRead = false,
         category: currentCategory,
         fileType: currentFileType
     }) => {
@@ -30,6 +31,7 @@ const filterDocVerificationList = (
             return ({
                 label: fileType,
                 value: fileType,
+                isRead: isRead,
                 subCategory: subCategory
             })
         })
@@ -41,7 +43,8 @@ const filterDocVerificationList = (
             ?.map(({ uploadDetailId, fileName }) => {
                 return ({
                     value: uploadDetailId,
-                    label: fileName
+                    label: fileName,
+                    isRead: isRead
                 })
             })
     }
