@@ -214,7 +214,7 @@ let ManualverifiedViewDetails = ({ details }) => {
         const updatedFiles = files.map((file) =>
             file.value === fileTypeToUpdate ? { ...file, isRead: true } : file
         );
-        console.log('updatedFiles',fileTypeToUpdate);
+        console.log('updatedFiles', fileTypeToUpdate);
         setFiles(updatedFiles);
     };
     const setUploadedFileDataResponse = async (defaultVerificationType) => {
@@ -240,6 +240,7 @@ let ManualverifiedViewDetails = ({ details }) => {
             showErrorMessage(EPFOVerificatypeSelectionMsg);
         }
     }
+
     useEffect(() => {
         if (files.length === 1 && selectedFiles.length === 0) {
             setSelectedFiles([files[0].value]);
@@ -269,13 +270,6 @@ let ManualverifiedViewDetails = ({ details }) => {
     ])
     useEffect(() => {
         if (verificationType) {
-            let newFileSrc = ''; 
-        if (verificationType.value === fatherFileCategoryTypeAlias) {
-            newFileSrc = ''; 
-        } else if (verificationType.value === epfFileTypeAlias) {
-            newFileSrc = '';
-        }
-        setFileSrc(newFileSrc);
             const { verificationCategoryList } = filterDocVerificationList({
                 fileCategory: verificationType.value,
                 uploadedFileData,
@@ -323,43 +317,37 @@ let ManualverifiedViewDetails = ({ details }) => {
                     </Typography>
                 </Stack>
 
-                <Grid container spacing={1}>
-                    <Grid item xs={12} md={12} letterSpacing={5}>
-                        <Stack direction="row" spacing={-8}>
-                            <PersonalInformation fieldName={"Name"} fieldValue={appointeeName} />
-                            <PersonalInformation fieldName={"Date of Birth"} fieldValue={dateOfBirth} />
-                            <PersonalInformation fieldName={"Father's / Husband's Name"} fieldValue={member} />
-                        </Stack>
-
-                        <Stack direction="row" spacing={-8}>
-                            <PersonalInformation fieldName={"Relationship with Member"} fieldValue={relationshipWithMember} />
-                            <PersonalInformation fieldName={"Nationality"} fieldValue={nationality} />
-                            <PersonalInformation fieldName={"Mobile"} fieldValue={mobileNo} />
-                        </Stack>
-
-                        <Stack direction="row" spacing={-8}>
-                            <PersonalInformation fieldName={"Qualification"} fieldValue={qualification} />
-                            <PersonalInformation fieldName={"Marital Status"} fieldValue={maritalStatus} />
-                            <PersonalInformation fieldName={"Physically Handicapped"} fieldValue={isPhysicallyHandicap} />
-                            {isPhysicallyHandicap === "Yes" && (
-                                <>
-                                    <PersonalInformation
-                                        fieldName={"Handicap Type"}
-                                        fieldValue={handicapType ? handicapType : NA}
-                                    />
-
-                                    {/* <PersonalInformation
-                                                    fieldName={"Handicap Certificate"}
-                                                // fieldValue={handicapFile ? 
-                                                //     <FileViewComponent
-                                                //         fileType={"Handicap Certificate"}
-                                                //         file={handicapFile}
-                                                //     />
-                                                //     : NA}
-                                                /> */}
-                                </>
-                            )}
-                        </Stack>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={12} lg={12} letterSpacing={2}>
+                        <Grid item xs={12}>
+                            <Stack direction={{ xs: "column", sm: "row" }} >
+                                <PersonalInformation fieldName={"Name"} fieldValue={appointeeName} />
+                                <PersonalInformation fieldName={"Date of Birth"} fieldValue={dateOfBirth} />
+                                <PersonalInformation fieldName={"Father's/Husband's Name"} fieldValue={member} />
+                            </Stack>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Stack direction={{ xs: "column", sm: "row" }} >
+                                <PersonalInformation fieldName={"Relationship with Member"} fieldValue={relationshipWithMember} />
+                                <PersonalInformation fieldName={"Nationality"} fieldValue={nationality} />
+                                <PersonalInformation fieldName={"Mobile"} fieldValue={mobileNo} />
+                            </Stack>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Stack direction={{ xs: "column", sm: "row" }} >
+                                <PersonalInformation fieldName={"Qualification"} fieldValue={qualification} />
+                                <PersonalInformation fieldName={"Marital Status"} fieldValue={maritalStatus} />
+                                <PersonalInformation fieldName={"Physically Handicapped"} fieldValue={isPhysicallyHandicap} />
+                                {isPhysicallyHandicap === "Yes" && (
+                                    <>
+                                        <PersonalInformation
+                                            fieldName={"Handicap Type"}
+                                            fieldValue={handicapType ? handicapType : NA}
+                                        />
+                                    </>
+                                )}
+                            </Stack>
+                        </Grid>
                     </Grid>
                 </Grid>
             </ManualVerifiedPageSectionContainer>
