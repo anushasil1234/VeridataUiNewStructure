@@ -5,7 +5,7 @@ export const MouseEventHandler = ({
     handleMouseDown
 }) => {
   
-    const getMouseEventHandlers = () => {
+    const  getMouseEventHandlers = () => {
         if (zoomLevel <= 1) {
             return {};
         }

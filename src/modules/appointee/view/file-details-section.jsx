@@ -17,7 +17,7 @@ import { MouseEventHandler } from 'shared/utils/associate/dragable'
 
 
 const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
-    verificationOnChange, verificationQuestionSet, appointeeId, fileName,selectedFiles, files,setVerificationType, categorySelected, setVerificationCategoryList, verificationTypeList, setVerificationTypeList }) => {
+    verificationOnChange, verificationQuestionSet, appointeeId, fileName, selectedFiles, files, setVerificationType, categorySelected, setVerificationCategoryList, verificationTypeList, setVerificationTypeList }) => {
 
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -46,9 +46,9 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
     const handleMouseDown = (e) => {
         setIsDragging(true);
         setLastMousePosition({ x: e.clientX, y: e.clientY });
-      };
-    
-      const handleMouseMove = (e) => {
+    };
+
+    const handleMouseMove = (e) => {
         if (!isDragging) return;
         const currentMousePosition = { x: e.clientX, y: e.clientY };
         setPosition((prevPosition) =>
@@ -56,8 +56,8 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
         );
         setLastMousePosition(currentMousePosition);
     };
-    
-      const handleMouseUp = () => setIsDragging(false);
+
+    const handleMouseUp = () => setIsDragging(false);
     const callApiBasedOnSuccess = async (payload) => {
         {
             const { responseInfo } = await UpdateAppointeeManualVerification(payload);
@@ -67,18 +67,18 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
         }
         return false;
     };
-    
+
 
     const handleVerificationSubmit = async () => {
         let submitconfModelContent = {
             dialogContentText: "",
         };
-        if (!hasValue(remarks)) { 
-            showErrorMessage(remarksemptyerror); 
+        if (!hasValue(remarks)) {
+            showErrorMessage(remarksemptyerror);
             return;
         }
         if (remarks.length < 15) {
-            showErrorMessage(remarksError); 
+            showErrorMessage(remarksError);
             return;
         }
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
@@ -87,13 +87,13 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
             return;
         }
         if (selectedFiles.length !== files.length) {
-            submitconfModelContent.dialogContentText = <ManualSubmitConfirmation/>;
+            submitconfModelContent.dialogContentText = <ManualSubmitConfirmation />;
         } else {
-            submitconfModelContent.dialogContentText =manualSubmitConfirmatonMsg;
+            submitconfModelContent.dialogContentText = manualSubmitConfirmatonMsg;
         }
-    
+
         openConfirmationModel(submitconfModelContent);
-    
+
         const { VerificationSubCategoryList } = createVerificationUpdate(verificationUpdate);
         const payload = {
             appointeeId: appointeeId,
@@ -120,16 +120,16 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
             }
         });
     };
-   
+
     return (
         <>
             <GridContainer>
                 <Grid
                     item
                     xs={12}
-                    md={6}
+                    md={8}
                 >
-                    <Typography sx={{ ...listHeadingStyle, fontSize: '1rem', textAlign: "left" }}>
+                    <Typography sx={{ ...listHeadingStyle, fontSize: '1rem', textAlign: "left",marginLeft:"-3px" }}>
                         {`${verificationType.label} Verification`}
                     </Typography>
                 </Grid>
@@ -163,29 +163,29 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
                             )}
                             {categorySelected ? (
                                 fileSrc && (
-                                    <Box  sx={{
+                                    <Box sx={{
                                         ...imagestyleContainer,
                                         position: 'relative',
                                         overflow: 'hidden',
-                                        cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default', 
+                                        cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
                                     }}
-                                    {...MouseEventHandler({
-                                        zoomLevel,
-                                        handleMouseMove,
-                                        handleMouseUp,
-                                        handleMouseDown,
-                                    })}
-                                >
+                                        {...MouseEventHandler({
+                                            zoomLevel,
+                                            handleMouseMove,
+                                            handleMouseUp,
+                                            handleMouseDown,
+                                        })}
+                                    >
                                         <img
                                             style={{
-                                                 position: 'absolute',
+                                                position: 'absolute',
                                                 transform: `scale(${zoomLevel})`,
                                                 transition: 'transform 0.3s ease',
                                                 transformOrigin: 'center',
                                                 maxWidth: '100%',
                                                 maxHeight: '100%',
-                                                left:  isDragging ? `${position.x}px` : 'auto', 
-                                                top: isDragging ? `${position.y}px` : 'auto', 
+                                                left: isDragging ? `${position.x}px` : 'auto',
+                                                top: isDragging ? `${position.y}px` : 'auto',
                                             }}
                                             src={fileSrc}
                                             alt="File Preview"
@@ -198,8 +198,11 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
                                 </Typography>
                             )}
                         </Box>
-
-
+                                <TextAreaInput
+                                    label={'Remarks'}
+                                    value={remarks}
+                                    onChange={handleRemarksChanged}
+                                />
                     </GridContainer>
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -212,7 +215,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
                         />
                     </GridContainer>
                 </Grid>
-                <GridContainer>
+                {/* <GridContainer>
                     <Grid item xs={12} md={8}>
                         <TextAreaInput
                             label={'Remarks'}
@@ -220,7 +223,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
                             onChange={handleRemarksChanged}
                         />
                     </Grid>
-                </GridContainer>
+                </GridContainer> */}
             </GridContainer>
 
             <GridContainer>

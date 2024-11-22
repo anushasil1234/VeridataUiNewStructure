@@ -1,4 +1,4 @@
-export const calculateDragPosition = (isDragging, lastMousePosition, currentMousePosition, prevPosition) => {
+export const  calculateDragPosition = (isDragging, lastMousePosition, currentMousePosition, prevPosition) => {
     if (!isDragging) return prevPosition;
 
     const deltaX = currentMousePosition.x - lastMousePosition.x;
