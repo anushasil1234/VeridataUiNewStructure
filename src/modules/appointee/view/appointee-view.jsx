@@ -97,6 +97,7 @@ let AppointeeViewForm = ({
   closeViewModel,
   hasPermission
 }) => {
+console.log('hasperpermissionAppointeeview',hasPermission,appointeeId);
 
   const loggedInData = useSelector((state) => state.loggedInData);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -136,6 +137,7 @@ let AppointeeViewForm = ({
   const [UAN, setUAN] = useState(null);
   const [uanNumber, setUanNumber] = useState(null);
   const [appointeeName, setAppointeeName] = useState(null);
+  const [_appointeeId, setAppointeeId] = useState(null);
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [dateOfJoining, setDateOfJoining] = useState(null);
   const [gender, setGender] = useState(null);
@@ -167,6 +169,7 @@ let AppointeeViewForm = ({
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
   const [isFnameVarified, setIsFnameVarified] = useState(null);
+  const [manualVerificationStatus, setManualVerificationStatus] = useState();
   const [isManualVerifiedViewOpen, setIsManualVerifiedViewOpen] = useState(false);
   const openManualVerifiedView = () => setIsManualVerifiedViewOpen(true);
   const closeManualVerifiedView = () => setIsManualVerifiedViewOpen(false);
@@ -248,6 +251,8 @@ let AppointeeViewForm = ({
 
   const setAppointeeDetails = async () => {
     const response = await getAppointeeDetails(appointeeId);
+    console.log('response2222',response);
+    
     if (response) {
       const {
         maskedUANNumber,
@@ -284,10 +289,14 @@ let AppointeeViewForm = ({
         isProcessed,
         saveStep,
         isTrustPassbook,
-        isManualPassbook
+        isManualPassbook,
+        workFlowStatus
       } = response.responseInfo;
+
       setAppointeeDetailsResponse(response.responseInfo);
+      
       setIsManualPassbook(isManualPassbook);
+      workFlowStatus ? setManualVerificationStatus(workFlowStatus) : setManualVerificationStatus(NA)
       maskedUANNumber ? setUAN(maskedUANNumber) : setUAN(NA);
       uanNumber ? setUanNumber(uanNumber) : setUanNumber(null)
       isPanVarified
@@ -481,6 +490,7 @@ let AppointeeViewForm = ({
       isFnameVarified,
       isUanVerified
     }
+    console.log('handelclick',personalInfo)
     openVerify(personalInfo);
   }
 
@@ -643,8 +653,7 @@ let AppointeeViewForm = ({
     return label ? <Chip {...appointeeVerificationStatusChipPropsStyle} label={label} color={color} /> : null;
   };
 
-
-
+console.log('status', manualVerificationStatus)
   return (
     <Box bgcolor={"#E2E8F0"} sx={{ position: "relative" ,borderRadius:'8px'}}>
       <Box sx={gridContainerStyle}>
@@ -939,7 +948,7 @@ let AppointeeViewForm = ({
             </Box>
           </Grid>
           <Grid item xs={12} md={3.5}>
-            {isManualPassbook && (
+            {isManualPassbook && (manualVerificationStatus ==='MV' || manualVerificationStatus === 'MRV') && (
               <Box sx={{
                 ...cardStyle,
                 display: 'flex',

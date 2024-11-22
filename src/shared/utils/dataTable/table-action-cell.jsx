@@ -41,7 +41,7 @@ import { useState } from "react";
 export const TableActionCell = (props1, props2) => {
   const { actionList, rowAttribute, actionPermissionList, setTableRows } =
     props1;
-  console.log("actionlist", rowAttribute);
+  console.log("actionlist", actionPermissionList);
   const { appointeeId, userId: id, isPassbookVerified, uanNo } = rowAttribute;
   const commonHooksFunctionSlice = useSelector(
     (state) => state.commonHooksFunctionSlice
@@ -271,7 +271,7 @@ export const TableActionCell = (props1, props2) => {
       return (
         <>
           {action === "VIEWDETAILS" 
-            //  && actionPermissionList && actionPermissionList['A001']
+              && actionPermissionList && actionPermissionList['A001']
              ? (
             <DarkTooltip placement="top" title={"Open Details"} arrow>
               <Fab
@@ -301,7 +301,7 @@ export const TableActionCell = (props1, props2) => {
             </DarkTooltip>
           ) : null}
           {action === "NOTIFYMAIL" 
-          // && actionPermissionList && actionPermissionList['A005']
+           && actionPermissionList && actionPermissionList['A005']
           ? (
             <DarkTooltip placement="top" title={"Notify Appointee"} arrow>
               <Fab
@@ -317,8 +317,9 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-          {action === "MANUALVER" ? (
-            // && actionPermissionList && actionPermissionList['A005']
+          {action === "MANUALVER"
+             && actionPermissionList && actionPermissionList['A015']
+             ? (
             <DarkTooltip placement="top" title={"Manual Verification"} arrow>
               <Fab
                 appointeeId={appointeeId}
@@ -354,8 +355,9 @@ export const TableActionCell = (props1, props2) => {
                 </Button> */}
             </DarkTooltip>
           ) : null}
-          {action === "MANUALREVER"  ? (
-            // && actionPermissionList && actionPermissionList['A005']
+          {action === "MANUALREVER"
+             && actionPermissionList && actionPermissionList['A015']
+             ? (
             <DarkTooltip placement="top" title={"Manual Re-Verification"} arrow>
               <Fab
                 appointeeId={appointeeId}

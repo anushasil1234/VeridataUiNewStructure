@@ -149,6 +149,8 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
                 if (trimmedPassword === confirmPassword.trim()) {
                     setIsOTPDisable(false);
                     setConfirmPasswordErrorMsg(false);
+                    showErrorMessage();
+
                 } else {
                     showErrorMessage(confirmpasswordNotMsg);
                     setIsOTPDisable(true);
