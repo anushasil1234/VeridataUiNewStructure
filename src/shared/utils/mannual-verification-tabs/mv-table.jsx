@@ -23,7 +23,7 @@ import downloadFile from "../associate/download-file";
 
 export const MVTable = (filters) => {
   console.log("columnlist", mannualVerificationListTableHeadCell);
-  const { props, payload, isDownload, isDownloadExcel } = filters;
+  const { props, payload, isDownload, isDownloadExcel ,hasPermission} = filters;
 
   const popUpSlice = useSelector((state) => state.popUpSlice);
   var date = moment();
@@ -58,8 +58,8 @@ export const MVTable = (filters) => {
           : props === "RD"
           ? docReuploadListTableHeadCell
           : mannualReverificationListTableHeadCell,
-        null
-        //hasPermission
+        null,
+       hasPermission
       );
       setRows({
         tableHead:
@@ -197,7 +197,7 @@ console.log('responselistlegth',responseListLength)
     if (actionRouteSlice.length === 0) {
       setTableRows(payload_MV);
     }
-  }, [actionRouteSlice, props, payload]);
+  }, [actionRouteSlice, props, payload,hasPermission]);
   return (
     <DataTable
       rows={rows}

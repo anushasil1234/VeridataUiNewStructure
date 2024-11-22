@@ -165,7 +165,7 @@ const UnWrappedMannualVerification = (props) => {
               </DarkTooltip>
             </Grid>
             {
-            //   hasPermission && hasPermission["A008"] && (
+               hasPermission && hasPermission["A008"] && (
               <Grid item sx={{ position: "relative" }}>
                 <DarkTooltip placement="top" title={"Download Report"} arrow>
                   <ResponsiveFab
@@ -227,12 +227,12 @@ const UnWrappedMannualVerification = (props) => {
                   </List>
                 )}
               </Grid>
-             // )}
-}
+              )}
+
           </Grid>
         </Grid>
         <Card sx={{ border: 1, borderColor: "divider", marginTop: "23px" }}>
-          <CustomTab tabs={tabs} payload={payload} isDownload={isDownload} isDownloadExcel={isDownloadExcel}  />
+          <CustomTab tabs={tabs} payload={payload} isDownload={isDownload} isDownloadExcel={isDownloadExcel} hasPermission ={hasPermission} />
         </Card>
       </CardLayout>
     </PageLayout>
