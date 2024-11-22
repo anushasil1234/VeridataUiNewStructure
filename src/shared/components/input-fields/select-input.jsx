@@ -1,9 +1,9 @@
 import { FormControl, MenuItem, Select, Typography } from '@mui/material'
-import { inputFieldStyle2, inputFieldStylesx, lable1CopyStyle } from 'app'
+import { dropdownMenuItemStyle, inputFieldStyle2, inputFieldStylesx, lable1CopyStyle } from 'app'
 import { useTheme } from '@mui/material/styles';
 const SelectInput = ({ itemList, label, onChange, value, required = false, disabled = false, handleClickOnMenuItem }) => {
     const theme = useTheme();
-   
+
     return (
         <FormControl fullWidth>
             <Typography sx={lable1CopyStyle}>
@@ -34,6 +34,7 @@ const SelectInput = ({ itemList, label, onChange, value, required = false, disab
                                 cursor: isDisabled ? 'not-allowed!important' : 'pointer!important',
                                 pointerEvents: isDisabled ? 'auto!important' : 'inherit!important', // Allow pointer events on disabled items
                                 backgroundColor: isRead === true ? 'rgba(154, 32, 140, 0.2)' : 'inherit',
+                               ...dropdownMenuItemStyle
                             }}
                         >
                             {label}

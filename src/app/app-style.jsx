@@ -404,18 +404,18 @@ export const inputFieldStyle2 = {
   width: "90%",
   margin: "10px 0px",
   padding: 0,
-  marginRight:"auto",
+  marginRight: "auto",
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
     borderColor: ThemeColorPalete.primary.main,
-   },
+  },
 };
-export const inputFieldStylesx= {
+export const inputFieldStylesx = {
   width: "100%",
   margin: "10px 0px",
   padding: 0,
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: ThemeColorPalete.primary.main,
-       },
+    borderColor: ThemeColorPalete.primary.main,
+  },
 };
 export const datePickerinputFieldStyle2 = {
   '& .MuiFormControl-root': {
@@ -679,7 +679,7 @@ export const smallstepNumberContainerStyle = {
   borderRadius: "50%",
   border: "1px solid #C7C8D0",
   color: "#C7C8D0",
-  marginTop:"3.5px"
+  marginTop: "3.5px"
 
 };
 export const stepHeadingStyle = {
@@ -745,13 +745,13 @@ export const lable1CopyStyle = {
   padding: "0px !important"
 };
 
-export const questionStyle={
+export const questionStyle = {
   fontWeight: 550,
   // fontSize: ".70rem",
   fontSize: "1rem",
   marginBottom: "2px",
   lineHeight: "1.4375em",
-  paddingLeft: '12px', 
+  paddingLeft: '12px',
   padding: "0px !important"
 }
 
@@ -1028,8 +1028,8 @@ export const listStyle = {
   borderBottom: "1px solid #E2E8F0",
   padding: "1rem"
 };
-export const fieldNameStyle={
-  fontSize: { xs: '12px', md: '14px', lg: '16px' } 
+export const fieldNameStyle = {
+  fontSize: { xs: '12px', md: '14px', lg: '16px' }
 }
 export const listHeadingConteinerStyle = {
   flexDirection: "row",
@@ -1208,8 +1208,8 @@ export const candidatefileViewContainerStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  marginLeft:'4px',
-  marginBottom:'30px'
+  marginLeft: '4px',
+  marginBottom: '30px'
 
 }
 export const imagestyleContainer = {
@@ -1226,7 +1226,7 @@ export const imagestyleContainer = {
   overflowX: 'auto',
   overflowY: 'auto',
   width: "85%",
-  height:"100%"
+  height: "100%"
 }
 
 export const getStatusChipStyle = (status) => {
@@ -1849,6 +1849,15 @@ export const verificationBtnStyle = {
 }
 export const submitBtnContainerStyle = {
   flexDirection: { xs: 'column', md: 'row' }
+}
+
+export const dropdownMenuItemStyle = {
+  '&:hover, &.Mui-selected:hover': {
+    backgroundColor: '#ffe6ff'
+  },
+  '&.Mui-selected': {
+    backgroundColor: 'rgba(154, 32, 140, 0.08)'
+  }
 }
 // export const submitButtonSubcontainerStyle = {
 //   flexDirection: {399:'column'},
