@@ -8,7 +8,7 @@ const VerificationQuiestions = ({ verificationOnChange, verificationQuestionSet,
     return (
         <Stack>
             <Stack>
-                <Typography sx={{ ...listHeadingStyle, fontSize: '0.8rem', textAlign: "left" }}>
+                <Typography sx={{ ...listHeadingStyle, fontSize: '0.8rem', textAlign: "left",marginLeft:"15px" }}>
                     {`Verification questions`}
                 </Typography>
                 <Divider sx={{ marginTop: "2px" }} />
@@ -20,7 +20,7 @@ const VerificationQuiestions = ({ verificationOnChange, verificationQuestionSet,
                         <GridContainer key={index}>
                             <Grid container item xs={10}>
                                 <Grid container item xs={2}>
-                                    <Stack sx={{...smallstepNumberContainerStyle, marginRight: '2px' }}>
+                                    <Stack sx={{...smallstepNumberContainerStyle, marginRight: '1px' }}>
                                         <Typography fontWeight={500} sx={{ fontSize: '0.8rem' }}>{index + 1}</Typography>
                                     </Stack>
                                 </Grid>

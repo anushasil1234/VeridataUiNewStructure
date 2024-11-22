@@ -57,7 +57,7 @@
 
 import { Info, TaskAlt } from '@mui/icons-material';
 import { Box, Chip, Grid, Stack, Typography } from '@mui/material';
-import { fieldValueSx, iconStyle, listStyle, successGreenXsOutlineStyle, xsChipIconCommonStyle } from 'app';
+import { fieldNameStyle, fieldValueSx, iconStyle, listStyle, successGreenXsOutlineStyle, xsChipIconCommonStyle } from 'app';
 import React from 'react';
 import TextSkelton1 from 'shared/utils/skeltons/text-skelton/text-skelton1';
 import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';
@@ -66,7 +66,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 export const FieldName = ({ fieldName, fieldValue, fieldTooltip }) => {
     return (
         <Stack flexDirection="row" alignItems="center">
-            <Typography fontWeight="bold">
+            <Typography fontWeight="bold" sx={{ ...fieldNameStyle, fontWeight: 600 }}>
                 {fieldValue ? `${fieldName}:` : <TextSkelton1 />}
             </Typography>
             {fieldTooltip && (
@@ -100,7 +100,7 @@ export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge
                     <FieldName fieldValue={fieldValue} fieldName={fieldName} fieldTooltip={fieldTooltip} />
                 </Box>
             </Grid>
-            <Grid container item xs={12} sm={6} md={7} lg={8} sx={listStyle}>
+            <Grid container item xs={12} sm={6} md={7} lg={7.7} sx={listStyle}>
 
                 {
                     badge === true ?

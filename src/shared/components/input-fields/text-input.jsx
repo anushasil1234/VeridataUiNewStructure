@@ -1,15 +1,20 @@
-import { TextField, Typography } from "@mui/material"
-import { inputFieldStyle, inputFieldStyle2, lable1CopyStyle, lable1Style } from "app"
+import { Grid, TextField, Typography } from "@mui/material"
+import { inputFieldStyle, inputFieldStyle2, lable1CopyStyle, lable1Style, listHeadingStyle } from "app"
+import GridContainer from "../grid-container/grid-container"
 
 const TextAreaInput = ({ label, value, required, onChange }) => {
     return (
-        <>
-            <Typography sx={lable1CopyStyle}>
+        <> 
+        <Grid item xs={12} md={8}>
+            <Typography sx={{ ...listHeadingStyle, fontSize: '1rem', textAlign: "left",marginLeft:"-22px" }}>
                 {label}
                 {required &&
                     <span className="requiredField">*</span>
                 }
             </Typography>
+           
+            </Grid>
+            
             <TextField
                 onChange={onChange}
                 error={false}
