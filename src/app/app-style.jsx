@@ -447,9 +447,9 @@ export const cardAppbar = {
 
 };
 // card ends
-export const zoombuttonStyle={
+export const zoombuttonStyle = {
   color: '#fff',
-  mr:"1rem",
+  mr: "1rem",
   backgroundColor: ThemeColorPalete.primary.main,
   "&:hover": {
     color: '#fff',
@@ -457,8 +457,8 @@ export const zoombuttonStyle={
     backgroundColor: ThemeColorPalete.primary.light,
   },
   boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.7)',
-    transition: 'transform 0.2s, background-color 0.2s', 
-    
+  transition: 'transform 0.2s, background-color 0.2s',
+
 }
 // Alert
 const alertStyle = {
@@ -837,11 +837,11 @@ export const downloadIconStyle = {
   bgcolor: ThemeColorPalete.primary.main,
   '&:hover': {
     bgcolor: ThemeColorPalete.primary.light,
-     transform: 'scale(1.05)'
+    transform: 'scale(1.05)'
   },
   borderRadius: "50%",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.7)",
-  transition: 'transform 0.2s, background-color 0.2s', 
+  transition: 'transform 0.2s, background-color 0.2s',
   padding: "8px",
   fontSize: "1.5rem",
 };
@@ -853,12 +853,12 @@ export const _addFabStyle = {
 };
 export const greenFabStyle = {
   ...actionIconStyle,
-  zIndex:0,
-   position: "relative",
+  zIndex: 0,
+  position: "relative",
   // right: "10px",
   // top: "10px",
   // width: { xs: 40, sm: 40 },
-  
+
   // height: { xs: 40, sm: 40 },
   // width: { xs: 40, sm: 40 },
   // height: { xs: 40, sm: 40 },
@@ -870,7 +870,7 @@ export const greenFabStyle = {
 };
 export const primaryFabStyle = {
   ...actionIconStyle,
-  zIndex:0,
+  zIndex: 0,
   position: "relative",
   // right: "10px",
   // top: "10px",
@@ -1065,18 +1065,18 @@ export const listHeadingStyle = {
   fontSize: "1.2rem"
 };
 
-export const buttonStyleSx={
-    background: 'linear-gradient(45deg, #7851A9, #5E3D8D)', 
-    borderRadius: '25px', 
-    padding: '8px 20px', 
-    fontWeight: 'bold', 
-    color: 'white',
-    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
-    transition: 'transform 0.2s, background-color 0.2s', 
-    '&:hover': {
-      backgroundColor: '#68439A',
-      transform: 'scale(1.05)', 
-    }
+export const buttonStyleSx = {
+  background: 'linear-gradient(45deg, #7851A9, #5E3D8D)',
+  borderRadius: '25px',
+  padding: '8px 20px',
+  fontWeight: 'bold',
+  color: 'white',
+  boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+  transition: 'transform 0.2s, background-color 0.2s',
+  '&:hover': {
+    backgroundColor: '#68439A',
+    transform: 'scale(1.05)',
+  }
 }
 // appointee view page end
 // Acticvity log start
@@ -1191,13 +1191,13 @@ export const candidatefileViewContainerStyle = {
   justifyContent: 'center'
 
 }
-export const imagestyleContainer ={
+export const imagestyleContainer = {
   border: '2px dashed #ccc',
   borderRadius: '8px',
   padding: '16px',
   margin: 'auto',
   marginTop: '25px',
-  marginBottom:'25px',
+  marginBottom: '25px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -1266,9 +1266,9 @@ export const fileNameStyle = {
   textAlign: 'center',
   marginTop: fileUploadSectionTextMargin,
   texWrap: 'nowrap',
- marginBottom:"20px"
+  marginBottom: "20px"
 }
-export const boxStyle={
+export const boxStyle = {
   position: 'absolute',
   top: 0,
   left: 0,
@@ -1294,8 +1294,8 @@ export const filenameContainer = {
   flexDirection: 'row',
   // marginTop: '10px',
   padding: '0 10px',
-  paddingY:'15px',
-  marginBottom:"15px",
+  paddingY: '15px',
+  marginBottom: "15px",
   position: 'relative',
   zIndex: 2
 }
@@ -1318,7 +1318,7 @@ export const fileCard = {
 };
 export const fileInputs = {
   position: "relative",
-  marginTop:"-15px",
+  marginTop: "-15px",
   // marginBottom:"25px",
   "& input": {
     position: "relative",
@@ -1589,8 +1589,8 @@ export const imageFileContainerStackStyle = {
   maxWidth: "100%",
   border: "2px dashed #dbb4db",
   overflow: "hidden",
-  overflowX:'auto',
-  overflowY:"auto" 
+  overflowX: 'auto',
+  overflowY: "auto"
 }
 
 export const zoomOutstackStyle = {
@@ -1774,8 +1774,8 @@ export const candidateRegistrationFormContainerStyle = {
 export const formHeadingGridContainerStyle = {
   marginX: '10px',
 }
-export const divederStyle={
-  my: 2, 
+export const divederStyle = {
+  my: 2,
   borderBottom: '0.9px bold #000',
   width: '90%',
   mx: 'auto'
@@ -1809,6 +1809,7 @@ export const submitBtnStyle = {
   backgroundColor: AppStyle.palette.primary.main,
   ...submitButtonCommonStyle,
 }
+
 export const rightMostBtnStyle = {
   marginTop: '10px',
   marginBottom: '10px',
@@ -1816,7 +1817,10 @@ export const rightMostBtnStyle = {
   ...submitButtonCommonStyle,
 }
 
-
+export const endJustifiedbtnContainer = {
+  flexDirection: 'row',
+  justifyContent: 'end'
+}
 export const verificationBtnStyle = {
   margin: "5px 0",
   ...submitButtonCommonStyle

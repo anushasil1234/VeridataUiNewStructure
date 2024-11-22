@@ -110,7 +110,8 @@ import {
   getUploadFileData_URL,
   UpdateAppointeeManualVerification_URL,
   dataSubmitionMsg,
-  GetMannualVerificationData_URL
+  GetMannualVerificationData_URL,
+  PostReuploadDocuments_URL
 } from "shared/constants/constants";
 import { storeDropdownList } from "store/slices/dropdown-slice";
 import { storeFunction } from "store/slices/function-slice";
@@ -393,7 +394,7 @@ const AppWrapper = (App) => {
         closeFilePasswordSubmitionModel();
       }
     }, [pathname]);
-   
+
 
     // API FUNCTOINS STARTS
     const postExcel = async (payLoad) => {
@@ -559,7 +560,7 @@ const AppWrapper = (App) => {
     };
 
     const GetUploadedFileDetailsById = async (payLoad) => {
-      return await PfcRequest(Postfileupload_URL, "POST",payLoad);
+      return await PfcRequest(Postfileupload_URL, "POST", payLoad);
     };
     const getAppointeeActivity = async (appointeeId) => {
       return await PfcRequest(`${GetAppointeeActivity_URL}${appointeeId}`, "GET");
@@ -692,7 +693,10 @@ const AppWrapper = (App) => {
       return await PfcRequest(`${getUploadFileData_URL}${appointeeId}`, "GET");
     }
     const UpdateAppointeeManualVerification = async (payLoad) => {
-      return await PfcRequest(`${UpdateAppointeeManualVerification_URL}`, "POST",  payLoad, dataSubmitionMsg);
+      return await PfcRequest(`${UpdateAppointeeManualVerification_URL}`, "POST", payLoad, dataSubmitionMsg);
+    }
+    const PostReuploadDocuments = async (payLoad) => {
+      return await PfcRequest(`${PostReuploadDocuments_URL}`, "POST", payLoad, dataSubmitionMsg);
     }
 
     // const getAppointeeAgingFilterReport = async (payLoad) => {
@@ -896,7 +900,8 @@ const AppWrapper = (App) => {
           downloadAgingExelReport,
           GetUnderProcessReport,
           getUploadFileData,
-          UpdateAppointeeManualVerification
+          UpdateAppointeeManualVerification,
+          PostReuploadDocuments
         })
       );
     }
@@ -1023,7 +1028,7 @@ const AppWrapper = (App) => {
           documentModelProps={documentModelProps}
           closeDocumentModel={closeDocumentModel}
         />
-        
+
         <ProfilePasswordForm
           open={passwordSubmitionModelOpen}
           passwordSubmitionProps={passwordSubmitionProps}

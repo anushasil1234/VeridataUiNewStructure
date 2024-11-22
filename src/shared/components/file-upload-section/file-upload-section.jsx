@@ -16,6 +16,7 @@ const FileUploadSection = ({ chooseFile, fileName, accept, disabled, maxUploadSi
 
     const handleRemove = (filename, event) => {
         event.stopPropagation();
+        
         if (handleRemoveFile) {
             handleRemoveFile(filename);
         }

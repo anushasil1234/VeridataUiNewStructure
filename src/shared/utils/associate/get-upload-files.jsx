@@ -42,7 +42,7 @@ const getUploadFiles = ({ files }, uploadTypeAlias, _filenameList, uploadType = 
     //       };
 
     //       if (uploadType === 'single') {
-    //         const { updatedUploadedFileList: _updatedUploadedFileList, updatedFileDetails: _updatedFileDetails } = removeFile({
+    //         const { updatedUploadedFileList: _updatedUploadedFileList, updatedFileDetails: _updatedFileDetails } =   ({
     //           uploadedFile: updatedUploadedFileList,
     //           fileDetails: updatedFileDetails,
     //           uploadTypeAlias: uploadTypeAlias,

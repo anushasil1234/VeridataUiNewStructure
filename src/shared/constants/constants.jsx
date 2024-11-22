@@ -146,6 +146,7 @@ export const NA = "N/A"
 
 export const toDashboard = "/dashboard";
 export const toRegister = "/appointeeregister";
+export const toReuploadDoc = "/reupload_document";
 export const toPFUsers = "/pfusers";
 export const toVerified = "/verified";
 export const toCancelled = "/cancelled";
@@ -192,9 +193,9 @@ const rejetedListActions = ['VIEWDETAILS'];
 const latestAppointeeListActions = ['VIEWDETAILS'];
 const verifiedListActions = ['VIEWDETAILS', 'DWNLDPSSBK', 'DWNLDTRUSTPSSBK', 'VIEWPSSBK'];
 const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL', 'USERMAILRESEND'];
-const mannualVerListActions = ['VIEWDETAILS','MANUALVER'];
-const mannualReverListActions = ['VIEWDETAILS','MANUALREVER'];
-const docReuploadListActions = ['VIEWDETAILS','NOTIFYMAIL'];
+const mannualVerListActions = ['VIEWDETAILS', 'MANUALVER'];
+const mannualReverListActions = ['VIEWDETAILS', 'MANUALREVER'];
+const docReuploadListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
 const criticalListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
 const lapsedListActions = ['VIEWDETAILS', 'UPDTEAPNTEE'];
 const userListActions = ['VIEWUSERDETAILS', 'UPDATEUSER', 'CLOSEUSERDETAILS'];
@@ -2261,6 +2262,7 @@ export const UploadxlsFile_URL = `${FileUpload}/UploadxlsFile`;
 export const UploadUpdatexlsFile_URL = `${FileUpload}/UploadUpdatexlsFile`;
 export const DownloadPassbookFile_URL = `${FileUpload}/DownloadPassbookFile`;
 export const getUploadFileData_URL = `${FileUpload}/getUploadFileData?appointeeId=`;
+export const PostReuploadDocuments_URL = `${FileUpload}/PostReuploadDocuments`;
 
 
 export const GetRawFileData_URL = (companyId, fileId) => `${FileUpload}/GetRawFileData?companyId=${companyId}&fileId=${fileId}`;
@@ -2376,6 +2378,7 @@ export const appointeeTerminationConfirmationMsg = `Do you want to terminate the
 export const passwordMaxFieldErrorMsg = 'The field Password must be a string with a maximum length of 12.';
 export const notProcessedDataVerificationConfirmationMsg = `Do you want to send verification portal link to the appointees? [Note: Appointees will be removed from this page and moved to the "Processing" page]`;
 export const submitConfirmationMsg = `Your data will be submitted, you will no longer be able to verify your data. To re verify your data you have to contact the admin`;
+export const reUploadsubmitConfirmationMsg = "Your uploaded document will be submitted, and you will no longer be able to update your file. It will be verified by the admin. Are you sure you want to submit?";
 export const epfoPassfileUploadeConfirmationMsg = `Please upload your trust EPFO passbook before submition`;
 export const visafileUploadeConfirmationMsg = `You must upload your visa before submition`;
 export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details  has been verified and submited successfully. you have completed your verification process. Please wait for the hr to reply for further processing of your application`;
@@ -2564,6 +2567,21 @@ export const fileVerificationEnums = {
     pensionGapFound: "isPensionGapFound",
 }
 
+export const uploadAliasCategory = {
+    // : isUanVarified, 
+    [tenthCertificateFileTypeAlias]: {
+        categoryType: 'isFnameVarified'
+    },
+    [otherFileTypeAlias]: {
+        categoryType: 'isFnameVarified'
+    },
+    [epfoServiceHistoryFileTypeAlias]: {
+        categoryType: 'isUanVarified'
+    },
+    [epfoPassbookFileTypeAlias]: {
+        categoryType: 'isUanVarified'
+    }
+}
 // export const defaultVerificationQuestionSet = [
 //     {
 //         label: "Completeness of  document?",
