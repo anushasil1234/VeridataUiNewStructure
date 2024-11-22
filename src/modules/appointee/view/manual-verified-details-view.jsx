@@ -99,6 +99,7 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [verificationQuestionSet, setVerificationQuestionSet] = useState([]);
     const [verificationUpdate, setVerificationUpdate] = useState({});
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const [selectedMandatoryCategoryList, setSelectedMandatoryCategoryList] = useState([]);
     const [categorySelected, setCategorySelected] = useState(false);
 
     const clearSubDropdownListofVerificationType = (currentValue) => {
@@ -152,7 +153,6 @@ let ManualverifiedViewDetails = ({ details }) => {
 
         setVerificationQuestionSet(_updatedQuestionSet);
         setVerificationUpdate({});
-        // }
     }
     const clearCategoryRelatedVariables = () => {
         setFileSrc("");
@@ -169,10 +169,16 @@ let ManualverifiedViewDetails = ({ details }) => {
         setSelectedFiles([]);
         const { files } = filterDocVerificationList({ fileCategory: verificationType.value, uploadedFileData, fileType: value });
         setFiles(files);
+
         if (files.length === 1) {
             await _setFile(files[0].value);
         } else {
             clearCategoryRelatedVariables();
+        }
+        console.log('verificationType', verificationType);
+
+        if (verificationType.verificationFieldName === fileVerificationEnums.docEPFO) {
+            setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
         }
     }
     const setFileImage = async (file) => {
@@ -293,6 +299,7 @@ let ManualverifiedViewDetails = ({ details }) => {
             });
             setVerificationQuestionSet(finalQuestionSet);
             setVerificationUpdate({});
+            setSelectedMandatoryCategoryList([]);
         }
     }, [verificationType]);
 
@@ -408,6 +415,8 @@ let ManualverifiedViewDetails = ({ details }) => {
                         verificationCategoryList={verificationCategoryList}
                         selectedFiles={selectedFiles}
                         files={files}
+                        selectedMandatoryCategoryList={selectedMandatoryCategoryList}
+                        setSelectedMandatoryCategoryList={setSelectedMandatoryCategoryList}
                     />
                 }
             </ManualVerifiedPageSectionContainer>

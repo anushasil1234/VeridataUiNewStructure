@@ -2405,8 +2405,10 @@ export const roleEmptyMsg = `Role can't be empty`;
 export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
 export const timeOutMsg = `Server is down, Please try again.`;
 export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
-export const ManualSubmitConfirmation = () => {
-    const manualSubmitConfirmatonMsgforfile = `You have not gone through all files, and there may be information that you have missed out.\nAre you sure you want to continue with the submission?`;
+export const ManualSubmitConfirmation = ({type}) => {
+    console.log('typeq23234', type);
+    
+    const manualSubmitConfirmatonMsgforfile = `You have not gone through all ${type}, and there may be information that you have missed out.\nAre you sure you want to continue with the submission?`;
   
     return (
       <div >

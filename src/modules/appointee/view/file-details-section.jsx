@@ -17,7 +17,10 @@ import { MouseEventHandler } from 'shared/utils/associate/dragable'
 
 
 const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
-    verificationOnChange, verificationQuestionSet, appointeeId, fileName, selectedFiles, files, setVerificationType, categorySelected, setVerificationCategoryList, verificationTypeList, setVerificationTypeList }) => {
+    verificationOnChange, verificationQuestionSet, appointeeId,
+    fileName, selectedFiles, files, setVerificationType, categorySelected,
+    verificationCategoryList, setVerificationCategoryList, verificationTypeList,
+    setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList }) => {
 
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -82,12 +85,17 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
             return;
         }
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
+        console.log("error1232", error);
+
         if (error) {
             showErrorMessage(error);
             return;
         }
-        if (selectedFiles.length !== files.length) {
-            submitconfModelContent.dialogContentText = <ManualSubmitConfirmation />;
+        
+        if (selectedMandatoryCategoryList.length !== verificationCategoryList.length) {
+            submitconfModelContent.dialogContentText = <ManualSubmitConfirmation type={'categories'} />
+        }else if (selectedFiles.length !== files.length) {
+            submitconfModelContent.dialogContentText = <ManualSubmitConfirmation type={'files'} />;
         } else {
             submitconfModelContent.dialogContentText = manualSubmitConfirmatonMsg;
         }
@@ -117,6 +125,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
                     showSuccessMessage(verificatiosucess);
                 }
                 setVerificationCategoryList([]);
+                setSelectedMandatoryCategoryList([]);
             }
         });
     };
@@ -129,7 +138,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
                     xs={12}
                     md={8}
                 >
-                    <Typography sx={{ ...listHeadingStyle, fontSize: '1rem', textAlign: "left",marginLeft:"-3px" }}>
+                    <Typography sx={{ ...listHeadingStyle, fontSize: '1rem', textAlign: "left", marginLeft: "-3px" }}>
                         {`${verificationType.label} Verification`}
                     </Typography>
                 </Grid>
@@ -198,11 +207,11 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
                                 </Typography>
                             )}
                         </Box>
-                                <TextAreaInput
-                                    label={'Remarks'}
-                                    value={remarks}
-                                    onChange={handleRemarksChanged}
-                                />
+                        <TextAreaInput
+                            label={'Remarks'}
+                            value={remarks}
+                            onChange={handleRemarksChanged}
+                        />
                     </GridContainer>
                 </Grid>
                 <Grid item xs={12} md={4}>

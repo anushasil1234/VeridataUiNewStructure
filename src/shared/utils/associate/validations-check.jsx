@@ -1,4 +1,4 @@
-import { epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, fatherFileCategoryTypeAlias, fileVerificationEnums } from "shared/constants/constants";
+import { epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, fatherFileCategoryTypeAlias, fileVerificationEnums, otherFileTypeAlias, tenthCertificateFileTypeAlias } from "shared/constants/constants";
 
 export const validationsCheck = (arrvalue, validation_type) => {
 
@@ -25,6 +25,8 @@ export const validationsCheck = (arrvalue, validation_type) => {
         case `${fileVerificationEnums.docComplete}_${epfoPassbookFileTypeAlias}`:
         case `${fileVerificationEnums.docValid}_${epfoPassbookFileTypeAlias}`:
         case `${fileVerificationEnums.docFname}_${fatherFileCategoryTypeAlias}`:
+        case `${fileVerificationEnums.docComplete}_${fatherFileCategoryTypeAlias}`:
+        case `${fileVerificationEnums.docValid}_${fatherFileCategoryTypeAlias}`:
         case fileVerificationEnums.pensionApplicable:
         case fileVerificationEnums.pensionGapFound:
             return arrvalue !== undefined;
