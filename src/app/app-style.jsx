@@ -901,6 +901,7 @@ export const primaryFabStyle = {
   },
 };
 export const redFabStyle = {
+  zIndex: 0,
   ...actionIconStyle,
   bgcolor: ThemeColorPalete.error.main,
   color: ThemeColorPalete.common.white,
