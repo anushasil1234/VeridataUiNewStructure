@@ -9,7 +9,8 @@ import {
   toUserlist, toVerified, toHelp, toSetPassword, toReSetPassword, toNoMovementAgingReport, toNoResponseAgingReport, toNationalityReport, toAppointeeReport,
   toUserLogin,
   topfPension,
-  toMannualVerification
+  toMannualVerification,
+  toReuploadDoc
 } from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 import { MsalProvider } from '@azure/msal-react';
@@ -41,6 +42,7 @@ const UpdateUserView = Loadable(lazy(() => import('../../modules/user/update-use
 const UserListView = Loadable(lazy(() => import('../../modules/user/userlist/userlist-view')));
 const Report = Loadable(lazy(() => import('../../modules/reports/report')));
 const AppointeeRegister = Loadable(lazy(() => import('../../modules/appointee/register/appointee-register')));
+const ReuploadDocument = Loadable(lazy(() => import('../../modules/appointee/register/reupload-document')));
 const AppointeeCount = Loadable(lazy(() => import('../../modules/reports/appointee-count')));
 const Login = Loadable(lazy(() => import('../../modules/account/login/login-view')));
 const SetPassword = Loadable(lazy(() => import('../../modules/set-password/set-password')));
@@ -66,6 +68,7 @@ const CustomRouter = [
       { path: toPFUsers, exact: true, element: <PFUsers /> },
       { path: toGeneralSetup, exact: true, element: <GeneralSetup /> },
       { path: toRegister, exact: true, element: <AppointeeRegister /> },
+      { path: toReuploadDoc, exact: true, element: <ReuploadDocument /> },
       { path: toAttention, exact: true, element: <Attention /> },
       { path: toLinknotsent, exact: true, element: <LinkNotSent /> },
       { path: toLapseddata, exact: true, element: <LapsedData /> },

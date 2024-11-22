@@ -144,6 +144,7 @@ import {
 import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
 import UANPrerequisiteInformation from "./uan-prerequiestic-info";
 import GenderSelection from "shared/utils/associate/gender-selection";
+import getFileDetails from "shared/utils/associate/get-file-details";
 // import CandidateRegisterFirstPage from "./candidate-register-first-page";
 
 
@@ -588,6 +589,8 @@ const AppointeeRegister = () => {
     const uploadTypeAlias =
       uploadedFile &&
       uploadedFile.find(({ uploadTypeAlias }) => uploadTypeAlias === fileTypeAlias);
+      console.log('checkFileUpload', uploadTypeAlias);
+      
     return hasValue(uploadTypeAlias);
   };
 
@@ -838,89 +841,21 @@ const AppointeeRegister = () => {
   //   }
   // };
 
-  const uploadFile = ({ files }, uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single') => {
-    let isFileExists;
-    let fileNameList = _filenameList;
-    let updatedUploadedFileList = [...uploadedFile];
-    let updatedFileDetails = [...fileDetails];
 
-    for (let index = 0; index < files.length; index++) {
-      const { name, size, type } = files[index];
-      // isFileExists = fileDetails.find((currentFileData) => {
-      //   return (
-      //     currentFileData.name === name &&
-      //     currentFileData.size === size &&
-      //     currentFileData.type === type
-      //   );
-      // });
-      // isFileExists = uploadedFile.find((currentFileData) => {
-      //   return (
-      //     currentFileData.name === name &&
-      //     currentFileData.size === size &&
-      //     currentFileData.type === type
-      //   );
-      // });
-      let isFileExists = false;
-      let isFileOfSameTypeExists = false;
-      for (let index = 0; index < uploadedFile.length; index++) {
-        const { fileLength, fileName, mimeType, uploadTypeAlias: _uploadTypeAlias } = uploadedFile[index];
-        if (name === fileName && size === fileLength && mimeType === type) {
-          isFileExists = true;
-          if (_uploadTypeAlias === uploadTypeAlias) {
-            isFileOfSameTypeExists = true;
-          }
-        }
-      }
-      if (isFileExists) {
-        showErrorMessage(`${name} ${duplicateFiles}`);
-        if (isFileOfSameTypeExists && uploadType === 'single') {
-          fileNameList = [name];
-        }
-      }
-      else {
-        if (size <= imgAndPdfMaxSizeValue) {
-          // Find the file type ID based on the uploadTypeAlias
-          const { id } =
-            fileTypeList &&
-            fileTypeList.length > 0 &&
-            fileTypeList.find(({ code }) => code === uploadTypeAlias);
-          // Create new file object
-          const file = {
-            fileName: name,
-            mimeType: type,
-            fileLength: size,
-            uploadTypeId: id,
-            uploadTypeAlias: uploadTypeAlias,
-            isFileUploaded: true,
-          };
 
-          if (uploadType === 'single') {
-            const { updatedUploadedFileList: _updatedUploadedFileList, updatedFileDetails: _updatedFileDetails } = removeFile({
-              uploadedFile: updatedUploadedFileList,
-              fileDetails: updatedFileDetails,
-              uploadTypeAlias: uploadTypeAlias,
-              fileNameList: fileNameList,
-              uploadType: uploadType
-            });
-            fileNameList = [name];
-            updatedUploadedFileList = [..._updatedUploadedFileList, file];
-            updatedFileDetails = [..._updatedFileDetails, files[index]];
-          } else {
-            fileNameList = [...fileNameList, name];
-            updatedUploadedFileList = [...updatedUploadedFileList, file];
-            updatedFileDetails = [...updatedFileDetails, files[index]];
-          }
-
-        } else {
-          showErrorMessage(uploadSizeErrorMsg);
-        }
-      }
+  const uploadFile = ({ files, uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single' }) => {
+    const { error, updatedUploadedFileList, updatedFileDetails, fileNameList } = getFileDetails(
+        { files, uploadTypeAlias, setFileName, _filenameList, uploadType, fileTypeList, uploadedFile, fileDetails }
+    );
+    if (hasValue(error)) {
+        showErrorMessage(error);
     }
-
+    console.log('fileNameList files', files,);
+    console.log('fileNameList', uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single');
     setUploadedFile([...updatedUploadedFileList]);
     setFileDetails([...updatedFileDetails]);
-    setFileName(fileNameList);
-  };
+    setFileName([...fileNameList]);
+};
 
   const removeEPFOPassbookFile = (currentFileName) => {
     const {
@@ -973,9 +908,10 @@ const AppointeeRegister = () => {
   };
 
   const handleFileUpload = (fileTypeAlias, setFileName, fileNameList = [], uploadType) => ({ target }) => {
-    uploadFile(target, fileTypeAlias, setFileName, fileNameList, uploadType);
-  };
+    console.log('fileTypeAlias12344', target.files);
 
+    uploadFile({ files: target.files, uploadTypeAlias: fileTypeAlias, setFileName, fileNameList, uploadType });
+  };
   const uploadTrustEPFOFile = handleFileUpload(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName, 'multiple');
   const uploadHandicapFile = handleFileUpload(handicapFileTypeAlias, setHandicapFileName);
   const uploadEpfoPassBookFile = handleFileUpload(epfoPassbookFileTypeAlias, setEpfoPassBookFiles, epfoPassBookFiles, 'multiple');
@@ -1090,9 +1026,7 @@ const AppointeeRegister = () => {
       if (!isUploaded) showUploadMessage("trust EPFO passbook");
       return isUploaded;
     }
-
   };
-
 
   // Check if passport is uploaded for other countries
   const checkPassportUploadForOtherCountries = () => {
@@ -1201,6 +1135,8 @@ const AppointeeRegister = () => {
 
 
   const buildFormData = (payLoad) => {
+    console.log('payLoad3223434', payLoad);
+
     let formData = new FormData();
     for (const property in payLoad) {
       if (Object.hasOwnProperty.call(payLoad, property)) {
@@ -1457,6 +1393,7 @@ const AppointeeRegister = () => {
     };
     // Use the buildFormData helper function to create the formData
     let formData = buildFormData(payLoad);
+    console.log('formData123', formData, payLoad);
 
     const response = await postAppointeeFileDetails(formData);
     if (response) {
@@ -1482,7 +1419,6 @@ const AppointeeRegister = () => {
       };
       openInfoModel(registrationSuccessContent, () => navigateTo(toDashboard));
     }
-    //}
   };
 
   const handleAppointeeFormPage3Save = () => {
@@ -3091,7 +3027,7 @@ const AppointeeRegister = () => {
                                     ...lable1CopyStyle,
                                     display: "flex",
                                     alignItems: "center",
-                                    marginRight:"-5px"
+                                    marginRight: "-5px"
                                   }}
                                 >
                                   {
@@ -3168,7 +3104,7 @@ const AppointeeRegister = () => {
                           )}
                         </Grid>
                       </Grid>
-                      <Divider sx={{... divederStyle}} />
+                      <Divider sx={{ ...divederStyle }} />
                       {/* ######  PF Verification Section End ###### */}
                       {/* ######  UAN number Section Start ###### */}
                       <Grid
@@ -3665,7 +3601,6 @@ const AppointeeRegister = () => {
                             isUanVerificationProcessManual === 'manual' &&
                             <Grid>
                               <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
-
                                 <Typography
                                   sx={{
                                     ...lable1CopyStyle,
@@ -3766,102 +3701,6 @@ const AppointeeRegister = () => {
                   </form>
                 </Box>
               ) : null}
-
-              {/* <form ref={formElement}>
-                <Grid sx={positionRelative} item xs={12}>
-                  <Grid
-                    mt={3}
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  >
-                    <Grid item xs={12} md={6}></Grid>
-                  </Grid>
-                </Grid>
-                <Grid
-                  sx={{ paddingLeft: "20px" }}
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                >
-                  <Grid
-                    container
-                    rowSpacing={1}
-                    columnSpacing={2.5}
-                    item
-                    xs={12}
-                  >
-                    <Box sx={{ m: { xs: "10px 27px", sm: "15px 27px" } }}>
-                      {(currentPageNo === 2 || currentPageNo === 3) && (
-                        <>
-                          <Button
-                            //onClick={() => setCurrentPageNo(1)}
-                            onClick={handleBack}
-                            //sx={{ m: "15px 5px", ml: 3 }}
-                            sx={{ m: { xs: "10px 0", sm: "15px 0" } }}
-                            variant="contained"
-                            color="primary"
-                          >
-                            {previousButton}
-                          </Button>
-                        </>
-                      )}
-                      {(currentPageNo === 3 && isUanVerificationProcessManual === 'manual') && (
-                        <>
-                          <Button
-                            //onClick={() => setCurrentPageNo(1)}
-                            onClick={() => submitDetails(false, true)}
-                            //sx={{ m: "15px 5px", ml: 3 }}
-                            sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
-                            variant="contained"
-                            color="primary"
-                          >
-                            {'Submit'}
-                          </Button>
-                        </>
-                      )}
-                      {currentPageNo === 2 && (
-                        <>
-                          <Button
-                            name="save"
-                            // disabled={isSubmitDisabled}
-                            onClick={DraftSave}
-                            //sx={{ m: "15px 25px", ml: 3 }}
-                            sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
-                            variant="contained"
-                            color="primary"
-                            disabled={isPreviousSectionDisabled}
-                          >
-                            Save as Draft
-                          </Button>
-                          <Button
-                            name="save"
-                            // disabled={isSubmitDisabled}
-                            onClick={handleSaveClick}
-                            //sx={{ m: "15px 25px", ml: 3 }}
-                            sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
-                            variant="contained"
-                            color="primary"
-                            disabled={isPreviousSectionDisabled}
-                          >
-                            Save
-                          </Button>
-                          <Button
-                            onClick={handleNext}
-                            sx={{ m: { xs: '10px 8px', sm: '15px 8px' }, ml: { sm: 3 } }}
-                            //sx={{ m: "15px 25px", ml: 3 }}
-                            variant="contained"
-                            color="primary"
-                            disabled={isthirdNextVisible === false}
-                          >
-                            Next
-                          </Button>
-                        </>
-                      )}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </form> */}
             </Grid>
           </Grid>
         </Box>

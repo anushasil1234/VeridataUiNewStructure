@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Typography, Chip, Tooltip } from "@mui/material";
 
-import { getStatusTooltip } from "shared/constants/constants";
+import { getStatusTooltip, toReuploadDoc } from "shared/constants/constants";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -196,7 +196,9 @@ const CandidateView = () => {
       );
     }
   };
-  const appointeeDocReupload = async () => {};
+  const appointeeDocReupload = async () => {
+    navigateTo(toReuploadDoc);
+  };
   useEffect(() => {
     if (userTypeId === 3) {
       setRemarks();
@@ -290,8 +292,7 @@ const CandidateView = () => {
                           transition: "box-shadow 0.3s, transform 0.3s", // Smooth transition for elevation and scale
                         }}
                       >
-                        {" "}
-                        "Document Reupload"
+                        Pending Verification
                       </Button>
                     </>
                   ) : null}
@@ -318,7 +319,7 @@ const CandidateView = () => {
                         {(consentStatus === 4 ||
                           consentStatus === 0 ||
                           consentStatus === 5) &&
-                        isProcessed !== true
+                          isProcessed !== true
                           ? "Start Verification"
                           : "Pending Verification"}
                       </Button>

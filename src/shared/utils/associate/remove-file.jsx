@@ -1,5 +1,8 @@
 export const removeFile = ({ uploadedFile, fileDetails, uploadTypeAlias, fileNameList, uploadType, currentFileName = null }) => {
-    let updatedUploadedFileList = [...uploadedFile];
+
+    console.log('currentFileName',  currentFileName);
+    
+let updatedUploadedFileList = [...uploadedFile];
     let updatedFileDetails = [...fileDetails];
 
     if (uploadType === 'single') {

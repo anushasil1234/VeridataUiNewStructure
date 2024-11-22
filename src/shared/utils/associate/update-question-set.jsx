@@ -21,8 +21,6 @@ console.log("updatedQuestionSet 12", updatedQuestionSet);
                     return question;
                 })
                 console.log("inside hasupdatedQuestionSet", updatedQuestionSet);
-
-
             }
             if ((verificationUpdate && (_isDocComplete !== true || _isDocValid !== true)) &&
                 verificationQuestionSet && verificationQuestionSet.length > 2) {
