@@ -589,8 +589,8 @@ const AppointeeRegister = () => {
     const uploadTypeAlias =
       uploadedFile &&
       uploadedFile.find(({ uploadTypeAlias }) => uploadTypeAlias === fileTypeAlias);
-      console.log('checkFileUpload', uploadTypeAlias);
-      
+    console.log('checkFileUpload', uploadTypeAlias);
+
     return hasValue(uploadTypeAlias);
   };
 
@@ -845,17 +845,19 @@ const AppointeeRegister = () => {
 
   const uploadFile = ({ files, uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single' }) => {
     const { error, updatedUploadedFileList, updatedFileDetails, fileNameList } = getFileDetails(
-        { files, uploadTypeAlias, setFileName, _filenameList, uploadType, fileTypeList, uploadedFile, fileDetails }
+      { files, uploadTypeAlias, setFileName, _filenameList, uploadType, fileTypeList, uploadedFile, fileDetails }
     );
     if (hasValue(error)) {
-        showErrorMessage(error);
+      showErrorMessage(error);
     }
     console.log('fileNameList files', files,);
     console.log('fileNameList', uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single');
+    console.log('updatedUploadedFileList', [...updatedUploadedFileList], fileNameList);
+
     setUploadedFile([...updatedUploadedFileList]);
     setFileDetails([...updatedFileDetails]);
     setFileName([...fileNameList]);
-};
+  };
 
   const removeEPFOPassbookFile = (currentFileName) => {
     const {
@@ -908,9 +910,10 @@ const AppointeeRegister = () => {
   };
 
   const handleFileUpload = (fileTypeAlias, setFileName, fileNameList = [], uploadType) => ({ target }) => {
-    console.log('fileTypeAlias12344', target.files);
-
-    uploadFile({ files: target.files, uploadTypeAlias: fileTypeAlias, setFileName, fileNameList, uploadType });
+    uploadFile({
+      files: target.files, uploadTypeAlias: fileTypeAlias, setFileName,
+      _filenameList: fileNameList, uploadType
+    });
   };
   const uploadTrustEPFOFile = handleFileUpload(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName, 'multiple');
   const uploadHandicapFile = handleFileUpload(handicapFileTypeAlias, setHandicapFileName);

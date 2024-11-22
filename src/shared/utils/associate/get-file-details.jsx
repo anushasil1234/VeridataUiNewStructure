@@ -3,20 +3,16 @@ import { removeFile } from "..";
 
 const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
     uploadType, uploadedFile, fileDetails, fileTypeList }) => {
-    console.log('fileTypeList', fileTypeList, uploadTypeAlias);
-    console.log('_filenameList', _filenameList);
 
     let fileNameList = [..._filenameList];
     let updatedUploadedFileList = [...uploadedFile];
     let updatedFileDetails = [...fileDetails];
     let error;
-    console.log('files234234', files);
 
     for (let index = 0; index < files.length; index++) {
         const { name, size, type } = files[index];
         let isFileExists = false;
         let isFileOfSameTypeExists = false;
-        console.log('isFileExists');
         for (let index = 0; index < uploadedFile.length; index++) {
 
             const { fileLength, fileName, mimeType, uploadTypeAlias: _uploadTypeAlias } = uploadedFile[index];
@@ -27,7 +23,6 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
                 }
             }
         }
-        console.log('isFileExists');
         if (isFileExists) {
 
             error = `${name} ${duplicateFiles}`;
@@ -36,12 +31,9 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
             }
         }
         else {
-            console.log('sfsadasfsdf');
 
             if (size <= imgAndPdfMaxSizeValue) {
                 // Find the file type ID based on the uploadTypeAlias
-                console.log('fileTypeList123', fileTypeList, uploadTypeAlias);
-
                 const { id } =
                     fileTypeList &&
                     fileTypeList.length > 0 &&
@@ -72,7 +64,6 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
                     fileNameList = [...fileNameList, name];
                     updatedUploadedFileList = [...updatedUploadedFileList, file];
                     updatedFileDetails = [...updatedFileDetails, files[index]];
-                    console.log('updatedUploadedFileList', updatedUploadedFileList, fileNameList);
                 }
 
             } else {
@@ -80,8 +71,6 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
             }
         }
     }
-    console.log('fileNameList', fileNameList);
-
     return ({
         error: error,
         updatedUploadedFileList: updatedUploadedFileList,
