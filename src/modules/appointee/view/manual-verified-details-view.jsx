@@ -427,7 +427,7 @@ let ManualverifiedViewDetails = ({ details }) => {
 const UnWrappedManualVerifiedView = (props) => {
     return (
         <FullScreenModel
-            headerText={"Manual verified Details"}
+            headerText={"Manual verification"}
             open={props.openView}
             fullScreen={true}
             closeModel={props.closeViewModel}
