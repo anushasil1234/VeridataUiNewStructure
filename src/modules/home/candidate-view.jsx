@@ -1,11 +1,12 @@
-import { Box, Button, Grid, Typography, Chip, Tooltip } from "@mui/material";
-
+import { Box, Button, Grid, Typography, Chip, Tooltip,tooltipClasses, Fab } from "@mui/material";
+import { styled } from '@mui/material/styles';
 import { getStatusTooltip, toReuploadDoc } from "shared/constants/constants";
 import React, { useEffect, useState } from "react";
 
 import {
   dashboardtextStyle,
   getStatusChipStyle,
+  primaryFabStyle,
   subHeadingContentTextStyle,
 } from "app";
 import { submitConfirmationMsg, toRegister } from "shared/constants/constants";
@@ -24,6 +25,9 @@ import {
   storeLoggedinData,
 } from "store/slices/login-slice";
 import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
+import Button1 from 'shared/utils/button/button1';
+import { Info } from "@mui/icons-material";
+import { dark } from "@mui/material/styles/createPalette";
 
 const CandidateView = () => {
   const commonHooksFunctionSlice = useSelector(
@@ -205,7 +209,17 @@ const CandidateView = () => {
       setSubmitStatus();
     }
   }, []);
-
+  const HtmlTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: '#f5f5f9',
+      color: 'rgba(0, 0, 0, 0.87)',
+      maxWidth: 220,
+      fontSize: theme.typography.pxToRem(12),
+      border: '1px solid #dadde9',
+    },
+  }));
   return (
     <>
       {loading && <CircularIndeterminate />}
@@ -251,7 +265,27 @@ const CandidateView = () => {
                       aria-label={`Status: ${status}`}
                     />
                   </Tooltip>
+                  <HtmlTooltip backgroundColor="dark"
+        title={
+          <React.Fragment>
+            <p style={{ margin: 0 }}><b>Submited :</b> Documents are submitted successfully.</p>
+            <p style={{ margin: 0 }}><b>Approved :</b> You are approved.</p>
+            <p style={{ margin: 0 }}><b>Ongoing  :</b> Not completed, some parts are submitted .</p>
+            <p style={{ margin: 0 }}><b>Rejected :</b> You are Rejected by Admin .</p>
+          </React.Fragment>
+        }
+      >
+                        <Fab
+                                variant="contained"
+                                size="small"
+                              
+                                sx={{ ...primaryFabStyle, ml: 5 }}
+                            >
+                                <Info width={18} sx={{ color: "#fff" }} />
+                        </Fab>
+                        </HtmlTooltip>
                 </Grid>
+              
                 <Grid item lg={4} xs={12}>
                   <Button
                     name="view"
