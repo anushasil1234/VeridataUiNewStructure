@@ -44,27 +44,37 @@ const UnwappedPFUsers = (props) => {
   const handleProcessStatusChange = async (e) => {
     const { value } = e.target;
     setProcessStatus(value);
-    payLoad.processStatus = value === "All" ? null : value;
-    setPayLoad(payLoad);
+  
+    const updatedPayLoad = {
+      ...payLoad,
+      processStatus: value === "All" ? null : value,
+    };
+  
+    setPayLoad(updatedPayLoad);
   };
+  
 
   const clearSearch = () => {
     setFromDate(null);
     setToDate(null);
     setProcessStatus('All');
-    const payLoad = {
+    const newPayLoad = {
+      ...payLoad,
+      fromDate: null,
+      toDate: null,
       isFiltered: false,
       noOfDays: 0,
       filterType: null,
       appointeeName: null,
       candidateId: null,
       isPfRequired: null,
-      processStatus: null
-    }
-    setPayLoad(payLoad);
-    setTableRows();
-    navigateTo(toPFUsers, {state:false});
-  }
+      processStatus: null,
+    };
+    setPayLoad(newPayLoad);
+    setTableRows(newPayLoad); 
+    navigateTo(toPFUsers, { state: false });
+  };
+  
 
   const apiSlice = useSelector(state => state.apiSlice);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
@@ -73,8 +83,8 @@ const UnwappedPFUsers = (props) => {
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getPfCreationAppointeeReportList } = apiSlice[0];
 
-  const setTableRows = async () => {
-    const response = await getPfCreationAppointeeReportList(payLoad);
+  const setTableRows = async (updatedPayLoad) => {
+    const response = await getPfCreationAppointeeReportList(updatedPayLoad);
     if (response) {
       const { responseInfos } = response;
       let generatedCells = generateTableRowData(
@@ -94,20 +104,24 @@ const UnwappedPFUsers = (props) => {
 
   useEffect(() => {
     dispatch(removeActionRoute());
-    if (actionRouteSlice.length === 0) {
-      setTableRows();
+    if (actionRouteSlice.length === 0 && hasPermission) {
+      setTableRows(payLoad);
     }
   }, [actionRouteSlice, hasPermission]);
   useEffect(() => {
-    payLoad.fromDate = DateFormatYYYYMMDD(fromDate?.toString());
-    payLoad.toDate = DateFormatYYYYMMDD(toDate?.toString());
-    setPayLoad(payLoad);
+    const updatedPayLoad = {
+      ...payLoad,
+      fromDate: fromDate ? DateFormatYYYYMMDD(fromDate.toString()) : null,
+      toDate: toDate ? DateFormatYYYYMMDD(toDate.toString()) : null,
+    };
+    setPayLoad(updatedPayLoad);
   }, [fromDate, toDate]);
+ 
   return (
     <PageLayout pageName={"PF Users List"}>
       <CardLayout>
         <DownloadReport
-          handleSearch={setTableRows}
+          handleSearch={()=>setTableRows(payLoad)}
           clearSearch={clearSearch}
           payLoad={payLoad}
           downloadApi={downloadPfCreationApponteeList_URL}

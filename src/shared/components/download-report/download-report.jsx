@@ -70,9 +70,16 @@ const DownloadReport = ({
     //   showErrorMessage(addPassWordMsg);
     // }
   };
+  const handelsearch=()=>{
+    if (!fromDate) {
+      showErrorMessage("From date can not be empty");
+    }else {
+      handleSearch();
+    }
+  }
   return (
     <Grid container spacing={2} alignItems="center">
-      <Grid item xs={12} sm={6} md={3} lg={2}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
         <Box sx={{ ...datePickerstyle }}>
           <DatePicker
             label="From Date"
@@ -83,7 +90,7 @@ const DownloadReport = ({
           />
         </Box>
       </Grid>
-      <Grid item xs={12} sm={6} md={3} lg={2}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
         <Box sx={{ ...datePickerstyle }}>
           <DatePicker
             label="To Date"
@@ -91,13 +98,15 @@ const DownloadReport = ({
             clearText="Clear me"
             value={toDate}
             minDate={fromDate}
-            setValue={setToDate}
+            setValue={(date) => {
+              setToDate(date);
+            }}
             disableFuture={true}
           />
         </Box>
       </Grid>
       {isStatusFilter && isStatusFilter === true ? (
-      <Grid item xs={12} sm={6} md={3} lg={2}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
           <FormControl sx={{ width: "100%" }} size="small">
             <InputLabel id="demo-select-small" >Status</InputLabel>
             {processStatus !== undefined && (
@@ -120,7 +129,7 @@ const DownloadReport = ({
        ) : null}
 
       {isStatusFilter && isStatusFilter === true ? (
-      <Grid item xs={12} sm={6} md={3} lg={2}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
           <FormControl sx={{ width: "100%" }} size="small">
             <InputLabel id="demo-select-small" >Passbook Status</InputLabel>
             {passbookStatus !== undefined && (
@@ -141,14 +150,14 @@ const DownloadReport = ({
        
       </Grid>
         ) : null}
-      <Grid item container xs={12} sm={6} md={3} lg={3} spacing={0.5} alignItems="center" justifyContent="flex-start">
+      <Grid item container xs={12} sm={6} md={4} lg={4} spacing={0.5} alignItems="center" justifyContent="flex-start">
         <Grid item >
           <DarkTooltip placement="top" title={"Search"} arrow>
             <ResponsiveFab Movement
               variant="contained"
               size="small"
               button={"N"}
-              onClick={handleSearch}
+              onClick={handelsearch}
               sx={{ ...primaryFabStyle }}
             >
               <Search width={18} sx={{ color: "#fff" }} />

@@ -16,6 +16,7 @@ import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { hasValue } from "shared/utils";
+import { useSelector } from "react-redux";
 
 
 const DownloadPFReport = ({
@@ -39,11 +40,20 @@ const DownloadPFReport = ({
   handelprocessPFchange
 }) => {
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
-
+  const {popUpSlice} = useSelector(
+    (state) => state
+  );
+  const { showErrorMessage } = popUpSlice[0];
   const handleClickOnDownload = () => {
     setIsDownloadListOpened(!isDownloadListOpened);
   };
-
+  const handelsearch=()=>{
+    if (!fromDate) {
+      showErrorMessage("From date can not be empty");
+    }else {
+      handleSearch();
+    }
+  }
   return (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -141,7 +151,7 @@ const DownloadPFReport = ({
               variant="contained"
               size="small"
               button={"N"}
-              onClick={handleSearch}
+              onClick={handelsearch}
               sx={{ ...primaryFabStyle }}
             >
               <Search width={18} sx={{ color: "#fff" }} />
