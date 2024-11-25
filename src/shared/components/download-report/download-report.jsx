@@ -71,7 +71,7 @@ const DownloadReport = ({
     // }
   };
   const handelsearch=()=>{
-    if (!fromDate) {
+    if (hasValue(toDate) && !hasValue(fromDate)) {
       showErrorMessage("From date can not be empty");
     }else {
       handleSearch();

@@ -17,6 +17,7 @@ import {
   DateFormatYYYYMMDD,
   PageLayout,
   generateTableRowData,
+  hasValue,
 } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import {
@@ -183,6 +184,8 @@ const UnWrappedProcessing = (props) => {
     setFromDate(null);
     setToDate(null);
     setStatusCode("All");
+    setPassbookStatus(null);
+    setIssueFilter(null);
     const payLoad = {
       isFiltered: false,
       noOfDays: 0,
@@ -249,7 +252,13 @@ const UnWrappedProcessing = (props) => {
   //   payLoad.toDate = DateFormatYYYYMMDD(toDate?.toString());
   //   setPayLoad(payLoad);
   // }, [toDate]);
-
+  const handelsearch=()=>{
+    if (hasValue(toDate) && !hasValue(fromDate)) {
+      showErrorMessage("From date can not be empty");
+    }else {
+      handleSearch();
+    }
+  }
   return (
     <PageLayout pageName={pageName}>
       <CardLayout>
@@ -349,7 +358,7 @@ const UnWrappedProcessing = (props) => {
                   variant="contained"
                   size="small"
                   button={"N"}
-                  onClick={handleSearch}
+                  onClick={handelsearch}
                   sx={primaryFabStyle}
                 >
                   <Search width={18} sx={{ color: "#fff" }} />

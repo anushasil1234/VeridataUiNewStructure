@@ -293,7 +293,13 @@ const AppointeeCount = () => {
 
     navigateTo(toAppointeecount, { state: false });
   };
-
+  const handelsearch=()=>{
+    if (hasValue(toDate) && !hasValue(fromDate)) {
+      showErrorMessage("From date can not be empty");
+    }else {
+      handleSearch();
+    }
+  }
 
   useEffect(() => {
     handleSearch()
@@ -428,7 +434,7 @@ const AppointeeCount = () => {
                   variant="contained"
                   size="small"
                   button={"N"}
-                  onClick={handleSearch}
+                  onClick={handelsearch}
                   sx={primaryFabStyle}
                 >
                   <Search width={18} sx={{ color: "#fff" }} />

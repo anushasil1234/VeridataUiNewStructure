@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { LinkNotSentTableHeadCell, notProcessedDataVerificationConfirmationMsg, startVerification, toLinknotsent } from 'shared/constants/constants';
-import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, selectCheckedRows } from 'shared/utils';
+import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue, selectCheckedRows } from 'shared/utils';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import { removeActionRoute } from 'store/slices/action-route-slice';
 import dayjs from "dayjs";
@@ -21,8 +21,9 @@ const UnwrapedLinkNotSent = (props) => {
     const functionSlice = useSelector((state) => state.functionSlice);
     const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
     const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
-   
-   
+    const popUpSlice = useSelector((state) => state.popUpSlice);
+    const { showErrorMessage } = popUpSlice[0]
+
     const { openConfirmationModel } = functionSlice[0];
     const { getLinkNotSentList, postRawFileData } = apiSlice[0];
     const { navigateTo } = commonHooksFunctionSlice[0];
@@ -93,7 +94,7 @@ const UnwrapedLinkNotSent = (props) => {
         const postRawDatapayLoad = {
             rawDataList: isCheckedAddedRows,
             userId: userId,
-            isUnprocessed: true 
+            isUnprocessed: true
         }
         const response = await postRawFileData(postRawDatapayLoad);
 
@@ -139,19 +140,26 @@ const UnwrapedLinkNotSent = (props) => {
 
     useEffect(() => {
         dispatch(removeActionRoute());
-       if (actionRouteSlice.length === 0 ) {
-         setTableRows(payLoad);
-       }
-     }, [state, actionRouteSlice]);
-   
-     useEffect(() => {
-       const _payLoad = {
-         ...payLoad,
-         fromDate: DateFormatYYYYMMDD(fromDate?.toString()),
-         toDate: DateFormatYYYYMMDD(toDate?.toString()),
-       }
-       setPayLoad(_payLoad);
-     }, [fromDate, toDate]);
+        if (actionRouteSlice.length === 0) {
+            setTableRows(payLoad);
+        }
+    }, [state, actionRouteSlice]);
+
+    useEffect(() => {
+        const _payLoad = {
+            ...payLoad,
+            fromDate: DateFormatYYYYMMDD(fromDate?.toString()),
+            toDate: DateFormatYYYYMMDD(toDate?.toString()),
+        }
+        setPayLoad(_payLoad);
+    }, [fromDate, toDate]);
+    const handelsearch = () => {
+        if (hasValue(toDate) && !hasValue(fromDate)) {
+            showErrorMessage("From date can not be empty");
+        } else {
+            handleSearch();
+        }
+    }
     return (
         <PageLayout pageName={pageName}>
             <CardLayout>
@@ -179,7 +187,7 @@ const UnwrapedLinkNotSent = (props) => {
                             variant="contained"
                             size="small"
                             button={"N"}
-                            onClick={handleSearch}
+                            onClick={handelsearch}
                             sx={primaryFabStyle}
                         >
                             <Search width={18} sx={{ color: "#fff" }} />

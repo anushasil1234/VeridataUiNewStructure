@@ -21,6 +21,7 @@ import {
   DataTable,
   PageLayout,
   generateTableRowData,
+  hasValue,
 } from "shared/utils";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import DatePicker from "shared/utils/date-picker/date-picker";
@@ -200,6 +201,13 @@ const UnwrappedReport = (props) => {
       setTableRows(fromDate, toDate);
     }
   }, [actionRouteSlice]);
+  const handelsearch=()=>{
+    if (hasValue(toDate) && !hasValue(fromDate)) {
+      showErrorMessage("From date can not be empty");
+    }else {
+      handleSearch();
+    }
+  }
   return (
     <PageLayout pageName={"Api count report"}>
       <CardLayout>
@@ -229,7 +237,7 @@ const UnwrappedReport = (props) => {
                 variant="contained"
                 size="small"
                 button={"N"}
-                onClick={handleSearch}
+                onClick={handelsearch}
                 sx={primaryFabStyle}
               >
                 <Search width={18} sx={{ color: "#fff" }} />

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ActionPermission from 'shared/components/action-permission/action-permission';
 import { criticalListTableHeadCell } from 'shared/constants/constants';
-import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from 'shared/utils';
+import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from 'shared/utils';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';
 import { removeActionRoute } from 'store/slices/action-route-slice';
@@ -18,7 +18,8 @@ const UnwrappedAttention = (props) => {
   const apiSlice = useSelector(state => state.apiSlice);
   const loggedInData = useSelector(state => state.loggedInData);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
- 
+  const popUpSlice = useSelector((state) => state.popUpSlice);
+  const {showErrorMessage} =popUpSlice[0]
   const { getCriticalAppointeeList } = apiSlice[0];
   const { companyId } = loggedInData[0];
 
@@ -66,6 +67,13 @@ const UnwrappedAttention = (props) => {
   const handleSearch = () => {
     setTableRows(payLoad);
   }
+  const handelsearch=()=>{
+    if (hasValue(toDate) && !hasValue(fromDate)) {
+      showErrorMessage("From date can not be empty");
+    }else {
+      handleSearch();
+    }
+  }
   return (
     <PageLayout pageName={"Attention List"}>
       <CardLayout>
@@ -93,7 +101,7 @@ const UnwrappedAttention = (props) => {
               variant="contained"
               size="small"
               button={"N"}
-              onClick={handleSearch}
+              onClick={handelsearch}
               sx={primaryFabStyle}
             >
               <Search width={18} sx={{ color: "#fff" }} />

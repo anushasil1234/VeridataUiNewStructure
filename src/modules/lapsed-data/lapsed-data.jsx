@@ -39,6 +39,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import Button from '@mui/material/Button';
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
+import { hasValue } from 'shared/utils';
 const UnwrappedLapseddata = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
@@ -229,7 +230,13 @@ if(!responseList || responseList.length === 0){
     payLoad.statusCode = statusCode;
     setPayLoad(payLoad);
   }, [statusCode]);
-
+  const handelsearch=()=>{
+    if (hasValue(toDate) && !hasValue(fromDate)) {
+      showErrorMessage("From date can not be empty");
+    }else {
+      handleSearch();
+    }
+  }
   return (
     <PageLayout pageName={pageName}>
       <CardLayout>
@@ -289,7 +296,7 @@ if(!responseList || responseList.length === 0){
                 variant="contained"
                 size="small"
                 button={"N"}
-                onClick={handleSearch}
+                onClick={handelsearch}
                 sx={primaryFabStyle}
               >
                 <Search width={18} sx={{ color: "#fff" }} />

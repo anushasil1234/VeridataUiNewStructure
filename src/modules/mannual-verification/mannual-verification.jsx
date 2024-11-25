@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { CardLayout, DateFormatYYYYMMDD, PageLayout } from "shared/utils";
+import { CardLayout, DateFormatYYYYMMDD, hasValue, PageLayout } from "shared/utils";
 import { Box, Button, Card, Grid, List, ListItemButton } from "@mui/material";
 import {
   primaryFabStyle,
@@ -25,6 +25,8 @@ const UnWrappedMannualVerification = (props) => {
   console.log("state1111", state);
   const [isDownload, setIsDownload] = useState(false);
   const [isDownloadExcel, setIsDownloadExcel] = useState(false);
+  const popUpSlice = useSelector((state) => state.popUpSlice);
+  const {showErrorMessage} =popUpSlice[0]
   let _fromday;
   let _today;
   const now = new Date();
@@ -101,7 +103,13 @@ const UnWrappedMannualVerification = (props) => {
       setIsDownloadExcel(false);
     }
   }, [isDownloadExcel]);
-
+  const handelsearch=()=>{
+    if (hasValue(toDate) && !hasValue(fromDate)) {
+      showErrorMessage("From date can not be empty");
+    }else {
+      handleSearch();
+    }
+  }
   return (
     <PageLayout pageName={"Manual Verification"}>
       <CardLayout>
@@ -144,7 +152,7 @@ const UnWrappedMannualVerification = (props) => {
                   variant="contained"
                   size="small"
                   button={"N"}
-                  onClick={handleSearch}
+                  onClick={handelsearch}
                   sx={primaryFabStyle}
                 >
                   <Search width={18} sx={{ color: "#fff" }} />
