@@ -1078,7 +1078,14 @@ export const floatingIconListStyle = {
 export const actionIconListStyle = {
   marginTop: "2rem"
 };
-
+export const actionIconListStylesx = {
+  marginTop: "10px"
+};
+export const actionstyle={
+  position: "absolute",
+  top: "1rem",         
+  right: "0.6rem", 
+}
 export const listHeadingStyle = {
   textAlign: "center",
   fontWeight: "bold",

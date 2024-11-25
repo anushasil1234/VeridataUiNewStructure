@@ -488,9 +488,10 @@ console.log('hasperpermissionAppointeeview',hasPermission,appointeeId);
       mobileNo,
       nationality,
       isFnameVarified,
-      isUanVerified
+      isUanVerified,
+      dateOfJoining,
+      userId
     }
-    console.log('handelclick',personalInfo)
     openVerify(personalInfo);
   }
 

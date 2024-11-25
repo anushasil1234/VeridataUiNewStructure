@@ -9,23 +9,33 @@ import {
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
-
 import {
+    Comment, 
+    ThumbDown,
+    Add
+} from "@mui/icons-material";
+import {
+    _addFabStyle,
+    actionIconListStyle,
+    actionIconListStylesx,
+    actionIconStyle,
+    actionstyle,
     cardStyle,
     cardStyle2,
+    floatingIconListStyle,
     gridContainerStyle,
     inputFieldStyle2,
     lable1CopyStyle,
     listHeadingConteinerStyle,
     listHeadingStyle,
 } from "app";
-import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias } from "shared/constants/constants";
+import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import SelectInput from "shared/components/input-fields/select-input";
 import FiledetailsSection from "./file-details-section";
 import filterDocVerificationList from "shared/utils/associate/filter-doc-verification-list";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GetImageSrc from "shared/utils/associate/get-image-src";
 import stringToBoolean from "shared/utils/associate/string-top-boolean";
 import handleVerificationStatusChange from "shared/utils/associate/handle-verification-status-change";
@@ -34,6 +44,10 @@ import addNewQuestion from "shared/utils/associate/add-new-question";
 import createVerificationTypeList from "shared/utils/associate/create-verification-type-list";
 import getFileCategoryByFileType from "shared/utils/associate/get-file-category";
 import isEPFOSelectionDisabled from "shared/utils/associate/is-epfo-disabled";
+import { DATEDIFF, DateFormatYYYYMMDD, FabIcon, toggleActionMenu, hasValue } from "shared/utils";
+import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
+import RemarksInputModel from "shared/utils/models/remarks-modal";
+import { storeActionRoute } from "store/slices/action-route-slice";
 
 const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
     return (
@@ -65,7 +79,9 @@ let ManualverifiedViewDetails = ({ details }) => {
         mobileNo,
         nationality,
         isFnameVarified,
-        isUanVerified
+        isUanVerified,
+        dateOfJoining,
+        userId
     } = details;
 
     const verificationFieldSet = {
@@ -75,10 +91,19 @@ let ManualverifiedViewDetails = ({ details }) => {
     }
 
     const apiSlice = useSelector((state) => state.apiSlice);
+    const functionSlice = useSelector((state) => state.functionSlice);
     const {
         getUploadFileData,
-        GetUploadedFileDetailsById
+        GetUploadedFileDetailsById,
+        getRemarks,
+        postAppointeeRejected
     } = apiSlice[0];
+    const {
+        openRemarksModel,
+        openRemarksInputModel,
+        closeRemarksInputModel,
+
+    } = functionSlice[0];
     const popUpSlice = useSelector(state => state.popUpSlice);
     const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
 
@@ -86,7 +111,7 @@ let ManualverifiedViewDetails = ({ details }) => {
     // useEffect(() => {
     //   //setTableRows(appointeeId);
     // }, []);
-    const [zoom, setZoom] = useState(1);
+    
     const [verificationType, setVerificationType] = useState(defaultVerificationTypeList[0]);
     const [verificationTypeList, setVerificationTypeList] = useState([]);
     const [uploadedFileData, setUploadedFileData] = useState([]);
@@ -101,7 +126,10 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [selectedMandatoryCategoryList, setSelectedMandatoryCategoryList] = useState([]);
     const [categorySelected, setCategorySelected] = useState(false);
+    const [degreeOfRotation, setDegreeOfRotation] = useState(0);
+    const [actionIconListDisplay, setActionIconListDisplay] = useState(false);
 
+    const dispatch = useDispatch();
     const clearSubDropdownListofVerificationType = (currentValue) => {
         clearCategoryRelatedVariables();
         setFiles([]);
@@ -110,6 +138,10 @@ let ManualverifiedViewDetails = ({ details }) => {
             setVerificationCategoryList([]);
         }
     }
+    const actionsAfterProcess = (actionRoute) => {
+        //    closeViewModel ();
+        dispatch(storeActionRoute({ actionRoute }));
+    };
     const selectDefaultVerificationType = (value, _uploadedFileData) => {
         const target = { value };
         handleChangeVerificationType({ target }, _uploadedFileData);
@@ -181,6 +213,23 @@ let ManualverifiedViewDetails = ({ details }) => {
             setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
         }
     }
+    const reject = async (remarks) => {
+        showErrorMessage();
+        if (hasValue(remarks)) {
+            const payLoad = {
+                appointeeId,
+                remarks: remarks,
+                userId: userId
+            };
+            const response = await postAppointeeRejected(payLoad);
+            if (response) {
+                actionsAfterProcess("reject");
+            }
+            closeRemarksInputModel();
+        } else {
+            showErrorMessage(remarksEmptyMsg);
+        }
+    };
     const setFileImage = async (file) => {
         const payload = {
             appointeeId: appointeeId,
@@ -276,6 +325,13 @@ let ManualverifiedViewDetails = ({ details }) => {
     ])
     useEffect(() => {
         if (verificationType) {
+            let newFileSrc = '';
+            if (verificationType.value === fatherFileCategoryTypeAlias) {
+                newFileSrc = '';
+            } else if (verificationType.value === epfFileTypeAlias) {
+                newFileSrc = '';
+            }
+            setFileSrc(newFileSrc);
             const { verificationCategoryList } = filterDocVerificationList({
                 fileCategory: verificationType.value,
                 uploadedFileData,
@@ -315,9 +371,94 @@ let ManualverifiedViewDetails = ({ details }) => {
             fileSrc
         });
     }, [fileSrc])
+    let addFabStyle = {
+        ..._addFabStyle,
+        transform: `rotate(${degreeOfRotation}deg)`,
+    };
+
+    const handleToggleActionList = () => {
+        const value = toggleActionMenu(degreeOfRotation, actionIconListDisplay);
+        setDegreeOfRotation(value.degreeOfRotation);
+        setActionIconListDisplay(value.actionIconListDisplay);
+    };
+
+    const handleClickOnReview = async () => {
+        const response = await getRemarks(appointeeId);
+        if (response && response.responseInfo && response.responseInfo.length > 0) {
+            const remarks = response.responseInfo;
+            openRemarksModel(remarks);
+        }
+    };
+    const handleReject = () => {
+        const currDate = DateFormatYYYYMMDD(new Date());
+        const joinDate = DateFormatYYYYMMDD(dateOfJoining);
+        const datetojoin = DATEDIFF(currDate, joinDate);
+        const confirmationModelContent = {
+            dialogContentText: `Candidate still has ${datetojoin} days left to complete verification process. ${appointeerejetionConfirmationMsg}`,
+            dialogComponent: <RemarksInputModel />,
+            dialogFunction: (remarks) => {
+                reject(remarks);
+            },
+        };
+        openRemarksInputModel(confirmationModelContent);
+    };
+    const addFabProps = new FabIconPropsModel(
+        addFabStyle,
+        handleToggleActionList,
+        "primary",
+        "add",
+        <Add />,
+        "Open action"
+    );
+    const remarksFabProps = new FabIconPropsModel(
+        actionIconStyle,
+        handleClickOnReview,
+        "info",
+        "remarks",
+        <Comment />,
+        "Remarks"
+    );
+    const rejectFabProps = new FabIconPropsModel(
+        actionIconStyle,
+        handleReject,
+        "error",
+        "thumsdown",
+        <ThumbDown />,
+        "Cancel"
+    );
     return (
-        <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%", padding: "1rem 0" }}>
+        <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%", padding: "1rem 0",marginRight:'10px' }}>
+            <Stack sx={floatingIconListStyle}>
+                <>
+                    <FabIcon props={{ ...addFabProps, selectedIndex: 1, index: 1 }} />
+                    {actionIconListDisplay ? (
+                        <Stack sx={{ ...actionIconListStylesx }}>
+                            <FabIcon
+                                props={{
+                                    ...rejectFabProps,
+                                    selectedIndex: 1,
+                                    index: 1,
+                                    placement: "left-end",
+                                    size: "small",
+                                }}
+                            />
+                             <FabIcon
+                                props={{
+                                    ...remarksFabProps,
+                                    selectedIndex: 1,
+                                    index: 1,
+                                    placement: "left-end",
+                                    size: "small",
+                                }}
+                            />
+                        </Stack>
+                    ) : null}
+                </>
+            </Stack>
+
             <ManualVerifiedPageSectionContainer>
+
+
                 <Stack sx={listHeadingConteinerStyle}>
                     <Typography sx={{ ...listHeadingStyle, fontSize: '1rem' }}>
                         Personal Information
@@ -363,7 +504,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    sx={{ paddingX: "1rem" }}
+                    sx={{ paddingX: "1rem", paddingLeft: "10px" }}
                 >
                     <Grid
                         item
