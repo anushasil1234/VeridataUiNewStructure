@@ -145,6 +145,8 @@ import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
 import UANPrerequisiteInformation from "./uan-prerequiestic-info";
 import GenderSelection from "shared/utils/associate/gender-selection";
 import getFileDetails from "shared/utils/associate/get-file-details";
+import getFilenames from "shared/utils/associate/get-filenames";
+import createFileUploadedData from "shared/utils/associate/create-file-uploaded-data";
 // import CandidateRegisterFirstPage from "./candidate-register-first-page";
 
 
@@ -293,14 +295,16 @@ const AppointeeRegister = () => {
   const [uploadedFile, setUploadedFile] = useState([]);
   const [xmlFileUploaded, setXmlFileUploaded] = useState();
   const [fileDetails, setFileDetails] = useState([]);
+  console.log('fileDetails12211', fileDetails);
+
   const [trustEpfoFileName, setTrustEpfoFileName] = useState([]);
   const [handicapFileName, setHandicapFileName] = useState();
   const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
   const [epfoServiceHistoryFile, setEpfoServiceHistoryFile] = useState();
   const [aadharXmlFileName, setAadharXmlFileName] = useState();
   const [passportFileName, setPassportFileName] = useState([]);
-  const [tenthCertificateFileName, setTenthCertificateFileName] = useState();
-  const [otherFileName, setOtherFileName] = useState();
+  const [tenthCertificateFileName, setTenthCertificateFileName] = useState([]);
+  const [otherFileName, setOtherFileName] = useState([]);
   const [
     isRelationShipWithMemberDisabled,
     setIsRelationShipWithMemberDisabled,
@@ -324,20 +328,56 @@ const AppointeeRegister = () => {
   const initialTimeOfOtpTimer = () => {
     setTimeoutTimer(10 * 60);
   };
-  const clearFileVaribles = (fileTypeAllias, setFileName) => {
-    let updatedFileDetails = [];
-    let updatedFileUploaded = [];
-    for (let index = 0; index < uploadedFile.length; index++) {
-      const { uploadTypeAlias } = uploadedFile[index];
-      if (uploadTypeAlias !== fileTypeAllias) {
-        updatedFileUploaded = [...updatedFileUploaded, uploadedFile[index]];
-        updatedFileDetails = [...updatedFileDetails, fileDetails[index]];
-      }
-    }
-    setUploadedFile(updatedFileUploaded);
+  const clearFileVaribles = (fileTypeAlias, setFileName, fileNameList) => {
+    console.log('clearFileVariables');
+
+    if (!fileDetails?.length) return;
+
+    // Filter out files matching the specified alias and having `uploadDetailsId === 0`
+    const filesToRemove = uploadedFile.filter(
+      ({ uploadTypeAlias, uploadDetailsId }) =>
+        uploadTypeAlias === fileTypeAlias && uploadDetailsId === 0
+    );
+
+    // Remaining uploaded files
+    const updatedUploadedFiles = uploadedFile.filter(
+      ({ uploadTypeAlias, uploadDetailsId }) =>
+        uploadTypeAlias !== fileTypeAlias || uploadDetailsId !== 0
+    );
+
+    // Files to remove from fileDetails
+    const removeDetailsList = fileDetails.filter(({ name, size }) =>
+      filesToRemove.some(
+        ({ fileName, fileLength }) => fileName === name && fileLength === size
+      )
+    );
+
+    // Remaining fileDetails
+    const updatedFileDetails = fileDetails.filter(
+      ({ name, size }) =>
+        !removeDetailsList.some(
+          (removed) => removed.name === name && removed.size === size
+        )
+    );
+
+    // Updated fileNameList
+    const removedNames = removeDetailsList.map(({ name }) => name);
+    const updatedFileNameList = fileNameList.filter(
+      (name) => !removedNames.includes(name)
+    );
+
+    // Update state with the filtered results
+    setUploadedFile(updatedUploadedFiles);
     setFileDetails(updatedFileDetails);
-    setFileName();
+    setFileName(updatedFileNameList);
+
+    console.log('Final State:', {
+      updatedFileDetails,
+      updatedUploadedFiles,
+      updatedFileNameList,
+    });
   };
+
   const disablePassportVerifyBtn = () => {
     setIsPassportVerifyBtnDisabled(true);
   };
@@ -512,6 +552,8 @@ const AppointeeRegister = () => {
         setCurrentPageNo(saveStep + 1);
       }
       setPassPortMaxLength(nationality);
+      const { upDatedFileUploaded } = createFileUploadedData({ fileUploaded });
+      setUploadedFile([...upDatedFileUploaded]);
       setFileUploaded(fileUploaded);
       setIsAppointeeUanAvailable(isUanAvailable);
       hasValue(isUanAvailable)
@@ -521,39 +563,55 @@ const AppointeeRegister = () => {
       hasValue(isTrustPassbook)
         ? setIsTrustEpfoAvailable(isTrustPassbook)
         : setIsTrustEpfoAvailable(true);
+      const {
+        tenthCertificateFileName, otherFileName, passportFileName, handicapFileName,
+        trustEpfoFileName, epfoPassBookFiles, epfoServiceHistoryFile
+      } = getFilenames({ fileUploaded });
+      setTenthCertificateFileName(tenthCertificateFileName);
+      setOtherFileName(otherFileName);
+      setPassportFileName(passportFileName);
+      setHandicapFileName(handicapFileName);
+      setTrustEpfoFileName(trustEpfoFileName);
+      setEpfoPassBookFiles(epfoPassBookFiles);
+      setEpfoServiceHistoryFile(epfoServiceHistoryFile);
+      // setUploadedFile([...upDatedFileUploaded]);
 
-      fileUploaded.forEach(
-        ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
-          const fileDetails = `data:${mimeType};base64,${fileData}`;
-          const file = {
-            fileDetails,
-            fileName,
-          };
+      // fileUploaded.forEach(
+      //   ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
+      //     const fileDetails = `data:${mimeType};base64,${fileData}`;
+      //     const file = {
+      //       fileDetails,
+      //       fileName,
+      //     };
 
-          if (uploadTypeAlias === tenthCertificateFileTypeAlias) {
-            setTenthCertificateFileName(file.fileName);
-          }
-          if (uploadTypeAlias === otherFileTypeAlias) {
-            setOtherFileName(file.fileName);
-          }
+      //     if (uploadTypeAlias === tenthCertificateFileTypeAlias) {
+      //       console.log('file.fileName', file.fileName);
 
-          if (uploadTypeAlias === passportFileTypeAlias) {
-            setPassportFileName(file.fileName);
-          }
-          if (uploadTypeAlias === handicapFileTypeAlias) {
-            setHandicapFileName(file.fileName);
-          }
-          if (uploadTypeAlias === trustEpfoFileTypeAlias) {
-            setTrustEpfoFileName(file.fileName);
-          }
-          if (uploadTypeAlias === epfoPassbookFileTypeAlias) {
-            setEpfoPassBookFiles(file.fileName);
-          }
-          if (uploadTypeAlias === epfoServiceHistoryFileTypeAlias) {
-            setEpfoServiceHistoryFile(file.fileName);
-          }
-        }
-      );
+      //       setTenthCertificateFileName([file.fileName]);
+      //     }
+      //     if (uploadTypeAlias === otherFileTypeAlias) {
+      //       setOtherFileName([file.fileName]);
+      //     }
+
+      //     if (uploadTypeAlias === passportFileTypeAlias) {
+      //       setPassportFileName(file.fileName);
+      //     }
+      //     if (uploadTypeAlias === handicapFileTypeAlias) {
+      //       setHandicapFileName(file.fileName);
+      //     }
+      //     if (uploadTypeAlias === trustEpfoFileTypeAlias) {
+      //       console.log('file.fileName123', file.fileName);
+
+      //       setTrustEpfoFileName([...trustEpfoFileName, file.fileName]);
+      //     }
+      //     if (uploadTypeAlias === epfoPassbookFileTypeAlias) {
+      //       setEpfoPassBookFiles(file.fileName);
+      //     }
+      //     if (uploadTypeAlias === epfoServiceHistoryFileTypeAlias) {
+      //       setEpfoServiceHistoryFile(file.fileName);
+      //     }
+      //   }
+      // );
       updateStep(
         {
           isHandicap: isHandicap,
@@ -679,7 +737,9 @@ const AppointeeRegister = () => {
 
   useEffect(() => {
     if (!isTrustEpfoAvailable) {
-      clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
+      console.log('trustEpfoFileName', trustEpfoFileName);
+
+      clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName);
     }
   }, [isTrustEpfoAvailable]);
 
@@ -753,7 +813,9 @@ const AppointeeRegister = () => {
   useEffect(() => {
     // updateStepCounter(isPhysicallyHandicap);
     if (isPhysicallyHandicap === 'N') {
-      clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
+      console.log('clearFileVaribles42323');
+
+      clearFileVaribles(handicapFileTypeAlias, setHandicapFileName, handicapFileName);
     }
   }, [isPhysicallyHandicap])
 
@@ -763,8 +825,8 @@ const AppointeeRegister = () => {
 
   useEffect(() => {
     if (isUanVerificationProcessManual === 'auto') {
-      clearFileVaribles(epfoPassbookFileTypeAlias, setEpfoPassBookFiles);
-      clearFileVaribles(epfoServiceHistoryFileTypeAlias, setEpfoServiceHistoryFile);
+      clearFileVaribles(epfoPassbookFileTypeAlias, setEpfoPassBookFiles, epfoPassBookFiles);
+      clearFileVaribles(epfoServiceHistoryFileTypeAlias, setEpfoServiceHistoryFile, epfoServiceHistoryFile);
     }
     setUploadedFile([]);
     setFileDetails([]);
@@ -884,6 +946,7 @@ const AppointeeRegister = () => {
       uploadTypeAlias: trustEpfoFileTypeAlias, fileNameList: trustEpfoFileName,
       currentFileName: currentFileName, uploadType: 'multiple'
     });
+    console.log('_updatedFileDetails', _updatedFileDetails);
 
     setTrustEpfoFileName(_fileNameList);
     setUploadedFile(_updatedUploadedFileList);
@@ -1180,22 +1243,17 @@ const AppointeeRegister = () => {
       IsFinalSubmit: false
     };
     // Use the buildFormData helper function to create the formData
+    console.log('payLoad121', payLoad);
+
     let formData = buildFormData(payLoad);
 
     // Make the API call
     const response = await PostUpdatePfUanDetails(formData, formSaveSuccess);
-    if (response) {
-      //handleNext();
-      //setIsPreviousSectionDisabled(true);
-      // setShowAdditionalSection(true);
-
-      //setIsUANappointeeAvailable(true)
-      clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
-      clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
-      clearFileVaribles(passportFileTypeAlias, setPassportFileName);
-
-
-    }
+    // if (response) {
+    //   clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
+    //   clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
+    //   clearFileVaribles(passportFileTypeAlias, setPassportFileName);
+    // }
   };
 
   const saveDetails = async () => {
@@ -1224,9 +1282,9 @@ const AppointeeRegister = () => {
       // setShowAdditionalSection(true);
 
       //setIsUANappointeeAvailable(true)
-      clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
-      clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
-      clearFileVaribles(passportFileTypeAlias, setPassportFileName);
+      clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName);
+      clearFileVaribles(handicapFileTypeAlias, setHandicapFileName, handicapFileName);
+      clearFileVaribles(passportFileTypeAlias, setPassportFileName, passportFileName);
     }
   };
 
@@ -1382,6 +1440,14 @@ const AppointeeRegister = () => {
   };
   const dispatch = useDispatch();
 
+
+  // const registrationSuccessContent = {
+  //   dialogContentText: registrationSuccessDialogContentText,
+  //   dialogTitle: congratulationDialogContentTitle,
+  //   maxWidth: "sm",
+  //   btnName: "Go to Dashboard",
+  // };
+  // openInfoModel(registrationSuccessContent, () => navigateTo(toDashboard));
   const handleAppointeeFormPage2Save = async ({ isUanManualUpload, status }) => {
     const loginUserData = getLocalStorageItem("pfc-user");
     let payLoad = {

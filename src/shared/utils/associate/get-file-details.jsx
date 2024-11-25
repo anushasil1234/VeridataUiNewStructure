@@ -3,6 +3,7 @@ import { removeFile } from "..";
 
 const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
     uploadType, uploadedFile, fileDetails, fileTypeList }) => {
+        console.log('uploadType', uploadType, uploadTypeAlias, uploadedFile);
 
     let fileNameList = [..._filenameList];
     let updatedUploadedFileList = [...uploadedFile];
@@ -15,8 +16,16 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
         let isFileOfSameTypeExists = false;
         for (let index = 0; index < uploadedFile.length; index++) {
 
-            const { fileLength, fileName, mimeType, uploadTypeAlias: _uploadTypeAlias } = uploadedFile[index];
-            if (name === fileName && size === fileLength && mimeType === type) {
+            const { fileLength, fileName, mimeType, uploadTypeAlias: _uploadTypeAlias, uploadDetailsId } = uploadedFile[index];
+            console.log('uploadedFile', uploadedFile);
+            
+            if (name === fileName && size === fileLength && mimeType === type && uploadDetailsId === 0) {
+                isFileExists = true;
+                if (_uploadTypeAlias === uploadTypeAlias) {
+                    isFileOfSameTypeExists = true;
+                }
+            }
+            if (name === fileName && mimeType === type && uploadDetailsId > 0) {
                 isFileExists = true;
                 if (_uploadTypeAlias === uploadTypeAlias) {
                     isFileOfSameTypeExists = true;
@@ -61,6 +70,7 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
                     updatedUploadedFileList = [..._updatedUploadedFileList, file];
                     updatedFileDetails = [..._updatedFileDetails, files[index]];
                 } else {
+                    
                     fileNameList = [...fileNameList, name];
                     updatedUploadedFileList = [...updatedUploadedFileList, file];
                     updatedFileDetails = [...updatedFileDetails, files[index]];

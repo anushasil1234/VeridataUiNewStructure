@@ -1,8 +1,8 @@
 export const removeFile = ({ uploadedFile, fileDetails, uploadTypeAlias, fileNameList, uploadType, currentFileName = null }) => {
 
-    console.log('currentFileName',  currentFileName);
-    
-let updatedUploadedFileList = [...uploadedFile];
+    console.log('currentFileName', currentFileName, uploadedFile, fileDetails, uploadTypeAlias, fileNameList, uploadType);
+
+    let updatedUploadedFileList = [...uploadedFile];
     let updatedFileDetails = [...fileDetails];
 
     if (uploadType === 'single') {
@@ -15,9 +15,13 @@ let updatedUploadedFileList = [...uploadedFile];
             updatedFileDetails.splice(existingFileIndex, 1);
         }
     } else {
+        console.log('uploadedFile', uploadedFile);
+        
         const existingFileIndex = uploadedFile.findIndex(
             (uploadedFile) => (uploadedFile.uploadTypeAlias === uploadTypeAlias && uploadedFile.fileName === currentFileName)
         );
+        console.log('existingFileIndex', existingFileIndex, updatedUploadedFileList);
+        
         if (existingFileIndex !== -1) {
             // If a file with the same uploadTypeAlias exists, remove it
             updatedUploadedFileList.splice(existingFileIndex, 1);
@@ -28,6 +32,13 @@ let updatedUploadedFileList = [...uploadedFile];
             fileNameList.splice(existingFileNameIndex, 1);
         }
     }
+    console.log(`fileNameList,
+        updatedUploadedFileList,
+        updatedFileDetails`,
+        fileNameList,
+        updatedUploadedFileList,
+        updatedFileDetails);
+
     return {
         fileNameList,
         updatedUploadedFileList,

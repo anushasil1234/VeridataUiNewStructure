@@ -29,7 +29,9 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
-    const { userId } = loggedInData[0];
+    const { userId } = (loggedInData && loggedInData[0]) || {
+        userId: null
+      };
     const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
     const {
         UpdateAppointeeManualVerification

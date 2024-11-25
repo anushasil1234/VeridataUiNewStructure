@@ -31,7 +31,8 @@ const getFilenames = ({ fileUploaded }) => {
                 handicapFileName = [file.fileName];
             }
             if (uploadTypeAlias === trustEpfoFileTypeAlias) {
-                trustEpfoFileName = [file.fileName];
+                
+                trustEpfoFileName = [...trustEpfoFileName, file.fileName];
             }
             if (uploadTypeAlias === epfoPassbookFileTypeAlias) {
                 epfoPassBookFiles = [...epfoPassBookFiles, file.fileName];
