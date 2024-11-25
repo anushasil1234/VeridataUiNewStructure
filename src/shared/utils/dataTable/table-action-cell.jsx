@@ -149,7 +149,7 @@ export const TableActionCell = (props1, props2) => {
   const [_isManualPassbook,setIsManualPassbook] = useState()
   const handleGetAppointeeDetails = async (appointeeId) => {
     const response = await getAppointeeDetails(appointeeId);
-    console.log("res1111", response);
+   
     const {
       appointeeName,
       dateOfBirth,
@@ -165,7 +165,9 @@ export const TableActionCell = (props1, props2) => {
       nationality,
       isFnameVarified,
       isUanVarified,
-      isManualPassbook
+      isManualPassbook,
+      dateOfJoining,
+      userId
     } = response?.responseInfo;
     setIsManualPassbook(isManualPassbook? isManualPassbook :NA)
     const personalInfo = {
@@ -201,8 +203,9 @@ export const TableActionCell = (props1, props2) => {
         : isUanVarified === false
         ? isUanVarified
         : NA,
+        dateOfJoining:dateOfJoining,
+        userId:userId
     };
-    console.log("personalInfo", response);
     // const personalInfo = {
     //   appointeeId,
     //   appointeeName,
