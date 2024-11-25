@@ -1281,7 +1281,7 @@ export const popupStyle = {
 // chip style end
 // Upload file starts
 export const fileUploadSectionContainerStyle = {
-  margin: '10px 0px!important'
+  margin: '10px 0px!important',
 }
 const fileUploadSectionTextMargin = '6px';
 export const fileNameStyle = {
@@ -1315,6 +1315,8 @@ export const PopupboxStyle = {
 }
 export const filenameContainer = {
   flexDirection: 'row',
+  alignItems:'center',
+  justifyContent: 'center',
   // marginTop: '10px',
   padding: '0 10px',
   paddingY: '15px',
@@ -1542,7 +1544,8 @@ export const infoButtonStyle = {
 export const fileInputboxContainerStyle = {
   alignItems: "center",
   justifyContent: "center",
-  height: "159px",
+  height: "200px",
+  // overflowY:'scroll',
   background: "#F7FAFF",
   border: "2px dashed #375993",
   marginTop: "5px"

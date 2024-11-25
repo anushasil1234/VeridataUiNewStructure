@@ -6,7 +6,7 @@ const createFileUploadedData = ({ fileUploaded, verificationFieldModal, }) => {
 
     const upDatedFileUploaded = fileUploaded.filter(({ uploadTypeAlias }) => {
         return (
-            verificationFieldModal[uploadAliasCategory[uploadTypeAlias].categoryType] !== true
+            verificationFieldModal[uploadAliasCategory[uploadTypeAlias]?.categoryType] !== true
         )
     })
         .map(({ uploadDetailsId, fileName, mimeType, uploadTypeId, uploadTypeAlias }) => {
