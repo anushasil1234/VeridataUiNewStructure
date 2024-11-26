@@ -46,7 +46,9 @@ const App = () => {
   }
   const { userTypeId, isDefaultPassword } = loggedInData.length > 0 && loggedInData[0];
   useEffect(() => {
+    
     if (userTypeId && isDefaultPassword === false) {
+      console.log("page app, userTypeId", userTypeId)
       setDropdownList();
     }
   }, [userTypeId])
