@@ -30,11 +30,11 @@ const _UserView = (props) => {
         if (response) {
             const { responseInfo } = response;
             const { emailId, roleId, userName, password, phone, userCode } = responseInfo;
-            hasValue(userName) ? setUserName(userName) : setUserName("");
-            hasValue(password) ? setPassword(password) : setPassword("");
-            hasValue(emailId) ? setUserEmail(emailId) : setUserEmail("");
-            hasValue(phone) ? setContactNumber(phone) : setContactNumber("");
-            hasValue(userCode) ? setUserCode(userCode) : setUserCode("");
+            hasValue(userName) ? setUserName(userName) : setUserName("N/A");
+            hasValue(password) ? setPassword(password) : setPassword("N/A");
+            hasValue(emailId) ? setUserEmail(emailId) : setUserEmail("N/A");
+            hasValue(phone) ? setContactNumber(phone) : setContactNumber("N/A");
+            hasValue(userCode) ? setUserCode(userCode) : setUserCode("N/A");
             if (hasValue(roleId)) {
                 const role = roleList && roleList.find(({ id }) => id === roleId);
                 if (role) {
