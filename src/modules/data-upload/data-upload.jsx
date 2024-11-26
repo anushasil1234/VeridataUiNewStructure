@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CardLayout, PageLayout } from 'shared/utils';
-import { sampleDownLoadLinkContainerStyle } from 'app';
+import { responsiveBtnType1Style, sampleDownLoadLinkContainerStyle } from 'app';
 import { DownloadSampleXlsFile_URL } from 'shared/constants/constants';
 import ActionPermission from 'shared/components/action-permission/action-permission';
 import FileUpload from 'shared/components/file-upload/file-upload';
@@ -64,7 +64,7 @@ const UnWrrappedDataUpload = (props) => {
                             removeFile={removeFile}
                             hasPermission={hasPermission}
                         />
-                        <DarkTooltip placement="right" arrow title="Help">
+                        <DarkTooltip placement="right" arrow title="Click Me">
                             <Fab
                                 variant="contained"
                                 size="small"
@@ -121,7 +121,7 @@ const UnWrrappedDataUpload = (props) => {
 
                     {/* Add DialogActions for the Close button */}
                     <DialogActions>
-                        <Button variant="contained" color="primary" onClick={handleCloseModal}>
+                        <Button variant="contained" color="primary"sx={{...responsiveBtnType1Style}} onClick={handleCloseModal}>
                             CLOSE
                         </Button>
                     </DialogActions>
