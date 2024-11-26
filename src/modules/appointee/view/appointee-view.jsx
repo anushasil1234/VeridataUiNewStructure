@@ -920,10 +920,7 @@ let AppointeeViewForm = ({
                         filesByAlias={filesByAlias}
                       />
                     ) : (
-                      <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>
-                        N/A
-                      </Typography>
-
+                        'N/A'
                     )
                   }
                 />
@@ -939,9 +936,7 @@ let AppointeeViewForm = ({
                         filesByAlias={filesByAlias}
                       />
                     ) : (
-                      <Typography variant="subtitle2" color="black" style={{ marginLeft: "5%", fontSize: '1rem' }}>
-                        N/A
-                      </Typography>
+                     'N/A'
                     )
                   }
                 />
