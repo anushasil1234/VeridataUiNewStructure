@@ -49,7 +49,7 @@ const UnWrrappedDataUpload = (props) => {
             <CardLayout>
                 <Box sx={sampleDownLoadLinkContainerStyle}>
                     <Typography onClick={() => downloadReport(DownloadSampleXlsFile_URL)}>
-                        Download New Appointee Template
+                       To Download New Appointee Template Click Here.
                     </Typography>
                 </Box>
                 {hasPermission && hasPermission['A006'] && (

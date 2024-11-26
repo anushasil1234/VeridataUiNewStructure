@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { useSelector } from "react-redux";
 import { CardLayout, PageLayout } from "shared/utils";
-import { sampleDownLoadLinkContainerStyle } from "app";
+import { responsiveBtnType1Style, sampleDownLoadLinkContainerStyle } from "app";
 import { DownloadUpdateSampleXlsFile_URL } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import FileUpdate from "shared/components/file-update/file-update";
@@ -53,7 +53,7 @@ const UnWrrappedDataUpdate = (props) => {
           <Typography
             onClick={() => downloadReport(DownloadUpdateSampleXlsFile_URL)}
           >
-            Download Bulk Update Template
+            To Download Bulk Update Template Click Here.
           </Typography>
 
         </Box>
@@ -70,7 +70,7 @@ const UnWrrappedDataUpdate = (props) => {
               hasPermission={hasPermission}
             />
 
-            <DarkTooltip placement="right" arrow title="Help">
+            <DarkTooltip placement="right" arrow title="Click Me">
               <Fab
                 variant="contained"
                 size="small"
@@ -127,7 +127,7 @@ const UnWrrappedDataUpdate = (props) => {
 
           {/* Add DialogActions for the Close button */}
           <DialogActions>
-            <Button variant="contained" color="primary" onClick={handleCloseModal}>
+            <Button variant="contained" color="primary" sx={{...responsiveBtnType1Style}} onClick={handleCloseModal}>
               CLOSE
             </Button>
           </DialogActions>
