@@ -290,6 +290,9 @@ const CandidateView = () => {
                         <Typography variant="body2" sx={{...statusstyle }}>
                           <strong>No Response:</strong> There has been no response yet.
                         </Typography>
+                        <Typography variant="body2" sx={{...statusstyle }}>
+                          <strong>Doc Reupload:</strong> Request for Doc Reupload.
+                        </Typography>
                       </Box>
                     }
                   >
