@@ -301,7 +301,7 @@ const AppointeeRegister = () => {
   const [handicapFileName, setHandicapFileName] = useState();
   const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
   const [epfoServiceHistoryFile, setEpfoServiceHistoryFile] = useState();
-  const [aadharXmlFileName, setAadharXmlFileName] = useState();
+  const [aadharXmlFileName, setAadharXmlFileName] = useState([]);
   const [passportFileName, setPassportFileName] = useState([]);
   const [tenthCertificateFileName, setTenthCertificateFileName] = useState([]);
   const [otherFileName, setOtherFileName] = useState([]);
@@ -968,7 +968,7 @@ const AppointeeRegister = () => {
     } else if (size > FILE_SIZE_LIMIT) {
       showErrorMessage(uploadSizeErrorMsg);
     } else {
-      setAadharXmlFileName(name);
+      setAadharXmlFileName([name]);
       setXmlFileUploaded(fileData);
     }
     setIsAadhaarXmlUploaded(true);
