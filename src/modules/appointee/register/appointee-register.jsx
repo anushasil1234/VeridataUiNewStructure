@@ -2988,8 +2988,10 @@ const AppointeeRegister = () => {
                                 {countryOfOrigin === "India" && (
                                   <>
                                     <Button
-                                      sx={{ margin: "5px", width: "fit-content" }}
+                                      sx={{ ...submitBtnStyle,margin: "5px", width: "fit-content" }}
                                       variant="contained"
+                                      color="primary"
+                                      
                                       disabled={isPassportVerifyBtnDisabled}
                                       onClick={handlePassportVerification}
                                       endIcon={<Autorenew />}
@@ -3294,14 +3296,18 @@ const AppointeeRegister = () => {
                       <DialogActions>
                         <Button
                           onClick={handleCloseModal}
-                          color="secondary"
+                          variant="contained"
+                          color="primary"
+                          sx={submitBtnStyle}
                         >
                           No
                         </Button>
                         <Button
                           onClick={handleConfirmSave}
+                          variant="contained"
                           color="primary"
                           autoFocus
+                          sx={submitBtnStyle}
                         >
                           Yes
                         </Button>
@@ -3452,7 +3458,7 @@ const AppointeeRegister = () => {
                             }
                           />
                           <Button
-                            sx={{ margin: "5px 0" }}
+                            sx={{...submitBtnStyle, margin: "5px 0" }}
                             disabled={isAadhaarVarified}
                             variant="contained"
                             onClick={handleAadharVerifiaction}
@@ -3520,7 +3526,7 @@ const AppointeeRegister = () => {
                             error={panNumberError}
                           />
                           <Button
-                            sx={{ margin: "5px 0" }}
+                            sx={{...submitBtnStyle, margin: "5px 0" }}
                             disabled={isPanVarified}
                             variant="contained"
                             onClick={handlePanVerifiaction}
@@ -3542,7 +3548,9 @@ const AppointeeRegister = () => {
                             <DialogActions>
                               <Button
                                 onClick={handleDialogConfirm}
+                                variant="contained"
                                 color="primary"
+                                sx={submitBtnStyle}
                                 autoFocus
                               >
                                 OK

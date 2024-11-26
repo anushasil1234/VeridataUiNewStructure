@@ -2441,6 +2441,25 @@ export const getStatusTooltip = (status) => {
             return
     }
 };
+
+export const getTooltipforStatus=(statusCode)=>{
+ switch(statusCode){
+    case "SUBMT":
+        return "Your data has been submitted successfully. HR Admin will take action accordingly.";
+    case "APPRVD":
+        return "Approved successfully."
+    case "DCRUPLD":
+        return "Document re-upload required." 
+    case "ONGNG":
+        return "Verification in progress"     
+    case "REJCT":
+        return "You are Rejected by Admin."
+    case "NORES":
+        return "There has been no response yet."        
+    default:
+        return
+ }
+}
 export const getHandicapTypeDescription = (type) => {
     switch (type) {
         case 'L':

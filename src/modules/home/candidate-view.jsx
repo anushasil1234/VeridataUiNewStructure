@@ -1,12 +1,15 @@
-import { Box, Button, Grid, Typography, Chip, Tooltip,tooltipClasses, Fab } from "@mui/material";
+import { Box, Button, Grid, Typography, Chip, Tooltip, tooltipClasses, Fab } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import { getStatusTooltip, toReuploadDoc } from "shared/constants/constants";
+import { getStatusTooltip, getTooltipforStatus, toReuploadDoc } from "shared/constants/constants";
 import React, { useEffect, useState } from "react";
 
 import {
   dashboardtextStyle,
   getStatusChipStyle,
+  pendingverificationsx,
   primaryFabStyle,
+  statusBoxstyle,
+  statusstyle,
   subHeadingContentTextStyle,
 } from "app";
 import { submitConfirmationMsg, toRegister } from "shared/constants/constants";
@@ -76,7 +79,7 @@ const CandidateView = () => {
   const handlePrerequisite = (statusId, statusCode) => {
     submitPrerequisiteStatus(statusId, statusCode);
   };
-
+  console.log("ANU_20105WTJ3", statusCode)
   const handleYes = () => handlePrerequisite(4, "PREREQCNFYES");
   const handleNo = () => handlePrerequisite(5, "PREREQCNFNO");
 
@@ -248,7 +251,7 @@ const CandidateView = () => {
                   <Tooltip
                     title={
                       <Typography sx={{ maxWidth: 200, whiteSpace: "normal" }}>
-                        {getStatusTooltip(status)}
+                        {getTooltipforStatus(statusCode)}
                       </Typography>
                     }
                     arrow
@@ -265,27 +268,42 @@ const CandidateView = () => {
                       aria-label={`Status: ${status}`}
                     />
                   </Tooltip>
-                  <HtmlTooltip backgroundColor="dark"
-        title={
-          <React.Fragment>
-            <p style={{ margin: 0 }}><b>Submited :</b> Documents are submitted successfully.</p>
-            <p style={{ margin: 0 }}><b>Approved :</b> You are approved.</p>
-            <p style={{ margin: 0 }}><b>Ongoing  :</b> Not completed, some parts are submitted .</p>
-            <p style={{ margin: 0 }}><b>Rejected :</b> You are Rejected by Admin .</p>
-          </React.Fragment>
-        }
-      >
-                        <Fab
-                                variant="contained"
-                                size="small"
-                              
-                                sx={{ ...primaryFabStyle, ml: 5 }}
-                            >
-                                <Info width={18} sx={{ color: "#fff" }} />
-                        </Fab>
-                        </HtmlTooltip>
+                  <Tooltip backgroundColor="dark"
+                    arrow
+                    title={
+                      <Box sx={{... statusBoxstyle}}>
+                        <Typography variant="body2" sx={{... statusstyle}}>
+                          <strong>Submitted:</strong> Your data has been submitted successfully.
+                        </Typography>
+                        <Typography variant="body2" sx={{... statusstyle }}>
+                          <strong>Approved:</strong> Approved successfully.
+                        </Typography>
+                        <Typography variant="body2" sx={{...statusstyle }}>
+                          <strong>Ongoing:</strong> Verification in progress.
+                        </Typography>
+                        <Typography variant="body2" sx={{...statusstyle}}>
+                          <strong>Rejected:</strong> You are rejected by Admin.
+                        </Typography>
+                        <Typography variant="body2" sx={{...statusstyle }}>
+                          <strong>Approved Manually:</strong> The data has been manually verified and approved by the admin.
+                        </Typography>
+                        <Typography variant="body2" sx={{...statusstyle }}>
+                          <strong>No Response:</strong> There has been no response yet.
+                        </Typography>
+                      </Box>
+                    }
+                  >
+                    <Fab
+                      variant="contained"
+                      size="small"
+
+                      sx={{ ...primaryFabStyle, ml: 5 }}
+                    >
+                      <Info width={18} sx={{ color: "#fff" }} />
+                    </Fab>
+                  </Tooltip>
                 </Grid>
-              
+
                 <Grid item lg={4} xs={12}>
                   <Button
                     name="view"
@@ -314,17 +332,7 @@ const CandidateView = () => {
                         variant="contained"
                         color="primary"
                         onClick={appointeeDocReupload}
-                        sx={{
-                          boxShadow: 10, // Elevation effect
-                          fontSize: "1rem", // Larger font for emphasis
-                          border: "2px solid rgba(255, 255, 255, 0.8)", // White border for emphasis
-                          borderRadius: "8px", // Rounded corners for a modern look
-                          "&:hover": {
-                            boxShadow: 20, // Stronger elevation on hover
-                            transform: "scale(1.05)", // Slight scale up on hover
-                          },
-                          transition: "box-shadow 0.3s, transform 0.3s", // Smooth transition for elevation and scale
-                        }}
+                        sx={{...pendingverificationsx}}
                       >
                         Pending Verification
                       </Button>
@@ -338,17 +346,7 @@ const CandidateView = () => {
                         color="primary"
                         onClick={appointeeVerification}
                         disabled={!isPrerequisiteDataAvailable}
-                        sx={{
-                          boxShadow: 10, // Elevation effect
-                          fontSize: "1rem", // Larger font for emphasis
-                          border: "2px solid rgba(255, 255, 255, 0.8)", // White border for emphasis
-                          borderRadius: "8px", // Rounded corners for a modern look
-                          "&:hover": {
-                            boxShadow: 20, // Stronger elevation on hover
-                            transform: "scale(1.05)", // Slight scale up on hover
-                          },
-                          transition: "box-shadow 0.3s, transform 0.3s", // Smooth transition for elevation and scale
-                        }}
+                        sx={{...pendingverificationsx }}
                       >
                         {(consentStatus === 4 ||
                           consentStatus === 0 ||

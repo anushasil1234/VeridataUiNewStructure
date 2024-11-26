@@ -1263,7 +1263,27 @@ export const getStatusChipStyle = (status) => {
       return {};
   }
 };
-
+export const statusstyle={
+  margin: "5px 0", 
+  color: "#fff",
+  fontSize:"0.8rem" 
+}
+export const statusBoxstyle={
+  padding: "5px", 
+  backgroundColor: "#333",
+  borderRadius: "4px" 
+}
+export const pendingverificationsx={
+  boxShadow: 10,
+  fontSize: "1rem", 
+  border: "2px solid rgba(255, 255, 255, 0.8)", 
+  borderRadius: "8px", 
+  "&:hover": {
+    boxShadow: 20, 
+    transform: "scale(1.05)", 
+  },
+  transition: "box-shadow 0.3s, transform 0.3s",
+}
 export const buttonStyle = {
   width: '80px',
   height: '36px',
@@ -1422,7 +1442,7 @@ export const modelButtonStyle = {
   fontSize: "0.875rem",
   borderRadius: "8px",
   "&:hover": {
-    backgroundColor: ThemeColorPalete.primary.secondary
+    backgroundColor: ThemeColorPalete.primary.light
   },
 };
 export const hideBoxSx = {
@@ -1732,7 +1752,11 @@ export const prereqModalShowMoreInfoStyle = {
 export const responsiveBtnType1Style = {
   padding: { xs: '4px 8px', sm: '6px 16px' },
   minWidth: { xs: '45px', sm: '65px' },
-  ...buttonfontSize
+  ...buttonfontSize,
+  backgroundColor: ThemeColorPalete.primary.main,
+  "&:hover": {
+    backgroundColor: ThemeColorPalete.primary.light
+  },
 }
 
 export const useStyles = makeStyles(() => ({
@@ -1841,6 +1865,10 @@ export const submitBtnStyle = {
   marginRight: '24px',
   backgroundColor: AppStyle.palette.primary.main,
   ...submitButtonCommonStyle,
+  "&:hover": {
+    color: '#fff',
+    backgroundColor: ThemeColorPalete.primary.light,
+  },
 }
 
 export const rightMostBtnStyle = {
