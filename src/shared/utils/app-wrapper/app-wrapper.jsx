@@ -1039,12 +1039,12 @@ const AppWrapper = (App) => {
           filePasswordSubmitionProps={filePasswordSubmitionProps}
           closeFilePasswordSubmitionModel={closeFilePasswordSubmitionModel}
         />
-        <AppointeeView
+        {/* <AppointeeView
           openViewModel={openViewModel}
           appointeeId={appointeeId}
           closeViewModel={closeViewModel}
           openView={isViewOpen}
-        />
+        /> */}
       </>
     );
   };
