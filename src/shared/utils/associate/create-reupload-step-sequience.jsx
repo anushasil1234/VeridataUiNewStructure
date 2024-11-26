@@ -4,7 +4,7 @@ const createReuploadStepSequience = ({ isUanVarified, isFathersNameVarified }) =
 
     let _steps = {};
     let _stepCounter = 0;
-    if (isFathersNameVarified !== true) {
+    if (isFathersNameVarified === false) {
         _stepCounter = _stepCounter + 1;
         _steps = {
             ..._steps,
@@ -14,7 +14,7 @@ const createReuploadStepSequience = ({ isUanVarified, isFathersNameVarified }) =
             }
         }
     }
-    if (isUanVarified !== true) {
+    if (isUanVarified === false) {
         _stepCounter = _stepCounter + 1;
         _steps = {
             ..._steps,

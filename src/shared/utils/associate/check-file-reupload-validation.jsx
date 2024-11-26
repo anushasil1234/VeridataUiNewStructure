@@ -7,11 +7,11 @@ const checkFileReuploadValidation = ({ uploadedFile, verificationFieldModal }) =
 
     for (let index = uploadedFile.length - 1; index >= 0; index--) {
         const { uploadDetailsId, uploadTypeAlias } = uploadedFile[index];
-        if (verificationFieldModal.isUanVarified !== true && uploadDetailsId === 0 && epfoError === true &&
+        if (verificationFieldModal.isUanVarified === false && uploadDetailsId === 0 && epfoError === true &&
             (uploadTypeAlias === epfoPassbookFileTypeAlias || uploadTypeAlias === epfoServiceHistoryFileTypeAlias)) {
             epfoError = false;
         }
-        if (verificationFieldModal.isFnameVarified !== true && uploadDetailsId === 0 && fdocError === true &&
+        if (verificationFieldModal.isFnameVarified === false && uploadDetailsId === 0 && fdocError === true &&
             (uploadTypeAlias === tenthCertificateFileTypeAlias || uploadTypeAlias === otherFileTypeAlias)) {
             fdocError = false;
         }
@@ -20,10 +20,10 @@ const checkFileReuploadValidation = ({ uploadedFile, verificationFieldModal }) =
         }
     }
 
-    if (epfoError) {
+    if (epfoError && verificationFieldModal.isUanVarified === false) {
         error = `Please attach a valid EPFO related document`;
     }
-    if (fdocError) {
+    if (fdocError && verificationFieldModal.isFnameVarified === false) {
         error = `Please attach a valid document with Father's name`
     }
     return (

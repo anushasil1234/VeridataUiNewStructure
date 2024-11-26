@@ -217,7 +217,7 @@ const ReuploadDocument = () => {
                                     >
                                         {/* ######  Certificate Upload Section Start ###### */}
                                         {
-                                            isFathersNameVarified !== true &&
+                                            isFathersNameVarified === false &&
                                             <>
                                                 <Grid
                                                     container
@@ -359,7 +359,7 @@ const ReuploadDocument = () => {
                                             </>
                                         }
                                         {
-                                            isUANVarified !== true &&
+                                            isUANVarified === false &&
                                             <>
                                                 <Grid
                                                     container
