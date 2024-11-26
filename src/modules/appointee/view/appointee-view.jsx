@@ -97,7 +97,7 @@ let AppointeeViewForm = ({
   closeViewModel,
   hasPermission
 }) => {
-console.log('hasperpermissionAppointeeview',hasPermission,appointeeId);
+  console.log('hasperpermissionAppointeeview', hasPermission, appointeeId);
 
   const loggedInData = useSelector((state) => state.loggedInData);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -251,8 +251,8 @@ console.log('hasperpermissionAppointeeview',hasPermission,appointeeId);
 
   const setAppointeeDetails = async () => {
     const response = await getAppointeeDetails(appointeeId);
-    console.log('response2222',response);
-    
+    console.log('response2222', response);
+
     if (response) {
       const {
         maskedUANNumber,
@@ -294,7 +294,7 @@ console.log('hasperpermissionAppointeeview',hasPermission,appointeeId);
       } = response.responseInfo;
 
       setAppointeeDetailsResponse(response.responseInfo);
-      
+
       setIsManualPassbook(isManualPassbook);
       workFlowStatus ? setManualVerificationStatus(workFlowStatus) : setManualVerificationStatus(NA)
       maskedUANNumber ? setUAN(maskedUANNumber) : setUAN(NA);
@@ -654,9 +654,9 @@ console.log('hasperpermissionAppointeeview',hasPermission,appointeeId);
     return label ? <Chip {...appointeeVerificationStatusChipPropsStyle} label={label} color={color} /> : null;
   };
 
-console.log('status', manualVerificationStatus)
+  console.log('status', manualVerificationStatus)
   return (
-    <Box bgcolor={"#E2E8F0"} sx={{ position: "relative" ,borderRadius:'8px'}}>
+    <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", borderRadius: '8px' }}>
       <Box sx={gridContainerStyle}>
         <Grid container spacing={2}>
           <Grid
@@ -723,14 +723,14 @@ console.log('status', manualVerificationStatus)
                     <FileViewComponent
                       fileType={trustEpfoFileTypeAlias}
                       file={trustPfFile}
-                      
+
                       filesByAlias={filesByAlias}
                       width="50px"
                     />
                   }
                 />
               )}
-       
+
               {isManualPassbook === true && manualPassbookFile && (
                 <DocumentDetails
                   fieldName={"EPFO Passbook File"}
@@ -740,12 +740,12 @@ console.log('status', manualVerificationStatus)
                       file={manualPassbookFile}
                       filesByAlias={filesByAlias}
                       width="50px"
-                    
+
                     />
                   }
                 />
               )}
-             
+
               {isManualPassbook === true && EPFOServiceHistoryFile && (
                 <DocumentDetails
                   fieldName={"EPFO Service History"}
@@ -948,33 +948,41 @@ console.log('status', manualVerificationStatus)
               </Grid>
             </Box>
           </Grid>
-          <Grid item xs={12} md={3.5}>
-            {isManualPassbook && (manualVerificationStatus ==='MV' || manualVerificationStatus === 'MRV') && (
-              <Box sx={{
-                ...cardStyle,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }} >
-                <Button
-                  onClick={handelclick}
-                  variant="contained"
-                  sx={{...buttonStyleSx}}
-                  startIcon={ <img
-                    src={exclamation}
-                    alt="exclamation"
-                    style={{ width: 25, height: 25 , filter: 'invert(1) brightness(100%)'}}
-                  />}
-                >
-                  verify manually
-                </Button>
 
-              </Box>
-            )}
+          <Grid item xs={12} md={3.5}>
+            {!roleTypeEnums.candidate.includes(userTypeId) ? (
+              isManualPassbook && (manualVerificationStatus === 'MV' || manualVerificationStatus === 'MRV') && (
+                <Box
+                  sx={{
+                    ...cardStyle,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Button
+                    onClick={handelclick}
+                    variant="contained"
+                    sx={{ ...buttonStyleSx }}
+                    startIcon={
+                      <img
+                        src={exclamation}
+                        alt="exclamation"
+                        style={{ width: 25, height: 25, filter: 'invert(1) brightness(100%)' }}
+                      />
+                    }
+                  >
+                    Verify Manually
+                  </Button>
+                </Box>
+              )
+            ) : null}
+
             <Box sx={{ margin: "1rem 0" }}>
               <ActivityLogDetails activityStatus={timelineStates} />
             </Box>
           </Grid>
+
         </Grid>
       </Box>
       {!roleTypeEnums.candidate.includes(userTypeId) ? (
