@@ -920,7 +920,7 @@ let AppointeeViewForm = ({
                         filesByAlias={filesByAlias}
                       />
                     ) : (
-                        'N/A'
+                      'N/A'
                     )
                   }
                 />
@@ -936,7 +936,7 @@ let AppointeeViewForm = ({
                         filesByAlias={filesByAlias}
                       />
                     ) : (
-                     'N/A'
+                      'N/A'
                     )
                   }
                 />

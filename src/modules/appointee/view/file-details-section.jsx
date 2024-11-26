@@ -16,7 +16,7 @@ import { calculateDragPosition } from 'shared/utils/associate/dragein'
 import { MouseEventHandler } from 'shared/utils/associate/dragable'
 
 
-const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
+const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fileTypeCategory,
     verificationOnChange, verificationQuestionSet, appointeeId,
     fileName, selectedFiles, files, setVerificationType, categorySelected,
     verificationCategoryList, setVerificationCategoryList, verificationTypeList,
@@ -31,7 +31,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
     const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
     const { userId } = (loggedInData && loggedInData[0]) || {
         userId: null
-      };
+    };
     const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
     const {
         UpdateAppointeeManualVerification
@@ -72,8 +72,6 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
         }
         return false;
     };
-
-
     const handleVerificationSubmit = async () => {
         let submitconfModelContent = {
             dialogContentText: "",
@@ -93,10 +91,10 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
             showErrorMessage(error);
             return;
         }
-        
+
         if (selectedMandatoryCategoryList.length !== verificationCategoryList.length) {
             submitconfModelContent.dialogContentText = <ManualSubmitConfirmation type={'categories'} />
-        }else if (selectedFiles.length !== files.length) {
+        } else if (selectedFiles.length !== files.length) {
             submitconfModelContent.dialogContentText = <ManualSubmitConfirmation type={'files'} />;
         } else {
             submitconfModelContent.dialogContentText = manualSubmitConfirmatonMsg;
@@ -165,11 +163,16 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate,
                                     <IconButton onClick={handleZoomIn} aria-label="zoom in">
                                         <ZoomIn />
                                     </IconButton>
-                                    <Tooltip title="Download File" arrow placement="right">
-                                        <IconButton onClick={() => downloadFile(fileSrc, fileName)} aria-label="download file">
-                                            <Download />
-                                        </IconButton>
-                                    </Tooltip>
+                                    {fileTypeCategory === "EPFO Service History" && (
+                                        <Tooltip title="Download File" arrow placement="right">
+                                            <IconButton
+                                                onClick={() => downloadFile(fileSrc, fileName)}
+                                                aria-label="download file"
+                                            >
+                                                <Download />
+                                            </IconButton>
+                                        </Tooltip>
+                                    )}
                                 </Box>
                             )}
                             {categorySelected ? (

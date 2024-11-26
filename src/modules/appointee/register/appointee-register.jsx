@@ -1573,7 +1573,7 @@ const AppointeeRegister = () => {
   const generateUANOTPDialog = (UAN) => {
     // Perform the below actions using the already existing 'uan' state
     setEpfoButton("Auto UAN Verification");
-    setDisabledPanInput(true);
+   // setDisabledPanInput(true);
     epfostatusMessage.message = "N/A";
     //epfostatusMessage.color = "";
     epfostatusMessage.success = null;

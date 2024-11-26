@@ -544,6 +544,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                         verificationType={verificationType}
                         fileSrc={fileSrc}
                         fileName={fileName}
+                        fileTypeCategory={fileTypeCategory}
                         verificationOnChange={verificationOnChange}
                         verificationUpdate={verificationUpdate}
                         verificationQuestionSet={verificationQuestionSet}
