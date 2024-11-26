@@ -273,7 +273,7 @@ const AppointeeRegister = () => {
   };
 
   const [isPFVerificatoinReq, setIsPFVerificatoinReq] = useState(null);
-  const [isAadhaarVarified, setisAadhaarVarified] = useState(null);
+  const [isAadhaarVarified, setisAadhaarVarified] = useState(false);
   const [isAadhaarXmlUploaded, setIsAadhaarXmlUploaded] = useState(false);
   const [isOfflineXmlDownloaded, setIsOfflineXmlDownloaded] = useState(false);
   const [isPanVarified, setIsPanVarified] = useState(null);
@@ -301,7 +301,7 @@ const AppointeeRegister = () => {
   const [handicapFileName, setHandicapFileName] = useState();
   const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
   const [epfoServiceHistoryFile, setEpfoServiceHistoryFile] = useState();
-  const [aadharXmlFileName, setAadharXmlFileName] = useState();
+  const [aadharXmlFileName, setAadharXmlFileName] = useState([]);
   const [passportFileName, setPassportFileName] = useState([]);
   const [tenthCertificateFileName, setTenthCertificateFileName] = useState([]);
   const [otherFileName, setOtherFileName] = useState([]);
@@ -759,7 +759,9 @@ const AppointeeRegister = () => {
     if (isPanVarified !== null) {
       setIsEpfoSectionDisabled(false);
     }
-
+    if (isAadhaarVarified !== null && isAadhaarVarified === true) {
+      setIsEpfoSectionDisabled(false);
+    }
     if (isAadhaarVarified !== null) {
       // setIsPanSectionDisabled(false);
     }
@@ -966,7 +968,7 @@ const AppointeeRegister = () => {
     } else if (size > FILE_SIZE_LIMIT) {
       showErrorMessage(uploadSizeErrorMsg);
     } else {
-      setAadharXmlFileName(name);
+      setAadharXmlFileName([name]);
       setXmlFileUploaded(fileData);
     }
     setIsAadhaarXmlUploaded(true);
@@ -996,6 +998,7 @@ const AppointeeRegister = () => {
     formData.append("aadharFileDetails", xmlFileUploaded);
 
     const response = await verifyAadharDetails(formData);
+    console.log('responseaaaa',response)
     if (response) {
       const { remarks, isVarified } = response.responseInfo;
       if (isVarified) {
