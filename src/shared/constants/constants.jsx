@@ -2381,7 +2381,8 @@ export const submitConfirmationMsg = `Your data will be submitted, you will no l
 export const reUploadsubmitConfirmationMsg = "Your uploaded document will be submitted, and you will no longer be able to update your file. It will be verified by the admin. Are you sure you want to submit?";
 export const epfoPassfileUploadeConfirmationMsg = `Please upload your trust EPFO passbook before submition`;
 export const visafileUploadeConfirmationMsg = `You must upload your visa before submition`;
-export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details  has been verified and submitted successfully. you have completed your verification process. Please wait for the HR to reply for further processing of your application`;
+export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details  has been verified and submitted successfully. You have completed your verification process. Please wait for the HR to reply for further processing of your application`;
+export const docResubmissionSuccessDialogContentText = `Your document has been submitted successfully. Please wait for the HR to reply for further processing of your application`;
 export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you.\n
 1. Review the Prerequisite Details.\n
 2. Click 'Start Verification' to begin the process (which includes giving consent).\n

@@ -1,0 +1,484 @@
+import { InfoOutlined } from '@mui/icons-material'
+import { Box, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material'
+import { candidateRegistrationFormContainerStyle, endJustifiedbtnContainer, fileUploadSectionContainerStyle, formHeadingContainerStyle, formHeadingGridContainerStyle, lable1CopyStyle, rightMostBtnStyle, submitBtnStyle } from 'app'
+import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import FileUploadSection from 'shared/components/file-upload-section/file-upload-section'
+import { congratulationDialogContentTitle, docResubmissionSuccessDialogContentText, epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, imgAndPdfMaxSize, otherFileTypeAlias, previousButton, registrationSuccessDialogContentText, reUploadsubmitConfirmationMsg, tenthCertificateFileTypeAlias, toDashboard } from 'shared/constants/constants'
+import { CardLayout, getLocalStorageItem, hasValue, PageLayout, removeFile, setLocalStorageItem } from 'shared/utils'
+import getFileDetails from 'shared/utils/associate/get-file-details'
+import FormHeading from '../register/form-heading'
+import getFilenames from 'shared/utils/associate/get-filenames'
+import createFileUploadedData from 'shared/utils/associate/create-file-uploaded-data'
+import createReuploadStepSequience from 'shared/utils/associate/create-reupload-step-sequience'
+import buildFormData from 'shared/utils/associate/build-form-data'
+import checkFileReuploadValidation from 'shared/utils/associate/check-file-reupload-validation'
+import { removeLoggedinData, storeLoggedinData } from 'store/slices/login-slice'
+
+export const ReuploadForm = () => {
+
+
+    const dispatch = useDispatch();
+    const loginUserData = getLocalStorageItem("pfc-user");
+
+    const popUpSlice = useSelector((state) => state.popUpSlice);
+    const dropdownList = useSelector((state) => state.dropdownList);
+    const apiSlice = useSelector((state) => state.apiSlice);
+    const functionSlice = useSelector((state) => state.functionSlice);
+    const loggedInData = useSelector((state) => state.loggedInData);
+    const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
+
+    const { navigateTo } = commonHooksFunctionSlice[0];
+    const { userId, appointeeId, userCode, status } = loggedInData[0];
+    const { showErrorMessage } = popUpSlice[0];
+
+    const {
+        fileTypeList,
+    } = dropdownList && dropdownList.length > 0 && dropdownList[0];
+    console.log('fileTypeList', fileTypeList);
+    const {
+        openConfirmationModel,
+        openInfoModel
+    } = functionSlice[0];
+    const {
+        getAppointeeDetails,
+        PostReuploadDocuments
+    } = apiSlice[0];
+
+    const [uploadedFile, setUploadedFile] = useState([]);
+    const [fileDetails, setFileDetails] = useState([]);
+    const [otherFileName, setOtherFileName] = useState([]);
+    const [tenthCertificateFileName, setTenthCertificateFileName] = useState([]);
+    const [epfoServiceHistoryFile, setEpfoServiceHistoryFile] = useState([]);
+    const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
+    const [isFathersNameVarified, setIsFathersNameVarified] = useState();
+    const [isUANVarified, setIsUANVarified] = useState();
+    const [stepsList, setStepsList] = useState();
+
+    // setStepsList({ ...stepsList, ..._steps })
+    const formElement = useRef(null);
+
+    const uploadFile = ({ files, uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single' }) => {
+        const { error, updatedUploadedFileList, updatedFileDetails, fileNameList } = getFileDetails(
+            { files, uploadTypeAlias, setFileName, _filenameList, uploadType, fileTypeList, uploadedFile, fileDetails }
+        );
+        if (hasValue(error)) {
+            showErrorMessage(error);
+        }
+        console.log('fileNameList files', files,);
+        console.log('fileNameList', uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single');
+        setUploadedFile([...updatedUploadedFileList]);
+        setFileDetails([...updatedFileDetails]);
+        setFileName([...fileNameList]);
+    };
+
+    const handleFileUpload = (fileTypeAlias, setFileName, fileNameList = [], uploadType) => ({ target }) => {
+        uploadFile({
+            files: target.files, uploadTypeAlias: fileTypeAlias, setFileName,
+            _filenameList: fileNameList, uploadType
+        });
+    };
+
+    const removeEPFOPassbookFile = (currentFileName) => {
+        const {
+            fileNameList: _fileNameList, updatedUploadedFileList: _updatedUploadedFileList, updatedFileDetails: _updatedFileDetails
+        } = removeFile({
+            uploadedFile: uploadedFile, fileDetails: fileDetails,
+            uploadTypeAlias: epfoPassbookFileTypeAlias, fileNameList: epfoPassBookFiles,
+            currentFileName: currentFileName, uploadType: 'multiple'
+        });
+
+        setEpfoPassBookFiles(_fileNameList);
+        setUploadedFile(_updatedUploadedFileList);
+        setFileDetails(_updatedFileDetails);
+    }
+
+    const uploadFathersDocFile = handleFileUpload(otherFileTypeAlias, setOtherFileName);
+    const upload10thCertificateFile = handleFileUpload(tenthCertificateFileTypeAlias, setTenthCertificateFileName);
+    const uploadEpfoServiceHistoryFile = handleFileUpload(epfoServiceHistoryFileTypeAlias, setEpfoServiceHistoryFile, epfoServiceHistoryFile, 'single');
+    const uploadEpfoPassBookFile = handleFileUpload(epfoPassbookFileTypeAlias, setEpfoPassBookFiles, epfoPassBookFiles, 'multiple');
+
+    const openSubmitConfirmationModel = () => {
+        const submitconfModelContent = {
+            dialogContentText: reUploadsubmitConfirmationMsg,
+        };
+        openConfirmationModel(submitconfModelContent, () => handlePostFileReupload());
+    };
+    const openUploadDocInfoModel = (dialogContentText) => {
+        openInfoModel({ dialogContentText });
+    };
+    const handlePostFileReupload = async () => {
+
+        let payLoad = {
+            appointeeId: appointeeId,
+            userId: userId,
+            appointeeCode: userCode,
+            FileDetails: fileDetails,
+            fileUploaded: uploadedFile
+        };
+        const formData = buildFormData(payLoad);
+        const response = await PostReuploadDocuments(formData);
+        if (response) {
+            const status = 'Submitted';
+            setLocalStorageItem("pfc-user", {
+                ...loginUserData,
+                status: status
+            });
+            dispatch(removeLoggedinData());
+            dispatch(
+                storeLoggedinData({
+                    ...loginUserData,
+                    status: status
+                })
+            );
+            const docResubmissionSuccessContent = {
+                dialogContentText: docResubmissionSuccessDialogContentText,
+                dialogTitle: congratulationDialogContentTitle,
+                maxWidth: "sm",
+                btnName: "Go to Dashboard",
+            };
+            openInfoModel(docResubmissionSuccessContent, () => navigateTo(toDashboard, { state: { status: 'Submited' } }));
+        }
+
+    }
+    const handleSubmit = async () => {
+        const verificationFieldModal = {
+            isUanVarified: isUANVarified,
+            isFnameVarified: isFathersNameVarified
+        }
+        const { error } = checkFileReuploadValidation({ uploadedFile, verificationFieldModal });
+        console.log('error', error);
+
+        if (hasValue(error)) {
+            showErrorMessage(error);
+            return
+        }
+        openSubmitConfirmationModel();
+    }
+
+    const setAppointeeDetails = async (appointeeId) => {
+
+        const response = await getAppointeeDetails(appointeeId);
+        if (response) {
+            let {
+                fileUploaded,
+                isFnameVarified,
+                isUanVarified
+            } = response.responseInfo;
+
+            const { tenthCertificateFileName, otherFileName,
+                epfoPassBookFiles, epfoServiceHistoryFile } = getFilenames({ fileUploaded });
+            setTenthCertificateFileName(tenthCertificateFileName);
+            setOtherFileName(otherFileName);
+            setEpfoServiceHistoryFile(epfoServiceHistoryFile);
+            setEpfoPassBookFiles(epfoPassBookFiles);
+            const verificationFieldModal = {
+                isUanVarified,
+                isFnameVarified
+            }
+            const { upDatedFileUploaded } = createFileUploadedData({ fileUploaded, verificationFieldModal });
+            setUploadedFile([...upDatedFileUploaded]);
+            setIsFathersNameVarified(isFnameVarified);
+            setIsUANVarified(isUanVarified);
+            const stepsList = createReuploadStepSequience({ isFathersNameVarified: isFnameVarified, isUanVarified: isUanVarified });
+            setStepsList(stepsList);
+        };
+    }
+
+    useEffect(() => {
+        setAppointeeDetails(appointeeId);
+    }, [])
+    console.log('isFathersNameVarified', isFathersNameVarified);
+
+    return (
+        <form ref={formElement}>
+            <Grid
+                sx={{ paddingLeft: "20px" }}
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+
+                {/* ######  Certificate Upload Section Start ###### */}
+                {
+                    isFathersNameVarified === false &&
+                    <>
+                        <Grid
+                            container
+                            rowSpacing={1}
+                            columnSpacing={2.5}
+                            item
+                            xs={12}
+                            sx={formHeadingGridContainerStyle}
+                        >
+                            <Grid item xs={12} sx={formHeadingContainerStyle}>
+                                <FormHeading
+                                    step={stepsList?.FC?.step}
+                                    heading={`Father's name related document`}
+                                    info={"Upload Father's related document."}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            container
+                            rowSpacing={1}
+                            columnSpacing={2.5}
+                            item
+                            xs={12}
+                            sx={formHeadingGridContainerStyle}
+                        >
+                            <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
+                                <Stack
+                                    flexDirection={"row"}
+                                    justifyContent={"space-between"}
+                                    alignItems={"center"}
+                                >
+                                    <Stack direction="row">
+                                        <Typography
+                                            sx={{
+                                                ...lable1CopyStyle,
+                                                display: "flex",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            {"10th pass Certificate"}
+                                        </Typography>
+                                        <Tooltip
+                                            arrow="bottom"
+                                            title="Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year."
+                                        >
+                                            <IconButton
+                                            // disabled={isPreviousSectionDisabled}
+                                            >
+                                                <InfoOutlined />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Stack>
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
+                                <Typography
+                                    sx={{
+                                        ...lable1CopyStyle,
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    Please upload 10th pass certificate
+                                    <span className="requiredField">*</span>
+                                </Typography>
+                                <Box sx={fileUploadSectionContainerStyle}>
+                                    <FileUploadSection
+                                        chooseFile={upload10thCertificateFile}
+                                        // fileName={
+                                        //   fileUploaded.some(file => file.uploadTypeAlias === "10THCERT")
+                                        //     ? fileUploaded.find(file => file.uploadTypeAlias === "10THCERT").fileName
+                                        //     : tenthCertificateFileName
+                                        // }
+                                        fileName={tenthCertificateFileName}
+                                        accept={"image/png, image/jpeg"}
+                                        // disabled={isPreviousSectionDisabled}
+                                        maxUploadSize={imgAndPdfMaxSize}
+                                        uploadTypeAlias={tenthCertificateFileTypeAlias}
+                                    // handleRemoveFile={remove10thPassCertificate}
+                                    />
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            container
+                            rowSpacing={1}
+                            columnSpacing={2.5}
+                            item
+                            xs={12}
+                            sx={formHeadingGridContainerStyle}
+                        >
+                            <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
+                                <Stack direction="row">
+                                    <Typography
+                                        sx={{
+                                            ...lable1CopyStyle,
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        {
+                                            "Document with father's name attached"
+                                        }
+                                    </Typography>
+                                    <Tooltip
+                                        arrow="bottom"
+                                        title="Upload a copy of the document with your father's name clearly mentioned. Examples of acceptable documents include birth certificates, national IDs, or other legal documents where both your name and your father's name are visible."
+                                    >
+                                        <IconButton
+                                        // disabled={isPreviousSectionDisabled}
+                                        >
+                                            <InfoOutlined />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
+                                <Typography
+                                    sx={{
+                                        ...lable1CopyStyle,
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    Please upload a document mentioning father's
+                                    name
+                                    <span className="requiredField">*</span>
+                                </Typography>
+                                <Box sx={fileUploadSectionContainerStyle}>
+                                    <FileUploadSection
+                                        chooseFile={uploadFathersDocFile}
+                                        fileName={otherFileName}
+                                        accept={"image/png, image/jpeg"}
+                                        // disabled={isPreviousSectionDisabled}
+                                        maxUploadSize={imgAndPdfMaxSize}
+                                        uploadTypeAlias={otherFileTypeAlias}
+                                    />
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </>
+                }
+                {
+                    isUANVarified === false &&
+                    <>
+                        <Grid
+                            container
+                            rowSpacing={1}
+                            columnSpacing={2.5}
+                            item
+                            xs={12}
+                            sx={formHeadingGridContainerStyle}
+                        >
+                            <Grid item xs={12} sx={formHeadingContainerStyle}>
+                                <FormHeading
+                                    step={stepsList?.EPFO?.step}
+                                    heading={stepsList?.EPFO?.name}
+                                    info={"Upload EPFO document."}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            container
+                            rowSpacing={1}
+                            columnSpacing={2.5}
+                            item
+                            xs={12}
+                            sx={formHeadingGridContainerStyle}
+                        >
+                            <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
+                                <Stack direction="row">
+                                    <Typography
+                                        sx={{
+                                            ...lable1CopyStyle,
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        {
+                                            "EPFO Service History and Passbook"
+                                        }
+                                    </Typography>
+                                    <Tooltip
+                                        arrow="bottom"
+                                        title="Upload a copy of your EPFO Service History and Passbook."
+                                    >
+                                        <IconButton
+                                        // disabled={isPreviousSectionDisabled}
+                                        >
+                                            <InfoOutlined />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Stack>
+                            </Grid>
+                            <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
+                                <Grid>
+                                    <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
+                                        <Typography
+                                            sx={{
+                                                ...lable1CopyStyle,
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            Please upload your EPFO Service History
+                                            <span className="requiredField">*</span>
+                                        </Typography>
+                                        <Box sx={fileUploadSectionContainerStyle}>
+                                            <FileUploadSection
+                                                chooseFile={uploadEpfoServiceHistoryFile}
+                                                // fileName={
+                                                //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSSBKMNL")
+                                                //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSSBKMNL").fileName
+                                                //     : handicapFileName
+                                                // }
+                                                fileName={epfoServiceHistoryFile}
+                                                accept={"image/png, image/jpeg"}
+                                                maxUploadSize={imgAndPdfMaxSize}
+                                                uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
+                                            // handleRemoveFile={removeEPFOServiceHistory}
+                                            />
+                                        </Box>
+                                    </Grid>
+                                    <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
+
+                                        <Typography
+                                            sx={{
+                                                ...lable1CopyStyle,
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            Please upload your EPFO passbook
+                                            <span className="requiredField">*</span>
+                                        </Typography>
+                                        <Box sx={fileUploadSectionContainerStyle}>
+                                            <FileUploadSection
+                                                chooseFile={uploadEpfoPassBookFile}
+                                                handleRemoveFile={removeEPFOPassbookFile}
+                                                // fileName={
+                                                //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSSBKMNL")
+                                                //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSSBKMNL").fileName
+                                                //     : handicapFileName
+                                                // }
+                                                fileName={epfoPassBookFiles}
+                                                accept={"image/png, image/jpeg"}
+                                                maxUploadSize={imgAndPdfMaxSize}
+                                                multiple={true}
+                                                uploadTypeAlias={epfoPassbookFileTypeAlias}
+                                            />
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </>
+                }
+                <Grid
+                    container
+                    rowSpacing={1}
+                    columnSpacing={2.5}
+                    item
+                    xs={12}
+                    sx={formHeadingGridContainerStyle}
+                >
+                    <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
+                        <Stack sx={endJustifiedbtnContainer}>
+                            <Button
+                                //onClick={() => setCurrentPageNo(1)}
+                                onClick={handleSubmit}
+                                //sx={{ m: "15px 5px", ml: 3 }}
+                                sx={rightMostBtnStyle}
+                                variant="contained"
+                                color="primary"
+                            >
+                                {'Submit'}
+                            </Button>
+                        </Stack>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </form>
+    )
+}

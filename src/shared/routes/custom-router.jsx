@@ -42,7 +42,7 @@ const UpdateUserView = Loadable(lazy(() => import('../../modules/user/update-use
 const UserListView = Loadable(lazy(() => import('../../modules/user/userlist/userlist-view')));
 const Report = Loadable(lazy(() => import('../../modules/reports/report')));
 const AppointeeRegister = Loadable(lazy(() => import('../../modules/appointee/register/appointee-register')));
-const ReuploadDocument = Loadable(lazy(() => import('../../modules/appointee/register/reupload-document')));
+const ReuploadDocument = Loadable(lazy(() => import('../../modules/appointee/reupload-document/reupload-document')));
 const AppointeeCount = Loadable(lazy(() => import('../../modules/reports/appointee-count')));
 const Login = Loadable(lazy(() => import('../../modules/account/login/login-view')));
 const SetPassword = Loadable(lazy(() => import('../../modules/set-password/set-password')));
