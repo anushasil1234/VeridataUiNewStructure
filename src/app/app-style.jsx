@@ -1170,6 +1170,7 @@ export const submittedStyle = {
   ...chipStyle,
   backgroundColor: ThemeColorPalete.primary.main
 };
+
 export const ongoingStyle = {
   ...chipStyle,
   backgroundColor: ThemeColorPalete.secondary.main
@@ -1203,6 +1204,14 @@ export const lapsedStyle = {
   ...chipStyle,
   backgroundColor: ThemeColorPalete.error.main
 };
+export const manualStyle={
+  ...chipStyle,
+  backgroundColor:"#6F4A9F"
+}
+export const manualstyle1={
+  ...chipStyle,
+  backgroundColor:"#E12009"
+}
 export const candidatefileViewContainerStyle = {
   // width: '100%',
   // overflowX: 'scroll',
@@ -1643,7 +1652,7 @@ export const imageFileContainerStackStyle = {
   border: "2px dashed #dbb4db",
   overflow: "hidden",
   overflowX: 'auto',
-  overflowY: "auto"
+  overflowY: "auto",
 }
 
 export const zoomOutstackStyle = {

@@ -311,7 +311,7 @@ export const verifiedListTableHeadCell = [
         enums: ['viewDetails'],
         component: {
             element: (props) => TableActionCell({ actionList: verifiedListActions, ...props }),
-            attribute: ['appointeeId', 'isTrustPFApplicable', 'uanNo', 'isPassbookVerified']
+            attribute: ['appointeeId', 'uanNo', 'isPassbookVerified']
         }
     }
 ];
@@ -1330,7 +1330,7 @@ export const lapsedListPdfTableHeadCell = [
     },
     {
         type: "string",
-        label: 'mobile No',
+        label: 'Mobile No',
         enums: ['mobileNo'],
     },
     {
@@ -2438,6 +2438,10 @@ export const getStatusTooltip = (status) => {
             return "Verification process incomplete and Date of Joining is over.";
         case "Verified":
             return "Verification process completed successfully"
+        case "Manual Verification Required":
+            return "Manual Verification Required"
+        case "Document Reupload Request":
+            return "HC Requests You to Reupload Your Document"  
         default:
             return
     }

@@ -2,37 +2,94 @@ import { Download, ZoomIn, ZoomOut } from '@mui/icons-material';
 import { Box, Stack, IconButton } from '@mui/material';
 import { actionIconStyle, downloadIconStyle, fileImageStyle, imageFileContainerStackStyle, imageFileContainerStyle, pdfFileContainerStyle, zoombuttonStyle, zoomOutstackStyle } from 'app';
 import React from 'react'
+import { useEffect } from 'react'
 import { FabIcon } from 'shared/utils';
 import downloadFile from 'shared/utils/associate/download-file';
 import FabIconPropsModel from 'shared/utils/fab-icon/fab-icon-model';
 import FullScreenModel from 'shared/utils/models/fullscreen-modal'
 import { useState } from 'react';
 import { handleZoom } from 'shared/utils/associate/Zoomin-out';
-
-const UnWrappedDocumentView = ({ documentModelProps,zoomLevel }) => {
-    const { fileDetails, filename } = documentModelProps;
+import { calculateDragPosition } from 'shared/utils/associate/dragein'
+import { calculateContainerHeight } from './calculateContainerHeight';
+import { MouseEventHandler } from 'shared/utils/associate/dragable';
+const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
+    const { fileDetails, fileType } = documentModelProps;
     const { fileName } = fileDetails;
     const mimeType = fileDetails.split(';')[0].split(':')[1];
-   
+
+    const [isDragging, setIsDragging] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
+    const [containerHeight, setContainerHeight] = useState();
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setLastMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        const currentMousePosition = { x: e.clientX, y: e.clientY };
+        setPosition((prevPosition) =>
+            calculateDragPosition(isDragging, lastMousePosition, currentMousePosition, prevPosition)
+        );
+        setLastMousePosition(currentMousePosition);
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+    useEffect(() => {
+        if (mimeType !== "application/pdf") {
+            calculateContainerHeight(fileDetails, setContainerHeight);
+        }
+    }, [fileDetails, mimeType]);
+
+
     return (
         <Stack sx={{ position: 'relative' }}>
-            <Stack sx={imageFileContainerStackStyle}>
+            <Stack sx={{ ...imageFileContainerStackStyle, height:containerHeight}}>
                 <Box
                     sx={{
                         ...(mimeType === 'application/pdf' ? pdfFileContainerStyle : imageFileContainerStyle),
                         transform: `scale(${zoomLevel})`,
                         transformOrigin: 'center',
-                        transition: 'transform 0.3s'
+                        transition: 'transform 0.3s',
+                        position: 'relative',
+                        cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
+                        left: isDragging ? `${position.x}px` : 'auto',
+                        top: isDragging ? `${position.y}px` : 'auto',
                     }}
+                    {...MouseEventHandler({
+                        zoomLevel,
+                        handleMouseMove,
+                        handleMouseUp,
+                        handleMouseDown,
+                    })}
                 >
-                    {mimeType === 'application/pdf' ?
-                        <embed src={`${fileDetails}#toolbar=0`} height="500" width="100%" style={{ transform: `scale(${zoomLevel})`, transformOrigin: 'center' }}></embed>
-                        :
-                        <img src={fileDetails} style={{ ...fileImageStyle, transform: `scale(${zoomLevel})`, transformOrigin: 'center' }} alt={fileName} />
-                    }
+                    {mimeType === 'application/pdf' ? (
+                        <embed
+                            src={`${fileDetails}#toolbar=0`}
+                            height="500"
+                            width="100%"
+                            style={{
+                                transform: `scale(${zoomLevel})`,
+                                transformOrigin: 'center',
+                            }}
+                        />
+                    ) : (
+                        <img
+                            src={fileDetails}
+                            style={{
+                                ...fileImageStyle,
+                                transform: `scale(${zoomLevel})`,
+                                transformOrigin: 'center',
+                            }}
+                            alt={fileName}
+                        />
+                    )}
                 </Box>
             </Stack>
-     
+
         </Stack>
     );
 };
@@ -40,7 +97,7 @@ const UnWrappedDocumentView = ({ documentModelProps,zoomLevel }) => {
 
 const DocumentView = (props) => {
     const { documentModelProps = {} } = props;
-    const {filename, fileDetails } = documentModelProps;
+    const { filename, fileDetails, fileType } = documentModelProps;
     const [zoomLevel, setZoomLevel] = useState(1);
 
     const handleZoomIn = () => {
@@ -49,7 +106,7 @@ const DocumentView = (props) => {
     const handleZoomOut = () => {
         setZoomLevel(handleZoom('out'));
     };
-    
+
     const downloadFabProps = new FabIconPropsModel(
         downloadIconStyle,
         () => downloadFile(fileDetails, filename),
@@ -58,18 +115,19 @@ const DocumentView = (props) => {
         <Download />,
         "Download"
     );
-    const downloadButton = (
+
+    const downloadButton = fileType === "EPFPSHF" && (
         <FabIcon props={{ ...downloadFabProps, size: "small", selectedIndex: 2, index: 2 }} />
     );
     const zoomControls = (
-       <>
-            <IconButton sx={{...zoombuttonStyle}} onClick={handleZoomOut} aria-label="zoom out">
+        <>
+            <IconButton sx={{ ...zoombuttonStyle }} onClick={handleZoomOut} aria-label="zoom out">
                 <ZoomOut />
             </IconButton>
-            <IconButton sx={{...zoombuttonStyle}}  onClick={handleZoomIn} aria-label="zoom in">
+            <IconButton sx={{ ...zoombuttonStyle }} onClick={handleZoomIn} aria-label="zoom in">
                 <ZoomIn />
             </IconButton>
-            </>
+        </>
     );
     return (
         <FullScreenModel

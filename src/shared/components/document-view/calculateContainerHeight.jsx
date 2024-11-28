@@ -1,0 +1,14 @@
+export const calculateContainerHeight = (imageUrl, callback) => {
+    const img = new Image();
+    img.src = imageUrl;
+  
+    img.onload = () => {
+      const aspectRatio = img.width / img.height;
+      if (aspectRatio > 1) {
+        callback("450px");
+      } else {
+        callback("100%");
+      }
+    };
+  };
+  

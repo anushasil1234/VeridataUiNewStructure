@@ -61,7 +61,7 @@ const _UserView = (props) => {
                 </Stack>
                 <Grid container spacing={0}>
                     <PersonalInformation
-                        fieldName={"User name"}
+                        fieldName={"Name"}
                         fieldValue={userName}
                     />
                     <PersonalInformation
@@ -73,7 +73,7 @@ const _UserView = (props) => {
                         fieldValue={userEmail}
                     />
                     <PersonalInformation
-                        fieldName={"User Code"}
+                        fieldName={"User Name"}
                         fieldValue={userCode}
                     />
                     <PersonalInformation
@@ -81,7 +81,7 @@ const _UserView = (props) => {
                         fieldValue={contactNumber}
                     />
                     <PersonalInformation
-                        fieldName={"Role Name"}
+                        fieldName={"Role"}
                         fieldValue={roleName}
                     />
                 </Grid>
