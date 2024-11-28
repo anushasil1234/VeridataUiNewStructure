@@ -6,6 +6,8 @@ import {
   consetPendingChipStyle,
   issueChipStyle,
   lapsedStyle,
+  manualStyle,
+  manualstyle1,
   noResponseStyle,
   ongoingStyle,
   reprocessedChipStyle,
@@ -93,6 +95,15 @@ const TableStatusCell = (props) => {
       chipIconStyle= <CancelIcon color="white"/>
     }
   }
+  if (cellName === "status") {
+    labelValue = cellValue;
+    if (cellValue === "Manual Verification Required") {
+      chipStyle = manualStyle;
+    }
+    if(cellValue==="Document Reupload Request"){
+      chipStyle = manualstyle1;
+    }
+  }
   if (cellName==="trustPassBookStatus"){
     if(hasValue(cellValue)){
       labelValue = (
@@ -103,6 +114,7 @@ const TableStatusCell = (props) => {
       chipStyle =  submittedStyle;
     }
   }
+  
   if (cellName==="epfoPassBookStatus"){
     if(hasValue(cellValue)){
       labelValue = (
