@@ -114,9 +114,7 @@ export const ReuploadForm = () => {
     };
     const handlePostFileReupload = async () => {
 
-        console.log('updatedFilesUnfiltered', uploadedFile, updatedFilesUnfiltered);
         const fileUploaded = MergeWithUniqueKey({ smallerArray: uploadedFile, wholeArrayList: updatedFilesUnfiltered, uniqueKey: 'uploadTypeAlias' });
-        console.log('fileUploaded11', fileUploaded);
 
         let payLoad = {
             appointeeId: appointeeId,
@@ -126,31 +124,29 @@ export const ReuploadForm = () => {
             fileUploaded: fileUploaded
         };
 
-        console.log('payLoad234', payLoad);
-
-        // const formData = buildFormData(payLoad);
-        // const response = await PostReuploadDocuments(formData);
-        // if (response) {
-        //     const status = 'Submitted';
-        //     setLocalStorageItem("pfc-user", {
-        //         ...loginUserData,
-        //         status: status
-        //     });
-        //     dispatch(removeLoggedinData());
-        //     dispatch(
-        //         storeLoggedinData({
-        //             ...loginUserData,
-        //             status: status
-        //         })
-        //     );
-        //     const docResubmissionSuccessContent = {
-        //         dialogContentText: docResubmissionSuccessDialogContentText,
-        //         dialogTitle: congratulationDialogContentTitle,
-        //         maxWidth: "sm",
-        //         btnName: "Go to Dashboard",
-        //     };
-        //     openInfoModel(docResubmissionSuccessContent, () => navigateTo(toDashboard, { state: { status: 'Submited' } }));
-        // }
+        const formData = buildFormData(payLoad);
+        const response = await PostReuploadDocuments(formData);
+        if (response) {
+            const status = 'Submitted';
+            setLocalStorageItem("pfc-user", {
+                ...loginUserData,
+                status: status
+            });
+            dispatch(removeLoggedinData());
+            dispatch(
+                storeLoggedinData({
+                    ...loginUserData,
+                    status: status
+                })
+            );
+            const docResubmissionSuccessContent = {
+                dialogContentText: docResubmissionSuccessDialogContentText,
+                dialogTitle: congratulationDialogContentTitle,
+                maxWidth: "sm",
+                btnName: "Go to Dashboard",
+            };
+            openInfoModel(docResubmissionSuccessContent, () => navigateTo(toDashboard, { state: { status: 'Submited' } }));
+        }
 
     }
     const handleSubmit = async () => {
@@ -215,7 +211,7 @@ export const ReuploadForm = () => {
 
                 {/* ######  Certificate Upload Section Start ###### */}
                 {
-                    isFathersNameVarified !== true &&
+                    isFathersNameVarified === false &&
                     <>
                         <Grid
                             container
@@ -357,7 +353,7 @@ export const ReuploadForm = () => {
                     </>
                 }
                 {
-                    isUANVarified !== true &&
+                    isUANVarified === false &&
                     <>
                         <Grid
                             container
