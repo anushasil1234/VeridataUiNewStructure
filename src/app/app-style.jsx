@@ -334,6 +334,7 @@ export const heading1 = {
   color: "#000",
   fontWeight: 600
 };
+
 export const userNameTextStyle = {
   whiteSpace: 'normal',
   wordBreak: 'break-all'
@@ -363,6 +364,11 @@ export const heading5 = {
   fontStyle: "bold",
   fontWeight: 600
 }
+export const heading6 = {
+  fontSize: "1.27rem",
+  color: "#000",
+  fontWeight: 600
+};
 // heading ends
 
 export const useFileChipStyles = () => {

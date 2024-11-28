@@ -1,6 +1,6 @@
 import { WarningAmber } from '@mui/icons-material'
 import { Grid, Stack, Typography } from '@mui/material'
-import { formHeadingGridContainerStyle, heading1 } from 'app'
+import { formHeadingGridContainerStyle, heading1, heading6 } from 'app'
 import React from 'react'
 
 const NotAccessibleSection = () => {
@@ -22,8 +22,8 @@ const NotAccessibleSection = () => {
                 <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
                     <Stack sx={{ alignItems: 'center' }}>
                         <WarningAmber sx={{ color: 'rgb(255, 174, 31)', width: '2em', height: '2em' }} />
-                        <Typography variant="h5" sx={heading1} component="h1">
-                            Sorry, You Are Not Allowed to Access This Page
+                        <Typography variant="h5" sx={heading6} component="h1">
+                            Sorry, you are not allowed to access this page
                         </Typography>
                     </Stack>
                 </Grid>
