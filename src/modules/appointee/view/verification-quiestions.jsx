@@ -9,7 +9,7 @@ const VerificationQuiestions = ({ verificationOnChange, verificationQuestionSet,
         <Stack>
             <Stack>
                 <Typography sx={{ ...listHeadingStyle, fontSize: '0.8rem', textAlign: "left",marginLeft:"15px" }}>
-                    {`Verification questions`}
+                    {`Verification Questions`}
                 </Typography>
                 <Divider sx={{ marginTop: "2px" }} />
             </Stack>
