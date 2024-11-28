@@ -3,10 +3,12 @@ import { removeFile } from "..";
 
 const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
     uploadType, uploadedFile, fileDetails, fileTypeList }) => {
-        console.log('uploadType', uploadType, uploadTypeAlias, uploadedFile);
+        console.log('uploadType12321', uploadType, uploadTypeAlias, uploadedFile, fileTypeList);
 
     let fileNameList = [..._filenameList];
     let updatedUploadedFileList = [...uploadedFile];
+    console.log('fileDetails4234', fileDetails);
+    
     let updatedFileDetails = [...fileDetails];
     let error;
 
@@ -59,6 +61,8 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
                 };
 
                 if (uploadType === 'single') {
+                   
+                    
                     const { updatedUploadedFileList: _updatedUploadedFileList, updatedFileDetails: _updatedFileDetails } = removeFile({
                         uploadedFile: updatedUploadedFileList,
                         fileDetails: updatedFileDetails,
@@ -66,6 +70,10 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
                         fileNameList: fileNameList,
                         uploadType: uploadType
                     });
+                    console.log("Uploading221321",
+                        updatedFileDetails,
+                        _updatedFileDetails,
+                        );
                     fileNameList = [name];
                     updatedUploadedFileList = [..._updatedUploadedFileList, file];
                     updatedFileDetails = [..._updatedFileDetails, files[index]];
@@ -81,6 +89,8 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
             }
         }
     }
+    console.log('Upload123', updatedUploadedFileList, updatedFileDetails, fileNameList);
+    
     return ({
         error: error,
         updatedUploadedFileList: updatedUploadedFileList,

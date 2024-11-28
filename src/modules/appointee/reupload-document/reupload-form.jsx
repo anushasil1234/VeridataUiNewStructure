@@ -14,6 +14,7 @@ import createReuploadStepSequience from 'shared/utils/associate/create-reupload-
 import buildFormData from 'shared/utils/associate/build-form-data'
 import checkFileReuploadValidation from 'shared/utils/associate/check-file-reupload-validation'
 import { removeLoggedinData, storeLoggedinData } from 'store/slices/login-slice'
+import MergeWithUniqueKey from 'shared/utils/associate/merge-with-unique-key'
 
 export const ReuploadForm = () => {
 
@@ -46,6 +47,7 @@ export const ReuploadForm = () => {
     } = apiSlice[0];
 
     const [uploadedFile, setUploadedFile] = useState([]);
+    const [updatedFilesUnfiltered, setUpdatedFilesUnfiltered] = useState([]);
     const [fileDetails, setFileDetails] = useState([]);
     const [otherFileName, setOtherFileName] = useState([]);
     const [tenthCertificateFileName, setTenthCertificateFileName] = useState([]);
@@ -67,6 +69,8 @@ export const ReuploadForm = () => {
         }
         console.log('fileNameList files', files,);
         console.log('fileNameList', uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single');
+        console.log('updatedFileDetails', updatedFileDetails);
+
         setUploadedFile([...updatedUploadedFileList]);
         setFileDetails([...updatedFileDetails]);
         setFileName([...fileNameList]);
@@ -87,6 +91,7 @@ export const ReuploadForm = () => {
             uploadTypeAlias: epfoPassbookFileTypeAlias, fileNameList: epfoPassBookFiles,
             currentFileName: currentFileName, uploadType: 'multiple'
         });
+        console.log('_updatedUploadedFileList', _updatedUploadedFileList);
 
         setEpfoPassBookFiles(_fileNameList);
         setUploadedFile(_updatedUploadedFileList);
@@ -109,36 +114,43 @@ export const ReuploadForm = () => {
     };
     const handlePostFileReupload = async () => {
 
+        console.log('updatedFilesUnfiltered', uploadedFile, updatedFilesUnfiltered);
+        const fileUploaded = MergeWithUniqueKey({ smallerArray: uploadedFile, wholeArrayList: updatedFilesUnfiltered, uniqueKey: 'uploadTypeAlias' });
+        console.log('fileUploaded11', fileUploaded);
+
         let payLoad = {
             appointeeId: appointeeId,
             userId: userId,
             appointeeCode: userCode,
             FileDetails: fileDetails,
-            fileUploaded: uploadedFile
+            fileUploaded: fileUploaded
         };
-        const formData = buildFormData(payLoad);
-        const response = await PostReuploadDocuments(formData);
-        if (response) {
-            const status = 'Submitted';
-            setLocalStorageItem("pfc-user", {
-                ...loginUserData,
-                status: status
-            });
-            dispatch(removeLoggedinData());
-            dispatch(
-                storeLoggedinData({
-                    ...loginUserData,
-                    status: status
-                })
-            );
-            const docResubmissionSuccessContent = {
-                dialogContentText: docResubmissionSuccessDialogContentText,
-                dialogTitle: congratulationDialogContentTitle,
-                maxWidth: "sm",
-                btnName: "Go to Dashboard",
-            };
-            openInfoModel(docResubmissionSuccessContent, () => navigateTo(toDashboard, { state: { status: 'Submited' } }));
-        }
+
+        console.log('payLoad234', payLoad);
+
+        // const formData = buildFormData(payLoad);
+        // const response = await PostReuploadDocuments(formData);
+        // if (response) {
+        //     const status = 'Submitted';
+        //     setLocalStorageItem("pfc-user", {
+        //         ...loginUserData,
+        //         status: status
+        //     });
+        //     dispatch(removeLoggedinData());
+        //     dispatch(
+        //         storeLoggedinData({
+        //             ...loginUserData,
+        //             status: status
+        //         })
+        //     );
+        //     const docResubmissionSuccessContent = {
+        //         dialogContentText: docResubmissionSuccessDialogContentText,
+        //         dialogTitle: congratulationDialogContentTitle,
+        //         maxWidth: "sm",
+        //         btnName: "Go to Dashboard",
+        //     };
+        //     openInfoModel(docResubmissionSuccessContent, () => navigateTo(toDashboard, { state: { status: 'Submited' } }));
+        // }
 
     }
     const handleSubmit = async () => {
@@ -177,7 +189,9 @@ export const ReuploadForm = () => {
                 isFnameVarified
             }
             const { upDatedFileUploaded } = createFileUploadedData({ fileUploaded, verificationFieldModal });
+            const { upDatedFileUploaded: updatedFilesUnfiltered } = createFileUploadedData({ fileUploaded });
             setUploadedFile([...upDatedFileUploaded]);
+            setUpdatedFilesUnfiltered([...updatedFilesUnfiltered]);
             setIsFathersNameVarified(isFnameVarified);
             setIsUANVarified(isUanVarified);
             const stepsList = createReuploadStepSequience({ isFathersNameVarified: isFnameVarified, isUanVarified: isUanVarified });
@@ -201,7 +215,7 @@ export const ReuploadForm = () => {
 
                 {/* ######  Certificate Upload Section Start ###### */}
                 {
-                    isFathersNameVarified === false &&
+                    isFathersNameVarified !== true &&
                     <>
                         <Grid
                             container
@@ -343,7 +357,7 @@ export const ReuploadForm = () => {
                     </>
                 }
                 {
-                    isUANVarified === false &&
+                    isUANVarified !== true &&
                     <>
                         <Grid
                             container
@@ -455,6 +469,7 @@ export const ReuploadForm = () => {
                         </Grid>
                     </>
                 }
+
                 <Grid
                     container
                     rowSpacing={1}
