@@ -208,7 +208,6 @@ export const ReuploadForm = () => {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-
                 {/* ######  Certificate Upload Section Start ###### */}
                 {
                     isFathersNameVarified === false &&
@@ -465,7 +464,6 @@ export const ReuploadForm = () => {
                         </Grid>
                     </>
                 }
-
                 <Grid
                     container
                     rowSpacing={1}
