@@ -3,7 +3,7 @@ import { Box, Button, Fab, Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { LinkNotSentTableHeadCell, notProcessedDataVerificationConfirmationMsg, startVerification, toLinknotsent } from 'shared/constants/constants';
+import { LinkNotSentTableHeadCell, startVerification, toLinknotsent, verificationConfirmationMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue, selectCheckedRows } from 'shared/utils';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import { removeActionRoute } from 'store/slices/action-route-slice';
@@ -104,7 +104,7 @@ const UnwrapedLinkNotSent = (props) => {
     }
     const handleStartProcess = () => {
         const confirmationModelContent = {
-            dialogContentText: notProcessedDataVerificationConfirmationMsg
+            dialogContentText: verificationConfirmationMsg
         }
         openConfirmationModel(confirmationModelContent, startProcessRawData)
         setSelected([]);
