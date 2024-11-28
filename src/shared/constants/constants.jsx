@@ -2363,26 +2363,26 @@ export const RemoveAdminUser_URL = (id, userId) => `${Users}/RemoveAdminUser?id=
 
 //Models messages starts
 export const aaddharNumberverify = `Please complete Aadhaar verification before proceeding.`
-export const approveConfirmation = `Candidate has not successfully completed verification process. Do you still want to approve?`;
+export const approveConfirmation = `Auto / manual verification process of appointee has not been completed successfully. Do you still want to force approve?`;
 export const pensionConfirmation = `Does appointee have Pension under EPFO? Yes / No"?`;
 export const uploadSizeErrorMsg = `File upload size limit has exceeded`;
-export const indianpassportFilePatternErrorMsg = 'Indian passport file number must be 12 digits alphanumeric code';
-export const passportFilePatternErrorMsg = 'Passport file number must be maximum of 20 digits';
-export const passportNoEmptyMsg = 'Passport number cannot be empty';
+export const indianpassportFilePatternErrorMsg = 'Indian Passport File Number must be 12 digits alphanumeric code';
+export const passportFilePatternErrorMsg = 'Passport File Number must be of maximum 20 digits';
+export const passportNoEmptyMsg = 'Passport Number cannot be empty';
 export const uploadFormatErrorMsg = `Upload valid formatted file`;
-export const verificationConfirmationMsg = `Are you sure you want to start the process?`;
-export const appointeerejetionConfirmationMsg = `Are you sure you want to reject?`;
+export const verificationConfirmationMsg = `Do you want to send verification portal link to the appointee(s)? [Note: Appointee(s) will be removed from this page and moved to the "Processing" page]`;
+export const appointeerejetionConfirmationMsg = `Are you sure you want to reject the appointee?`;
 export const verificationRemiderMsg = `Reminder alert will be sent to appointee, asking them to complete the verification process. Do you want to continue?`;
 export const credentialRemiderMsg = `An alert with login credentials will be sent to the appointee to complete the verification process. Would you like to proceed?`;
 export const appointeeTerminationConfirmationMsg = `Do you want to terminate the process?`;
-export const passwordMaxFieldErrorMsg = 'The field Password must be a string with a maximum length of 12.';
+export const passwordMaxFieldErrorMsg = 'Length exceeded. Password can be of maximum 12 characters.';
 export const notProcessedDataVerificationConfirmationMsg = `Do you want to send verification portal link to the appointees? [Note: Appointees will be removed from this page and moved to the "Processing" page]`;
-export const submitConfirmationMsg = `Your data will be submitted, you will no longer be able to verify your data. To re verify your data you have to contact the admin`;
-export const reUploadsubmitConfirmationMsg = "Your uploaded document will be submitted, and you will no longer be able to update your file. It will be verified by the admin. Are you sure you want to submit?";
-export const epfoPassfileUploadeConfirmationMsg = `Please upload your trust EPFO passbook before submition`;
-export const visafileUploadeConfirmationMsg = `You must upload your visa before submition`;
-export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details  has been verified and submitted successfully. You have completed your verification process. Please wait for the HR to reply for further processing of your application`;
-export const docResubmissionSuccessDialogContentText = `Your document has been submitted successfully. Please wait for the HR to reply for further processing of your application`;
+export const submitConfirmationMsg = `Your data will be submitted to PwC HC for verification. Hence you will no longer be able to change your data. Only PwC HC can decide to allow you to update /reverify data. Are you sure you want to submit?`;
+export const reUploadsubmitConfirmationMsg = "Your re-uploaded document(s) will be submitted to PwC HC for verification. Hence you will no longer be able to change your data. Are you sure you want to submit?";
+export const epfoPassfileUploadeConfirmationMsg = `Please upload your entire Trust / private PF passbook(s) before submission`;
+export const visafileUploadeConfirmationMsg = `Please upload your visa copy before submission`;
+export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details has been verified and submitted successfully. You have completed your verification process. Please wait for the HR to reply for further processing of your application`;
+export const docResubmissionSuccessDialogContentText = `Your documents have been submitted successfully. Please wait for your documents to be verified by PwC HC. .`;
 export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you.\n
 1. Review the Prerequisite Details.\n
 2. Click 'Start Verification' to begin the process (which includes giving consent).\n
