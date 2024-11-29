@@ -2748,28 +2748,28 @@ export const passbookVerificationQuestionSet = [
         disabled:true,
     },
     {
-        label: "Completeness of Passbook document?",
+        label: "Completeness of Passbook document(s)?",
         name: fileVerificationEnums.docComplete,
         subCategory: epfoPassbookFileTypeAlias,
         type: "prerequisite",
         disabled: true,
     },
     {
-        label: "Correctness of Passbook document?",
+        label: "Correctness of Passbook document(s)?",
         name: fileVerificationEnums.docValid,
         subCategory: epfoPassbookFileTypeAlias,
         type: "prerequisite",
         disabled:true,
     },
     {
-        label: "Is pension applicable?",
+        label: "Is member of EPS?",
         name: fileVerificationEnums.pensionApplicable,
         subCategory: epfoPassbookFileTypeAlias,
         dependsOn: [fileVerificationEnums.docComplete, fileVerificationEnums.docValid,fileVerificationEnums.DocComplete,fileVerificationEnums.docValid],
         disabled: true
     },
     {
-        label: "Has pension gap?",
+        label: "Is EPS gap identified?",
         name: fileVerificationEnums.pensionGapFound,
         subCategory: epfoPassbookFileTypeAlias,
         dependsOn: [fileVerificationEnums.docComplete, fileVerificationEnums.docValid,fileVerificationEnums.pensionApplicable],

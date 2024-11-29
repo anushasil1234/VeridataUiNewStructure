@@ -41,11 +41,9 @@ import { useState } from "react";
  import exclamation from "assets/images/exclamation.png"
 
 export const TableActionCell = (props1, props2) => {
-  const { actionList, rowAttribute, actionPermissionList, setTableRows } =
-    props1;
-    const {verificationStatusCode} = rowAttribute;
-  console.log("actionlist", props1);
-  const { appointeeId, userId: id, isPassbookVerified, uanNo,passbookStatusCode } = rowAttribute;
+  const { actionList, rowAttribute, actionPermissionList, setTableRows } =    props1;
+  
+  const { appointeeId, userId: id, isPassbookVerified, uanNo,passbookStatusCode,verificationStatusCode } = rowAttribute;
   const commonHooksFunctionSlice = useSelector(
     (state) => state.commonHooksFunctionSlice
   );
@@ -347,9 +345,9 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-           {action === "REDIRECTMANVER" 
-          //  && actionPermissionList &&
-          // actionPermissionList["A001"] 
+           {action === "REDIRECTMANVER" &&  ["MV", "MRV", "RD"].includes(verificationStatusCode)
+           && actionPermissionList &&
+           actionPermissionList['A016'] 
           ? (
             <DarkTooltip placement="top" title={"Visit Manual Verification Page"} arrow>
               <Fab
