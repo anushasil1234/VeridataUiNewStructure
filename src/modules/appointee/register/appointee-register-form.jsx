@@ -293,8 +293,6 @@ const AppointeeRegisterForm = () => {
     const [uploadedFile, setUploadedFile] = useState([]);
     const [xmlFileUploaded, setXmlFileUploaded] = useState();
     const [fileDetails, setFileDetails] = useState([]);
-    console.log('fileDetails12211', fileDetails);
-
     const [trustEpfoFileName, setTrustEpfoFileName] = useState([]);
     const [handicapFileName, setHandicapFileName] = useState();
     const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
@@ -314,6 +312,7 @@ const AppointeeRegisterForm = () => {
     const [isNextVisible, setIsNextVisible] = useState(false);
     const [isthirdNextVisible, setIsThirdNextVisible] = useState(false);
     const [isDraft, setIsDraft] = useState(true);
+    const [uanAadharLink, setUanAadharLink] = useState('');
     const [stepsList, setStepsList] = useState(
         stepperDefaultList
     );
@@ -447,7 +446,8 @@ const AppointeeRegisterForm = () => {
                 fileUploaded,
                 isUanAvailable,
                 isTrustPassbook,
-                isManualPassbook
+                isManualPassbook,
+                isUanLinkWithAadhar
             } = response.responseInfo;
             setIsSubmit(isSubmit);
             setCompanyName(companyName);
@@ -524,6 +524,9 @@ const AppointeeRegisterForm = () => {
                 ? isManualPassbook === true ? setIsUanVerificationProcessManual('manual')
                     : setIsUanVerificationProcessManual('auto')
                 : setIsUanVerificationProcessManual('auto');
+            hasValue(isUanLinkWithAadhar)
+                ? setUanAadharLink(isUanLinkWithAadhar)
+                : setUanAadharLink('NA');
             // setIsEmployementDataVarified(isEmployementVarified);
 
             if (hasValue(uanNumber)
@@ -573,7 +576,7 @@ const AppointeeRegisterForm = () => {
             setEpfoPassBookFiles(epfoPassBookFiles);
             setEpfoServiceHistoryFile(epfoServiceHistoryFile);
             // setUploadedFile([...upDatedFileUploaded]);
-
+            console.log("AAAAAA)", uanAadharLink)
             // fileUploaded.forEach(
             //   ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
             //     const fileDetails = `data:${mimeType};base64,${fileData}`;
@@ -744,7 +747,7 @@ const AppointeeRegisterForm = () => {
     useEffect(() => {
         if (
             isAadhaarVarified === true &&
-           // isPanVarified === true &&
+            // isPanVarified === true &&
             isUanVarified !== null
             //&&      isEmployementDataVarified !== null
         ) {
@@ -754,9 +757,9 @@ const AppointeeRegisterForm = () => {
             setDisabledPanInput(true);
         }
 
-        if (isPanVarified !== null) {
-            setIsEpfoSectionDisabled(false);
-        }
+        // if (isPanVarified !== null) {
+        //     setIsEpfoSectionDisabled(false);
+        // }
         if (isAadhaarVarified !== null && isAadhaarVarified === true) {
             setIsEpfoSectionDisabled(false);
         }
@@ -771,7 +774,7 @@ const AppointeeRegisterForm = () => {
             isSubmit === false) {
             if (
                 isAadhaarVarified &&
-                isPanVarified &&
+                // isPanVarified &&
                 isUanVarified
                 //&& !hasValue(UAN)
             ) {
@@ -781,7 +784,7 @@ const AppointeeRegisterForm = () => {
 
     }, [
         isAadhaarVarified,
-     //   isPanVarified,
+        //   isPanVarified,
         isUanVarified,
     ]);
 
@@ -3637,6 +3640,10 @@ const AppointeeRegisterForm = () => {
                                                     <VerificationStatusSection
                                                         docType={epfostatusMessage}
                                                     />
+                                                    <Stack direction={"row"} alignItems={"center"}>
+                                                        <Typography sx={{ margin: "5px 0", color: "#000" }}>{"UAN Aadhar Link : "} </Typography>
+                                                        <Typography>{uanAadharLink}</Typography>
+                                                    </Stack>
                                                 </Grid>
                                                 <Grid
                                                     item
