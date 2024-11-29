@@ -975,8 +975,9 @@ let AppointeeViewForm = ({
           <Grid item xs={12} md={3.5}>
             {!roleTypeEnums.candidate.includes(userTypeId)
               ? isManualPassbook &&
-              (manualVerificationStatus === "MV" ||
-                manualVerificationStatus === "MRV") && hasPermission &&
+              //(manualVerificationStatus === "MV" ||
+               // manualVerificationStatus === "MRV") && 
+               hasPermission &&
               hasPermission["A015"] && (
                 <Box
                   sx={{
