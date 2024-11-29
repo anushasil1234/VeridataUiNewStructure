@@ -187,6 +187,7 @@ let ManualverifiedViewDetails = ({ details }) => {
 
         setVerificationQuestionSet(_updatedQuestionSet);
         setVerificationUpdate({});
+        setFileTypeCategory("");
     }
     const clearCategoryRelatedVariables = () => {
         setFileSrc("");
