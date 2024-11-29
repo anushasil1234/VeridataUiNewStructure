@@ -184,7 +184,8 @@ let AppointeeViewForm = ({
   const [actionIconListDisplay, setActionIconListDisplay] = useState(false);
   const [isSaveStep, setIsSaveStep] = useState(null);
   const [isTrustPassbook, setIsTrustPassbook] = useState(null);
-  const [uanAadhar, setUanAadhar] = useState(null)
+  const [uanAadhar,setUanAadhar]=useState(null);
+  const[candidateId,SetcandidateId]=useState(null);
   const [isManualPassbook, setIsManualPassbook] = useState(null);
   const [isPensionApplicable, setIsPensionApplicable] = useState(null);
   const [filesByAlias, setFilesByAlias] = useState(new Map());
@@ -293,7 +294,8 @@ let AppointeeViewForm = ({
         isTrustPassbook,
         isManualPassbook,
         workFlowStatus,
-        isUanLinkWithAadhar
+        isUanLinkWithAadhar,
+        candidateId
       } = response.responseInfo;
 
       setAppointeeDetailsResponse(response.responseInfo);
@@ -314,7 +316,8 @@ let AppointeeViewForm = ({
         ? setIsFnameVarified(isFnameVarified)
         : setIsFnameVarified(null);
       appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
-      isUanLinkWithAadhar ? setUanAadhar(isUanLinkWithAadhar) : setUanAadhar(null)
+      isUanLinkWithAadhar?setUanAadhar(isUanLinkWithAadhar):setUanAadhar(NA);
+      candidateId?SetcandidateId(candidateId):SetcandidateId(null);
       isUanVarified
         ? setIsUanVerified(isUanVarified)
         : isUanVarified === false
@@ -717,6 +720,10 @@ let AppointeeViewForm = ({
               <Stack sx={listHeadingConteinerStyle}>
                 <Typography sx={listHeadingStyle}>Document Details</Typography>
               </Stack>
+              <DocumentDetails
+                fieldName={"Candidate Id"}
+                fieldValue={candidateId}
+              />
               <DocumentDetails
                 isVerified={isAadharVerified}
                 fieldName={"Aadhaar Name"}
