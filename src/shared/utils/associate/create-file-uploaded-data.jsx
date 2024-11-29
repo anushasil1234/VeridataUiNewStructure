@@ -13,7 +13,7 @@ const createFileUploadedData = ({ fileUploaded, verificationFieldModal = null })
     // console.log('test23423', test);
     
     const upDatedFileUploaded = verificationFieldModal ? fileUploaded.filter(({ uploadTypeAlias }) => {
-        console.log('verificationFieldModal', verificationFieldModal);
+       
         
         const _currentCategoryType = uploadAliasCategory[uploadTypeAlias]?.categoryType;
         return (
@@ -42,7 +42,7 @@ const createFileUploadedData = ({ fileUploaded, verificationFieldModal = null })
                 isFileUploaded: false
             })
         })
-    console.log('upDatedFileUpload', upDatedFileUploaded);
+  
 
     return ({ upDatedFileUploaded })
 }

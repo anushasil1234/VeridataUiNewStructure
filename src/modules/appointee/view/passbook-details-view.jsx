@@ -164,7 +164,7 @@ let PassbookViewDetails = ({ appointeeId, passbookDetails }) => {
       label: "Employment History",
     };
     // jsPDFEmploymentHistTemplate({ tableObj });
-    console.log("resposneInfo1111", responseInfo);
+  
     jsPDFReportDataTemplate({
       reportDetails: {
         fileName: `_Passbook_Details_${currentDate}`,

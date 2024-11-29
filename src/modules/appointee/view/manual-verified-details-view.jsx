@@ -210,14 +210,14 @@ let ManualverifiedViewDetails = ({ details }) => {
         } else {
             clearCategoryRelatedVariables();
         }
-        console.log('verificationType', verificationType);
+    
         setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
 
         // if (verificationType.verificationFieldName === fileVerificationEnums.docEPFO) {
         //     setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
         // }
     }
-    console.log('verificationType', verificationType);
+ 
 
     const reject = async (remarks) => {
         showErrorMessage();
@@ -275,7 +275,7 @@ let ManualverifiedViewDetails = ({ details }) => {
         const updatedFiles = files.map((file) =>
             file.value === fileTypeToUpdate ? { ...file, isRead: true } : file
         );
-        console.log('updatedFiles', fileTypeToUpdate);
+       
         setFiles(updatedFiles);
     };
     const setUploadedFileDataResponse = async (defaultVerificationType) => {

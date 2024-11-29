@@ -52,7 +52,7 @@ export default function CustomTab(props) {
   }
   const { tabs, payload ,isDownload, isDownloadExcel, hasPermission} = props;
   const { labelList, pannelList ,filterTab} = tabs;
-  console.log("tabs", props);
+
   const initialTabIndex = pannelList.indexOf(filterTab); // Find the index of the `filterTab`
   const [tabValue, setTabValue] = React.useState(initialTabIndex >= 0 ? initialTabIndex : 0);
 

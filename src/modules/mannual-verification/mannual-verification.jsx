@@ -18,11 +18,11 @@ import moment from "moment";
 import CustomTab from "shared/utils/customTab/custom-tab";
 
 const UnWrappedMannualVerification = (props) => {
-  console.log("props", props);
+
   const { hasPermission } = props;
 
   const { state } = useLocation();
-  console.log("state1111", state);
+ 
   const [isDownload, setIsDownload] = useState(false);
   const [isDownloadExcel, setIsDownloadExcel] = useState(false);
   const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -72,7 +72,7 @@ const UnWrappedMannualVerification = (props) => {
   //   }
   // }, [state]);
   const selectedtab=hasValue(state)?state:"MV";
-  console.log("selectedtab",selectedtab)
+
   const [tabs, setTabs] = useState({
     labelList: [
       "Manual Verification Required",

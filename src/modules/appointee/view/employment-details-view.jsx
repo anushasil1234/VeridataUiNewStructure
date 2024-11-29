@@ -122,7 +122,7 @@ let EmploymentViewDetails = ({ appointeeId, userId,epfoDetails }) => {
     //   tableName: "Appointee details",
     //   rptDesc: "",
     // };
-    console.log('resposneInfo1111',responseInfo)
+ 
     jsPDFReportDataTemplate({
       reportDetails: {
         fileName: `_Employment_History_${currentDate}`,

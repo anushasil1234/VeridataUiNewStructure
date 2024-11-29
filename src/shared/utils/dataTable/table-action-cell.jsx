@@ -263,7 +263,7 @@ export const TableActionCell = (props1, props2) => {
     //   isFnameVarified,
     //   isUanVerified
     // }
-    console.log("personalInfo3333", (openVerify));
+  
 
     openVerify(personalInfo);
   };

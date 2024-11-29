@@ -36,7 +36,7 @@ export const ReuploadForm = () => {
     const {
         fileTypeList,
     } = dropdownList && dropdownList.length > 0 && dropdownList[0];
-    console.log('fileTypeList', fileTypeList);
+    // console.log('fileTypeList', fileTypeList);
     const {
         openConfirmationModel,
         openInfoModel
@@ -67,9 +67,9 @@ export const ReuploadForm = () => {
         if (hasValue(error)) {
             showErrorMessage(error);
         }
-        console.log('fileNameList files', files,);
-        console.log('fileNameList', uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single');
-        console.log('updatedFileDetails', updatedFileDetails);
+        // console.log('fileNameList files', files,);
+        // console.log('fileNameList', uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single');
+        // console.log('updatedFileDetails', updatedFileDetails);
 
         setUploadedFile([...updatedUploadedFileList]);
         setFileDetails([...updatedFileDetails]);
@@ -91,7 +91,7 @@ export const ReuploadForm = () => {
             uploadTypeAlias: epfoPassbookFileTypeAlias, fileNameList: epfoPassBookFiles,
             currentFileName: currentFileName, uploadType: 'multiple'
         });
-        console.log('_updatedUploadedFileList', _updatedUploadedFileList);
+     
 
         setEpfoPassBookFiles(_fileNameList);
         setUploadedFile(_updatedUploadedFileList);
@@ -155,7 +155,7 @@ export const ReuploadForm = () => {
             isFnameVarified: isFathersNameVarified
         }
         const { error } = checkFileReuploadValidation({ uploadedFile, verificationFieldModal });
-        console.log('error', error);
+      
 
         if (hasValue(error)) {
             showErrorMessage(error);
@@ -198,7 +198,7 @@ export const ReuploadForm = () => {
     useEffect(() => {
         setAppointeeDetails(appointeeId);
     }, [])
-    console.log('isFathersNameVarified', isFathersNameVarified);
+  
 
     return (
         <form ref={formElement}>

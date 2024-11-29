@@ -94,7 +94,7 @@ let AppointeeViewForm = ({
   closeViewModel,
   hasPermission,
 }) => {
-  console.log("hasperpermissionAppointeeview", hasPermission, appointeeId);
+  // console.log("hasperpermissionAppointeeview", hasPermission, appointeeId);
   const commonHooksFunctionSlice = useSelector(
     (state) => state.commonHooksFunctionSlice
   );
@@ -254,7 +254,7 @@ let AppointeeViewForm = ({
 
   const setAppointeeDetails = async () => {
     const response = await getAppointeeDetails(appointeeId);
-    console.log("response2222", response);
+  
 
     if (response) {
       const {
@@ -472,7 +472,7 @@ let AppointeeViewForm = ({
   // }, [appointeeId]);
   useEffect(() => {
     if (appointeeId && !hasFetchedData) {
-      console.log("Fetching appointee details and activity");
+      
       setAppointeeDetails();
       setAppointeeActivity();
       setHasFetchedData(true); // Mark as fetched
@@ -691,7 +691,7 @@ let AppointeeViewForm = ({
     navigateTo(`${toMannualVerification}`, { state: manualVerificationStatus });
     closeViewModel();
   };
-  console.log("status", manualVerificationStatus);
+ 
   return (
     <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", borderRadius: "8px" }}>
       <Box sx={gridContainerStyle}>

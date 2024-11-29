@@ -92,7 +92,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         }
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
 
-        console.log("error1232", error);
+   
 
         if (error) {
             showErrorMessage(error);

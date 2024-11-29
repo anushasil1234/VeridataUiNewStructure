@@ -2,7 +2,7 @@ import { validationsCheck } from "..";
 
 const validateQuestionSet = (verificationQuestionSet, verificationUpdate) => {
     let error;
-    console.log('verificationQuestionSet', verificationQuestionSet, verificationUpdate);
+  
     if (Object.keys(verificationUpdate).length === 0) {
         error = `Please select appropiate answer for the questions`;
     } else {
@@ -10,7 +10,7 @@ const validateQuestionSet = (verificationQuestionSet, verificationUpdate) => {
             const { disabled, name, subCategory, label } = verificationQuestionSet[index];
             const _name = `${name}_${subCategory}`;
 
-            console.log('validationQuestionSet', verificationQuestionSet, _name);
+          
             
             if (disabled === false) {
                 if (!validationsCheck(verificationUpdate[_name], _name)) {

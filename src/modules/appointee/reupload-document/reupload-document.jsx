@@ -9,12 +9,12 @@ import NotAccessibleSection from 'shared/components/not-accessible/not-accessibl
 const ReuploadDocument = () => {
     const loggedInData = useSelector((state) => state.loggedInData);
     const { status } = loggedInData[0];
-    console.log("logindata", loggedInData[0]);
+  
     const [isFileReUploadPermitted, setIsFileReUploadPermitted] = useState();
-    console.log('isFileReUploadPermitted', isFileReUploadPermitted);
+   
 
     useEffect(() => {
-        console.log('loggedInData3234', loggedInData);
+      
 
         if (status === 'Doc Reupload') {
             setIsFileReUploadPermitted(true);

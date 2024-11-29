@@ -43,9 +43,9 @@ import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
 const UnWrappedProcessing = (props) => {
   const { hasPermission } = props;
-  console.log('props',props);
+ 
   const { state } = useLocation();
-  console.log('state9999',state)
+ 
   const popUpSlice = useSelector((state) => state.popUpSlice);
   const { showErrorMessage } = popUpSlice[0]
   let noOfDays = 0;

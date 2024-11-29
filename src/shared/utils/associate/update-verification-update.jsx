@@ -30,7 +30,7 @@ const updateVerificationUpdate = ({ verificationUpdate, verificationQuestionSet,
             _verificationUpdate = verificationUpdate;
         }
     }
-    console.log("updatedVerification", _verificationUpdate);
+  
 
     return (
         { updatedVerification: _verificationUpdate }

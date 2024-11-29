@@ -7,7 +7,7 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
 
     let fileNameList = [..._filenameList];
     let updatedUploadedFileList = [...uploadedFile];
-    console.log('fileDetails4234', fileDetails);
+  
     
     let updatedFileDetails = [...fileDetails];
     let error;
@@ -19,7 +19,7 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
         for (let index = 0; index < uploadedFile.length; index++) {
 
             const { fileLength, fileName, mimeType, uploadTypeAlias: _uploadTypeAlias, uploadDetailsId } = uploadedFile[index];
-            console.log('uploadedFile', uploadedFile);
+        
             
             if (name === fileName && size === fileLength && mimeType === type && uploadDetailsId === 0) {
                 isFileExists = true;
@@ -70,10 +70,10 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
                         fileNameList: fileNameList,
                         uploadType: uploadType
                     });
-                    console.log("Uploading221321",
-                        updatedFileDetails,
-                        _updatedFileDetails,
-                        );
+                    // console.log("Uploading221321",
+                    //     updatedFileDetails,
+                    //     _updatedFileDetails,
+                    //     );
                     fileNameList = [name];
                     updatedUploadedFileList = [..._updatedUploadedFileList, file];
                     updatedFileDetails = [..._updatedFileDetails, files[index]];
@@ -89,7 +89,7 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
             }
         }
     }
-    console.log('Upload123', updatedUploadedFileList, updatedFileDetails, fileNameList);
+   
     
     return ({
         error: error,

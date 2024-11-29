@@ -326,7 +326,7 @@ const AppointeeRegisterForm = () => {
         setTimeoutTimer(10 * 60);
     };
     const clearFileVaribles = (fileTypeAlias, setFileName, fileNameList) => {
-        console.log('clearFileVariables');
+ 
 
         if (!fileDetails?.length) return;
 
@@ -648,7 +648,7 @@ const AppointeeRegisterForm = () => {
         const uploadTypeAlias =
             uploadedFile &&
             uploadedFile.find(({ uploadTypeAlias }) => uploadTypeAlias === fileTypeAlias);
-        console.log('checkFileUpload', uploadTypeAlias);
+        
 
         return hasValue(uploadTypeAlias);
     };
@@ -738,7 +738,7 @@ const AppointeeRegisterForm = () => {
 
     useEffect(() => {
         if (!isTrustEpfoAvailable) {
-            console.log('trustEpfoFileName', trustEpfoFileName);
+          
 
             clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName);
         }
@@ -816,7 +816,7 @@ const AppointeeRegisterForm = () => {
     useEffect(() => {
         // updateStepCounter(isPhysicallyHandicap);
         if (isPhysicallyHandicap === 'N') {
-            console.log('clearFileVaribles42323');
+          
 
             clearFileVaribles(handicapFileTypeAlias, setHandicapFileName, handicapFileName);
         }
@@ -915,9 +915,9 @@ const AppointeeRegisterForm = () => {
         if (hasValue(error)) {
             showErrorMessage(error);
         }
-        console.log('fileNameList files', files,);
-        console.log('fileNameList', uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single');
-        console.log('updatedUploadedFileList', [...updatedUploadedFileList], fileNameList);
+        // console.log('fileNameList files', files,);
+        // console.log('fileNameList', uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single');
+        // console.log('updatedUploadedFileList', [...updatedUploadedFileList], fileNameList);
 
         setUploadedFile([...updatedUploadedFileList]);
         setFileDetails([...updatedFileDetails]);
@@ -949,7 +949,7 @@ const AppointeeRegisterForm = () => {
             uploadTypeAlias: trustEpfoFileTypeAlias, fileNameList: trustEpfoFileName,
             currentFileName: currentFileName, uploadType: 'multiple'
         });
-        console.log('_updatedFileDetails', _updatedFileDetails);
+      
 
         setTrustEpfoFileName(_fileNameList);
         setUploadedFile(_updatedUploadedFileList);
@@ -999,7 +999,7 @@ const AppointeeRegisterForm = () => {
         formData.append("aadharFileDetails", xmlFileUploaded);
 
         const response = await verifyAadharDetails(formData);
-        console.log('responseaaaa', response)
+    
         if (response) {
             const { remarks, isVarified } = response.responseInfo;
             if (isVarified) {
@@ -1205,7 +1205,7 @@ const AppointeeRegisterForm = () => {
 
 
     const buildFormData = (payLoad) => {
-        console.log('payLoad3223434', payLoad);
+     
 
         let formData = new FormData();
         for (const property in payLoad) {
@@ -1247,7 +1247,7 @@ const AppointeeRegisterForm = () => {
             IsFinalSubmit: false
         };
         // Use the buildFormData helper function to create the formData
-        console.log('payLoad121', payLoad);
+     
 
         let formData = buildFormData(payLoad);
 
@@ -1466,7 +1466,7 @@ const AppointeeRegisterForm = () => {
         };
         // Use the buildFormData helper function to create the formData
         let formData = buildFormData(payLoad);
-        console.log('formData123', formData, payLoad);
+        // console.log('formData123', formData, payLoad);
 
         const response = await postAppointeeFileDetails(formData);
         if (response) {

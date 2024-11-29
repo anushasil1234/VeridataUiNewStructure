@@ -66,7 +66,7 @@
 // }
 
 export const removeFile = ({ uploadedFile, fileDetails, uploadTypeAlias, fileNameList, uploadType, currentFileName = null }) => {
-    console.log('Removing file with details:', { currentFileName, uploadedFile, fileDetails, uploadTypeAlias, fileNameList, uploadType });
+    // console.log('Removing file with details:', { currentFileName, uploadedFile, fileDetails, uploadTypeAlias, fileNameList, uploadType });
 
     const updatedUploadedFileList = [...uploadedFile];
     let updatedFileDetails = [...fileDetails];
@@ -95,7 +95,7 @@ export const removeFile = ({ uploadedFile, fileDetails, uploadTypeAlias, fileNam
         }
     }
 
-    console.log('Updated lists:', { fileNameList, updatedUploadedFileList, updatedFileDetails });
+  
 
     return { fileNameList, updatedUploadedFileList, updatedFileDetails };
 };

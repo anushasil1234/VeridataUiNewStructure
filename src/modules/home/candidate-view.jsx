@@ -57,7 +57,7 @@ const CandidateView = () => {
     isProcessed,
     candidateId
   } = loggedInData[0];
-  console.log("logindata", loggedInData[0]);
+ 
   const [isPrerequisiteDataAvailable, setIsPrerequisiteDataAvailable] =
     useState(prerquistdata);
   const [loading, setLoading] = useState(false);
@@ -80,7 +80,7 @@ const CandidateView = () => {
   const handlePrerequisite = (statusId, statusCode) => {
     submitPrerequisiteStatus(statusId, statusCode);
   };
-  console.log("ANU_20105WTJ3", statusCode)
+
   const handleYes = () => handlePrerequisite(4, "PREREQCNFYES");
   const handleNo = () => handlePrerequisite(5, "PREREQCNFNO");
 

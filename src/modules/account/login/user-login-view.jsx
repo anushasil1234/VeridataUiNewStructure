@@ -147,7 +147,7 @@ export const UserLoginView = () => {
               const { responseInfo } = response;
               const { userDetails, tokenDetails } = responseInfo;
               const { userName, consentStatus, userTypeId, isDefaultPassword, isPasswordExpire } = userDetails;
-console.log('isDefaultPassword, isPasswordExpire', isDefaultPassword, isPasswordExpire);
+
 
               // Show welcome message if needed
               if (roleTypeEnums.candidate.includes(userTypeId) && consentStatus === 0 && !isDefaultPassword && !isPasswordExpire) {
@@ -167,7 +167,7 @@ console.log('isDefaultPassword, isPasswordExpire', isDefaultPassword, isPassword
                 };
                 openInfoModel(wellcomeMsgContent);
               }
-console.log("userDetails", userDetails);
+
 
               // Store user and token data
               setLocalStorageItem("pfc-user", userDetails);

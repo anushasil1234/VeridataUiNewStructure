@@ -13,15 +13,15 @@ const addNewQuestion = ({
     if (verificationType.value === epfFileCategoryTypeAlias) {
         updatedQuestion = _passbookVerificationQuestionSet;
     }
-    console.log('fatherVerificationQuestionSet1231', _fatherVerificationQuestionSet);
+  
 
-    console.log("addNewQuestionupdatedQuestionSet", {
-        updatedQuestionSet:
-            [
-                ...verificationQuestionSet,
-                ...updatedQuestion
-            ]
-    });
+    // console.log("addNewQuestionupdatedQuestionSet", {
+    //     updatedQuestionSet:
+    //         [
+    //             ...verificationQuestionSet,
+    //             ...updatedQuestion
+    //         ]
+    // });
 
     return (
         {

@@ -14,7 +14,7 @@ import NotAccessibleSection from "shared/components/not-accessible/not-accessibl
 const AppointeeRegister = () => {
   const loggedInData = useSelector((state) => state.loggedInData);
   const { status, isPrerequisiteDataAvailable, consentStatus } = loggedInData[0];
-  console.log("logindata", loggedInData[0]);
+  // console.log("logindata", loggedInData[0]);
   const [isRegistrationPermitted, setIsRegistrationPermitted] = useState();
 
   useEffect(() => {

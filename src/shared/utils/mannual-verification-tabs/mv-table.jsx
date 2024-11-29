@@ -23,17 +23,17 @@ import downloadFile from "../associate/download-file";
 import { removeManualValidationResponseStatusSlice, storeManualValidationResponseStatusSlice } from "store/slices/manual-validation-response-status-slice";
 
 export const MVTable = (filters) => {
-  console.log("columnlist", mannualVerificationListTableHeadCell);
+ 
   const { props, payload, isDownload, isDownloadExcel, hasPermission } = filters;
   const manualValidationResponseStatusSlice = useSelector((state) => state.manualValidationResponseStatusSlice);
-  console.log('manualValidationResponseStatusSlice', manualValidationResponseStatusSlice);
+ 
   const manualValidationResponseStatus = manualValidationResponseStatusSlice[manualValidationResponseStatusSlice.length - 1]; // todo change syntax
 
   // dispatch(storeLoggedinData(loginData));
   const popUpSlice = useSelector((state) => state.popUpSlice);
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
-  console.log("filterType", filters);
+ 
   const [rows, setRows] = useState([]);
   const [responseList, setResponseList] = useState();
   const [responseListLength, setResponseListLength] = useState(0);
@@ -50,7 +50,7 @@ export const MVTable = (filters) => {
   // dispatch(removeManualValidationResponseStatusSlice());
   // dispatch(removeManualValidationResponseStatusSlice());
   // dispatch(removeManualValidationResponseStatusSlice());
-  console.log("actions", payload_MV);
+ 
   const setTableRows = async (payload_MV) => {
     const response = await getMannualVerificationDataList(payload_MV);
     if (response) {
@@ -60,7 +60,7 @@ export const MVTable = (filters) => {
       const { manualVerificationList } = responseInfo;
       setResponseList(manualVerificationList);
       manualVerificationList.length > 0 && setResponseListLength(manualVerificationList.length)
-      console.log();
+    
       let generatedCells = generateTableRowData(
         manualVerificationList,
         props === "MV"
@@ -82,7 +82,7 @@ export const MVTable = (filters) => {
       });
     }
   };
-  console.log('responselistlegth', responseListLength)
+  
   const handleDownload = () => {
     if (!responseList || responseList.length === 0) {
       showErrorMessage(reportGenarate);
@@ -206,12 +206,12 @@ export const MVTable = (filters) => {
       handleDownload();
     }
   }, [props, isDownload]);
-  console.log('manualValidationResponseStatus mv', manualValidationResponseStatus);
+
 
   useEffect(() => {
     dispatch(removeActionRoute());
     if (actionRouteSlice.length === 0) {
-      console.log('inside useeffect');
+    
       setTableRows(payload_MV);
 
       // if (manualValidationResponseStatus && manualValidationResponseStatus.hasOwnProperty('isdataSubmited')) {
@@ -229,7 +229,7 @@ export const MVTable = (filters) => {
   useEffect(() => {
     // dispatch(removeActionRoute());
     if (manualValidationResponseStatus?.isdataSubmited) {
-      console.log('inside useeffect');
+     
       setTableRows(payload_MV);
 
       // if (manualValidationResponseStatus && manualValidationResponseStatus.hasOwnProperty('isdataSubmited')) {

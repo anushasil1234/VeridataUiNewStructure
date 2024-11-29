@@ -14,7 +14,7 @@ const createVerificationTypeList = (verificationTypeList, verificationFieldSet) 
         return _verificationTypeItem;
     });
 
-    console.log('_verificationTypeList', _verificationTypeList);
+ 
 
     return { verificationTypeList: _verificationTypeList };
 };
