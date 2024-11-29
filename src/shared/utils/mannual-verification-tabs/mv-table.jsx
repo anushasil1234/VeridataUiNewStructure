@@ -160,8 +160,8 @@ console.log('responselistlegth',responseListLength)
   };
   const handleDownloade = (response) => {
     const { filedata } = response;
-    if (filedata.fileData && typeof filedata.fileData === "string") {
-      const base64String = filedata.fileData;
+    if (filedata?.fileData && typeof filedata?.fileData === "string") {
+      const base64String = filedata?.fileData;
       const fileName =
         props === "MV"
           ? `_Manual_Verification_Required_List_${currentDate}`
@@ -176,6 +176,10 @@ console.log('responselistlegth',responseListLength)
   };
   const handleDwnldExcel = async () => {
     const response = await getMannualVerificationDataList(payload_MV);
+    if (!response || response.length === 0) {
+      showErrorMessage(reportGenarate)
+      return;
+    }
     if (response) {
       const { responseInfo } = response;
       //   const { manualVerificationList } = responseInfo;

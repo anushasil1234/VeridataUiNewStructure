@@ -192,7 +192,7 @@ export const genders = [<Male />, <Female />, <Transgender />].map((genderIcon) 
 const rejetedListActions = ['VIEWDETAILS'];
 const latestAppointeeListActions = ['VIEWDETAILS'];
 const verifiedListActions = ['VIEWDETAILS', 'DWNLDPSSBK', 'DWNLDTRUSTPSSBK', 'VIEWPSSBK'];
-const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL', 'USERMAILRESEND'];
+const procesingListActions = ['VIEWDETAILS', 'NOTIFYMAIL', 'USERMAILRESEND','REDIRECTMANVER'];
 const mannualVerListActions = ['VIEWDETAILS', 'MANUALVER'];
 const mannualReverListActions = ['VIEWDETAILS', 'MANUALREVER'];
 const docReuploadListActions = ['VIEWDETAILS', 'NOTIFYMAIL'];
@@ -1238,7 +1238,7 @@ export const processingListTableHeadCell = [
         enums: ['viewDetails'],
         component: {
             element: (props) => TableActionCell({ actionList: procesingListActions, ...props }),
-            attribute: ['appointeeId']
+            attribute: ['appointeeId','verificationStatusCode']
         }
     }
 ]

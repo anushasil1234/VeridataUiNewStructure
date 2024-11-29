@@ -56,17 +56,38 @@ const UnWrappedMannualVerification = (props) => {
     };
     setPayload(reqPayload);
   };
-  const tabs = {
+  // const tabs = {
+  //   labelList: [
+  //     "Manual Verification Required",
+  //     "Manual Re-Verification Required",
+  //     "Document Reupload Request",
+  //   ],
+  //   pannelList: ["MV", "MRV", "RD"],
+  //   filterTab: "MRV",
+  // };
+  // console.log("datatabs", tabs);
+  // useEffect(() => {
+  //   if (state?.filterTab && tabs.pannelList.includes(state.filterTab)) {
+  //     setTabs((prevTabs) => ({ ...prevTabs, filterTab: state.filterTab }));
+  //   }
+  // }, [state]);
+  const selectedtab=hasValue(state)?state:"MV";
+  console.log("selectedtab",selectedtab)
+  const [tabs, setTabs] = useState({
     labelList: [
       "Manual Verification Required",
       "Manual Re-Verification Required",
       "Document Reupload Request",
     ],
     pannelList: ["MV", "MRV", "RD"],
-    isDownloadTab: false,
-  };
-  console.log("datatabs", tabs);
+    filterTab: selectedtab, // Default filterTab
+  });
 
+  useEffect(() => {
+    if (state?.filterTab && tabs.pannelList.includes(state.filterTab)) {
+      setTabs((prevTabs) => ({ ...prevTabs, filterTab: state.filterTab }));
+    }
+  }, [state, tabs.pannelList]);
   //   const handleDownloade = (rf) => {
   //     if (rf.fileData && typeof rf.fileData === 'string') {
   //       const base64String = rf.fileData;

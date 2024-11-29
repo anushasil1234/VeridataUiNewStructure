@@ -28,6 +28,7 @@ import {
   credentialRemiderMsg,
   NA,
   noPassBookMsg,
+  toMannualVerification,
   toUpdateUser,
   verificationRemiderMsg,
 } from "shared/constants/constants";
@@ -41,7 +42,8 @@ import { useState } from "react";
 export const TableActionCell = (props1, props2) => {
   const { actionList, rowAttribute, actionPermissionList, setTableRows } =
     props1;
-  console.log("actionlist", actionPermissionList);
+    const {verificationStatusCode} = rowAttribute;
+  console.log("actionlist", props1);
   const { appointeeId, userId: id, isPassbookVerified, uanNo } = rowAttribute;
   const commonHooksFunctionSlice = useSelector(
     (state) => state.commonHooksFunctionSlice
@@ -223,6 +225,8 @@ export const TableActionCell = (props1, props2) => {
     //   isFnameVarified,
     //   isUanVerified
     // }
+    console.log("personalInfo3333", (openVerify));
+
     openVerify(personalInfo);
   };
   console.log("personalInfo", _isManualPassbook);
@@ -300,6 +304,27 @@ export const TableActionCell = (props1, props2) => {
                 sx={greenFabStyle}
               >
                 <Article width={18} />
+              </Fab>
+            </DarkTooltip>
+          ) : null}
+           {action === "REDIRECTMANVER" 
+          //  && actionPermissionList &&
+          // actionPermissionList["A001"] 
+          ? (
+            <DarkTooltip placement="top" title={"Visit Manual Verification Page"} arrow>
+              <Fab
+                mood="V"
+                variant="contained"
+                size="small"
+                onClick={() => navigateTo(`${toMannualVerification}`,{ state:  verificationStatusCode })}
+                sx={{
+                  background: 'linear-gradient(45deg, #7851A9, #5E3D8D)',
+                  ...primaryFabStyle
+                }}
+              >
+                {/* <Navigation width={18} /> */}
+      <img width={18} src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '70%', height: 'auto' }}/> 
+
               </Fab>
             </DarkTooltip>
           ) : null}

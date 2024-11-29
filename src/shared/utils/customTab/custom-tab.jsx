@@ -43,7 +43,7 @@ export default function CustomTab(props) {
   let noOfDays = 0;
   let _fromday;
   let _today;
-  const [tabValue, setTabValue] = React.useState(0);
+  // const [tabValue, setTabValue] = React.useState(0);
 
   if (noOfDays > 0) {
     const now = new Date();
@@ -51,8 +51,11 @@ export default function CustomTab(props) {
     _today = dayjs(new Date());
   }
   const { tabs, payload ,isDownload, isDownloadExcel, hasPermission} = props;
-  const { labelList, pannelList ,isDownloadTab} = tabs;
+  const { labelList, pannelList ,filterTab} = tabs;
   console.log("tabs", props);
+  const initialTabIndex = pannelList.indexOf(filterTab); // Find the index of the `filterTab`
+  const [tabValue, setTabValue] = React.useState(initialTabIndex >= 0 ? initialTabIndex : 0);
+
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -105,6 +108,7 @@ export default function CustomTab(props) {
           return (
             <CustomTabPanel value={tabValue} index={index}>
               <MVTable props={pannel} payload={payload} isDownload ={isDownload} isDownloadExcel = {isDownloadExcel} hasPermission = {hasPermission} />
+            {/* {console.log('aaaa')} */}
             </CustomTabPanel>
           );
         })}
