@@ -184,6 +184,7 @@ let AppointeeViewForm = ({
   const [actionIconListDisplay, setActionIconListDisplay] = useState(false);
   const [isSaveStep, setIsSaveStep] = useState(null);
   const [isTrustPassbook, setIsTrustPassbook] = useState(null);
+  const [uanAadhar,setUanAadhar]=useState(null)
   const [isManualPassbook, setIsManualPassbook] = useState(null);
   const [isPensionApplicable, setIsPensionApplicable] = useState(null);
   const [filesByAlias, setFilesByAlias] = useState(new Map());
@@ -292,6 +293,7 @@ let AppointeeViewForm = ({
         isTrustPassbook,
         isManualPassbook,
         workFlowStatus,
+        isUanLinkWithAadhar
       } = response.responseInfo;
 
       setAppointeeDetailsResponse(response.responseInfo);
@@ -312,6 +314,7 @@ let AppointeeViewForm = ({
         ? setIsFnameVarified(isFnameVarified)
         : setIsFnameVarified(null);
       appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
+      isUanLinkWithAadhar?setUanAadhar(isUanLinkWithAadhar):setUanAadhar(null)
       isUanVarified
         ? setIsUanVerified(isUanVarified)
         : isUanVarified === false
@@ -728,6 +731,10 @@ let AppointeeViewForm = ({
                 isVerified={isUanVerified}
                 fieldName={"UAN Number"}
                 fieldValue={UAN}
+              />
+              <DocumentDetails
+                fieldName={"Aadhaar-UAN Link "}
+                fieldValue={uanAadhar}
               />
               <DocumentDetails
                 isVerified={isPanVarified}

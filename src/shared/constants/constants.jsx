@@ -11,7 +11,7 @@ export const emptyUserNameField = `Username can't be empty`;
 export const invalidUserCodeMsg = `User code should contain alphabet's and number only`;
 export const defaultUploadFormat = `Accepted format: pdf, jpg, png`;
 export const noRemarks = `No Remarks Available`;
-export const noPassBookMsg = `Passbook not available`;
+export const noPassBookMsg = ` Please go to the Document Details section under the Open Details page.`;
 export const noEmployementMsg = `Employment History not available`;
 export const configurationSuccessMsg = `Configuration updated`;
 export const userCreationSuccessMsg = `User has been created successfully`;
@@ -215,11 +215,33 @@ export const verifiedListTableHeadCell = [
         }
     },
     {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Date of Joining',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
+    },
+    {
         id: 'adhaarNo',
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Aadhaar',
+        label: 'Aadhaar No.',
         enums: ['adhaarNo'],
         component: {
             element: Typography
@@ -230,30 +252,31 @@ export const verifiedListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'PAN',
+        label: 'PAN No.',
         enums: ['panNo'],
         component: {
             element: Typography
         }
     },
-    {
-        id: 'dateOfJoining',
-        numeric: true,
-        type: "date",
-        disablePadding: false,
-        label: 'Joining Date ',
-        enums: ['dateOfJoining'],
-        component: {
-            element: Typography
-        }
-    },
+    
     {
         id: 'uanNo',
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'UAN Number ',
+        label: 'UAN No. ',
         enums: ['uanNo'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'uanLinkWithAadhar',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Aadhar-UAN Link',
+        enums: ['uanLinkWithAadhar'],
         component: {
             element: Typography
         }
@@ -263,7 +286,7 @@ export const verifiedListTableHeadCell = [
         numeric: true,
         type: "boolean",
         disablePadding: false,
-        label: 'Pension Applicable',
+        label: ' EPS Member',
         enums: ['isPensionApplicable'],
         component: {
             element: Typography
@@ -274,7 +297,7 @@ export const verifiedListTableHeadCell = [
         numeric: true,
         type: "boolean",
         disablePadding: false,
-        label: 'Pension Gap',
+        label: 'EPS Gap',
         enums: ['isPensionGap'],
         component: {
             element: Typography
@@ -285,7 +308,7 @@ export const verifiedListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Status',
+        label: 'Verification Status',
         enums: ['status'],
         component: {
             element: Typography
@@ -296,7 +319,7 @@ export const verifiedListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Passbook Status',
+        label: 'Verification Type',
         enums: ['passbookStatus'],
         component: {
             element: Typography
@@ -311,7 +334,7 @@ export const verifiedListTableHeadCell = [
         enums: ['viewDetails'],
         component: {
             element: (props) => TableActionCell({ actionList: verifiedListActions, ...props }),
-            attribute: ['appointeeId', 'uanNo', 'isPassbookVerified']
+            attribute: ['appointeeId', 'uanNo', 'isPassbookVerified','passbookStatusCode']
         }
     }
 ];
@@ -393,7 +416,7 @@ export const latestAppointeeListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date ',
+        label: 'Date Of Joining  ',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -416,7 +439,7 @@ export const latestAppointeeListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'View Details',
+        label: 'Open Details',
         enums: ['viewDetails'],
         component: {
             element: (props) => TableActionCell({ actionList: latestAppointeeListActions, ...props }),
@@ -438,11 +461,33 @@ export const GetPfCreationListTableHeadCell = [
         }
     },
     {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Date Of Joining  ',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
+    },
+    {
         id: 'adhaarNo',
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Aadhaar',
+        label: 'Aadhaar No.',
         enums: ['adhaarNo'],
         component: {
             element: Typography
@@ -453,30 +498,31 @@ export const GetPfCreationListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'PAN',
+        label: 'PAN No.',
         enums: ['panNo'],
         component: {
             element: Typography
         }
     },
-    {
-        id: 'dateOfJoining',
-        numeric: true,
-        type: "date",
-        disablePadding: false,
-        label: 'Joining Date ',
-        enums: ['dateOfJoining'],
-        component: {
-            element: Typography
-        }
-    },
+    
     {
         id: 'uanNo',
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'UAN Number ',
+        label: 'UAN No. ',
         enums: ['uanNo'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'epuanLinkWithAadharfNo',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Aadhar-UAN Link',
+        enums: ['uanLinkWithAadhar'],
         component: {
             element: Typography
         }
@@ -486,7 +532,7 @@ export const GetPfCreationListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Pension Applicable',
+        label: 'EPS Member',
         enums: ['isPensionApplicable'],
         component: {
             element: Typography
@@ -497,7 +543,7 @@ export const GetPfCreationListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Status',
+        label: 'Template Status',
         enums: ['status'],
         component: {
             element: Typography
@@ -508,7 +554,7 @@ export const GetPfCreationListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'View Details',
+        label: 'Open Details',
         enums: ['viewDetails'],
         component: {
             element: (props) => TableActionCell({ actionList: verifiedListActions, ...props }),
@@ -529,11 +575,22 @@ export const rejectedListTableHeadCell = [
         }
     },
     {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
         id: 'adhaarNo',
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Aadhaar',
+        label: 'Aadhaar No.',
         enums: ['adhaarNo'],
         component: {
             element: Typography
@@ -544,7 +601,7 @@ export const rejectedListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'PAN',
+        label: 'PAN No.',
         enums: ['panNo'],
         component: {
             element: Typography
@@ -555,7 +612,7 @@ export const rejectedListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date ',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -599,11 +656,22 @@ export const pfPensionTableHeadCell = [
         }
     },
     {
+        id:"candidateId",
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
         id: 'adhaarNo',
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Aadhaar No',
+        label: 'Aadhaar No.',
         enums: ['aadharNumber'],
         component: {
             element: Typography
@@ -614,20 +682,29 @@ export const pfPensionTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'UAN Number ',
+        label: 'UAN No. ',
         enums: ['uan'],
         component: {
             element: Typography
         }
     },
-
-
+    {
+        id: 'isUanAadharLink',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Aadhar-UAN Link',
+        enums: ['isUanAadharLink'],
+        component: {
+            element: Typography
+        }
+    },
     {
         id: 'dateOfJoining',
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date ',
+        label: 'Date Of Joining  ',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -639,7 +716,7 @@ export const pfPensionTableHeadCell = [
         numeric: true,
         type: "badge",
         disablePadding: false,
-        label: 'Pf Info',
+        label: 'PF Type',
         enums: ['trustPassBookStatus', 'epfoPassBookStatus'],
         component: {
             element: (props) => TableStatusCell(props),
@@ -652,8 +729,19 @@ export const pfPensionTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Pension Info',
+        label: 'EPS Membership',
         enums: ['pensionStatus'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'epsGap',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'EPS Gap',
+        enums: ['epsGap'],
         component: {
             element: Typography
         }
@@ -663,7 +751,7 @@ export const pfPensionTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Passbook Status',
+        label: 'Verification Type',
         enums: ['isManual'],
         component: {
             element: Typography
@@ -724,7 +812,7 @@ export const LinkNotSentTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date ',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -760,7 +848,7 @@ export const criticalListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -809,7 +897,7 @@ export const MVListPdfTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Mobile No',
+        label: 'Mobile No.',
         enums: ['mobileNo'],
     },
     {
@@ -824,7 +912,7 @@ export const MVListPdfTableHeadCell = [
     },
     {
         type: "date",
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
     },
     {
@@ -841,7 +929,7 @@ export const RDListPdfTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Mobile No',
+        label: 'Mobile No.',
         enums: ['mobileNo'],
     },
     {
@@ -856,7 +944,7 @@ export const RDListPdfTableHeadCell = [
     },
     {
         type: "date",
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
     },
     {
@@ -873,7 +961,7 @@ export const MRVListPdfTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Mobile No',
+        label: 'Mobile No.',
         enums: ['mobileNo'],
     },
     {
@@ -888,7 +976,7 @@ export const MRVListPdfTableHeadCell = [
     },
     {
         type: "date",
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
     },
     {
@@ -905,7 +993,7 @@ export const processingListPdfTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Mobile No',
+        label: 'Mobile No.',
         enums: ['mobileNo'],
     },
     {
@@ -920,7 +1008,7 @@ export const processingListPdfTableHeadCell = [
     },
     {
         type: "date",
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
     },
     {
@@ -968,7 +1056,7 @@ export const mannualVerificationListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -1038,7 +1126,7 @@ export const mannualReverificationListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -1119,7 +1207,7 @@ export const docReuploadListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -1189,7 +1277,7 @@ export const processingListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -1223,7 +1311,7 @@ export const processingListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Passbook Status',
+        label: 'Verification Type',
         enums: ['passbookStatus'],
         component: {
             element: Typography
@@ -1281,7 +1369,7 @@ export const lapsedListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -1330,7 +1418,7 @@ export const lapsedListPdfTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Mobile No',
+        label: 'Mobile No.',
         enums: ['mobileNo'],
     },
     {
@@ -1345,7 +1433,7 @@ export const lapsedListPdfTableHeadCell = [
     },
     {
         type: "date",
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
     },
     {
@@ -1783,7 +1871,7 @@ export const noResponseListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date ',
+        label: 'Date Of Joining ',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -1874,7 +1962,7 @@ export const noMovementListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date ',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -1962,7 +2050,7 @@ export const noResponseReportTableHeadCell = [
     // },
     {
         type: "date",
-        label: 'Joining Date ',
+        label: 'Date Of Joining ',
         enums: ['dateOfJoining'],
     },
     {
@@ -2136,7 +2224,7 @@ export const appointeeListTableHeadCell = [
         numeric: true,
         type: "date",
         disablePadding: false,
-        label: 'Joining Date',
+        label: 'Date Of Joining',
         enums: ['dateOfJoining'],
         component: {
             element: Typography
@@ -2180,13 +2268,13 @@ export const appointeeReportTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Mobile No',
+        label: 'Mobile No.',
         enums: ['mobileNo'],
 
     },
     {
         type: "date",
-        label: 'Joining Date ',
+        label: 'Date Of Joining ',
         enums: ['dateOfJoining'],
     },
     {

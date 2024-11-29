@@ -83,7 +83,7 @@ const DownloadPFReport = ({
       {ispensionfilter && ispensionfilter === true ? (
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <FormControl sx={{ width: "100%" }} size="large">
-            <InputLabel id="demo-simple-select-label" >PF Status</InputLabel>
+            <InputLabel id="demo-simple-select-label" >PF Type</InputLabel>
             <Select
               sx={inputFieldStyleAdded}
               labelId="demo-simple-select-label"
@@ -95,15 +95,16 @@ const DownloadPFReport = ({
             >
               <MenuItem value={1}>Trust</MenuItem>
               <MenuItem value={2}>EPFO</MenuItem>
+              <MenuItem value={4}>Trust+EPFO</MenuItem>
               <MenuItem value={3}>NA</MenuItem>
             </Select>
           </FormControl>
         </Grid>
       ) : null}
-      {ispassFilter && ispassFilter === true && PfType === 2 ? (
+      {ispassFilter && ispassFilter === true && PfType === 2 || PfType === 4 ? (
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <FormControl sx={{ width: "100%" }} size="large">
-            <InputLabel id="demo-simple-select-label">Passbook Status</InputLabel>
+            <InputLabel id="demo-simple-select-label">Verification Type</InputLabel>
             {passbookStatus !== undefined && (
               <Select
                 labelId="demo-simple-select-label"
@@ -111,12 +112,12 @@ const DownloadPFReport = ({
                 className="customeTextField"
                 sx={inputFieldStyleAdded}
                 value={passbookStatus}
-                label="Passbook Status"
+                label="Verification Type"
                 onChange={handlePassbookStatusChange}
               >
                 <MenuItem value={3}>All</MenuItem>
                 <MenuItem value={1}>Manual</MenuItem>
-                <MenuItem value={2}>Auto fetch</MenuItem>
+                <MenuItem value={2}>Auto</MenuItem>
                 
               </Select>
             )}
@@ -127,7 +128,7 @@ const DownloadPFReport = ({
       {ispensionfilter && ispensionfilter === true ? (
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <FormControl sx={{ width: "100%" }} size="large">
-            <InputLabel id="demo-simple-select-label" >Pension Status</InputLabel>
+            <InputLabel id="demo-simple-select-label" >EPS Member</InputLabel>
             <Select
               sx={inputFieldStyleAdded}
               labelId="demo-simple-select-label"

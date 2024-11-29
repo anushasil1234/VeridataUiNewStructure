@@ -147,6 +147,7 @@ const AppWrapper = (App) => {
     const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);
     const [isEmploymentViewOpen, setEmploymentIsViewOpen] = useState(false);
     const [appointeeId, setAppointeeId] = useState();
+    const [passbookDetails,setPassbookDetails]=useState();
     const [appointeePersonalDetails, setAppointeePersonalDetails] = useState();
     const [confirmationModelOpen, setConfirmationModelOpen] = useState(false);
     const [confirmationModelContent, setConfirmationModelContent] = useState();
@@ -175,6 +176,7 @@ const AppWrapper = (App) => {
     const [documentModelOpen, setDocumentModelOpen] = useState(false);
     const [documentModelProps, setDocumentModelProps] = useState();
     const [userId, setUserId] = useState();
+    const[epfoDetails,SetepfoDetails]=useState()
     const [isUserViewOpen, setIsUserViewOpen] = useState(false);
 
     const closeRemedyModel = () => {
@@ -327,17 +329,19 @@ const AppWrapper = (App) => {
     const closeVerify = () => {
       setIsManualVerificationViewOpen(false)
     }
-    const openPassbookViewModel = (appointeeId) => {
+    const openPassbookViewModel = (appointeeId,passbookDetails) => {
       setAppointeeId(appointeeId);
+      setPassbookDetails(passbookDetails);
       setPassbookIsViewOpen(true);
     };
 
     const closePassbookViewModel = () => {
       setPassbookIsViewOpen(false);
     };
-    const openEmploymentViewModel = (appointeeId, userId) => {
+    const openEmploymentViewModel = (appointeeId, userId,epfoDetails) => {
       setAppointeeId(appointeeId);
       setUserId(userId);
+      SetepfoDetails(epfoDetails);
       setEmploymentIsViewOpen(true);
     };
     const closeEmploymentViewModel = () => {
@@ -356,9 +360,9 @@ const AppWrapper = (App) => {
     const closeDocumentModel = () => {
       setDocumentModelOpen(false);
     };
-    const openDocumentModel = (fileDetails, filename) => {
+    const openDocumentModel = (fileDetails, filename,fileType) => {
       setDocumentModelOpen(true);
-      setDocumentModelProps({ fileDetails, filename });
+      setDocumentModelProps({ fileDetails, filename,fileType });
     };
     const openPasswordSubmitionModel = (passwordModelContent) => {
       setPasswordSubmitionModelOpen(true);
@@ -976,6 +980,7 @@ const AppWrapper = (App) => {
         <PassbookView
           openViewModel={openPassbookViewModel}
           appointeeId={appointeeId}
+          passbookDetails={passbookDetails}
           closeViewModel={closePassbookViewModel}
           openView={isPassbookViewOpen}
         />
@@ -983,6 +988,7 @@ const AppWrapper = (App) => {
           openViewModel={openEmploymentViewModel}
           appointeeId={appointeeId}
           userId={userId}
+          epfoDetails={epfoDetails}
           closeViewModel={closeEmploymentViewModel}
           openView={isEmploymentViewOpen}
         />
