@@ -518,12 +518,12 @@ export const GetPfCreationListTableHeadCell = [
         }
     },
     {
-        id: 'epuanLinkWithAadharfNo',
+        id: 'uanAadharLink',
         numeric: true,
         type: "string",
         disablePadding: false,
         label: 'Aadhar-UAN Link',
-        enums: ['uanLinkWithAadhar'],
+        enums: ['uanAadharLink'],
         component: {
             element: Typography
         }
@@ -2496,7 +2496,7 @@ export const verifiedReportInfo = `Trust PF data is not reflected in following f
 export const timeOutMsg = `Server is down, Please try again.`;
 export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
 export const ManualSubmitConfirmation = ({type}) => {
-    console.log('typeq23234', type);
+ 
     
     const manualSubmitConfirmatonMsgforfile = `You have not gone through all ${type}, and there may be information that you have missed out.\nAre you sure you want to continue with the submission?`;
   

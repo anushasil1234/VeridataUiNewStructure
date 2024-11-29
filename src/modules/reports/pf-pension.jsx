@@ -38,6 +38,7 @@ const UnWrappedpf = (props) => {
   const [pensionStatus, setPensionStatus] = useState(null);
   const [isManual, setisManual] = useState(null);
   const [PfType, setPftype] = useState(null);
+  const[EpsGap,setEpsgap]=useState(null);
   const [appointeeDetails, setappointeeDetails] = useState()
   const [fileData, setFileData] = useState(null);
   const popUpSlice = useSelector(state => state.popUpSlice);
@@ -48,7 +49,8 @@ const UnWrappedpf = (props) => {
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
     pensionStatus: null,
     PfType: null,
-    isManual: null
+    isManual: null,
+    EpsGap: null
   }
   let [payLoad, setPayLoad] = useState(payloadData);
   const [rows, setRows] = useState([]);
@@ -78,19 +80,28 @@ const UnWrappedpf = (props) => {
     const _payLoad = { ...payLoad, PfType: _pfStatus }
     setPayLoad(_payLoad);
   }
+  const handelprocessEPSgapchange = async (e) => {
+    const { value } = e.target;
+    setEpsgap(value);
+    const _epsGap = value;
+     const _payLoad = { ...payLoad, EpsGap:  _epsGap }
+    setPayLoad(_payLoad);
+  }
 
   const clearSearch = () => {
     setFromDate(null);
     setToDate(null);
     setPensionStatus();
     setisManual(null);
-    setPftype(null)
+    setPftype(null);
+    setEpsgap();
     const payLoad = {
       fromDate: null,
       toDate: null,
       pensionStatus: null,
       PfType: null,
-      isManual: null
+      isManual: null,
+      EpsGap:null
     }
     setPayLoad(payLoad);
     setTableRows(payLoad);
@@ -198,6 +209,7 @@ const UnWrappedpf = (props) => {
           clearSearch={clearSearch}
           pensionStatus={pensionStatus}
           passbookStatus={isManual}
+          EpsGap={EpsGap}
           PfType={PfType}
           toDate={toDate}
           handleDownload={handleDownload}
@@ -208,6 +220,7 @@ const UnWrappedpf = (props) => {
           handleProcessPansionChange={handleProcessPansionChange}
           handlePassbookStatusChange={handlePassbookStatusChange}
           handelprocessPFchange={handelprocessPFchange}
+          handelprocessEPSgapchange={handelprocessEPSgapchange}
           ispassFilter={true}
           ispensionfilter={true}
           hasPermission={hasPermission}

@@ -37,7 +37,9 @@ const DownloadPFReport = ({
   handleProcessPansionChange,
   pensionStatus,
   PfType,
-  handelprocessPFchange
+  EpsGap,
+  handelprocessPFchange,
+  handelprocessEPSgapchange
 }) => {
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
   const {popUpSlice} = useSelector(
@@ -145,6 +147,25 @@ const DownloadPFReport = ({
           </FormControl>
         </Grid>
       ) : null}
+       <Grid item xs={12} sm={6} md={4} lg={3}>
+          <FormControl sx={{ width: "100%" }} size="large">
+            <InputLabel id="demo-simple-select-label" >EPS Gap</InputLabel>
+            <Select
+              sx={inputFieldStyleAdded}
+              labelId="demo-simple-select-label"
+              id="demo-select-small"
+              className="customeTextField"
+              value={EpsGap}
+              label="EPS Gap"
+              onChange={handelprocessEPSgapchange}
+            >
+              <MenuItem value={1}>Yes</MenuItem>
+              <MenuItem value={2}>No</MenuItem>
+              <MenuItem value={3}>NA</MenuItem>
+             
+            </Select>
+          </FormControl>
+        </Grid>
       <Grid item container xs={12} sm={6} md={4} lg={3} spacing={0.5} alignItems="center" justifyContent="flex-start">
         <Grid item >
           <DarkTooltip placement="top" title={"Search"} arrow>
