@@ -20,8 +20,9 @@ import {
     Step,
     StepLabel,
     Divider,
+    Fab,
 } from "@mui/material";
-import { InfoOutlined } from "@mui/icons-material";
+import { Info, InfoOutlined } from "@mui/icons-material";
 import {
     activeStepStyle,
     candidateRegistrationFormContainerStyle,
@@ -42,6 +43,9 @@ import {
     lable1CopyStyle,
     lable1Style,
     positionRelative,
+    primaryFabStyle,
+    statusBoxstyle,
+    statusstyle,
     subHeadingContentTextStyle,
     submitBtnContainerStyle,
     submitBtnStyle,
@@ -326,7 +330,7 @@ const AppointeeRegisterForm = () => {
         setTimeoutTimer(10 * 60);
     };
     const clearFileVaribles = (fileTypeAlias, setFileName, fileNameList) => {
- 
+
 
         if (!fileDetails?.length) return;
 
@@ -648,7 +652,7 @@ const AppointeeRegisterForm = () => {
         const uploadTypeAlias =
             uploadedFile &&
             uploadedFile.find(({ uploadTypeAlias }) => uploadTypeAlias === fileTypeAlias);
-        
+
 
         return hasValue(uploadTypeAlias);
     };
@@ -738,7 +742,7 @@ const AppointeeRegisterForm = () => {
 
     useEffect(() => {
         if (!isTrustEpfoAvailable) {
-          
+
 
             clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName);
         }
@@ -816,7 +820,7 @@ const AppointeeRegisterForm = () => {
     useEffect(() => {
         // updateStepCounter(isPhysicallyHandicap);
         if (isPhysicallyHandicap === 'N') {
-          
+
 
             clearFileVaribles(handicapFileTypeAlias, setHandicapFileName, handicapFileName);
         }
@@ -949,7 +953,7 @@ const AppointeeRegisterForm = () => {
             uploadTypeAlias: trustEpfoFileTypeAlias, fileNameList: trustEpfoFileName,
             currentFileName: currentFileName, uploadType: 'multiple'
         });
-      
+
 
         setTrustEpfoFileName(_fileNameList);
         setUploadedFile(_updatedUploadedFileList);
@@ -999,7 +1003,7 @@ const AppointeeRegisterForm = () => {
         formData.append("aadharFileDetails", xmlFileUploaded);
 
         const response = await verifyAadharDetails(formData);
-    
+
         if (response) {
             const { remarks, isVarified } = response.responseInfo;
             if (isVarified) {
@@ -1205,7 +1209,7 @@ const AppointeeRegisterForm = () => {
 
 
     const buildFormData = (payLoad) => {
-     
+
 
         let formData = new FormData();
         for (const property in payLoad) {
@@ -1247,7 +1251,7 @@ const AppointeeRegisterForm = () => {
             IsFinalSubmit: false
         };
         // Use the buildFormData helper function to create the formData
-     
+
 
         let formData = buildFormData(payLoad);
 
@@ -3652,11 +3656,7 @@ const AppointeeRegisterForm = () => {
                                                     sx={{ paddingLeft: { xs: '0px !important', md: '20px!important', ...positionRelative } }}
                                                 >
                                                     <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
-                                                        <Stack
-                                                            flexDirection={"col"}
-                                                            justifyContent={"space-between"}
-                                                            alignItems={"start"}
-                                                        >
+                                                        <Stack flexDirection="column" justifyContent="space-between" alignItems="start">
                                                             <Typography sx={{ ...lable1CopyStyle }}>
                                                                 {"UAN Verification"}
                                                             </Typography>
@@ -3666,20 +3666,42 @@ const AppointeeRegisterForm = () => {
                                                                 onChange={handleChangeUanVerification}
                                                             >
                                                                 <FormControlLabel
-                                                                    value={'auto'}
+                                                                    value="auto"
                                                                     control={<Radio />}
                                                                     label="Automatic"
                                                                     disabled={!hasValue(UAN)}
                                                                 />
-                                                                <FormControlLabel
-                                                                    value={'manual'}
-                                                                    control={<Radio />}
-                                                                    label="Manual"
-                                                                    disabled={!hasValue(UAN)}
-                                                                />
+                                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                                    <FormControlLabel
+                                                                        value="manual"
+                                                                        control={<Radio />}
+                                                                        label="Manual"
+                                                                        disabled={!hasValue(UAN)}
+                                                                    />
+                                                                    <Tooltip
+                                                                        arrow
+                                                                        title={
+                                                                            <Box sx={{ ...statusBoxstyle }}>
+                                                                                <Typography variant="body2" sx={{ ...statusstyle }}>
+                                                                                It is mandatory for EPFO members to upload all PF passbooks 2005 onwards (if applicable).
+                                                                                </Typography>
+
+                                                                            </Box>
+                                                                        }
+                                                                    >
+                                                                        <Fab
+                                                                            variant="contained"
+                                                                            size="small"
+                                                                            sx={{ ...primaryFabStyle, ml: 1 }}
+                                                                        >
+                                                                            <Info width={18} sx={{ color: "#fff" }} />
+                                                                        </Fab>
+                                                                    </Tooltip>
+                                                                </Box>
                                                             </RadioGroup>
                                                         </Stack>
                                                     </Grid>
+
                                                     {
                                                         isUanVerificationProcessManual === 'manual' &&
                                                         <Grid>
