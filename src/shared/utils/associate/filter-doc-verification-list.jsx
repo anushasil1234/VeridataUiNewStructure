@@ -16,7 +16,8 @@ const filterDocVerificationList = (
         console.log("uploadedFileData", uploadedFileData, currentFileCategory
         );
 
-        verificationFilteredCategoryList = uploadedFileData?.filter(({ fileCategory }) => fileCategory === currentFileCategory)[0]?.files;
+        const safeUploadedFileData = Array.isArray(uploadedFileData) ? uploadedFileData : [];
+        verificationFilteredCategoryList = safeUploadedFileData.filter(({ fileCategory }) => fileCategory === currentFileCategory)[0]?.files;
         _verificationDropdownCategoryList = verificationFilteredCategoryList?.map(({ fileType }) => {
             let subCategory;
             if (fileType === '10th Certificate' || fileType === 'Other Govt.Proof') {

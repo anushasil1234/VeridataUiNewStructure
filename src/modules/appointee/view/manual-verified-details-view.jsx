@@ -285,16 +285,10 @@ let ManualverifiedViewDetails = ({ details }) => {
         setVerificationUpdate({ ...verificationUpdate, [name]: stringToBoolean(value) });
     }
     const handleClickOnMenuItem = (value) => {
-
-        if (value === epfFileCategoryTypeAlias &&
-            isEPFOSelectionDisabled({
-                verificationFieldName: fileVerificationEnums.docEPFO,
-                verificationFieldSet
-            })
-        ) {
-            showErrorMessage(EPFOVerificatypeSelectionMsg);
+        if (value === epfFileCategoryTypeAlias) {
+            console.log("EPFO option selected:", value);
         }
-    }
+    };
 
     useEffect(() => {
         if (files.length === 1 && selectedFiles.length === 0) {
