@@ -744,7 +744,7 @@ const AppointeeRegisterForm = () => {
     useEffect(() => {
         if (
             isAadhaarVarified === true &&
-            isPanVarified === true &&
+           // isPanVarified === true &&
             isUanVarified !== null
             //&&      isEmployementDataVarified !== null
         ) {
@@ -781,7 +781,7 @@ const AppointeeRegisterForm = () => {
 
     }, [
         isAadhaarVarified,
-        isPanVarified,
+     //   isPanVarified,
         isUanVarified,
     ]);
 

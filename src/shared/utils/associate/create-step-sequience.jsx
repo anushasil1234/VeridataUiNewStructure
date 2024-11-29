@@ -42,7 +42,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         PAV: {
             step: _stepCounter,
-            name: 'PAN Verification'
+            name: 'PAN Verification (optional)'
         }
     }
     _stepCounter = _stepCounter + 1;
