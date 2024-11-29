@@ -30,6 +30,7 @@ export const generateOtpSucces = `OTP has sent successfully, Please fill the otp
 export const aadharNoValidationError = `Your phone number is not linked with Aadhaar. Link your phone number then retry or submit anyway`;
 export const remarksError = `Remarks should have at least 15 charecters long`;
 export const remarksemptyerror=`Please provide your remarks before submitting.`;
+export const categoryFileEmptyerror=`Please go through all the Category(s) and Files, and select the required answers, mention Remarks to be able to Submit`;
 export const invalidPanMsg = `PAN number should be of 10 digits and properly formatted`;
 export const invalidAadharMsg = `Aadhaar number should be of 12 digits`;
 export const emptyAadharFileMsg = `Please upload Aadhaar`;

@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
 import {
-    Comment, 
+    Comment,
     ThumbDown,
     Add
 } from "@mui/icons-material";
@@ -58,7 +58,9 @@ const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
                         {children}
                     </Box>
                 </Grid>
-            </Grid></Box>
+            </Grid>
+
+        </Box>
     )
 }
 
@@ -111,7 +113,7 @@ let ManualverifiedViewDetails = ({ details }) => {
     // useEffect(() => {
     //   //setTableRows(appointeeId);
     // }, []);
-    
+
     const [verificationType, setVerificationType] = useState(defaultVerificationTypeList[0]);
     const [verificationTypeList, setVerificationTypeList] = useState([]);
     const [uploadedFileData, setUploadedFileData] = useState([]);
@@ -208,11 +210,14 @@ let ManualverifiedViewDetails = ({ details }) => {
             clearCategoryRelatedVariables();
         }
         console.log('verificationType', verificationType);
+        setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
 
-        if (verificationType.verificationFieldName === fileVerificationEnums.docEPFO) {
-            setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
-        }
+        // if (verificationType.verificationFieldName === fileVerificationEnums.docEPFO) {
+        //     setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
+        // }
     }
+    console.log('verificationType', verificationType);
+
     const reject = async (remarks) => {
         showErrorMessage();
         if (hasValue(remarks)) {
@@ -421,7 +426,7 @@ let ManualverifiedViewDetails = ({ details }) => {
         "Cancel"
     );
     return (
-        <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%", padding: "1rem 0",marginRight:'10px' }}>
+        <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%", padding: "1rem 0", marginRight: '10px' }}>
             <Stack sx={floatingIconListStyle}>
                 <>
                     <FabIcon props={{ ...addFabProps, selectedIndex: 1, index: 1 }} />
@@ -436,7 +441,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                                     size: "small",
                                 }}
                             />
-                             <FabIcon
+                            <FabIcon
                                 props={{
                                     ...remarksFabProps,
                                     selectedIndex: 1,
@@ -551,6 +556,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                         verificationCategoryList={verificationCategoryList}
                         selectedFiles={selectedFiles}
                         files={files}
+                        setFile={setFile}
                         selectedMandatoryCategoryList={selectedMandatoryCategoryList}
                         setSelectedMandatoryCategoryList={setSelectedMandatoryCategoryList}
                     />

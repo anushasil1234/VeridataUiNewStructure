@@ -11,12 +11,14 @@ import actionRouteSlice from "./slices/action-route-slice";
 import sideMenuItemsSlice from "./slices/side-menu-items-slice";
 import setTableRowsSlice from "./slices/set-table-rows-slice";
 import dataSlice from "./slices/data-slice";
+import ManualValidationResponseStatusSlice from "./slices/manual-validation-response-status-slice";
 
 const store = configureStore(
     {
         reducer: {
             loggedInData: LoggedinData,
             loggedinTokenData:LoggedinTokenData,
+            manualValidationResponseStatusSlice:ManualValidationResponseStatusSlice,
             loggeoutData: LoggeoutData,
             apiSlice: ApiSlice,
             popUpSlice: popupSlice,
