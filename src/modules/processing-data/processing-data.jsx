@@ -317,7 +317,7 @@ const UnWrappedProcessing = (props) => {
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3} spacing={1}>
             <FormControl sx={{ width: "100%" }} size="large">
-              <InputLabel id="demo-select-small" >Passbook Status</InputLabel>
+              <InputLabel id="demo-select-small" >Verification Type</InputLabel>
               {passbookStatus !== undefined && (
                 <Select
                   sx={{ height: '57px' }}
@@ -328,8 +328,8 @@ const UnWrappedProcessing = (props) => {
                   onChange={handlePassbookStatusChange}
                 >
                   <MenuItem value={'All'}>Select all</MenuItem>
-                  <MenuItem value={true}>Manual Passbook</MenuItem>
-                  <MenuItem value={false}>AutoFetch Passbook</MenuItem>
+                  <MenuItem value={true}>Manual</MenuItem>
+                  <MenuItem value={false}>Auto</MenuItem>
                 </Select>
               )}
             </FormControl>

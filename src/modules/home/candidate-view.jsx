@@ -55,6 +55,7 @@ const CandidateView = () => {
     status,
     statusCode,
     isProcessed,
+    candidateId
   } = loggedInData[0];
   console.log("logindata", loggedInData[0]);
   const [isPrerequisiteDataAvailable, setIsPrerequisiteDataAvailable] =
@@ -237,16 +238,19 @@ const CandidateView = () => {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
-                <Grid item lg={4} xs={12}>
+                <Grid item lg={3} xs={12}>
                   Name: {userName}
                 </Grid>
-                <Grid item lg={4} xs={12}>
+                <Grid item lg={3} xs={12}>
                   Email: {emailId}
                 </Grid>
-                <Grid item lg={4} xs={12}>
+                <Grid item lg={3} xs={12}>
                   Phone: {phone}
                 </Grid>
-                <Grid item lg={4} xs={12}>
+                <Grid item lg={3} xs={12}>
+                  Candidate Id: {candidateId}
+                </Grid>
+                <Grid item lg={3} xs={12}>
                   Status:
                   <Tooltip
                     title={

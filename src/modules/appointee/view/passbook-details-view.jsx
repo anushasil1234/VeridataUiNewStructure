@@ -39,7 +39,7 @@ import moment from "moment";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 
-let PassbookViewDetails = ({ appointeeId }) => {
+let PassbookViewDetails = ({ appointeeId, passbookDetails }) => {
   const apiSlice = useSelector((state) => state.apiSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
@@ -129,23 +129,22 @@ let PassbookViewDetails = ({ appointeeId }) => {
   const [responseInfo, setResponseInfo] = useState([]);
 
   const { showErrorMessage } = popUpSlice[0];
-
-  const setTableRows = async (appointeeId) => {
-    const response = await getPassbookDetails(appointeeId);
-    console.log("passbookDetails", response);
-
-    const { dob, fatherName, fullName, pfUan, companies } =
-      response?.responseInfo || {};
-    setResponseInfo(response?.responseInfo);
-    if (pfUan && companies.length > 0) {
-      dob ? setDob(dob) : setDob(NA);
-      fatherName ? setFatherName(fatherName) : setFatherName(NA);
-      fullName ? setFullName(fullName) : setFullName(NA);
-      pfUan ? setPfUan(pfUan) : setPfUan(NA);
-      companies && companies[0] ? setCompanies(companies) : setCompanies(NA);
+  useEffect(() => {
+    if (passbookDetails) {    
+      setTableRows(passbookDetails);
+    }
+  }, [passbookDetails]);
+  const setTableRows = async (details) => {
+    const { dob, fatherName, fullName, pfUan, companies } = details || {};
+    setResponseInfo(details);
+    dob ? setDob(dob) : setDob(NA);
+    fatherName ? setFatherName(fatherName) : setFatherName(NA);
+    fullName ? setFullName(fullName) : setFullName(NA);
+    pfUan ? setPfUan(pfUan) : setPfUan(NA);
+    if (Array.isArray(companies)) {
+      companies.length > 0 ? setCompanies(companies) : setCompanies(NA);
     } else {
-      closePassbookViewModel();
-      showErrorMessage(noPassBookMsg);
+      setCompanies(NA);
     }
   };
   const handleDownload = async () => {
@@ -189,9 +188,9 @@ let PassbookViewDetails = ({ appointeeId }) => {
     "Passbook Report"
   );
   //console.log('envvar',process.env.REACT_APP_COMPANY_NAME)
-  useEffect(() => {
-    setTableRows(appointeeId);
-  }, []);
+  // useEffect(() => {
+  //   setTableRows(appointeeId,passbookDetails);
+  // }, []);
   return (
     <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%" }}>
       <Box sx={gridContainerStyle}>

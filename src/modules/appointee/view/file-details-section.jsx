@@ -1,26 +1,30 @@
 import { Box, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material'
 import { candidatefileViewContainerStyle, imagestyleContainer, listHeadingStyle, rightMostBtnStyle, submitBtnStyle, zoombuttonStyle } from 'app'
 import React, { useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import VerificationQuiestions from './verification-quiestions'
 import GridContainer from 'shared/components/grid-container/grid-container'
 import { hasValue, validationsCheck } from 'shared/utils'
 import validateQuestionSet from 'shared/utils/associate/validate-question-set'
 import TextAreaInput from 'shared/components/input-fields/text-input'
-import { ManualSubmitConfirmation, manualSubmitConfirmatonMsg, remarksemptyerror, remarksError, verificatiosucess } from 'shared/constants/constants'
+import { categoryFileEmptyerror, fileVerificationEnums, ManualSubmitConfirmation, manualSubmitConfirmatonMsg, remarksemptyerror, remarksError, verificatiosucess } from 'shared/constants/constants'
 import createVerificationUpdate from 'shared/utils/associate/create-verification-update'
 import { Download, ZoomIn, ZoomOut } from '@mui/icons-material'
 import { handleZoom } from 'shared/utils/associate/Zoomin-out'
 import downloadFile from 'shared/utils/associate/download-file'
 import { calculateDragPosition } from 'shared/utils/associate/dragein'
 import { MouseEventHandler } from 'shared/utils/associate/dragable'
+import { removeManualValidationResponseStatusSlice, storeManualValidationResponseStatusSlice } from 'store/slices/manual-validation-response-status-slice'
 
 
 const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fileTypeCategory,
     verificationOnChange, verificationQuestionSet, appointeeId,
     fileName, selectedFiles, files, setVerificationType, categorySelected,
     verificationCategoryList, setVerificationCategoryList, verificationTypeList,
-    setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList }) => {
+    setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList,
+ }) => {
+
+    const dispatch = useDispatch();
 
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -65,9 +69,15 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
     const handleMouseUp = () => setIsDragging(false);
     const callApiBasedOnSuccess = async (payload) => {
         {
+
             const { responseInfo } = await UpdateAppointeeManualVerification(payload);
             if (responseInfo) {
-                return true;
+                // store into redux
+                // dispatch(storeLoggedinData(loginData));
+                const isdataSubmited = true;
+                dispatch(removeManualValidationResponseStatusSlice());
+                dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited }));
+                return isdataSubmited;
             }
         }
         return false;
@@ -76,6 +86,18 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         let submitconfModelContent = {
             dialogContentText: "",
         };
+        if (selectedMandatoryCategoryList.length === 0) {
+            showErrorMessage(categoryFileEmptyerror);
+            return;
+        }
+        const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
+
+        console.log("error1232", error);
+
+        if (error) {
+            showErrorMessage(error);
+            return;
+        }
         if (!hasValue(remarks)) {
             showErrorMessage(remarksemptyerror);
             return;
@@ -84,23 +106,16 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
             showErrorMessage(remarksError);
             return;
         }
-        const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
-        console.log("error1232", error);
 
-        if (error) {
-            showErrorMessage(error);
-            return;
-        }
-
-        if (selectedMandatoryCategoryList.length !== verificationCategoryList.length) {
+        if (selectedMandatoryCategoryList.length !== verificationCategoryList.length &&
+            verificationType.verificationFieldName === fileVerificationEnums.docEPFO
+        ) {
             submitconfModelContent.dialogContentText = <ManualSubmitConfirmation type={'categories'} />
         } else if (selectedFiles.length !== files.length) {
             submitconfModelContent.dialogContentText = <ManualSubmitConfirmation type={'files'} />;
         } else {
             submitconfModelContent.dialogContentText = manualSubmitConfirmatonMsg;
         }
-
-        openConfirmationModel(submitconfModelContent);
 
         const { VerificationSubCategoryList } = createVerificationUpdate(verificationUpdate);
         const payload = {
@@ -113,6 +128,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
 
         openConfirmationModel(submitconfModelContent, async () => {
             const isSuccessful = await callApiBasedOnSuccess(payload);
+
             if (isSuccessful) {
                 const updatedVerificationTypeList = verificationTypeList.filter(
                     (type) => type.value !== verificationType.value
@@ -126,6 +142,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                 }
                 setVerificationCategoryList([]);
                 setSelectedMandatoryCategoryList([]);
+                setFile("");
             }
         });
     };

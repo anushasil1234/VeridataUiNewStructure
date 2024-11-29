@@ -26,7 +26,7 @@ import moment from "moment";
 import jsPDFEmploymentHistTemplate from "shared/utils/associate/js-pdf-employmenthist";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 
-let EmploymentViewDetails = ({ appointeeId, userId }) => {
+let EmploymentViewDetails = ({ appointeeId, userId,epfoDetails }) => {
 
   const apiSlice = useSelector((state) => state.apiSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -80,22 +80,22 @@ let EmploymentViewDetails = ({ appointeeId, userId }) => {
   const [companies, setCompanies] = useState();
 
   const { showErrorMessage } = popUpSlice[0];
-
-  const setTableRows = async (appointeeId, userId) => {
-    const response = await getEmployementDetails(appointeeId, userId);
-    setResponseInfo(response?.responseInfo);
-
-
-    const { dob, fatherName, fullName, pfUan, companies } = response?.responseInfo || {};
-    if (pfUan && companies.length > 0) {
-      dob ? setDob(dob) : setDob(NA);
-      fatherName ? setFatherName(fatherName) : setFatherName(NA);
-      fullName ? setFullName(fullName) : setFullName(NA);
-      pfUan ? setPfUan(pfUan) : setPfUan(NA);
-      companies && companies[0] ? setCompanies(companies) : setCompanies(NA);
+  useEffect(() => {
+    if (epfoDetails) {
+      setTableRows(epfoDetails);
+    }
+  }, [epfoDetails]);
+  const setTableRows = async (details) => {
+    const { dob, fatherName, fullName, pfUan, companies } = details || {};
+    setResponseInfo(details);
+    dob ? setDob(dob) : setDob(NA);
+    fatherName ? setFatherName(fatherName) : setFatherName(NA);
+    fullName ? setFullName(fullName) : setFullName(NA);
+    pfUan ? setPfUan(pfUan) : setPfUan(NA);
+    if (Array.isArray(companies)) {
+      companies.length > 0 ? setCompanies(companies) : setCompanies(NA);
     } else {
-      closeEmploymentViewModel();
-      showErrorMessage(noEmployementMsg);
+      setCompanies(NA);
     }
   };
   const handleDownload = async () => {
@@ -145,9 +145,9 @@ let EmploymentViewDetails = ({ appointeeId, userId }) => {
     <DownloadIcon />,
     "Employement Report"
   );
-  useEffect(() => {
-    setTableRows(appointeeId, userId);
-  }, []);
+  // useEffect(() => {
+  //   setTableRows(appointeeId, userId);
+  // }, []);
   return (
     <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%" }}>
       <Box sx={gridContainerStyle}>

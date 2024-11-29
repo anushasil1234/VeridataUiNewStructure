@@ -27,6 +27,7 @@ import { useSelector } from "react-redux";
 import {
   credentialRemiderMsg,
   NA,
+  noEmployementMsg,
   noPassBookMsg,
   toMannualVerification,
   toUpdateUser,
@@ -40,11 +41,9 @@ import { useState } from "react";
  import exclamation from "assets/images/exclamation.png"
 
 export const TableActionCell = (props1, props2) => {
-  const { actionList, rowAttribute, actionPermissionList, setTableRows } =
-    props1;
-    const {verificationStatusCode} = rowAttribute;
-  console.log("actionlist", props1);
-  const { appointeeId, userId: id, isPassbookVerified, uanNo } = rowAttribute;
+  const { actionList, rowAttribute, actionPermissionList, setTableRows } =    props1;
+  
+  const { appointeeId, userId: id, isPassbookVerified, uanNo,passbookStatusCode,verificationStatusCode } = rowAttribute;
   const commonHooksFunctionSlice = useSelector(
     (state) => state.commonHooksFunctionSlice
   );
@@ -53,7 +52,7 @@ export const TableActionCell = (props1, props2) => {
   const apiSlice = useSelector((state) => state.apiSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
   const dropdownList = useSelector((state) => state.dropdownList);
-
+  const { getPassbookDetails,getEmployementDetails } = apiSlice[0];
   const { getAppointeeDetails } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { openConfirmationModel, openVerify } = functionSlice[0];
@@ -68,7 +67,8 @@ export const TableActionCell = (props1, props2) => {
     maritalStatusList,
     genderList,
   } = dropdownList.length > 0 && dropdownList[0];
-
+  const [isPassbookAvailable, setIsPassbookAvailable] = useState(true); 
+  const [isEmploymentAvailable, setIsEmploymentAvailable] = useState(true);
   const {
     getPassbookFileData,
     postRemainderMail,
@@ -121,7 +121,45 @@ export const TableActionCell = (props1, props2) => {
       async () => await postResendCredMail(appointeeId, userId)
     );
   };
+  const handlePassbookView = async (appointeeId) => {
+    try {
+      const response = await getPassbookDetails(appointeeId);
+      const { pfUan, companies } = response?.responseInfo || {};
+      if (pfUan && pfUan.length >= 12  && Array.isArray(companies) && companies.length > 0) {
+         const passbookDetails=response.responseInfo
+        openPassbookViewModel(appointeeId,passbookDetails);
+      } else {
+        if (passbookStatusCode === "MNL") {
+          showErrorMessage(noPassBookMsg);
+          setIsPassbookAvailable(false);
+          return;
+        }
+        // setIsPassbookAvailable(false);
+        // showErrorMessage(noPassBookMsg);
+        
+      }
+    } catch (error) {
+      setIsPassbookAvailable(false);
+      showErrorMessage("Failed to fetch passbook details. Please try again.");
+    }
+  };
 
+  const handleEpfoView=async(appointeeId, userId)=>{
+    try {
+      const response = await getEmployementDetails(appointeeId, userId);
+      const { pfUan, companies } = response?.responseInfo || {};
+      if (pfUan && Array.isArray(companies) && companies.length > 0) {
+         const epfoDetails=response.responseInfo
+         openEmploymentViewModel(appointeeId,userId,epfoDetails);
+      } else {
+        setIsEmploymentAvailable(false)
+        showErrorMessage(noEmployementMsg);
+      }
+    } catch (error) {
+      setIsEmploymentAvailable(false)
+      showErrorMessage("Failed to fetch epfo details.");
+    }
+  }
   const handleClickOnCancel = () => {
     const submitmodalcontent = {
       dialogComponent: <CloseAppointeeAddRemarks />,
@@ -229,7 +267,7 @@ export const TableActionCell = (props1, props2) => {
 
     openVerify(personalInfo);
   };
-  console.log("personalInfo", _isManualPassbook);
+ 
 
   // const handleClick =(appointeeId)=>{
   //   handleGetAppointeeDetails(appointeeId)
@@ -307,9 +345,9 @@ export const TableActionCell = (props1, props2) => {
               </Fab>
             </DarkTooltip>
           ) : null}
-           {action === "REDIRECTMANVER" 
-          //  && actionPermissionList &&
-          // actionPermissionList["A001"] 
+           {action === "REDIRECTMANVER" &&  ["MV", "MRV", "RD"].includes(verificationStatusCode)
+           && actionPermissionList &&
+           actionPermissionList['A016'] 
           ? (
             <DarkTooltip placement="top" title={"Visit Manual Verification Page"} arrow>
               <Fab
@@ -473,13 +511,15 @@ export const TableActionCell = (props1, props2) => {
           ) : null}
           {action === "VIEWPSSBK" &&
           actionPermissionList &&
-          actionPermissionList["A012"] ? (
+          actionPermissionList["A012"]&& uanNo &&
+          uanNo.length >= 12  ? (
             <DarkTooltip placement="top" title={"EPFO Passbook"} arrow>
               <Fab
                 variant="contained"
                 size="small"
                 button={"N"}
-                onClick={() => openPassbookViewModel(appointeeId)}
+                disabled={!isPassbookAvailable}
+                onClick={() => handlePassbookView(appointeeId)}
                 sx={primaryFabStyle}
               >
                 {/* <Article width={18} /> */}
@@ -500,7 +540,8 @@ export const TableActionCell = (props1, props2) => {
                 variant="contained"
                 size="small"
                 button={"N"}
-                onClick={() => openEmploymentViewModel(appointeeId, userId)}
+                onClick={() => handleEpfoView(appointeeId, userId)}
+                disabled={!isEmploymentAvailable}
                 sx={primaryFabStyle}
               >
                 <AccountBox width={18} />

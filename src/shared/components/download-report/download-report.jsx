@@ -131,7 +131,7 @@ const DownloadReport = ({
       {isStatusFilter && isStatusFilter === true ? (
       <Grid item xs={12} sm={6} md={4} lg={3}>
           <FormControl sx={{ width: "100%" }} size="small">
-            <InputLabel id="demo-select-small" >Passbook Status</InputLabel>
+            <InputLabel id="demo-select-small" >Verification Type</InputLabel>
             {passbookStatus !== undefined && (
               <Select
                 sx={{ height: '57px' }}
@@ -142,8 +142,8 @@ const DownloadReport = ({
                 onChange={handlePassbookStatusChange}
               >
                 <MenuItem value={'All'}>Select all</MenuItem>
-                <MenuItem value={true}>Manual Passbook</MenuItem>
-                <MenuItem value={false}>AutoFetch Passbook</MenuItem>
+                <MenuItem value={true}>Manual</MenuItem>
+                <MenuItem value={false}>Auto</MenuItem>
               </Select>
             )}
           </FormControl>
