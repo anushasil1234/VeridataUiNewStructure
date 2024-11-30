@@ -2494,7 +2494,9 @@ export const invalidcontactNoMsg = `Phone no should have 10 digits`;
 export const roleEmptyMsg = `Role can't be empty`;
 export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
 export const timeOutMsg = `Server is down, Please try again.`;
-export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
+//export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
+export const manualSubmitConfirmatonMsg = `Based on your answers, Veridata will either Verify the candidate or send Issue list to candidate for reuploading the correct and required documents. Do you want to proceed & Submit?`;
+
 export const ManualSubmitConfirmation = ({type}) => {
  
     
