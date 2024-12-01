@@ -737,12 +737,12 @@ export const pfPensionTableHeadCell = [
         }
     },
     {
-        id: 'epsGap',
+        id: 'pensionStatus',
         numeric: true,
         type: "string",
         disablePadding: false,
         label: 'EPS Gap',
-        enums: ['epsGap'],
+        enums: ['pensionStatus'],
         component: {
             element: Typography
         }
