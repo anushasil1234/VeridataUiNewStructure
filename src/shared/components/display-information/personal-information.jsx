@@ -65,7 +65,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export const FieldName = ({ fieldName, fieldValue, fieldTooltip }) => {
     return (
-        <Stack flexDirection="row" alignItems="center">
+        <Stack flexDirection="row" alignItems="center" spacing={2}>
             <Typography fontWeight="bold" sx={{ ...fieldNameStyle, fontWeight: 600 }}>
                 {fieldValue ? `${fieldName}:` : <TextSkelton1 />}
             </Typography>
@@ -81,7 +81,7 @@ export const FieldName = ({ fieldName, fieldValue, fieldTooltip }) => {
 export const FieldValue = ({ fieldValue }) => {
     return (
         typeof fieldValue === 'string' ? (
-            <Typography sx={fieldValueSx} marginLeft={2}>
+            <Typography sx={{...fieldValueSx,marginLeft: 6 }} marginLeft={2}>
                 {fieldValue || <TextSkelton1 />}
             </Typography>
         ) : (
@@ -94,33 +94,32 @@ export const FieldValue = ({ fieldValue }) => {
 
 export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge = null, badgeTitle = null }) => {
     return (
-        <>
-            <Grid item xs={12} sm={6} md={5} lg={4} sx={listStyle}>
+        <Grid container spacing={2} sx={listStyle}>
+            {/* Field Name Section */}
+            <Grid item xs={12} sm={6} md={5} lg={4}>
                 <Box>
-                    <FieldName fieldValue={fieldValue} fieldName={fieldName} fieldTooltip={fieldTooltip} />
+                    <FieldName
+                        fieldValue={fieldValue}
+                        fieldName={fieldName}
+                        fieldTooltip={fieldTooltip}
+                    />
                 </Box>
             </Grid>
-            <Grid container item xs={12} sm={6} md={7} lg={7.7} sx={listStyle}>
 
-                {
-                    badge === true ?
-                        <>
-                            <Grid item xs={6} md={5}>
-                                <FieldValue fieldValue={fieldValue} />
-                            </Grid>
-                            <Grid item xs={6} md={5}>
-                                <Chip
-                                    icon={<TaskAlt sx={xsChipIconCommonStyle} color="#2e7d32" />}
-                                    sx={successGreenXsOutlineStyle}
-                                    size="small"
-                                    label={badgeTitle}
-                                />
-                            </Grid>
-                        </> :
-                        <FieldValue fieldValue={fieldValue} />
-                }
-
+            {/* Field Value Section */}
+            <Grid item xs={12} sm={6} md={7} lg={8}>
+                <Stack direction="row" spacing={2} alignItems="center">
+                    <FieldValue fieldValue={fieldValue} />
+                    {badge && (
+                        <Chip
+                            icon={<TaskAlt sx={xsChipIconCommonStyle}color="2e7d32"  />}
+                            sx={successGreenXsOutlineStyle}
+                            size="small"
+                            label={badgeTitle}
+                        />
+                    )}
+                </Stack>
             </Grid>
-        </>
+        </Grid>
     );
 };

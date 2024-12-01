@@ -210,14 +210,14 @@ let ManualverifiedViewDetails = ({ details }) => {
         } else {
             clearCategoryRelatedVariables();
         }
-    
+
         setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
 
         // if (verificationType.verificationFieldName === fileVerificationEnums.docEPFO) {
         //     setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
         // }
     }
- 
+
 
     const reject = async (remarks) => {
         showErrorMessage();
@@ -275,7 +275,7 @@ let ManualverifiedViewDetails = ({ details }) => {
         const updatedFiles = files.map((file) =>
             file.value === fileTypeToUpdate ? { ...file, isRead: true } : file
         );
-       
+
         setFiles(updatedFiles);
     };
     const setUploadedFileDataResponse = async (defaultVerificationType) => {
@@ -468,7 +468,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={12} lg={12} letterSpacing={2}>
                         <Grid item xs={12}>
-                            <Stack direction={{ xs: "column", sm: "row" }} >
+                            <Stack direction={{ xs: "column", sm: "row" }}  >
                                 <PersonalInformation fieldName={"Name"} fieldValue={appointeeName} />
                                 <PersonalInformation fieldName={"Date of Birth"} fieldValue={dateOfBirth} />
                                 <PersonalInformation fieldName={"Father's/Husband's Name"} fieldValue={member} />

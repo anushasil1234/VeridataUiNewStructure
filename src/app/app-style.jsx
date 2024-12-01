@@ -1221,7 +1221,7 @@ export const manualstyle1={
 export const candidatefileViewContainerStyle = {
   // width: '100%',
   // overflowX: 'scroll',
-  width: '90%',
+  width: '89.47%',
   height: '300px',
   margin: 'auto',
   // backgroundColor: '',
