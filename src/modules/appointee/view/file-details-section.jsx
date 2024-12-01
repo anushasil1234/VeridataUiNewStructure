@@ -7,7 +7,7 @@ import GridContainer from 'shared/components/grid-container/grid-container'
 import { hasValue, validationsCheck } from 'shared/utils'
 import validateQuestionSet from 'shared/utils/associate/validate-question-set'
 import TextAreaInput from 'shared/components/input-fields/text-input'
-import { categoryFileEmptyerror, fileVerificationEnums, ManualSubmitConfirmation, manualSubmitConfirmatonMsg, remarksemptyerror, remarksError, verificatiosucess } from 'shared/constants/constants'
+import { categoryFileEmptyerror, fileEmptyerror, fileVerificationEnums, ManualSubmitConfirmation, manualSubmitConfirmatonMsg, remarksemptyerror, remarksError, verificatiosucess } from 'shared/constants/constants'
 import createVerificationUpdate from 'shared/utils/associate/create-verification-update'
 import { Download, ZoomIn, ZoomOut } from '@mui/icons-material'
 import { handleZoom } from 'shared/utils/associate/Zoomin-out'
@@ -88,6 +88,10 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         };
         if (selectedMandatoryCategoryList.length === 0) {
             showErrorMessage(categoryFileEmptyerror);
+            return;
+        }
+        if (selectedFiles.length === 0) {
+            showErrorMessage(fileEmptyerror);
             return;
         }
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
