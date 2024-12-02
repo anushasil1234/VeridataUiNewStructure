@@ -727,23 +727,23 @@ export const pfPensionTableHeadCell = [
     },
 
     {
-        id: 'pensioninfo',
+        id: 'isEpsMember',
         numeric: true,
         type: "string",
         disablePadding: false,
         label: 'EPS Membership',
-        enums: ['pensionStatus'],
+        enums: ['isEpsMember'],
         component: {
             element: Typography
         }
     },
     {
-        id: 'EpsGap',
+        id: 'PensionStatus',
         numeric: true,
         type: "string",
         disablePadding: false,
         label: 'EPS Gap',
-        enums: ['EpsGap'],
+        enums: ['PensionStatus'],
         component: {
             element: Typography
         }
