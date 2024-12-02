@@ -309,6 +309,7 @@ export const TableActionCell = (props1, props2) => {
   //   openVerify(personalInfo);
   // }
   let actionListData;
+  console.log('actionList', actionList, actionPermissionList);
 
   actionListData =
     actionList &&

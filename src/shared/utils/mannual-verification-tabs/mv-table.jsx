@@ -23,17 +23,19 @@ import downloadFile from "../associate/download-file";
 import { removeManualValidationResponseStatusSlice, storeManualValidationResponseStatusSlice } from "store/slices/manual-validation-response-status-slice";
 
 export const MVTable = (filters) => {
- 
+
   const { props, payload, isDownload, isDownloadExcel, hasPermission } = filters;
+  console.log("hasPermission12321", hasPermission);
+
   const manualValidationResponseStatusSlice = useSelector((state) => state.manualValidationResponseStatusSlice);
- 
+
   const manualValidationResponseStatus = manualValidationResponseStatusSlice[manualValidationResponseStatusSlice.length - 1]; // todo change syntax
 
   // dispatch(storeLoggedinData(loginData));
   const popUpSlice = useSelector((state) => state.popUpSlice);
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
- 
+
   const [rows, setRows] = useState([]);
   const [responseList, setResponseList] = useState();
   const [responseListLength, setResponseListLength] = useState(0);
@@ -50,7 +52,7 @@ export const MVTable = (filters) => {
   // dispatch(removeManualValidationResponseStatusSlice());
   // dispatch(removeManualValidationResponseStatusSlice());
   // dispatch(removeManualValidationResponseStatusSlice());
- 
+
   const setTableRows = async (payload_MV) => {
     const response = await getMannualVerificationDataList(payload_MV);
     if (response) {
@@ -60,7 +62,7 @@ export const MVTable = (filters) => {
       const { manualVerificationList } = responseInfo;
       setResponseList(manualVerificationList);
       manualVerificationList.length > 0 && setResponseListLength(manualVerificationList.length)
-    
+
       let generatedCells = generateTableRowData(
         manualVerificationList,
         props === "MV"
@@ -82,7 +84,7 @@ export const MVTable = (filters) => {
       });
     }
   };
-  
+
   const handleDownload = () => {
     if (!responseList || responseList.length === 0) {
       showErrorMessage(reportGenarate);
@@ -210,8 +212,12 @@ export const MVTable = (filters) => {
 
   useEffect(() => {
     dispatch(removeActionRoute());
-    if (actionRouteSlice.length === 0) {
-    
+    console.log("hasPermission if out", hasPermission, );
+    console.log("actionRouteSlice24 if out", actionRouteSlice );
+
+    if (actionRouteSlice.length === 0 && hasPermission) {
+      console.log("hasPermission in", hasPermission, actionRouteSlice);
+
       setTableRows(payload_MV);
 
       // if (manualValidationResponseStatus && manualValidationResponseStatus.hasOwnProperty('isdataSubmited')) {
@@ -225,11 +231,11 @@ export const MVTable = (filters) => {
       // }
     }
   }, [actionRouteSlice, props, payload, hasPermission, manualValidationResponseStatus?.isdataSubmited]);
- // todo use single useeffect here for the funtion setTableRows
+  // todo use single useeffect here for the funtion setTableRows
   useEffect(() => {
     // dispatch(removeActionRoute());
     if (manualValidationResponseStatus?.isdataSubmited) {
-     
+
       setTableRows(payload_MV);
 
       // if (manualValidationResponseStatus && manualValidationResponseStatus.hasOwnProperty('isdataSubmited')) {
