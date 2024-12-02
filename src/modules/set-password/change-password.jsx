@@ -192,7 +192,7 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
 
     const newPasswordInput = new InputFieldProps(
         setNewPassword,
-        "New password",
+        "New Password",
         null,
         'text'
     );
@@ -204,7 +204,7 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
     );
     const confirmPasswordInput = new InputFieldProps(
         setConfirmPassword,
-        "Confirm password",
+        "Confirm Password",
         null,
         passwordType
     );
