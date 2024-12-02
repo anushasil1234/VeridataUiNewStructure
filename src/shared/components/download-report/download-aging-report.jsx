@@ -54,7 +54,7 @@ const DownloadAgingReport = ({
     else if (hasValue(fromDate)) {
       handleSearch();
     } else {
-      showErrorMessage("From date can not be empty");
+      showErrorMessage("From Date can not be empty");
     }
   };
 
