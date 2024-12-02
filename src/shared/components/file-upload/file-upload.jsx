@@ -56,7 +56,7 @@ const FileUpload = ({ modalConfirmation, SetFileId, files, setFiles, removeFile,
                 fileId = rawFileData[0];
             }
             if (duplicateCount > 0 || invalidUserCount > 0) {
-                let dialogContentText = generateUPloadErrorMessage(duplicateCount, invalidUserCount, rawFileDataCount);
+                let dialogContentText = generateUPloadErrorMessage({duplicateCount, invalidUserCount, rawFileDataCount});
                 dialogContentText =
                     <>
                         {dialogContentText}

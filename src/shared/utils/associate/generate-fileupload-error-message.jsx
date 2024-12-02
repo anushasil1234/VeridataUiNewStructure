@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 
-export const generateUPloadErrorMessage = (duplicateCount, invalidUserCount) => {
+export const generateUPloadErrorMessage = ({duplicateCount, invalidUserCount, nonExsitingCount}) => {
     let message = "";
     const lineStart = `Excell file has`
     const lineEnd = `Please check the mail to know more.`
@@ -13,6 +13,9 @@ export const generateUPloadErrorMessage = (duplicateCount, invalidUserCount) => 
     }
     if (invalidUserCount) {
         message = `${message} ${invalidUserCount} invalid data,`
+    }
+    if (nonExsitingCount) {
+        message = `${message} ${nonExsitingCount} non exsiting data,`
     }
     message =
         <>

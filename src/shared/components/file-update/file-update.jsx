@@ -40,6 +40,7 @@ const FileUpdate = ({ files, setFiles, removeFile,
         }
     }
     const uploadHandler = async (event) => {
+console.log('uploadHandler');
 
         const FileDetails = event.target.files[0];
         const formData = new FormData();
@@ -56,7 +57,9 @@ const FileUpdate = ({ files, setFiles, removeFile,
                 fileId = rawFileData[0];
             }
             if (duplicateCount > 0 || invalidUserCount > 0 || nonExsitingCount > 0) {
-                let dialogContentText = generateUPloadErrorMessage(duplicateCount, invalidUserCount, rawFileDataCount);
+                console.log("nonExsitingCount",nonExsitingCount);
+                
+                let dialogContentText = generateUPloadErrorMessage({duplicateCount, invalidUserCount, rawFileDataCount, nonExsitingCount});
                 dialogContentText =
                     <>
                         {dialogContentText}
