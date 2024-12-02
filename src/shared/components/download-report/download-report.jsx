@@ -72,7 +72,7 @@ const DownloadReport = ({
   };
   const handelsearch=()=>{
     if (hasValue(toDate) && !hasValue(fromDate)) {
-      showErrorMessage("From date can not be empty");
+      showErrorMessage("From Date can not be empty");
     }else {
       handleSearch();
     }
@@ -108,14 +108,14 @@ const DownloadReport = ({
       {isStatusFilter && isStatusFilter === true ? (
       <Grid item xs={12} sm={6} md={4} lg={3}>
           <FormControl sx={{ width: "100%" }} size="small">
-            <InputLabel id="demo-select-small" >Status</InputLabel>
+            <InputLabel id="demo-select-small" >Verification Status</InputLabel>
             {processStatus !== undefined && (
               <Select
                 sx={{ height: '57px' }}
                 labelId="demo-select-small"
                 id="demo-select-small"
                 value={processStatus}
-                label="Status"
+                label="Verification Status"
                 onChange={handleProcessStatusChange}
               >
                 <MenuItem value={"All"}>Select all</MenuItem>

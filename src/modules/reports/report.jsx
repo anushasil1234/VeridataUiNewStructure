@@ -203,7 +203,7 @@ const UnwrappedReport = (props) => {
   }, [actionRouteSlice]);
   const handelsearch=()=>{
     if (hasValue(toDate) && !hasValue(fromDate)) {
-      showErrorMessage("From date can not be empty");
+      showErrorMessage("From Date can not be empty");
     }else {
       handleSearch();
     }
