@@ -186,7 +186,7 @@ export const MVTable = (filters) => {
   };
   const handleDwnldExcel = async () => {
     const response = await getMannualVerificationDataList(payload_MV);
-    if (!response || response.length === 0) {
+    if (!response || response?.responseInfo?.manualVerificationList?.length === 0) {
       showErrorMessage(reportGenarate)
       return;
     }
