@@ -2781,3 +2781,4 @@ export const passbookVerificationQuestionSet = [
     }
 ]
 
+export const defaultDropdownValue = 'none';

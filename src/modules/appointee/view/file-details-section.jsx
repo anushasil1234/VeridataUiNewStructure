@@ -7,7 +7,7 @@ import GridContainer from 'shared/components/grid-container/grid-container'
 import { hasValue, validationsCheck } from 'shared/utils'
 import validateQuestionSet from 'shared/utils/associate/validate-question-set'
 import TextAreaInput from 'shared/components/input-fields/text-input'
-import { categoryFileEmptyerror, fileEmptyerror, fileVerificationEnums, ManualSubmitConfirmation, manualSubmitConfirmatonMsg, remarksemptyerror, remarksError, verificatiosucess } from 'shared/constants/constants'
+import { categoryFileEmptyerror, defaultDropdownValue, fileEmptyerror, fileVerificationEnums, ManualSubmitConfirmation, manualSubmitConfirmatonMsg, remarksemptyerror, remarksError, verificatiosucess } from 'shared/constants/constants'
 import createVerificationUpdate from 'shared/utils/associate/create-verification-update'
 import { Download, ZoomIn, ZoomOut } from '@mui/icons-material'
 import { handleZoom } from 'shared/utils/associate/Zoomin-out'
@@ -17,12 +17,12 @@ import { MouseEventHandler } from 'shared/utils/associate/dragable'
 import { removeManualValidationResponseStatusSlice, storeManualValidationResponseStatusSlice } from 'store/slices/manual-validation-response-status-slice'
 
 
-const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fileTypeCategory,
+const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fileTypeCategory, setFileTypeCategory,
     verificationOnChange, verificationQuestionSet, appointeeId,
-    fileName, selectedFiles, files, setVerificationType, categorySelected,
+    fileName, selectedFiles, files, setFiles, setVerificationType, categorySelected,
     verificationCategoryList, setVerificationCategoryList, verificationTypeList,
     setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList,
- }) => {
+}) => {
 
     const dispatch = useDispatch();
 
@@ -82,6 +82,8 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         }
         return false;
     };
+    console.log("selectedMandatoryCategoryList", selectedMandatoryCategoryList);
+
     const handleVerificationSubmit = async () => {
         let submitconfModelContent = {
             dialogContentText: "",
@@ -96,7 +98,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         }
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
 
-   
+
 
         if (error) {
             showErrorMessage(error);
@@ -146,7 +148,9 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                 }
                 setVerificationCategoryList([]);
                 setSelectedMandatoryCategoryList([]);
-                setFile("");
+                setFile(defaultDropdownValue);
+                setFiles([]);
+                setFileTypeCategory(defaultDropdownValue);
             }
         });
     };

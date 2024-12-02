@@ -29,7 +29,7 @@ import {
     listHeadingConteinerStyle,
     listHeadingStyle,
 } from "app";
-import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg } from "shared/constants/constants";
+import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg, defaultDropdownValue } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import SelectInput from "shared/components/input-fields/select-input";
@@ -118,9 +118,9 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [verificationTypeList, setVerificationTypeList] = useState([]);
     const [uploadedFileData, setUploadedFileData] = useState([]);
     const [verificationCategoryList, setVerificationCategoryList] = useState([]);
-    const [fileTypeCategory, setFileTypeCategory] = useState("");
+    const [fileTypeCategory, setFileTypeCategory] = useState(defaultDropdownValue);
     const [files, setFiles] = useState([]);
-    const [file, setFile] = useState("");
+    const [file, setFile] = useState(defaultDropdownValue);
     const [fileSrc, setFileSrc] = useState("");
     const [fileName, setFilename] = useState("");
     const [verificationQuestionSet, setVerificationQuestionSet] = useState([]);
@@ -136,7 +136,7 @@ let ManualverifiedViewDetails = ({ details }) => {
         clearCategoryRelatedVariables();
         setFiles([]);
         if (currentValue === 'none') {
-            setFileTypeCategory("");
+            setFileTypeCategory(defaultDropdownValue);
             setVerificationCategoryList([]);
         }
     }
@@ -187,31 +187,35 @@ let ManualverifiedViewDetails = ({ details }) => {
 
         setVerificationQuestionSet(_updatedQuestionSet);
         setVerificationUpdate({});
-        setFileTypeCategory("");
+        setFileTypeCategory(defaultDropdownValue);
     }
     const clearCategoryRelatedVariables = () => {
         setFileSrc("");
-        setFile("");
+        setFile(defaultDropdownValue);
     }
     const _setFile = async (value) => {
         setFile(value);
         await setFileImage(value);
     }
     const handleCategoryChange = async ({ target }) => {
+
         const { value } = target;
-        setFileTypeCategory(value);
-        setCategorySelected(true);
-        setSelectedFiles([]);
-        const { files } = filterDocVerificationList({ fileCategory: verificationType.value, uploadedFileData, fileType: value });
-        setFiles(files);
+        console.log('handleCategoryChange', target, value);
+        if (value !== defaultDropdownValue) {
+            setFileTypeCategory(value);
+            setCategorySelected(true);
+            setSelectedFiles([]);
+            const { files } = filterDocVerificationList({ fileCategory: verificationType.value, uploadedFileData, fileType: value });
+            setFiles(files);
 
-        if (files.length === 1) {
-            await _setFile(files[0].value);
-        } else {
-            clearCategoryRelatedVariables();
+            if (files.length === 1) {
+                await _setFile(files[0].value);
+            } else {
+                clearCategoryRelatedVariables();
+            }
+
+            setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
         }
-
-        setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
 
         // if (verificationType.verificationFieldName === fileVerificationEnums.docEPFO) {
         //     setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
@@ -545,6 +549,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                         fileSrc={fileSrc}
                         fileName={fileName}
                         fileTypeCategory={fileTypeCategory}
+                        setFileTypeCategory={setFileTypeCategory}
                         verificationOnChange={verificationOnChange}
                         verificationUpdate={verificationUpdate}
                         verificationQuestionSet={verificationQuestionSet}
@@ -557,6 +562,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                         verificationCategoryList={verificationCategoryList}
                         selectedFiles={selectedFiles}
                         files={files}
+                        setFiles={setFiles}
                         setFile={setFile}
                         selectedMandatoryCategoryList={selectedMandatoryCategoryList}
                         setSelectedMandatoryCategoryList={setSelectedMandatoryCategoryList}
