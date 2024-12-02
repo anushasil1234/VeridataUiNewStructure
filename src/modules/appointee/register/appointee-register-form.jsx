@@ -1502,9 +1502,9 @@ const AppointeeRegisterForm = () => {
         if (!checkAadharVerification()) {
             return
         }
-        if (!checkPANVerification()) {
-            return
-        }
+        // if (!checkPANVerification()) {
+        //     return
+        // }
         if (!checkUANVerificationRequiredDoc()) {
             return
         }
