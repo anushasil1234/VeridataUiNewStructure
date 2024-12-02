@@ -68,7 +68,7 @@ function EnhancedTableHead(props) {
     const tableHeadRowStyle = {
         position: "sticky",
         top: 0,
-        zIndex: 2,
+        zIndex: 0,
         bgcolor: "#fff",
     };
     return (

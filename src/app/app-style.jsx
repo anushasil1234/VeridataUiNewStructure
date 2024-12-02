@@ -1033,7 +1033,9 @@ export const cardStyle2 = {
 };
 export const listStyle = {
   borderBottom: "1px solid #E2E8F0",
-  padding: "1rem"
+  padding: "1rem",
+  ml:0,
+  mt:0
 };
 export const fieldNameStyle = {
   fontSize: { xs: '12px', md: '14px', lg: '16px' }
