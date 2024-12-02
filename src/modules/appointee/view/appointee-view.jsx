@@ -641,7 +641,7 @@ let AppointeeViewForm = ({
     "info",
     "remarks",
     <Comment />,
-    "Remarks"
+    "Remarks/Issues"
   );
   const mannualUploadFabProps = new FabIconPropsModel(
     actionIconStyle,
