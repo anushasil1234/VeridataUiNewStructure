@@ -8,7 +8,8 @@ import {
   processingListTableHeadCell,
   toProcessing,
   reportGenarate,
-  issueFilterList
+  issueFilterList,
+  uploadedFromDateEmptyMsg
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -211,6 +212,10 @@ const UnWrappedProcessing = (props) => {
     setIsDownloadListOpened(!isDownloadListOpened)
   }
   const handleSearch = () => {
+    if (!hasValue (fromDate)) {
+      showErrorMessage(uploadedFromDateEmptyMsg);
+      return;
+    }
     setTableRows(payLoad);
   };
   

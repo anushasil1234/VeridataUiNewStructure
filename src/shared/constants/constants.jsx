@@ -79,7 +79,7 @@ export const generateProcessingAppointeeReportDesc = `The purpose of this report
 export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns,identify any issues, and improve the efficiency of the API system.`;
 export const pfPensionReportDesc = `The purpose of this report is to provide a comprehensive overview of PF and Pension information for appointees within a specified date range. This report includes detailed fields such as appointee name, Aadhaar number, UAN number, joining date, PF and pension status, and passbook status (manual or automatic). The objective is to help stakeholders monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
 export const verificatiosucess=`Your verification has been successfully completed.`
-
+export const appointeeReportdesc=`This report offers a comprehensive analysis of appointees . It provides detailed insights, including each candidate's name, email ID, date of joining (DOJ), the date the link was sent, and their current status. This data assists stakeholders in identifying trends, addressing potential bottlenecks, and evaluating whether the lack of progress suggests disinterest in joining.`
 export const generatenationlityReportDesc = (type) => {
     switch (type) {
         case 'All':
@@ -758,6 +758,71 @@ export const pfPensionTableHeadCell = [
         component: {
             element: Typography
         }
+    },
+
+]
+export const pfPensionTablereportHeadCell = [
+    {
+        label: 'Name',
+        enums: ['appointeeName','candidateId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        type: "string",
+        label: 'Email',
+        enums: ['emailId'],
+
+    },
+    {
+        type: "string",
+        label: 'Mobile No',
+        enums: ['mobileNo'],
+
+    },
+    {
+        type: "string",
+        label: 'Aadhaar No.',
+        enums: ['aadharNumber'],
+    },
+    {
+        type: "string",
+        label: 'UAN',
+        enums: ['uan']
+    },
+    {
+        type: "string",
+        label: 'Aadhar-UAN Link',
+        enums: ['isUanAadharLink'],
+    },
+    {
+        type: "date",
+        label: 'Date Of Joining  ',
+        enums: ['dateOfJoining'],
+    },
+
+    {
+        type: "badge",
+        label: 'PF Type',
+        enums: ['trustPassBookStatus', 'epfoPassBookStatus']
+    },
+
+    {
+       
+        type: "string",
+        label: 'EPS Membership',
+        enums: ['isEpsMember'],
+    },
+    {
+        type: "string",
+        label: 'EPS Gap',
+        enums: ['pensionStatus']
+    },
+    {
+        type: "string",
+        label: 'Verification Type',
+        enums: ['isManual']
     },
 
 ]
@@ -2127,7 +2192,7 @@ export const nationalityListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Passport Number',
+        label: 'Passport No.',
         enums: ['passportNumber'],
         component: {
             element: Typography
@@ -2171,7 +2236,7 @@ export const nationalityReportTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Mobile No',
+        label: 'Mobile No.',
         enums: ['mobileNo'],
 
     },

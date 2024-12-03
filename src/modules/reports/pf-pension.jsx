@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadPFReport from "shared/components/download-report/download-PF-report";
-import { pfPensionReportDesc, pfPensionTableHeadCell, reportGenarate, topfPension, uploadedFromDateEmptyMsg, verifiedReportInfo } from "shared/constants/constants";
+import { pfPensionReportDesc, pfPensionTableHeadCell, pfPensionTablereportHeadCell, reportGenarate, topfPension, uploadedFromDateEmptyMsg, verifiedReportInfo } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import downloadFile from "shared/utils/associate/download-file";
@@ -142,12 +142,12 @@ const UnWrappedpf = (props) => {
       return;
     }
   
-    const tableHeadList = pfPensionTableHeadCell.map(({ label }) => ({
+    const tableHeadList = pfPensionTablereportHeadCell.map(({ label }) => ({
       title: label,
     }));
   
     const tableBodyList = appointeeDetails .map((rowData) => {
-      return CreatePdfTableBody(rowData, pfPensionTableHeadCell);
+      return CreatePdfTableBody(rowData, pfPensionTablereportHeadCell);
     });
   
   

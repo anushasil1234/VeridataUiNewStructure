@@ -17,7 +17,8 @@ import {
   lapsedListPdfTableHeadCell,
   lapsedListTableHeadCell,
   toLapseddata,
-  reportGenarate
+  reportGenarate,
+  uploadedFromDateEmptyMsg
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -171,6 +172,10 @@ const UnwrappedLapseddata = (props) => {
   };
 
   const handleSearch = () => {
+    if (!hasValue (fromDate)) {
+      showErrorMessage(uploadedFromDateEmptyMsg);
+      return;
+    }
     setTableRows(payLoad);
   };
   const handleDownload = () => {

@@ -16,6 +16,7 @@ import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import moment from "moment";
 import CustomTab from "shared/utils/customTab/custom-tab";
+import { uploadedFromDateEmptyMsg } from "shared/constants/constants";
 
 const UnWrappedMannualVerification = (props) => {
 
@@ -50,6 +51,10 @@ const UnWrappedMannualVerification = (props) => {
     setIsDownloadListOpened(!isDownloadListOpened);
   };
   const handleSearch = () => {
+    if (!hasValue(fromDate)) {
+      showErrorMessage(uploadedFromDateEmptyMsg);
+      return;
+    }
     const reqPayload = {
       fromDate: DateFormatYYYYMMDD(fromDate?.toString()),
       toDate: DateFormatYYYYMMDD(toDate?.toString()),
