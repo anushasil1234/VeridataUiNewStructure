@@ -88,42 +88,26 @@ const UnWrappedMannualVerification = (props) => {
       setTabs((prevTabs) => ({ ...prevTabs, filterTab: state.filterTab }));
     }
   }, [state, tabs.pannelList]);
-  //   const handleDownloade = (rf) => {
-  //     if (rf.fileData && typeof rf.fileData === 'string') {
-  //       const base64String = rf.fileData;
-  //       const fileName = rf.fileName || "appointee_data.xlsx";
-  //       const blob = generateBlobFromBase64(base64String);
-  //       const blobUrl = window.URL.createObjectURL(blob);
-  //       downloadFile(blobUrl, fileName);
-  //       window.URL.revokeObjectURL(blobUrl);
-  //     }
-  //   };
-  //   const handleClick = async () => {
-  //     const response = await GetUnderProcessReport(payLoad);
-  //     if (response) {
-  //       const { responseInfo } = response;
-  //       handleDownloade(responseInfo);
-  //     }
-  //   };
+
   const handleClickToDwnldExcl = () => {
     setIsDownloadExcel(true);
   };
   const handleDownload = () => {
     setIsDownload(true);
   };
-  useEffect(() => {
-    if (isDownload) {
-      handleDownload();
-      setIsDownload(false);
-    }
-  }, [isDownload]);
+  // useEffect(() => {
+  //   if (isDownload) {
+  //     handleDownload();
+  //     setIsDownload(false);
+  //   }
+  // }, [isDownload]);
 
-  useEffect(() => {
-    if (isDownloadExcel) {
-      handleClickToDwnldExcl();
-      setIsDownloadExcel(false);
-    }
-  }, [isDownloadExcel]);
+  // useEffect(() => {
+  //   if (isDownloadExcel) {
+  //     handleClickToDwnldExcl();
+  //     setIsDownloadExcel(false);
+  //   }
+  // }, [isDownloadExcel]);
   const handelsearch=()=>{
     if (hasValue(toDate) && !hasValue(fromDate)) {
       showErrorMessage("From Date can not be empty");
@@ -261,7 +245,7 @@ const UnWrappedMannualVerification = (props) => {
           </Grid>
         </Grid>
         <Card sx={{ border: 1, borderColor: "divider", marginTop: "23px" }}>
-          <CustomTab tabs={tabs} payload={payload} isDownload={isDownload} isDownloadExcel={isDownloadExcel} hasPermission ={hasPermission} />
+          <CustomTab tabs={tabs} payload={payload} isDownload={isDownload} setIsDownload={setIsDownload} isDownloadExcel={isDownloadExcel} setIsDownloadExcel={setIsDownloadExcel} hasPermission ={hasPermission} />
         </Card>
       </CardLayout>
     </PageLayout>

@@ -24,8 +24,7 @@ import { removeManualValidationResponseStatusSlice, storeManualValidationRespons
 
 export const MVTable = (filters) => {
 
-  const { props, payload, isDownload, isDownloadExcel, hasPermission } = filters;
-  console.log("hasPermission12321", hasPermission);
+  const { props, payload, setIsDownload, isDownload, setIsDownloadExcel, isDownloadExcel, hasPermission } = filters;
 
   const manualValidationResponseStatusSlice = useSelector((state) => state.manualValidationResponseStatusSlice);
 
@@ -39,7 +38,7 @@ export const MVTable = (filters) => {
   const [rows, setRows] = useState([]);
   const [responseList, setResponseList] = useState();
   const [responseListLength, setResponseListLength] = useState(0);
-
+  const [responseFileDetails, setResponseFileDetails] = useState(null);
   const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
   const { getMannualVerificationDataList } = apiSlice[0];
@@ -49,20 +48,17 @@ export const MVTable = (filters) => {
     filterType: props,
     ...payload,
   };
-  // dispatch(removeManualValidationResponseStatusSlice());
-  // dispatch(removeManualValidationResponseStatusSlice());
-  // dispatch(removeManualValidationResponseStatusSlice());
 
   const setTableRows = async (payload_MV) => {
     const response = await getMannualVerificationDataList(payload_MV);
     if (response) {
 
-      dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited: false }));
+      // dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited: false }));
       const { responseInfo } = response;
-      const { manualVerificationList } = responseInfo;
+      const { manualVerificationList, filedata } = responseInfo;
       setResponseList(manualVerificationList);
       manualVerificationList.length > 0 && setResponseListLength(manualVerificationList.length)
-
+      setResponseFileDetails(filedata);
       let generatedCells = generateTableRowData(
         manualVerificationList,
         props === "MV"
@@ -86,134 +82,125 @@ export const MVTable = (filters) => {
   };
 
   const handleDownload = () => {
-    if (!responseList || responseList.length === 0) {
-      showErrorMessage(reportGenarate);
-      return;
-    }
-    // const tableHeadList = props === 'MV' && mannualVerificationListTableHeadCell.map(({ label }) => {
-    //   return {
-    //     title: label,
-    //   };
-    // });
+    if (responseList && responseList.length > 0) {
 
-    const tableHeadList = (() => {
-      let sourceList = [];
+      const tableHeadList = (() => {
+        let sourceList = [];
+        switch (props) {
+          case "MV":
+            sourceList = MVListPdfTableHeadCell;
+            break;
+          case "RD":
+            sourceList = RDListPdfTableHeadCell;
+            break;
+          case "MRV":
+            sourceList = MRVListPdfTableHeadCell;
+            break;
+          default:
+            sourceList = [];
+        }
+        return sourceList.map(({ label }) => ({ title: label }));
+      })();
+      let selectedTableHeadCell = null;
+
       switch (props) {
         case "MV":
-          sourceList = MVListPdfTableHeadCell;
+          selectedTableHeadCell = MVListPdfTableHeadCell;
           break;
         case "RD":
-          sourceList = RDListPdfTableHeadCell;
+          selectedTableHeadCell = RDListPdfTableHeadCell;
           break;
         case "MRV":
-          sourceList = MRVListPdfTableHeadCell;
+          selectedTableHeadCell = MRVListPdfTableHeadCell;
           break;
         default:
-          sourceList = [];
+          selectedTableHeadCell = null;
       }
-      return sourceList.map(({ label }) => ({ title: label }));
-    })();
-    let selectedTableHeadCell = null;
 
-    switch (props) {
-      case "MV":
-        selectedTableHeadCell = MVListPdfTableHeadCell;
-        break;
-      case "RD":
-        selectedTableHeadCell = RDListPdfTableHeadCell;
-        break;
-      case "MRV":
-        selectedTableHeadCell = MRVListPdfTableHeadCell;
-        break;
-      default:
-        selectedTableHeadCell = null;
+      const tableBodyList = responseList
+        ? responseList.map((tableRows) =>
+          selectedTableHeadCell
+            ? CreatePdfTableBody(tableRows, selectedTableHeadCell)
+            : null
+        )
+        : [];
+
+      const tableObj = {
+        headerList: tableHeadList,
+        rows: tableBodyList,
+      };
+
+      // Call jsPDFReportTemplate with tableObj
+      jsPDFReportDataTemplate({
+        reportDetails: {
+          fileName:
+            props === "MV"
+              ? `_Manual_Verification_Required_List_${currentDate}`
+              : props === "RD"
+                ? `_Document_Reupload_Request_List_${currentDate}`
+                : `_Manual_Reverification_Required_List_${currentDate}`,
+          label:
+            props === "MV"
+              ? "Manual Verification Required List"
+              : props === "RD"
+                ? "Document Reupload Request List"
+                : "Manual Reverification Required List",
+          //  fromDate: fromDate,
+          //  toDate: toDate,
+          rptDesc: generateProcessingAppointeeReportDesc,
+          companyName: "PWC REPORT", // or use a dynamic company name
+        },
+        tables: [tableObj],
+        countFlag: responseListLength
+        //clientDetailsFlag : false
+      });
+    } else {
+      showErrorMessage(reportGenarate);
+      return;
+
     }
-
-    const tableBodyList = responseList
-      ? responseList.map((tableRows) =>
-        selectedTableHeadCell
-          ? CreatePdfTableBody(tableRows, selectedTableHeadCell)
-          : null
-      )
-      : [];
-    // const tableBodyList = props === 'MV' && responseList && responseList.map((tableRows) => {
-    //   return CreatePdfTableBody(tableRows, mannualVerificationListTableHeadCell);
-    // });
-
-    const tableObj = {
-      headerList: tableHeadList,
-      rows: tableBodyList,
-    };
-
-    // Call jsPDFReportTemplate with tableObj
-    jsPDFReportDataTemplate({
-      reportDetails: {
-        fileName:
+  };
+  const handleDownloadExcel = () => {
+    console.log("isDownloadExcel",isDownloadExcel,isDownload);
+    if (responseList && responseList?.length > 0) {
+      if (responseFileDetails?.fileData && typeof responseFileDetails?.fileData === "string") {
+        const base64String = responseFileDetails?.fileData;
+        const fileName =
           props === "MV"
             ? `_Manual_Verification_Required_List_${currentDate}`
             : props === "RD"
               ? `_Document_Reupload_Request_List_${currentDate}`
-              : `_Manual_Reverification_Required_List_${currentDate}`,
-        label:
-          props === "MV"
-            ? "Manual Verification Required List"
-            : props === "RD"
-              ? "Document Reupload Request List"
-              : "Manual Reverification Required List",
-        //  fromDate: fromDate,
-        //  toDate: toDate,
-        rptDesc: generateProcessingAppointeeReportDesc,
-        companyName: "PWC REPORT", // or use a dynamic company name
-      },
-      tables: [tableObj],
-      countFlag: responseListLength
-      //clientDetailsFlag : false
-    });
-  };
-  const handleDownloade = (response) => {
-    const { filedata } = response;
-    if (filedata?.fileData && typeof filedata?.fileData === "string") {
-      const base64String = filedata?.fileData;
-      const fileName =
-        props === "MV"
-          ? `_Manual_Verification_Required_List_${currentDate}`
-          : props === "RD"
-            ? `_Document_Reupload_Request_List_${currentDate}`
-            : `_Manual_Reverification_Required_List_${currentDate}`;
-      const blob = generateBlobFromBase64(base64String);
-      const blobUrl = window.URL.createObjectURL(blob);
-      downloadFile(blobUrl, fileName);
-      window.URL.revokeObjectURL(blobUrl);
-    }
-  };
-  const handleDwnldExcel = async () => {
-    const response = await getMannualVerificationDataList(payload_MV);
-    if (!response || response?.responseInfo?.manualVerificationList?.length === 0) {
+              : `_Manual_Reverification_Required_List_${currentDate}`;
+        const blob = generateBlobFromBase64(base64String);
+        const blobUrl = window.URL.createObjectURL(blob);
+        downloadFile(blobUrl, fileName);
+        window.URL.revokeObjectURL(blobUrl);
+      }
+    } else {
       showErrorMessage(reportGenarate)
       return;
     }
-    if (response) {
-      const { responseInfo } = response;
-      //   const { manualVerificationList } = responseInfo;
-      handleDownloade(responseInfo);
-    }
   };
+  
   useEffect(() => {
-    if (isDownloadExcel) {
-      handleDwnldExcel();
+   
+    if (isDownloadExcel === true) {
+      handleDownloadExcel();
+      setIsDownloadExcel(false);
     }
-  }, [props, isDownloadExcel]);
-  useEffect(() => {
-    if (isDownload) {
+    if (isDownload === true) {
       handleDownload();
+      setIsDownload(false);
+
     }
-  }, [props, isDownload]);
+  }, [isDownloadExcel, isDownload]);
+
 
 
   useEffect(() => {
     dispatch(removeActionRoute());
-    console.log("hasPermission if out", hasPermission, );
-    console.log("actionRouteSlice24 if out", actionRouteSlice );
+    console.log("hasPermission if out", hasPermission,);
+    console.log("actionRouteSlice24 if out", actionRouteSlice);
 
     if (actionRouteSlice.length === 0 && hasPermission) {
       console.log("hasPermission in", hasPermission, actionRouteSlice);
