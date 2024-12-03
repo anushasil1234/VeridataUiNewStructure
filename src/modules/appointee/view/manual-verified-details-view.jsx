@@ -64,7 +64,7 @@ const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
     )
 }
 
-let ManualverifiedViewDetails = ({ details }) => {
+let ManualverifiedViewDetails = ({ details,closeModel }) => {
 
     const {
         appointeeId,
@@ -650,6 +650,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                         setFile={setFile}
                         selectedMandatoryCategoryList={selectedMandatoryCategoryList}
                         setSelectedMandatoryCategoryList={setSelectedMandatoryCategoryList}
+                        closeModel={closeModel}
                     />
                 }
             </ManualVerifiedPageSectionContainer>
