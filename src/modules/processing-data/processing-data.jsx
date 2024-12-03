@@ -9,7 +9,8 @@ import {
   toProcessing,
   reportGenarate,
   issueFilterList,
-  uploadedFromDateEmptyMsg
+  uploadedFromDateEmptyMsg,
+  FromDateEmptyMsg
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -213,7 +214,7 @@ const UnWrappedProcessing = (props) => {
   }
   const handleSearch = () => {
     if (!hasValue (fromDate)) {
-      showErrorMessage(uploadedFromDateEmptyMsg);
+      showErrorMessage(FromDateEmptyMsg);
       return;
     }
     setTableRows(payLoad);

@@ -4,7 +4,7 @@ import { primaryFabStyle } from 'app';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ActionPermission from 'shared/components/action-permission/action-permission';
-import { criticalListTableHeadCell, uploadedFromDateEmptyMsg } from 'shared/constants/constants';
+import { criticalListTableHeadCell, FromDateEmptyMsg, uploadedFromDateEmptyMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from 'shared/utils';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';
@@ -66,7 +66,7 @@ const UnwrappedAttention = (props) => {
   }, [fromDate, toDate])
   const handleSearch = () => {
     if (!hasValue (fromDate)) {
-      showErrorMessage(uploadedFromDateEmptyMsg);
+      showErrorMessage(FromDateEmptyMsg);
       return;
     }
     setTableRows(payLoad);

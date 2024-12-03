@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
-import { appointeeListTableHeadCell, appointeeReportTableHeadCell, toAppointeeReport, reportGenarate, uploadedFromDateEmptyMsg, appointeeReportdesc } from "shared/constants/constants";
+import { appointeeListTableHeadCell, appointeeReportTableHeadCell, toAppointeeReport, reportGenarate, uploadedFromDateEmptyMsg, appointeeReportdesc, FromDateEmptyMsg } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
@@ -161,7 +161,7 @@ const AppointeeDataReportView = (props) => {
   const handleReportSearch = () => {
     if (filterType !== 0) {
       if (!hasValue (fromDate)) {
-        showErrorMessage(uploadedFromDateEmptyMsg);
+        showErrorMessage(FromDateEmptyMsg);
         return;
       }
     }

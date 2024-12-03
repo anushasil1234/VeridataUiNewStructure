@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReport from "shared/components/download-report/download-report";
-import { GetPfCreationListTableHeadCell, downloadPfCreationApponteeList_URL, toPFUsers, uploadedFromDateEmptyMsg } from "shared/constants/constants";
+import { FromDateEmptyMsg, GetPfCreationListTableHeadCell, downloadPfCreationApponteeList_URL, toPFUsers, uploadedFromDateEmptyMsg } from "shared/constants/constants";
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 
@@ -102,7 +102,7 @@ const UnwappedPFUsers = (props) => {
   };
   const handleSearch = () => {
     if (!hasValue (fromDate)) {
-      showErrorMessage(uploadedFromDateEmptyMsg);
+      showErrorMessage(FromDateEmptyMsg);
       return;
     }
     setTableRows(payLoad);

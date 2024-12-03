@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import ActionPermission from 'shared/components/action-permission/action-permission';
 import DownloadReport from 'shared/components/download-report/download-report';
-import { downloadRejectedList_URL, rejectedListTableHeadCell, toCancelled, uploadedFromDateEmptyMsg } from 'shared/constants/constants';
+import { downloadRejectedList_URL, FromDateEmptyMsg, rejectedListTableHeadCell, toCancelled, uploadedFromDateEmptyMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from 'shared/utils';
 import { removeActionRoute } from 'store/slices/action-route-slice';
 
@@ -88,7 +88,7 @@ const UnwrappedCancelled = (props) => {
   }
   const handleSearch = () => {
     if (!hasValue (fromDate)) {
-      showErrorMessage(uploadedFromDateEmptyMsg);
+      showErrorMessage(FromDateEmptyMsg);
       return;
     }
     setTableRows(payLoad);
