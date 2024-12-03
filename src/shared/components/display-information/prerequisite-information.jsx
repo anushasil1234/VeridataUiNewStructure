@@ -12,10 +12,10 @@ const PrerequisiteInformation = () => {
         {
             StepNumber: 'Aadhaar',
             primaryHeading: 'Aadhaar Number',
-            secondaryText: 'Please have your Addhar and PAN card  before continuing.',
+            secondaryText: 'Please have your Aadhaar and PAN card  before continuing.',
             secondaryComponent:
                 <>
-                    {' — If you dont have an Addhar please contact with your HR'}
+                    {' — If you dont have an Aadhaar please contact with your HR'}
                     <Box >
                         {/* <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}> */}
                         <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}>

@@ -868,19 +868,19 @@ let AppointeeViewForm = ({
                   fieldName={"Name"}
                   fieldValue={appointeeName}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAR Verified"}
+                  badgeTitle={"AADHAAR Verified"}
                 />
                 <PersonalInformation
                   fieldName={"Date of Birth"}
                   fieldValue={dateOfBirth}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAR Verified"}
+                  badgeTitle={"AADHAAR Verified"}
                 />
                 <PersonalInformation
                   fieldName={"Gender"}
                   fieldValue={gender}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAR Verified"}
+                  badgeTitle={"AADHAAR Verified"}
                 />
                 <PersonalInformation
                   fieldName={"Father's / Husband's Name"}
@@ -900,7 +900,7 @@ let AppointeeViewForm = ({
                   fieldName={"Mobile"}
                   fieldValue={mobileNo}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAR Verified"}
+                  badgeTitle={"AADHAAR Verified"}
                 />
                 <PersonalInformation fieldName={"Email"} fieldValue={email} />
                 <PersonalInformation
@@ -985,8 +985,8 @@ let AppointeeViewForm = ({
           <Grid item xs={12} md={3.5}>
             {!roleTypeEnums.candidate.includes(userTypeId)
               ? isManualPassbook &&
-              //(manualVerificationStatus === "MV" ||
-               // manualVerificationStatus === "MRV") && 
+              (manualVerificationStatus === "MV" ||
+                manualVerificationStatus === "MRV") && 
                hasPermission &&
               hasPermission["A015"] && (
                 <Box

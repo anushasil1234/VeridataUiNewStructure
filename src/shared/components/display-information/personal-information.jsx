@@ -110,7 +110,7 @@ export const PersonalInformation = ({ fieldName, fieldValue, fieldTooltip, badge
             <Grid item xs={12} sm={6} md={7} lg={8}>
                 <Stack direction="row" spacing={2} alignItems="center">
                     <FieldValue fieldValue={fieldValue} />
-                    {badge && (
+                    {badge && badge===true && (
                         <Chip
                             icon={<TaskAlt sx={xsChipIconCommonStyle}color="2e7d32"  />}
                             sx={successGreenXsOutlineStyle}
