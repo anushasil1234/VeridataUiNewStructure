@@ -424,7 +424,7 @@ export const ReuploadForm = () => {
                                                 //     : handicapFileName
                                                 // }
                                                 fileName={epfoServiceHistoryFile}
-                                                accept={"image/png, image/jpeg"}
+                                                accept={"image/png, image/jpeg, application/pdf"}
                                                 maxUploadSize={imgAndPdfMaxSize}
                                                 uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
                                             // handleRemoveFile={removeEPFOServiceHistory}
@@ -452,7 +452,7 @@ export const ReuploadForm = () => {
                                                 //     : handicapFileName
                                                 // }
                                                 fileName={epfoPassBookFiles}
-                                                accept={"image/png, image/jpeg"}
+                                                accept={"image/png, image/jpeg, application/pdf"}
                                                 maxUploadSize={imgAndPdfMaxSize}
                                                 multiple={true}
                                                 uploadTypeAlias={epfoPassbookFileTypeAlias}
