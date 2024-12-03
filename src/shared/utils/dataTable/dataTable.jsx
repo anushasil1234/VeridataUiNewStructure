@@ -18,7 +18,7 @@ import {
     Toolbar,
     Typography,
 } from "@mui/material";
-import { Stack } from "@mui/system";
+import { borderBottom, Stack } from "@mui/system";
 import { tableHeader, toolbarsx } from "app";
 
 function descendingComparator(a, b, orderBy) {
@@ -70,6 +70,7 @@ function EnhancedTableHead(props) {
         top: 0,
         zIndex: 0,
         bgcolor: "#fff",
+        borderBottom: "1px solid rgba(224, 224, 224, 1)"
     };
     return (
         <TableHead>
