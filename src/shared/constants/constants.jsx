@@ -1080,6 +1080,11 @@ export const processingListPdfTableHeadCell = [
     },
     {
         type: "string",
+        label: 'Verification Type',
+        enums: ['passbookStatus']
+    },
+    {
+        type: "string",
         label: 'Status',
         enums: ['status'],
     }
@@ -2137,7 +2142,7 @@ export const noResponseReportTableHeadCell = [
     },
     {
         type: "date",
-        label: 'Last Activity at',
+        label: 'Last Activity Date',
         enums: ['lastActionDate'],
     }
 
@@ -2247,7 +2252,7 @@ export const nationalityReportTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Country',
+        label: 'Country Name',
         enums: ['countryName'],
     },
     {
