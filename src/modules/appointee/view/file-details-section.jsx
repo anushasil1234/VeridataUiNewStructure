@@ -1,5 +1,5 @@
 import { Box, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material'
-import { candidatefileViewContainerStyle, imagestyleContainer, listHeadingStyle, rightMostBtnStyle, submitBtnStyle, zoombuttonStyle } from 'app'
+import { candidatefileViewContainerStyle, imagestyleContainer, listHeadingStyle, rightMostBtnStyle, subHeadingContentTextStyle, submitBtnStyle, zoombuttonStyle } from 'app'
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import VerificationQuiestions from './verification-quiestions'
@@ -22,11 +22,13 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
     verificationOnChange, verificationQuestionSet, appointeeId,
     fileName, selectedFiles, files, setFiles, setVerificationType, categorySelected,
     verificationCategoryList, setVerificationCategoryList, verificationTypeList,
-    setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList,
+    setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList,closeModel
 }) => {
 
     const dispatch = useDispatch();
-
+    const handleYes = () => closeModel();
+    const handleNo = () => {};
+  
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
     const apiSlice = useSelector((state) => state.apiSlice);
@@ -41,7 +43,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
     const {
         UpdateAppointeeManualVerification
     } = apiSlice[0];
-    const { openConfirmationModel } = functionSlice[0];
+    const { openConfirmationModel, openConfirmationYesNoModal} = functionSlice[0];
     const [zoomLevel, setZoomLevel] = useState(1);
     const [remarks, setRemarks] = useState("");
     const handleZoomIn = () => {
@@ -155,6 +157,48 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
             }
         });
     };
+
+const handleClose = async () => {
+    // if (
+    //   hasValue(uanNumber) &&
+    //   isManualPassbook === true &&
+    //   isPensionApplicable === null
+    // ) {
+      const closeConfirmationModelContent = {
+        // dialogTitle: (
+        //   <div
+        //     style={{
+        //       display: "flex",
+        //       justifyContent: "space-between",
+        //       alignItems: "center",
+        //     }}
+        //   >
+        //     <Typography>Close Verification</Typography>
+        //   </div>
+        // ),
+        dialogContentText: (
+          <>
+            <Typography sx={subHeadingContentTextStyle}>
+              {'If you have selected any answers / written "Remarks", please click on "Submit" to register your responses - you will loose them otherwise.'}
+            </Typography>
+            <Typography>  {'Do you still want to "Close"?'}</Typography>
+          </>
+        ),
+        // dialogComponent: <PrerequisiteInformation />,
+        // firstButtonName: "Yes",
+        // secondButtonName: "No",
+        fullWidth: true,
+        mxWidth: "md",
+      };
+      openConfirmationYesNoModal(
+        closeConfirmationModelContent,
+        handleYes,
+        handleNo
+      );
+    // } else {
+    //   handleApproveModal();
+    // }
+  };
 
     return (
         <>
@@ -278,7 +322,8 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                         >
                             {'Submit'}
                         </Button1>
-                        {/* <Button
+                        <Button1
+                        onClick = {handleClose}
                             //onClick={() => setCurrentPageNo(1)}
                             // onClick={() => submitDetails(false, true)}
                             //sx={{ m: "15px 5px", ml: 3 }}
@@ -287,7 +332,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                             color="primary"
                         >
                             {'Close'}
-                        </Button> */}
+                        </Button1>
                     </Stack>
                 </Grid>
             </GridContainer>
