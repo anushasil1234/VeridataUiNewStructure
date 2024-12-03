@@ -180,8 +180,7 @@ const handleClose = async () => {
           <>
             <Typography sx={subHeadingContentTextStyle}>
               {'If you have selected any answers / written "Remarks", please click on "Submit" to register your responses - you will loose them otherwise.'}
-            </Typography>
-            <Typography>  {'Do you still want to "Close"?'}</Typography>
+              </Typography>  <Typography sx={subHeadingContentTextStyle}> {'Do you still want to "Close"?'}</Typography>
           </>
         ),
         // dialogComponent: <PrerequisiteInformation />,
