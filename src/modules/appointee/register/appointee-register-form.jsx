@@ -2825,6 +2825,10 @@ const AppointeeRegisterForm = () => {
                                                         >
                                                             <IconButton
                                                                 disabled={isPreviousSectionDisabled}
+                                                                sx={{
+                                                                    marginLeft: '-5px', // Moves the icon a bit to the left
+                                                                    marginTop: '-5px',  // Moves the icon a bit upwards
+                                                                }}
                                                             >
                                                                 <InfoOutlined />
                                                             </IconButton>
