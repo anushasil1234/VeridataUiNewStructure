@@ -184,7 +184,7 @@ let EmploymentViewDetails = ({ appointeeId, userId,epfoDetails }) => {
                   fieldValue={fatherName}
                 />
                 <PersonalInformation
-                  fieldName={"UAN Number"}
+                  fieldName={"UAN"}
                   fieldValue={pfUan}
                 />
               </Stack>

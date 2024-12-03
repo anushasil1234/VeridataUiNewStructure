@@ -266,7 +266,7 @@ export const verifiedListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'UAN No. ',
+        label: 'UAN',
         enums: ['uanNo'],
         component: {
             element: Typography
@@ -512,7 +512,7 @@ export const GetPfCreationListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'UAN No. ',
+        label: 'UAN',
         enums: ['uanNo'],
         component: {
             element: Typography
@@ -684,7 +684,7 @@ export const pfPensionTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'UAN No. ',
+        label: 'UAN',
         enums: ['uan'],
         component: {
             element: Typography

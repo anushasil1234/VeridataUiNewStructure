@@ -736,7 +736,7 @@ let AppointeeViewForm = ({
               />
               <DocumentDetails
                 isVerified={isUanVerified}
-                fieldName={"UAN Number"}
+                fieldName={"UAN"}
                 fieldValue={UAN}
               />
               <DocumentDetails
