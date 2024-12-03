@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
-import { nationalityListTableHeadCell, nationalityReportTableHeadCell, toNationalityReport ,reportGenarate} from "shared/constants/constants";
+import { nationalityListTableHeadCell, nationalityReportTableHeadCell, toNationalityReport ,reportGenarate, uploadedFromDateEmptyMsg} from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import { removeActionRoute } from "store/slices/action-route-slice";
@@ -189,19 +189,20 @@ const NationalityReportView = (props) => {
   //   jsPDFReportTemplate({ tableObj });
   // };
   const handleReportSearch = () => {
-    if (filterType === 0) {
-      const _payLoad = {
-        ...payLoad,
-        fromDate: null,
-        toDate: null,
-        nationalityType: null,
+    if (filterType !== 0) {
+      if (!hasValue (fromDate)) {
+        showErrorMessage(uploadedFromDateEmptyMsg);
+        return;
       }
-      setTableRows(_payLoad);
     }
-    else{
-      setTableRows(payLoad)
-    }
+  
+    const _payLoad = filterType === 0 
+      ? { ...payLoad, fromDate: null, toDate: null, nationalityType: null } 
+      : payLoad;
+  
+    setTableRows(_payLoad);
   };
+  
   return (
     <PageLayout pageName={"Nationality"}>
       <CardLayout>

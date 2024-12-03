@@ -59,6 +59,7 @@ import {
   pensionConfirmation,
   epfoServiceHistoryFileTypeAlias,
   toMannualVerification,
+  remarksissuemessage,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -483,6 +484,8 @@ let AppointeeViewForm = ({
     if (response && response.responseInfo && response.responseInfo.length > 0) {
       const remarks = response.responseInfo;
       openRemarksModel(remarks);
+    }else{
+      showErrorMessage(remarksissuemessage)
     }
   };
 
@@ -721,7 +724,7 @@ let AppointeeViewForm = ({
                 <Typography sx={listHeadingStyle}>Document Details</Typography>
               </Stack>
               <DocumentDetails
-                fieldName={"Candidate Id"}
+                fieldName={"Candidate ID"}
                 fieldValue={candidateId}
               />
               <DocumentDetails

@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadPFReport from "shared/components/download-report/download-PF-report";
-import { pfPensionReportDesc, pfPensionTableHeadCell, reportGenarate, topfPension, verifiedReportInfo } from "shared/constants/constants";
-import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
+import { pfPensionReportDesc, pfPensionTableHeadCell, reportGenarate, topfPension, uploadedFromDateEmptyMsg, verifiedReportInfo } from "shared/constants/constants";
+import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
@@ -185,6 +185,13 @@ const UnWrappedpf = (props) => {
       window.URL.revokeObjectURL(blobUrl);
     }
   };
+  const handleSearch = () => {
+    if (!hasValue (fromDate)) {
+      showErrorMessage(uploadedFromDateEmptyMsg);
+      return;
+    }
+    setTableRows(payLoad);
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -205,7 +212,7 @@ const UnWrappedpf = (props) => {
     <PageLayout pageName={"PF-Pension Report"}>
       <CardLayout>
         <DownloadPFReport
-          handleSearch={() => setTableRows(payLoad)}
+          handleSearch={handleSearch}
           clearSearch={clearSearch}
           pensionStatus={pensionStatus}
           passbookStatus={isManual}

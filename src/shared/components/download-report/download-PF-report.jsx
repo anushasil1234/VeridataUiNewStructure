@@ -130,14 +130,14 @@ const DownloadPFReport = ({
       {ispensionfilter && ispensionfilter === true ? (
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <FormControl sx={{ width: "100%" }} size="large">
-            <InputLabel id="demo-simple-select-label" >EPS Member</InputLabel>
+            <InputLabel id="demo-simple-select-label" >EPS Membership</InputLabel>
             <Select
               sx={inputFieldStyleAdded}
               labelId="demo-simple-select-label"
               id="demo-select-small"
               className="customeTextField"
               value={pensionStatus}
-              label="Pension Status"
+              label="EPS Membership"
               onChange={handleProcessPansionChange}
             >
               <MenuItem value={true}>Yes</MenuItem>

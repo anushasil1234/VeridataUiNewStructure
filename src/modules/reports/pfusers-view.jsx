@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReport from "shared/components/download-report/download-report";
-import { GetPfCreationListTableHeadCell, downloadPfCreationApponteeList_URL, toPFUsers } from "shared/constants/constants";
-import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
+import { GetPfCreationListTableHeadCell, downloadPfCreationApponteeList_URL, toPFUsers, uploadedFromDateEmptyMsg } from "shared/constants/constants";
+import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 
 const UnwappedPFUsers = (props) => {
@@ -82,7 +82,8 @@ const UnwappedPFUsers = (props) => {
  
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getPfCreationAppointeeReportList } = apiSlice[0];
-
+  const popUpSlice = useSelector((state) => state.popUpSlice);
+  const { showErrorMessage } = popUpSlice[0]
   const setTableRows = async (updatedPayLoad) => {
     const response = await getPfCreationAppointeeReportList(updatedPayLoad);
     if (response) {
@@ -98,6 +99,13 @@ const UnwappedPFUsers = (props) => {
         tableRows: generatedCells,
       });
     }
+  };
+  const handleSearch = () => {
+    if (!hasValue (fromDate)) {
+      showErrorMessage(uploadedFromDateEmptyMsg);
+      return;
+    }
+    setTableRows(payLoad);
   };
 
   const dispatch = useDispatch();
@@ -121,7 +129,7 @@ const UnwappedPFUsers = (props) => {
     <PageLayout pageName={"PF Users List"}>
       <CardLayout>
         <DownloadReport
-          handleSearch={()=>setTableRows(payLoad)}
+          handleSearch={handleSearch}
           clearSearch={clearSearch}
           payLoad={payLoad}
           downloadApi={downloadPfCreationApponteeList_URL}

@@ -57,7 +57,7 @@ export const passportExpireddMsg = `Your passport has expired. Please set the Da
 export const fetchUanConfirmationtMsg = `Your Aadhaar or PAN verification has failed. If you continue you will not be able to change your Aadhaar or PAN.   want to continue?`;
 export const remiderSuccessMsg = `A reminder has been sent successfully`;
 export const noRecordsMsg = `No records found`;
-export const noRemarksMsg = `No remarks available`;
+export const noRemarksMsg = `No remarks/issues available`;
 export const emptyRowMsg = `Please select a row`;
 export const addPassWordMsg = `Please go to profile settings and add a profile password`;
 export const invalidPasswordMsg = `Password should have length 6-10, containing 1 letter, 1 number, 1 spacial character, please retry`;
@@ -2061,8 +2061,13 @@ export const noResponseReportTableHeadCell = [
         enums: ['createdDate'],
     },
     {
+        id: 'status',
+        label: 'Status',
+        enums: ['status']
+    },
+    {
         type: "string",
-        label: 'Last Activity',
+        label: 'Last Activity Info',
         enums: ['lastActivityDesc'],
     },
     {
@@ -2486,7 +2491,7 @@ export const confirmpasswordNotMsg = `Confirm Password does not match with New P
 export const passwordPattern = `Password should be of atleast 8 - 12 characters long, with atleast 1 UPPER CASE, 1 lower case, 1 number, and one special character`;
 export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
 export const remarksEmptyMsg = `Remarks cannot be empty`;
-export const remarksissuemessage=`No remarks/issue available for this appointee.`;
+export const remarksissuemessage=`No remarks/issues available.`;
 export const otpToMailMsg = `A verification code has been sent to your email address, Please check and enter `;
 export const setPasswordOtpToMailMsg = `A verification code has been sent to your email address. Please check and enter it in OTP field. `;
 export const emailEmptyMsg = `Email cannot be empty`;
@@ -2498,7 +2503,7 @@ export const verifiedReportInfo = `Trust PF data is not reflected in following f
 export const timeOutMsg = `Server is down, Please try again.`;
 //export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
 export const manualSubmitConfirmatonMsg = `Based on your answers, Veridata will either Verify the candidate or send Issue list to candidate for reuploading the correct and required documents. Do you want to proceed & Submit?`;
-export const uploadedFromDateEmptyMsg = `"Upload From" date cannot be empty`;
+export const uploadedFromDateEmptyMsg = `"Upload From" Date cannot be empty`;
 
 export const ManualSubmitConfirmation = ({type}) => {
  

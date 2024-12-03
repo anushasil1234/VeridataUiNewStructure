@@ -118,7 +118,7 @@ const DownloadReport = ({
                 label="Verification Status"
                 onChange={handleProcessStatusChange}
               >
-                <MenuItem value={"All"}>Select all</MenuItem>
+                <MenuItem value={"All"}>Select All</MenuItem>
                 <MenuItem value={"AP"}>Verified</MenuItem>
                 <MenuItem value={"FA"}>Manual Override</MenuItem>
               </Select>
@@ -141,7 +141,7 @@ const DownloadReport = ({
                 label="Passbook Status"
                 onChange={handlePassbookStatusChange}
               >
-                <MenuItem value={'All'}>Select all</MenuItem>
+                <MenuItem value={'All'}>Select All</MenuItem>
                 <MenuItem value={true}>Manual</MenuItem>
                 <MenuItem value={false}>Auto</MenuItem>
               </Select>

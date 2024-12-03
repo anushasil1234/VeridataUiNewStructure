@@ -345,7 +345,7 @@ const UnWrappedProcessing = (props) => {
                   label="Passbook Status"
                   onChange={handlePassbookStatusChange}
                 >
-                  <MenuItem value={'All'}>Select all</MenuItem>
+                  <MenuItem value={'All'}>Select All</MenuItem>
                   <MenuItem value="true">Manual</MenuItem>
                   <MenuItem value="false">Auto</MenuItem>
                 </Select>

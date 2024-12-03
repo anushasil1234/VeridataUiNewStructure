@@ -1485,6 +1485,7 @@ const yellow = ThemeColorPalete.yellow1.light;
 const rejected = ThemeColorPalete.red.main;
 
 export const statusChartColorList = [successlight, secondary, yellow, rejected];
+export const barcharcolour=[yellow,secondary]
 // status chart style end
 
 // skelton style starts
