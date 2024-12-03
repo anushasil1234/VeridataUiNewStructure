@@ -3170,7 +3170,7 @@ const AppointeeRegisterForm = () => {
                                                                     //     : trustEpfoFileName
                                                                     // }
                                                                     fileName={trustEpfoFileName}
-                                                                    accept={"image/png, image/jpeg"}
+                                                                    accept={"image/png, image/jpeg,application/pdf"}
                                                                     disabled={isPreviousSectionDisabled}
                                                                     maxUploadSize={imgAndPdfMaxSize}
                                                                     uploadTypeAlias={trustEpfoFileTypeAlias}
@@ -3724,7 +3724,7 @@ const AppointeeRegisterForm = () => {
                                                                         //     : handicapFileName
                                                                         // }
                                                                         fileName={epfoServiceHistoryFile}
-                                                                        accept={"image/png, image/jpeg"}
+                                                                        accept={"image/png, image/jpeg, application/pdf"}
                                                                         maxUploadSize={imgAndPdfMaxSize}
                                                                         uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
                                                                     // handleRemoveFile={removeEPFOServiceHistory}
@@ -3752,7 +3752,7 @@ const AppointeeRegisterForm = () => {
                                                                         //     : handicapFileName
                                                                         // }
                                                                         fileName={epfoPassBookFiles}
-                                                                        accept={"image/png, image/jpeg"}
+                                                                        accept={"image/png, image/jpeg,application/pdf"}
                                                                         maxUploadSize={imgAndPdfMaxSize}
                                                                         multiple={true}
                                                                         uploadTypeAlias={epfoPassbookFileTypeAlias}
