@@ -1,5 +1,5 @@
 import { Box, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material'
-import { candidatefileViewContainerStyle, imagestyleContainer, listHeadingStyle, rightMostBtnStyle, subHeadingContentTextStyle, submitBtnStyle, zoombuttonStyle } from 'app'
+import { candidatefileViewContainerStyle, imagestyleContainer, infoDialogTitleStyle, listHeadingStyle, rightMostBtnStyle, subHeadingContentTextStyle, submitBtnStyle, zoombuttonStyle } from 'app'
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import VerificationQuiestions from './verification-quiestions'
@@ -22,13 +22,12 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
     verificationOnChange, verificationQuestionSet, appointeeId,
     fileName, selectedFiles, files, setFiles, setVerificationType, categorySelected,
     verificationCategoryList, setVerificationCategoryList, verificationTypeList,
-    setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList,closeModel
+    setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList, closeModel,setIsVarified
 }) => {
 
     const dispatch = useDispatch();
-    const handleYes = () => closeModel();
-    const handleNo = () => {};
   
+
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
     const apiSlice = useSelector((state) => state.apiSlice);
@@ -40,12 +39,12 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         userId: null
     };
     const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
-    const {
-        UpdateAppointeeManualVerification
-    } = apiSlice[0];
-    const { openConfirmationModel, openConfirmationYesNoModal} = functionSlice[0];
+    const { UpdateAppointeeManualVerification } = apiSlice[0];
+    const { openConfirmationModel } = functionSlice[0];
     const [zoomLevel, setZoomLevel] = useState(1);
     const [remarks, setRemarks] = useState("");
+  
+
     const handleZoomIn = () => {
         setZoomLevel(handleZoom('in'));
     };
@@ -73,10 +72,13 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
     const callApiBasedOnSuccess = async (payload) => {
         {
 
-            const { responseInfo } = await UpdateAppointeeManualVerification(payload);
-            if (responseInfo) {
+            const response = await UpdateAppointeeManualVerification(payload);
+            if (response) {
+                const { responseInfo } = response
+                console.log("responseInfo", responseInfo)
                 // store into redux
                 // dispatch(storeLoggedinData(loginData));
+                setIsVarified(responseInfo);
                 const isdataSubmited = true;
                 dispatch(removeManualValidationResponseStatusSlice());
                 dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited }));
@@ -85,7 +87,6 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         }
         return false;
     };
-    console.log("selectedMandatoryCategoryList", selectedMandatoryCategoryList);
 
     const handleVerificationSubmit = async () => {
         let submitconfModelContent = {
@@ -158,46 +159,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         });
     };
 
-const handleClose = async () => {
-    // if (
-    //   hasValue(uanNumber) &&
-    //   isManualPassbook === true &&
-    //   isPensionApplicable === null
-    // ) {
-      const closeConfirmationModelContent = {
-        // dialogTitle: (
-        //   <div
-        //     style={{
-        //       display: "flex",
-        //       justifyContent: "space-between",
-        //       alignItems: "center",
-        //     }}
-        //   >
-        //     <Typography>Close Verification</Typography>
-        //   </div>
-        // ),
-        dialogContentText: (
-          <>
-            <Typography sx={subHeadingContentTextStyle}>
-              {'If you have selected any answers / written "Remarks", please click on "Submit" to register your responses - you will loose them otherwise.'}
-              </Typography>  <Typography sx={subHeadingContentTextStyle}> {'Do you still want to "Close"?'}</Typography>
-          </>
-        ),
-        // dialogComponent: <PrerequisiteInformation />,
-        // firstButtonName: "Yes",
-        // secondButtonName: "No",
-        fullWidth: true,
-        mxWidth: "md",
-      };
-      openConfirmationYesNoModal(
-        closeConfirmationModelContent,
-        handleYes,
-        handleNo
-      );
-    // } else {
-    //   handleApproveModal();
-    // }
-  };
+  
 
     return (
         <>
@@ -322,7 +284,7 @@ const handleClose = async () => {
                             {'Submit'}
                         </Button1>
                         <Button1
-                        onClick = {handleClose}
+                            onClick={closeModel}
                             //onClick={() => setCurrentPageNo(1)}
                             // onClick={() => submitDetails(false, true)}
                             //sx={{ m: "15px 5px", ml: 3 }}

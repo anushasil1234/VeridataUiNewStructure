@@ -24,10 +24,13 @@ import {
     cardStyle2,
     floatingIconListStyle,
     gridContainerStyle,
+    infoDialogTitleStyle,
     inputFieldStyle2,
     lable1CopyStyle,
     listHeadingConteinerStyle,
     listHeadingStyle,
+    rightMostBtnStyle,
+    subHeadingContentTextStyle,
 } from "app";
 import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg, defaultDropdownValue, remarksissuemessage } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
@@ -48,6 +51,8 @@ import { DATEDIFF, DateFormatYYYYMMDD, FabIcon, toggleActionMenu, hasValue, DDMM
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import RemarksInputModel from "shared/utils/models/remarks-modal";
 import { storeActionRoute } from "store/slices/action-route-slice";
+import GridContainer from "shared/components/grid-container/grid-container";
+import Button1 from "shared/utils/button/button1";
 
 const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
     return (
@@ -64,7 +69,7 @@ const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
     )
 }
 
-let ManualverifiedViewDetails = ({ details,closeModel }) => {
+let ManualverifiedViewDetails = ({ details, closeModel }) => {
 
     const {
         appointeeId,
@@ -108,7 +113,7 @@ let ManualverifiedViewDetails = ({ details,closeModel }) => {
         openRemarksModel,
         openRemarksInputModel,
         closeRemarksInputModel,
-
+        openConfirmationYesNoModal
     } = functionSlice[0];
     const popUpSlice = useSelector(state => state.popUpSlice);
     const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
@@ -150,7 +155,7 @@ let ManualverifiedViewDetails = ({ details,closeModel }) => {
     const [isUanVerified, setIsUanVerified] = useState(false);
     const [dateOfJoining, setDateOfJoining] = useState(null);
     const [userId, setUserId] = useState(null);
-
+    const [isVarified, setIsVarified] = useState();
     const dispatch = useDispatch();
     const clearSubDropdownListofVerificationType = (currentValue) => {
         clearCategoryRelatedVariables();
@@ -359,21 +364,21 @@ let ManualverifiedViewDetails = ({ details,closeModel }) => {
                 )
                 : setMaritalStatus(NA);
             appointeeEmailId ? setEmail(appointeeEmailId) : setEmail(NA);
-      mobileNo ? setMobileNo(mobileNo) : setMobileNo(NA);
-      nationality ? setNationality(nationality) : setNationality(NA);
-      dateOfJoining
-        ? setDateOfJoining(DDMMYYYY(dateOfJoining))
-        : setDateOfJoining(NA);
-      // mobileNo: mobileNo ? mobileNo : NA,
-      // nationality: nationality ? nationality : NA,
-      // isFnameVarified: isFnameVarified ? isFnameVarified : NA,
-      // isUanVerified: isUanVarified
-      //   ? isUanVarified
-      //   : isUanVarified === false
-      //   ? isUanVarified
-      //   : NA,
-      //   dateOfJoining:dateOfJoining,
-      //   userId:userId
+            mobileNo ? setMobileNo(mobileNo) : setMobileNo(NA);
+            nationality ? setNationality(nationality) : setNationality(NA);
+            dateOfJoining
+                ? setDateOfJoining(DDMMYYYY(dateOfJoining))
+                : setDateOfJoining(NA);
+            // mobileNo: mobileNo ? mobileNo : NA,
+            // nationality: nationality ? nationality : NA,
+            // isFnameVarified: isFnameVarified ? isFnameVarified : NA,
+            // isUanVerified: isUanVarified
+            //   ? isUanVarified
+            //   : isUanVarified === false
+            //   ? isUanVarified
+            //   : NA,
+            //   dateOfJoining:dateOfJoining,
+            //   userId:userId
             const verificationFieldSet = {
                 none: false,
                 isFnameVarified: isFnameVarified,
@@ -514,6 +519,50 @@ let ManualverifiedViewDetails = ({ details,closeModel }) => {
         <ThumbDown />,
         "Cancel"
     );
+    const handleYes = () => closeModel();
+    const handleNo = () => { };
+    const handleClose = async () => {
+
+        let _contetntText
+        console.log('isVarified', isVarified);
+        if (isVarified === false) {
+            _contetntText = (
+                <>
+                    <Typography sx={subHeadingContentTextStyle}>
+                        {'Candidate has failed verification in the previously checked segment.'}
+                    </Typography>
+                    <Typography sx={subHeadingContentTextStyle}>
+                        {'If you Close now, you will not be able to complete the remaining verification segments.'}
+                    </Typography>
+                    <Typography sx={subHeadingContentTextStyle}>
+                        {'Candidate will be moved to "Document Reupload Requested" tab, requesting Candidate to reupload relevant documents against the failed verification issues. After candidate completes the reupload, Candidate will be moved to Manual Re-Verification tab, from where you will again be able to reverify candidate.'}
+                    </Typography>
+                    <Typography sx={infoDialogTitleStyle}> {'Do you still want to "Close"?'}</Typography>
+                </>
+            )
+        } else {
+            _contetntText = (
+                <>
+                    <Typography sx={subHeadingContentTextStyle}>
+                        {'If you have selected any answers / written "Remarks", please click on "Submit" to register your responses - you will loose them otherwise.'}
+                    </Typography>
+                    <Typography sx={infoDialogTitleStyle}> {'Do you still want to "Close"?'}</Typography>
+                </>
+            )
+        }
+        const closeConfirmationModelContent = {
+
+            dialogContentText: _contetntText,
+            fullWidth: true,
+            mxWidth: "md",
+        };
+        openConfirmationYesNoModal(
+            closeConfirmationModelContent,
+            handleYes,
+            handleNo
+        );
+
+    };
     return (
         <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%", padding: "1rem 0", marginRight: '10px' }}>
             <Stack sx={floatingIconListStyle}>
@@ -626,33 +675,54 @@ let ManualverifiedViewDetails = ({ details,closeModel }) => {
                 </Grid>
                 <Divider />
                 {
-                    verificationCategoryList && verificationCategoryList.length > 0 &&
-                    <FiledetailsSection
-                        appointeeId={appointeeId}
-                        verificationType={verificationType}
-                        fileSrc={fileSrc}
-                        fileName={fileName}
-                        fileTypeCategory={fileTypeCategory}
-                        setFileTypeCategory={setFileTypeCategory}
-                        verificationOnChange={verificationOnChange}
-                        verificationUpdate={verificationUpdate}
-                        verificationQuestionSet={verificationQuestionSet}
-                        categorySelected={categorySelected}
-                        setVerificationTypeList={setVerificationTypeList}
-                        setVerificationType={setVerificationType}
-                        setVerificationCategoryList={setVerificationCategoryList}
-                        uploadedFileData={uploadedFileData}
-                        verificationTypeList={verificationTypeList}
-                        verificationCategoryList={verificationCategoryList}
-                        selectedFiles={selectedFiles}
-                        files={files}
-                        setFiles={setFiles}
-                        setFile={setFile}
-                        selectedMandatoryCategoryList={selectedMandatoryCategoryList}
-                        setSelectedMandatoryCategoryList={setSelectedMandatoryCategoryList}
-                        closeModel={closeModel}
-                    />
+                    verificationCategoryList && verificationCategoryList.length > 0 ? (
+                        <FiledetailsSection
+                            appointeeId={appointeeId}
+                            verificationType={verificationType}
+                            fileSrc={fileSrc}
+                            fileName={fileName}
+                            fileTypeCategory={fileTypeCategory}
+                            setFileTypeCategory={setFileTypeCategory}
+                            verificationOnChange={verificationOnChange}
+                            verificationUpdate={verificationUpdate}
+                            verificationQuestionSet={verificationQuestionSet}
+                            categorySelected={categorySelected}
+                            setVerificationTypeList={setVerificationTypeList}
+                            setVerificationType={setVerificationType}
+                            setVerificationCategoryList={setVerificationCategoryList}
+                            uploadedFileData={uploadedFileData}
+                            verificationTypeList={verificationTypeList}
+                            verificationCategoryList={verificationCategoryList}
+                            selectedFiles={selectedFiles}
+                            files={files}
+                            setFiles={setFiles}
+                            setFile={setFile}
+                            selectedMandatoryCategoryList={selectedMandatoryCategoryList}
+                            setSelectedMandatoryCategoryList={setSelectedMandatoryCategoryList}
+                            closeModel={handleClose}
+                            setIsVarified={setIsVarified}
+                            isVarified={isVarified}
+
+                        />
+                    ) : (
+                        <Grid item xs={12}>
+                            <Stack sx={{ flexDirection: 'row', justifyContent: 'end' }}>
+
+                                <Button1
+                                    onClick={closeModel}
+                                    sx={rightMostBtnStyle}
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    {'Close'}
+                                </Button1>
+                            </Stack>
+                        </Grid>
+                    )
                 }
+                {/* <GridContainer> */}
+
+                {/* </GridContainer> */}
             </ManualVerifiedPageSectionContainer>
         </Box>
     );
@@ -664,8 +734,8 @@ const UnWrappedManualVerifiedView = (props) => {
             headerText={"Manual Verification"}
             open={props.openView}
             fullScreen={true}
-            closeModel={props.closeViewModel}
-            content={<ManualverifiedViewDetails details={props.appointeePersonalDetails} closeModel={props.closeViewModel}/>}
+            // closeModel={props.closeViewModel}
+            content={<ManualverifiedViewDetails details={props.appointeePersonalDetails} closeModel={props.closeViewModel} />}
         />
     );
 };

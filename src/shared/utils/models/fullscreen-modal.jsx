@@ -22,21 +22,23 @@ export default function FullScreenModel({ fullScreen, open, closeModel, content,
             <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0' }}>
                 <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '-5px' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={closeModel}
-                            aria-label="close"
-                        >
-                            <Close />
-                        </IconButton>
+                        {closeModel &&
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                onClick={closeModel}
+                                aria-label="close"
+                            >
+                                <Close />
+                            </IconButton>
+                        }
                         {headerText && (
                             <Typography sx={{ ...fileNameStyleinview, ml: "5px", fontWeight: 'bold' }} fontSize={15}>
                                 {headerText}
                             </Typography>
                         )}
                     </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center',gap:-1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: -1 }}>
                         {zoomControls}
                         {actionButton}
                     </Box>
