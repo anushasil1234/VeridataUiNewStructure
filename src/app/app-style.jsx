@@ -1330,11 +1330,11 @@ export const fileUploadSectionContainerStyle = {
 }
 const fileUploadSectionTextMargin = '6px';
 export const fileNameStyle = {
-  fontSize: ".7rem",
+  fontSize: ".875rem",
   textAlign: 'center',
   marginTop: fileUploadSectionTextMargin,
   texWrap: 'nowrap',
-  marginBottom: "20px"
+  marginBottom: "8px"
 }
 export const boxStyle = {
   position: 'absolute',
