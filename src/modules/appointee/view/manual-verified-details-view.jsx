@@ -44,7 +44,7 @@ import addNewQuestion from "shared/utils/associate/add-new-question";
 import createVerificationTypeList from "shared/utils/associate/create-verification-type-list";
 import getFileCategoryByFileType from "shared/utils/associate/get-file-category";
 import isEPFOSelectionDisabled from "shared/utils/associate/is-epfo-disabled";
-import { DATEDIFF, DateFormatYYYYMMDD, FabIcon, toggleActionMenu, hasValue } from "shared/utils";
+import { DATEDIFF, DateFormatYYYYMMDD, FabIcon, toggleActionMenu, hasValue, DDMMYYYY, filteredObjectProperty } from "shared/utils";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import RemarksInputModel from "shared/utils/models/remarks-modal";
 import { storeActionRoute } from "store/slices/action-route-slice";
@@ -68,37 +68,41 @@ let ManualverifiedViewDetails = ({ details }) => {
 
     const {
         appointeeId,
-        appointeeName,
-        dateOfBirth,
-        gender,
-        relationshipWithMember,
-        member,
-        handicapType,
-        isPhysicallyHandicap,
-        maritalStatus,
-        qualification,
-        email,
-        mobileNo,
-        nationality,
-        isFnameVarified,
-        isUanVerified,
-        dateOfJoining,
-        userId
+        // appointeeName,
+        // dateOfBirth,
+        // gender,
+        // relationshipWithMember,
+        // member,
+        // handicapType,
+        // isPhysicallyHandicap,
+        // maritalStatus,
+        // qualification,
+        // email,
+        // mobileNo,
+        // nationality,
+        // isFnameVarified,
+        // isUanVerified,
+        // dateOfJoining,
+        // userId
     } = details;
 
-    const verificationFieldSet = {
-        none: false,
-        isFnameVarified: isFnameVarified,
-        isUanVerified: isUanVerified
-    }
-
     const apiSlice = useSelector((state) => state.apiSlice);
+    const dropdownList = useSelector((state) => state.dropdownList);
+
+    const {
+        relationList,
+        qualificationList,
+        disabilityList,
+        maritalStatusList,
+        genderList,
+    } = dropdownList.length > 0 && dropdownList[0];
     const functionSlice = useSelector((state) => state.functionSlice);
     const {
         getUploadFileData,
         GetUploadedFileDetailsById,
         getRemarks,
-        postAppointeeRejected
+        postAppointeeRejected,
+        getAppointeeDetails,
     } = apiSlice[0];
     const {
         openRemarksModel,
@@ -130,6 +134,22 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [categorySelected, setCategorySelected] = useState(false);
     const [degreeOfRotation, setDegreeOfRotation] = useState(0);
     const [actionIconListDisplay, setActionIconListDisplay] = useState(false);
+    const [appointeeName, setAppointeeName] = useState();
+    const [dateOfBirth, setDateOfBirth] = useState();
+    const [gender, setGender] = useState();
+    const [relationshipWithMember, setRelationshipWithMember] = useState(null);
+    const [member, setMember] = useState(null);
+    const [handicapType, setHandicapType] = useState(null);
+    const [isPhysicallyHandicap, setIsPhysicallyHandicap] = useState(false);
+    const [maritalStatus, setMaritalStatus] = useState(null);
+    const [qualification, setQualification] = useState(null);
+    const [email, setEmail] = useState("");
+    const [mobileNo, setMobileNo] = useState("");
+    const [nationality, setNationality] = useState(null);
+    const [isFnameVarified, setIsFnameVarified] = useState(false);
+    const [isUanVerified, setIsUanVerified] = useState(false);
+    const [dateOfJoining, setDateOfJoining] = useState(null);
+    const [userId, setUserId] = useState(null);
 
     const dispatch = useDispatch();
     const clearSubDropdownListofVerificationType = (currentValue) => {
@@ -146,6 +166,8 @@ let ManualverifiedViewDetails = ({ details }) => {
     };
     const selectDefaultVerificationType = (value, _uploadedFileData) => {
         const target = { value };
+        console.log('_uploadedFileData', _uploadedFileData);
+
         handleChangeVerificationType({ target }, _uploadedFileData);
     }
 
@@ -299,7 +321,69 @@ let ManualverifiedViewDetails = ({ details }) => {
             console.log("EPFO option selected:", value);
         }
     };
+    const initializeVerificationData = async () => {
+        const response = await getAppointeeDetails(appointeeId);
 
+        if (response) {
+            const { appointeeName, dateOfBirth, gender, memberName, memberRelation, isHandicap, handicapeType, maratialStatus, qualification,
+                appointeeEmailId, mobileNo, dateOfJoining, isUanVarified, isFnameVarified } = response.responseInfo;
+            appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
+            dateOfBirth ? setDateOfBirth(DDMMYYYY(dateOfBirth)) : setDateOfBirth(NA);
+            gender
+                ? setGender(filteredObjectProperty(genderList, gender))
+                : setGender(NA);
+            memberName ? setMember(memberName) : setMember(NA);
+            memberRelation
+                ? setRelationshipWithMember(
+                    filteredObjectProperty(relationList, memberRelation)
+                )
+                : setRelationshipWithMember(NA);
+            hasValue(isHandicap)
+                ? isHandicap === "Y"
+                    ? setIsPhysicallyHandicap("Yes")
+                    : setIsPhysicallyHandicap("No")
+                : setIsPhysicallyHandicap(NA);
+            isHandicap === "N" || !isHandicap
+                ? setHandicapType(NA)
+                : setHandicapType(
+                    filteredObjectProperty(disabilityList, handicapeType)
+                );
+            qualification
+                ? setQualification(
+                    filteredObjectProperty(qualificationList, qualification)
+                )
+                : setQualification(NA);
+            maratialStatus
+                ? setMaritalStatus(
+                    filteredObjectProperty(maritalStatusList, maratialStatus)
+                )
+                : setMaritalStatus(NA);
+            appointeeEmailId ? setEmail(appointeeEmailId) : setEmail(NA);
+      mobileNo ? setMobileNo(mobileNo) : setMobileNo(NA);
+      nationality ? setNationality(nationality) : setNationality(NA);
+      dateOfJoining
+        ? setDateOfJoining(DDMMYYYY(dateOfJoining))
+        : setDateOfJoining(NA);
+      // mobileNo: mobileNo ? mobileNo : NA,
+      // nationality: nationality ? nationality : NA,
+      // isFnameVarified: isFnameVarified ? isFnameVarified : NA,
+      // isUanVerified: isUanVarified
+      //   ? isUanVarified
+      //   : isUanVarified === false
+      //   ? isUanVarified
+      //   : NA,
+      //   dateOfJoining:dateOfJoining,
+      //   userId:userId
+            const verificationFieldSet = {
+                none: false,
+                isFnameVarified: isFnameVarified,
+                isUanVerified: isUanVarified
+            }
+            const { verificationTypeList } = createVerificationTypeList(defaultVerificationTypeList, verificationFieldSet);
+            setUploadedFileDataResponse(verificationTypeList[0]?.value);
+            setVerificationTypeList(verificationTypeList);
+        }
+    };
     useEffect(() => {
         if (files.length === 1 && selectedFiles.length === 0) {
             setSelectedFiles([files[0].value]);
@@ -364,9 +448,7 @@ let ManualverifiedViewDetails = ({ details }) => {
     }, [verificationType]);
 
     useEffect(() => {
-        const { verificationTypeList } = createVerificationTypeList(defaultVerificationTypeList, verificationFieldSet);
-        setUploadedFileDataResponse(verificationTypeList[0]?.value);
-        setVerificationTypeList(verificationTypeList);
+        initializeVerificationData();
     }, [])
     useEffect(() => {
         const { updatedQuestionSet: _updatedQuestionSet } = upDateQuestionSet({
