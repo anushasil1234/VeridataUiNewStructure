@@ -3,7 +3,7 @@ import { Box, Button, Fab, Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { LinkNotSentTableHeadCell, notProcessedDataVerificationConfirmationMsg, startVerification, toLinknotsent, verificationConfirmationMsg } from 'shared/constants/constants';
+import { LinkNotSentTableHeadCell, notProcessedDataVerificationConfirmationMsg, startVerification, toLinknotsent, uploadedFromDateEmptyMsg, verificationConfirmationMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue, selectCheckedRows } from 'shared/utils';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import { removeActionRoute } from 'store/slices/action-route-slice';
@@ -97,7 +97,7 @@ const UnwrapedLinkNotSent = (props) => {
             isUnprocessed: true
         }
         console.log('isCheckedAddedRows', isCheckedAddedRows);
-        
+
         // const response = await postRawFileData(postRawDatapayLoad);
 
         // if (response) {
@@ -155,12 +155,12 @@ const UnwrapedLinkNotSent = (props) => {
         }
         setPayLoad(_payLoad);
     }, [fromDate, toDate]);
-    const handelsearch = () => {
-        if (hasValue(toDate) && !hasValue(fromDate)) {
-            showErrorMessage("From Date can not be empty");
-        } else {
-            handleSearch();
+    const handleClickOnsearch = () => {
+        if (!hasValue(fromDate)) {
+            showErrorMessage(uploadedFromDateEmptyMsg);
+            return
         }
+        handleSearch();
     }
     return (
         <PageLayout pageName={pageName}>
@@ -189,7 +189,7 @@ const UnwrapedLinkNotSent = (props) => {
                             variant="contained"
                             size="small"
                             button={"N"}
-                            onClick={handelsearch}
+                            onClick={handleClickOnsearch}
                             sx={primaryFabStyle}
                         >
                             <Search width={18} sx={{ color: "#fff" }} />
