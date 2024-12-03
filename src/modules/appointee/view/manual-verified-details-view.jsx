@@ -664,7 +664,7 @@ const UnWrappedManualVerifiedView = (props) => {
             open={props.openView}
             fullScreen={true}
             closeModel={props.closeViewModel}
-            content={<ManualverifiedViewDetails details={props.appointeePersonalDetails} />}
+            content={<ManualverifiedViewDetails details={props.appointeePersonalDetails} closeModel={props.closeViewModel}/>}
         />
     );
 };
