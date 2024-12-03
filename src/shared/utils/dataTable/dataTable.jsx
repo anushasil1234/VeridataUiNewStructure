@@ -166,6 +166,7 @@ const DataTable = ({
     checBoxRequired,
     isPaginationOn = true,
     isShowMoreRowsOn = true,
+    handleRowSelection
 }) => {
     const [tableRows, setTableRows] = useState();
     const [order, setOrder] = React.useState("asc");
@@ -236,6 +237,7 @@ const DataTable = ({
                 });
             setCountCheckBoxEnabledRows(countCheckBoxEnabledRows);
             setSelected(newSelected);
+            handleRowSelection && handleRowSelection({ rowsPerPage, page });
         } else {
             setSelected([]);
         }
@@ -257,6 +259,7 @@ const DataTable = ({
             );
         }
         setSelected(newSelected);
+        handleRowSelection && handleRowSelection({ rowsPerPage, page });
     };
 
     const handleChangePage = (event, newPage) => {

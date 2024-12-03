@@ -47,6 +47,8 @@ const UnwrapedLinkNotSent = (props) => {
 
 
     const [selected, setSelected] = useState([]);
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [responseInfos, setResponseInfos] = useState();
     const [isStartVerificationBtndisabled, setIsStartVerificationBtnDisabled] = useState(true);
     const [rows, setRows] = useState([]);
@@ -90,7 +92,7 @@ const UnwrapedLinkNotSent = (props) => {
     }
 
     const startProcessRawData = async () => {
-        const isCheckedAddedRows = selectCheckedRows(responseInfos, selected);
+        const isCheckedAddedRows = selectCheckedRows(responseInfos, selected, rowsPerPage, page);
         const postRawDatapayLoad = {
             rawDataList: isCheckedAddedRows,
             userId: userId,
@@ -130,6 +132,17 @@ const UnwrapedLinkNotSent = (props) => {
         setTableRows(payLoad);
         navigateTo(toLinknotsent, { state: false });
     }
+    const handleClickOnsearch = () => {
+        if (!hasValue(fromDate)) {
+            showErrorMessage(uploadedFromDateEmptyMsg);
+            return
+        }
+        handleSearch();
+    }
+    const handleRowSelection = ({rowsPerPage, page}) => {
+        setRowsPerPage(rowsPerPage);
+        setPage(page);
+    }
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -155,13 +168,7 @@ const UnwrapedLinkNotSent = (props) => {
         }
         setPayLoad(_payLoad);
     }, [fromDate, toDate]);
-    const handleClickOnsearch = () => {
-        if (!hasValue(fromDate)) {
-            showErrorMessage(uploadedFromDateEmptyMsg);
-            return
-        }
-        handleSearch();
-    }
+
     return (
         <PageLayout pageName={pageName}>
             <CardLayout>
@@ -215,6 +222,7 @@ const UnwrapedLinkNotSent = (props) => {
                     checBoxRequired={true}
                     selected={selected}
                     setSelected={setSelected}
+                    handleRowSelection={handleRowSelection}
                 />
                 {
                     hasPermission && hasPermission['A004'] &&

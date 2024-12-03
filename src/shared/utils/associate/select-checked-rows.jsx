@@ -1,7 +1,8 @@
-export const selectCheckedRows = (rows, selected) => {
+export const selectCheckedRows = (rows, selected, rowsPerPage, page) => {
     return selected && selected.map((checkedIndex) => {
-        rows[checkedIndex].isChecked = true;
-        return rows[checkedIndex]
+        const _checkedIndex = page * rowsPerPage + checkedIndex
+        rows[_checkedIndex].isChecked = true;
+        return rows[_checkedIndex]
     }, rows)
 
 }
