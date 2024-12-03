@@ -422,7 +422,7 @@ let ManualverifiedViewDetails = ({ details }) => {
         "info",
         "remarks",
         <Comment />,
-        "Remarks"
+        "Remarks/Issues"
     );
     const rejectFabProps = new FabIconPropsModel(
         actionIconStyle,

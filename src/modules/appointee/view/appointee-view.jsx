@@ -617,7 +617,7 @@ let AppointeeViewForm = ({
     "success",
     "thumsup",
     <ThumbUp />,
-    "Manuall override"
+    "Manual Override"
   );
   const rejectFabProps = new FabIconPropsModel(
     actionIconStyle,

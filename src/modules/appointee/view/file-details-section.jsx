@@ -15,6 +15,7 @@ import downloadFile from 'shared/utils/associate/download-file'
 import { calculateDragPosition } from 'shared/utils/associate/dragein'
 import { MouseEventHandler } from 'shared/utils/associate/dragable'
 import { removeManualValidationResponseStatusSlice, storeManualValidationResponseStatusSlice } from 'store/slices/manual-validation-response-status-slice'
+import Button1 from 'shared/utils/button/button1'
 
 
 const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fileTypeCategory, setFileTypeCategory,
@@ -268,7 +269,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
             <GridContainer>
                 <Grid item xs={12}>
                     <Stack sx={{ flexDirection: 'row', justifyContent: 'end' }}>
-                        <Button
+                        <Button1
                             onClick={handleVerificationSubmit}
                             //sx={{ m: "15px 5px", ml: 3 }}
                             sx={submitBtnStyle}
@@ -276,8 +277,8 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                             color="primary"
                         >
                             {'Submit'}
-                        </Button>
-                        <Button
+                        </Button1>
+                        {/* <Button
                             //onClick={() => setCurrentPageNo(1)}
                             // onClick={() => submitDetails(false, true)}
                             //sx={{ m: "15px 5px", ml: 3 }}
@@ -286,7 +287,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                             color="primary"
                         >
                             {'Close'}
-                        </Button>
+                        </Button> */}
                     </Stack>
                 </Grid>
             </GridContainer>
