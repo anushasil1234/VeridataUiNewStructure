@@ -2486,6 +2486,7 @@ export const confirmpasswordNotMsg = `Confirm Password does not match with New P
 export const passwordPattern = `Password should be of atleast 8 - 12 characters long, with atleast 1 UPPER CASE, 1 lower case, 1 number, and one special character`;
 export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
 export const remarksEmptyMsg = `Remarks cannot be empty`;
+export const remarksissuemessage=`No remarks/issue available for this appointee.`;
 export const otpToMailMsg = `A verification code has been sent to your email address, Please check and enter `;
 export const setPasswordOtpToMailMsg = `A verification code has been sent to your email address. Please check and enter it in OTP field. `;
 export const emailEmptyMsg = `Email cannot be empty`;

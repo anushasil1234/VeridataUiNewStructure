@@ -29,7 +29,7 @@ import {
     listHeadingConteinerStyle,
     listHeadingStyle,
 } from "app";
-import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg, defaultDropdownValue } from "shared/constants/constants";
+import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg, defaultDropdownValue, remarksissuemessage } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import SelectInput from "shared/components/input-fields/select-input";
@@ -391,6 +391,8 @@ let ManualverifiedViewDetails = ({ details }) => {
         if (response && response.responseInfo && response.responseInfo.length > 0) {
             const remarks = response.responseInfo;
             openRemarksModel(remarks);
+        } else {
+            showErrorMessage(remarksissuemessage);
         }
     };
     const handleReject = () => {
