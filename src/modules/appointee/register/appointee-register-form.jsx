@@ -1960,7 +1960,7 @@ const AppointeeRegisterForm = () => {
                                                             step={stepsList.PD.step}
                                                             heading={stepsList.PD.name}
                                                             info={
-                                                                "Enter all your Personal Details like Gender, DOB to verify with Adhar, PAN, UAN."
+                                                                "Enter all your Personal Details like Gender, DOB to verify with Aadhaar, PAN, UAN."
                                                             }
                                                         />
                                                     </Grid>
@@ -3348,7 +3348,7 @@ const AppointeeRegisterForm = () => {
                                                         step={stepsList?.AV?.step}
                                                         heading={stepsList?.AV?.name}
                                                         info={
-                                                            "Enter Adhar data to verify, see more info in the below link."
+                                                            "Enter Aadhaar data to verify, see more info in the below link."
                                                         }
                                                     />
                                                 </Grid>
