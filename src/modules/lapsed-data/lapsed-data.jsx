@@ -18,7 +18,8 @@ import {
   lapsedListTableHeadCell,
   toLapseddata,
   reportGenarate,
-  uploadedFromDateEmptyMsg
+  uploadedFromDateEmptyMsg,
+  FromDateEmptyMsg
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -173,7 +174,7 @@ const UnwrappedLapseddata = (props) => {
 
   const handleSearch = () => {
     if (!hasValue (fromDate)) {
-      showErrorMessage(uploadedFromDateEmptyMsg);
+      showErrorMessage(FromDateEmptyMsg);
       return;
     }
     setTableRows(payLoad);

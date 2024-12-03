@@ -2569,6 +2569,7 @@ export const timeOutMsg = `Server is down, Please try again.`;
 //export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
 export const manualSubmitConfirmatonMsg = `Based on your answers, Veridata will either Verify the candidate or send Issue list to candidate for reuploading the correct and required documents. Do you want to proceed & Submit?`;
 export const uploadedFromDateEmptyMsg = `"Upload From" Date cannot be empty`;
+export const FromDateEmptyMsg = `"From Date" Date cannot be empty`;
 
 export const ManualSubmitConfirmation = ({type}) => {
  

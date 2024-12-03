@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadPFReport from "shared/components/download-report/download-PF-report";
-import { pfPensionReportDesc, pfPensionTableHeadCell, pfPensionTablereportHeadCell, reportGenarate, topfPension, uploadedFromDateEmptyMsg, verifiedReportInfo } from "shared/constants/constants";
+import { FromDateEmptyMsg, pfPensionReportDesc, pfPensionTableHeadCell, pfPensionTablereportHeadCell, reportGenarate, topfPension, uploadedFromDateEmptyMsg, verifiedReportInfo } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import downloadFile from "shared/utils/associate/download-file";
@@ -187,7 +187,7 @@ const UnWrappedpf = (props) => {
   };
   const handleSearch = () => {
     if (!hasValue (fromDate)) {
-      showErrorMessage(uploadedFromDateEmptyMsg);
+      showErrorMessage(FromDateEmptyMsg);
       return;
     }
     setTableRows(payLoad);
