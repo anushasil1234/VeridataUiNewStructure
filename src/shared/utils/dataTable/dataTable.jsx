@@ -87,6 +87,7 @@ function EnhancedTableHead(props) {
                                 inputProps={{
                                     "aria-label": "select all desserts",
                                 }}
+                                sx={{ padding: '25px' }}
                             />
                         ) : (
                             <TableCell
