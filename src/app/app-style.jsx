@@ -1723,7 +1723,8 @@ export const fieldValueSx = {
 }
 
 export const remarksInputContainerSx = {
-  marginTop: "20px"
+  marginTop: "20px",
+  marginLeft: "-12px"
 }
 export const iconStyle = {
   color: ThemeColorPalete.info.main,
