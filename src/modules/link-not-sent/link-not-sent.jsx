@@ -98,11 +98,11 @@ const UnwrapedLinkNotSent = (props) => {
         }
         console.log('isCheckedAddedRows', isCheckedAddedRows);
 
-        // const response = await postRawFileData(postRawDatapayLoad);
+        const response = await postRawFileData(postRawDatapayLoad);
 
-        // if (response) {
-        //     setTableRows(payLoad);
-        // }
+        if (response) {
+            setTableRows(payLoad);
+        }
     }
     const handleStartProcess = () => {
         const confirmationModelContent = {
