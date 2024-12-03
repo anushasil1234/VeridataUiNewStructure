@@ -3,7 +3,7 @@ import { Box, Button, Fab, Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { LinkNotSentTableHeadCell, startVerification, toLinknotsent, verificationConfirmationMsg } from 'shared/constants/constants';
+import { LinkNotSentTableHeadCell, notProcessedDataVerificationConfirmationMsg, startVerification, toLinknotsent, verificationConfirmationMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue, selectCheckedRows } from 'shared/utils';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import { removeActionRoute } from 'store/slices/action-route-slice';
@@ -96,15 +96,17 @@ const UnwrapedLinkNotSent = (props) => {
             userId: userId,
             isUnprocessed: true
         }
-        const response = await postRawFileData(postRawDatapayLoad);
+        console.log('isCheckedAddedRows', isCheckedAddedRows);
+        
+        // const response = await postRawFileData(postRawDatapayLoad);
 
-        if (response) {
-            setTableRows(payLoad);
-        }
+        // if (response) {
+        //     setTableRows(payLoad);
+        // }
     }
     const handleStartProcess = () => {
         const confirmationModelContent = {
-            dialogContentText: verificationConfirmationMsg
+            dialogContentText: notProcessedDataVerificationConfirmationMsg
         }
         openConfirmationModel(confirmationModelContent, startProcessRawData)
         setSelected([]);

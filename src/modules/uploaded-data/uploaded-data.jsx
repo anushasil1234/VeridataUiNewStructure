@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import ActionPermission from 'shared/components/action-permission/action-permission';
-import { emptyRowMsg, rawAppointeeListTableHeadCell, startVerification, verificationConfirmationMsg } from 'shared/constants/constants';
+import { emptyRowMsg, notProcessedDataVerificationConfirmationMsg, rawAppointeeListTableHeadCell, startVerification, verificationConfirmationMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, PageLayout, addIsCheckFlag, generateTableRowData, hasValue } from 'shared/utils'
 
 const UnWrappedUploadedData = (props) => {
