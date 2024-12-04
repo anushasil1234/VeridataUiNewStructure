@@ -949,13 +949,16 @@ let AppointeeViewForm = ({
                   fieldName={"Date of Joining"}
                   fieldValue={dateOfJoining}
                 />
+                
+
                 <PersonalInformation
-                  fieldName={"10th Pass Certificate"}
+                 // fieldName={"Father's Name Verification Document"}
+                  fieldName={"PAN Card"}
                   fieldValue={
-                    tenFile ? (
+                    otherFile ? (
                       <FileViewComponent
-                        fileType={tenthCertificateFileTypeAlias}
-                        file={tenFile}
+                        fileType={otherFileTypeAlias}
+                        file={otherFile}
                         filesByAlias={filesByAlias}
                       />
                     ) : (
@@ -963,14 +966,13 @@ let AppointeeViewForm = ({
                     )
                   }
                 />
-
                 <PersonalInformation
-                  fieldName={"Father's Name Verification Document"}
+                  fieldName={"10th Pass Certificate"}
                   fieldValue={
-                    otherFile ? (
+                    tenFile ? (
                       <FileViewComponent
-                        fileType={otherFileTypeAlias}
-                        file={otherFile}
+                        fileType={tenthCertificateFileTypeAlias}
+                        file={tenFile}
                         filesByAlias={filesByAlias}
                       />
                     ) : (
