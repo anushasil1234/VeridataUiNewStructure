@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Stack, Chip, Typography } from '@mui/material';
 import { popupStyle, buttonStyle, fileNameStyle, useFileChipStyles } from 'app';
+import Button1 from 'shared/utils/button/button1';
 
 const FileSelectionPopup = ({ isPopupOpen, setIsPopupOpen, files, handleFileClick }) => {
 
@@ -25,7 +26,7 @@ const FileSelectionPopup = ({ isPopupOpen, setIsPopupOpen, files, handleFileClic
   const getChipStyles = useFileChipStyles();
   return (
     <Dialog open={isPopupOpen} onClose={() => setIsPopupOpen(false)} maxWidth="sm" fullWidth>
-      <DialogTitle>Select any file for view</DialogTitle>
+      <DialogTitle style={{fontSize:'0.9rem',backgroundColor:'#9A208C',color:'#FFFFFF',fontWeight:700}}>Select Any File To View</DialogTitle>
       <DialogContent dividers>
         <Stack
           direction="column"
@@ -57,13 +58,13 @@ const FileSelectionPopup = ({ isPopupOpen, setIsPopupOpen, files, handleFileClic
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button
+        <Button1
           onClick={() => setIsPopupOpen(false)}
           variant="contained"
           sx={{...buttonStyle}}
         >
           Close
-        </Button>
+        </Button1>
       </DialogActions>
     </Dialog>
   );
