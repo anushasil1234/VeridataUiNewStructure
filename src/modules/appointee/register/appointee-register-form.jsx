@@ -20,8 +20,9 @@ import {
     Step,
     StepLabel,
     Divider,
+    Fab,
 } from "@mui/material";
-import { InfoOutlined } from "@mui/icons-material";
+import { Info, InfoOutlined } from "@mui/icons-material";
 import {
     activeStepStyle,
     candidateRegistrationFormContainerStyle,
@@ -42,6 +43,9 @@ import {
     lable1CopyStyle,
     lable1Style,
     positionRelative,
+    primaryFabStyle,
+    statusBoxstyle,
+    statusstyle,
     subHeadingContentTextStyle,
     submitBtnContainerStyle,
     submitBtnStyle,
@@ -326,7 +330,7 @@ const AppointeeRegisterForm = () => {
         setTimeoutTimer(10 * 60);
     };
     const clearFileVaribles = (fileTypeAlias, setFileName, fileNameList) => {
- 
+
 
         if (!fileDetails?.length) return;
 
@@ -648,7 +652,7 @@ const AppointeeRegisterForm = () => {
         const uploadTypeAlias =
             uploadedFile &&
             uploadedFile.find(({ uploadTypeAlias }) => uploadTypeAlias === fileTypeAlias);
-        
+
 
         return hasValue(uploadTypeAlias);
     };
@@ -738,7 +742,7 @@ const AppointeeRegisterForm = () => {
 
     useEffect(() => {
         if (!isTrustEpfoAvailable) {
-          
+
 
             clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName);
         }
@@ -816,7 +820,7 @@ const AppointeeRegisterForm = () => {
     useEffect(() => {
         // updateStepCounter(isPhysicallyHandicap);
         if (isPhysicallyHandicap === 'N') {
-          
+
 
             clearFileVaribles(handicapFileTypeAlias, setHandicapFileName, handicapFileName);
         }
@@ -949,7 +953,7 @@ const AppointeeRegisterForm = () => {
             uploadTypeAlias: trustEpfoFileTypeAlias, fileNameList: trustEpfoFileName,
             currentFileName: currentFileName, uploadType: 'multiple'
         });
-      
+
 
         setTrustEpfoFileName(_fileNameList);
         setUploadedFile(_updatedUploadedFileList);
@@ -999,7 +1003,7 @@ const AppointeeRegisterForm = () => {
         formData.append("aadharFileDetails", xmlFileUploaded);
 
         const response = await verifyAadharDetails(formData);
-    
+
         if (response) {
             const { remarks, isVarified } = response.responseInfo;
             if (isVarified) {
@@ -1205,7 +1209,7 @@ const AppointeeRegisterForm = () => {
 
 
     const buildFormData = (payLoad) => {
-     
+
 
         let formData = new FormData();
         for (const property in payLoad) {
@@ -1247,7 +1251,7 @@ const AppointeeRegisterForm = () => {
             IsFinalSubmit: false
         };
         // Use the buildFormData helper function to create the formData
-     
+
 
         let formData = buildFormData(payLoad);
 
@@ -1498,9 +1502,9 @@ const AppointeeRegisterForm = () => {
         if (!checkAadharVerification()) {
             return
         }
-        if (!checkPANVerification()) {
-            return
-        }
+        // if (!checkPANVerification()) {
+        //     return
+        // }
         if (!checkUANVerificationRequiredDoc()) {
             return
         }
@@ -1956,7 +1960,7 @@ const AppointeeRegisterForm = () => {
                                                             step={stepsList.PD.step}
                                                             heading={stepsList.PD.name}
                                                             info={
-                                                                "Enter all your Personal Details like Gender, DOB to verify with Adhar, PAN, UAN."
+                                                                "Enter all your Personal Details like Gender, DOB to verify with Aadhaar, PAN, UAN."
                                                             }
                                                         />
                                                     </Grid>
@@ -2737,6 +2741,73 @@ const AppointeeRegisterForm = () => {
                                                 xs={12}
                                                 sx={formHeadingGridContainerStyle}
                                             >
+                                                                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
+                                                    <Stack direction="row">
+                                                        <Typography
+                                                            sx={{
+                                                                ...lable1CopyStyle,
+                                                                display: "flex",
+                                                                alignItems: "center",
+                                                            }}
+                                                        >
+                                                            {
+                                                                "PAN Card"
+                                                            }
+                                                        </Typography>
+                                                        <Tooltip
+                                                            arrow="bottom"
+                                                          //  title="Upload a copy of the document with your father's name clearly mentioned. Examples of acceptable documents include birth certificates, national IDs, or other legal documents where both your name and your father's name are visible."
+                                                       title = "Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card."
+                                                       >
+                                                            <IconButton
+                                                                disabled={isPreviousSectionDisabled}
+                                                                sx={{
+                                                                    marginLeft: '-5px', // Moves the icon a bit to the left
+                                                                    marginTop: '-5px',  // Moves the icon a bit upwards
+                                                                }}
+                                                            >
+                                                                <InfoOutlined />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    </Stack>
+                                                </Grid>
+                                                <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
+                                                    <Typography
+                                                        sx={{
+                                                            ...lable1CopyStyle,
+                                                            textAlign: "center",
+                                                        }}
+                                                    >
+                                                        Please upload PAN Card
+                                                        <span className="requiredField">*</span>
+                                                    </Typography>
+                                                    <Box sx={fileUploadSectionContainerStyle}>
+                                                        <FileUploadSection
+                                                            chooseFile={uploadFathersDocFile}
+                                                            // fileName={
+                                                            //   fileUploaded.some(file => file.uploadTypeAlias === "OTHID")
+                                                            //     ? fileUploaded.find(file => file.uploadTypeAlias === "OTHID").fileName
+                                                            //     : otherFileName
+                                                            // }
+                                                            fileName={otherFileName}
+                                                            accept={"image/png, image/jpeg"}
+                                                            disabled={isPreviousSectionDisabled}
+                                                            maxUploadSize={imgAndPdfMaxSize}
+                                                            uploadTypeAlias={otherFileTypeAlias}
+                                                        // handleRemoveFile={removeFathersDocCertificate}
+                                                        />
+                                                    </Box>
+                                                </Grid>
+
+                                            </Grid>
+                                            <Grid
+                                                container
+                                                rowSpacing={1}
+                                                columnSpacing={2.5}
+                                                item
+                                                xs={12}
+                                                sx={formHeadingGridContainerStyle}
+                                            >
                                                 <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
                                                     <Stack
                                                         flexDirection={"row"}
@@ -2751,7 +2822,7 @@ const AppointeeRegisterForm = () => {
                                                                     alignItems: "center",
                                                                 }}
                                                             >
-                                                                {"10th pass Certificate"}
+                                                                {"10th Pass Certificate"}
                                                             </Typography>
                                                             <Tooltip
                                                                 arrow="bottom"
@@ -2773,7 +2844,7 @@ const AppointeeRegisterForm = () => {
                                                             textAlign: "center",
                                                         }}
                                                     >
-                                                        Please upload 10th pass certificate
+                                                        Please upload 10th Pass certificate
                                                         <span className="requiredField">*</span>
                                                     </Typography>
                                                     <Box sx={fileUploadSectionContainerStyle}>
@@ -2790,68 +2861,6 @@ const AppointeeRegisterForm = () => {
                                                             maxUploadSize={imgAndPdfMaxSize}
                                                             uploadTypeAlias={tenthCertificateFileTypeAlias}
                                                         // handleRemoveFile={remove10thPassCertificate}
-                                                        />
-                                                    </Box>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                    <Stack direction="row">
-                                                        <Typography
-                                                            sx={{
-                                                                ...lable1CopyStyle,
-                                                                display: "flex",
-                                                                alignItems: "center",
-                                                            }}
-                                                        >
-                                                            {
-                                                                "Document with father's name attached"
-                                                            }
-                                                        </Typography>
-                                                        <Tooltip
-                                                            arrow="bottom"
-                                                            title="Upload a copy of the document with your father's name clearly mentioned. Examples of acceptable documents include birth certificates, national IDs, or other legal documents where both your name and your father's name are visible."
-                                                        >
-                                                            <IconButton
-                                                                disabled={isPreviousSectionDisabled}
-                                                            >
-                                                                <InfoOutlined />
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    </Stack>
-                                                </Grid>
-                                                <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                    <Typography
-                                                        sx={{
-                                                            ...lable1CopyStyle,
-                                                            textAlign: "center",
-                                                        }}
-                                                    >
-                                                        Please upload a document mentioning father's
-                                                        name
-                                                        <span className="requiredField">*</span>
-                                                    </Typography>
-                                                    <Box sx={fileUploadSectionContainerStyle}>
-                                                        <FileUploadSection
-                                                            chooseFile={uploadFathersDocFile}
-                                                            // fileName={
-                                                            //   fileUploaded.some(file => file.uploadTypeAlias === "OTHID")
-                                                            //     ? fileUploaded.find(file => file.uploadTypeAlias === "OTHID").fileName
-                                                            //     : otherFileName
-                                                            // }
-                                                            fileName={otherFileName}
-                                                            accept={"image/png, image/jpeg"}
-                                                            disabled={isPreviousSectionDisabled}
-                                                            maxUploadSize={imgAndPdfMaxSize}
-                                                            uploadTypeAlias={otherFileTypeAlias}
-                                                        // handleRemoveFile={removeFathersDocCertificate}
                                                         />
                                                     </Box>
                                                 </Grid>
@@ -3100,7 +3109,7 @@ const AppointeeRegisterForm = () => {
                                                                         ...lable1CopyStyle,
                                                                         display: "flex",
                                                                         alignItems: "center",
-                                                                        marginRight: "-5px"
+                                                                       // marginRight: "-5px"
                                                                     }}
                                                                 >
                                                                     {
@@ -3166,7 +3175,7 @@ const AppointeeRegisterForm = () => {
                                                                     //     : trustEpfoFileName
                                                                     // }
                                                                     fileName={trustEpfoFileName}
-                                                                    accept={"image/png, image/jpeg"}
+                                                                    accept={"image/png, image/jpeg,application/pdf"}
                                                                     disabled={isPreviousSectionDisabled}
                                                                     maxUploadSize={imgAndPdfMaxSize}
                                                                     uploadTypeAlias={trustEpfoFileTypeAlias}
@@ -3344,7 +3353,7 @@ const AppointeeRegisterForm = () => {
                                                         step={stepsList?.AV?.step}
                                                         heading={stepsList?.AV?.name}
                                                         info={
-                                                            "Enter Adhar data to verify, see more info in the below link."
+                                                            "Enter Aadhaar data to verify, see more info in the below link."
                                                         }
                                                     />
                                                 </Grid>
@@ -3652,11 +3661,7 @@ const AppointeeRegisterForm = () => {
                                                     sx={{ paddingLeft: { xs: '0px !important', md: '20px!important', ...positionRelative } }}
                                                 >
                                                     <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
-                                                        <Stack
-                                                            flexDirection={"col"}
-                                                            justifyContent={"space-between"}
-                                                            alignItems={"start"}
-                                                        >
+                                                        <Stack flexDirection="column" justifyContent="space-between" alignItems="start">
                                                             <Typography sx={{ ...lable1CopyStyle }}>
                                                                 {"UAN Verification"}
                                                             </Typography>
@@ -3666,20 +3671,42 @@ const AppointeeRegisterForm = () => {
                                                                 onChange={handleChangeUanVerification}
                                                             >
                                                                 <FormControlLabel
-                                                                    value={'auto'}
+                                                                    value="auto"
                                                                     control={<Radio />}
                                                                     label="Automatic"
                                                                     disabled={!hasValue(UAN)}
                                                                 />
-                                                                <FormControlLabel
-                                                                    value={'manual'}
-                                                                    control={<Radio />}
-                                                                    label="Manual"
-                                                                    disabled={!hasValue(UAN)}
-                                                                />
+                                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                                    <FormControlLabel
+                                                                        value="manual"
+                                                                        control={<Radio />}
+                                                                        label="Manual"
+                                                                        disabled={!hasValue(UAN)}
+                                                                    />
+                                                                    <Tooltip
+                                                                        arrow
+                                                                        title={
+                                                                            <Box sx={{ ...statusBoxstyle }}>
+                                                                                <Typography variant="body2" sx={{ ...statusstyle }}>
+                                                                                It is mandatory for EPFO members to upload all PF passbooks 2005 onwards (if applicable).
+                                                                                </Typography>
+
+                                                                            </Box>
+                                                                        }
+                                                                    >
+                                                                        <Fab
+                                                                            variant="contained"
+                                                                            size="small"
+                                                                            sx={{ ...primaryFabStyle, ml: 1 }}
+                                                                        >
+                                                                            <Info width={18} sx={{ color: "#fff" }} />
+                                                                        </Fab>
+                                                                    </Tooltip>
+                                                                </Box>
                                                             </RadioGroup>
                                                         </Stack>
                                                     </Grid>
+
                                                     {
                                                         isUanVerificationProcessManual === 'manual' &&
                                                         <Grid>
@@ -3702,7 +3729,7 @@ const AppointeeRegisterForm = () => {
                                                                         //     : handicapFileName
                                                                         // }
                                                                         fileName={epfoServiceHistoryFile}
-                                                                        accept={"image/png, image/jpeg"}
+                                                                        accept={"image/png, image/jpeg, application/pdf"}
                                                                         maxUploadSize={imgAndPdfMaxSize}
                                                                         uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
                                                                     // handleRemoveFile={removeEPFOServiceHistory}
@@ -3730,7 +3757,7 @@ const AppointeeRegisterForm = () => {
                                                                         //     : handicapFileName
                                                                         // }
                                                                         fileName={epfoPassBookFiles}
-                                                                        accept={"image/png, image/jpeg"}
+                                                                        accept={"image/png, image/jpeg,application/pdf"}
                                                                         maxUploadSize={imgAndPdfMaxSize}
                                                                         multiple={true}
                                                                         uploadTypeAlias={epfoPassbookFileTypeAlias}

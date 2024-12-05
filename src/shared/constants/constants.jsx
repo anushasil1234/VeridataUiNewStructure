@@ -29,16 +29,17 @@ export const generateOtpRety = `Otp sending is unsuccessful, please retry`;
 export const generateOtpSucces = `OTP has sent successfully, Please fill the otp and submit`;
 export const aadharNoValidationError = `Your phone number is not linked with Aadhaar. Link your phone number then retry or submit anyway`;
 export const remarksError = `Remarks should have at least 15 charecters long`;
-export const remarksemptyerror=`Please provide your remarks before submitting.`;
+export const remarksemptyerror=`Please provide your Remarks before submitting.`;
 export const categoryFileEmptyerror=`Please go through all the Category(s) and Files, and select the required answers, mention Remarks to be able to Submit`;
+export const fileEmptyerror=`Please select a file`; 
 export const invalidPanMsg = `PAN number should be of 10 digits and properly formatted`;
 export const invalidAadharMsg = `Aadhaar number should be of 12 digits`;
 export const emptyAadharFileMsg = `Please upload Aadhaar`;
-export const emptyPasswordField = `password can't be empty`;
+export const emptyPasswordField = `Password can't be empty`;
 export const fileUploadSuccess = `File upload completed`;
 export const duplicateData = `There is no unique data for processing`;
 export const processStarted = `Verification initiated  successfully`;
-export const duplicateFiles = `file already exists, please choose a diferent one`;
+export const duplicateFiles = `file already exists. Please choose a diferent one`;
 export const formSubmitionSuccess = `Form has been submitted successfully`;
 export const formSaveSuccess = `Form has been saved successfully`;
 export const appointeeApproveSuccess = `Appointee has been approved successfully`;
@@ -56,7 +57,7 @@ export const passportExpireddMsg = `Your passport has expired. Please set the Da
 export const fetchUanConfirmationtMsg = `Your Aadhaar or PAN verification has failed. If you continue you will not be able to change your Aadhaar or PAN.   want to continue?`;
 export const remiderSuccessMsg = `A reminder has been sent successfully`;
 export const noRecordsMsg = `No records found`;
-export const noRemarksMsg = `No remarks available`;
+export const noRemarksMsg = `No remarks/issues available`;
 export const emptyRowMsg = `Please select a row`;
 export const addPassWordMsg = `Please go to profile settings and add a profile password`;
 export const invalidPasswordMsg = `Password should have length 6-10, containing 1 letter, 1 number, 1 spacial character, please retry`;
@@ -78,7 +79,7 @@ export const generateProcessingAppointeeReportDesc = `The purpose of this report
 export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns,identify any issues, and improve the efficiency of the API system.`;
 export const pfPensionReportDesc = `The purpose of this report is to provide a comprehensive overview of PF and Pension information for appointees within a specified date range. This report includes detailed fields such as appointee name, Aadhaar number, UAN number, joining date, PF and pension status, and passbook status (manual or automatic). The objective is to help stakeholders monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
 export const verificatiosucess=`Your verification has been successfully completed.`
-
+export const appointeeReportdesc=`This report offers a comprehensive analysis of appointees . It provides detailed insights, including each candidate's name, email ID, date of joining (DOJ), the date the link was sent, and their current status. This data assists stakeholders in identifying trends, addressing potential bottlenecks, and evaluating whether the lack of progress suggests disinterest in joining.`
 export const generatenationlityReportDesc = (type) => {
     switch (type) {
         case 'All':
@@ -265,7 +266,7 @@ export const verifiedListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'UAN No. ',
+        label: 'UAN',
         enums: ['uanNo'],
         component: {
             element: Typography
@@ -511,19 +512,19 @@ export const GetPfCreationListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'UAN No. ',
+        label: 'UAN',
         enums: ['uanNo'],
         component: {
             element: Typography
         }
     },
     {
-        id: 'epuanLinkWithAadharfNo',
+        id: 'uanAadharLink',
         numeric: true,
         type: "string",
         disablePadding: false,
         label: 'Aadhar-UAN Link',
-        enums: ['uanLinkWithAadhar'],
+        enums: ['uanAadharLink'],
         component: {
             element: Typography
         }
@@ -683,7 +684,7 @@ export const pfPensionTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'UAN No. ',
+        label: 'UAN',
         enums: ['uan'],
         component: {
             element: Typography
@@ -726,23 +727,23 @@ export const pfPensionTableHeadCell = [
     },
 
     {
-        id: 'pensioninfo',
+        id: 'isEpsMember',
         numeric: true,
         type: "string",
         disablePadding: false,
         label: 'EPS Membership',
-        enums: ['pensionStatus'],
+        enums: ['isEpsMember'],
         component: {
             element: Typography
         }
     },
     {
-        id: 'epsGap',
+        id: 'pensionStatus',
         numeric: true,
         type: "string",
         disablePadding: false,
         label: 'EPS Gap',
-        enums: ['epsGap'],
+        enums: ['pensionStatus'],
         component: {
             element: Typography
         }
@@ -757,6 +758,71 @@ export const pfPensionTableHeadCell = [
         component: {
             element: Typography
         }
+    },
+
+]
+export const pfPensionTablereportHeadCell = [
+    {
+        label: 'Name',
+        enums: ['appointeeName','candidateId'],
+        component: {
+            element: Typography
+        }
+    },
+    {
+        type: "string",
+        label: 'Email',
+        enums: ['emailId'],
+
+    },
+    {
+        type: "string",
+        label: 'Mobile No',
+        enums: ['mobileNo'],
+
+    },
+    {
+        type: "string",
+        label: 'Aadhaar No.',
+        enums: ['aadharNumber'],
+    },
+    {
+        type: "string",
+        label: 'UAN',
+        enums: ['uan']
+    },
+    {
+        type: "string",
+        label: 'Aadhar-UAN Link',
+        enums: ['isUanAadharLink'],
+    },
+    {
+        type: "date",
+        label: 'Date Of Joining  ',
+        enums: ['dateOfJoining'],
+    },
+
+    {
+        type: "badge",
+        label: 'PF Type',
+        enums: ['trustPassBookStatus', 'epfoPassBookStatus']
+    },
+
+    {
+       
+        type: "string",
+        label: 'EPS Membership',
+        enums: ['isEpsMember'],
+    },
+    {
+        type: "string",
+        label: 'EPS Gap',
+        enums: ['pensionStatus']
+    },
+    {
+        type: "string",
+        label: 'Verification Type',
+        enums: ['isManual']
     },
 
 ]
@@ -1011,6 +1077,11 @@ export const processingListPdfTableHeadCell = [
         type: "date",
         label: 'Date Of Joining',
         enums: ['dateOfJoining'],
+    },
+    {
+        type: "string",
+        label: 'Verification Type',
+        enums: ['passbookStatus']
     },
     {
         type: "string",
@@ -2060,13 +2131,18 @@ export const noResponseReportTableHeadCell = [
         enums: ['createdDate'],
     },
     {
+        id: 'status',
+        label: 'Status',
+        enums: ['status']
+    },
+    {
         type: "string",
-        label: 'Last Activity',
+        label: 'Last Activity Info',
         enums: ['lastActivityDesc'],
     },
     {
         type: "date",
-        label: 'Last Activity at',
+        label: 'Last Activity Date',
         enums: ['lastActionDate'],
     }
 
@@ -2121,7 +2197,7 @@ export const nationalityListTableHeadCell = [
         numeric: true,
         type: "string",
         disablePadding: false,
-        label: 'Passport Number',
+        label: 'Passport No.',
         enums: ['passportNumber'],
         component: {
             element: Typography
@@ -2165,7 +2241,7 @@ export const nationalityReportTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Mobile No',
+        label: 'Mobile No.',
         enums: ['mobileNo'],
 
     },
@@ -2176,7 +2252,7 @@ export const nationalityReportTableHeadCell = [
     },
     {
         type: "string",
-        label: 'Country',
+        label: 'Country Name',
         enums: ['countryName'],
     },
     {
@@ -2459,14 +2535,14 @@ export const indianpassportFilePatternErrorMsg = 'Indian Passport File Number mu
 export const passportFilePatternErrorMsg = 'Passport File Number must be of maximum 20 digits';
 export const passportNoEmptyMsg = 'Passport Number cannot be empty';
 export const uploadFormatErrorMsg = `Upload valid formatted file`;
-export const verificationConfirmationMsg = `Do you want to send verification portal link to the appointee(s)? [Note: Appointee(s) will be removed from this page and moved to the "Processing" page]`;
+export const verificationConfirmationMsg = `Do you want to send verification portal link to the appointee(s)? [Note: Appointee(s) will be removed from this page. The checked appointee(s) will be moved to the "Processing" page and the unchecked appointee(s) will be moved to the "Link not sent" page]`;
 export const appointeerejetionConfirmationMsg = `Are you sure you want to reject the appointee?`;
 export const verificationRemiderMsg = `Reminder alert will be sent to appointee, asking them to complete the verification process. Do you want to continue?`;
 export const credentialRemiderMsg = `An alert with login credentials will be sent to the appointee to complete the verification process. Would you like to proceed?`;
 export const appointeeTerminationConfirmationMsg = `Do you want to terminate the process?`;
 export const passwordMaxFieldErrorMsg = 'Length exceeded. Password can be of maximum 12 characters.';
 export const notProcessedDataVerificationConfirmationMsg = `Do you want to send verification portal link to the appointees? [Note: Appointees will be removed from this page and moved to the "Processing" page]`;
-export const submitConfirmationMsg = `Your data will be submitted to PwC HC for verification. Hence you will no longer be able to change your data. Only PwC HC can decide to allow you to update /reverify data. Are you sure you want to submit?`;
+export const submitConfirmationMsg = `Your data will be submitted to PwC HC for verification. After submission, you will no longer be able to make any changes. Any updates or re-verification will be at the discretion of PwC HC. Are you sure you want to proceed with the submission?`;
 export const reUploadsubmitConfirmationMsg = "Your re-uploaded document(s) will be submitted to PwC HC for verification. Hence you will no longer be able to change your data. Are you sure you want to submit?";
 export const epfoPassfileUploadeConfirmationMsg = `Please upload your entire Trust / private PF passbook(s) before submission`;
 export const visafileUploadeConfirmationMsg = `Please upload your visa copy before submission`;
@@ -2479,24 +2555,29 @@ Fill in the required information to complete verification.`;
 export const congratulationDialogContentTitle = `Congratulatoins!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
-export const OtpEmptyMsg = `Otp cant not be empty`;
+export const OtpEmptyMsg = `OTP can not be empty`;
 export const passwordNotMsg = `Password not matched`;
-export const confirmpasswordNotMsg = `Confirm password is not matched with password`;
-export const passwordPattern = `Password should be of atleast 8 - 12 characters long, with atleast 1 UPPER CASE, 1 lower case, 1 number, and one special charecter`;
+export const confirmpasswordNotMsg = `Confirm Password does not match with New Password`;
+export const passwordPattern = `Password should be of atleast 8 - 12 characters long, with atleast 1 UPPER CASE, 1 lower case, 1 number, and one special character`;
 export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
-export const remarksEmptyMsg = `Remarks cant not be empty`;
+export const remarksEmptyMsg = `Remarks cannot be empty`;
+export const remarksissuemessage=`No remarks/issues available.`;
 export const otpToMailMsg = `A verification code has been sent to your email address, Please check and enter `;
-export const setPasswordOtpToMailMsg = `A verification code has been sent to your email address, Please check and enter it in otp field `;
-export const emailEmptyMsg = `Email can't not be empty`;
-export const invalidEmailMsg = `Enter a valid email`;
-export const contactNoEmptyMsg = `Contact no can't be empty`;
-export const invalidcontactNoMsg = `Phone no should have 10 digits`;
+export const setPasswordOtpToMailMsg = `A verification code has been sent to your email address. Please check and enter it in OTP field. `;
+export const emailEmptyMsg = `Email cannot be empty`;
+export const invalidEmailMsg = `Enter a valid Email ID`;
+export const contactNoEmptyMsg = `Contact no. can't be empty`;
+export const invalidcontactNoMsg = `Phone no. should have 10 digits`;
 export const roleEmptyMsg = `Role can't be empty`;
-export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO passbook, EPFO employment history. You can download Trust passbook details from respective Action`;
+export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO Passbook, EPFO Service History. You can download Trust passbook details from respective Action`;
 export const timeOutMsg = `Server is down, Please try again.`;
-export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
+//export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
+export const manualSubmitConfirmatonMsg = `Based on your answers, Veridata will either Verify the candidate or send Issue list to candidate for reuploading the correct and required documents. Do you want to proceed & Submit?`;
+export const uploadedFromDateEmptyMsg = `"Upload From" Date cannot be empty`;
+export const FromDateEmptyMsg = `"From Date" cannot be empty`;
+export const manualverificationinfo=`You can do manual verification only in the "Manual Verification" & "Manual Re-Verification" tabs. You can't do so in the "Document Reupload Request" tab.`
 export const ManualSubmitConfirmation = ({type}) => {
-    console.log('typeq23234', type);
+ 
     
     const manualSubmitConfirmatonMsgforfile = `You have not gone through all ${type}, and there may be information that you have missed out.\nAre you sure you want to continue with the submission?`;
   
@@ -2778,3 +2859,4 @@ export const passbookVerificationQuestionSet = [
     }
 ]
 
+export const defaultDropdownValue = 'none';

@@ -21,7 +21,7 @@ const ReSetPassword = () => {
             <Box mt={2}>
                 <Typography variant="body2" align="center">
                     <Link href={toUserLogin} underline="hover">
-                        Back to login
+                        Back to Login
                     </Link>
                 </Typography>
             </Box>

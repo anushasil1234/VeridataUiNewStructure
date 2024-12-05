@@ -8,7 +8,9 @@ import {
   processingListTableHeadCell,
   toProcessing,
   reportGenarate,
-  issueFilterList
+  issueFilterList,
+  uploadedFromDateEmptyMsg,
+  FromDateEmptyMsg
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -187,9 +189,10 @@ const UnWrappedProcessing = (props) => {
     setFromDate(null);
     setToDate(null);
     setStatusCode("All");
-    setPassbookStatus(null);
-    setIssueFilter(null);
-    const payLoad = {
+    setPassbookStatus("All");
+    setIssueFilter("All");
+    
+    const resetPayLoad = {
       isFiltered: false,
       noOfDays: 0,
       filterType: null,
@@ -198,17 +201,25 @@ const UnWrappedProcessing = (props) => {
       companyId: companyId,
       isPfRequired: null,
       IsManualPassbook: null,
-      IssueFilter: null
+      IssueFilter: null,
     };
-    setTableRows(payLoad);
+    
+    setPayLoad(resetPayLoad);
+    setTableRows(resetPayLoad);
     navigateTo(toProcessing, { state: false });
   };
+  
   const handleExalListDownload = () => {
     setIsDownloadListOpened(!isDownloadListOpened)
   }
   const handleSearch = () => {
+    if (!hasValue (fromDate)) {
+      showErrorMessage(FromDateEmptyMsg);
+      return;
+    }
     setTableRows(payLoad);
   };
+  
 
   const handleIssueChange = ({ target }) => {
     const { value } = target;
@@ -218,14 +229,27 @@ const UnWrappedProcessing = (props) => {
     setPayLoad(_payload);
   }
   const dispatch = useDispatch();
-
   const handlePassbookStatusChange = async (e) => {
-    const { value } = e.target;
+    const { value } = e.target;  
+    const parsedValue = value === "All" 
+      ? null 
+      : value === "true" 
+        ? true 
+        : value === "false" 
+          ? false 
+          : null;
+  
     setPassbookStatus(value);
-    const _passbookStatus = value === "All" ? null : value;
-    const _payLoad = { ...payLoad, IsManualPassbook: _passbookStatus }
-    setPayLoad(_payLoad);
+  
+    const updatedPayLoad = {
+      ...payLoad,
+      IsManualPassbook: parsedValue,
+    };
+  
+    setPayLoad(updatedPayLoad);
   };
+  
+  
 
   useEffect(() => {
     dispatch(removeActionRoute());
@@ -257,7 +281,7 @@ const UnWrappedProcessing = (props) => {
   // }, [toDate]);
   const handelsearch=()=>{
     if (hasValue(toDate) && !hasValue(fromDate)) {
-      showErrorMessage("From date can not be empty");
+      showErrorMessage("From Date can not be empty");
     }else {
       handleSearch();
     }
@@ -327,9 +351,9 @@ const UnWrappedProcessing = (props) => {
                   label="Passbook Status"
                   onChange={handlePassbookStatusChange}
                 >
-                  <MenuItem value={'All'}>Select all</MenuItem>
-                  <MenuItem value={true}>Manual</MenuItem>
-                  <MenuItem value={false}>Auto</MenuItem>
+                  <MenuItem value={'All'}>Select All</MenuItem>
+                  <MenuItem value="true">Manual</MenuItem>
+                  <MenuItem value="false">Auto</MenuItem>
                 </Select>
               )}
             </FormControl>

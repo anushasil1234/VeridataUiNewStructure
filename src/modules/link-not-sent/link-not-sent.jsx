@@ -3,7 +3,7 @@ import { Box, Button, Fab, Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { LinkNotSentTableHeadCell, startVerification, toLinknotsent, verificationConfirmationMsg } from 'shared/constants/constants';
+import { LinkNotSentTableHeadCell, notProcessedDataVerificationConfirmationMsg, startVerification, toLinknotsent, uploadedFromDateEmptyMsg, verificationConfirmationMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue, selectCheckedRows } from 'shared/utils';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import { removeActionRoute } from 'store/slices/action-route-slice';
@@ -47,6 +47,8 @@ const UnwrapedLinkNotSent = (props) => {
 
 
     const [selected, setSelected] = useState([]);
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [responseInfos, setResponseInfos] = useState();
     const [isStartVerificationBtndisabled, setIsStartVerificationBtnDisabled] = useState(true);
     const [rows, setRows] = useState([]);
@@ -90,12 +92,14 @@ const UnwrapedLinkNotSent = (props) => {
     }
 
     const startProcessRawData = async () => {
-        const isCheckedAddedRows = selectCheckedRows(responseInfos, selected);
+        const isCheckedAddedRows = selectCheckedRows(responseInfos, selected, rowsPerPage, page);
         const postRawDatapayLoad = {
             rawDataList: isCheckedAddedRows,
             userId: userId,
             isUnprocessed: true
         }
+        console.log('isCheckedAddedRows', isCheckedAddedRows);
+
         const response = await postRawFileData(postRawDatapayLoad);
 
         if (response) {
@@ -104,7 +108,7 @@ const UnwrapedLinkNotSent = (props) => {
     }
     const handleStartProcess = () => {
         const confirmationModelContent = {
-            dialogContentText: verificationConfirmationMsg
+            dialogContentText: notProcessedDataVerificationConfirmationMsg
         }
         openConfirmationModel(confirmationModelContent, startProcessRawData)
         setSelected([]);
@@ -127,6 +131,17 @@ const UnwrapedLinkNotSent = (props) => {
         setPayLoad(payLoad);
         setTableRows(payLoad);
         navigateTo(toLinknotsent, { state: false });
+    }
+    const handleClickOnsearch = () => {
+        if (!hasValue(fromDate)) {
+            showErrorMessage(uploadedFromDateEmptyMsg);
+            return
+        }
+        handleSearch();
+    }
+    const handleRowSelection = ({rowsPerPage, page}) => {
+        setRowsPerPage(rowsPerPage);
+        setPage(page);
     }
     const dispatch = useDispatch();
 
@@ -153,13 +168,7 @@ const UnwrapedLinkNotSent = (props) => {
         }
         setPayLoad(_payLoad);
     }, [fromDate, toDate]);
-    const handelsearch = () => {
-        if (hasValue(toDate) && !hasValue(fromDate)) {
-            showErrorMessage("From date can not be empty");
-        } else {
-            handleSearch();
-        }
-    }
+
     return (
         <PageLayout pageName={pageName}>
             <CardLayout>
@@ -187,7 +196,7 @@ const UnwrapedLinkNotSent = (props) => {
                             variant="contained"
                             size="small"
                             button={"N"}
-                            onClick={handelsearch}
+                            onClick={handleClickOnsearch}
                             sx={primaryFabStyle}
                         >
                             <Search width={18} sx={{ color: "#fff" }} />
@@ -213,6 +222,7 @@ const UnwrapedLinkNotSent = (props) => {
                     checBoxRequired={true}
                     selected={selected}
                     setSelected={setSelected}
+                    handleRowSelection={handleRowSelection}
                 />
                 {
                     hasPermission && hasPermission['A004'] &&

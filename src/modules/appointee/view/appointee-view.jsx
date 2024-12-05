@@ -59,6 +59,7 @@ import {
   pensionConfirmation,
   epfoServiceHistoryFileTypeAlias,
   toMannualVerification,
+  remarksissuemessage,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -483,6 +484,8 @@ let AppointeeViewForm = ({
     if (response && response.responseInfo && response.responseInfo.length > 0) {
       const remarks = response.responseInfo;
       openRemarksModel(remarks);
+    }else{
+      showErrorMessage(remarksissuemessage)
     }
   };
 
@@ -490,22 +493,22 @@ let AppointeeViewForm = ({
   const handelclick = () => {
     const personalInfo = {
       appointeeId,
-      appointeeName,
-      dateOfBirth,
-      gender,
-      relationshipWithMember,
-      member,
-      handicapType,
-      isPhysicallyHandicap,
-      maritalStatus,
-      qualification,
-      email,
-      mobileNo,
-      nationality,
-      isFnameVarified,
-      isUanVerified,
-      dateOfJoining,
-      userId,
+      // appointeeName,
+      // dateOfBirth,
+      // gender,
+      // relationshipWithMember,
+      // member,
+      // handicapType,
+      // isPhysicallyHandicap,
+      // maritalStatus,
+      // qualification,
+      // email,
+      // mobileNo,
+      // nationality,
+      // isFnameVarified,
+      // isUanVerified,
+      // dateOfJoining,
+      // userId,
     };
     openVerify(personalInfo);
   };
@@ -617,7 +620,7 @@ let AppointeeViewForm = ({
     "success",
     "thumsup",
     <ThumbUp />,
-    "Manuall override"
+    "Manual Override"
   );
   const rejectFabProps = new FabIconPropsModel(
     actionIconStyle,
@@ -641,7 +644,7 @@ let AppointeeViewForm = ({
     "info",
     "remarks",
     <Comment />,
-    "Remarks"
+    "Remarks/Issues"
   );
   const mannualUploadFabProps = new FabIconPropsModel(
     actionIconStyle,
@@ -721,7 +724,7 @@ let AppointeeViewForm = ({
                 <Typography sx={listHeadingStyle}>Document Details</Typography>
               </Stack>
               <DocumentDetails
-                fieldName={"Candidate Id"}
+                fieldName={"Candidate ID"}
                 fieldValue={candidateId}
               />
               <DocumentDetails
@@ -736,7 +739,7 @@ let AppointeeViewForm = ({
               />
               <DocumentDetails
                 isVerified={isUanVerified}
-                fieldName={"UAN Number"}
+                fieldName={"UAN"}
                 fieldValue={UAN}
               />
               <DocumentDetails
@@ -865,19 +868,19 @@ let AppointeeViewForm = ({
                   fieldName={"Name"}
                   fieldValue={appointeeName}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAR Verified"}
+                  badgeTitle={"AADHAAR Verified"}
                 />
                 <PersonalInformation
                   fieldName={"Date of Birth"}
                   fieldValue={dateOfBirth}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAR Verified"}
+                  badgeTitle={"AADHAAR Verified"}
                 />
                 <PersonalInformation
                   fieldName={"Gender"}
                   fieldValue={gender}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAR Verified"}
+                  badgeTitle={"AADHAAR Verified"}
                 />
                 <PersonalInformation
                   fieldName={"Father's / Husband's Name"}
@@ -897,7 +900,7 @@ let AppointeeViewForm = ({
                   fieldName={"Mobile"}
                   fieldValue={mobileNo}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAR Verified"}
+                  badgeTitle={"AADHAAR Verified"}
                 />
                 <PersonalInformation fieldName={"Email"} fieldValue={email} />
                 <PersonalInformation
@@ -946,6 +949,23 @@ let AppointeeViewForm = ({
                   fieldName={"Date of Joining"}
                   fieldValue={dateOfJoining}
                 />
+                
+
+                <PersonalInformation
+                 // fieldName={"Father's Name Verification Document"}
+                  fieldName={"PAN Card"}
+                  fieldValue={
+                    otherFile ? (
+                      <FileViewComponent
+                        fileType={otherFileTypeAlias}
+                        file={otherFile}
+                        filesByAlias={filesByAlias}
+                      />
+                    ) : (
+                      "N/A"
+                    )
+                  }
+                />
                 <PersonalInformation
                   fieldName={"10th Pass Certificate"}
                   fieldValue={
@@ -960,21 +980,6 @@ let AppointeeViewForm = ({
                     )
                   }
                 />
-
-                <PersonalInformation
-                  fieldName={"Father's Name Verification Document"}
-                  fieldValue={
-                    otherFile ? (
-                      <FileViewComponent
-                        fileType={otherFileTypeAlias}
-                        file={otherFile}
-                        filesByAlias={filesByAlias}
-                      />
-                    ) : (
-                      "N/A"
-                    )
-                  }
-                />
               </Grid>
             </Box>
           </Grid>
@@ -982,8 +987,8 @@ let AppointeeViewForm = ({
           <Grid item xs={12} md={3.5}>
             {!roleTypeEnums.candidate.includes(userTypeId)
               ? isManualPassbook &&
-              //(manualVerificationStatus === "MV" ||
-               // manualVerificationStatus === "MRV") && 
+              (manualVerificationStatus === "MV" ||
+                manualVerificationStatus === "MRV") && 
                hasPermission &&
               hasPermission["A015"] && (
                 <Box

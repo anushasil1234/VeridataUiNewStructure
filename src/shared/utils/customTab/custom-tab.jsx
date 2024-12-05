@@ -50,7 +50,7 @@ export default function CustomTab(props) {
     _fromday = dayjs(new Date(now.setDate(now.getDate() - noOfDays)));
     _today = dayjs(new Date());
   }
-  const { tabs, payload ,isDownload, isDownloadExcel, hasPermission} = props;
+  const { tabs, payload ,isDownload,setIsDownloadExcel,setIsDownload, isDownloadExcel, hasPermission} = props;
   const { labelList, pannelList ,filterTab} = tabs;
 
   const initialTabIndex = pannelList.indexOf(filterTab); // Find the index of the `filterTab`
@@ -107,7 +107,7 @@ export default function CustomTab(props) {
         pannelList.map((pannel, index) => {
           return (
             <CustomTabPanel value={tabValue} index={index}>
-              <MVTable props={pannel} payload={payload} isDownload ={isDownload} isDownloadExcel = {isDownloadExcel} hasPermission = {hasPermission} />
+              <MVTable props={pannel} payload={payload} isDownload ={isDownload} setIsDownload={setIsDownload} isDownloadExcel = {isDownloadExcel} setIsDownloadExcel={setIsDownloadExcel} hasPermission = {hasPermission} />
             {/* {console.log('aaaa')} */}
             </CustomTabPanel>
           );

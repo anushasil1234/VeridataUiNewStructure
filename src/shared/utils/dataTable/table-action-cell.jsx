@@ -186,65 +186,65 @@ export const TableActionCell = (props1, props2) => {
   const updateUser = (rowAttribute) => {
     navigateTo(toUpdateUser, { state: rowAttribute });
   };
-  const [_isManualPassbook,setIsManualPassbook] = useState()
+  // const [_isManualPassbook,setIsManualPassbook] = useState()
   const handleGetAppointeeDetails = async (appointeeId) => {
-    const response = await getAppointeeDetails(appointeeId);
+    // const response = await getAppointeeDetails(appointeeId);
    
-    const {
-      appointeeName,
-      dateOfBirth,
-      gender,
-      memberName,
-      memberRelation,
-      handicapeType,
-      isHandicap,
-      maratialStatus,
-      qualification,
-      appointeeEmailId,
-      mobileNo,
-      nationality,
-      isFnameVarified,
-      isUanVarified,
-      isManualPassbook,
-      dateOfJoining,
-      userId
-    } = response?.responseInfo;
-    setIsManualPassbook(isManualPassbook? isManualPassbook :NA)
+    // const {
+    //   appointeeName,
+    //   dateOfBirth,
+    //   gender,
+    //   memberName,
+    //   memberRelation,
+    //   handicapeType,
+    //   isHandicap,
+    //   maratialStatus,
+    //   qualification,
+    //   appointeeEmailId,
+    //   mobileNo,
+    //   nationality,
+    //   isFnameVarified,
+    //   isUanVarified,
+    //   isManualPassbook,
+    //   dateOfJoining,
+    //   userId
+    // } = response?.responseInfo;
+    // setIsManualPassbook(isManualPassbook? isManualPassbook :NA)
     const personalInfo = {
       appointeeId,
-      appointeeName: appointeeName ? appointeeName : NA,
-      dateOfBirth: dateOfBirth ? DDMMYYYY(dateOfBirth) : NA,
-      gender: gender ? filteredObjectProperty(genderList, gender) : NA,
-      member: memberName ? memberName : NA,
-      relationshipWithMember: memberRelation
-        ? filteredObjectProperty(relationList, memberRelation)
-        : NA,
-      handicapType:
-        isHandicap === "N" || !isHandicap
-          ? NA
-          : filteredObjectProperty(disabilityList, handicapeType),
-      isPhysicallyHandicap: hasValue(isHandicap)
-        ? isHandicap === "Y"
-          ? "Yes"
-          : "No"
-        : NA,
-      maritalStatus: maratialStatus
-        ? filteredObjectProperty(maritalStatusList, maratialStatus)
-        : NA,
-      qualification: qualification
-        ? filteredObjectProperty(qualificationList, qualification)
-        : NA,
-      email: appointeeEmailId ? appointeeEmailId : NA,
-      mobileNo: mobileNo ? mobileNo : NA,
-      nationality: nationality ? nationality : NA,
-      isFnameVarified: isFnameVarified ? isFnameVarified : NA,
-      isUanVerified: isUanVarified
-        ? isUanVarified
-        : isUanVarified === false
-        ? isUanVarified
-        : NA,
-        dateOfJoining:dateOfJoining,
-        userId:userId
+      // appointeeName: appointeeName ? appointeeName : NA,
+      // dateOfBirth: dateOfBirth ? DDMMYYYY(dateOfBirth) : NA,
+      // gender: gender ? filteredObjectProperty(genderList, gender) : NA,
+      // member: memberName ? memberName : NA,
+      // relationshipWithMember: memberRelation
+      //   ? filteredObjectProperty(relationList, memberRelation)
+      //   : NA,
+      // handicapType:
+      //   isHandicap === "N" || !isHandicap
+      //     ? NA
+      //     : filteredObjectProperty(disabilityList, handicapeType),
+      // isPhysicallyHandicap: hasValue(isHandicap)
+      //   ? isHandicap === "Y"
+      //     ? "Yes"
+      //     : "No"
+      //   : NA,
+      // maritalStatus: maratialStatus
+      //   ? filteredObjectProperty(maritalStatusList, maratialStatus)
+      //   : NA,
+      // qualification: qualification
+      //   ? filteredObjectProperty(qualificationList, qualification)
+      //   : NA,
+      // email: appointeeEmailId ? appointeeEmailId : NA,
+      // mobileNo: mobileNo ? mobileNo : NA,
+      // nationality: nationality ? nationality : NA,
+      // isFnameVarified: isFnameVarified ? isFnameVarified : NA,
+      // isUanVerified: isUanVarified
+      //   ? isUanVarified
+      //   : isUanVarified === false
+      //   ? isUanVarified
+      //   : NA,
+      //   dateOfJoining:dateOfJoining,
+      //   userId:userId
     };
     // const personalInfo = {
     //   appointeeId,
@@ -309,6 +309,7 @@ export const TableActionCell = (props1, props2) => {
   //   openVerify(personalInfo);
   // }
   let actionListData;
+  console.log('actionList', actionList, actionPermissionList);
 
   actionListData =
     actionList &&

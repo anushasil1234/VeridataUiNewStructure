@@ -17,7 +17,9 @@ import {
   lapsedListPdfTableHeadCell,
   lapsedListTableHeadCell,
   toLapseddata,
-  reportGenarate
+  reportGenarate,
+  uploadedFromDateEmptyMsg,
+  FromDateEmptyMsg
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -171,6 +173,10 @@ const UnwrappedLapseddata = (props) => {
   };
 
   const handleSearch = () => {
+    if (!hasValue (fromDate)) {
+      showErrorMessage(FromDateEmptyMsg);
+      return;
+    }
     setTableRows(payLoad);
   };
   const handleDownload = () => {
@@ -232,7 +238,7 @@ if(!responseList || responseList.length === 0){
   }, [statusCode]);
   const handelsearch=()=>{
     if (hasValue(toDate) && !hasValue(fromDate)) {
-      showErrorMessage("From date can not be empty");
+      showErrorMessage("From Date can not be empty");
     }else {
       handleSearch();
     }

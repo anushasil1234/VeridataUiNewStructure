@@ -304,7 +304,7 @@ const CandidateView = () => {
                       variant="contained"
                       size="small"
 
-                      sx={{ ...primaryFabStyle, ml: 5 }}
+                      sx={{ ...primaryFabStyle, ml: 1.7 }}
                     >
                       <Info width={18} sx={{ color: "#fff" }} />
                     </Fab>

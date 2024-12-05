@@ -8,7 +8,7 @@ const VerificationQuiestions = ({ verificationOnChange, verificationQuestionSet,
     return (
         <Stack>
             <Stack>
-                <Typography sx={{ ...listHeadingStyle, fontSize: '0.8rem', textAlign: "left",marginLeft:"15px" }}>
+                <Typography sx={{ ...listHeadingStyle, fontSize: '1rem', textAlign: "left",marginLeft:"15px" }}>
                     {`Verification Questions`}
                 </Typography>
                 <Divider sx={{ marginTop: "2px" }} />

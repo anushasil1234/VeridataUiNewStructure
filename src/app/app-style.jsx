@@ -1033,7 +1033,9 @@ export const cardStyle2 = {
 };
 export const listStyle = {
   borderBottom: "1px solid #E2E8F0",
-  padding: "1rem"
+  padding: "1rem",
+  ml:0,
+  mt:0
 };
 export const fieldNameStyle = {
   fontSize: { xs: '12px', md: '14px', lg: '16px' }
@@ -1221,11 +1223,12 @@ export const manualstyle1={
 export const candidatefileViewContainerStyle = {
   // width: '100%',
   // overflowX: 'scroll',
-  width: '90%',
+  width: '89.47%',
   height: '300px',
   margin: 'auto',
   // backgroundColor: '',
-  border: "2px solid #9A208C",
+  border: "1px solid rgba(0, 0, 0, 0.12)",
+  borderRadius: "4px",
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -1327,11 +1330,11 @@ export const fileUploadSectionContainerStyle = {
 }
 const fileUploadSectionTextMargin = '6px';
 export const fileNameStyle = {
-  fontSize: ".7rem",
+  fontSize: ".875rem",
   textAlign: 'center',
   marginTop: fileUploadSectionTextMargin,
   texWrap: 'nowrap',
-  marginBottom: "20px"
+  marginBottom: "8px"
 }
 export const boxStyle = {
   position: 'absolute',
@@ -1482,6 +1485,7 @@ const yellow = ThemeColorPalete.yellow1.light;
 const rejected = ThemeColorPalete.red.main;
 
 export const statusChartColorList = [successlight, secondary, yellow, rejected];
+export const barcharcolour=[yellow,secondary]
 // status chart style end
 
 // skelton style starts
@@ -1719,7 +1723,8 @@ export const fieldValueSx = {
 }
 
 export const remarksInputContainerSx = {
-  marginTop: "20px"
+  marginTop: "20px",
+  marginLeft: "-12px"
 }
 export const iconStyle = {
   color: ThemeColorPalete.info.main,

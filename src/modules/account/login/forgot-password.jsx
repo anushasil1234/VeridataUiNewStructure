@@ -51,7 +51,7 @@ export const ForgotPasswordView = () => {
         const { clientId, dbUserType, userId } = responseInfo;
         const data = { userId, clientId, userCode: userName, dbUserType };
         navigate(`${toReSetPassword}`, { state: data });
-      } 
+      }
     }
   };
 
@@ -76,7 +76,7 @@ export const ForgotPasswordView = () => {
                 />
               </Box>
               <Box my={1.25}>
-                <PageHeading1 heading={"sign in"} />
+                <PageHeading1 heading={"Sign In"} />
               </Box>
               <Grid>
                 <form onSubmit={handleSubmit}>
@@ -88,13 +88,13 @@ export const ForgotPasswordView = () => {
                     style={styles.btnstyle}
                     fullWidth
                   >
-                    Generate Otp & Set Password
+                    Reset Password & Generate OTP
                   </Button>
                 </form>
                 <Box mt={2}>
                   <Typography variant="body2" align="center">
                     <Link href={toUserLogin} underline="hover">
-                      Back to login
+                      Back to Login
                     </Link>
                   </Typography>
                 </Box>

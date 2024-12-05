@@ -24,12 +24,15 @@ import {
     cardStyle2,
     floatingIconListStyle,
     gridContainerStyle,
+    infoDialogTitleStyle,
     inputFieldStyle2,
     lable1CopyStyle,
     listHeadingConteinerStyle,
     listHeadingStyle,
+    rightMostBtnStyle,
+    subHeadingContentTextStyle,
 } from "app";
-import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg } from "shared/constants/constants";
+import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg, defaultDropdownValue, remarksissuemessage } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import SelectInput from "shared/components/input-fields/select-input";
@@ -44,10 +47,12 @@ import addNewQuestion from "shared/utils/associate/add-new-question";
 import createVerificationTypeList from "shared/utils/associate/create-verification-type-list";
 import getFileCategoryByFileType from "shared/utils/associate/get-file-category";
 import isEPFOSelectionDisabled from "shared/utils/associate/is-epfo-disabled";
-import { DATEDIFF, DateFormatYYYYMMDD, FabIcon, toggleActionMenu, hasValue } from "shared/utils";
+import { DATEDIFF, DateFormatYYYYMMDD, FabIcon, toggleActionMenu, hasValue, DDMMYYYY, filteredObjectProperty } from "shared/utils";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import RemarksInputModel from "shared/utils/models/remarks-modal";
 import { storeActionRoute } from "store/slices/action-route-slice";
+import GridContainer from "shared/components/grid-container/grid-container";
+import Button1 from "shared/utils/button/button1";
 
 const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
     return (
@@ -64,47 +69,51 @@ const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
     )
 }
 
-let ManualverifiedViewDetails = ({ details }) => {
+let ManualverifiedViewDetails = ({ details, closeModel }) => {
 
     const {
         appointeeId,
-        appointeeName,
-        dateOfBirth,
-        gender,
-        relationshipWithMember,
-        member,
-        handicapType,
-        isPhysicallyHandicap,
-        maritalStatus,
-        qualification,
-        email,
-        mobileNo,
-        nationality,
-        isFnameVarified,
-        isUanVerified,
-        dateOfJoining,
-        userId
+        // appointeeName,
+        // dateOfBirth,
+        // gender,
+        // relationshipWithMember,
+        // member,
+        // handicapType,
+        // isPhysicallyHandicap,
+        // maritalStatus,
+        // qualification,
+        // email,
+        // mobileNo,
+        // nationality,
+        // isFnameVarified,
+        // isUanVerified,
+        // dateOfJoining,
+        // userId
     } = details;
 
-    const verificationFieldSet = {
-        none: false,
-        isFnameVarified: isFnameVarified,
-        isUanVerified: isUanVerified
-    }
-
     const apiSlice = useSelector((state) => state.apiSlice);
+    const dropdownList = useSelector((state) => state.dropdownList);
+
+    const {
+        relationList,
+        qualificationList,
+        disabilityList,
+        maritalStatusList,
+        genderList,
+    } = dropdownList.length > 0 && dropdownList[0];
     const functionSlice = useSelector((state) => state.functionSlice);
     const {
         getUploadFileData,
         GetUploadedFileDetailsById,
         getRemarks,
-        postAppointeeRejected
+        postAppointeeRejected,
+        getAppointeeDetails,
     } = apiSlice[0];
     const {
         openRemarksModel,
         openRemarksInputModel,
         closeRemarksInputModel,
-
+        openConfirmationYesNoModal
     } = functionSlice[0];
     const popUpSlice = useSelector(state => state.popUpSlice);
     const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
@@ -118,9 +127,9 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [verificationTypeList, setVerificationTypeList] = useState([]);
     const [uploadedFileData, setUploadedFileData] = useState([]);
     const [verificationCategoryList, setVerificationCategoryList] = useState([]);
-    const [fileTypeCategory, setFileTypeCategory] = useState("");
+    const [fileTypeCategory, setFileTypeCategory] = useState(defaultDropdownValue);
     const [files, setFiles] = useState([]);
-    const [file, setFile] = useState("");
+    const [file, setFile] = useState(defaultDropdownValue);
     const [fileSrc, setFileSrc] = useState("");
     const [fileName, setFilename] = useState("");
     const [verificationQuestionSet, setVerificationQuestionSet] = useState([]);
@@ -130,13 +139,29 @@ let ManualverifiedViewDetails = ({ details }) => {
     const [categorySelected, setCategorySelected] = useState(false);
     const [degreeOfRotation, setDegreeOfRotation] = useState(0);
     const [actionIconListDisplay, setActionIconListDisplay] = useState(false);
-
+    const [appointeeName, setAppointeeName] = useState();
+    const [dateOfBirth, setDateOfBirth] = useState();
+    const [gender, setGender] = useState();
+    const [relationshipWithMember, setRelationshipWithMember] = useState(null);
+    const [member, setMember] = useState(null);
+    const [handicapType, setHandicapType] = useState(null);
+    const [isPhysicallyHandicap, setIsPhysicallyHandicap] = useState(false);
+    const [maritalStatus, setMaritalStatus] = useState(null);
+    const [qualification, setQualification] = useState(null);
+    const [email, setEmail] = useState("");
+    const [mobileNo, setMobileNo] = useState("");
+    const [nationality, setNationality] = useState(null);
+    const [isFnameVarified, setIsFnameVarified] = useState(false);
+    const [isUanVerified, setIsUanVerified] = useState(false);
+    const [dateOfJoining, setDateOfJoining] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [isVarified, setIsVarified] = useState();
     const dispatch = useDispatch();
     const clearSubDropdownListofVerificationType = (currentValue) => {
         clearCategoryRelatedVariables();
         setFiles([]);
         if (currentValue === 'none') {
-            setFileTypeCategory("");
+            setFileTypeCategory(defaultDropdownValue);
             setVerificationCategoryList([]);
         }
     }
@@ -146,6 +171,8 @@ let ManualverifiedViewDetails = ({ details }) => {
     };
     const selectDefaultVerificationType = (value, _uploadedFileData) => {
         const target = { value };
+        console.log('_uploadedFileData', _uploadedFileData);
+
         handleChangeVerificationType({ target }, _uploadedFileData);
     }
 
@@ -187,37 +214,41 @@ let ManualverifiedViewDetails = ({ details }) => {
 
         setVerificationQuestionSet(_updatedQuestionSet);
         setVerificationUpdate({});
-        setFileTypeCategory("");
+        setFileTypeCategory(defaultDropdownValue);
     }
     const clearCategoryRelatedVariables = () => {
         setFileSrc("");
-        setFile("");
+        setFile(defaultDropdownValue);
     }
     const _setFile = async (value) => {
         setFile(value);
         await setFileImage(value);
     }
     const handleCategoryChange = async ({ target }) => {
-        const { value } = target;
-        setFileTypeCategory(value);
-        setCategorySelected(true);
-        setSelectedFiles([]);
-        const { files } = filterDocVerificationList({ fileCategory: verificationType.value, uploadedFileData, fileType: value });
-        setFiles(files);
 
-        if (files.length === 1) {
-            await _setFile(files[0].value);
-        } else {
-            clearCategoryRelatedVariables();
+        const { value } = target;
+        console.log('handleCategoryChange', target, value);
+        if (value !== defaultDropdownValue) {
+            setFileTypeCategory(value);
+            setCategorySelected(true);
+            setSelectedFiles([]);
+            const { files } = filterDocVerificationList({ fileCategory: verificationType.value, uploadedFileData, fileType: value });
+            setFiles(files);
+
+            if (files.length === 1) {
+                await _setFile(files[0].value);
+            } else {
+                clearCategoryRelatedVariables();
+            }
+
+            setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
         }
-    
-        setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
 
         // if (verificationType.verificationFieldName === fileVerificationEnums.docEPFO) {
         //     setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
         // }
     }
- 
+
 
     const reject = async (remarks) => {
         showErrorMessage();
@@ -275,7 +306,7 @@ let ManualverifiedViewDetails = ({ details }) => {
         const updatedFiles = files.map((file) =>
             file.value === fileTypeToUpdate ? { ...file, isRead: true } : file
         );
-       
+
         setFiles(updatedFiles);
     };
     const setUploadedFileDataResponse = async (defaultVerificationType) => {
@@ -295,7 +326,69 @@ let ManualverifiedViewDetails = ({ details }) => {
             console.log("EPFO option selected:", value);
         }
     };
+    const initializeVerificationData = async () => {
+        const response = await getAppointeeDetails(appointeeId);
 
+        if (response) {
+            const { appointeeName, dateOfBirth, gender, memberName, memberRelation, isHandicap, handicapeType, maratialStatus, qualification,
+                appointeeEmailId, mobileNo, dateOfJoining, isUanVarified, isFnameVarified } = response.responseInfo;
+            appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
+            dateOfBirth ? setDateOfBirth(DDMMYYYY(dateOfBirth)) : setDateOfBirth(NA);
+            gender
+                ? setGender(filteredObjectProperty(genderList, gender))
+                : setGender(NA);
+            memberName ? setMember(memberName) : setMember(NA);
+            memberRelation
+                ? setRelationshipWithMember(
+                    filteredObjectProperty(relationList, memberRelation)
+                )
+                : setRelationshipWithMember(NA);
+            hasValue(isHandicap)
+                ? isHandicap === "Y"
+                    ? setIsPhysicallyHandicap("Yes")
+                    : setIsPhysicallyHandicap("No")
+                : setIsPhysicallyHandicap(NA);
+            isHandicap === "N" || !isHandicap
+                ? setHandicapType(NA)
+                : setHandicapType(
+                    filteredObjectProperty(disabilityList, handicapeType)
+                );
+            qualification
+                ? setQualification(
+                    filteredObjectProperty(qualificationList, qualification)
+                )
+                : setQualification(NA);
+            maratialStatus
+                ? setMaritalStatus(
+                    filteredObjectProperty(maritalStatusList, maratialStatus)
+                )
+                : setMaritalStatus(NA);
+            appointeeEmailId ? setEmail(appointeeEmailId) : setEmail(NA);
+            mobileNo ? setMobileNo(mobileNo) : setMobileNo(NA);
+            nationality ? setNationality(nationality) : setNationality(NA);
+            dateOfJoining
+                ? setDateOfJoining(DDMMYYYY(dateOfJoining))
+                : setDateOfJoining(NA);
+            // mobileNo: mobileNo ? mobileNo : NA,
+            // nationality: nationality ? nationality : NA,
+            // isFnameVarified: isFnameVarified ? isFnameVarified : NA,
+            // isUanVerified: isUanVarified
+            //   ? isUanVarified
+            //   : isUanVarified === false
+            //   ? isUanVarified
+            //   : NA,
+            //   dateOfJoining:dateOfJoining,
+            //   userId:userId
+            const verificationFieldSet = {
+                none: false,
+                isFnameVarified: isFnameVarified,
+                isUanVerified: isUanVarified
+            }
+            const { verificationTypeList } = createVerificationTypeList(defaultVerificationTypeList, verificationFieldSet);
+            setUploadedFileDataResponse(verificationTypeList[0]?.value);
+            setVerificationTypeList(verificationTypeList);
+        }
+    };
     useEffect(() => {
         if (files.length === 1 && selectedFiles.length === 0) {
             setSelectedFiles([files[0].value]);
@@ -360,9 +453,7 @@ let ManualverifiedViewDetails = ({ details }) => {
     }, [verificationType]);
 
     useEffect(() => {
-        const { verificationTypeList } = createVerificationTypeList(defaultVerificationTypeList, verificationFieldSet);
-        setUploadedFileDataResponse(verificationTypeList[0]?.value);
-        setVerificationTypeList(verificationTypeList);
+        initializeVerificationData();
     }, [])
     useEffect(() => {
         const { updatedQuestionSet: _updatedQuestionSet } = upDateQuestionSet({
@@ -387,6 +478,8 @@ let ManualverifiedViewDetails = ({ details }) => {
         if (response && response.responseInfo && response.responseInfo.length > 0) {
             const remarks = response.responseInfo;
             openRemarksModel(remarks);
+        } else {
+            showErrorMessage(remarksissuemessage);
         }
     };
     const handleReject = () => {
@@ -416,7 +509,7 @@ let ManualverifiedViewDetails = ({ details }) => {
         "info",
         "remarks",
         <Comment />,
-        "Remarks"
+        "Remarks/Issues"
     );
     const rejectFabProps = new FabIconPropsModel(
         actionIconStyle,
@@ -426,6 +519,50 @@ let ManualverifiedViewDetails = ({ details }) => {
         <ThumbDown />,
         "Cancel"
     );
+    const handleYes = () => closeModel();
+    const handleNo = () => { };
+    const handleClose = async () => {
+
+        let _contetntText
+        console.log('isVarified', isVarified);
+        if (isVarified === false) {
+            _contetntText = (
+                <>
+                    <Typography sx={subHeadingContentTextStyle}>
+                        {'Candidate has failed verification in the previously checked segment.'}
+                    </Typography>
+                    <Typography sx={subHeadingContentTextStyle}>
+                        {'If you Close now, you will not be able to complete the remaining verification segments.'}
+                    </Typography>
+                    <Typography sx={subHeadingContentTextStyle}>
+                        {'Candidate will be moved to "Document Reupload Requested" tab, requesting Candidate to reupload relevant documents against the failed verification issues. After candidate completes the reupload, Candidate will be moved to Manual Re-Verification tab, from where you will again be able to reverify candidate.'}
+                    </Typography>
+                    <Typography sx={infoDialogTitleStyle}> {'Do you still want to "Close"?'}</Typography>
+                </>
+            )
+        } else {
+            _contetntText = (
+                <>
+                    <Typography sx={subHeadingContentTextStyle}>
+                        {'If you have selected any answers / written "Remarks", please click on "Submit" to register your responses - you will loose them otherwise.'}
+                    </Typography>
+                    <Typography sx={infoDialogTitleStyle}> {'Do you still want to "Close"?'}</Typography>
+                </>
+            )
+        }
+        const closeConfirmationModelContent = {
+
+            dialogContentText: _contetntText,
+            fullWidth: true,
+            mxWidth: "md",
+        };
+        openConfirmationYesNoModal(
+            closeConfirmationModelContent,
+            handleYes,
+            handleNo
+        );
+
+    };
     return (
         <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", width: "100%", height: "100%", padding: "1rem 0", marginRight: '10px' }}>
             <Stack sx={floatingIconListStyle}>
@@ -468,7 +605,7 @@ let ManualverifiedViewDetails = ({ details }) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={12} lg={12} letterSpacing={2}>
                         <Grid item xs={12}>
-                            <Stack direction={{ xs: "column", sm: "row" }} >
+                            <Stack direction={{ xs: "column", sm: "row" }}  >
                                 <PersonalInformation fieldName={"Name"} fieldValue={appointeeName} />
                                 <PersonalInformation fieldName={"Date of Birth"} fieldValue={dateOfBirth} />
                                 <PersonalInformation fieldName={"Father's/Husband's Name"} fieldValue={member} />
@@ -538,30 +675,54 @@ let ManualverifiedViewDetails = ({ details }) => {
                 </Grid>
                 <Divider />
                 {
-                    verificationCategoryList && verificationCategoryList.length > 0 &&
-                    <FiledetailsSection
-                        appointeeId={appointeeId}
-                        verificationType={verificationType}
-                        fileSrc={fileSrc}
-                        fileName={fileName}
-                        fileTypeCategory={fileTypeCategory}
-                        verificationOnChange={verificationOnChange}
-                        verificationUpdate={verificationUpdate}
-                        verificationQuestionSet={verificationQuestionSet}
-                        categorySelected={categorySelected}
-                        setVerificationTypeList={setVerificationTypeList}
-                        setVerificationType={setVerificationType}
-                        setVerificationCategoryList={setVerificationCategoryList}
-                        uploadedFileData={uploadedFileData}
-                        verificationTypeList={verificationTypeList}
-                        verificationCategoryList={verificationCategoryList}
-                        selectedFiles={selectedFiles}
-                        files={files}
-                        setFile={setFile}
-                        selectedMandatoryCategoryList={selectedMandatoryCategoryList}
-                        setSelectedMandatoryCategoryList={setSelectedMandatoryCategoryList}
-                    />
+                    verificationCategoryList && verificationCategoryList.length > 0 ? (
+                        <FiledetailsSection
+                            appointeeId={appointeeId}
+                            verificationType={verificationType}
+                            fileSrc={fileSrc}
+                            fileName={fileName}
+                            fileTypeCategory={fileTypeCategory}
+                            setFileTypeCategory={setFileTypeCategory}
+                            verificationOnChange={verificationOnChange}
+                            verificationUpdate={verificationUpdate}
+                            verificationQuestionSet={verificationQuestionSet}
+                            categorySelected={categorySelected}
+                            setVerificationTypeList={setVerificationTypeList}
+                            setVerificationType={setVerificationType}
+                            setVerificationCategoryList={setVerificationCategoryList}
+                            uploadedFileData={uploadedFileData}
+                            verificationTypeList={verificationTypeList}
+                            verificationCategoryList={verificationCategoryList}
+                            selectedFiles={selectedFiles}
+                            files={files}
+                            setFiles={setFiles}
+                            setFile={setFile}
+                            selectedMandatoryCategoryList={selectedMandatoryCategoryList}
+                            setSelectedMandatoryCategoryList={setSelectedMandatoryCategoryList}
+                            closeModel={handleClose}
+                            setIsVarified={setIsVarified}
+                            isVarified={isVarified}
+
+                        />
+                    ) : (
+                        <Grid item xs={12}>
+                            <Stack sx={{ flexDirection: 'row', justifyContent: 'end' }}>
+
+                                <Button1
+                                    onClick={closeModel}
+                                    sx={rightMostBtnStyle}
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    {'Close'}
+                                </Button1>
+                            </Stack>
+                        </Grid>
+                    )
                 }
+                {/* <GridContainer> */}
+
+                {/* </GridContainer> */}
             </ManualVerifiedPageSectionContainer>
         </Box>
     );
@@ -573,8 +734,8 @@ const UnWrappedManualVerifiedView = (props) => {
             headerText={"Manual Verification"}
             open={props.openView}
             fullScreen={true}
-            closeModel={props.closeViewModel}
-            content={<ManualverifiedViewDetails details={props.appointeePersonalDetails} />}
+            // closeModel={props.closeViewModel}
+            content={<ManualverifiedViewDetails details={props.appointeePersonalDetails} closeModel={props.closeViewModel} />}
         />
     );
 };

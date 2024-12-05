@@ -134,7 +134,7 @@ const jsPDFReportDataTemplate = async ({
       { label: "Full Name:", value: responseInfo?.fullName },
       { label: "Father's Name:", value: responseInfo?.fatherName },
       { label: "Date of Birth:", value: responseInfo?.dob },
-      { label: "UAN Number:", value: responseInfo?.pfUan },
+      { label: "UAN:", value: responseInfo?.pfUan },
     ];
 
     doc.setFontSize(12);

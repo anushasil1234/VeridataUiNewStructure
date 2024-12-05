@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReport from "shared/components/download-report/download-report";
-import { downloadVerifiedList_URL, toVerified, verifiedListTableHeadCell, verifiedReportInfo } from "shared/constants/constants";
-import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from "shared/utils";
+import { downloadVerifiedList_URL, FromDateEmptyMsg, toVerified, uploadedFromDateEmptyMsg, verifiedListTableHeadCell, verifiedReportInfo } from "shared/constants/constants";
+import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData,hasValue } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import { storeData } from "store/slices/data-slice";
 
@@ -95,7 +95,8 @@ const UnWrappedVerified = (props) => {
 
   const { getVerifiedAppointeeList } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
-
+  const popUpSlice = useSelector((state) => state.popUpSlice);
+  const { showErrorMessage } = popUpSlice[0]
 
   const setTableRows = async (payLoad) => {
     setPageName(
@@ -126,6 +127,13 @@ const UnWrappedVerified = (props) => {
     const _payLoad = { ...payLoad, filePassword }
     setPayLoad(_payLoad);
   }
+  const handleSearch = () => {
+    if (!hasValue (fromDate)) {
+      showErrorMessage(FromDateEmptyMsg);
+      return;
+    }
+    setTableRows(payLoad);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(removeActionRoute());
@@ -155,7 +163,7 @@ const UnWrappedVerified = (props) => {
     <PageLayout pageName={pageName}>
       <CardLayout>
         <DownloadReport
-          handleSearch={() => setTableRows(payLoad)}
+          handleSearch={handleSearch}
           clearSearch={clearSearch}
           payLoad={payLoad}
           downloadApi={downloadVerifiedList_URL}

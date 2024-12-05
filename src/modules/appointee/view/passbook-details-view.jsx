@@ -227,7 +227,7 @@ let PassbookViewDetails = ({ appointeeId, passbookDetails }) => {
                   fieldValue={fatherName}
                 />
                 <PersonalInformation
-                  fieldName={"UAN Number"}
+                  fieldName={"UAN"}
                   fieldValue={pfUan}
                 />
               </Stack>

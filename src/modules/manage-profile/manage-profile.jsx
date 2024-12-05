@@ -56,7 +56,7 @@ const ManageProfile = () => {
                     <Grid container spacing={2}>
                         <PersonalInformation fieldName="Role" fieldValue={roleName} />
                         <PersonalInformation fieldName="Email" fieldValue={emailId} />
-                        {
+                        {/* {
                             !isSetProfilePassword &&
                             <PersonalInformation
                                 fieldName="Profile Password"
@@ -86,7 +86,7 @@ const ManageProfile = () => {
                                 }
                             />
 
-                        }
+                        } */}
                     </Grid>
                 </Grid>
             </Grid>

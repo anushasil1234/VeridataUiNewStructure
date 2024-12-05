@@ -22,6 +22,19 @@ const SelectInput = ({ itemList, label, onChange, value, required = false, disab
                 onChange={onChange}
                 value={value}
             >
+                <MenuItem
+                    // onMouseEnter={}
+                    value={"none"}
+                    disabled={true}
+                    sx={{
+                        cursor: 'not-allowed!important',
+                        pointerEvents: 'auto!important', // Allow pointer events on disabled items
+                        backgroundColor: 'rgba(154, 32, 140, 0.2)',
+                        ...dropdownMenuItemStyle
+                    }}
+                >
+                    {`Select ${label}`}
+                </MenuItem>
                 {itemList && itemList.length > 0 && itemList.map(({ value, label, isRead = false, isDisabled = false }, index) => {
                     return (
                         <MenuItem
@@ -34,7 +47,7 @@ const SelectInput = ({ itemList, label, onChange, value, required = false, disab
                                 cursor: isDisabled ? 'not-allowed!important' : 'pointer!important',
                                 pointerEvents: isDisabled ? 'auto!important' : 'inherit!important', // Allow pointer events on disabled items
                                 backgroundColor: isRead === true ? 'rgba(154, 32, 140, 0.2)' : 'inherit',
-                               ...dropdownMenuItemStyle
+                                ...dropdownMenuItemStyle
                             }}
                         >
                             {label}

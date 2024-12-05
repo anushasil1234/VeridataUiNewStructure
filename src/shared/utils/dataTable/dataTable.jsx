@@ -18,7 +18,7 @@ import {
     Toolbar,
     Typography,
 } from "@mui/material";
-import { Stack } from "@mui/system";
+import { borderBottom, Stack } from "@mui/system";
 import { tableHeader, toolbarsx } from "app";
 
 function descendingComparator(a, b, orderBy) {
@@ -68,8 +68,9 @@ function EnhancedTableHead(props) {
     const tableHeadRowStyle = {
         position: "sticky",
         top: 0,
-        zIndex: 2,
+        zIndex: 0,
         bgcolor: "#fff",
+        borderBottom: "1px solid rgba(224, 224, 224, 1)"
     };
     return (
         <TableHead>
@@ -86,6 +87,7 @@ function EnhancedTableHead(props) {
                                 inputProps={{
                                     "aria-label": "select all desserts",
                                 }}
+                                sx={{ padding: '25px' }}
                             />
                         ) : (
                             <TableCell
@@ -164,6 +166,7 @@ const DataTable = ({
     checBoxRequired,
     isPaginationOn = true,
     isShowMoreRowsOn = true,
+    handleRowSelection
 }) => {
     const [tableRows, setTableRows] = useState();
     const [order, setOrder] = React.useState("asc");
@@ -234,6 +237,7 @@ const DataTable = ({
                 });
             setCountCheckBoxEnabledRows(countCheckBoxEnabledRows);
             setSelected(newSelected);
+            handleRowSelection && handleRowSelection({ rowsPerPage, page });
         } else {
             setSelected([]);
         }
@@ -255,6 +259,7 @@ const DataTable = ({
             );
         }
         setSelected(newSelected);
+        handleRowSelection && handleRowSelection({ rowsPerPage, page });
     };
 
     const handleChangePage = (event, newPage) => {

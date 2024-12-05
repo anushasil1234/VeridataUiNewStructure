@@ -812,8 +812,8 @@ const AppWrapper = (App) => {
 
     const setRemarks = async (appointeeId) => {
       const response = await getRemarks(appointeeId);
-      if (response.responseInfo && response.responseInfo.length > 0) {
-        const remarks = response.responseInfo;
+      if (response?.responseInfo && response?.responseInfo.length > 0) {
+        const remarks = response?.responseInfo;
         openRemarksModel(remarks);
       } else {
         showErrorMessage(noRemarksMsg);

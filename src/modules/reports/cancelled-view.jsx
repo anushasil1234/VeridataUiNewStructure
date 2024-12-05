@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import ActionPermission from 'shared/components/action-permission/action-permission';
 import DownloadReport from 'shared/components/download-report/download-report';
-import { downloadRejectedList_URL, rejectedListTableHeadCell, toCancelled } from 'shared/constants/constants';
-import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData } from 'shared/utils';
+import { downloadRejectedList_URL, FromDateEmptyMsg, rejectedListTableHeadCell, toCancelled, uploadedFromDateEmptyMsg } from 'shared/constants/constants';
+import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from 'shared/utils';
 import { removeActionRoute } from 'store/slices/action-route-slice';
 
 const UnwrappedCancelled = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
+  const popUpSlice = useSelector((state) => state.popUpSlice);
+  const { showErrorMessage } = popUpSlice[0]
   let noOfDays = 0;
 
   if (state) {
@@ -84,6 +86,13 @@ const UnwrappedCancelled = (props) => {
       });
     }
   }
+  const handleSearch = () => {
+    if (!hasValue (fromDate)) {
+      showErrorMessage(FromDateEmptyMsg);
+      return;
+    }
+    setTableRows(payLoad);
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -101,7 +110,7 @@ const UnwrappedCancelled = (props) => {
     <PageLayout pageName={"cancelled List"}>
       <CardLayout>
         <DownloadReport
-          handleSearch={() => setTableRows(payLoad)}
+          handleSearch={handleSearch}
           clearSearch={clearSearch}
           payLoad={payLoad}
           downloadApi={downloadRejectedList_URL}

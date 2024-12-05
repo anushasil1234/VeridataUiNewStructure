@@ -1,5 +1,5 @@
 import { Box, Button, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material'
-import { candidatefileViewContainerStyle, imagestyleContainer, listHeadingStyle, rightMostBtnStyle, submitBtnStyle, zoombuttonStyle } from 'app'
+import { candidatefileViewContainerStyle, imagestyleContainer, infoDialogTitleStyle, listHeadingStyle, rightMostBtnStyle, subHeadingContentTextStyle, submitBtnStyle, zoombuttonStyle } from 'app'
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import VerificationQuiestions from './verification-quiestions'
@@ -7,7 +7,7 @@ import GridContainer from 'shared/components/grid-container/grid-container'
 import { hasValue, validationsCheck } from 'shared/utils'
 import validateQuestionSet from 'shared/utils/associate/validate-question-set'
 import TextAreaInput from 'shared/components/input-fields/text-input'
-import { categoryFileEmptyerror, fileVerificationEnums, ManualSubmitConfirmation, manualSubmitConfirmatonMsg, remarksemptyerror, remarksError, verificatiosucess } from 'shared/constants/constants'
+import { categoryFileEmptyerror, defaultDropdownValue, fileEmptyerror, fileVerificationEnums, ManualSubmitConfirmation, manualSubmitConfirmatonMsg, remarksemptyerror, remarksError, verificatiosucess } from 'shared/constants/constants'
 import createVerificationUpdate from 'shared/utils/associate/create-verification-update'
 import { Download, ZoomIn, ZoomOut } from '@mui/icons-material'
 import { handleZoom } from 'shared/utils/associate/Zoomin-out'
@@ -15,16 +15,18 @@ import downloadFile from 'shared/utils/associate/download-file'
 import { calculateDragPosition } from 'shared/utils/associate/dragein'
 import { MouseEventHandler } from 'shared/utils/associate/dragable'
 import { removeManualValidationResponseStatusSlice, storeManualValidationResponseStatusSlice } from 'store/slices/manual-validation-response-status-slice'
+import Button1 from 'shared/utils/button/button1'
 
 
-const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fileTypeCategory,
+const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fileTypeCategory, setFileTypeCategory,
     verificationOnChange, verificationQuestionSet, appointeeId,
-    fileName, selectedFiles, files, setVerificationType, categorySelected,
+    fileName, selectedFiles, files, setFiles, setVerificationType, categorySelected,
     verificationCategoryList, setVerificationCategoryList, verificationTypeList,
-    setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList,
- }) => {
+    setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList, closeModel,setIsVarified
+}) => {
 
     const dispatch = useDispatch();
+  
 
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -37,12 +39,12 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         userId: null
     };
     const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
-    const {
-        UpdateAppointeeManualVerification
-    } = apiSlice[0];
+    const { UpdateAppointeeManualVerification } = apiSlice[0];
     const { openConfirmationModel } = functionSlice[0];
     const [zoomLevel, setZoomLevel] = useState(1);
     const [remarks, setRemarks] = useState("");
+  
+
     const handleZoomIn = () => {
         setZoomLevel(handleZoom('in'));
     };
@@ -70,10 +72,13 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
     const callApiBasedOnSuccess = async (payload) => {
         {
 
-            const { responseInfo } = await UpdateAppointeeManualVerification(payload);
-            if (responseInfo) {
+            const response = await UpdateAppointeeManualVerification(payload);
+            if (response) {
+                const { responseInfo } = response
+                console.log("responseInfo", responseInfo)
                 // store into redux
                 // dispatch(storeLoggedinData(loginData));
+                setIsVarified(responseInfo);
                 const isdataSubmited = true;
                 dispatch(removeManualValidationResponseStatusSlice());
                 dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited }));
@@ -82,6 +87,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         }
         return false;
     };
+
     const handleVerificationSubmit = async () => {
         let submitconfModelContent = {
             dialogContentText: "",
@@ -90,9 +96,13 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
             showErrorMessage(categoryFileEmptyerror);
             return;
         }
+        if (selectedFiles.length === 0) {
+            showErrorMessage(fileEmptyerror);
+            return;
+        }
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
 
-   
+
 
         if (error) {
             showErrorMessage(error);
@@ -142,10 +152,14 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                 }
                 setVerificationCategoryList([]);
                 setSelectedMandatoryCategoryList([]);
-                setFile("");
+                setFile(defaultDropdownValue);
+                setFiles([]);
+                setFileTypeCategory(defaultDropdownValue);
             }
         });
     };
+
+  
 
     return (
         <>
@@ -260,7 +274,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
             <GridContainer>
                 <Grid item xs={12}>
                     <Stack sx={{ flexDirection: 'row', justifyContent: 'end' }}>
-                        <Button
+                        <Button1
                             onClick={handleVerificationSubmit}
                             //sx={{ m: "15px 5px", ml: 3 }}
                             sx={submitBtnStyle}
@@ -268,8 +282,9 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                             color="primary"
                         >
                             {'Submit'}
-                        </Button>
-                        <Button
+                        </Button1>
+                        <Button1
+                            onClick={closeModel}
                             //onClick={() => setCurrentPageNo(1)}
                             // onClick={() => submitDetails(false, true)}
                             //sx={{ m: "15px 5px", ml: 3 }}
@@ -278,7 +293,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                             color="primary"
                         >
                             {'Close'}
-                        </Button>
+                        </Button1>
                     </Stack>
                 </Grid>
             </GridContainer>

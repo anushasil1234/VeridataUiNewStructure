@@ -14,7 +14,7 @@ import {
   useTheme
 } from "@mui/material";
 import { datePickerstyle, downLoadListSx, inputFieldStyle, primaryFabStyle,ResponsiveFab } from "app";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
@@ -42,13 +42,15 @@ const DownloadReportFilter = ({
   const { popUpSlice } = useSelector(
     (state) => state
   );
- 
+  const downloadListRef = useRef(null);
   
   const currentDate = moment();
   const _currentDate = currentDate.format("DD-MMM-YYYY");
   const { showErrorMessage } = popUpSlice[0];
   const[isDownloadListOpened,setIsDownloadListOpened]=useState(false);
   const handleDownloadClick =()=>{
+    console.log('clikoutside')
+
     setIsDownloadListOpened(!isDownloadListOpened);
   }
   const handleReportSearch = () => {
@@ -64,7 +66,20 @@ const DownloadReportFilter = ({
       handleSearch();
     }
   };
+  // Close download list on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      console.log('clikoutside',event.target)
+      if (downloadListRef.current && !downloadListRef.current.contains(event.target)) {
+        setIsDownloadListOpened(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
 
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <Grid
@@ -196,7 +211,7 @@ const DownloadReportFilter = ({
 
             {isDownloadListOpened && (
               
-              <List sx={{ ...downLoadListSx, left: '-16px', zIndex: 1000 }}>
+              <List  ref={downloadListRef} sx={{ ...downLoadListSx, left: '-16px', zIndex: 1000 }}>
                 <ListItemButton component="a">
                   <DarkTooltip placement="top" title="Download PDF Report" arrow>
                     <Button variant="contained" onClick={handleDownload}>PDF</Button>

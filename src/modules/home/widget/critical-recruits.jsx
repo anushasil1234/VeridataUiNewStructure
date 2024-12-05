@@ -7,7 +7,7 @@ import { WidgetCard } from '.';
 import { useSelector } from 'react-redux';
 import { toAttention } from 'shared/constants/constants';
 import { hasValue } from 'shared/utils';
-import { dashBoardwidget } from 'app';
+import { barcharcolour, dashBoardwidget } from 'app';
 import { ResponsiveFab } from 'app';
 
 const CriticalRecruits = () => {
@@ -20,6 +20,7 @@ const CriticalRecruits = () => {
 
     const theme = useTheme();
     const primary = theme.palette.secondary.main;
+  
     const criticalColor = '#ca5180e3';
     const attention_light = theme.palette.error.main;
     const attention_dark = theme.palette.error.dark;
@@ -35,7 +36,7 @@ const CriticalRecruits = () => {
             height: 155
         },
         labels: ["Under process", "Link not sent"],
-        colors: [primary, criticalColor],
+        colors: barcharcolour,
         plotOptions: {
             pie: {
                 startAngle: -90,

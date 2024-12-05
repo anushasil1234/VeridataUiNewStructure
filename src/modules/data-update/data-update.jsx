@@ -109,7 +109,7 @@ const UnWrrappedDataUpdate = (props) => {
 
             {/* Numbered list */}
             <Typography variant="subtitle2" sx={{ mt: 1 }}>
-              2. To update, provide the candidate ID and only the specific field to be changed, leaving all other fields blank.
+              2. To update, provide the Candidate ID and only the specific field to be changed, leaving all other fields blank.
             </Typography>
 
             <Typography variant="subtitle2" sx={{ mt: 1 }}>
