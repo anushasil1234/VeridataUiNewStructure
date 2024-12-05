@@ -86,10 +86,19 @@ const PrerequisiteInformation = () => {
         {
             StepNumber: `Father's Name Certificate`,
             primaryHeading: "Father's Name Certificate",
-            secondaryText: "Please have a certificate which has your Father's name before continuing.",
+            secondaryText: "PAN Card and 10th Pass certificate soft copies, to verify your father's name.",
             secondaryComponent:
                 <>
                     {" —  If you don't have an Father's name Certificate please contact with your HR."}
+                </>
+        },
+        {
+            StepNumber: `Hanicap Certificate`,
+            primaryHeading: "Handicap Certificate",
+            secondaryText: "Your Handicap Certificate, if you are physically challenged.",
+            secondaryComponent:
+                <>
+                    {" —  keep soft copy in your hand."}
                 </>
         }
     ]
