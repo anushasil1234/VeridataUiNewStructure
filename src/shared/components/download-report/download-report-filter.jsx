@@ -1,4 +1,4 @@
-import { Download, Refresh, Search, Summarize } from "@mui/icons-material";
+import { Download, Info, Refresh, Search, Summarize } from "@mui/icons-material";
 import {
   Box,
   Grid,
@@ -23,6 +23,7 @@ import { DateFormatYYYYMMDD, hasValue } from "shared/utils";
 import moment from "moment";
 import ArticleIcon from '@mui/icons-material/Article';
 import Button from '@mui/material/Button';
+import { appointeeCountInfo, generateAppointeeCountReportDesc, generatenationlityReportDesc, nationalityInfo } from "shared/constants/constants";
 const DownloadReportFilter = ({
   filterType,
   setFilterType,
@@ -226,6 +227,19 @@ const DownloadReportFilter = ({
             )}
           </Grid>
         )}
+        <Grid item>
+        <DarkTooltip placement="top" title={filterCode === "NATNLTY" ? nationalityInfo(dropdownFilterType?.toString()):filterCode === "APPNTE" ? appointeeCountInfo :''} arrow>
+            <ResponsiveFab
+              variant="contained"
+              size="small"
+              button="N"
+           //   onClick={clearSearch}
+              sx={primaryFabStyle}
+            >
+              <Info width={18} sx={{ color: "#fff" }} />
+            </ResponsiveFab>
+          </DarkTooltip>
+        </Grid>
       </Grid>
     </Grid>
   );

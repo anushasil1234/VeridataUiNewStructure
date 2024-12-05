@@ -266,7 +266,7 @@ const UnWrappedMannualVerification = (props) => {
               md={3}
               lg={3} 
               sx={{ position: "relative" }}>
-                 <DarkTooltip placement="right" title={manualverificationinfo} arrow>
+                 <DarkTooltip placement="top" title={manualverificationinfo} arrow>
               <ResponsiveFab
                 variant="contained"
                 size="small"

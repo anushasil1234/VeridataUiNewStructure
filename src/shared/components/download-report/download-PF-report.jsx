@@ -17,6 +17,7 @@ import PropTypes from "prop-types";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { hasValue } from "shared/utils";
 import { useSelector } from "react-redux";
+import { pfPensionInfo } from "shared/constants/constants";
 
 
 const DownloadPFReport = ({
@@ -235,6 +236,19 @@ const DownloadPFReport = ({
             )}
           </Grid>
         )}
+         <Grid item>
+          <DarkTooltip placement="top" title={pfPensionInfo} arrow>
+            <ResponsiveFab
+              variant="contained"
+              size="small"
+              button={"N"}
+            //  onClick={clearSearch}
+              sx={{ ...primaryFabStyle }}
+            >
+              <Info width={18} sx={{ color: "#fff" }} />
+            </ResponsiveFab>
+          </DarkTooltip>
+        </Grid>
         {/* <Grid item>
           {infoDetails && hasValue(infoDetails) ?
             <DarkTooltip placement="right" title={infoDetails} arrow>
@@ -245,7 +259,7 @@ const DownloadPFReport = ({
                 sx={{ ...primaryFabStyle }}
               >
                 <Info width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>
+              </ResponsiveFab>=
             </DarkTooltip>
             : null}
         </Grid> */}

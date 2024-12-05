@@ -10,7 +10,10 @@ const DarkTooltip = styled(({ className, ...props }) => (
     [`& .${tooltipClasses.tooltip}`]: {
         backgroundColor: theme.palette.common.black,
         boxShadow: theme.shadows[1],
-        fontSize: 16
+        fontSize: 16,
+        maxWidth: 500, // Set a max width
+        padding: '8px 12px', // Adjust padding
+       // wordWrap: 'break-word', // Ensure text wraps if too long
     },
 }));
 
