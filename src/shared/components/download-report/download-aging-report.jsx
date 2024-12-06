@@ -97,7 +97,6 @@ const DownloadAgingReport = ({
     setFilterType(value);
     
     if (value === 0) {
-      // Reset to 'All' behavior, clear custom filter
       setNoOfDays(null);
       setFromDate(null);
       setPayLoad({ ...payLoad, startDate: null, noOfDays: 0 });
