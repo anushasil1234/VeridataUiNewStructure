@@ -2604,7 +2604,7 @@ export const noResponseInfo = (days) => {
   return (
     <div>
       <p>{generateNoResponseReportDesc(days)}</p>
-      <a
+      {/* <a
         href={toHelp}
         target="_blank"
         rel="noopener noreferrer"
@@ -2615,7 +2615,7 @@ export const noResponseInfo = (days) => {
         }}
       >
         Read More
-      </a>
+      </a> */}
     </div>
   );
 };
@@ -2623,18 +2623,7 @@ export const noMovementInfo = (days) => {
   return (
     <div>
       <p>{generateNoMovementReportDesc(days)}</p>
-      <a
-        href={toHelp}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: "#E55C80",
-          // textDecoration: "underline",
-          cursor: "pointer",
-        }}
-      >
-        Read More
-      </a>
+
     </div>
   );
 };
@@ -2642,53 +2631,19 @@ export const nationalityInfo = (type) => {
   return (
     <div>
       <p>{generatenationlityReportDesc(type)}</p>
-      <a
-        href={toHelp}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: "#E55C80",
-          // textDecoration: "underline",
-          cursor: "pointer",
-        }}
-      >
-        Read More
-      </a>
+
     </div>
   );
 };
 export const appointeeCountInfo = (
   <div>
     <p>{appointeeReportdesc}</p>
-    <a
-      href={toHelp}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        color: "#E55C80",
-        // textDecoration: "underline",
-        cursor: "pointer",
-      }}
-    >
-      Read More
-    </a>
+
   </div>
 );
 export const pfPensionInfo = (
   <div>
     <p>{pfPensionReportDesc}</p>
-    <a
-      href={toHelp}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        color: "#E55C80",
-        // textDecoration: "underline",
-        cursor: "pointer",
-      }}
-    >
-      Read More
-    </a>
   </div>
 );
 
