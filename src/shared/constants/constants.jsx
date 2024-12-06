@@ -74,24 +74,29 @@ export const aadharVerificationErrorMsg = `Please verify your Aadhar before subm
 export const PANVerifictionErrorMsg = `Please verify your PAN before submit`;
 export const dataSubmitionMsg = `Data submited successfully`;
 export const generateNoMovementReportDesc = (days) => {
+  return `This report analyzes appointees who have not started verification process ${
+    days > 0 ? `for ${days} days ` : ""
+  }during a specified period. It includes detailed information about these candidates to help Pwc understand progress patterns, identify issues and potential candidate disinterest.`;
+};
+export const generateNoResponseReportDesc = (days) => {
   return `This report analyzes appointees who have made no progress ${
     days > 0 ? `for ${days} days ` : ""
-  }during a specified period. It includes detailed information about these candidates to help stakeholders understand progress patterns, identify issues and potential candidate disinterest.`;
+  }during a specified period. It includes detailed information about these candidates to help Pwc understand progress patterns, identify issues and potential candidate disinterest.`;
 };
 export const generatePassbookDetailsReportDesc = `The purpose of this report is to allow for easy navigation and understanding of the employee's career progression and financial contributions across various positions and companies.This structure is aimed at providing a comprehensive view of both professional history and financial records for review and reference.`;
 export const generateEmploymentHistoryReportDesc = `The purpose of this report is to provide a comprehensive summary of the employment history for the selected employee, detailing their previous roles, companies they have worked for, and their associated employment accounts. This report serves as a detailed record of the employee’s professional background, intended for use in verification, reference checks, or as part of an internal assessment.`;
-export const generateAppointeeCountReportDesc = `The purpose of this report is to provide an overview and analysis of the appointee count added to the system on a daily basis during a specified period. This report includes details such as the total number of appointees added each day, the total number of links sent, and the total number of links not sent. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns, identify any issues and improve the efficiency of the API system.`;
-export const pfPensionReportDesc = `This report provides an overview of PF and Pension information for appointees within a specified date range, including appointee name, Aadhaar number, UAN, joining date, PF and pension status, and passbook status (manual or automatic). It helps stakeholders monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
+export const generateAppointeeCountReportDesc = `The purpose of this report is to provide an overview and analysis of the appointee count added to the system on a daily basis during a specified period. This report includes details such as the total number of appointees added each day, the total number of links sent, and the total number of links not sent. The goal is to help Pwc understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help Pwc understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help Pwc understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help Pwc understand the usage patterns, identify any issues and improve the efficiency of the API system.`;
+export const pfPensionReportDesc = `This report provides an overview of PF and Pension information for appointees within a specified date range, including appointee name, Aadhaar number, UAN, joining date, PF and pension status, and passbook status (manual or automatic). It helps Pwc monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
 export const verificatiosucess = `Your verification has been successfully completed.`;
-export const appointeeReportdesc = `This report provides an analysis of appointees, including names, email ID, date of joining (DOJ), link-sent dates, and status. It aids stakeholders in identifying trends, resolving bottlenecks, and evaluating candidate interest.`;
+export const appointeeReportdesc = `This report provides an analysis of appointees, including names, email ID, date of joining (DOJ), link-sent dates, and status. It aids Pwc in identifying trends, resolving bottlenecks, and evaluating candidate interest.`;
 // export const appointeeReportdesc=`This report offers a comprehensive analysis of appointees . It provides detailed insights, including each candidate's name, email ID, date of joining (DOJ), the date the link was sent, and their current status. This data assists stakeholders in identifying trends, addressing potential bottlenecks, and evaluating whether the lack of progress suggests disinterest in joining.`
 export const generatenationlityReportDesc = (type) => {
   switch (type) {
     case "All":
-      return "This report provides a comprehensive overview of individuals, including both Indian and foreign nationals, offering a complete view of all individuals.";
+      return "This report provides a nationality details of appointees, including both Indian and foreign nationals, offering a complete view of all individuals.";
     case "IN":
       return "This report gives an overview of important information about Indian nationals, highlighting their unique trends and details";
     case "OTH":
@@ -2596,6 +2601,25 @@ export const FromDateEmptyMsg = `"From Date" cannot be empty`;
 
 export const manualverificationinfo = `You can do manual verification only in the "Manual Verification" & "Manual Re-Verification" tabs. You can't do so in the "Document Reupload Request" tab.`;
 export const noResponseInfo = (days) => {
+  return (
+    <div>
+      <p>{generateNoResponseReportDesc(days)}</p>
+      <a
+        href={toHelp}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          color: "#E55C80",
+          // textDecoration: "underline",
+          cursor: "pointer",
+        }}
+      >
+        Read More
+      </a>
+    </div>
+  );
+};
+export const noMovementInfo = (days) => {
   return (
     <div>
       <p>{generateNoMovementReportDesc(days)}</p>

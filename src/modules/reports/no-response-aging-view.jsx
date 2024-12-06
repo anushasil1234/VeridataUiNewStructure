@@ -202,13 +202,16 @@ const NoResponseAgingReportView = (props) => {
           handleSearch={handleReportSearch}
           clearSearch={clearSearch}
           payLoad={payLoad}
+          setPayLoad = {setPayLoad}
           handleDownload={handleAppointeeCountDownload}
           handelxlsxDownload={handleDownload}
           fromDate={fromDate}
           setFromDate={setFromDate}
           noOfDays={noOfDays}
+          setNoOfDays={setNoOfDays}
           handleNoOfDaysChange={handleNoOfDaysChange}
           hasPermission={hasPermission}
+          reportType = {"NORESPNSE"}
         />
 
         <DataTable

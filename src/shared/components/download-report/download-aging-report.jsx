@@ -33,7 +33,7 @@ import { DateFormatYYYYMMDD, hasValue } from "shared/utils";
 import moment from "moment";
 import ArticleIcon from "@mui/icons-material/Article";
 import Button from "@mui/material/Button";
-import { noResponseInfo, toHelp } from "shared/constants/constants";
+import { noMovementInfo, noResponseInfo, toHelp } from "shared/constants/constants";
 const DownloadAgingReport = ({
   filterType,
   setFilterType,
@@ -42,12 +42,16 @@ const DownloadAgingReport = ({
   handleDownload,
   fromDate,
   payLoad,
+  setPayLoad,
   setFromDate,
   noOfDays,
+  setNoOfDays,
   handleNoOfDaysChange,
   hasPermission,
   handelxlsxDownload,
+  reportType
 }) => {
+  console.log('noOfDays',noOfDays);
   const { popUpSlice } = useSelector((state) => state);
   const currentDate = moment();
   const _currentDate = currentDate.format("DD/MM/YYYY");
@@ -67,17 +71,38 @@ const DownloadAgingReport = ({
     }
   };
 
+  // const handleNoOfInactivityDaysChange = (event) => {
+  //   const value = event?.target?.value;
+
+  //   const _startDate = fromDate && DateFormatYYYYMMDD(fromDate?.toString());
+  //   const startDate = moment(_startDate);
+  //   const daydiff = moment(currentDate).diff(moment(startDate), "days");
+  //   if (value >= 0 && value <= daydiff) {
+  //     handleNoOfDaysChange(value);
+  //   }
+  // };
   const handleNoOfInactivityDaysChange = (event) => {
     const value = event?.target?.value;
-
-    const _startDate = fromDate && DateFormatYYYYMMDD(fromDate?.toString());
-    const startDate = moment(_startDate);
-    const daydiff = moment(currentDate).diff(moment(startDate), "days");
-    if (value >= 0 && value <= daydiff) {
-      handleNoOfDaysChange(value);
+  
+    if (filterType === 1) {
+      const _startDate = fromDate && DateFormatYYYYMMDD(fromDate?.toString());
+      const startDate = moment(_startDate);
+      const daydiff = moment(currentDate).diff(moment(startDate), "days");
+      if (value >= 0 && value <= daydiff) {
+        handleNoOfDaysChange(value);
+      }
     }
   };
-
+  const handleFilterChange = (value) => {
+    setFilterType(value);
+    
+    if (value === 0) {
+      // Reset to 'All' behavior, clear custom filter
+      setNoOfDays(null);
+      setFromDate(null);
+      setPayLoad({ ...payLoad, startDate: null, noOfDays: 0 });
+    }
+  };
   return (
     <Box
       my={2}
@@ -100,7 +125,8 @@ const DownloadAgingReport = ({
             id="demo-select-small"
             value={filterType}
             label="Filter"
-            onChange={(e) => setFilterType(e.target.value)}
+           // onChange={(e) => setFilterType(e.target.value)}
+            onChange={(e) => handleFilterChange(e.target.value)}
           >
             <MenuItem value={0}>All</MenuItem>
             <MenuItem value={1}>Custom</MenuItem>
@@ -265,7 +291,7 @@ const DownloadAgingReport = ({
         )}
         <DarkTooltip
           placement="top"
-          title= {noResponseInfo(noOfDays ?? 0)}
+          title={reportType === 'NORESPNSE' ? noResponseInfo(noOfDays ?? 0) : reportType === 'NOMVMENT' ? noMovementInfo(noOfDays ?? 0) : ''}
           arrow
         >
           <ResponsiveFab

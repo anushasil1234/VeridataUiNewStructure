@@ -147,8 +147,8 @@ const NoMovementAgingReportView = (props) => {
     };
     jsPDFReportDataTemplate({
       reportDetails: {
-        fileName: `NoMovement_Appointee_${currentDate}`,
-        label: "No Movement Appointee",
+        fileName: `Appointee_Inactivity_${currentDate}`,
+        label: "Appointee Inactivity",
         fromDate: fromDate,
         toDate: "",
         rptDesc: generateNoMovementReportDesc(noOfDays ?? 0),
@@ -195,7 +195,7 @@ const NoMovementAgingReportView = (props) => {
     }
   };
   return (
-    <PageLayout pageName={"No Movement"}>
+    <PageLayout pageName={"Appointee Inactivity"}>
       <CardLayout>
         <DownloadAgingReport
           filterType={filterType}
@@ -203,13 +203,16 @@ const NoMovementAgingReportView = (props) => {
           handleSearch={handleReportSearch}
           clearSearch={clearSearch}
           payLoad={payLoad}
+          setPayLoad = {setPayLoad}
           handleDownload={handleAppointeeCountDownload}
           handelxlsxDownload={handleDownload}
           fromDate={fromDate}
           setFromDate={setFromDate}
           noOfDays={noOfDays}
+          setNoOfDays={setNoOfDays}
           handleNoOfDaysChange={handleNoOfDaysChange}
           hasPermission={hasPermission}
+          reportType = {"NOMVMENT"}
         />
 
         <DataTable
