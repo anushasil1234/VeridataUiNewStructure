@@ -85,7 +85,7 @@ const DownloadReportFilter = ({
   return (
     <Grid
       container
-      spacing={2}
+      spacing={1}
       alignItems="center"
       justifyContent="flex-start"
       my={2}
