@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -53,6 +53,7 @@ const Profile = () => {
     } else {
       loggeoutFunction.handleClickOnLogout();
     }
+    localStorage.setItem('logout', Date.now());
   };
   const handleYes = () => {
     loggeoutFunction.handleClickOnLogout();
@@ -60,6 +61,20 @@ const Profile = () => {
   const handleNo = () => {
     // loggeoutFunction.handleClickOnLogout();
   }
+  console.log('loggedout',loggeoutFunction)
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      console.log('storage',event)
+      if (event.key === 'logout') {
+        loggeoutFunction.handleClickOnLogout();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [loggeoutFunction]);
   return (
     <Box>
       <IconButton

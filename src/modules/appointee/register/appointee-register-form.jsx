@@ -75,6 +75,7 @@ import {
     passportNoEmptyMsg,
     epfoServiceHistoryFileTypeAlias,
     aadharFileTypeAlias,
+    toHelp,
 } from "shared/constants/constants";
 import {
     CardLayout,
@@ -2757,8 +2758,23 @@ const AppointeeRegisterForm = () => {
                                                         <Tooltip
                                                             arrow="bottom"
                                                           //  title="Upload a copy of the document with your father's name clearly mentioned. Examples of acceptable documents include birth certificates, national IDs, or other legal documents where both your name and your father's name are visible."
-                                                       title = "Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card."
-                                                       >
+                                                     //  title = "Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card."
+                                                     title = {<div>
+                                                     <p>{'Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card.'}</p>
+                                                     <a
+                                                       href={toHelp}
+                                                       target="_blank"
+                                                       rel="noopener noreferrer"
+                                                       style={{
+                                                         color: "#F57264",
+                                                         // textDecoration: "underline",
+                                                         cursor: "pointer",
+                                                       }}
+                                                     >
+                                                       Read More
+                                                     </a> 
+                                                   </div>}>
+                                                      
                                                             <IconButton
                                                                 disabled={isPreviousSectionDisabled}
                                                                 sx={{
@@ -2826,7 +2842,22 @@ const AppointeeRegisterForm = () => {
                                                             </Typography>
                                                             <Tooltip
                                                                 arrow="bottom"
-                                                                title="Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year."
+                                                             //   title="Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year."
+                                                             title = {<div>
+                                                                <p>{'Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year.'}</p>
+                                                                <a
+                                                                  href={toHelp}
+                                                                  target="_blank"
+                                                                  rel="noopener noreferrer"
+                                                                  style={{
+                                                                    color: "#F57264",
+                                                                    // textDecoration: "underline",
+                                                                    cursor: "pointer",
+                                                                  }}
+                                                                >
+                                                                  Read More
+                                                                </a> 
+                                                              </div>}
                                                             >
                                                                 <IconButton
                                                                     disabled={isPreviousSectionDisabled}
@@ -3118,7 +3149,22 @@ const AppointeeRegisterForm = () => {
                                                                 </Typography>
                                                                 <Tooltip
                                                                     arrow="bottom"
-                                                                    title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO"
+                                                                 //   title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO"
+                                                                 title = {<div>
+                                                                    <p>{'Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO'}</p>
+                                                                    <a
+                                                                      href={toHelp}
+                                                                      target="_blank"
+                                                                      rel="noopener noreferrer"
+                                                                      style={{
+                                                                        color: "#F57264",
+                                                                        // textDecoration: "underline",
+                                                                        cursor: "pointer",
+                                                                      }}
+                                                                    >
+                                                                      Read More
+                                                                    </a> 
+                                                                  </div>}
                                                                 >
                                                                     <IconButton
                                                                         disabled={isPreviousSectionDisabled}
