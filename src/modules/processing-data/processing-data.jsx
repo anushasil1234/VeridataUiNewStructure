@@ -33,7 +33,7 @@ import {
   Select,
 } from "@mui/material";
 import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab, downLoadListSx, datePickerstyle } from "app";
-import { Assessment, Download, Refresh, Search, Summarize } from "@mui/icons-material";
+import { Assessment, Download, Info, Refresh, Search, Summarize } from "@mui/icons-material";
 import DatePicker from "shared/utils/date-picker/date-picker";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
@@ -456,6 +456,19 @@ const UnWrappedProcessing = (props) => {
                 )}
               </Grid>
             )}
+            <Grid item>
+              <DarkTooltip placement="top" title={generateProcessingAppointeeReportDesc} arrow>
+                <ResponsiveFab
+                  variant="contained"
+                  size="small"
+                  button={"N"}
+                //  onClick={clearSearch}
+                  sx={primaryFabStyle}
+                >
+                  <Info width={18} sx={{ color: "#fff" }} />
+                </ResponsiveFab>
+              </DarkTooltip>
+            </Grid>
           </Grid>
         </Grid>
         <DataTable

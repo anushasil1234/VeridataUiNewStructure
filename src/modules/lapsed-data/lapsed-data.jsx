@@ -1,4 +1,4 @@
-import { Download, Refresh, Search, Summarize } from "@mui/icons-material";
+import { Download, Info, Refresh, Search, Summarize } from "@mui/icons-material";
 import {
   Box,
   FormControl,
@@ -369,6 +369,17 @@ if(!responseList || responseList.length === 0){
                     </ListItemButton>
                   </List>
                 )}
+                 <DarkTooltip placement="top" title={generateLapsedAppointeeReportDesc} arrow>
+              <ResponsiveFab
+                variant="contained"
+                size="small"
+                button={"N"}
+                onClick={handelsearch}
+                sx={primaryFabStyle}
+              >
+                <Info width={18} sx={{ color: "#fff" }} />
+              </ResponsiveFab>
+            </DarkTooltip>
               </Grid>
             )}
           </Grid>
