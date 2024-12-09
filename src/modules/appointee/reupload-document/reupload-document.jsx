@@ -5,16 +5,17 @@ import { useSelector } from 'react-redux'
 import { CardLayout, PageLayout } from 'shared/utils'
 import { ReuploadForm } from './reupload-form'
 import NotAccessibleSection from 'shared/components/not-accessible/not-accessible'
+import FormContainer from 'shared/components/grid-container/form-container'
 
 const ReuploadDocument = () => {
     const loggedInData = useSelector((state) => state.loggedInData);
     const { status } = loggedInData[0];
-  
+
     const [isFileReUploadPermitted, setIsFileReUploadPermitted] = useState();
-   
+
 
     useEffect(() => {
-      
+
 
         if (status === 'Doc Reupload') {
             setIsFileReUploadPermitted(true);
@@ -28,7 +29,15 @@ const ReuploadDocument = () => {
     return (
         <PageLayout pageName={"Document Reupload"}>
             <CardLayout>
-                <Box sx={{ width: "100%" }}>
+                <FormContainer>
+                    <Box sx={{ width: "100%" }}>
+                        {isFileReUploadPermitted === true ?
+                            <ReuploadForm /> :
+                            <NotAccessibleSection />
+                        }
+                    </Box>
+                </FormContainer>
+                {/* <Box sx={{ width: "100%" }}>
                     <Grid
                         container
                         rowSpacing={1}
@@ -51,7 +60,7 @@ const ReuploadDocument = () => {
                             </Box>
                         </Grid>
                     </Grid>
-                </Box>
+                </Box> */}
             </CardLayout>
         </PageLayout>
 
