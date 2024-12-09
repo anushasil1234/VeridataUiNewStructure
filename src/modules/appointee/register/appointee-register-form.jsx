@@ -1,60 +1,16 @@
 
 
 import {
-    Box,
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    Grid,
-    IconButton,
-    Link,
-    MenuItem,
-    Select,
-    Stack,
-    Switch,
-    TextField,
-    Typography,
-    Tooltip,
-    Stepper,
-    Step,
-    StepLabel,
-    Divider,
-    Fab,
+    Box, Typography
 } from "@mui/material";
-import { Info, InfoOutlined } from "@mui/icons-material";
 import {
-    activeStepStyle,
-    candidateRegistrationFormContainerStyle,
-    checkBoxLabelStyle,
-    checkBoxStyle,
-    datePickerinputFieldStyle2,
-    divederStyle,
-    fileUploadSectionContainerStyle,
-    formHeadingContainerStyle,
-    formHeadingGridContainerStyle,
-    genderSectionContainer,
-    genderTypeStyle,
     heading2,
-    headingType1,
-    indActiveStepStyle,
-    inputFieldStyle,
     inputFieldStyle2,
-    lable1CopyStyle,
-    lable1Style,
-    positionRelative,
-    primaryFabStyle,
-    statusBoxstyle,
-    statusstyle,
-    subHeadingContentTextStyle,
-    submitBtnContainerStyle,
-    submitBtnStyle,
-    verificationBtnStyle,
+    subHeadingContentTextStyle
 } from "app";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    getHandicapTypeDescription,
     otherFileTypeAlias,
     stepperDefaultList,
     tenthCertificateFileTypeAlias,
@@ -68,8 +24,6 @@ import {
     aadharVerificationErrorMsg,
     PANVerifictionErrorMsg,
     passportFilePatternErrorMsg,
-    imgAndPdfMaxSize,
-    imgAndPdfMaxSizeValue,
     aaddharNumberverify,
     indianpassportFilePatternErrorMsg,
     passportNoEmptyMsg,
@@ -78,7 +32,6 @@ import {
     toHelp,
 } from "shared/constants/constants";
 import {
-    CardLayout,
     CreateStepSequience,
     DateFormatYYYYMMDD,
     getLocalStorageItem,
@@ -90,7 +43,7 @@ import {
     trimmedDate,
     validationsCheck,
 } from "shared/utils";
-import FormHeading from "./form-heading";
+
 import {
     aadharVerifyFailedMsg,
     aadharVerifySuccessMsg,
@@ -106,27 +59,18 @@ import {
     panVerifyFailedMsg,
     passportSuccessMsg,
     passportVerifyFailedMsg,
-    previousButton,
     registrationSuccessDialogContentText,
-    saveAndNextbutton,
-    saveButton,
     submitConfirmationMsg,
     toDashboard,
     uanVerifyFailedMsg,
     uanVerifySuccessMsg,
     uploadSizeErrorMsg,
-    duplicateFiles,
     uploadFormatErrorMsg,
     passportExpireddMsg,
 } from "shared/constants/constants";
-import DatePicker from "shared/utils/date-picker/date-picker";
-import dayjs from 'dayjs';
-import { DisableSection } from "shared/components/disble-section/disble-section";
+
 import VerificationStatus from "../../../shared/components/verification/verification-status";
-import { Autorenew, HelpOutline } from "@mui/icons-material";
-import { VerificationStatusSection } from "../../../shared/components/verification/verification-status-section";
 import FormDialog from "shared/utils/models/form-dialog";
-import FileUploadSection from "shared/components/file-upload-section/file-upload-section";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import uploadFileMessage from "shared/utils/associate/upload-file-message";
 import selectUANmessage from "shared/utils/associate/select-uan-message";
@@ -137,21 +81,18 @@ import {
     removeLoggedinData,
     storeLoggedinData,
 } from "store/slices/login-slice";
-import { Radio, RadioGroup } from "@mui/material";
-import {
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-} from "@mui/material";
+
 
 import { FILE_SIZE_LIMIT, validFileTypes } from "shared/constants/constants";
 import UANPrerequisiteInformation from "./uan-prerequiestic-info";
-import GenderSelection from "shared/utils/associate/gender-selection";
 import getFileDetails from "shared/utils/associate/get-file-details";
 import getFilenames from "shared/utils/associate/get-filenames";
 import createFileUploadedData from "shared/utils/associate/create-file-uploaded-data";
+import LinearStepper from "shared/components/Stepper/linear-stepper";
+import FormContainer from "shared/components/grid-container/form-container";
+import FirstForm from "./first-form";
+import SecondForm from "./second-form";
+import ThirdForm from "./third-form";
 
 const AppointeeRegisterForm = () => {
     const steps = ["Step 1", "Step 2", "Step 3"];
@@ -180,9 +121,6 @@ const AppointeeRegisterForm = () => {
         countryList,
         nationalityList,
         relationList,
-        qualificationList,
-        disabilityList,
-        maritalStatusList,
         fileTypeList,
     } = dropdownList && dropdownList.length > 0 && dropdownList[0];
     const genderDropdownList =
@@ -323,7 +261,7 @@ const AppointeeRegisterForm = () => {
     );
     const [isUanVerificationProcessManual, setIsUanVerificationProcessManual] = useState('auto');
     const [panNumberError, setPanNumberError] = useState(false);
-
+    const [updatedRealtionList, setUpdatedRealtionList] = useState([]);
     const stepCounter = 4;
 
 
@@ -1635,17 +1573,29 @@ const AppointeeRegisterForm = () => {
     }
     const handleNationalityChange = ({ target }) => {
         const value = target.value;
-        setNationality(value);
-        setPassportNo("");
-        if (value.toLowerCase() !== "indian" && value.toLowerCase() !== "nepalese" && value.toLowerCase() !== "bhutanese") {
-            setPassportAvailable('Y');
-            setIsPassportAvailableDisable(true);
-        } else {
-            setIsPassportAvailableDisable(false);
-            setPassportAvailable('');
+        if (value !== 'none') {
+            setNationality(value);
+            setPassportNo("");
+            if (value.toLowerCase() !== "indian" && value.toLowerCase() !== "nepalese" && value.toLowerCase() !== "bhutanese") {
+                setPassportAvailable('Y');
+                setIsPassportAvailableDisable(true);
+            } else {
+                setIsPassportAvailableDisable(false);
+                setPassportAvailable('');
+            }
+            setPassPortMaxLength(value);
         }
-        setPassPortMaxLength(value);
     }
+    const handleQualificationChange = ({ target }) => {
+        const value = target.value;
+        value !== 'none' && setQualification(value);
+    }
+    const handleMaritalStatusChange = ({ target }) => {
+        const value = target.value;
+        value !== 'none' && setMaritalStatus(value);
+    }
+    console.log('maritalStatus', maritalStatus);
+
 
     const verifyUAN = async (otp, clientId) => {
         const payLoad = {
@@ -1712,30 +1662,48 @@ const AppointeeRegisterForm = () => {
 
     const formElement = useRef(null);
 
-    const handlePassFileNumberOnChange = (e) => {
-        const { value } = e.target;
+    const handlePassFileNumberOnChange = (value) => {
         setPassportFileNumber(value);
         setPassportFileNumberError(false);
     };
     const handleIsOfflineXmlDownloadedOnChange = (e) => {
         setIsOfflineXmlDownloaded(e.target.checked);
     };
-    const handleInternationalWorkerOnChange = (e) => {
-        const { value } = e.target;
-        setisInterNationalWorker(value);
-        if (value === "Y") {
-            const nationalityLower = nationality?.toLowerCase();
-            const matchedNationality = nationalityList.find(
-                (element) => element.value?.toLowerCase() === nationalityLower
-            );
-            const index = nationalityList.indexOf(matchedNationality);
-            setCountryOfOrigin(countryList[index]?.value);
-            // setCountryOfOrigin();
-        }
-        if (value === "N") {
-            setCountryOfOrigin(defaultCountry);
+    const handleInternationalWorkerOnChange = ({ target }) => {
+        const { value } = target;
+        if (value !== 'none') {
+            setisInterNationalWorker(value);
+            if (value === "Y") {
+                const nationalityLower = nationality?.toLowerCase();
+                const matchedNationality = nationalityList.find(
+                    (element) => element.value?.toLowerCase() === nationalityLower
+                );
+                const index = nationalityList.indexOf(matchedNationality);
+                setCountryOfOrigin(countryList[index]?.value);
+                // setCountryOfOrigin();
+            }
+            if (value === "N") {
+                setCountryOfOrigin(defaultCountry);
+            }
         }
     };
+    const handleIsPhysicallyHandicapOnChange = ({ target }) => {
+        const { value } = target;
+        if (value !== 'none') {
+            setIsPhysicallyHandicap(value);
+        }
+    }
+    const handleHandicapTypeOnChange = ({ target }) => {
+        const { value } = target;
+        if (value !== 'none') {
+            setHandicapType(value);
+        }
+    }
+    const handleChangeCountryOfOrigin = ({ target }) => {
+        const { value } = target;
+        value !== 'none' && setCountryOfOrigin(value);
+    }
+    console.log('isPhysicallyHandicap', isPhysicallyHandicap);
 
     const today = DateFormatYYYYMMDD(new Date());
     const PasswordExpiryValidity = (expiryDate) => {
@@ -1791,20 +1759,25 @@ const AppointeeRegisterForm = () => {
         setDisabledIsInterNationalWorker(false); // Optional: enable the field if "No" is selected
     };
 
-    const handleIsPassportAvailableOnChange = (e) => {
-        const { value } = e.target;
-        setPassportAvailable(value);
-        setPassportNumberError(false);
+    const handleIsPassportAvailableOnChange = ({ target }) => {
+        const { value } = target;
+        if (value !== 'none') {
+            setPassportAvailable(value);
+            setPassportNumberError(false);
 
-        if (value === "Y") {
-            const nationalityLower = nationality?.toLowerCase();
+            if (value === "Y") {
+                const nationalityLower = nationality?.toLowerCase();
 
-            // determineIsInternationalWorker(nationalityLower, defaultCountry);
-            setCountryOfOriginBasedOnNationality(nationalityLower);
-        } else if (value === "N") {
-            resetPassportDetails();
+                // determineIsInternationalWorker(nationalityLower, defaultCountry);
+                setCountryOfOriginBasedOnNationality(nationalityLower);
+            }
+            if (value === "N") {
+                resetPassportDetails();
+            }
         }
     };
+    console.log('isPassportAvailable', passportAvailable);
+
 
     const handlePassporNumbertHelp = () => {
         const passportHelpContent = {
@@ -1859,21 +1832,42 @@ const AppointeeRegisterForm = () => {
         }
     }
 
-    const handlePassportNoChange = ({ target }) => {
+    const handlePassportNoChange = (value) => {
         setPassportNumberError(false);
-        setPassportNo(target.value);
+        setPassportNo(value);
     }
 
-    const handelPANNumberChange = ({ target }) => {
+    const handelPANNumberChange = (value) => {
 
-        const { value } = target;
-        setPanNumberError(false);
-        if (isAadhaarVarified) {
-            setPan(value.toUpperCase());
-        } else {
-            showErrorMessage(aaddharNumberverify)
+        if (value !== 'none') {
+            setPanNumberError(false);
+            if (isAadhaarVarified) {
+                setPan(value.toUpperCase());
+            } else {
+                showErrorMessage(aaddharNumberverify)
+            }
         }
+
     }
+    const handleChangeNameOnAadhar = (value) => {
+        setNameAsOnAadhar(value.toUpperCase());
+    }
+    const handleChangeRelationship = ({ target }) => {
+        target.value !== 'none' && setRelationshipWithMember(target.value);
+    }
+    useEffect(() => {
+        if (relationList) {
+            const _updatedRelationList = relationList.map(({ code, id, value }) => {
+                return (
+                    {
+                        value: code,
+                        label: value
+                    }
+                )
+            })
+            setUpdatedRealtionList(_updatedRelationList);
+        }
+    }, [relationList])
     return (
         <>
             {currentPageNo === 2 && (
@@ -1881,1984 +1875,158 @@ const AppointeeRegisterForm = () => {
                     Your personal details must match with your Aadhaar details
                 </Typography>
             )}
-            {/* <NonLinearStepper/> */}
             <Box sx={{ width: "100%" }}>
-                <Stepper activeStep={activeStep} alternativeLabel>
-                    {steps.map((label, index) => (
-                        <Step key={label} completed={activeStep > index}>
-                            <StepLabel sx={activeStep === index ? activeStepStyle : indActiveStepStyle}>
-                                {label}
-                            </StepLabel>
-                        </Step>
-                    ))}
-                </Stepper>
+                <LinearStepper steps={steps} activeStep={activeStep} />
                 <Box my={"20px"}>
-                    <Grid
-                        container
-                        rowSpacing={1}
-                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >
-                        <Grid
-                            container
-                            rowSpacing={1}
-                            columnSpacing={2.5}
-                            item
-                            xs={12}
-                            md={12}
-                            sx={candidateRegistrationFormContainerStyle}
-                        >
-
-                            {currentPageNo === 1 ? (
-                                <>
-                                    {/* <CandidateRegisterFirstPage
-                  handleOnSubmit={handleAppointeeFormPage1Save}
-                  stepsList={stepsList}
-                  fathersOrHusbandName={fathersOrHusbandName}
-                  setFathersOrHusbandName={setFathersOrHusbandName}
-                  gender={gender}
-                  setGender={setGender}
-                  isAadhaarVarified={isAadhaarVarified}
-                  dateOfBirth={dateOfBirth}
-                  setDateOfBirth={setDateOfBirth}
-                  relationshipWithMember={relationshipWithMember}
-                  setRelationshipWithMember={setRelationshipWithMember}
-                  mobileNo={mobileNo}
-                  setMobileNo={setMobileNo}
-                  email={email}
-                  setEmail={setEmail}
-                  nationality={nationality}
-                  setNationality={setNationality}
-                  setPassportNo={setPassportNo}
-                  setPassportAvailable={setPassportAvailable}
-                  setIsPassportAvailableDisable={setIsPassportAvailableDisable}
-                  setPassPortMaxLength={setPassPortMaxLength}
-                  qualification={qualification}
-                  setQualification={setQualification}
-                  maritalStatus={maritalStatus}
-                  setMaritalStatus={setMaritalStatus}
-                /> */}
-                                    <Box sx={{ marginTop: "1.8rem" }}>
-                                        <form onSubmit={handleAppointeeFormPage1Save}>
-                                            <Grid
-                                                sx={{ paddingLeft: "20px" }}
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                                            >
-
-                                                {/* ###### Personal Details Section Start ###### */}
-
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                        <FormHeading
-                                                            step={stepsList.PD.step}
-                                                            heading={stepsList.PD.name}
-                                                            info={
-                                                                "Enter all your Personal Details like Gender, DOB to verify with Aadhaar, PAN, UAN."
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid
-                                                        item
-                                                        container
-                                                        sx={{ paddingLeft: '0px !important' }}
-                                                        rowSpacing={{ xs: 1, md: 0 }}
-                                                        columnSpacing={{ xs: 0, md: 2 }}
-                                                        xs={12}
-                                                    >
-                                                        {genderList &&
-                                                            genderList.map((gender, index) => {
-                                                                const {
-                                                                    value,
-                                                                    icon,
-                                                                    selected,
-                                                                    id,
-                                                                    code,
-                                                                    selectGender,
-                                                                } = gender;
-                                                                const { currentGenderSectionContainer } = GenderSelection(selected, isAadhaarVarified);
-                                                                return (
-                                                                    <Grid sx={{ padding: 0 }} key={index} item xs={12} md={4}>
-                                                                        {isAadhaarVarified ? (
-                                                                            <Stack
-                                                                                id={id}
-                                                                                sx={currentGenderSectionContainer}
-                                                                            >
-                                                                                {icon}
-                                                                                <Typography
-                                                                                    fontSize="2rem"
-                                                                                    sx={genderTypeStyle}
-                                                                                >
-                                                                                    {value}
-                                                                                </Typography>
-                                                                            </Stack>
-                                                                        ) : (
-                                                                            <Stack
-                                                                                id={id}
-                                                                                sx={currentGenderSectionContainer}
-                                                                                onClick={() => {
-                                                                                    selectGender(code);
-                                                                                }}
-                                                                            >
-                                                                                {icon}
-                                                                                <Typography
-                                                                                    fontSize="2rem"
-                                                                                    sx={genderTypeStyle}
-                                                                                >
-                                                                                    {value}
-                                                                                </Typography>
-                                                                            </Stack>
-                                                                        )}
-                                                                    </Grid>
-                                                                );
-                                                            })}
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                        <Typography sx={lable1CopyStyle}>
-                                                            Name
-                                                            <span className="requiredField">*</span>
-                                                        </Typography>
-                                                        <TextField
-                                                            onChange={(e) => {
-                                                                setMemberName(e.target.value);
-                                                            }}
-                                                            error={false}
-                                                            style={inputFieldStyle2}
-                                                            type="text"
-                                                            className="customeTextField"
-                                                            variant="outlined"
-                                                            defaultValue={" "}
-                                                            value={memberName}
-                                                            disabled
-                                                            inputStyle={{ padding: 0 }}
-                                                            InputProps={{
-                                                                readOnly: true,
-                                                                style: {
-                                                                    padding: 0,
-                                                                    color: "#000",
-                                                                },
-                                                            }}
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                        <FormControl sx={{ ...datePickerinputFieldStyle2 }} fullWidth>
-                                                            <Typography sx={lable1CopyStyle}>
-                                                                Date Of Birth
-                                                                <span className="requiredField">*</span>
-                                                            </Typography>
-
-                                                            <DatePicker
-                                                                disabled={isAadhaarVarified}
-                                                                style={{ ...datePickerinputFieldStyle2 }}
-                                                                //label="Date of Birth"
-                                                                value={dateOfBirth ? dayjs(dateOfBirth) : null}
-                                                                setValue={(newDate) => {
-                                                                    if (newDate) {
-                                                                        setDateOfBirth(newDate.format('YYYY-MM-DD'));
-                                                                    }
-                                                                }}
-                                                                disableFuture={true}
-                                                                maxDate={dayjs()}
-                                                                minDate={null}
-                                                            />
-                                                        </FormControl>
-
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid item xs={12} md={6} sx={{ paddingLeft: '0px !important' }}>
-                                                        <Typography sx={lable1CopyStyle}>
-                                                            Father's/ Husband's Name
-                                                            <span className="requiredField">*</span>
-                                                        </Typography>
-
-                                                        <TextField
-                                                            error={false}
-                                                            style={inputFieldStyle2}
-                                                            type="text"
-                                                            className="customeTextField"
-                                                            variant="outlined"
-                                                            onKeyDown={handleSpacialcharecter}
-                                                            onPaste={handelSpacialCharecterPaste}
-                                                            onChange={(e) => {
-                                                                setFathersOrHusbandName(e.target.value);
-                                                            }}
-                                                            value={fathersOrHusbandName}
-                                                            defaultValue={" "}
-                                                            inputProps={{ maxLength: 50 }}
-                                                        />
-                                                    </Grid>
-
-                                                    <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                        <FormControl fullWidth>
-                                                            <Typography sx={lable1CopyStyle}>
-                                                                Relationship{" "}
-                                                                <span className="requiredField">*</span>
-                                                            </Typography>
-                                                            {relationshipWithMember !== undefined && (
-                                                                <Select
-                                                                    error={false}
-                                                                    labelId="demo-simple-select-label"
-                                                                    id="demo-simple-select"
-                                                                    className="customeTextField"
-                                                                    disabled={isRelationShipWithMemberDisabled}
-                                                                    sx={inputFieldStyle2}
-                                                                    onChange={(e) => {
-                                                                        setRelationshipWithMember(e.target.value);
-                                                                    }}
-                                                                    value={relationshipWithMember}
-                                                                >
-                                                                    {relationList &&
-                                                                        relationList.map((element) => {
-                                                                            return (
-                                                                                <MenuItem
-                                                                                    key={element.id}
-                                                                                    value={element.code}
-                                                                                >
-                                                                                    {element.value}
-                                                                                </MenuItem>
-                                                                            );
-                                                                        })}
-                                                                </Select>
-                                                            )}
-                                                        </FormControl>
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                        <Typography sx={lable1CopyStyle}>
-                                                            Mobile No
-                                                            <span className="requiredField">*</span>
-                                                        </Typography>
-                                                        <TextField
-                                                            style={inputFieldStyle2}
-                                                            type="text"
-                                                            disabled={true}
-                                                            variant="outlined"
-                                                            className="customeTextField"
-                                                            onChange={(e) => {
-                                                                setMobileNo(e.target.value);
-                                                            }}
-                                                            value={mobileNo}
-                                                            defaultValue={" "}
-                                                            InputProps={{
-                                                                readOnly: true,
-                                                            }}
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                        <Typography sx={lable1CopyStyle}>
-                                                            Email
-                                                            <span className="requiredField">*</span>
-                                                        </Typography>
-                                                        <TextField
-                                                            style={inputFieldStyle2}
-                                                            type="text"
-                                                            disabled={true}
-                                                            variant="outlined"
-                                                            className="customeTextField"
-                                                            onChange={(e) => {
-                                                                setEmail(e.target.value);
-                                                            }}
-                                                            value={email}
-                                                            defaultValue={" "}
-                                                            InputProps={{
-                                                                readOnly: true,
-                                                            }}
-                                                        />
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                        <FormControl fullWidth>
-                                                            <Typography sx={lable1CopyStyle}>
-                                                                Nationality
-                                                                <span className="requiredField">*</span>
-                                                            </Typography>
-                                                            {nationality !== undefined && (
-                                                                <Select
-                                                                    error={false}
-                                                                    labelId="demo-simple-select-label"
-                                                                    id="demo-simple-select"
-                                                                    sx={inputFieldStyle2}
-                                                                    value={nationality}
-                                                                    className="customeTextField"
-                                                                    onChange={handleNationalityChange}
-                                                                >
-                                                                    {nationalityList &&
-                                                                        nationalityList.map((element) => {
-                                                                            return (
-                                                                                <MenuItem
-                                                                                    key={element.id}
-                                                                                    value={element.code}
-                                                                                >
-                                                                                    {element.value}
-                                                                                </MenuItem>
-                                                                            );
-                                                                        })}
-                                                                </Select>
-                                                            )}
-                                                        </FormControl>
-                                                    </Grid>
-                                                    <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                        <FormControl fullWidth>
-                                                            <Typography sx={lable1CopyStyle}>
-                                                                Qualification
-                                                            </Typography>
-                                                            {qualification !== undefined && (
-                                                                <Select
-                                                                    error={false}
-                                                                    labelId="demo-simple-select-label"
-                                                                    id="demo-simple-select"
-                                                                    className="customeTextField"
-                                                                    sx={inputFieldStyle2}
-                                                                    onChange={(e) => {
-                                                                        setQualification(e.target.value);
-                                                                    }}
-                                                                    value={qualification}
-                                                                >
-                                                                    {qualificationList &&
-                                                                        qualificationList.map((element) => {
-                                                                            return (
-                                                                                <MenuItem
-                                                                                    key={element.id}
-                                                                                    value={element.code}
-                                                                                >
-                                                                                    {element.value}
-                                                                                </MenuItem>
-                                                                            );
-                                                                        })}
-                                                                </Select>
-                                                            )}
-                                                        </FormControl>
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                        <FormControl fullWidth>
-                                                            <Typography sx={lable1CopyStyle}>
-                                                                Marital status
-                                                                <span className="requiredField">*</span>
-                                                            </Typography>
-                                                            {maritalStatus !== undefined && (
-                                                                <Select
-                                                                    error={false}
-                                                                    labelId="demo-simple-select-label"
-                                                                    id="demo-simple-select"
-                                                                    sx={inputFieldStyle2}
-                                                                    className="customeTextField"
-                                                                    onChange={(e) => {
-                                                                        setMaritalStatus(e.target.value);
-                                                                    }}
-                                                                    value={maritalStatus}
-                                                                >
-                                                                    {maritalStatusList &&
-                                                                        maritalStatusList.map((element) => {
-                                                                            return (
-                                                                                <MenuItem
-                                                                                    key={element.id}
-                                                                                    value={element.code}
-                                                                                >
-                                                                                    {element.value}
-                                                                                </MenuItem>
-                                                                            );
-                                                                        })}
-                                                                </Select>
-                                                            )}
-                                                        </FormControl>
-                                                    </Grid>
-                                                </Grid>
-
-                                                {/* ###### Personal Details Section End ###### */}
+                    <FormContainer>
+                        {currentPageNo === 1 ? (
+                            <>
+                                <FirstForm
+                                    stepsList={stepsList}
+                                    setGender={setGender}
+                                    memberName={memberName}
+                                    dateOfBirth={dateOfBirth}
+                                    setDateOfBirth={setDateOfBirth}
+                                    fathersOrHusbandName={fathersOrHusbandName}
+                                    relationshipWithMember={relationshipWithMember}
+                                    handleChangeRelationship={handleChangeRelationship}
+                                    isRelationShipWithMemberDisabled={isRelationShipWithMemberDisabled}
+                                    mobileNo={mobileNo}
+                                    email={email}
+                                    nationality={nationality}
+                                    handleNationalityChange={handleNationalityChange}
+                                    qualification={qualification}
+                                    maritalStatus={maritalStatus}
+                                    handleMaritalStatusChange={handleMaritalStatusChange}
+                                    passportAvailable={passportAvailable}
+                                    passportNo={passportNo}
+                                    handleAppointeeFormPage1Save={handleAppointeeFormPage1Save}
+                                    isAadhaarVarified={isAadhaarVarified}
+                                    setFathersOrHusbandName={setFathersOrHusbandName}
+                                    handleQualificationChange={handleQualificationChange}
+                                    handleIsPassportAvailableOnChange={handleIsPassportAvailableOnChange}
+                                    isInterNationalWorker={isInterNationalWorker}
+                                    handleInternationalWorkerOnChange={handleInternationalWorkerOnChange}
+                                    isPassportVarified={isPassportVarified}
+                                    countryOfOrigin={countryOfOrigin}
+                                    disabledIsInterNationalWorker={disabledIsInterNationalWorker}
+                                    handleChangeCountryOfOrigin={handleChangeCountryOfOrigin}
+                                    handlePassportNoChange={handlePassportNoChange}
+                                    passportNumberError={passportNumberError}
+                                    passportNoMaxLength={passportNoMaxLength}
+                                    passportValidForDate={passportValidForDate}
+                                    setPassportValidForDate={setPassportValidForDate}
+                                    setPassportValidTillDate={setPassportValidTillDate}
+                                    passportValidTillDate={passportValidTillDate}
+                                    PasswordExpiryValidity={PasswordExpiryValidity}
+                                    dateOfJoining={dateOfJoining}
+                                    isPhysicallyHandicap={isPhysicallyHandicap}
+                                    handleIsPhysicallyHandicapOnChange={handleIsPhysicallyHandicapOnChange}
+                                    handicapType={handicapType}
+                                    handleHandicapTypeOnChange={handleHandicapTypeOnChange}
+                                    isDraft={isDraft}
+                                    handleSecondNext={handleSecondNext}
+                                    setClickedButton={setClickedButton}
+                                    genderList={genderList}
+                                />
+                            </>
+                        ) : null}
+                        {currentPageNo === 2 ? (
+                            <>
+                                <SecondForm
+                                    formElement={formElement}
+                                    stepsList={stepsList}
+                                    isPreviousSectionDisabled={isPreviousSectionDisabled}
+                                    upload10thCertificateFile={upload10thCertificateFile}
+                                    tenthCertificateFileName={tenthCertificateFileName}
+                                    uploadFathersDocFile={uploadFathersDocFile}
+                                    otherFileName={otherFileName}
+                                    isPhysicallyHandicap={isPhysicallyHandicap}
+                                    handicapType={handicapType}
+                                    uploadHandicapFile={uploadHandicapFile}
+                                    handicapFileName={handicapFileName}
+                                    passportAvailable={passportAvailable}
+                                    passportNo={passportNo}
+                                    countryOfOrigin={countryOfOrigin}
+                                    isPassportVerifyBtnDisabled={isPassportVerifyBtnDisabled}
+                                    handlePassportVerification={handlePassportVerification}
+                                    passportstatusMessage={passportstatusMessage}
+                                    handlePassFileNumberOnChange={handlePassFileNumberOnChange}
+                                    passportFileNumberError={passportFileNumberError}
+                                    uploadPassportFile={uploadPassportFile}
+                                    passportFileName={passportFileName}
+                                    isTrustEpfoAvailable={isTrustEpfoAvailable}
+                                    uploadTrustEPFOFile={uploadTrustEPFOFile}
+                                    removeEPFOFile={removeEPFOFile}
+                                    trustEpfoFileName={trustEpfoFileName}
+                                    uanNumberAvailable={uanNumberAvailable}
+                                    handleChange={handleChange}
+                                    handleBack={handleBack}
+                                    DraftSave={DraftSave}
+                                    handleSaveClick={handleSaveClick}
+                                    handleNext={handleNext}
+                                    isthirdNextVisible={isthirdNextVisible}
+                                    isModalOpen={isModalOpen}
+                                    handleCloseModal={handleCloseModal}
+                                    handleConfirmSave={handleConfirmSave}
+                                    passportFileNumber={passportFileNumber}
+                                    setIsTrustEpfoAvailable={setIsTrustEpfoAvailable}
+                                />
+                            </>
+                        ) : null}
 
 
-                                                {/* ###### Passport Details Section Start ###### */}
-
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                        <FormHeading
-                                                            step={stepsList.PassD.step}
-                                                            heading={stepsList.PassD.name}
-                                                            info={
-                                                                "Enter your Passport details to verify its authenticity."
-                                                            }
-                                                            Children={
-                                                                <IconButton
-                                                                    onClick={handlePassporNumbertHelp}
-                                                                >
-                                                                    <HelpOutline />
-                                                                </IconButton>
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                        <FormControl fullWidth>
-                                                            <Typography sx={lable1CopyStyle}>
-                                                                Is Passport Available
-                                                                <span className="requiredField">*</span>
-                                                            </Typography>
-                                                            {passportAvailable !== undefined && (
-                                                                <Select
-                                                                    error={false}
-                                                                    className="customeTextField"
-                                                                    labelId="demo-simple-select-label"
-                                                                    id="demo-simple-select"
-                                                                    sx={inputFieldStyle2}
-                                                                    onChange={
-                                                                        handleIsPassportAvailableOnChange
-                                                                    }
-                                                                    value={passportAvailable}
-                                                                    disabled={isPassportAvailableDisable}
-                                                                >
-                                                                    <MenuItem value={"Y"}>Yes</MenuItem>
-                                                                    <MenuItem value={"N"}>No</MenuItem>
-                                                                </Select>
-                                                            )}
-                                                        </FormControl>
-                                                    </Grid>
-                                                    {passportAvailable === "Y" ? (
-                                                        <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                            <FormControl fullWidth>
-                                                                <Typography sx={lable1CopyStyle}>
-                                                                    Is International Worker
-                                                                    <span className="requiredField">*</span>
-                                                                </Typography>
-                                                                {isInterNationalWorker !== undefined && (
-                                                                    <Select
-                                                                        error={false}
-                                                                        className="customeTextField"
-                                                                        labelId="demo-simple-select-label"
-                                                                        id="demo-simple-select"
-                                                                        sx={inputFieldStyle2}
-                                                                        disabled={
-                                                                            isPassportVarified ||
-                                                                            disabledIsInterNationalWorker
-                                                                        }
-                                                                        onChange={
-                                                                            handleInternationalWorkerOnChange
-                                                                        }
-                                                                        value={isInterNationalWorker}
-                                                                    >
-                                                                        <MenuItem value={"Y"}>Yes</MenuItem>
-                                                                        <MenuItem value={"N"}>No</MenuItem>
-                                                                    </Select>
-                                                                )}
-                                                            </FormControl>
-                                                        </Grid>
-                                                    ) : null}
-                                                </Grid>
-
-                                                {passportAvailable === "Y" ? (
-                                                    <>
-                                                        <Grid
-                                                            container
-                                                            rowSpacing={1}
-                                                            columnSpacing={2.5}
-                                                            item
-                                                            xs={12}
-                                                            sx={formHeadingGridContainerStyle}
-                                                        >
-                                                            <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                                <FormControl fullWidth>
-                                                                    <Typography sx={lable1CopyStyle}>
-                                                                        Country of origin
-                                                                        <span className="requiredField">*</span>
-                                                                    </Typography>
-
-                                                                    <Select
-                                                                        error={false}
-                                                                        disabled={isInterNationalWorker === "N"}
-                                                                        labelId="demo-simple-select-label"
-                                                                        id="demo-simple-select"
-                                                                        className="customeTextField"
-                                                                        sx={inputFieldStyle2}
-                                                                        onChange={(e) => {
-                                                                            setCountryOfOrigin(e.target.value);
-                                                                        }}
-                                                                        value={countryOfOrigin}
-                                                                    >
-                                                                        {countryList &&
-                                                                            countryList.map((element) => {
-                                                                                return (
-                                                                                    <MenuItem
-                                                                                        key={element.id}
-                                                                                        value={element.code}
-                                                                                    >
-                                                                                        {element.value}
-                                                                                    </MenuItem>
-                                                                                );
-                                                                            })}
-                                                                    </Select>
-                                                                </FormControl>
-                                                            </Grid>
-                                                            <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                                <FormControl fullWidth>
-                                                                    <Typography sx={lable1CopyStyle}>
-                                                                        Passport Number
-                                                                        <span className="requiredField">*</span>
-                                                                    </Typography>
-                                                                    <TextField
-                                                                        error={passportNumberError}
-                                                                        style={inputFieldStyle2}
-                                                                        type="text"
-                                                                        className="customeTextField"
-                                                                        variant="outlined"
-                                                                        onChange={handlePassportNoChange}
-                                                                        value={passportNo}
-                                                                        disabled={isPassportVarified}
-                                                                        defaultValue={" "}
-                                                                        inputProps={passportNumberInputProps}
-                                                                    />
-                                                                </FormControl>
-                                                            </Grid>
-                                                        </Grid>
-                                                        <Grid
-                                                            container
-                                                            rowSpacing={1}
-                                                            columnSpacing={2.5}
-                                                            item
-                                                            xs={12}
-                                                            sx={formHeadingGridContainerStyle}
-                                                        >
-                                                            <Grid item xs={12} md={6} sx={{ paddingLeft: '0px !important' }}>
-                                                                <FormControl sx={{ ...datePickerinputFieldStyle2 }} fullWidth>
-                                                                    <Typography sx={lable1CopyStyle}>
-                                                                        Date of Issue
-                                                                        <span className="requiredField">*</span>
-                                                                    </Typography>
-
-
-                                                                    <DatePicker
-                                                                        disabled={isPassportVarified}
-                                                                        style={{ ...datePickerinputFieldStyle2 }}
-                                                                        value={passportValidForDate ? dayjs(passportValidForDate) : null}
-                                                                        setValue={(newDate) => {
-                                                                            if (newDate) {
-                                                                                setPassportValidForDate(newDate.format('YYYY-MM-DD'));
-                                                                                const expiryDate = newDate.add(10, 'year').subtract(1, 'day').format('YYYY-MM-DD');
-                                                                                setPassportValidTillDate(expiryDate);
-                                                                            }
-                                                                        }}
-                                                                        disableFuture={true}
-                                                                        maxDate={dayjs()}
-                                                                        minDate={null}
-                                                                    />
-                                                                </FormControl>
-                                                            </Grid>
-
-                                                            <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                                <FormControl sx={{ ...datePickerinputFieldStyle2 }} fullWidth>
-                                                                    <Typography sx={lable1CopyStyle}>
-                                                                        Date of Expiry
-                                                                        <span className="requiredField">*</span>
-                                                                    </Typography>
-
-
-                                                                    <DatePicker
-                                                                        disabled={isPassportVarified}
-                                                                        style={{ ...datePickerinputFieldStyle2 }}
-                                                                        value={passportValidTillDate ? dayjs(passportValidTillDate) : null}
-                                                                        setValue={(newDate) => {
-                                                                            if (newDate) {
-                                                                                PasswordExpiryValidity(newDate.format('YYYY-MM-DD'));
-                                                                            }
-                                                                        }}
-                                                                        disableFuture={false}
-                                                                        minDate={dayjs()}
-                                                                    />
-                                                                </FormControl>
-                                                            </Grid>
-
-                                                        </Grid>
-                                                    </>
-                                                ) : null}
-
-                                                {/* ###### Passport Details Section End ###### */}
-                                                {/* ###### Others Details Section Start ###### */}
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                        <FormHeading
-                                                            step={stepsList.OD.step}
-                                                            heading={stepsList.OD.name}
-                                                            info={
-                                                                "Enter your other information like handicap details ."
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                        <FormControl fullWidth>
-                                                            <Typography sx={lable1CopyStyle}>
-                                                                Date Of Joining
-                                                                <span className="requiredField">*</span>
-                                                            </Typography>
-                                                            <TextField
-                                                                onChange={(e) => {
-                                                                    setDateOfJoining(e.target.value);
-                                                                }}
-                                                                error={false}
-                                                                disableFuture={true}
-                                                                id="date"
-                                                                className="customeTextField"
-                                                                type="date"
-                                                                value={dateOfJoining}
-                                                                sx={inputFieldStyle2}
-                                                                InputLabelProps={{
-                                                                    shrink: true,
-                                                                }}
-                                                                InputProps={{
-                                                                    readOnly: true,
-                                                                }}
-                                                            />
-                                                        </FormControl>
-                                                    </Grid>
-                                                    <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                        <FormControl fullWidth>
-                                                            <Typography sx={lable1CopyStyle}>
-                                                                Is Physically Handicap
-                                                                <span className="requiredField">*</span>
-                                                            </Typography>
-                                                            {isPhysicallyHandicap !== undefined && (
-                                                                <Select
-                                                                    error={false}
-                                                                    className="customeTextField"
-                                                                    labelId="demo-simple-select-label"
-                                                                    id="demo-simple-select"
-                                                                    sx={inputFieldStyle2}
-                                                                    onChange={(e) => {
-                                                                        setIsPhysicallyHandicap(e.target.value);
-                                                                    }}
-                                                                    value={isPhysicallyHandicap}
-                                                                >
-                                                                    <MenuItem value={"Y"}>Yes</MenuItem>
-                                                                    <MenuItem value={"N"}>No</MenuItem>
-                                                                </Select>
-                                                            )}
-                                                        </FormControl>
-                                                    </Grid>
-                                                </Grid>
-                                                {isPhysicallyHandicap === "Y" ? (
-                                                    <Grid
-                                                        container
-                                                        rowSpacing={1}
-                                                        columnSpacing={2.5}
-                                                        item
-                                                        xs={12}
-                                                        sx={formHeadingGridContainerStyle}
-                                                    >
-                                                        <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                            <FormControl fullWidth>
-                                                                <Typography sx={lable1CopyStyle}>
-                                                                    Handicap type
-                                                                    <span className="requiredField">*</span>
-                                                                </Typography>
-                                                                {handicapType !== undefined && (
-                                                                    <Select
-                                                                        error={false}
-                                                                        className="customeTextField"
-                                                                        labelId="demo-simple-select-label"
-                                                                        id="demo-simple-select"
-                                                                        sx={inputFieldStyle2}
-                                                                        onChange={(e) => {
-                                                                            setHandicapType(e.target.value);
-                                                                        }}
-                                                                        value={handicapType}
-                                                                    >
-                                                                        {disabilityList &&
-                                                                            disabilityList.map((element) => {
-                                                                                return (
-                                                                                    <MenuItem
-                                                                                        key={element.id}
-                                                                                        value={element.code}
-                                                                                    >
-                                                                                        {element.value}
-                                                                                    </MenuItem>
-                                                                                );
-                                                                            })}
-                                                                    </Select>
-                                                                )}
-                                                            </FormControl>
-                                                        </Grid>
-                                                    </Grid>
-                                                ) : null}
-                                                {/* ###### Others Details Section End ###### */}
-                                                <Grid
-                                                    container
-                                                    rowSpacing={1}
-                                                    columnSpacing={2.5}
-                                                    item
-                                                    xs={12}
-                                                    sx={formHeadingGridContainerStyle}
-                                                >
-                                                    <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
-                                                        <Stack sx={submitBtnContainerStyle}>
-                                                            <Stack flexDirection={'row'} >
-                                                                <Button
-                                                                    xs={12}
-                                                                    name="save"
-                                                                    onClick={() => setClickedButton("S")}
-                                                                    type="submit"
-                                                                    sx={submitBtnStyle}
-                                                                    variant="contained"
-                                                                    color="primary"
-                                                                    disabled={!isDraft} // Hide saveButton when clickedButton is "N"
-                                                                >
-                                                                    {saveButton}
-                                                                </Button>
-                                                                <Button
-                                                                    name="save_and_next"
-                                                                    onClick={() => setClickedButton("N")}
-                                                                    type="submit"
-                                                                    sx={submitBtnStyle}
-                                                                    variant="contained"
-                                                                    color="primary"
-                                                                >
-                                                                    {saveAndNextbutton}
-                                                                </Button>
-                                                            </Stack>
-                                                            <Button
-                                                                onClick={handleSecondNext}
-                                                                sx={submitBtnStyle}
-                                                                variant="contained"
-                                                                color="primary"
-                                                                disabled={isDraft} // Show Next button only when clickedButton is "N"
-                                                            >
-                                                                Next
-                                                            </Button>
-                                                        </Stack>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </form>
-                                    </Box>
-                                </>
-                            ) : null}
-                            {currentPageNo === 2 ? (
-                                <Box sx={{ width: "100%" }}>
-                                    <form ref={formElement}>
-                                        <Grid
-                                            sx={{ paddingLeft: "20px" }}
-                                            container
-                                            rowSpacing={1}
-                                            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                                        >
-                                            {/* ######  Certificate Upload Section Start ###### */}
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                    <FormHeading
-                                                        step={stepsList.CF.step}
-                                                        heading={stepsList.CF.name}
-                                                        info={"Upload file details ."}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                    <Stack direction="row">
-                                                        <Typography
-                                                            sx={{
-                                                                ...lable1CopyStyle,
-                                                                display: "flex",
-                                                                alignItems: "center",
-                                                            }}
-                                                        >
-                                                            {
-                                                                "PAN Card"
-                                                            }
-                                                        </Typography>
-                                                        <Tooltip
-                                                            arrow="bottom"
-                                                          //  title="Upload a copy of the document with your father's name clearly mentioned. Examples of acceptable documents include birth certificates, national IDs, or other legal documents where both your name and your father's name are visible."
-                                                     //  title = "Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card."
-                                                     title = {<div>
-                                                     <p>{'Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card.'}</p>
-                                                     <a
-                                                       href={toHelp}
-                                                       target="_blank"
-                                                       rel="noopener noreferrer"
-                                                       style={{
-                                                         color: "#F57264",
-                                                         // textDecoration: "underline",
-                                                         cursor: "pointer",
-                                                       }}
-                                                     >
-                                                       Read More
-                                                     </a> 
-                                                   </div>}>
-                                                      
-                                                            <IconButton
-                                                                disabled={isPreviousSectionDisabled}
-                                                                sx={{
-                                                                    marginLeft: '-5px', // Moves the icon a bit to the left
-                                                                    marginTop: '-5px',  // Moves the icon a bit upwards
-                                                                }}
-                                                            >
-                                                                <InfoOutlined />
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    </Stack>
-                                                </Grid>
-                                                <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                    <Typography
-                                                        sx={{
-                                                            ...lable1CopyStyle,
-                                                            textAlign: "center",
-                                                        }}
-                                                    >
-                                                        Please upload PAN Card
-                                                        <span className="requiredField">*</span>
-                                                    </Typography>
-                                                    <Box sx={fileUploadSectionContainerStyle}>
-                                                        <FileUploadSection
-                                                            chooseFile={uploadFathersDocFile}
-                                                            // fileName={
-                                                            //   fileUploaded.some(file => file.uploadTypeAlias === "OTHID")
-                                                            //     ? fileUploaded.find(file => file.uploadTypeAlias === "OTHID").fileName
-                                                            //     : otherFileName
-                                                            // }
-                                                            fileName={otherFileName}
-                                                            accept={"image/png, image/jpeg"}
-                                                            disabled={isPreviousSectionDisabled}
-                                                            maxUploadSize={imgAndPdfMaxSize}
-                                                            uploadTypeAlias={otherFileTypeAlias}
-                                                        // handleRemoveFile={removeFathersDocCertificate}
-                                                        />
-                                                    </Box>
-                                                </Grid>
-
-                                            </Grid>
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                    <Stack
-                                                        flexDirection={"row"}
-                                                        justifyContent={"space-between"}
-                                                        alignItems={"center"}
-                                                    >
-                                                        <Stack direction="row">
-                                                            <Typography
-                                                                sx={{
-                                                                    ...lable1CopyStyle,
-                                                                    display: "flex",
-                                                                    alignItems: "center",
-                                                                }}
-                                                            >
-                                                                {"10th Pass Certificate"}
-                                                            </Typography>
-                                                            <Tooltip
-                                                                arrow="bottom"
-                                                             //   title="Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year."
-                                                             title = {<div>
-                                                                <p>{'Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year.'}</p>
-                                                                <a
-                                                                  href={toHelp}
-                                                                  target="_blank"
-                                                                  rel="noopener noreferrer"
-                                                                  style={{
-                                                                    color: "#F57264",
-                                                                    // textDecoration: "underline",
-                                                                    cursor: "pointer",
-                                                                  }}
-                                                                >
-                                                                  Read More
-                                                                </a> 
-                                                              </div>}
-                                                            >
-                                                                <IconButton
-                                                                    disabled={isPreviousSectionDisabled}
-                                                                >
-                                                                    <InfoOutlined />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                        </Stack>
-                                                    </Stack>
-                                                </Grid>
-                                                <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                    <Typography
-                                                        sx={{
-                                                            ...lable1CopyStyle,
-                                                            textAlign: "center",
-                                                        }}
-                                                    >
-                                                        Please upload 10th Pass certificate
-                                                        <span className="requiredField">*</span>
-                                                    </Typography>
-                                                    <Box sx={fileUploadSectionContainerStyle}>
-                                                        <FileUploadSection
-                                                            chooseFile={upload10thCertificateFile}
-                                                            // fileName={
-                                                            //   fileUploaded.some(file => file.uploadTypeAlias === "10THCERT")
-                                                            //     ? fileUploaded.find(file => file.uploadTypeAlias === "10THCERT").fileName
-                                                            //     : tenthCertificateFileName
-                                                            // }
-                                                            fileName={tenthCertificateFileName}
-                                                            accept={"image/png, image/jpeg"}
-                                                            disabled={isPreviousSectionDisabled}
-                                                            maxUploadSize={imgAndPdfMaxSize}
-                                                            uploadTypeAlias={tenthCertificateFileTypeAlias}
-                                                        // handleRemoveFile={remove10thPassCertificate}
-                                                        />
-                                                    </Box>
-                                                </Grid>
-                                            </Grid>
-                                            {/* ######  Certificate Upload Section End ###### */}
-
-                                            {/* ######  Handicaped Section Start ###### */}
-                                            {isPhysicallyHandicap === 'Y' &&
-                                                <>
-                                                    <Grid
-                                                        container
-                                                        rowSpacing={1}
-                                                        columnSpacing={2.5}
-                                                        item
-                                                        xs={12}
-                                                        sx={formHeadingGridContainerStyle}
-                                                    >
-                                                        <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                            <FormHeading
-                                                                step={stepsList?.HV?.step}
-                                                                heading={stepsList?.HV?.name}
-                                                                info={"Upload your handicap file details ."}
-                                                            />
-                                                        </Grid>
-                                                    </Grid>
-                                                    <Grid
-                                                        container
-                                                        rowSpacing={1}
-                                                        columnSpacing={2.5}
-                                                        item
-                                                        xs={12}
-                                                        sx={formHeadingGridContainerStyle}
-                                                    >
-                                                        <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                            <Typography sx={lable1CopyStyle}>
-                                                                Handicap Type
-                                                            </Typography>
-
-                                                            <TextField
-                                                                style={inputFieldStyle2}
-                                                                type="text"
-                                                                variant="outlined"
-                                                                className="customeTextField"
-                                                                value={getHandicapTypeDescription(
-                                                                    handicapType
-                                                                )}
-                                                                defaultValue={""}
-                                                                disabled={isPreviousSectionDisabled}
-                                                            />
-                                                        </Grid>
-                                                        <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                            <Typography
-                                                                sx={{
-                                                                    ...lable1CopyStyle,
-                                                                    textAlign: "center",
-                                                                }}
-                                                            >
-                                                                Please upload your Handicap Certificate
-                                                                <span className="requiredField">*</span>
-                                                            </Typography>
-                                                            <Box sx={fileUploadSectionContainerStyle}>
-                                                                <FileUploadSection
-                                                                    chooseFile={uploadHandicapFile}
-                                                                    // fileName={
-                                                                    //   fileUploaded.some(file => file.uploadTypeAlias === "HANDCERT")
-                                                                    //     ? fileUploaded.find(file => file.uploadTypeAlias === "HANDCERT").fileName
-                                                                    //     : handicapFileName
-                                                                    // }
-                                                                    fileName={handicapFileName}
-                                                                    accept={"image/png, image/jpeg"}
-                                                                    disabled={isPreviousSectionDisabled}
-                                                                    maxUploadSize={imgAndPdfMaxSize}
-                                                                    uploadTypeAlias={handicapFileTypeAlias}
-                                                                />
-                                                            </Box>
-                                                        </Grid>
-                                                    </Grid>
-                                                </>
-                                            }
-                                            {/* ######  Handicaped Section End ###### */}
-                                            {/* ######  Passport upload Section Start ###### */}
-                                            {passportAvailable === "Y" ? (
-                                                <>
-                                                    <Grid
-                                                        container
-                                                        rowSpacing={1}
-                                                        columnSpacing={2.5}
-                                                        item
-                                                        xs={12}
-                                                        sx={formHeadingGridContainerStyle}
-                                                    >
-                                                        <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                            <FormHeading
-                                                                step={stepsList?.PV?.step}
-                                                                heading={stepsList?.PV?.name}
-                                                                info={
-                                                                    "Enter your Passport file number to verify also see the help sign (?) to see how to find passport file number ."
-                                                                }
-                                                                Children={
-                                                                    <IconButton
-                                                                        onClick={handlePassporFileNumbertHelp}
-                                                                    >
-                                                                        <HelpOutline />
-                                                                    </IconButton>
-                                                                }
-                                                            />
-                                                        </Grid>
-                                                    </Grid>
-                                                    <Grid
-                                                        container
-                                                        rowSpacing={1}
-                                                        columnSpacing={2.5}
-                                                        item
-                                                        xs={12}
-                                                        sx={{ ...formHeadingGridContainerStyle, ...positionRelative }}
-                                                    >
-                                                        <Grid sx={{ ...positionRelative }} item xs={12} md={12}>
-                                                            {!passportAvailable && <DisableSection />}
-                                                        </Grid>
-
-                                                        <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                            <FormControl fullWidth>
-                                                                <Typography sx={lable1CopyStyle}>
-                                                                    Passport Number
-                                                                </Typography>
-
-                                                                <TextField
-                                                                    style={inputFieldStyle2}
-                                                                    type="text"
-                                                                    variant="outlined"
-                                                                    className="customeTextField"
-                                                                    value={passportNo}
-                                                                    defaultValue={""}
-                                                                    disabled={isPreviousSectionDisabled}
-                                                                />
-                                                                {countryOfOrigin === "India" && (
-                                                                    <>
-                                                                        <Button
-                                                                            sx={{ ...submitBtnStyle, margin: "5px", width: "fit-content" }}
-                                                                            variant="contained"
-                                                                            color="primary"
-
-                                                                            disabled={isPassportVerifyBtnDisabled}
-                                                                            onClick={handlePassportVerification}
-                                                                            endIcon={<Autorenew />}
-                                                                        >
-                                                                            Verify
-                                                                        </Button>
-                                                                        <VerificationStatusSection
-                                                                            docType={passportstatusMessage}
-                                                                        />
-                                                                    </>
-                                                                )}
-                                                            </FormControl>
-                                                        </Grid>
-
-                                                        <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                            {countryOfOrigin === "India" ? (
-                                                                <>
-                                                                    <Typography sx={lable1CopyStyle}>
-                                                                        Passport File Number
-                                                                    </Typography>
-                                                                    <TextField
-                                                                        style={inputFieldStyle2}
-                                                                        type="text"
-                                                                        variant="outlined"
-                                                                        onChange={
-                                                                            handlePassFileNumberOnChange
-                                                                        }
-                                                                        className="customeTextField"
-                                                                        value={passportFileNumber}
-                                                                        error={passportFileNumberError}
-                                                                        defaultValue={""}
-                                                                        disabled={isPassportVerifyBtnDisabled}
-                                                                    />
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <Typography
-                                                                        sx={{
-                                                                            ...lable1CopyStyle,
-                                                                            textAlign: "center",
-                                                                        }}
-                                                                    >
-                                                                        Please upload your Visa Details
-                                                                        <span className="requiredField">
-                                                                            *
-                                                                        </span>
-                                                                    </Typography>
-                                                                    <FileUploadSection
-                                                                        chooseFile={uploadPassportFile}
-                                                                        // fileName={
-                                                                        //   fileUploaded.some(file => file.uploadTypeAlias === "VISA")
-                                                                        //     ? fileUploaded.find(file => file.uploadTypeAlias === "VISA").fileName
-                                                                        //     : passportFileName
-                                                                        // }
-                                                                        fileName={passportFileName}
-                                                                        disabled={isPreviousSectionDisabled}
-                                                                        maxUploadSize={imgAndPdfMaxSize}
-                                                                        uploadTypeAlias={passportFileTypeAlias}
-                                                                    />
-                                                                </>
-                                                            )}
-                                                        </Grid>
-                                                    </Grid>
-                                                </>
-                                            )
-                                                : null}
-                                            {/* ######  Passport Section End ###### */}
-
-                                            {/* ######  PF Verification Section Start ###### */}
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                    <FormHeading
-                                                        step={stepsList.PFD.step}
-                                                        heading={stepsList.PFD.name}
-                                                        info={"Upload file details ."}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                    <Stack
-                                                        flexDirection={"row"}
-                                                        justifyContent={"space-between"}
-                                                        alignItems={"center"}
-                                                    >
-                                                        <Box>
-                                                            <Stack direction="row">
-                                                                <Typography
-                                                                    sx={{
-                                                                        ...lable1CopyStyle,
-                                                                        display: "flex",
-                                                                        alignItems: "center",
-                                                                       // marginRight: "-5px"
-                                                                    }}
-                                                                >
-                                                                    {
-                                                                        "Do you have PF under any Trust, in the past or present"
-                                                                    }
-                                                                </Typography>
-                                                                <Tooltip
-                                                                    arrow="bottom"
-                                                                 //   title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO"
-                                                                 title = {<div>
-                                                                    <p>{'Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO'}</p>
-                                                                    <a
-                                                                      href={toHelp}
-                                                                      target="_blank"
-                                                                      rel="noopener noreferrer"
-                                                                      style={{
-                                                                        color: "#F57264",
-                                                                        // textDecoration: "underline",
-                                                                        cursor: "pointer",
-                                                                      }}
-                                                                    >
-                                                                      Read More
-                                                                    </a> 
-                                                                  </div>}
-                                                                >
-                                                                    <IconButton
-                                                                        disabled={isPreviousSectionDisabled}
-                                                                        sx={{
-                                                                            marginLeft: '-5px', // Moves the icon a bit to the left
-                                                                            marginTop: '-5px',  // Moves the icon a bit upwards
-                                                                        }}
-                                                                    >
-                                                                        <InfoOutlined />
-                                                                    </IconButton>
-                                                                </Tooltip>
-                                                            </Stack>
-                                                            <FormControl sx={{ marginLeft: "17px" }}>
-                                                                <Stack
-                                                                    direction="row"
-                                                                    spacing={1}
-                                                                    justifyContent={"end"}
-                                                                    alignItems="center"
-                                                                    width={"auto"}
-                                                                >
-                                                                    <Typography>No</Typography>
-                                                                    <Switch
-                                                                        onChange={({ target }) =>
-                                                                            setIsTrustEpfoAvailable(target.checked)
-                                                                        }
-                                                                        checked={isTrustEpfoAvailable}
-                                                                        color="secondary"
-                                                                        disabled={isPreviousSectionDisabled}
-                                                                        sx={{ borderColor: "2px" }}
-                                                                    />
-                                                                    <Typography>Yes</Typography>
-                                                                </Stack>
-                                                            </FormControl>
-                                                        </Box>
-                                                    </Stack>
-                                                </Grid>
-
-                                                <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                    {isTrustEpfoAvailable && (
-                                                        <Box>
-                                                            <Typography
-                                                                sx={{ ...lable1CopyStyle, textAlign: "center" }}
-                                                            >
-                                                                Please upload Trust PF Details
-                                                                <span className="requiredField">*</span>
-                                                            </Typography>
-                                                            <Box sx={fileUploadSectionContainerStyle}>
-                                                                <FileUploadSection
-                                                                    chooseFile={uploadTrustEPFOFile}
-                                                                    handleRemoveFile={removeEPFOFile}
-                                                                    // fileName={
-                                                                    //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSBKTRUST")
-                                                                    //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSBKTRUST").fileName
-                                                                    //     : trustEpfoFileName
-                                                                    // }
-                                                                    fileName={trustEpfoFileName}
-                                                                    accept={"image/png, image/jpeg,application/pdf"}
-                                                                    disabled={isPreviousSectionDisabled}
-                                                                    maxUploadSize={imgAndPdfMaxSize}
-                                                                    uploadTypeAlias={trustEpfoFileTypeAlias}
-                                                                    multiple={true}
-                                                                />
-                                                            </Box>
-                                                        </Box>
-                                                    )}
-                                                </Grid>
-                                            </Grid>
-                                            <Divider sx={{ ...divederStyle }} />
-                                            {/* ######  PF Verification Section End ###### */}
-                                            {/* ######  UAN number Section Start ###### */}
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                    <Stack
-                                                        flexDirection={"col"}
-                                                        justifyContent={"space-between"}
-                                                        alignItems={"start"}
-                                                    >
-                                                        <Typography sx={{ ...lable1CopyStyle }}>
-                                                            {"Do you have UAN number"}
-                                                        </Typography>
-                                                        <RadioGroup
-                                                            row
-                                                            value={uanNumberAvailable}
-                                                            onChange={handleChange}
-                                                            sx={{ marginLeft: 2 }} // Adjust margin as needed
-                                                        >
-                                                            <FormControlLabel
-                                                                value="no"
-                                                                control={<Radio />}
-                                                                label="No"
-                                                                disabled={isPreviousSectionDisabled}
-                                                            />
-                                                            <FormControlLabel
-                                                                value="yes"
-                                                                control={<Radio />}
-                                                                label="Yes"
-                                                                disabled={isPreviousSectionDisabled}
-                                                            />
-                                                        </RadioGroup>
-                                                    </Stack>
-                                                </Grid>
-                                            </Grid>
-                                            {/* ######  UAN number Section End ###### */}
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
-                                                    <Stack sx={submitBtnContainerStyle}>
-                                                        <Stack flexDirection={'row'}>
-                                                            <Button
-                                                                //onClick={() => setCurrentPageNo(1)}
-                                                                onClick={handleBack}
-                                                                //sx={{ m: "15px 5px", ml: 3 }}
-                                                                sx={submitBtnStyle}
-                                                                variant="contained"
-                                                                color="primary"
-                                                            >
-                                                                {previousButton}
-                                                            </Button>
-                                                            <Button
-                                                                name="save"
-                                                                // disabled={isSubmitDisabled}
-                                                                onClick={DraftSave}
-                                                                sx={submitBtnStyle}
-                                                                variant="contained"
-                                                                color="primary"
-                                                                disabled={isPreviousSectionDisabled}
-                                                            >
-                                                                Save as Draft
-                                                            </Button>
-                                                        </Stack>
-                                                        <Stack flexDirection={'row'}>
-                                                            <Button
-                                                                name="save"
-                                                                // disabled={isSubmitDisabled}
-                                                                onClick={handleSaveClick}
-                                                                //sx={{ m: "15px 25px", ml: 3 }}
-                                                                sx={submitBtnStyle}
-                                                                variant="contained"
-                                                                color="primary"
-                                                                disabled={isPreviousSectionDisabled}
-                                                            >
-                                                                Save
-                                                            </Button>
-                                                            <Button
-                                                                onClick={handleNext}
-                                                                sx={submitBtnStyle}
-                                                                variant="contained"
-                                                                color="primary"
-                                                                disabled={isthirdNextVisible === false}
-                                                            >
-                                                                Next
-                                                            </Button>
-                                                        </Stack>
-                                                    </Stack>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                        <Dialog
-                                            open={isModalOpen}
-                                            onClose={handleCloseModal}
-                                            aria-labelledby="confirm-save-title"
-                                            aria-describedby="confirm-save-description"
-                                        >
-                                            <DialogTitle id="confirm-save-title">
-                                                {"Are you sure you want to save the details?"}
-                                            </DialogTitle>
-                                            <DialogContent>
-                                                <DialogContentText id="confirm-save-description">
-                                                    Once saved, the details cannot be edited
-                                                    anymore. Do you want to proceed?
-                                                </DialogContentText>
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button
-                                                    onClick={handleCloseModal}
-                                                    variant="contained"
-                                                    color="primary"
-                                                    sx={submitBtnStyle}
-                                                >
-                                                    No
-                                                </Button>
-                                                <Button
-                                                    onClick={handleConfirmSave}
-                                                    variant="contained"
-                                                    color="primary"
-                                                    autoFocus
-                                                    sx={submitBtnStyle}
-                                                >
-                                                    Yes
-                                                </Button>
-                                            </DialogActions>
-                                        </Dialog>
-                                    </form>
-                                </Box>
-                            ) : null}
-
-
-                            {currentPageNo === 3 ? (
-                                <Box sx={{ width: "100%" }}>
-                                    <form ref={formElement}>
-                                        <Grid
-                                            sx={{ paddingLeft: "20px" }}
-                                            container
-                                            rowSpacing={1}
-                                            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                                        >
-                                            {/* ######  Aadha Verification Section Start ###### */}
-
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                    <FormHeading
-                                                        step={stepsList?.AV?.step}
-                                                        heading={stepsList?.AV?.name}
-                                                        info={
-                                                            "Enter Aadhaar data to verify, see more info in the below link."
-                                                        }
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Typography
-                                                    sx={headingType1}
-                                                >
-                                                    As part of onboarding process, Please generate
-                                                    your offline KYC verification file and upload it
-                                                    here. To see the details steps,
-                                                    {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
-                        Aadhaar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
-                                                    <Link
-                                                        sx={{ cursor: "pointer" }}
-                                                        onClick={() => openOfflineKycInfoModel()}
-                                                    >
-                                                        {" "}
-                                                        Click here
-                                                    </Link>
-                                                </Typography>
-                                                <FormControl sx={{ flexDirection: 'row' }}>
-                                                    {isAadhaarVarified ? (
-                                                        <>
-                                                            <FormControlLabel
-                                                                sx={checkBoxLabelStyle}
-                                                                control={
-                                                                    <Checkbox
-                                                                        disabled
-                                                                        checked
-                                                                        inputProps={{ "aria-label": "controlled" }}
-                                                                        sx={checkBoxStyle}
-                                                                    />
-                                                                }>
-                                                            </FormControlLabel>
-                                                            <Typography
-                                                                onClick={() => setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)}
-                                                                sx={checkBoxLabelStyle}
-                                                            >I have downloaded the Aadhar offline KYC file</Typography>
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <FormControlLabel
-                                                                control={
-                                                                    <Checkbox
-                                                                        checked={isOfflineXmlDownloaded}
-                                                                        sx={{ paddingLeft: 0 }}
-                                                                        onChange={
-                                                                            handleIsOfflineXmlDownloadedOnChange
-                                                                        }
-                                                                        inputProps={{ "aria-label": "controlled" }}
-                                                                    />
-                                                                }
-                                                            >
-                                                            </FormControlLabel>
-                                                            <Typography
-                                                                onClick={() => setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)}
-                                                                sx={checkBoxLabelStyle}
-                                                            >I have downloaded the Aadhar offline KYC file</Typography>
-                                                        </>
-                                                    )}
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={{ ...formHeadingGridContainerStyle, ...positionRelative }}
-                                            >
-                                                {!isOfflineXmlDownloaded && <DisableSection />}
-                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                    <Typography sx={lable1CopyStyle}>
-                                                        Name On Aadhaar
-                                                    </Typography>
-                                                    <TextField
-                                                        style={inputFieldStyle2}
-                                                        type="text"
-                                                        variant="outlined"
-                                                        className="customeTextField"
-                                                        onChange={(e) => {
-                                                            setNameAsOnAadhar(
-                                                                e.target.value.toUpperCase()
-                                                            );
-                                                        }}
-                                                        value={nameAsOnAadhar}
-                                                        //defaultValue={" "}
-                                                        disabled={true}
-                                                    />{" "}
-                                                    <Typography sx={lable1CopyStyle}>
-                                                        Share Code (to be provided after uploading)
-                                                    </Typography>
-                                                    <TextField
-                                                        style={inputFieldStyle2}
-                                                        type="text"
-                                                        variant="outlined"
-                                                        className="customeTextField"
-                                                        onChange={(e) => {
-                                                            setAadharShareCode(e.target.value);
-                                                        }}
-                                                        value={aadharShareCode}
-                                                        defaultValue={" "}
-                                                        disabled={
-                                                            disabledAadharInput || !isAadhaarXmlUploaded
-                                                        }
-                                                    />
-                                                    <Button
-                                                        sx={{ ...submitBtnStyle, margin: "5px 0" }}
-                                                        disabled={isAadhaarVarified}
-                                                        variant="contained"
-                                                        onClick={handleAadharVerifiaction}
-                                                        endIcon={<Autorenew />}
-                                                    >
-                                                        Verify
-                                                    </Button>
-                                                    <VerificationStatusSection
-                                                        docType={aadharstatusMessage}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                    <FileUploadSection
-                                                        chooseFile={uploadAadharXmlFile}
-                                                        fileName={aadharXmlFileName}
-                                                        accept={".rar, .zip"}
-                                                        disabled={isAadhaarVarified}
-                                                        uploadTypeAlias={aadharFileTypeAlias}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            {/* ######  Aadhar Verification Section End ###### */}
-                                            {/* ######  PAN Verification Section Start ###### */}
-                                            <Grid
-                                                container
-                                                rowSpacing={2}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-
-                                                <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                    <FormHeading
-                                                        step={stepsList?.PAV?.step}
-                                                        heading={stepsList?.PAV?.name}
-                                                        info={"Enter your PAN Numebr to verify."}
-                                                    />
-                                                </Grid>{" "}
-                                            </Grid>
-                                            <Grid
-                                                container
-                                                rowSpacing={2}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-
-                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-                                                    <Typography sx={lable1CopyStyle}>
-                                                        PAN Number
-                                                        <span className="requiredField">*</span>
-                                                    </Typography>
-                                                    <TextField
-                                                        style={inputFieldStyle2}
-                                                        type="text"
-                                                        variant="outlined"
-                                                        className="customeTextField"
-                                                        onChange={handelPANNumberChange}
-                                                        value={pan}
-                                                        defaultValue={" "}
-                                                        inputProps={{ maxLength: 10 }}
-                                                        disabled={disabledPanInput}
-                                                        error={panNumberError}
-                                                    />
-                                                    <Button
-                                                        sx={{ ...submitBtnStyle, margin: "5px 0" }}
-                                                        disabled={isPanVarified}
-                                                        variant="contained"
-                                                        onClick={handlePanVerifiaction}
-                                                        endIcon={<Autorenew />}
-                                                    >
-                                                        Verify
-                                                    </Button>
-                                                    <Dialog
-                                                        open={isPANModalOpen}
-                                                        onClose={handleDialogCancel}
-                                                    >
-                                                        <DialogTitle>PAN Verified</DialogTitle>
-                                                        <DialogContent>
-                                                            <DialogContentText>
-                                                                Your PAN is successfully verified. To fetch and
-                                                                verify UAN automatically please click on OK.
-                                                            </DialogContentText>
-                                                        </DialogContent>
-                                                        <DialogActions>
-                                                            <Button
-                                                                onClick={handleDialogConfirm}
-                                                                variant="contained"
-                                                                color="primary"
-                                                                sx={submitBtnStyle}
-                                                                autoFocus
-                                                            >
-                                                                OK
-                                                            </Button>
-                                                        </DialogActions>
-                                                    </Dialog>
-                                                    <VerificationStatusSection
-                                                        docType={panstatusMessage}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
-                                                    <Typography sx={lable1CopyStyle}>
-                                                        Name on PAN
-                                                        <span className="requiredField">*</span>
-                                                    </Typography>
-                                                    <TextField
-                                                        style={inputFieldStyle2}
-                                                        type="text"
-                                                        variant="outlined"
-                                                        className="customeTextField"
-                                                        onChange={(e) => {
-                                                            setNameAsOnPan(e.target.value.toUpperCase());
-                                                        }}
-                                                        value={nameAsOnPan}
-                                                        defaultValue={" "}
-                                                        disabled={true}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            {/* ######  PAN Verification Section End ###### */}
-                                            {/* ######  UAN Verification Section Start ###### */}
-                                            <Grid
-                                                container
-                                                rowSpacing={2}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid item xs={12} sx={formHeadingContainerStyle}>
-                                                    <FormHeading
-                                                        step={stepsList?.UAV?.step}
-                                                        heading={stepsList?.UAV?.name}
-                                                        info={
-                                                            "Enter your Universal Account Number(UAN) to verify."
-                                                        }
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={{ ...formHeadingGridContainerStyle, ...positionRelative }}
-                                            >
-                                                {isEpfoSectionDisabled && <DisableSection />}
-
-                                                <Grid item xs={12} md={6} sx={{ paddingLeft: '0px !important' }}>
-                                                    <Typography sx={lable1CopyStyle}>
-                                                        Universal Account Number(UAN)
-                                                    </Typography>
-                                                    <TextField
-                                                        onChange={(e) => {
-                                                            setUAN(e.target.value);
-                                                        }}
-                                                        style={inputFieldStyle2}
-                                                        type="text"
-                                                        className="customeTextField"
-                                                        variant="outlined"
-                                                        defaultValue={" "}
-                                                        value={UAN}
-                                                    />
-                                                    <Button
-                                                        sx={verificationBtnStyle}
-                                                        enabled={isUanVarified}
-                                                        variant="contained"
-                                                        onClick={handleEpfoButtonClick}
-                                                        endIcon={<Autorenew />}
-                                                        disabled={isUanVerificationProcessManual === 'manual'}
-                                                    >
-                                                        {epfoButton}
-                                                    </Button>
-                                                    <VerificationStatusSection
-                                                        docType={epfostatusMessage}
-                                                    />
-                                                    <Stack direction={"row"} alignItems={"center"}>
-                                                        <Typography sx={{ margin: "5px 0", color: "#000" }}>{"UAN Aadhar Link : "} </Typography>
-                                                        <Typography>{uanAadharLink}</Typography>
-                                                    </Stack>
-                                                </Grid>
-                                                <Grid
-                                                    item
-                                                    xs={12}
-                                                    md={6}
-                                                    sx={{ paddingLeft: { xs: '0px !important', md: '20px!important', ...positionRelative } }}
-                                                >
-                                                    <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
-                                                        <Stack flexDirection="column" justifyContent="space-between" alignItems="start">
-                                                            <Typography sx={{ ...lable1CopyStyle }}>
-                                                                {"UAN Verification"}
-                                                            </Typography>
-                                                            <RadioGroup
-                                                                row
-                                                                value={isUanVerificationProcessManual}
-                                                                onChange={handleChangeUanVerification}
-                                                            >
-                                                                <FormControlLabel
-                                                                    value="auto"
-                                                                    control={<Radio />}
-                                                                    label="Automatic"
-                                                                    disabled={!hasValue(UAN)}
-                                                                />
-                                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                                    <FormControlLabel
-                                                                        value="manual"
-                                                                        control={<Radio />}
-                                                                        label="Manual"
-                                                                        disabled={!hasValue(UAN)}
-                                                                    />
-                                                                    <Tooltip
-                                                                        arrow
-                                                                        title={
-                                                                            <Box sx={{ ...statusBoxstyle }}>
-                                                                                <Typography variant="body2" sx={{ ...statusstyle }}>
-                                                                                It is mandatory for EPFO members to upload all PF passbooks 2005 onwards (if applicable).
-                                                                                </Typography>
-
-                                                                            </Box>
-                                                                        }
-                                                                    >
-                                                                        <Fab
-                                                                            variant="contained"
-                                                                            size="small"
-                                                                            sx={{ ...primaryFabStyle, ml: 1 }}
-                                                                        >
-                                                                            <Info width={18} sx={{ color: "#fff" }} />
-                                                                        </Fab>
-                                                                    </Tooltip>
-                                                                </Box>
-                                                            </RadioGroup>
-                                                        </Stack>
-                                                    </Grid>
-
-                                                    {
-                                                        isUanVerificationProcessManual === 'manual' &&
-                                                        <Grid>
-                                                            <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
-                                                                <Typography
-                                                                    sx={{
-                                                                        ...lable1CopyStyle,
-                                                                        textAlign: "center",
-                                                                    }}
-                                                                >
-                                                                    Please upload your EPFO Service History
-                                                                    <span className="requiredField">*</span>
-                                                                </Typography>
-                                                                <Box sx={fileUploadSectionContainerStyle}>
-                                                                    <FileUploadSection
-                                                                        chooseFile={uploadEpfoServiceHistoryFile}
-                                                                        // fileName={
-                                                                        //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSSBKMNL")
-                                                                        //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSSBKMNL").fileName
-                                                                        //     : handicapFileName
-                                                                        // }
-                                                                        fileName={epfoServiceHistoryFile}
-                                                                        accept={"image/png, image/jpeg, application/pdf"}
-                                                                        maxUploadSize={imgAndPdfMaxSize}
-                                                                        uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
-                                                                    // handleRemoveFile={removeEPFOServiceHistory}
-                                                                    />
-                                                                </Box>
-                                                            </Grid>
-                                                            <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
-
-                                                                <Typography
-                                                                    sx={{
-                                                                        ...lable1CopyStyle,
-                                                                        textAlign: "center",
-                                                                    }}
-                                                                >
-                                                                    Please upload your EPFO passbook
-                                                                    <span className="requiredField">*</span>
-                                                                </Typography>
-                                                                <Box sx={fileUploadSectionContainerStyle}>
-                                                                    <FileUploadSection
-                                                                        chooseFile={uploadEpfoPassBookFile}
-                                                                        handleRemoveFile={removeEPFOPassbookFile}
-                                                                        // fileName={
-                                                                        //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSSBKMNL")
-                                                                        //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSSBKMNL").fileName
-                                                                        //     : handicapFileName
-                                                                        // }
-                                                                        fileName={epfoPassBookFiles}
-                                                                        accept={"image/png, image/jpeg,application/pdf"}
-                                                                        maxUploadSize={imgAndPdfMaxSize}
-                                                                        multiple={true}
-                                                                        uploadTypeAlias={epfoPassbookFileTypeAlias}
-                                                                    />
-                                                                </Box>
-                                                            </Grid>
-                                                        </Grid>
-                                                    }
-                                                </Grid>
-                                            </Grid>
-                                            {/* ######  UAN Verification Section End ###### */}
-                                            <Grid
-                                                container
-                                                rowSpacing={1}
-                                                columnSpacing={2.5}
-                                                item
-                                                xs={12}
-                                                sx={formHeadingGridContainerStyle}
-                                            >
-                                                <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
-                                                    <Stack flexDirection={'row'}>
-                                                        <Button
-                                                            //onClick={() => setCurrentPageNo(1)}
-                                                            onClick={handleBack}
-                                                            //sx={{ m: "15px 5px", ml: 3 }}
-                                                            sx={submitBtnStyle}
-                                                            variant="contained"
-                                                            color="primary"
-                                                        >
-                                                            {previousButton}
-                                                        </Button>
-
-                                                        {(isUanVerificationProcessManual === 'manual') && (
-                                                            <>
-                                                                <Button
-                                                                    //onClick={() => setCurrentPageNo(1)}
-                                                                    onClick={() => submitDetails(false, true)}
-                                                                    //sx={{ m: "15px 5px", ml: 3 }}
-                                                                    sx={submitBtnStyle}
-                                                                    variant="contained"
-                                                                    color="primary"
-                                                                >
-                                                                    {'Submit'}
-                                                                </Button>
-                                                            </>
-                                                        )}
-                                                    </Stack>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </form>
-                                </Box>
-                            ) : null}
-                        </Grid>
-                    </Grid>
+                        {currentPageNo === 3 ? (
+                            <>
+                                <ThirdForm
+                                    formElement={formElement}
+                                    stepsList={stepsList}
+                                    isAadhaarVarified={isAadhaarVarified}
+                                    isOfflineXmlDownloaded={isOfflineXmlDownloaded}
+                                    setIsOfflineXmlDownloaded={setIsOfflineXmlDownloaded}
+                                    handleIsOfflineXmlDownloadedOnChange={handleIsOfflineXmlDownloadedOnChange}
+                                    nameAsOnAadhar={nameAsOnAadhar}
+                                    handleChangeNameOnAadhar={handleChangeNameOnAadhar}
+                                    aadharShareCode={aadharShareCode}
+                                    setAadharShareCode={setAadharShareCode}
+                                    disabledAadharInput={disabledAadharInput}
+                                    isAadhaarXmlUploaded={isAadhaarXmlUploaded}
+                                    handleAadharVerifiaction={handleAadharVerifiaction}
+                                    aadharstatusMessage={aadharstatusMessage}
+                                    uploadAadharXmlFile={uploadAadharXmlFile}
+                                    aadharXmlFileName={aadharXmlFileName}
+                                    pan={pan}
+                                    handelPANNumberChange={handelPANNumberChange}
+                                    disabledPanInput={disabledPanInput}
+                                    panNumberError={panNumberError}
+                                    isPanVarified={isPanVarified}
+                                    handlePanVerifiaction={handlePanVerifiaction}
+                                    isPANModalOpen={isPANModalOpen}
+                                    handleDialogCancel={handleDialogCancel}
+                                    handleDialogConfirm={handleDialogConfirm}
+                                    panstatusMessage={panstatusMessage}
+                                    nameAsOnPan={nameAsOnPan}
+                                    isEpfoSectionDisabled={isEpfoSectionDisabled}
+                                    setUAN={setUAN}
+                                    UAN={UAN}
+                                    isUanVarified={isUanVarified}
+                                    handleEpfoButtonClick={handleEpfoButtonClick}
+                                    isUanVerificationProcessManual={isUanVerificationProcessManual}
+                                    epfoButton={epfoButton}
+                                    epfostatusMessage={epfostatusMessage}
+                                    uanAadharLink={uanAadharLink}
+                                    handleChangeUanVerification={handleChangeUanVerification}
+                                    uploadEpfoServiceHistoryFile={uploadEpfoServiceHistoryFile}
+                                    epfoServiceHistoryFile={epfoServiceHistoryFile}
+                                    uploadEpfoPassBookFile={uploadEpfoPassBookFile}
+                                    removeEPFOPassbookFile={removeEPFOPassbookFile}
+                                    epfoPassBookFiles={epfoPassBookFiles}
+                                    handleBack={handleBack}
+                                    submitDetails={submitDetails}
+                                />
+                            </>
+                        ) : null}
+                    </FormContainer>
                 </Box>
                 <FormDialog
                     open={fetchUanConfirmation}

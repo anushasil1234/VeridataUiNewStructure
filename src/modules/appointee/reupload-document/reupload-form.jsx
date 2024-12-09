@@ -15,6 +15,7 @@ import buildFormData from 'shared/utils/associate/build-form-data'
 import checkFileReuploadValidation from 'shared/utils/associate/check-file-reupload-validation'
 import { removeLoggedinData, storeLoggedinData } from 'store/slices/login-slice'
 import MergeWithUniqueKey from 'shared/utils/associate/merge-with-unique-key'
+import TextInput from 'shared/components/input-fields/text-input'
 
 export const ReuploadForm = () => {
 
@@ -56,6 +57,7 @@ export const ReuploadForm = () => {
     const [isFathersNameVarified, setIsFathersNameVarified] = useState();
     const [isUANVarified, setIsUANVarified] = useState();
     const [stepsList, setStepsList] = useState();
+    const [fathersName, setFathersName] = useState();
 
     // setStepsList({ ...stepsList, ..._steps })
     const formElement = useRef(null);
@@ -91,7 +93,7 @@ export const ReuploadForm = () => {
             uploadTypeAlias: epfoPassbookFileTypeAlias, fileNameList: epfoPassBookFiles,
             currentFileName: currentFileName, uploadType: 'multiple'
         });
-     
+
 
         setEpfoPassBookFiles(_fileNameList);
         setUploadedFile(_updatedUploadedFileList);
@@ -121,7 +123,8 @@ export const ReuploadForm = () => {
             userId: userId,
             appointeeCode: userCode,
             FileDetails: fileDetails,
-            fileUploaded: fileUploaded
+            fileUploaded: fileUploaded,
+            FathersName: fathersName
         };
 
         const formData = buildFormData(payLoad);
@@ -155,7 +158,7 @@ export const ReuploadForm = () => {
             isFnameVarified: isFathersNameVarified
         }
         const { error } = checkFileReuploadValidation({ uploadedFile, verificationFieldModal });
-      
+
 
         if (hasValue(error)) {
             showErrorMessage(error);
@@ -171,7 +174,8 @@ export const ReuploadForm = () => {
             let {
                 fileUploaded,
                 isFnameVarified,
-                isUanVarified
+                isUanVarified,
+                memberName
             } = response.responseInfo;
 
             const { tenthCertificateFileName, otherFileName,
@@ -180,6 +184,7 @@ export const ReuploadForm = () => {
             setOtherFileName(otherFileName);
             setEpfoServiceHistoryFile(epfoServiceHistoryFile);
             setEpfoPassBookFiles(epfoPassBookFiles);
+            setFathersName(memberName);
             const verificationFieldModal = {
                 isUanVarified,
                 isFnameVarified
@@ -198,7 +203,7 @@ export const ReuploadForm = () => {
     useEffect(() => {
         setAppointeeDetails(appointeeId);
     }, [])
-  
+
 
     return (
         <form ref={formElement}>
@@ -225,6 +230,24 @@ export const ReuploadForm = () => {
                                     step={stepsList?.FC?.step}
                                     heading={`Father's name related document`}
                                     info={"Upload Father's related document."}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            container
+                            rowSpacing={1}
+                            columnSpacing={2.5}
+                            item
+                            xs={12}
+                            sx={formHeadingGridContainerStyle}
+                        >
+                            <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
+                                <TextInput
+                                    label={`Father's Name`}
+                                    value={fathersName}
+                                    onChange={setFathersName}
+                                    required={true}
+                                    maxLength={50}
                                 />
                             </Grid>
                         </Grid>

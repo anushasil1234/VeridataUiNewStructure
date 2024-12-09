@@ -1,42 +1,41 @@
-import { Grid, TextField, Typography } from "@mui/material"
-import { inputFieldStyle, inputFieldStyle2, lable1CopyStyle, lable1Style, listHeadingStyle } from "app"
-import GridContainer from "../grid-container/grid-container"
+import { inputFieldStyle2 } from 'app';
+import React from 'react'
+import Label from './label';
+import { FormControl, TextField } from '@mui/material';
 
-const TextAreaInput = ({ label, value, required, onChange }) => {
+const TextInput = ({ value, onChange, label, required = false, readOnly = false, disabled = false, error = false, onKeyDown,
+    onPaste, maxLength = 0, inputProps
+}) => {
+    const _inputProps = inputProps ? inputProps : {
+        maxLength: maxLength,
+        readOnly: readOnly,
+        style: {
+            padding: 0,
+            color: "#000"
+        }
+    }
     return (
-        <> 
-        <Grid item xs={12} md={8}>
-            <Typography sx={{ ...listHeadingStyle, fontSize: '1rem', textAlign: "left",marginLeft:"-22px" }}>
-                {label}
-                {required &&
-                    <span className="requiredField">*</span>
-                }
-            </Typography>
-           
-            </Grid>
-            
+        <FormControl fullWidth>
+            <Label required={required}>{label}</Label>
             <TextField
-                onChange={onChange}
-                error={false}
+                onChange={(e) => {
+                    onChange(e.target.value);
+                }}
+                onKeyDown={(e) => onKeyDown ? onKeyDown(e) : false}
+                onPaste={(e) => onPaste ? onPaste(e) : false}
+                error={error}
                 style={inputFieldStyle2}
                 type="text"
                 className="customeTextField"
                 variant="outlined"
                 defaultValue={" "}
-                multiline
-                rows={4}
-                maxRows={4}
                 value={value}
-                required={required}
+                disabled={disabled}
                 inputStyle={{ padding: 0 }}
-                InputProps={{
-                    style: {
-                        color: "#000",
-                        padding: "16.5px 14px"
-                    },
-                }}
+                InputProps={_inputProps}
             />
-        </>
+        </FormControl>
     )
 }
-export default TextAreaInput
+
+export default TextInput

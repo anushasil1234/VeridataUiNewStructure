@@ -1,0 +1,19 @@
+import { Step, StepLabel, Stepper } from '@mui/material'
+import { activeStepStyle, indActiveStepStyle } from 'app'
+import React from 'react'
+
+const LinearStepper = ({steps, activeStep}) => {
+    return (
+        <Stepper activeStep={activeStep} alternativeLabel>
+            {steps.map((label, index) => (
+                <Step key={label} completed={activeStep > index}>
+                    <StepLabel sx={activeStep === index ? activeStepStyle : indActiveStepStyle}>
+                        {label}
+                    </StepLabel>
+                </Step>
+            ))}
+        </Stepper>
+    )
+}
+
+export default LinearStepper

@@ -8,8 +8,6 @@ import { Checkbox, Typography } from "@mui/material";
 import { TableActionCell } from "shared/utils/dataTable/table-action-cell";
 import TableClickableCell from "shared/utils/dataTable/table-clickable-cell";
 import TableStatusCell from "shared/utils/dataTable/table-status-cell";
-
-// messages
 export const reportGenarate = `There is no data to export a report`;
 export const maxUploadSize = `Max size: 2MB`;
 export const emptyUserNameField = `Username can't be empty`;
@@ -91,8 +89,7 @@ export const generateProcessingAppointeeReportDesc = `The purpose of this report
 export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help PwC understand the usage patterns, identify any issues and improve the efficiency of the API system.`;
 export const pfPensionReportDesc = `This report provides an overview of PF and Pension information for appointees within a specified date range, including appointee name, Aadhaar number, UAN, joining date, PF and pension status, and passbook status (manual or automatic). It helps PwC monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
 export const verificatiosucess = `Your verification has been successfully completed.`;
-export const appointeeReportdesc = `This report provides an analysis of appointees, including names, email ID, date of joining (DOJ), link-sent dates, and status. It aids PwC in identifying trends, resolving bottlenecks, and evaluating candidate interest.`;
-// export const appointeeReportdesc=`This report offers a comprehensive analysis of appointees . It provides detailed insights, including each candidate's name, email ID, date of joining (DOJ), the date the link was sent, and their current status. This data assists stakeholders in identifying trends, addressing potential bottlenecks, and evaluating whether the lack of progress suggests disinterest in joining.`
+export const appointeeReportdesc = `This report provides an analysis of appointees, including names, email ID, date of joining (DOJ), link-sent dates, and status. It aids Pwc in identifying trends, resolving bottlenecks, and evaluating candidate interest.`;
 export const generatenationlityReportDesc = (type) => {
   switch (type) {
     case "All":
@@ -107,8 +104,6 @@ export const generatenationlityReportDesc = (type) => {
 };
 export const EPFOVerificatypeSelectionMsg =
   "Please select and verify Fathers's name first";
-
-// Dropdown Types
 export const GEN = `GEN`;
 export const NAT = `NAT`;
 export const CON = `CON`;
@@ -118,13 +113,7 @@ export const FLT = `FLT`;
 export const QUA = `QUA`;
 export const RLE = `RLE`;
 export const ENTITY = `ENTITY`;
-
-// Date Format
-
 export const dateFormat = `DD/MM/YYYY`;
-
-// Button name
-
 export const saveButton = "Save as Draft";
 export const changePassword = "Change Password";
 export const submitButton = "Submit";
@@ -132,8 +121,6 @@ export const saveAndNextbutton = "Save and Next";
 export const previousButton = "Previous";
 export const remarks = "Remarks";
 export const startVerification = "Start Verification";
-
-//Alias
 export const nameAlias = "102";
 export const genderAlias = "104";
 export const fatherNameAlias = "101";
@@ -146,19 +133,13 @@ export const tenthCertificateFileTypeAlias = "10THCERT";
 export const otherFileTypeAlias = "OTHID";
 export const handicapFileTypeAlias = "HANDCERT";
 export const aadharFileTypeAlias = "ADH";
-
 export const passportFileTypeAlias = "VISA";
 export const epfTypeAlias = "EPFPSBK";
 export const epfExcelTypeAlias = "EPFPSBKEXCL";
 export const epfFileTypeAlias = "EPFO";
 export const epfFileCategoryTypeAlias = "EPFO";
 export const fatherFileCategoryTypeAlias = "FTHR";
-
-//Not Available
 export const NA = "N/A";
-
-// routes
-
 export const toDashboard = "/dashboard";
 export const toRegister = "/appointeeregister";
 export const toReuploadDoc = "/reupload_document";
@@ -191,9 +172,6 @@ export const toNoResponseAgingReport = "/noresponseagigreport";
 export const toNoMovementAgingReport = "/nomovementagigreport";
 export const toNationalityReport = "/nationalityreport";
 export const toAppointeeReport = "/appointeereport";
-
-// dropdown values start
-
 export const genders = [<Male />, <Female />, <Transgender />].map(
   (genderIcon) => {
     return {
@@ -202,9 +180,6 @@ export const genders = [<Male />, <Female />, <Transgender />].map(
     };
   }
 );
-
-// dropdown values start end
-// table headercell start
 const rejetedListActions = ["VIEWDETAILS"];
 const latestAppointeeListActions = ["VIEWDETAILS"];
 const verifiedListActions = [
@@ -2351,6 +2326,7 @@ export const appointeeListTableHeadCell = [
     },
   },
 ];
+
 export const appointeeReportTableHeadCell = [
   {
     type: "string",
@@ -2424,19 +2400,13 @@ export const stepperDefaultList = {
     step: 4,
   },
 };
-
-// Apis urls
-// const Api = `/api`;
-// const Api = process.env.REACT_APP_API_PATH || '';
 const AppointeeReports = `/AppointeeReports`;
 const AppoienteeWorkFlow = `/AppoienteeWorkFlow`;
 const Account = `/Account`;
 const AadhaarValidate = `/AadhaarValidate`;
 const FileUpload = `/FileUpload`;
 const Users = `/Users`;
-
 export const PasswordChange_URL = `${Account}/PostPasswordChange`;
-
 export const DownloadSampleXlsFile_URL = `${FileUpload}/DownloadSampleXlsFile`;
 export const DownloadUpdateSampleXlsFile_URL = `${FileUpload}/DownloadUpdateSampleXlsFile`;
 export const UploadxlsFile_URL = `${FileUpload}/UploadxlsFile`;
@@ -2444,12 +2414,9 @@ export const UploadUpdatexlsFile_URL = `${FileUpload}/UploadUpdatexlsFile`;
 export const DownloadPassbookFile_URL = `${FileUpload}/DownloadPassbookFile`;
 export const getUploadFileData_URL = `${FileUpload}/getUploadFileData?appointeeId=`;
 export const PostReuploadDocuments_URL = `${FileUpload}/PostReuploadDocuments`;
-
 export const GetRawFileData_URL = (companyId, fileId) =>
   `${FileUpload}/GetRawFileData?companyId=${companyId}&fileId=${fileId}`;
-
 export const GetReportFilterStatus_URL = `${AppoienteeWorkFlow}/GetAllReportFilterStatus`;
-
 export const ValidateUserLogIn_URL = `${Account}/ValidateUserLogIn`;
 export const UserSignInDetailsByEmail_URL = `${Account}/UserSignInDetailsByEmail?email=`;
 export const UserSignInDetails_URL = `${Account}/UserSignInDetails`;
@@ -2466,7 +2433,6 @@ export const ValidateProfilePassword_URL = `${Account}/ValidateProfilePassword`;
 export const EditUserProfile_URL = `${Account}/EditUserProfile`;
 export const GetFaqData_URL = `${Account}/GetFaqData`;
 export const GetRefreshToken_URL = `${Account}/GenerateRefreshToken`;
-
 export const RawDataProcess_URL = `${AppoienteeWorkFlow}/RawDataProcess`;
 export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointeeDetailsUpdate`;
 export const PostAppointeeDetailsSave_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSave`;
@@ -2503,7 +2469,6 @@ export const downloadProcessingList_URL = `${AppointeeReports}/GetUnderProcessRe
 export const downloadLapsedList_URL = `${AppointeeReports}/GetLapsedDataReport`;
 export const downloadApiCounterReport_URL = `${AppointeeReports}/ApiCounterReport`;
 export const downloadpfReport_URL = `${AppointeeReports}/AppointeeDataPfFilterReport`;
-
 export const AppointeeAgingFilterReport_URL = `${AppointeeReports}/AppointeeAgingFilterReport`;
 export const AppointeeNationalityReport_URL = `${AppointeeReports}/NationalityFilterReport`;
 export const AppointeeDataReport_URL = `${AppointeeReports}/AppointeeDataFilterReport`;
@@ -2517,19 +2482,16 @@ export const ApiCounterReport_URL = (fromDate, toDate) => {
 };
 export const PassbookDetails_URL = `${AppoienteeWorkFlow}/GetPassbookDetails?AppointeeId=`;
 export const UpdateAppointeeManualVerification_URL = `${AppoienteeWorkFlow}/UpdateAppointeeManualVerification`;
-// export const EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails?AppointeeId=`;
 export const EmployementDetails_URL = (AppointeeId, userId) => {
   let _EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails`;
   return `${_EmployementDetails_URL}?AppointeeId=${AppointeeId}&userId=${userId}`;
 };
-
 export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetails`;
 export const VerifyPanDetails_URL = `${AadhaarValidate}/VerifyPanDetails`;
 export const VerifyAadharViaXml_URL = `${AadhaarValidate}/VerifyAadharViaXml`;
 export const GenerateUANOTP_URL = `${AadhaarValidate}/UANGenerateOTP`;
 export const GetUANNumber_URL = `${AadhaarValidate}/GetUANDetails`;
 export const UANSubmitOTP_URL = `${AadhaarValidate}/UANSubmitOTP`;
-
 export const GetAdminUserList_URL = `${Users}/GetAdminUserList`;
 export const CreateUser_URL = `${Users}/CreateUser`;
 export const UpdateAdminUser_URL = `${Users}/UpdateAdminUser`;
@@ -2539,13 +2501,8 @@ export const AppointeeConsentUpdate_URL = `${Users}/AppointeeConsentUpdate`;
 export const AppointeePrerequisiteUpdate_URL = `${Users}/AppointeePrerequisiteUpdate`;
 export const ChangePasswordGenerateOTP_URL = `${Account}/ChangePasswordGenerateOTP`;
 export const ValidateUserByOtpForgetPassword_URL = `${Account}/ValidateUserByOtpForgetPassword`;
-
 export const RemoveAdminUser_URL = (id, userId) =>
   `${Users}/RemoveAdminUser?id=${id}&userId=${userId}`;
-
-//Apis urls
-
-//Models messages starts
 export const aaddharNumberverify = `Please complete Aadhaar verification before proceeding.`;
 export const approveConfirmation = `Auto / manual verification process of appointee has not been completed successfully. Do you still want to force approve?`;
 export const pensionConfirmation = `Does appointee have Pension under EPFO? Yes / No"?`;
@@ -2554,25 +2511,23 @@ export const indianpassportFilePatternErrorMsg =
   "Indian Passport File Number must be 12 digits alphanumeric code";
 export const passportFilePatternErrorMsg =
   "Passport File Number must be of maximum 20 digits";
-export const passportNoEmptyMsg = "Passport Number cannot be empty";
+  export const passportNoEmptyMsg = "Passport Number cannot be empty";
 export const uploadFormatErrorMsg = `Upload valid formatted file`;
 export const verificationConfirmationMsg = `Do you want to send verification portal link to the appointee(s)? [Note: Appointee(s) will be removed from this page. The checked appointee(s) will be moved to the "Processing" page and the unchecked appointee(s) will be moved to the "Link not sent" page]`;
 export const appointeerejetionConfirmationMsg = `Are you sure you want to reject the appointee?`;
 export const verificationRemiderMsg = `Reminder alert will be sent to appointee, asking them to complete the verification process. Do you want to continue?`;
 export const credentialRemiderMsg = `An alert with login credentials will be sent to the appointee to complete the verification process. Would you like to proceed?`;
 export const appointeeTerminationConfirmationMsg = `Do you want to terminate the process?`;
-export const passwordMaxFieldErrorMsg =
-  "Length exceeded. Password can be of maximum 12 characters.";
+export const passwordMaxFieldErrorMsg = "Length exceeded. Password can be of maximum 12 characters.";
 export const notProcessedDataVerificationConfirmationMsg = `Do you want to send verification portal link to the appointees? [Note: Appointees will be removed from this page and moved to the "Processing" page]`;
 export const submitConfirmationMsg = `Your data will be submitted to PwC HC for verification. After submission, you will no longer be able to make any changes. Any updates or re-verification will be at the discretion of PwC HC. Are you sure you want to proceed with the submission?`;
-export const reUploadsubmitConfirmationMsg =
-  "Your re-uploaded document(s) will be submitted to PwC HC for verification. Hence you will no longer be able to change your data. Are you sure you want to submit?";
-export const epfoPassfileUploadeConfirmationMsg = `Please upload your entire Trust / private PF passbook(s) before submission`;
+export const reUploadsubmitConfirmationMsg = "Your re-uploaded document(s) will be submitted to PwC HC for verification. Hence you will no longer be able to change your data. Are you sure you want to submit?";
+  export const epfoPassfileUploadeConfirmationMsg = `Please upload your entire Trust / private PF passbook(s) before submission`;
 export const visafileUploadeConfirmationMsg = `Please upload your visa copy before submission`;
 export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details has been verified and submitted successfully. You have completed your verification process. Please wait for the HR to reply for further processing of your application`;
 export const docResubmissionSuccessDialogContentText = `Your documents have been submitted successfully. Please wait for your documents to be verified by PwC HC. .`;
 export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you.\n
-1. Review the Prerequisite Details.\n
+  1. Review the Prerequisite Details.\n
 2. Click 'Start Verification' to begin the process (which includes giving consent).\n
 Fill in the required information to complete verification.`;
 export const congratulationDialogContentTitle = `Congratulatoins!👍`;
@@ -2594,28 +2549,26 @@ export const invalidcontactNoMsg = `Phone no. should have 10 digits`;
 export const roleEmptyMsg = `Role can't be empty`;
 export const verifiedReportInfo = `Trust PF data is not reflected in following fields: Pension Applicable, EPFO Passbook, EPFO Service History. You can download Trust passbook details from respective Action`;
 export const timeOutMsg = `Server is down, Please try again.`;
-//export const manualSubmitConfirmatonMsg = `Are you sure you want to submit?`;
 export const manualSubmitConfirmatonMsg = `Based on your answers, Veridata will either Verify the candidate or send Issue list to candidate for reuploading the correct and required documents. Do you want to proceed & Submit?`;
 export const uploadedFromDateEmptyMsg = `"Upload From" Date cannot be empty`;
 export const FromDateEmptyMsg = `"From Date" cannot be empty`;
-
 export const manualverificationinfo = `You can do manual verification only in the "Manual Verification" & "Manual Re-Verification" tabs. You can't do so in the "Document Reupload Request" tab.`;
 export const noResponseInfo = (days) => {
   return (
     <div>
       <p>{generateNoResponseReportDesc(days)}</p>
       {/* <a
-        href={toHelp}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: "#E55C80",
-          // textDecoration: "underline",
-          cursor: "pointer",
-        }}
-      >
-        Read More
-      </a> */}
+          href={toHelp}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: "#E55C80",
+            // textDecoration: "underline",
+            cursor: "pointer",
+          }}
+        >
+          Read More
+        </a> */}
     </div>
   );
 };
@@ -2646,7 +2599,6 @@ export const pfPensionInfo = (
     <p>{pfPensionReportDesc}</p>
   </div>
 );
-
 export const ManualSubmitConfirmation = ({ type }) => {
   const manualSubmitConfirmatonMsgforfile = `You have not gone through all ${type}, and there may be information that you have missed out.\nAre you sure you want to continue with the submission?`;
 
@@ -2717,10 +2669,10 @@ export const getHandicapTypeDescription = (type) => {
   }
 };
 
+
 export const FILE_SIZE_LIMIT = 4000000; // 4MB
 export const imgAndPdfMaxSize = "2MB";
 export const imgAndPdfMaxSizeValue = 2000000;
-
 export const validFileTypes = [
   "application/x-zip-compressed",
   "application/x-compressed",
@@ -2767,6 +2719,8 @@ export const fatherDocCategoryTypeList = [
     label: "Others Certificate",
   },
 ];
+
+
 export const verificationCategoryModel = {
   EPFO: passbookCategoryTypeList,
   FTHR: fatherDocCategoryTypeList,
@@ -2921,8 +2875,8 @@ export const passbookVerificationQuestionSet = [
     dependsOn: [
       fileVerificationEnums.docComplete,
       fileVerificationEnums.docValid,
-      fileVerificationEnums.DocComplete,
-      fileVerificationEnums.docValid,
+      // fileVerificationEnums.DocComplete,
+      // fileVerificationEnums.docValid,
     ],
     disabled: true,
   },
@@ -2940,3 +2894,21 @@ export const passbookVerificationQuestionSet = [
 ];
 
 export const defaultDropdownValue = "none";
+// export const generateAppointeeCountReportDesc = `The purpose of this report is to provide an overview and analysis of the appointee count added to the system on a daily basis during a specified period. This report includes details such as the total number of appointees added each day, the total number of links sent, and the total number of links not sent. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+// export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+// export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help stakeholders understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+// export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help stakeholders understand the usage patterns,identify any issues, and improve the efficiency of the API system.`;
+// export const pfPensionReportDesc = `The purpose of this report is to provide a comprehensive overview of PF and Pension information for appointees within a specified date range. This report includes detailed fields such as appointee name, Aadhaar number, UAN number, joining date, PF and pension status, and passbook status (manual or automatic). The objective is to help stakeholders monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
+// export const verificatiosucess = `Your verification has been successfully completed.`
+// export const appointeeReportdesc = `This report offers a comprehensive analysis of appointees . It provides detailed insights, including each candidate's name, email ID, date of joining (DOJ), the date the link was sent, and their current status. This data assists stakeholders in identifying trends, addressing potential bottlenecks, and evaluating whether the lack of progress suggests disinterest in joining.`
+// export const manualverificationinfo = `You can do manual verification only in the "Manual Verification" & "Manual Re-Verification" tabs. You can't do so in the "Document Reupload Request" tab.`
+export const yesNoList = [
+  {
+    label: "Yes",
+    value: "Y"
+  },
+  {
+    label: "No",
+    value: "N"
+  }
+];

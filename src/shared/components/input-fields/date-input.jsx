@@ -1,0 +1,32 @@
+import { FormControl, TextField } from '@mui/material';
+import React from 'react'
+import Label from './label';
+import { inputFieldStyle2 } from 'app';
+
+const DateInput = ({value, onChange, label, disableFuture=false, error=false, readOnly=false, required}) => {
+    return (
+        <FormControl fullWidth>
+            <Label required={required}>{label}</Label>
+            <TextField
+                onChange={(e) => {
+                    onChange(e.target.value);
+                }}
+                error={error}
+                disableFuture={disableFuture}
+                id="date"
+                className="customeTextField"
+                type="date"
+                value={value}
+                sx={inputFieldStyle2}
+                InputLabelProps={{
+                    shrink: true
+                }}
+                InputProps={{
+                    readOnly: readOnly
+                }}
+            />
+        </FormControl>
+    )
+}
+
+export default DateInput

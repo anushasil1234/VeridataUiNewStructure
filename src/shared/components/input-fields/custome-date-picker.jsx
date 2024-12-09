@@ -1,0 +1,25 @@
+import { FormControl } from '@mui/material';
+import { datePickerinputFieldStyle2 } from 'app';
+import React from 'react'
+import Label from './label';
+import DatePicker from 'shared/utils/date-picker/date-picker';
+import dayjs from 'dayjs';
+
+const CustomeDatePicker = ({ label, value, setValue, disabled, required, disableFuture = false, maxDate = null, minDate = null }) => {
+    return (
+        <FormControl sx={{ ...datePickerinputFieldStyle2 }} fullWidth>
+            <Label required={required}>{label}</Label>
+            <DatePicker
+                disabled={disabled}
+                style={{ ...datePickerinputFieldStyle2 }}
+                value={value ? dayjs(value) : null}
+                setValue={(newDate) => { setValue(newDate) }}
+                disableFuture={disableFuture}
+                maxDate={maxDate}
+                minDate={minDate}
+            />
+        </FormControl>
+    )
+}
+
+export default CustomeDatePicker

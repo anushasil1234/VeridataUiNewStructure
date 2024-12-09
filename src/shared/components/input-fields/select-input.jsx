@@ -1,24 +1,21 @@
 import { FormControl, MenuItem, Select, Typography } from '@mui/material'
 import { dropdownMenuItemStyle, inputFieldStyle2, inputFieldStylesx, lable1CopyStyle } from 'app'
 import { useTheme } from '@mui/material/styles';
-const SelectInput = ({ itemList, label, onChange, value, required = false, disabled = false, handleClickOnMenuItem }) => {
+import Label from './label';
+const SelectInput = ({ itemList, label, onChange, value, required = false, disabled = false, handleClickOnMenuItem, sx, selectProperty = 'value' }) => {
     const theme = useTheme();
+    console.log('itemList12321', itemList, value);
 
     return (
         <FormControl fullWidth>
-            <Typography sx={lable1CopyStyle}>
-                {label}
-                {required === true &&
-                    <span className="requiredField">*</span>
-                }
-            </Typography>
+            <Label required={required}>{label}</Label>
             <Select
                 error={false}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 className="customeTextField"
                 disabled={disabled}
-                sx={{ ...inputFieldStylesx }}
+                sx={sx ? sx : inputFieldStylesx}
                 onChange={onChange}
                 value={value}
             >
@@ -35,12 +32,15 @@ const SelectInput = ({ itemList, label, onChange, value, required = false, disab
                 >
                     {`Select ${label}`}
                 </MenuItem>
-                {itemList && itemList.length > 0 && itemList.map(({ value, label, isRead = false, isDisabled = false }, index) => {
+                {itemList && itemList.length > 0 && itemList.map((item, index) => {
+
+                    const { isRead = false, isDisabled = false } = item;
+                    const label = selectProperty === 'code'? item.value : item.label;
+                    const value = item[selectProperty];
                     return (
                         <MenuItem
                             key={index}
                             value={value}
-                            // onMouseEnter={}
                             onClick={handleClickOnMenuItem ? () => handleClickOnMenuItem(value) : null}
                             disabled={isDisabled}
                             sx={{
