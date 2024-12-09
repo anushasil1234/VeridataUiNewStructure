@@ -4,7 +4,7 @@ import Loadable from '../layouts/full/shared/loadable/Loadable';
 import RequireAuth from 'shared/components/auth-provider';
 import AuthorizedRedirection from 'shared/components/authorized-redirection';
 import {
-  toAppointeecount, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent,
+  toAppointeecount,toAppointeeInvoice, toAttention, toCancelled, toCreateUser, toDashboard, toDataUploaded, toGeneralSetup, toLapseddata, toLinknotsent,
   toLogin, toForgotPassword, toManageProfile, toPFUsers, toProcessing, toRegister, toApiCountReport, toUpdateData, toUpdateUser, toUplodData,
   toUserlist, toVerified, toHelp, toSetPassword, toReSetPassword, toNoMovementAgingReport, toNoResponseAgingReport, toNationalityReport, toAppointeeReport,
   toUserLogin,
@@ -44,6 +44,7 @@ const Report = Loadable(lazy(() => import('../../modules/reports/report')));
 const AppointeeRegister = Loadable(lazy(() => import('../../modules/appointee/register/appointee-register')));
 const ReuploadDocument = Loadable(lazy(() => import('../../modules/appointee/reupload-document/reupload-document')));
 const AppointeeCount = Loadable(lazy(() => import('../../modules/reports/appointee-count')));
+const AppointeeInvoice=Loadable(lazy(()=>import('../../modules/reports/appointee-invoice')))
 const Login = Loadable(lazy(() => import('../../modules/account/login/login-view')));
 const SetPassword = Loadable(lazy(() => import('../../modules/set-password/set-password')));
 const ReSetPassword = Loadable(lazy(() => import('../../modules/set-password/reset-password')));
@@ -82,6 +83,7 @@ const CustomRouter = [
       { path: toUpdateUser, exact: true, element: <UpdateUserView /> },
       { path: toUserlist, exact: true, element: <UserListView /> },
       { path: toAppointeecount, exact: true, element: <AppointeeCount /> },
+      { path: toAppointeeInvoice, exact: true, element: <AppointeeInvoice /> },
       { path: toManageProfile, exact: true, element: <ManageProfile /> },
       { path: toHelp, exact: true, element: <Help /> },
       { path: toNoResponseAgingReport, exact: true, element: <NoResponseAgingReport /> },

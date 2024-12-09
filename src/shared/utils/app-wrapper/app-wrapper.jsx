@@ -83,6 +83,7 @@ import {
   RemoveAdminUser_URL,
   UploadUpdatexlsFile_URL,
   AppointeeCounterReport_URL,
+  AppointeecounterBillingreport_URL,
   ValidateProfilePassword_URL,
   EditUserProfile_URL,
   passwordCreationSuccessMsg,
@@ -641,6 +642,9 @@ const AppWrapper = (App) => {
     const getAppointeeCounterReport = async (payLoad) => {
       return await PfcRequest(AppointeeCounterReport_URL, "POST", payLoad, null, true);
     };
+    const getAppointeeCounterBillingReport = async (payLoad) => {
+      return await PfcRequest(AppointeecounterBillingreport_URL, "POST", payLoad, null, true);
+    };
     const getApiCounterReport = async (fromDate, toDate) => {
       return await PfcRequest(ApiCounterReport_URL(fromDate, toDate), "POST");
     };
@@ -751,6 +755,29 @@ const AppWrapper = (App) => {
             value: "A",
           }
         ],
+         dayscoustom : [
+          {
+            lable: "Monthly",
+            value: 30,
+          },
+          {
+            lable: "Quarterly",
+            value: 90,
+          },
+          {
+            lable: "Halfially",
+            value: 180,
+          },
+          {
+            lable: "Annually",
+            value: 365,
+          },
+          {
+            lable: "Coustom",
+            value: "A",
+          }
+      ],
+      
         upcomingRecruitsStatusList: [
           {
             id: 1,
@@ -886,6 +913,7 @@ const AppWrapper = (App) => {
           postUpdateUserDetails,
           deleteUserDetails,
           getAppointeeCounterReport,
+          getAppointeeCounterBillingReport,
           getApiCounterReport,
           postProfilePassword,
           editUserProfileDetails,

@@ -97,6 +97,12 @@ const Menuitems = [
     href: '/PfPension',
   },
   {
+    id:uniqueId(),
+    title:'appointeeinvoice',
+    icon: WidgetsIcon,
+    href: '/appointeeinvoice',
+  },
+  {
     id: uniqueId(),
     title: 'Cancelled',
     icon: WidgetsIcon,

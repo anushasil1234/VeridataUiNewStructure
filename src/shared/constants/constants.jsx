@@ -95,6 +95,8 @@ export const generateapiCountReportDesc = `The purpose of this report is to prov
 export const pfPensionReportDesc = `This report provides an overview of PF and Pension information for appointees within a specified date range, including appointee name, Aadhaar number, UAN, joining date, PF and pension status, and passbook status (manual or automatic). It helps PwC monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
 export const verificatiosucess = `Your verification has been successfully completed.`;
 export const appointeeReportdesc = `This report provides an analysis of appointees, including names, email ID, date of joining (DOJ), link-sent dates, and status. It aids Pwc in identifying trends, resolving bottlenecks, and evaluating candidate interest.`;
+export const appointeeBillingdesc = `This billing report provides a detailed summary of the costs associated with new appointees for each entity.It includes the entity name,time period, cost per new appointee,total number of new appointees, and the total billing amount.`;
+
 export const generatenationlityReportDesc = (type) => {
   switch (type) {
     case "All":
@@ -164,6 +166,7 @@ export const toCreateUser = "/createuser";
 export const toUpdateUser = "/updateuser";
 export const toUserlist = "/userlist";
 export const toAppointeecount = "/appointeecount";
+export const toAppointeeInvoice = "/appointeeinvoice"
 export const topfPension = "/PfPension";
 export const toDataUploaded = "/datauploaded";
 export const toLogin = "/auth/login";
@@ -457,120 +460,119 @@ export const latestAppointeeListTableHeadCell = [
 ];
 //PFUsers
 export const GetPfCreationListTableHeadCell = [
-  {
-    id: "appointeeName",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Name",
-    enums: ["appointeeName", "mobileNo", "appointeeEmailId"],
-    component: {
-      element: Typography,
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'appointeeEmailId'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "candidateId",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Candidate ID",
-    enums: ["candidateId"],
-    component: {
-      element: Typography,
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "dateOfJoining",
-    numeric: true,
-    type: "date",
-    disablePadding: false,
-    label: "Date Of Joining  ",
-    enums: ["dateOfJoining"],
-    component: {
-      element: Typography,
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Date Of Joining  ',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "adhaarNo",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Aadhaar No.",
-    enums: ["adhaarNo"],
-    component: {
-      element: Typography,
+    {
+        id: 'adhaarNo',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Aadhaar No.',
+        enums: ['adhaarNo'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "panNo",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "PAN No.",
-    enums: ["panNo"],
-    component: {
-      element: Typography,
+    {
+        id: 'panNo',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'PAN No.',
+        enums: ['panNo'],
+        component: {
+            element: Typography
+        }
     },
-  },
 
-  {
-    id: "uanNo",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "UAN",
-    enums: ["uanNo"],
-    component: {
-      element: Typography,
+    {
+        id: 'uanNo',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'UAN',
+        enums: ['uanNo'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "uanAadharLink",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Aadhar-UAN Link",
-    enums: ["uanAadharLink"],
-    component: {
-      element: Typography,
+    {
+        id: 'uanAadharLink',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Aadhar-UAN Link',
+        enums: ['uanAadharLink'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "isPensionApplicable",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "EPS Member",
-    enums: ["isPensionApplicable"],
-    component: {
-      element: Typography,
+    {
+        id: 'isPensionApplicable',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'EPS Member',
+        enums: ['isPensionApplicable'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "status",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Template Status",
-    enums: ["status"],
-    component: {
-      element: Typography,
+    {
+        id: 'status',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Template Status',
+        enums: ['status'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "viewDetails",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Open Details",
-    enums: ["viewDetails"],
-    component: {
-      element: (props) =>
-        TableActionCell({ actionList: verifiedListActions, ...props }),
-      attribute: ["appointeeId"],
-    },
-  },
-];
+    {
+        id: 'viewDetails',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Open Details',
+        enums: ['viewDetails'],
+        component: {
+            element: (props) => TableActionCell({ actionList: verifiedListActions, ...props }),
+            attribute: ['appointeeId']
+        }
+    }
+]
 export const rejectedListTableHeadCell = [
   {
     id: "appointeeName",
@@ -654,72 +656,72 @@ export const rejectedListTableHeadCell = [
   },
 ];
 export const pfPensionTableHeadCell = [
-  {
-    id: "appointeeName",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Name",
-    enums: ["appointeeName", "mobileNo", "emailId"],
-    component: {
-      element: Typography,
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'emailId'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "candidateId",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Candidate ID",
-    enums: ["candidateId"],
-    component: {
-      element: Typography,
+    {
+        id: "candidateId",
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "adhaarNo",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Aadhaar No.",
-    enums: ["aadharNumber"],
-    component: {
-      element: Typography,
+    {
+        id: 'adhaarNo',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Aadhaar No.',
+        enums: ['aadharNumber'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "uanNo",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "UAN",
-    enums: ["uan"],
-    component: {
-      element: Typography,
+    {
+        id: 'uanNo',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'UAN',
+        enums: ['uan'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "isUanAadharLink",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Aadhar-UAN Link",
-    enums: ["isUanAadharLink"],
-    component: {
-      element: Typography,
+    {
+        id: 'isUanAadharLink',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Aadhar-UAN Link',
+        enums: ['isUanAadharLink'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "dateOfJoining",
-    numeric: true,
-    type: "date",
-    disablePadding: false,
-    label: "Date Of Joining  ",
-    enums: ["dateOfJoining"],
-    component: {
-      element: Typography,
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Date Of Joining  ',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
     },
-  },
 
   {
     id: "pfinfo",
@@ -769,43 +771,45 @@ export const pfPensionTableHeadCell = [
   },
 ];
 export const pfPensionTablereportHeadCell = [
-  {
-    label: "Name",
-    enums: ["appointeeName", "candidateId"],
-    component: {
-      element: Typography,
+    {
+        label: 'Name',
+        enums: ['appointeeName', 'candidateId'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    type: "string",
-    label: "Email",
-    enums: ["emailId"],
-  },
-  {
-    type: "string",
-    label: "Mobile No",
-    enums: ["mobileNo"],
-  },
-  {
-    type: "string",
-    label: "Aadhaar No.",
-    enums: ["aadharNumber"],
-  },
-  {
-    type: "string",
-    label: "UAN",
-    enums: ["uan"],
-  },
-  {
-    type: "string",
-    label: "Aadhar-UAN Link",
-    enums: ["isUanAadharLink"],
-  },
-  {
-    type: "date",
-    label: "Date Of Joining  ",
-    enums: ["dateOfJoining"],
-  },
+    {
+        type: "string",
+        label: 'Email',
+        enums: ['emailId'],
+
+    },
+    {
+        type: "string",
+        label: 'Mobile No',
+        enums: ['mobileNo'],
+
+    },
+    {
+        type: "string",
+        label: 'Aadhaar No.',
+        enums: ['aadharNumber'],
+    },
+    {
+        type: "string",
+        label: 'UAN',
+        enums: ['uan']
+    },
+    {
+        type: "string",
+        label: 'Aadhar-UAN Link',
+        enums: ['isUanAadharLink'],
+    },
+    {
+        type: "date",
+        label: 'Date Of Joining  ',
+        enums: ['dateOfJoining'],
+    },
 
   {
     type: "badge",
@@ -813,22 +817,24 @@ export const pfPensionTablereportHeadCell = [
     enums: ["trustPassBookStatus", "epfoPassBookStatus"],
   },
 
-  {
-    type: "string",
-    label: "EPS Membership",
-    enums: ["isEpsMember"],
-  },
-  {
-    type: "string",
-    label: "EPS Gap",
-    enums: ["pensionStatus"],
-  },
-  {
-    type: "string",
-    label: "Verification Type",
-    enums: ["isManual"],
-  },
-];
+    {
+
+        type: "string",
+        label: 'EPS Membership',
+        enums: ['isEpsMember'],
+    },
+    {
+        type: "string",
+        label: 'EPS Gap',
+        enums: ['pensionStatus']
+    },
+    {
+        type: "string",
+        label: 'Verification Type',
+        enums: ['isManual']
+    },
+
+]
 export const LinkNotSentTableHeadCell = [
   {
     id: "checkBox",
@@ -1314,98 +1320,97 @@ export const docReuploadListTableHeadCell = [
   },
 ];
 export const processingListTableHeadCell = [
-  {
-    id: "appointeeName",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Name",
-    enums: ["appointeeName", "mobileNo", "appointeeEmailId"],
-    component: {
-      element: Typography,
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Name',
+        enums: ['appointeeName', 'mobileNo', 'appointeeEmailId'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "candidateId",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Candidate ID",
-    enums: ["candidateId"],
-    component: {
-      element: Typography,
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Candidate ID',
+        enums: ['candidateId'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "createdDate",
-    numeric: true,
-    type: "date",
-    disablePadding: false,
-    label: "Link Sent Date",
-    enums: ["createdDate"],
-    component: {
-      element: Typography,
+    {
+        id: 'createdDate',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Link Sent Date',
+        enums: ['createdDate'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "dateOfJoining",
-    numeric: true,
-    type: "date",
-    disablePadding: false,
-    label: "Date Of Joining",
-    enums: ["dateOfJoining"],
-    component: {
-      element: Typography,
+    {
+        id: 'dateOfJoining',
+        numeric: true,
+        type: "date",
+        disablePadding: false,
+        label: 'Date Of Joining',
+        enums: ['dateOfJoining'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "consentStatusCode",
-    numeric: true,
-    type: "badge",
-    disablePadding: false,
-    label: "Consent",
-    enums: ["consentStatusCode"],
-    component: {
-      element: (props) => TableStatusCell(props),
+    {
+        id: 'consentStatusCode',
+        numeric: true,
+        type: "badge",
+        disablePadding: false,
+        label: 'Consent',
+        enums: ['consentStatusCode'],
+        component: {
+            element: (props) => TableStatusCell(props),
+        }
     },
-  },
-  {
-    id: "status",
-    numeric: true,
-    type: "badge",
-    disablePadding: false,
-    label: "Status",
-    enums: ["status", "isNoIsuueinVerification", "isReprocess"],
-    component: {
-      element: (props) => TableStatusCell(props),
-      attribute: ["appointeeId"],
+    {
+        id: 'status',
+        numeric: true,
+        type: "badge",
+        disablePadding: false,
+        label: 'Status',
+        enums: ['status', 'isNoIsuueinVerification', 'isReprocess'],
+        component: {
+            element: (props) => TableStatusCell(props),
+            attribute: ['appointeeId']
+        }
     },
-  },
-  {
-    id: "passbookStatus",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Verification Type",
-    enums: ["passbookStatus"],
-    component: {
-      element: Typography,
+    {
+        id: 'passbookStatus',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Verification Type',
+        enums: ['passbookStatus'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "viewDetails",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Actions",
-    enums: ["viewDetails"],
-    component: {
-      element: (props) =>
-        TableActionCell({ actionList: procesingListActions, ...props }),
-      attribute: ["appointeeId", "verificationStatusCode"],
-    },
-  },
-];
+    {
+        id: 'viewDetails',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Actions',
+        enums: ['viewDetails'],
+        component: {
+            element: (props) => TableActionCell({ actionList: procesingListActions, ...props }),
+            attribute: ['appointeeId', 'verificationStatusCode']
+        }
+    }
+]
 export const lapsedListTableHeadCell = [
   {
     id: "appointeeName",
@@ -1764,84 +1769,163 @@ export const consoidateApiCountHeadCell = [
   },
 ];
 export const appointeeCountDetailsHeadCell = [
-  {
-    id: "date",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Date",
-    enums: ["date"],
-    component: {
-      element: Typography,
+    {
+        id: 'date',
+        numeric: true,
+        type: "string",
+        disablePadding: false,
+        label: 'Date',
+        enums: ['date'],
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "candidateId",
-    numeric: true,
-    type: "string",
-    enums: ["candidateId"],
-    disablePadding: false,
-    label: "Candidate ID",
-    component: {
-      element: Typography,
+    {
+        id: 'candidateId',
+        numeric: true,
+        type: "string",
+        enums: ['candidateId'],
+        disablePadding: false,
+        label: 'Candidate ID',
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "companyName",
-    numeric: true,
-    type: "string",
-    enums: ["companyName"],
-    disablePadding: false,
-    label: "Entity Name",
-    component: {
-      element: Typography,
+    {
+        id: 'companyName',
+        numeric: true,
+        type: "string",
+        enums: ['companyName'],
+        disablePadding: false,
+        label: 'Entity Name',
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "appointeeName",
-    numeric: true,
-    type: "string",
-    enums: ["appointeeName"],
-    disablePadding: false,
-    label: "AppointeeName",
-    component: {
-      element: Typography,
+    {
+        id: 'appointeeName',
+        numeric: true,
+        type: "string",
+        enums: ['appointeeName'],
+        disablePadding: false,
+        label: 'AppointeeName',
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "emailId",
-    numeric: true,
-    type: "string",
-    enums: ["emailId"],
-    disablePadding: false,
-    label: "EmailId",
-    component: {
-      element: Typography,
+    {
+        id: 'emailId',
+        numeric: true,
+        type: "string",
+        enums: ['companyName'],
+        disablePadding: false,
+        label: 'Entity Name',
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "appointeeStatus",
-    numeric: true,
-    type: "string",
-    enums: ["appointeeStatus"],
-    disablePadding: false,
-    label: "Appointee Status",
-    component: {
-      element: Typography,
+    {
+        id: 'appointeeStatus',
+        numeric: true,
+        type: "string",
+        enums: ['appointeeStatus'],
+        disablePadding: false,
+        label: 'Appointee Status',
+        component: {
+            element: Typography
+        }
     },
-  },
-  {
-    id: "actionTaken",
-    numeric: true,
-    type: "string",
-    enums: ["actionTaken"],
-    disablePadding: false,
-    label: "Action Taken",
-    component: {
-      element: Typography,
+]
+export const appointeeCountDetailsHeadCell1 = [
+    {
+        id: 'companyName',
+        numeric: true,
+        type: "string",
+        enums: ['companyName'],
+        disablePadding: false,
+        label: 'Entity Name',
+        component: {
+            element: Typography
+        }
     },
-  },
-];
+    {
+        id: 'timePeriod',
+        numeric: false,
+        type: "string",
+        enums: ['timePeriod'],
+        disablePadding: false,
+        label: 'Time Period',
+        component: {
+            element: Typography,
+        },
+    },
+
+    {
+        id: 'ratePerTotalAppointeeCount',
+        numeric: true,
+        type: "string",
+        enums: ['ratePerTotalAppointeeCount'],
+        disablePadding: false,
+        label: 'Cost Per New Appointee : INR',
+        component: {
+            element: Typography
+        }
+    },
+    {
+        id: 'totalAppointeeCount',
+        numeric: true,
+        type: "string",
+        enums: ['totalAppointeeCount'],
+        disablePadding: false,
+        label: 'Total Number Of New Appointees',
+        component: {
+            element: Typography
+        }
+    },
+
+    {
+        id: 'grandTotal',
+        numeric: true,
+        type: "string",
+        enums: ['grandTotal'],
+        disablePadding: false,
+        label: 'Total Billing : INR ',
+        component: {
+            element: Typography
+        }
+    },
+
+
+]
+export const appointeeCountDetailsreportHeadCell = [
+    {
+        type: "string",
+        enums: ['companyName'],
+        label: 'Entity Name',
+    },
+    {
+        type: "string",
+        enums: ['timePeriod'],
+        label: 'Time Period',
+    },
+
+    {
+        type: "string",
+        enums: ['ratePerTotalAppointeeCount'],
+        label: 'Cost Per New Appointee : INR',
+    },
+    {
+        type: "string",
+        enums: ['totalAppointeeCount'],
+        label: 'Total Number Of New Appointees',
+    },
+    {
+        type: "string",
+        enums: ['grandTotal'],
+        label: 'Total Billing : INR '
+    },
+
+]
 export const apiCountDetailsHeadCell = [
   {
     id: "date",
@@ -2478,6 +2562,7 @@ export const AppointeeAgingFilterReport_URL = `${AppointeeReports}/AppointeeAgin
 export const AppointeeNationalityReport_URL = `${AppointeeReports}/NationalityFilterReport`;
 export const AppointeeDataReport_URL = `${AppointeeReports}/AppointeeDataFilterReport`;
 export const AppointeeCounterReport_URL = `${AppointeeReports}/AppointeeCounterReport`;
+export const AppointeecounterBillingreport_URL= `${AppointeeReports}/AppointeeCounterBillingReport`
 export const ApiCounterReport_URL = (fromDate, toDate) => {
   let ApiCounterReportUrl = `${AppointeeReports}/ApiCounterReport`;
   if (fromDate && toDate) {
