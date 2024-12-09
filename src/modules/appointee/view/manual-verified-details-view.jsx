@@ -213,6 +213,8 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
 
 
         setVerificationQuestionSet(_updatedQuestionSet);
+        console.log('currentValue', currentValue);
+
         setVerificationUpdate({});
         setFileTypeCategory(defaultDropdownValue);
     }
@@ -319,8 +321,13 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     }
     const verificationOnChange = ({ target }, index) => {
         const { name, value } = target;
+ 
+        console.log('verificationUpdate1', verificationUpdate);
+        
         setVerificationUpdate({ ...verificationUpdate, [name]: stringToBoolean(value) });
     }
+    console.log('verificationUpdate', verificationUpdate);
+
     const handleClickOnMenuItem = (value) => {
         if (value === epfFileCategoryTypeAlias) {
             console.log("EPFO option selected:", value);
@@ -406,6 +413,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         });
         setVerificationQuestionSet(updatedQuestionSet);
         setVerificationUpdate(updatedVerification);
+console.log('sueeeee');
 
     }, [
         verificationUpdate?.[`${fileVerificationEnums.docComplete}_${fatherFileCategoryTypeAlias}`],
@@ -416,13 +424,32 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         verificationUpdate?.[`${fileVerificationEnums.docComplete}_${epfoPassbookFileTypeAlias}`],
         verificationUpdate?.[`${fileVerificationEnums.docValid}_${epfoPassbookFileTypeAlias}`],
     ])
+    console.log("verificationUpdate24234", verificationUpdate);
+    
     useEffect(() => {
         if (verificationType) {
+            console.log('verificationType1', verificationType);
+
             let newFileSrc = '';
+            let _verificationUpdate = {};
             if (verificationType.value === fatherFileCategoryTypeAlias) {
                 newFileSrc = '';
+                _verificationUpdate = {
+                    "isDocComplete_EPFPSHF": undefined,
+                    "isDocValid_EPFPSHF": undefined,
+                    "isDocComplete_EPFPSSBKMNL": undefined,
+                    "isDocValid_EPFPSSBKMNL": undefined
+                }
             } else if (verificationType.value === epfFileTypeAlias) {
                 newFileSrc = '';
+                _verificationUpdate = {
+                    "isDocComplete_EPFPSHF": undefined,
+                    "isDocValid_EPFPSHF": undefined,
+                    "isDocComplete_EPFPSSBKMNL": undefined,
+                    "isDocValid_EPFPSSBKMNL": undefined,
+                    "isPensionApplicable_EPFPSSBKMNL": undefined,
+                    "isPensionGapFound_EPFPSSBKMNL": undefined
+                }
             }
             setFileSrc(newFileSrc);
             const { verificationCategoryList } = filterDocVerificationList({
@@ -447,7 +474,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
                 fileSrc,
             });
             setVerificationQuestionSet(finalQuestionSet);
-            setVerificationUpdate({});
+            setVerificationUpdate(_verificationUpdate);
             setSelectedMandatoryCategoryList([]);
         }
     }, [verificationType]);
@@ -537,16 +564,16 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
                     <Typography sx={subHeadingContentTextStyle}>
                         {'Candidate will be moved to "Document Reupload Requested" tab, requesting Candidate to reupload relevant documents against the failed verification issues. After candidate completes the reupload, Candidate will be moved to Manual Re-Verification tab, from where you will again be able to reverify candidate.'}
                     </Typography>
-                    <Typography sx={infoDialogTitleStyle}> {'Do you still want to "Close"?'}</Typography>
+                    <Typography sx={{...subHeadingContentTextStyle, marginTop: '20px'}}> {'Do you still want to "Close"?'}</Typography>
                 </>
             )
         } else {
             _contetntText = (
                 <>
                     <Typography sx={subHeadingContentTextStyle}>
-                        {'If you have selected any answers / written "Remarks", please click on "Submit" to register your responses - you will loose them otherwise.'}
+                        {'If you have selected any answers / written "Remarks", please click on "Submit" to register your responses - you will lose them otherwise.'}
                     </Typography>
-                    <Typography sx={infoDialogTitleStyle}> {'Do you still want to "Close"?'}</Typography>
+                    <Typography sx={{...subHeadingContentTextStyle, marginTop: '20px'}}> {'Do you still want to "Close"?'}</Typography>
                 </>
             )
         }

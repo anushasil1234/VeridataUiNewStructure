@@ -27,6 +27,9 @@ export const validationsCheck = (arrvalue, validation_type) => {
         case `${fileVerificationEnums.docFname}_${fatherFileCategoryTypeAlias}`:
         case `${fileVerificationEnums.docComplete}_${fatherFileCategoryTypeAlias}`:
         case `${fileVerificationEnums.docValid}_${fatherFileCategoryTypeAlias}`:
+        case `${fileVerificationEnums.pensionApplicable}_${epfoPassbookFileTypeAlias}`:
+        case `${fileVerificationEnums.pensionGapFound}_${epfoPassbookFileTypeAlias}`:
+        case fileVerificationEnums.pensionGapFound:
         case fileVerificationEnums.pensionApplicable:
         case fileVerificationEnums.pensionGapFound:
             return arrvalue !== undefined;

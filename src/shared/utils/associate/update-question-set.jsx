@@ -10,16 +10,33 @@ const upDateQuestionSet = ({ verificationQuestionSet, verificationUpdate,
     if (verificationType.value !== 'none') {
 
         if (subCategory) {
-            const _isDocComplete = subCategory && verificationUpdate[`isDocComplete_${subCategory}`];
-            const _isDocValid = subCategory && verificationUpdate[`isDocValid_${subCategory}`];
-           
+            console.log('verificationUpdate', verificationUpdate);
+            let _isDocComplete = true;
+            let _isDocValid = true;
+            // const _isDocComplete = subCategory && verificationUpdate[`isDocComplete_${subCategory}`];
+            // const _isDocValid = subCategory && verificationUpdate[`isDocValid_${subCategory}`];
+            for (const [key, value] of Object.entries(verificationUpdate)) {
+                if (key.startsWith('isDocComplete') && !value) {
+                    _isDocComplete = false;
+                    break;
+                }
+            }
+
+            // Check for isDocValid properties
+            for (const [key, value] of Object.entries(verificationUpdate)) {
+                if (key.startsWith('isDocValid') && !value) {
+                    _isDocValid = false;
+                    break;
+                }
+            }
+
             if (_isDocComplete === true &&
                 _isDocValid === true) {
                 updatedQuestionSet = updatedQuestionSet.map((question) => {
                     question.disabled = false;
                     return question;
                 })
-               
+                
             }
             if ((verificationUpdate && (_isDocComplete !== true || _isDocValid !== true)) &&
                 verificationQuestionSet && verificationQuestionSet.length > 2) {
@@ -29,42 +46,30 @@ const upDateQuestionSet = ({ verificationQuestionSet, verificationUpdate,
                     }
                     return question;
                 })
-            
-
-                
             }
         }
         if (verificationUpdate && verificationUpdate.hasOwnProperty(fileVerificationEnums.pensionApplicable) &&
             verificationUpdate[fileVerificationEnums.pensionApplicable] === false) {
-
             updatedQuestionSet = updatedQuestionSet.map((question) => {
                 if (question.name === fileVerificationEnums.pensionGapFound) {
                     question.disabled = true;
                 }
-                
                 return question
             })
-         
         }
         updatedQuestionSet.map((updatedQuestion) => {
             const { type } = updatedQuestion;
-       
-            
             if (type === 'prerequisite') {
-             
-                
                 if (hasValue(fileSrc)) {
                     updatedQuestion.disabled = false;
                 } else {
                     updatedQuestion.disabled = true;
                 }
             }
-          
             return updatedQuestion
         })
-        
     }
-    
+    console.log('updatedQuestionSet323423', updatedQuestionSet, verificationUpdate);
     
     return (
         { updatedQuestionSet }

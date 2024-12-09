@@ -1,11 +1,15 @@
 const updateVerificationUpdate = ({ verificationUpdate, verificationQuestionSet, updatedQuestionSet, subCategory }) => {
 
+    console.log('updateVerificationUpdate',);
+
     const _isDocComplete = verificationUpdate[`isDocComplete_${subCategory}`];
     const _isDocValid = verificationUpdate[`isDocValid_${subCategory}`];
     const _isPensionApplicable = verificationUpdate?.[`isPensionApplicable_${subCategory}`];
     let _verificationUpdate = {};
     if ((_isDocComplete === false || _isDocValid === false) &&
         verificationQuestionSet.length > 2) {
+        console.log('inside ::');
+
         updatedQuestionSet.map(({ name, disabled, subCategory }) => {
             const _name = `${name}_${subCategory}`;
             if (disabled === false) {
@@ -30,7 +34,21 @@ const updateVerificationUpdate = ({ verificationUpdate, verificationQuestionSet,
             _verificationUpdate = verificationUpdate;
         }
     }
-  
+    // let isdependentQuestionDisabled = true;
+    updatedQuestionSet.map(({ name, disabled, subCategory }) => {
+        const _name = `${name}_${subCategory}`;
+        if (disabled === false) {
+
+            return _verificationUpdate = { ..._verificationUpdate, [_name]: verificationUpdate[_name] }
+        }
+        console.log("_name123", _name, updatedQuestionSet, _verificationUpdate);
+    })
+    // updatedQuestionSet.map(({ name, disabled, subCategory }) => {
+    //     const _name = `${name}_${subCategory}`;
+    //     if (disabled === false) {
+    //         return _verificationUpdate = { ..._verificationUpdate, [_name]: verificationUpdate[_name] }
+    //     }
+    // })
 
     return (
         { updatedVerification: _verificationUpdate }

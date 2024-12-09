@@ -22,11 +22,11 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
     verificationOnChange, verificationQuestionSet, appointeeId,
     fileName, selectedFiles, files, setFiles, setVerificationType, categorySelected,
     verificationCategoryList, setVerificationCategoryList, verificationTypeList,
-    setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList, closeModel,setIsVarified
+    setFile, setVerificationTypeList, selectedMandatoryCategoryList, setSelectedMandatoryCategoryList, closeModel, setIsVarified
 }) => {
 
     const dispatch = useDispatch();
-  
+
 
     const loggedInData = useSelector((state) => state.loggedInData);
     const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -43,7 +43,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
     const { openConfirmationModel } = functionSlice[0];
     const [zoomLevel, setZoomLevel] = useState(1);
     const [remarks, setRemarks] = useState("");
-  
+
 
     const handleZoomIn = () => {
         setZoomLevel(handleZoom('in'));
@@ -100,9 +100,9 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
             showErrorMessage(fileEmptyerror);
             return;
         }
+        console.log("handleVerificationSubmit", verificationUpdate);
+        
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
-
-
 
         if (error) {
             showErrorMessage(error);
@@ -159,7 +159,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
         });
     };
 
-  
+
 
     return (
         <>
