@@ -71,6 +71,11 @@ export const UANEmptyErrorMsg = `UAN number is required`;
 export const aadharVerificationErrorMsg = `Please verify your Aadhar before submit`;
 export const PANVerifictionErrorMsg = `Please verify your PAN before submit`;
 export const dataSubmitionMsg = `Data submited successfully`;
+
+export const attentionInfo = `The appointees with the nearest joining dates are listed below, including the following details: Appointee Name, Date of Joining (DOJ), and Days to Join.`
+export const linkNotSentInfo = `The following appointees, for whom the verification link has not been sent, are listed below along with their respective details: Appointee Name, Email ID and Date of Joining (DOJ).`
+export const pfUsersInfo =`This list provides detailed information about PF users, including key fields such as Appointee Name, Aadhaar Number, PAN, UAN (Universal Account Number), Aadhaar-UAN Link Status, EPS Membership Status, and other relevant details. It serves as a comprehensive record for managing and tracking employee provident fund data efficiently`
+export const cancelledInfo = `The following appointees have been rejected during the verification process. Their details, including Appointee Name, Aadhaar Number, PAN, Date of Joining (DOJ), and the reason for rejection, are provided below.`
 export const generateNoMovementReportDesc = (days) => {
   return `This report analyzes appointees who have not started verification process ${
     days > 0 ? `for ${days} days ` : ""

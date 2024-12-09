@@ -1,10 +1,10 @@
-import { Refresh, Search } from '@mui/icons-material';
+import { Info, Refresh, Search } from '@mui/icons-material';
 import { Box, Fab,  Stack } from '@mui/material';
 import { primaryFabStyle } from 'app';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ActionPermission from 'shared/components/action-permission/action-permission';
-import { criticalListTableHeadCell, FromDateEmptyMsg, uploadedFromDateEmptyMsg } from 'shared/constants/constants';
+import { attentionInfo, criticalListTableHeadCell, FromDateEmptyMsg, uploadedFromDateEmptyMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from 'shared/utils';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';
@@ -120,6 +120,17 @@ const UnwrappedAttention = (props) => {
               sx={primaryFabStyle}
             >
               <Refresh width={18} sx={{ color: "#fff" }} />
+            </Fab>
+          </DarkTooltip>
+          <DarkTooltip placement="top" title={attentionInfo} arrow>
+            <Fab
+              variant="contained"
+              size="small"
+              button={"N"}
+          //    onClick={clearSearch}
+              sx={primaryFabStyle}
+            >
+              <Info width={18} sx={{ color: "#fff" }} />
             </Fab>
           </DarkTooltip>
         </Stack>

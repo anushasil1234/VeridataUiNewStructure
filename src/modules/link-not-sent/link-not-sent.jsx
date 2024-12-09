@@ -1,9 +1,9 @@
-import { Refresh, Search, Send } from '@mui/icons-material';
+import { Info, Refresh, Search, Send } from '@mui/icons-material';
 import { Box, Button, Fab, Stack } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { LinkNotSentTableHeadCell, notProcessedDataVerificationConfirmationMsg, startVerification, toLinknotsent, uploadedFromDateEmptyMsg, verificationConfirmationMsg } from 'shared/constants/constants';
+import { linkNotSentInfo, LinkNotSentTableHeadCell, notProcessedDataVerificationConfirmationMsg, startVerification, toLinknotsent, uploadedFromDateEmptyMsg, verificationConfirmationMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue, selectCheckedRows } from 'shared/utils';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import { removeActionRoute } from 'store/slices/action-route-slice';
@@ -212,6 +212,18 @@ const UnwrapedLinkNotSent = (props) => {
                         // disabled
                         >
                             <Refresh width={18} sx={{ color: "#fff" }} />
+                        </Fab>
+                    </DarkTooltip>
+                    <DarkTooltip placement="top" title={linkNotSentInfo} arrow>
+                        <Fab
+                            variant="contained"
+                            size="small"
+                            button={"N"}
+                          //  onClick={clearSearch}
+                            sx={primaryFabStyle}
+                        // disabled
+                        >
+                            <Info width={18} sx={{ color: "#fff" }} />
                         </Fab>
                     </DarkTooltip>
                 </Stack>
