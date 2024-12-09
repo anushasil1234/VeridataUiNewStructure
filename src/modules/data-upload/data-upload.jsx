@@ -11,7 +11,7 @@ import { primaryFabStyle } from "app";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 
 
-import myImage from 'assets/images/profile/candidateUploadTemplate.jpg';
+import myImage from 'assets/images/profile/candidateUploadTemplate_new.JPG';
 
 const UnWrrappedDataUpload = (props) => {
     const { hasPermission } = props;
