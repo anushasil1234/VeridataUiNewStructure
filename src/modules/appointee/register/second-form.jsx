@@ -5,7 +5,7 @@ import FormHeading from './form-heading'
 import GridRow from 'shared/components/grid-container/grid-row'
 import { divederStyle, fileUploadSectionContainerStyle, lable1CopyStyle, positionRelative, submitBtnContainerStyle, submitBtnStyle } from 'app'
 import { Autorenew, HelpOutline, InfoOutlined } from '@mui/icons-material'
-import { getHandicapTypeDescription, handicapFileTypeAlias, imgAndPdfMaxSize, otherFileTypeAlias, passportFileTypeAlias, previousButton, tenthCertificateFileTypeAlias, trustEpfoFileTypeAlias } from 'shared/constants/constants'
+import { getHandicapTypeDescription, handicapFileTypeAlias, imgAndPdfMaxSize, otherFileTypeAlias, passportFileTypeAlias, previousButton, tenthCertificateFileTypeAlias, toHelp, trustEpfoFileTypeAlias } from 'shared/constants/constants'
 import TextInput from 'shared/components/input-fields/text-input'
 import FileUploadSection from 'shared/components/file-upload-section/file-upload-section'
 import { useSelector } from 'react-redux'
@@ -81,7 +81,21 @@ const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload1
                                     </Typography>
                                     <Tooltip
                                         arrow="bottom"
-                                        title="Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year."
+                                        title={<div>
+                                            <p>{'Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year.'}</p>
+                                            <a
+                                                href={toHelp}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                style={{
+                                                    color: "#F57264",
+                                                    // textDecoration: "underline",
+                                                    cursor: "pointer",
+                                                }}
+                                            >
+                                                Read More
+                                            </a>
+                                        </div>}
                                     >
                                         <IconButton
                                             disabled={isPreviousSectionDisabled}
@@ -131,12 +145,26 @@ const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload1
                                     }}
                                 >
                                     {
-                                        "Document with father's name attached"
+                                        "PAN Card"
                                     }
                                 </Typography>
                                 <Tooltip
                                     arrow="bottom"
-                                    title="Upload a copy of the document with your father's name clearly mentioned. Examples of acceptable documents include birth certificates, national IDs, or other legal documents where both your name and your father's name are visible."
+                                    title={<div>
+                                        <p>{'Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card.'}</p>
+                                        <a
+                                            href={toHelp}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style={{
+                                                color: "#F57264",
+                                                // textDecoration: "underline",
+                                                cursor: "pointer",
+                                            }}
+                                        >
+                                            Read More
+                                        </a>
+                                    </div>}
                                 >
                                     <IconButton
                                         disabled={isPreviousSectionDisabled}
@@ -157,8 +185,7 @@ const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload1
                                     textAlign: "center",
                                 }}
                             >
-                                Please upload a document mentioning father's
-                                name
+                                Please upload PAN Card
                                 <span className="requiredField">*</span>
                             </Typography>
                             <Box sx={fileUploadSectionContainerStyle}>
@@ -358,7 +385,21 @@ const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload1
                                         </Typography>
                                         <Tooltip
                                             arrow="bottom"
-                                            title="Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO"
+                                            title={<div>
+                                                <p>{'Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO'}</p>
+                                                <a
+                                                    href={toHelp}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    style={{
+                                                        color: "#F57264",
+                                                        // textDecoration: "underline",
+                                                        cursor: "pointer",
+                                                    }}
+                                                >
+                                                    Read More
+                                                </a>
+                                            </div>}
                                         >
                                             <IconButton
                                                 disabled={isPreviousSectionDisabled}
