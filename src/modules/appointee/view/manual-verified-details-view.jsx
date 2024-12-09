@@ -358,7 +358,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
 
         if (response) {
             const { appointeeName, dateOfBirth, gender, memberName, memberRelation, isHandicap, handicapeType, maratialStatus, qualification,
-                appointeeEmailId, mobileNo, dateOfJoining, isUanVarified, isFnameVarified } = response.responseInfo;
+                appointeeEmailId, mobileNo, dateOfJoining, isUanVarified, isFnameVarified ,nationality} = response.responseInfo;
             appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
             dateOfBirth ? setDateOfBirth(DDMMYYYY(dateOfBirth)) : setDateOfBirth(NA);
             gender
