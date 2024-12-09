@@ -12,7 +12,8 @@ import FullScreenModel from "shared/utils/models/fullscreen-modal";
 import {
     Comment,
     ThumbDown,
-    Add
+    Add,
+    ThumbUp
 } from "@mui/icons-material";
 import {
     _addFabStyle,
@@ -32,7 +33,7 @@ import {
     rightMostBtnStyle,
     subHeadingContentTextStyle,
 } from "app";
-import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg, defaultDropdownValue, remarksissuemessage } from "shared/constants/constants";
+import { defaultVerificationUpdate, NA, defaultVerificationTypeList, fileVerificationEnums, fatherFileCategoryTypeAlias, epfoServiceHistoryFileTypeAlias, defaultFnameVerificationUpdate, defaultEpfoPassbookVerificationUpdate, epfFileTypeAlias, epfFileCategoryTypeAlias, EPFOVerificatypeSelectionMsg, epfoPassbookFileTypeAlias, appointeerejetionConfirmationMsg, remarksEmptyMsg, defaultDropdownValue, remarksissuemessage, approveConfirmation, manuallyVerificationInfo } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { PersonalInformation } from "shared/components/display-information/personal-information";
 import SelectInput from "shared/components/input-fields/select-input";
@@ -90,10 +91,13 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         // dateOfJoining,
         // userId
     } = details;
-
+    const loggedInData = useSelector((state) => state.loggedInData);
     const apiSlice = useSelector((state) => state.apiSlice);
     const dropdownList = useSelector((state) => state.dropdownList);
-
+    const { userTypeId, userId } = (loggedInData && loggedInData[0]) || {
+        userTypeId: null,
+        userId: null,
+      };
     const {
         relationList,
         qualificationList,
@@ -107,7 +111,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         GetUploadedFileDetailsById,
         getRemarks,
         postAppointeeRejected,
-        getAppointeeDetails,
+        getAppointeeDetails,postAppointeeApproved
     } = apiSlice[0];
     const {
         openRemarksModel,
@@ -154,7 +158,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     const [isFnameVarified, setIsFnameVarified] = useState(false);
     const [isUanVerified, setIsUanVerified] = useState(false);
     const [dateOfJoining, setDateOfJoining] = useState(null);
-    const [userId, setUserId] = useState(null);
+   // const [userId, setUserId] = useState(null);
     const [isVarified, setIsVarified] = useState();
     const dispatch = useDispatch();
     const clearSubDropdownListofVerificationType = (currentValue) => {
@@ -250,7 +254,23 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         //     setSelectedMandatoryCategoryList([...selectedMandatoryCategoryList, value]);
         // }
     }
-
+    const approve = async (remarks) => {
+        showErrorMessage();
+        if (hasValue(remarks)) {
+          const payLoad = {
+            appointeeId,
+            userId: userId,
+            remarks: remarks,
+          };
+          const response = await postAppointeeApproved(payLoad);
+          if (response) {
+            actionsAfterProcess("approve");
+          }
+          closeRemarksInputModel();
+        } else {
+          showErrorMessage(remarksEmptyMsg);
+        }
+      };
 
     const reject = async (remarks) => {
         showErrorMessage();
@@ -509,6 +529,17 @@ console.log('sueeeee');
             showErrorMessage(remarksissuemessage);
         }
     };
+
+    const handleApproveModal = async () => {
+        const confirmationModelContent = {
+          dialogContentText: approveConfirmation,
+          dialogComponent: <RemarksInputModel />,
+          dialogFunction: (remarks) => {
+            approve(remarks);
+          },
+        };
+        openRemarksInputModel(confirmationModelContent);
+      };
     const handleReject = () => {
         const currDate = DateFormatYYYYMMDD(new Date());
         const joinDate = DateFormatYYYYMMDD(dateOfJoining);
@@ -538,6 +569,14 @@ console.log('sueeeee');
         <Comment />,
         "Remarks/Issues"
     );
+    const approveFabProps = new FabIconPropsModel(
+        actionIconStyle,
+        handleApproveModal,
+        "success",
+        "thumsup",
+        <ThumbUp />,
+        "Manual Override"
+      );
     const rejectFabProps = new FabIconPropsModel(
         actionIconStyle,
         handleReject,
@@ -597,6 +636,20 @@ console.log('sueeeee');
                     <FabIcon props={{ ...addFabProps, selectedIndex: 1, index: 1 }} />
                     {actionIconListDisplay ? (
                         <Stack sx={{ ...actionIconListStylesx }}>
+                            {/* {isSaveStep && isSaveStep > 0
+                        ? hasPermission &&
+                        hasPermission["A002"] && ( */}
+                          <FabIcon
+                            props={{
+                              ...approveFabProps,
+                              selectedIndex: 1,
+                              index: 1,
+                              placement: "left-end",
+                              size: "small",
+                            }}
+                          />
+                        {/* )
+                        : null} */}
                             <FabIcon
                                 props={{
                                     ...rejectFabProps,
@@ -664,11 +717,16 @@ console.log('sueeeee');
                 </Grid>
             </ManualVerifiedPageSectionContainer>
             <ManualVerifiedPageSectionContainer sx={{ marginTop: '1rem' }}>
+            <Stack sx={listHeadingConteinerStyle}>
+                    <Typography sx={{ ...listHeadingStyle, fontSize: '1rem' }}>
+                        Verification Section
+                    </Typography>
+                </Stack>
                 <Grid
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    sx={{ paddingX: "1rem", paddingLeft: "10px" }}
+                    sx={{ paddingX: "1rem", paddingLeft: "10px" ,mt:'5px',mb:'5px'}}
                 >
                     <Grid
                         item
@@ -759,6 +817,7 @@ const UnWrappedManualVerifiedView = (props) => {
     return (
         <FullScreenModel
             headerText={"Manual Verification"}
+            headerInfo = {manuallyVerificationInfo}
             open={props.openView}
             fullScreen={true}
             // closeModel={props.closeViewModel}

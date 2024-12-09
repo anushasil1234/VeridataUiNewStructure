@@ -207,7 +207,7 @@ const AppointeeInvoice = () => {
 
         jsPDFinvoiceReportDataTemplate({
             reportDetails: {
-                fileName: `Billing_Infromation_Report${currentDate}`,
+                fileName: `Billing_Information_Report${currentDate}`,
                 label: "Billing Information",
                 // fromDate: fromDate,
                 // toDate: toDate,

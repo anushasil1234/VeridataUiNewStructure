@@ -2643,6 +2643,7 @@ export const manualSubmitConfirmatonMsg = `Based on your answers, Veridata will 
 export const uploadedFromDateEmptyMsg = `"Upload From" Date cannot be empty`;
 export const FromDateEmptyMsg = `"From Date" cannot be empty`;
 export const manualverificationinfo = `You can do manual verification only in the "Manual Verification" & "Manual Re-Verification" tabs. You can't do so in the "Document Reupload Request" tab.`;
+export const manuallyVerificationInfo = `In this page, you will have to manually verify the candidate uploaded documents, in the "Verification Section" below. Please review all the dropdown options and corresponding documents, answer all the "enabled" questions and submit your response.You can force Approve or force Cancel any candidature from the "Open Action / +" icon at the top right corner of the page.`
 export const noResponseInfo = (days) => {
   return (
     <div>

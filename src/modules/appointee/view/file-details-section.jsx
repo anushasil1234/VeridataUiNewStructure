@@ -221,7 +221,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                                             handleMouseDown,
                                         })}
                                     >
-                                        <img
+                                        <iframe
                                             style={{
                                                 position: 'absolute',
                                                 transform: `scale(${zoomLevel})`,

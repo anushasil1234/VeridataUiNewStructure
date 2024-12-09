@@ -1,15 +1,16 @@
 import { Dialog, ListItem, List, AppBar, Toolbar, IconButton, Slide, Typography, Box } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { Close, Info } from '@mui/icons-material';
 import { fileNameStyle, fileNameStyleinview, fullScreenListItemStyle, modelToolbar } from 'app';
 import PropTypes from "prop-types";
 import { forwardRef } from 'react';
+import DarkTooltip from '../tooltip/dark-tooltip';
 
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenModel({ fullScreen, open, closeModel, content, screensize, headerText, actionButton, zoomControls }) {
+export default function FullScreenModel({ fullScreen, open, closeModel, content, screensize, headerText,headerInfo, actionButton, zoomControls }) {
 
     return (
         <Dialog
@@ -33,9 +34,26 @@ export default function FullScreenModel({ fullScreen, open, closeModel, content,
                             </IconButton>
                         }
                         {headerText && (
-                            <Typography sx={{ ...fileNameStyleinview, ml: "5px", fontWeight: 'bold' }} fontSize={15}>
+                            <Typography sx={{ ...fileNameStyleinview, ml: "5px", fontWeight: 600, fontSize:'1.27rem'}}>
                                 {headerText}
                             </Typography>
+                            
+                        )}
+                        {headerInfo && (
+                             <DarkTooltip placement="right" title={headerInfo} arrow>
+                             {/* <Fab
+                               variant="contained"
+                               size="small"
+                               button={"N"}
+                               onClick={handelsearch}
+                               sx={primaryFabStyle}
+                             >
+                               <Search width={18} sx={{ color: "#fff" }} />
+                             </Fab> */}
+                             
+                                <Info sx={{ml:'5px'}}/>
+                            
+                           </DarkTooltip>
                         )}
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: -1 }}>
