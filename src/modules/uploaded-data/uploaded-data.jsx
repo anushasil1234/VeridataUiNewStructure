@@ -1,5 +1,5 @@
 import { Send } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -85,6 +85,9 @@ const UnWrappedUploadedData = (props) => {
   }
   return (
     <PageLayout pageName={"Uploaded Data"}>
+     <Typography sx={{fontFamily:'Montserrat,Anuphan',fontSize:'1rem',fontWeight:400,color:'#000000'}}>{`Please select the candidates to whom you want to send the Start Verification mail, for Veridata.`}</Typography>
+      {/* <Typography sx={{fontFamily:'Montserrat,Anuphan',fontSize:'1rem',fontWeight:400,color:'#000000'}}>{`After data upload, please go to UTILITIES -> Uploaded Data Page`}</Typography> */}
+
       <CardLayout>
         <DataTable
           rows={rows}

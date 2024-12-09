@@ -15,7 +15,7 @@ import UploadButtonforxlsx from '../upload-xlsx/upload-xlsx';
 const dialogComponent =
     <Box p={2}>
         <Typography fontSize={15} fontWeight={"bold"}>
-            <Typography fontSize={15}>System will proceed with valid data and non duplicate data.</Typography>
+            <Typography fontSize={15}>System will accept only valid and non duplicate data - will reject the rest.</Typography>
         </Typography>
         <Typography mt={2}>
             Do you want to continue?

@@ -1,6 +1,7 @@
 import {
     Assessment,
     Download,
+    Info,
     Refresh,
     Search,
     Summarize,
@@ -478,6 +479,17 @@ const AppointeeInvoice = () => {
                                     </List>
 
                                 )}
+                                <DarkTooltip placement="top" title={appointeeBillingdesc} arrow>
+                                <ResponsiveFab
+                                    variant="contained"
+                                    size="small"
+                                    button={"N"}
+                                //    onClick={clearSearch}
+                                    sx={primaryFabStyle}
+                                >
+                                    <Info width={18} sx={{ color: "#fff" }} />
+                                </ResponsiveFab>
+                            </DarkTooltip>
                             </Grid>
                         </Box>
                     </Grid>
