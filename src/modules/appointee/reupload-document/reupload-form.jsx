@@ -153,6 +153,10 @@ export const ReuploadForm = () => {
 
     }
     const handleSubmit = async () => {
+        if (!fathersName || fathersName.trim() === '') {
+            showErrorMessage("Father's Name is required.");
+            return;
+        }
         const verificationFieldModal = {
             isUanVarified: isUANVarified,
             isFnameVarified: isFathersNameVarified
