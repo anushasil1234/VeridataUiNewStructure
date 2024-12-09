@@ -48,7 +48,7 @@ export const UserLoginView = () => {
 
   const userNameInput = new InputFieldProps(
     setUserName,
-    "Username",
+    "Appointee Username",
     null,
     null
   );
@@ -283,7 +283,7 @@ export const UserLoginView = () => {
                       style={styles.btnstyle}
                       fullWidth
                     >
-                      Sign In
+                     Appointee Sign In
                     </Button>
                   </form>
                   <hr />
