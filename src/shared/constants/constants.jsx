@@ -1877,7 +1877,7 @@ export const appointeeCountDetailsHeadCell1 = [
         type: "string",
         enums: ['totalAppointeeCount'],
         disablePadding: false,
-        label: 'Total Number Of New Appointees',
+        label: 'Total Number Of New Appointee',
         component: {
             element: Typography
         }
@@ -1917,7 +1917,7 @@ export const appointeeCountDetailsreportHeadCell = [
     {
         type: "string",
         enums: ['totalAppointeeCount'],
-        label: 'Total Number Of New Appointees',
+        label: 'Total Number Of New Appointee',
     },
     {
         type: "string",
