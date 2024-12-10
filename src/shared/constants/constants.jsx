@@ -2622,7 +2622,7 @@ export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for y
   1. Review the Prerequisite Details.\n
 2. Click 'Start Verification' to begin the process (which includes giving consent).\n
 Fill in the required information to complete verification.`;
-export const congratulationDialogContentTitle = `Congratulatoins!👍`;
+export const congratulationDialogContentTitle = `Congratulations!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
 export const OtpEmptyMsg = `OTP can not be empty`;
