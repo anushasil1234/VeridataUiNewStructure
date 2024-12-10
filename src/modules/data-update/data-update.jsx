@@ -56,7 +56,10 @@ const UnWrrappedDataUpdate = (props) => {
             To download Bulk Update Template, click here
           </Typography>
 
+
         </Box>
+        <Typography sx={{fontFamily:'Montserrat,Anuphan',fontSize:'1rem',fontWeight:400,color:'#000000'}}>{`You can change details of existing Appointees here. Know more in "i"`}</Typography>
+
         {
           <Box mt={3} display="flex" alignItems="center">
             <FileUpdate
@@ -104,7 +107,7 @@ const UnWrrappedDataUpdate = (props) => {
               Notes:
             </Typography>
             <Typography variant="subtitle2" sx={{ mt: 1 }}>
-            1. Please use the template for updating existing appointee details so that appointee can be verified for pre-onboarding process.
+              1. Please use the template for updating existing appointee details so that appointee can be verified for pre-onboarding process.
 
             </Typography>
 
@@ -114,7 +117,7 @@ const UnWrrappedDataUpdate = (props) => {
             </Typography>
 
             <Typography variant="subtitle2" sx={{ mt: 1 }}>
-              3. Candidate ID must be unique and should match with the previous upload.
+              3. Appointee ID MUST match with that of the previously uploaded candidate details. 
             </Typography>
 
             <Typography variant="subtitle2" sx={{ mt: 1 }}>
