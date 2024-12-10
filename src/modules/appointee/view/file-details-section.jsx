@@ -101,7 +101,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
             return;
         }
         console.log("handleVerificationSubmit", verificationUpdate);
-        
+
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
 
         if (error) {
@@ -246,6 +246,7 @@ const FiledetailsSection = ({ verificationType, fileSrc, verificationUpdate, fil
                         <TextAreaInput
                             label={'Remarks'}
                             value={remarks}
+                            required={true}
                             onChange={handleRemarksChanged}
                         />
                     </GridContainer>

@@ -1,4 +1,4 @@
-import { fileVerificationEnums } from "shared/constants/constants";
+import { epfoPassbookFileTypeAlias, fileVerificationEnums } from "shared/constants/constants";
 import { hasValue } from "..";
 
 const upDateQuestionSet = ({ verificationQuestionSet, verificationUpdate,
@@ -10,7 +10,6 @@ const upDateQuestionSet = ({ verificationQuestionSet, verificationUpdate,
     if (verificationType.value !== 'none') {
 
         if (subCategory) {
-            console.log('verificationUpdate', verificationUpdate);
             let _isDocComplete = true;
             let _isDocValid = true;
             // const _isDocComplete = subCategory && verificationUpdate[`isDocComplete_${subCategory}`];
@@ -32,11 +31,12 @@ const upDateQuestionSet = ({ verificationQuestionSet, verificationUpdate,
 
             if (_isDocComplete === true &&
                 _isDocValid === true) {
+
                 updatedQuestionSet = updatedQuestionSet.map((question) => {
                     question.disabled = false;
                     return question;
                 })
-                
+
             }
             if ((verificationUpdate && (_isDocComplete !== true || _isDocValid !== true)) &&
                 verificationQuestionSet && verificationQuestionSet.length > 2) {
@@ -69,8 +69,17 @@ const upDateQuestionSet = ({ verificationQuestionSet, verificationUpdate,
             return updatedQuestion
         })
     }
-    console.log('updatedQuestionSet323423', updatedQuestionSet, verificationUpdate);
-    
+    if (verificationUpdate && verificationUpdate.hasOwnProperty(`${fileVerificationEnums.pensionApplicable}_${epfoPassbookFileTypeAlias}`) &&
+        verificationUpdate[`${fileVerificationEnums.pensionApplicable}_${epfoPassbookFileTypeAlias}`] === false
+    ) {
+        for (let index = updatedQuestionSet.length - 1; index >= 0; index--) {
+            const { name, subCategory } = updatedQuestionSet[index];
+            if (`${name}_${subCategory}` === `${fileVerificationEnums.pensionGapFound}_${epfoPassbookFileTypeAlias}`) {
+                updatedQuestionSet[index].disabled = true;
+                break;
+            }
+        }
+    }
     return (
         { updatedQuestionSet }
     )

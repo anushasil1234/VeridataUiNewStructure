@@ -97,7 +97,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     const { userTypeId, userId } = (loggedInData && loggedInData[0]) || {
         userTypeId: null,
         userId: null,
-      };
+    };
     const {
         relationList,
         qualificationList,
@@ -111,7 +111,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         GetUploadedFileDetailsById,
         getRemarks,
         postAppointeeRejected,
-        getAppointeeDetails,postAppointeeApproved
+        getAppointeeDetails, postAppointeeApproved
     } = apiSlice[0];
     const {
         openRemarksModel,
@@ -158,7 +158,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     const [isFnameVarified, setIsFnameVarified] = useState(false);
     const [isUanVerified, setIsUanVerified] = useState(false);
     const [dateOfJoining, setDateOfJoining] = useState(null);
-   // const [userId, setUserId] = useState(null);
+    // const [userId, setUserId] = useState(null);
     const [isVarified, setIsVarified] = useState();
     const dispatch = useDispatch();
     const clearSubDropdownListofVerificationType = (currentValue) => {
@@ -175,52 +175,49 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     };
     const selectDefaultVerificationType = (value, _uploadedFileData) => {
         const target = { value };
-        console.log('_uploadedFileData', _uploadedFileData);
-
         handleChangeVerificationType({ target }, _uploadedFileData);
     }
 
     const handleChangeVerificationType = ({ target }, _uploadedFileData) => {
         const { value: currentValue } = target;
-        const isSelectedItemDisabled = verificationTypeList.find(({ isDisabled, value }) =>
-            value === currentValue && isDisabled === true);
-        if (isSelectedItemDisabled) {
-            return
+        if (currentValue !== 'none') {
+            const isSelectedItemDisabled = verificationTypeList.find(({ isDisabled, value }) =>
+                value === currentValue && isDisabled === true);
+            if (isSelectedItemDisabled) {
+                return
+            }
+            const selectedVerificationType = defaultVerificationTypeList.find(({ value }) => value === currentValue);
+            setVerificationType(selectedVerificationType);
+            clearSubDropdownListofVerificationType(currentValue);
+            setCategorySelected(false);
+            const { verificationCategoryList } = filterDocVerificationList({
+                fileCategory: currentValue,
+                uploadedFileData: _uploadedFileData ? _uploadedFileData : uploadedFileData
+            });
+            setVerificationCategoryList(verificationCategoryList);
+            // setFileTypeCategory(verificationCategoryList[0].value);
+            const { updatedQuestionSet } = addNewQuestion({ verificationType: target, verificationQuestionSet: [] });
+
+            let currentDefaultVerificationUpdate;
+            if (currentValue === fatherFileCategoryTypeAlias) {
+                currentDefaultVerificationUpdate = defaultFnameVerificationUpdate
+            }
+            if (currentValue === epfFileTypeAlias) {
+                currentDefaultVerificationUpdate = defaultEpfoPassbookVerificationUpdate
+            }
+            const { updatedQuestionSet: _updatedQuestionSet } = upDateQuestionSet({
+                verificationQuestionSet: updatedQuestionSet,
+                verificationUpdate: currentDefaultVerificationUpdate,
+                verificationType: target,
+                fileSrc
+            });
+
+
+            setVerificationQuestionSet(_updatedQuestionSet);
+
+            setVerificationUpdate({});
+            setFileTypeCategory(defaultDropdownValue);
         }
-        const selectedVerificationType = defaultVerificationTypeList.find(({ value }) => value === currentValue);
-        setVerificationType(selectedVerificationType);
-        clearSubDropdownListofVerificationType(currentValue);
-        setCategorySelected(false);
-        const { verificationCategoryList } = filterDocVerificationList({
-            fileCategory: currentValue,
-            uploadedFileData: _uploadedFileData ? _uploadedFileData : uploadedFileData
-        });
-
-
-        setVerificationCategoryList(verificationCategoryList);
-        // setFileTypeCategory(verificationCategoryList[0].value);
-        const { updatedQuestionSet } = addNewQuestion({ verificationType: target, verificationQuestionSet: [] });
-
-        let currentDefaultVerificationUpdate;
-        if (currentValue === fatherFileCategoryTypeAlias) {
-            currentDefaultVerificationUpdate = defaultFnameVerificationUpdate
-        }
-        if (currentValue === epfFileTypeAlias) {
-            currentDefaultVerificationUpdate = defaultEpfoPassbookVerificationUpdate
-        }
-        const { updatedQuestionSet: _updatedQuestionSet } = upDateQuestionSet({
-            verificationQuestionSet: updatedQuestionSet,
-            verificationUpdate: currentDefaultVerificationUpdate,
-            verificationType: target,
-            fileSrc
-        });
-
-
-        setVerificationQuestionSet(_updatedQuestionSet);
-        console.log('currentValue', currentValue);
-
-        setVerificationUpdate({});
-        setFileTypeCategory(defaultDropdownValue);
     }
     const clearCategoryRelatedVariables = () => {
         setFileSrc("");
@@ -233,7 +230,6 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     const handleCategoryChange = async ({ target }) => {
 
         const { value } = target;
-        console.log('handleCategoryChange', target, value);
         if (value !== defaultDropdownValue) {
             setFileTypeCategory(value);
             setCategorySelected(true);
@@ -257,20 +253,20 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     const approve = async (remarks) => {
         showErrorMessage();
         if (hasValue(remarks)) {
-          const payLoad = {
-            appointeeId,
-            userId: userId,
-            remarks: remarks,
-          };
-          const response = await postAppointeeApproved(payLoad);
-          if (response) {
-            actionsAfterProcess("approve");
-          }
-          closeRemarksInputModel();
+            const payLoad = {
+                appointeeId,
+                userId: userId,
+                remarks: remarks,
+            };
+            const response = await postAppointeeApproved(payLoad);
+            if (response) {
+                actionsAfterProcess("approve");
+            }
+            closeRemarksInputModel();
         } else {
-          showErrorMessage(remarksEmptyMsg);
+            showErrorMessage(remarksEmptyMsg);
         }
-      };
+    };
 
     const reject = async (remarks) => {
         showErrorMessage();
@@ -341,16 +337,11 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     }
     const verificationOnChange = ({ target }, index) => {
         const { name, value } = target;
- 
-        console.log('verificationUpdate1', verificationUpdate);
-        
         setVerificationUpdate({ ...verificationUpdate, [name]: stringToBoolean(value) });
     }
-    console.log('verificationUpdate', verificationUpdate);
 
     const handleClickOnMenuItem = (value) => {
         if (value === epfFileCategoryTypeAlias) {
-            console.log("EPFO option selected:", value);
         }
     };
     const initializeVerificationData = async () => {
@@ -433,7 +424,6 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         });
         setVerificationQuestionSet(updatedQuestionSet);
         setVerificationUpdate(updatedVerification);
-console.log('sueeeee');
 
     }, [
         verificationUpdate?.[`${fileVerificationEnums.docComplete}_${fatherFileCategoryTypeAlias}`],
@@ -441,24 +431,21 @@ console.log('sueeeee');
         verificationUpdate?.[`${fileVerificationEnums.docComplete}_${epfoServiceHistoryFileTypeAlias}`],
         verificationUpdate?.[`${fileVerificationEnums.docValid}_${epfoServiceHistoryFileTypeAlias}`],
         verificationUpdate?.[`${fileVerificationEnums.pensionApplicable}_${epfoServiceHistoryFileTypeAlias}`],
+        verificationUpdate?.[`${fileVerificationEnums.pensionApplicable}_${epfoPassbookFileTypeAlias}`],
         verificationUpdate?.[`${fileVerificationEnums.docComplete}_${epfoPassbookFileTypeAlias}`],
         verificationUpdate?.[`${fileVerificationEnums.docValid}_${epfoPassbookFileTypeAlias}`],
     ])
-    console.log("verificationUpdate24234", verificationUpdate);
-    
+
     useEffect(() => {
         if (verificationType) {
-            console.log('verificationType1', verificationType);
-
             let newFileSrc = '';
             let _verificationUpdate = {};
             if (verificationType.value === fatherFileCategoryTypeAlias) {
                 newFileSrc = '';
                 _verificationUpdate = {
-                    "isDocComplete_EPFPSHF": undefined,
-                    "isDocValid_EPFPSHF": undefined,
-                    "isDocComplete_EPFPSSBKMNL": undefined,
-                    "isDocValid_EPFPSSBKMNL": undefined
+                    "isDocComplete_FTHR": undefined,
+                    "isDocValid_FTHR": undefined,
+                    "isFnameVarified_FTHR": undefined,
                 }
             } else if (verificationType.value === epfFileTypeAlias) {
                 newFileSrc = '';
@@ -532,14 +519,14 @@ console.log('sueeeee');
 
     const handleApproveModal = async () => {
         const confirmationModelContent = {
-          dialogContentText: approveConfirmation,
-          dialogComponent: <RemarksInputModel />,
-          dialogFunction: (remarks) => {
-            approve(remarks);
-          },
+            dialogContentText: approveConfirmation,
+            dialogComponent: <RemarksInputModel />,
+            dialogFunction: (remarks) => {
+                approve(remarks);
+            },
         };
         openRemarksInputModel(confirmationModelContent);
-      };
+    };
     const handleReject = () => {
         const currDate = DateFormatYYYYMMDD(new Date());
         const joinDate = DateFormatYYYYMMDD(dateOfJoining);
@@ -576,7 +563,7 @@ console.log('sueeeee');
         "thumsup",
         <ThumbUp />,
         "Manual Override"
-      );
+    );
     const rejectFabProps = new FabIconPropsModel(
         actionIconStyle,
         handleReject,
@@ -590,7 +577,6 @@ console.log('sueeeee');
     const handleClose = async () => {
 
         let _contetntText
-        console.log('isVarified', isVarified);
         if (isVarified === false) {
             _contetntText = (
                 <>
@@ -603,7 +589,7 @@ console.log('sueeeee');
                     <Typography sx={subHeadingContentTextStyle}>
                         {'Candidate will be moved to "Document Reupload Requested" tab, requesting Candidate to reupload relevant documents against the failed verification issues. After candidate completes the reupload, Candidate will be moved to Manual Re-Verification tab, from where you will again be able to reverify candidate.'}
                     </Typography>
-                    <Typography sx={{...subHeadingContentTextStyle, marginTop: '20px'}}> {'Do you still want to "Close"?'}</Typography>
+                    <Typography sx={{ ...subHeadingContentTextStyle, marginTop: '20px' }}> {'Do you still want to "Close"?'}</Typography>
                 </>
             )
         } else {
@@ -612,7 +598,7 @@ console.log('sueeeee');
                     <Typography sx={subHeadingContentTextStyle}>
                         {'If you have selected any answers / written "Remarks", please click on "Submit" to register your responses - you will lose them otherwise.'}
                     </Typography>
-                    <Typography sx={{...subHeadingContentTextStyle, marginTop: '20px'}}> {'Do you still want to "Close"?'}</Typography>
+                    <Typography sx={{ ...subHeadingContentTextStyle, marginTop: '20px' }}> {'Do you still want to "Close"?'}</Typography>
                 </>
             )
         }
@@ -639,16 +625,16 @@ console.log('sueeeee');
                             {/* {isSaveStep && isSaveStep > 0
                         ? hasPermission &&
                         hasPermission["A002"] && ( */}
-                          <FabIcon
-                            props={{
-                              ...approveFabProps,
-                              selectedIndex: 1,
-                              index: 1,
-                              placement: "left-end",
-                              size: "small",
-                            }}
-                          />
-                        {/* )
+                            <FabIcon
+                                props={{
+                                    ...approveFabProps,
+                                    selectedIndex: 1,
+                                    index: 1,
+                                    placement: "left-end",
+                                    size: "small",
+                                }}
+                            />
+                            {/* )
                         : null} */}
                             <FabIcon
                                 props={{
@@ -717,7 +703,7 @@ console.log('sueeeee');
                 </Grid>
             </ManualVerifiedPageSectionContainer>
             <ManualVerifiedPageSectionContainer sx={{ marginTop: '1rem' }}>
-            <Stack sx={listHeadingConteinerStyle}>
+                <Stack sx={listHeadingConteinerStyle}>
                     <Typography sx={{ ...listHeadingStyle, fontSize: '1rem' }}>
                         Verification Section
                     </Typography>
@@ -726,7 +712,7 @@ console.log('sueeeee');
                     container
                     rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    sx={{ paddingX: "1rem", paddingLeft: "10px" ,mt:'5px',mb:'5px'}}
+                    sx={{ paddingX: "1rem", paddingLeft: "10px", mt: '5px', mb: '5px' }}
                 >
                     <Grid
                         item
@@ -817,7 +803,7 @@ const UnWrappedManualVerifiedView = (props) => {
     return (
         <FullScreenModel
             headerText={"Manual Verification"}
-            headerInfo = {manuallyVerificationInfo}
+            headerInfo={manuallyVerificationInfo}
             open={props.openView}
             fullScreen={true}
             // closeModel={props.closeViewModel}

@@ -5,13 +5,14 @@ import React from 'react'
 
 
 const RadioInput = ({ label, name, value, onChange,
-    disabled = false, subCategory, flexDirection = 'column', size = "medium", ...rest }) => {
+    disabled = false, subCategory, flexDirection = 'column', size = "medium", required = false, ...rest }) => {
 
 
     return (
         <Stack flexDirection={flexDirection}>
             <Typography sx={disabled ? { ...disableStyle } : { ...questionStyle }}>
                 {label}
+                {required && <span className="requiredField">*</span>}
             </Typography>
             <RadioGroup
                 row
