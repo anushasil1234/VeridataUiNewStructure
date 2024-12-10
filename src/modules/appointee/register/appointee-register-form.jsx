@@ -30,6 +30,7 @@ import {
     epfoServiceHistoryFileTypeAlias,
     aadharFileTypeAlias,
     toHelp,
+    UANPatterErrorMsg,
 } from "shared/constants/constants";
 import {
     CreateStepSequience,
@@ -1081,6 +1082,10 @@ const AppointeeRegisterForm = () => {
             showErrorMessage(UANEmptyErrorMsg);
             return false;
         }
+        if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
+            showErrorMessage(UANPatterErrorMsg);
+            return false;
+        }
         if (!checkEPFOServiceHistoryDocCertificateUpload()) {
             return false
         }
@@ -1447,6 +1452,7 @@ const AppointeeRegisterForm = () => {
         if (!checkUANVerificationRequiredDoc()) {
             return
         }
+
         openSubmitConfirmationModel();
     }
 
