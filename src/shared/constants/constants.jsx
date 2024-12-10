@@ -96,6 +96,7 @@ export const generateapiCountReportDesc = `The purpose of this report is to prov
 export const pfPensionReportDesc = `This report provides an overview of PF and Pension information for appointees within a specified date range, including appointee name, Aadhaar number, UAN, joining date, PF and pension status, and passbook status (manual or automatic). It helps PwC monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
 export const verificatiosucess = `Your verification has been successfully completed.`;
 export const appointeeReportdesc = `This report provides an analysis of appointees, including names, email ID, date of joining (DOJ), link-sent dates, and status. It aids Pwc in identifying trends, resolving bottlenecks, and evaluating candidate interest.`;
+
 export const appointeeBillingdesc = `This billing report provides a detailed summary of the costs associated with new appointees for each entity.It includes the entity name,time period, cost per new appointee,total number of new appointees, and the total billing amount.`;
 
 export const generatenationlityReportDesc = (type) => {
@@ -1878,7 +1879,7 @@ export const appointeeCountDetailsHeadCell1 = [
         type: "string",
         enums: ['totalAppointeeCount'],
         disablePadding: false,
-        label: 'Total Number Of New Appointee',
+        label: 'Total Number Of New Appointees',
         component: {
             element: Typography
         }
@@ -1918,7 +1919,7 @@ export const appointeeCountDetailsreportHeadCell = [
     {
         type: "string",
         enums: ['totalAppointeeCount'],
-        label: 'Total Number Of New Appointee',
+        label: 'Total Number Of New Appointees',
     },
     {
         type: "string",

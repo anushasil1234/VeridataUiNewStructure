@@ -1003,7 +1003,7 @@ const AppointeeRegisterForm = () => {
     const checkFathersDocCertificateUpload = () => {
 
         const isUploaded = hasFathersDocCertificateUpload() || hasValue(otherFileName);
-        if (!isUploaded) showUploadMessage("father's name attached certificate");
+        if (!isUploaded) showUploadMessage("PAN Card");
         return isUploaded;
     };
     const checkEPFOPassbookDocCertificateUpload = () => {
