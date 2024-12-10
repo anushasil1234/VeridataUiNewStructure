@@ -166,7 +166,7 @@ const UnwrappedReport = (props) => {
       fromDate,
       toDate,
       rptDesc: generateAppointeeCountReportDesc,
-      companyName: 'ELOGIX.LTD'
+      companyName: 'ELOGIX Software Pvt.Ltd'
     };
 
     const tables = [

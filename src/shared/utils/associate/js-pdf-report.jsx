@@ -584,7 +584,7 @@ const jsPDFReportDataTemplate = async ({
 
       const splitDesc = splitTextIntoLines(rptDesc, availableWidth);
       const additionalSplitDesc = splitDesc.flatMap((line) =>
-        splitTextIntoLines(line, availableWidth / 2)
+        splitTextIntoLines(line, availableWidth / 1.9)
       );
 
       additionalSplitDesc.forEach((line) => {
