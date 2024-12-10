@@ -68,6 +68,7 @@ export const invalidProfilePasswordMsg = `Password is not valid, please retry`;
 export const passwordCreationSuccessMsg = `Password has been created successfully`;
 export const passwordChangeSuccessMsg = `Password has been changed successfully`;
 export const UANEmptyErrorMsg = `UAN number is required`;
+export const UANPatterErrorMsg = `UAN should have 12 digits`;
 export const aadharVerificationErrorMsg = `Please verify your Aadhar before submit`;
 export const PANVerifictionErrorMsg = `Please verify your PAN before submit`;
 export const dataSubmitionMsg = `Data submited successfully`;
