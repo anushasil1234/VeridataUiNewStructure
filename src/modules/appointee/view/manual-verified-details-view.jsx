@@ -301,22 +301,23 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     }
     const handleFileChange = async ({ target }) => {
         const { value } = target;
+        if (value !== 'none') {
+            if (files.length === 1 && selectedFiles.length === 0) {
+                setSelectedFiles([value]);
+            } else {
 
-        if (files.length === 1 && selectedFiles.length === 0) {
-            setSelectedFiles([value]);
-        } else {
+                setSelectedFiles((prev) => {
+                    if (!prev.includes(value)) {
+                        return [...prev, value];
+                    } else {
+                        return prev.filter((file) => file !== value);
+                    }
+                });
 
-            setSelectedFiles((prev) => {
-                if (!prev.includes(value)) {
-                    return [...prev, value];
-                } else {
-                    return prev.filter((file) => file !== value);
-                }
-            });
-
+            }
+            await markFileAsRead(value);
+            await _setFile(value);
         }
-        await markFileAsRead(value);
-        await _setFile(value);
     };
 
     const markFileAsRead = (fileTypeToUpdate) => {
@@ -349,7 +350,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
 
         if (response) {
             const { appointeeName, dateOfBirth, gender, memberName, memberRelation, isHandicap, handicapeType, maratialStatus, qualification,
-                appointeeEmailId, mobileNo, dateOfJoining, isUanVarified, isFnameVarified ,nationality} = response.responseInfo;
+                appointeeEmailId, mobileNo, dateOfJoining, isUanVarified, isFnameVarified, nationality } = response.responseInfo;
             appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
             dateOfBirth ? setDateOfBirth(DDMMYYYY(dateOfBirth)) : setDateOfBirth(NA);
             gender

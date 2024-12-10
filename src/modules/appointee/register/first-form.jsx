@@ -49,26 +49,6 @@ const FirstForm = ({ stepsList, setGender, memberName, dateOfBirth, setDateOfBir
     const { openInfoModel } = functionSlice[0];
 
 
-
-    // const selectGender = (genderCode) => {
-    //     const selectedGender = genderCode;
-    //     const updatedGender =
-    //         genderDropdownList &&
-    //         genderDropdownList.map((gender, index) => {
-    //             let selected = false;
-    //             if (gender.code === selectedGender) {
-    //                 selected = true;
-    //                 setGender(gender.code);
-    //             }
-    //             return {
-    //                 ...gender,
-    //                 selected: selected,
-    //                 icon: genders[index].icon,
-    //                 selectGender,
-    //             };
-    //         }, genders);
-    //     setGenderList(updatedGender);
-    // };
     const passportNumberInputProps = {
         maxLength: passportNoMaxLength,
         ...inputFieldStyle2,
@@ -89,96 +69,7 @@ const FirstForm = ({ stepsList, setGender, memberName, dateOfBirth, setDateOfBir
         };
         openInfoModel(passportHelpContent);
     };
-    // const handleAppointeeFormPage1Save = async (formElement) => {
 
-    //     formElement.preventDefault();
-    //     if (passportAvailable === 'Y') {
-    //         if (!hasValue(passportNo)) {
-    //             setPassportNumberError(true);
-    //             showErrorMessage(passportNoEmptyMsg);
-    //             return;
-    //         }
-    //         if (nationality.toLowerCase() === 'indian' && passportNo.length !== 12) {
-    //             setPassportNumberError(true);
-    //             showErrorMessage(indianpassportFilePatternErrorMsg);
-    //             return
-    //         }
-
-    //     }
-    //     const loginUserData = getLocalStorageItem("pfc-user");
-    //     const formPostSuccessMessage = clickedButton === "S" ? formSaveSuccess : formSubmitionSuccess;
-    //     let payLoad = {
-    //         appointeeDetailsId: appointeeDetailsId,
-    //         appointeeId: appointeeId,
-    //         candidateId: candidteId,
-    //         appointeeCode: userCode,
-    //         companyId: companyId,
-    //         appointeeName: memberName,
-    //         appointeeEmailId: email,
-    //         dateOfBirth: dateOfBirth,
-    //         gender: gender,
-    //         mobileNo: mobileNo,
-    //         uanNumber: UAN,
-    //         dateOfJoining: dateOfJoining,
-    //         memberName: fathersOrHusbandName,
-    //         memberRelation: relationshipWithMember,
-    //         nationality: nationality,
-    //         epfWages: EPFWages,
-    //         qualification: qualification,
-    //         maratialStatus: maritalStatus,
-    //         isPassportAvailable: passportAvailable,
-    //         isInternationalWorker: isInterNationalWorker,
-    //         originCountry: countryOfOrigin,
-    //         passportNo: passportNo,
-    //         passportValidFrom: passportValidForDate,
-    //         passportValidTill: passportValidTillDate,
-    //         isHandicap: isPhysicallyHandicap,
-    //         handicapeType: handicapType,
-    //         IsPFverificationReq: isPFVerificatoinReq,
-    //         panName: nameAsOnPan,
-    //         panNumber: pan,
-    //         isAadhaarVarified,
-    //         isPensionApplicable,
-    //         isUanVarified,
-    //         userId: userId,
-    //         companyName,
-    //         isSubmit: clickedButton === "S" ? false : true,
-    //     };
-    //     for (const key in payLoad) {
-    //         if (Object.hasOwnProperty.call(payLoad, key)) {
-    //             if (payLoad[key] === "") {
-    //                 payLoad[key] = null;
-    //             }
-    //         }
-    //     }
-    //     const response = await postAppointeeDetails(payLoad, formPostSuccessMessage);
-    //     if (response) {
-    //         setLocalStorageItem("pfc-user", {
-    //             ...loginUserData,
-    //             //isSubmit: true,
-    //             status: 'Ongoing'
-    //         });
-    //         dispatch(removeLoggedinData());
-    //         dispatch(storeLoggedinData({
-    //             ...loginUserData,
-    //             //isSubmit: true,
-    //             status: 'Ongoing'
-    //         }))
-    //         if (clickedButton === "N") {
-    //             //setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, steps.length - 1));
-    //             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    //             setCurrentPageNo(2);
-    //             setIsNextVisible(true);
-    //             setIsDraft(false);
-    //             updateStep(
-    //                 {
-    //                     isHandicap: isPhysicallyHandicap,
-    //                     isPassportAvailable: passportAvailable
-    //                 }
-    //             );
-    //         }
-    //     }
-    // };
     const handleSpacialcharecter = (e) => {
         const char = /^[A-Za-z\s]+$/;
         const allowedKeys = [
