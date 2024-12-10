@@ -53,7 +53,7 @@ const UnWrrappedDataUpdate = (props) => {
           <Typography
             onClick={() => downloadReport(DownloadUpdateSampleXlsFile_URL)}
           >
-            To Download Bulk Update Template Click Here.
+            To download Bulk Update Template, click here
           </Typography>
 
         </Box>
@@ -104,7 +104,8 @@ const UnWrrappedDataUpdate = (props) => {
               Notes:
             </Typography>
             <Typography variant="subtitle2" sx={{ mt: 1 }}>
-              1. Please use the template for correct data update.
+            1. Please use the template for updating existing appointee details so that appointee can be verified for pre-onboarding process.
+
             </Typography>
 
             {/* Numbered list */}
@@ -120,8 +121,9 @@ const UnWrrappedDataUpdate = (props) => {
               4. Updated Date of Joining: Use dd-mm-yyyy format. Must be a future date.
             </Typography>
 
-            <Typography variant="subtitle2" sx={{ mt: 1 }}>
-              5. Don't change the header.
+            <Typography variant="subtitle2"  sx={{ mt: 1 ,fontWeight:'bold'}}>
+            5. Don't change the header; Don't add new tabs or sheets or columns to the existing template.
+
             </Typography>
           </DialogContent>
 

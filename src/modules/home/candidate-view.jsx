@@ -54,6 +54,7 @@ const CandidateView = () => {
     phone,
     status,
     statusCode,
+    isSubmit,
     isProcessed,
     candidateId
   } = loggedInData[0];
@@ -63,7 +64,7 @@ const CandidateView = () => {
   const [loading, setLoading] = useState(false);
 
   const [remarkList, setRemarkList] = useState([]);
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [isSubmitExternal, setIsSubmitExternal] = useState(false);
   const startLoader = () => setLoading(true);
   const stopLoader = () => setLoading(false);
   const functionSlice = useSelector((state) => state.functionSlice);
@@ -197,12 +198,12 @@ const CandidateView = () => {
     }
   };
   const setSubmitStatus = async () => {
-    const response = await getAppointeeDetails(appointeeId);
-    if (response) {
-      setIsSubmit(
-        response.responseInfo.isSubmit || response.responseInfo.isProcessed
+   // const response = await getAppointeeDetails(appointeeId);
+  //  if (response) {
+      setIsSubmitExternal(
+       isSubmit || isProcessed
       );
-    }
+   // }
   };
   const appointeeDocReupload = async () => {
     navigateTo(toReuploadDoc);
@@ -333,7 +334,7 @@ const CandidateView = () => {
                   >
                     Prerequisite Details
                   </Button>
-                  {statusCode === "DCRUPLD" && isSubmit ? (
+                  {statusCode === "DCRUPLD" && isSubmitExternal ? (
                     <>
                       <Button
                         variant="contained"
@@ -346,7 +347,7 @@ const CandidateView = () => {
                     </>
                   ) : null}
 
-                  {!isSubmit ? (
+                  {!isSubmitExternal ? (
                     <>
                       <Button
                         variant="contained"

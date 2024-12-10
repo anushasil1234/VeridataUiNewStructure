@@ -49,9 +49,14 @@ const UnWrrappedDataUpload = (props) => {
             <CardLayout>
                 <Box sx={sampleDownLoadLinkContainerStyle}>
                     <Typography onClick={() => downloadReport(DownloadSampleXlsFile_URL)}>
-                       To Download New Appointee Template Click Here.
+                       To download New Appointee Template, click here
                     </Typography>
+                
+                 
+                
                 </Box>
+                <Typography sx={{fontFamily:'Montserrat,Anuphan',fontSize:'1rem',fontWeight:400,color:'#000000'}}>{`After data upload, please go to UTILITIES -> Uploaded Data Page`}</Typography>
+
                 {hasPermission && hasPermission['A006'] && (
                     <Box mt={3} display="flex" alignItems="center">
                         <FileUpload
@@ -95,10 +100,10 @@ const UnWrrappedDataUpload = (props) => {
                     <DialogContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left', alignItems: 'flex-start' }}>
 
                         <Typography variant="subtitle2">
-                            Notes:
+                            Notes :
                         </Typography>
                         <Typography variant="subtitle2" sx={{ mt: 1 }}>
-                            1. Please use the template for correct data upload.
+                            1. Please use the template for uploading new appointee details so that appointee can be verified for pre-onboarding process.
                         </Typography>
 
                         {/* Numbered list */}
@@ -114,8 +119,8 @@ const UnWrrappedDataUpload = (props) => {
                             4. Date of Joining: Use dd-mm-yyyy format. Must be a future date.
                         </Typography>
 
-                        <Typography variant="subtitle2" sx={{ mt: 1 }}>
-                            5. Don't change the header.
+                        <Typography variant="subtitle2" sx={{ mt: 1 ,fontWeight:'bold'}}>
+                            5. Don't change the header; Don't add new tabs or sheets or columns to the existing template.
                         </Typography>
                     </DialogContent>
 
