@@ -1,7 +1,7 @@
 import { Box, Button, Grid, IconButton, InputAdornment, Link, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { InputField, PageHeading1, PageHeading2, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
-import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle, logoImageStyle, userLoginErrorModel } from "app";
+import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle, logoImageStyle } from "app";
 import { useNavigate } from "react-router-dom";
 import { emptyPasswordField, emptyUserNameField, otpToMailMsg, passwordMaxFieldErrorMsg, toDashboard, toForgotPassword, toSetPassword, welcomeMsg } from "shared/constants/constants";
 import loginImage from 'assets/images/backgrounds/loginimage.png';
@@ -28,8 +28,8 @@ export const UserLoginView = () => {
   const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
   const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
 
-  const { postLoginCredDetails, postLoginDetails, postLoginByEmailDetails } = apiSlice[0];
-  const { setDropdownList, openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } = functionSlice[0];
+  const { postLoginCredDetails, postLoginDetails } = apiSlice[0];
+  const { openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } = functionSlice[0];
 
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
