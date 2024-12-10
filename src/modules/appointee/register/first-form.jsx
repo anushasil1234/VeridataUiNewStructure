@@ -298,6 +298,7 @@ const FirstForm = ({ stepsList, setGender, memberName, dateOfBirth, setDateOfBir
                                 disableFuture={true}
                                 maxDate={dayjs()}
                                 minDate={null}
+                                disabled={isAadhaarVarified}
                             />
                         </Grid>
                     </GridRow>
