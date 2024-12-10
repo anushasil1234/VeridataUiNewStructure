@@ -19,7 +19,7 @@ const TextInput = ({ value, onChange, label, required = false, readOnly = false,
             <Label required={required}>{label}</Label>
             <TextField
                 onChange={(e) => {
-                    onChange(e.target.value);
+                    onChange && onChange(e.target.value);
                 }}
                 onKeyDown={(e) => onKeyDown ? onKeyDown(e) : false}
                 onPaste={(e) => onPaste ? onPaste(e) : false}
