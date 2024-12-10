@@ -4,7 +4,7 @@ import { candidateRegistrationFormContainerStyle, endJustifiedbtnContainer, file
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FileUploadSection from 'shared/components/file-upload-section/file-upload-section'
-import { congratulationDialogContentTitle, docResubmissionSuccessDialogContentText, epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, imgAndPdfMaxSize, otherFileTypeAlias, previousButton, registrationSuccessDialogContentText, reUploadsubmitConfirmationMsg, tenthCertificateFileTypeAlias, toDashboard } from 'shared/constants/constants'
+import { congratulationDialogContentTitle, docResubmissionSuccessDialogContentText, epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, imgAndPdfMaxSize, otherFileTypeAlias, previousButton, registrationSuccessDialogContentText, reUploadsubmitConfirmationMsg, tenthCertificateFileTypeAlias, toDashboard, toHelp } from 'shared/constants/constants'
 import { CardLayout, getLocalStorageItem, hasValue, PageLayout, removeFile, setLocalStorageItem } from 'shared/utils'
 import getFileDetails from 'shared/utils/associate/get-file-details'
 import FormHeading from '../register/form-heading'
@@ -281,10 +281,23 @@ export const ReuploadForm = () => {
                                         </Typography>
                                         <Tooltip
                                             arrow="bottom"
-                                            title="Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year."
+                                            title={<div>
+                                                <p>{'Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year.'}</p>
+                                                <a
+                                                    href={toHelp}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    style={{
+                                                        color: "#F57264",
+                                                        // textDecoration: "underline",
+                                                        cursor: "pointer",
+                                                    }}
+                                                >
+                                                    Read More
+                                                </a>
+                                            </div>}
                                         >
                                             <IconButton
-                                            // disabled={isPreviousSectionDisabled}
                                             >
                                                 <InfoOutlined />
                                             </IconButton>
@@ -338,15 +351,32 @@ export const ReuploadForm = () => {
                                         }}
                                     >
                                         {
-                                            "Document with father's name attached"
+                                            "PAN Card"
                                         }
                                     </Typography>
                                     <Tooltip
                                         arrow="bottom"
-                                        title="Upload a copy of the document with your father's name clearly mentioned. Examples of acceptable documents include birth certificates, national IDs, or other legal documents where both your name and your father's name are visible."
+                                        title={<div>
+                                            <p>{'Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card.'}</p>
+                                            <a
+                                                href={toHelp}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                style={{
+                                                    color: "#F57264",
+                                                    // textDecoration: "underline",
+                                                    cursor: "pointer",
+                                                }}
+                                            >
+                                                Read More
+                                            </a>
+                                        </div>}
                                     >
                                         <IconButton
-                                        // disabled={isPreviousSectionDisabled}
+                                            sx={{
+                                                marginLeft: '-5px', // Moves the icon a bit to the left
+                                                marginTop: '-5px',  // Moves the icon a bit upwards
+                                            }}
                                         >
                                             <InfoOutlined />
                                         </IconButton>
@@ -360,8 +390,7 @@ export const ReuploadForm = () => {
                                         textAlign: "center",
                                     }}
                                 >
-                                    Please upload a document mentioning father's
-                                    name
+                                    Please upload PAN Card
                                     <span className="requiredField">*</span>
                                 </Typography>
                                 <Box sx={fileUploadSectionContainerStyle}>
