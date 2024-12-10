@@ -67,14 +67,19 @@ const ThirdForm = ({
                             here. To see the details steps,
                             {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
                         Aadhaar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
-                            <Link
-                                sx={{ cursor: "pointer" }}
-                                onClick={() => openOfflineKycInfoModel()}
-                            >
-                                {" "}
-                                Click here
-                            </Link>
+                           
+
                         </Typography>
+                        <Typography
+                                sx={{
+                                    cursor: "pointer",
+                                    color: "#9A208C", 
+                                    fontWeight: 500,
+                                }}
+                                onClick={() => openOfflineKycInfoModel()}
+                        
+                               >Click here</Typography>
+                          
                         <FormControl sx={{ flexDirection: 'row' }}>
                             {isAadhaarVarified ? (
                                 <>
