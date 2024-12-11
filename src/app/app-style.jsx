@@ -2,7 +2,6 @@ import { alpha, createTheme } from "@mui/material/styles";
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import Fab from "@mui/material/Fab"; // Import Fab component from MUI
-import zIndex from "@mui/material/styles/zIndex";
 
 
 
@@ -527,7 +526,7 @@ export const clickableCell = {
   textOverflow: "ellipsis",
   cursor: "pointer",
   color: "#e82e27",
-  marginLeft: "12px",
+  // marginLeft: "12px",
   textDecoration: "underline",
   marginLeft: '-2px'
 }
@@ -591,7 +590,6 @@ export const imageContainer = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  height: 'auto',
 };
 export const logoImageStyle = {
   height: "auto",

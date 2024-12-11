@@ -1,4 +1,9 @@
-import { Download, Info, Refresh, Search, Summarize } from "@mui/icons-material";
+import {
+  Download,
+  Info,
+  Refresh,
+  Search,
+} from "@mui/icons-material";
 import {
   Box,
   FormControl,
@@ -18,8 +23,7 @@ import {
   lapsedListTableHeadCell,
   toLapseddata,
   reportGenarate,
-  uploadedFromDateEmptyMsg,
-  FromDateEmptyMsg
+  FromDateEmptyMsg,
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -32,22 +36,27 @@ import {
 import DatePicker from "shared/utils/date-picker/date-picker";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import dayjs from "dayjs";
-import { inputFieldStyleAdded, primaryFabStyle, ResponsiveFab,downLoadListSx, datePickerstyle } from "app";
+import {
+  inputFieldStyleAdded,
+  primaryFabStyle,
+  ResponsiveFab,
+  downLoadListSx,
+  datePickerstyle,
+} from "app";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import moment from "moment";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-import ArticleIcon from '@mui/icons-material/Article';
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
-import { hasValue } from 'shared/utils';
+import { hasValue } from "shared/utils";
 const UnwrappedLapseddata = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
   const popUpSlice = useSelector((state) => state.popUpSlice);
   let noOfDays = 0;
-  const {showErrorMessage} =popUpSlice[0]
+  const { showErrorMessage } = popUpSlice[0];
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
@@ -57,7 +66,7 @@ const UnwrappedLapseddata = (props) => {
 
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getLapsedDataList } = apiSlice[0];
-  const {GetLapsedDataReport}=apiSlice[0]
+  const { GetLapsedDataReport } = apiSlice[0];
   const { companyId } = loggedInData[0];
 
   if (state) {
@@ -96,14 +105,14 @@ const UnwrappedLapseddata = (props) => {
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
   const handleDownloade = (rf) => {
-    if (rf.fileData && typeof rf.fileData === 'string') {
-      const base64String = rf.fileData; 
-      const fileName = rf.fileName || "appointee_data.xlsx"; 
+    if (rf.fileData && typeof rf.fileData === "string") {
+      const base64String = rf.fileData;
+      const fileName = rf.fileName || "appointee_data.xlsx";
       const blob = generateBlobFromBase64(base64String);
       const blobUrl = window.URL.createObjectURL(blob);
       downloadFile(blobUrl, fileName);
       window.URL.revokeObjectURL(blobUrl);
-    } 
+    }
   };
   const handleClick = async (payLoad) => {
     const response = await GetLapsedDataReport(payLoad);
@@ -112,7 +121,7 @@ const UnwrappedLapseddata = (props) => {
       handleDownloade(responseInfo);
     }
   };
-  
+
   const setTableRows = async (payLoad) => {
     let noOfDays = 0;
     let isFiltered = false;
@@ -166,24 +175,24 @@ const UnwrappedLapseddata = (props) => {
       appointeeName: null,
       candidateId: null,
       companyId: companyId,
-      isPfRequired: null
+      isPfRequired: null,
     };
     setTableRows(payLoad);
     navigateTo(toLapseddata, { state: false });
   };
 
   const handleSearch = () => {
-    if (!hasValue (fromDate)) {
+    if (!hasValue(fromDate)) {
       showErrorMessage(FromDateEmptyMsg);
       return;
     }
     setTableRows(payLoad);
   };
   const handleDownload = () => {
-if(!responseList || responseList.length === 0){
-  showErrorMessage(reportGenarate)
-  return;
-}
+    if (!responseList || responseList.length === 0) {
+      showErrorMessage(reportGenarate);
+      return;
+    }
 
     const tableHeadList = lapsedListPdfTableHeadCell.map(({ label }) => {
       return {
@@ -191,11 +200,11 @@ if(!responseList || responseList.length === 0){
       };
     });
 
-
-    const tableBodyList = responseList && responseList.map((tableRows) => {
-      return CreatePdfTableBody(tableRows, lapsedListPdfTableHeadCell);
-    });
-
+    const tableBodyList =
+      responseList &&
+      responseList.map((tableRows) => {
+        return CreatePdfTableBody(tableRows, lapsedListPdfTableHeadCell);
+      });
 
     const tableObj = {
       headerList: tableHeadList,
@@ -203,7 +212,6 @@ if(!responseList || responseList.length === 0){
       tableName: "Appointee details",
       rptDesc: generateLapsedAppointeeReportDesc,
     };
-
 
     jsPDFReportDataTemplate({
       reportDetails: {
@@ -236,38 +244,38 @@ if(!responseList || responseList.length === 0){
     payLoad.statusCode = statusCode;
     setPayLoad(payLoad);
   }, [statusCode]);
-  const handelsearch=()=>{
+  const handelsearch = () => {
     if (hasValue(toDate) && !hasValue(fromDate)) {
       showErrorMessage("From Date can not be empty");
-    }else {
+    } else {
       handleSearch();
     }
-  }
+  };
   return (
     <PageLayout pageName={pageName}>
       <CardLayout>
-        <Grid container spacing={1}alignItems="center" >
+        <Grid container spacing={1} alignItems="center">
           <Grid item xs={3}>
             <Box sx={{ ...datePickerstyle }}>
-            <DatePicker
-              label={"From Date"}
-              value={fromDate}
-              maxDate={toDate}
-              setValue={setFromDate}
-              disableFuture={true}
-            />
+              <DatePicker
+                label={"From Date"}
+                value={fromDate}
+                maxDate={toDate}
+                setValue={setFromDate}
+                disableFuture={true}
+              />
             </Box>
           </Grid>
           <Grid item xs={3}>
-          <Box sx={{ ...datePickerstyle }}>
-            <DatePicker
-              label={"To Date"}
-              value={toDate}
-              minDate={fromDate}
-              setValue={setToDate}
-              disableFuture={true}
-            />
-             </Box>
+            <Box sx={{ ...datePickerstyle }}>
+              <DatePicker
+                label={"To Date"}
+                value={toDate}
+                minDate={fromDate}
+                setValue={setToDate}
+                disableFuture={true}
+              />
+            </Box>
           </Grid>
           <Grid item xs={2}>
             <FormControl sx={{ width: "100%" }} size="large">
@@ -294,9 +302,14 @@ if(!responseList || responseList.length === 0){
               )}
             </FormControl>
           </Grid>
-  
-        
-          <Grid item xs={4} display="flex" justifyContent="flex-start" alignItems="center">
+
+          <Grid
+            item
+            xs={4}
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="center"
+          >
             <DarkTooltip placement="top" title={"Search"} arrow>
               <ResponsiveFab
                 variant="contained"
@@ -309,7 +322,8 @@ if(!responseList || responseList.length === 0){
               </ResponsiveFab>
             </DarkTooltip>
             <DarkTooltip placement="top" title={"Clear Search"} arrow>
-              <ResponsiveFab List
+              <ResponsiveFab
+                List
                 variant="contained"
                 size="small"
                 button={"N"}
@@ -319,9 +333,16 @@ if(!responseList || responseList.length === 0){
                 <Refresh width={18} sx={{ color: "#fff" }} />
               </ResponsiveFab>
             </DarkTooltip>
-  
+
             {hasPermission && hasPermission["A008"] && (
-              <Grid item sx={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <Grid
+                item
+                sx={{
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <DarkTooltip placement="top" title={"Download Report"} arrow>
                   <ResponsiveFab
                     variant="contained"
@@ -340,8 +361,12 @@ if(!responseList || responseList.length === 0){
                       zIndex: 1000,
                     }}
                   >
-                    <ListItemButton component="a" >
-                      <DarkTooltip placement="top" title={"Download PDF Report"} arrow>
+                    <ListItemButton component="a">
+                      <DarkTooltip
+                        placement="top"
+                        title={"Download PDF Report"}
+                        arrow
+                      >
                         {/* <ResponsiveFab
                           variant="contained"
                           size="small"
@@ -351,11 +376,17 @@ if(!responseList || responseList.length === 0){
                         >
                           <Summarize width={18} sx={{ color: "#fff" }} />
                         </ResponsiveFab> */}
-                          <Button variant="contained" onClick={handleDownload}>PDF</Button>
+                        <Button variant="contained" onClick={handleDownload}>
+                          PDF
+                        </Button>
                       </DarkTooltip>
                     </ListItemButton>
                     <ListItemButton component="a">
-                      <DarkTooltip placement="top" title={"Download XLSX Report"} arrow>
+                      <DarkTooltip
+                        placement="top"
+                        title={"Download XLSX Report"}
+                        arrow
+                      >
                         {/* <ResponsiveFab
                           variant="contained"
                           size="small"
@@ -364,22 +395,30 @@ if(!responseList || responseList.length === 0){
                         >
                           <ArticleIcon width={18} sx={{ color: "#fff" }} />
                         </ResponsiveFab> */}
-                         <Button variant="contained" onClick={()=>handleClick(payLoad)}>XLSX</Button>
+                        <Button
+                          variant="contained"
+                          onClick={() => handleClick(payLoad)}
+                        >
+                          XLSX
+                        </Button>
                       </DarkTooltip>
                     </ListItemButton>
                   </List>
                 )}
-                 <DarkTooltip placement="top" title={generateLapsedAppointeeReportDesc} arrow>
-              <ResponsiveFab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={handelsearch}
-                sx={primaryFabStyle}
-              >
-                <Info width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>
-            </DarkTooltip>
+                <DarkTooltip
+                  placement="top"
+                  title={generateLapsedAppointeeReportDesc}
+                  arrow
+                >
+                  <ResponsiveFab
+                    variant="contained"
+                    size="small"
+                    button={"N"}
+                    sx={primaryFabStyle}
+                  >
+                    <Info width={18} sx={{ color: "#fff" }} />
+                  </ResponsiveFab>
+                </DarkTooltip>
               </Grid>
             )}
           </Grid>

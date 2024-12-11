@@ -22,8 +22,8 @@ export const validationsCheck = (arrvalue, validation_type) => {
             return /^\d{12}$/.test(arrvalue);
         case `${fileVerificationEnums.docComplete}_${epfoServiceHistoryFileTypeAlias}`:
         case `${fileVerificationEnums.docValid}_${epfoServiceHistoryFileTypeAlias}`:
-        case `${fileVerificationEnums.docComplete}_${epfoServiceHistoryFileTypeAlias}`:
-        case `${fileVerificationEnums.docValid}_${epfoServiceHistoryFileTypeAlias}`:
+        // case `${fileVerificationEnums.docComplete}_${epfoServiceHistoryFileTypeAlias}`:
+        // case `${fileVerificationEnums.docValid}_${epfoServiceHistoryFileTypeAlias}`:
         case `${fileVerificationEnums.docComplete}_${epfoPassbookFileTypeAlias}`:
         case `${fileVerificationEnums.docValid}_${epfoPassbookFileTypeAlias}`:
         case `${fileVerificationEnums.docFname}_${fatherFileCategoryTypeAlias}`:
