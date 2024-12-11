@@ -1481,7 +1481,10 @@ const AppointeeRegisterForm = () => {
             } else {
                 handleGetUANNumber();
             }
-        } else handleEpfoVerifiaction();
+        }else if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
+            showErrorMessage(UANPatterErrorMsg);
+        }
+        else handleEpfoVerifiaction();
     };
     const handleGetUANNumber = async () => {
         const payLoad = {
