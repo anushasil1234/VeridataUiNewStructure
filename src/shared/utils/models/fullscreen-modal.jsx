@@ -11,7 +11,9 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 export default function FullScreenModel({ fullScreen, open, closeModel, content, screensize, headerText,headerInfo, actionButton, zoomControls }) {
+console.log("fullScreen", fullScreen, screensize);
 
+    
     return (
         <Dialog
             maxWidth={screensize}
@@ -62,7 +64,7 @@ export default function FullScreenModel({ fullScreen, open, closeModel, content,
                     </Box>
                 </Toolbar>
             </AppBar>
-            <List sx={{ height: 'fit-content' }}>
+            <List sx={{ height: 'fit-content', backgroundColor: fullScreen? '#E2E8F0': '#fff' }}>
                 <ListItem sx={fullScreenListItemStyle} >
                     {content}
                 </ListItem>
