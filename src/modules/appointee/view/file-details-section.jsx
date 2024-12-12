@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Grid,
   IconButton,
   Stack,
@@ -10,18 +9,15 @@ import {
 import {
   candidatefileViewContainerStyle,
   imagestyleContainer,
-  infoDialogTitleStyle,
   listHeadingStyle,
   rightMostBtnStyle,
-  subHeadingContentTextStyle,
   submitBtnStyle,
-  zoombuttonStyle,
 } from "app";
-import React, { useRef, useState } from "react";
+import React, {useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import VerificationQuiestions from "./verification-quiestions";
 import GridContainer from "shared/components/grid-container/grid-container";
-import { hasValue, validationsCheck } from "shared/utils";
+import { hasValue } from "shared/utils";
 import validateQuestionSet from "shared/utils/associate/validate-question-set";
 import TextAreaInput from "shared/components/input-fields/text-area-input";
 import {
@@ -304,9 +300,28 @@ const FiledetailsSection = ({
                         alt="File Preview"
                       />
                     ) : mimeType === "application/pdf" ? (
-                      <iframe
-                        style={{
-                          position: "absolute",
+                      // <iframe
+                      //   style={{
+                      //     width:'600px',
+                      //     height:'250px'
+                      //     // position: "absolute",
+                      //     // transform: `scale(${zoomLevel})`,
+                      //     // transition: "transform 0.3s ease",
+                      //     // transformOrigin: "center",
+                      //     // maxWidth: "100%",
+                      //     // maxHeight: "100%",
+                      //     // left: isDragging ? `${position.x}px` : "auto",
+                      //     // top: isDragging ? `${position.y}px` : "auto",
+                      //   }}
+                      //   src={fileSrc}
+                      //   alt="File Preview"
+                      // />
+                      <embed
+                            src={`${fileSrc}#toolbar=0`}
+                            height="230px"
+                            width="500px"
+                            style={{
+                            position: "absolute",
                           transform: `scale(${zoomLevel})`,
                           transition: "transform 0.3s ease",
                           transformOrigin: "center",
@@ -314,10 +329,8 @@ const FiledetailsSection = ({
                           maxHeight: "100%",
                           left: isDragging ? `${position.x}px` : "auto",
                           top: isDragging ? `${position.y}px` : "auto",
-                        }}
-                        src={fileSrc}
-                        alt="File Preview"
-                      />
+                            }}
+                        />
                     ) : (
                       ""
                     )}
