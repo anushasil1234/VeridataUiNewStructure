@@ -58,7 +58,7 @@ export const ReuploadForm = () => {
     const [isUANVarified, setIsUANVarified] = useState();
     const [stepsList, setStepsList] = useState();
     const [fathersName, setFathersName] = useState();
-
+    const [responseFathersName, setResponseFathersName] = useState();
     // setStepsList({ ...stepsList, ..._steps })
     const formElement = useRef(null);
 
@@ -157,16 +157,18 @@ export const ReuploadForm = () => {
             showErrorMessage("Father's Name is required.");
             return;
         }
-        const verificationFieldModal = {
-            isUanVarified: isUANVarified,
-            isFnameVarified: isFathersNameVarified
-        }
-        const { error } = checkFileReuploadValidation({ uploadedFile, verificationFieldModal });
-
-
-        if (hasValue(error)) {
-            showErrorMessage(error);
-            return
+        if(fathersName.trim().toLowerCase() ===  responseFathersName.trim().toLowerCase()){
+            const verificationFieldModal = {
+                isUanVarified: isUANVarified,
+                isFnameVarified: isFathersNameVarified
+            }
+            const { error } = checkFileReuploadValidation({ uploadedFile, verificationFieldModal });
+    
+    
+            if (hasValue(error)) {
+                showErrorMessage(error);
+                return
+            }
         }
         openSubmitConfirmationModel();
     }
@@ -189,6 +191,7 @@ export const ReuploadForm = () => {
             setEpfoServiceHistoryFile(epfoServiceHistoryFile);
             setEpfoPassBookFiles(epfoPassBookFiles);
             setFathersName(memberName);
+            setResponseFathersName(memberName);
             const verificationFieldModal = {
                 isUanVarified,
                 isFnameVarified
