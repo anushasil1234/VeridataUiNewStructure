@@ -1879,6 +1879,7 @@ const AppointeeRegisterForm = () => {
                     isRelationShipWithMemberDisabled
                   }
                   mobileNo={mobileNo}
+                  isPassportAvailableDisable={isPassportAvailableDisable}
                   email={email}
                   nationality={nationality}
                   handleNationalityChange={handleNationalityChange}

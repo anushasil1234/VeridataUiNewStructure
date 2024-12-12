@@ -20,7 +20,7 @@ const FirstForm = ({ stepsList, setGender, memberName, dateOfBirth, setDateOfBir
     handleChangeRelationship, isRelationShipWithMemberDisabled, mobileNo, email, nationality,
     handleNationalityChange, qualification, maritalStatus, handleMaritalStatusChange, passportAvailable,
     passportNo, handleAppointeeFormPage1Save, isAadhaarVarified,
-    setFathersOrHusbandName, handleQualificationChange, handleIsPassportAvailableOnChange,
+    setFathersOrHusbandName, handleQualificationChange, handleIsPassportAvailableOnChange, isPassportAvailableDisable,
     isInterNationalWorker, handleInternationalWorkerOnChange, isPassportVarified, countryOfOrigin, disabledIsInterNationalWorker,
     handleChangeCountryOfOrigin, handlePassportNoChange, passportNumberError, passportNoMaxLength, passportValidForDate,
     setPassportValidForDate, setPassportValidTillDate, passportValidTillDate, PasswordExpiryValidity, dateOfJoining,
@@ -303,6 +303,7 @@ const FirstForm = ({ stepsList, setGender, memberName, dateOfBirth, setDateOfBir
                                 value={passportAvailable}
                                 onChange={handleIsPassportAvailableOnChange}
                                 sx={inputFieldStyle2}
+                                disabled={isPassportAvailableDisable}
                                 required={true}
                             />
                         </Grid>
