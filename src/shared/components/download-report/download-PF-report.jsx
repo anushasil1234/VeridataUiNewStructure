@@ -59,7 +59,7 @@ const DownloadPFReport = ({
   }
   return (
     <Grid container spacing={2} alignItems="center">
-      <Grid item xs={12} sm={6} md={4} lg={3}>
+      <Grid item xs={12} sm={8} md={3} lg={2}>
         <Box sx={{ ...datePickerstyle }}>
           <DatePicker
             label="From Date"
@@ -70,7 +70,7 @@ const DownloadPFReport = ({
           />
         </Box>
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
+      <Grid item xs={12} sm={8} md={3} lg={2}>
         <Box sx={{ ...datePickerstyle }}>
           <DatePicker
             label="To Date"
@@ -84,7 +84,7 @@ const DownloadPFReport = ({
         </Box>
       </Grid>
       {ispensionfilter && ispensionfilter === true ? (
-        <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Grid item xs={12} sm={8} md={3} lg={2}>
           <FormControl sx={{ width: "100%" }} size="large">
             <InputLabel id="demo-simple-select-label" >PF Type</InputLabel>
             <Select
@@ -93,7 +93,7 @@ const DownloadPFReport = ({
               id="demo-select-small"
               className="customeTextField"
               value={PfType}
-              label="Pf Status"
+              label="PF Type"
               onChange={handelprocessPFchange}
             >
               <MenuItem value={1}>Trust</MenuItem>
@@ -105,7 +105,7 @@ const DownloadPFReport = ({
         </Grid>
       ) : null}
       {ispassFilter && ispassFilter === true && PfType === 2 || PfType === 4 ? (
-        <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Grid item xs={12} sm={8} md={3} lg={2}>
           <FormControl sx={{ width: "100%" }} size="large">
             <InputLabel id="demo-simple-select-label">Verification Type</InputLabel>
             {passbookStatus !== undefined && (
@@ -129,7 +129,7 @@ const DownloadPFReport = ({
       ) : null}
 
       {ispensionfilter && ispensionfilter === true ? (
-        <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Grid item xs={12} sm={8} md={3} lg={2}>
           <FormControl sx={{ width: "100%" }} size="large">
             <InputLabel id="demo-simple-select-label" >EPS Membership</InputLabel>
             <Select
@@ -148,7 +148,7 @@ const DownloadPFReport = ({
           </FormControl>
         </Grid>
       ) : null}
-       <Grid item xs={12} sm={6} md={4} lg={3}>
+       <Grid item xs={12} sm={8} md={3} lg={2}>
           <FormControl sx={{ width: "100%" }} size="large">
             <InputLabel id="demo-simple-select-label" >EPS Gap</InputLabel>
             <Select
@@ -167,7 +167,7 @@ const DownloadPFReport = ({
             </Select>
           </FormControl>
         </Grid>
-      <Grid item container xs={12} sm={6} md={4} lg={3} spacing={0.5} alignItems="center" justifyContent="flex-start">
+      <Grid item container direction="row" xs={12} sm={8} md={4} lg={3} spacing={0.2} >
         <Grid item >
           <DarkTooltip placement="top" title={"Search"} arrow>
             <ResponsiveFab Movement
@@ -202,7 +202,7 @@ const DownloadPFReport = ({
                 size="small"
                 button={"N"}
                 onClick={handleClickOnDownload}
-                sx={primaryFabStyle}
+                sx={{ ...primaryFabStyle }}
               >
                 <Download width={18} />
               </ResponsiveFab>
@@ -236,33 +236,18 @@ const DownloadPFReport = ({
             )}
           </Grid>
         )}
-         <Grid item>
+         <Grid item sx={{ position: 'relative' }}>
           <DarkTooltip placement="top" title={pfPensionInfo} arrow>
             <ResponsiveFab
               variant="contained"
               size="small"
               button={"N"}
-            //  onClick={clearSearch}
               sx={{ ...primaryFabStyle }}
             >
               <Info width={18} sx={{ color: "#fff" }} />
             </ResponsiveFab>
           </DarkTooltip>
         </Grid>
-        {/* <Grid item>
-          {infoDetails && hasValue(infoDetails) ?
-            <DarkTooltip placement="right" title={infoDetails} arrow>
-              <ResponsiveFab
-                variant="contained"
-                size="small"
-                button={"N"}
-                sx={{ ...primaryFabStyle }}
-              >
-                <Info width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>=
-            </DarkTooltip>
-            : null}
-        </Grid> */}
       </Grid>
     </Grid>
   );
