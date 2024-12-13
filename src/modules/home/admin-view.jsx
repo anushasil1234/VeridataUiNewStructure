@@ -110,7 +110,7 @@ import {
     return (
       <>
         {loading && <CircularIndeterminate />}
-        <PageLayout pageName={"Dashboard"}>
+        <PageLayout pageName={"Dashboard"} tooltipInfo ={`Welcome to VERIDATA® - Your Pre-Onboarding Compliance Ally. This dashboard provides overview of pre-onboarding status of all the candidates who have received offer letter. Use it to track candidate's verification progress of current status(Link Not Sent, No Response, Processing, Lapsed, Verified) and most importantly have Aadhaar mapped details along with EPFO verification .Detailed status reports are also accessible from Reports.`}>
           
               <Box>
                 <Grid

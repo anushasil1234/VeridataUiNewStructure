@@ -10,6 +10,7 @@ const Help = () => {
     const { GetFaqData } = apiSlice[0];
     const handleGetHalpData = async () => {
         const response = await GetFaqData();
+        console.log('response',response)
         if (response) {
             const { responseInfos } = response;
             setResponseList(responseInfos);
@@ -24,6 +25,7 @@ const Help = () => {
         <div>
             {responseList && responseList.map((element, index) => {
                 return (
+                    <>
                     <Accordion key={index}>
                         <AccordionSummary
                             expandIcon={<ArrowDropDownIcon />}
@@ -33,11 +35,16 @@ const Help = () => {
                             <Typography> Q{index+1} : {element.faqName}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Typography>
+                            {element.contenttype==='text' ?  <Typography>
+                                {element.faqDescription}
+                            </Typography>: element.contenttype==='html' ? <Typography>
+                             { console.log('aaaa',element.faqDescription)}
                                 {parse(element.faqDescription)}
-                            </Typography>
+                            </Typography>:''}
+                           
                         </AccordionDetails>
                     </Accordion>
+                    </>
                 )
             })
             }
