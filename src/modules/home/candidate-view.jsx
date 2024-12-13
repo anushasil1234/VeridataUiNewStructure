@@ -211,9 +211,13 @@ const CandidateView = () => {
   useEffect(() => {
     if (userTypeId === 3) {
       setRemarks();
-      setSubmitStatus();
     }
   }, []);
+  useEffect(() => {
+    if (userTypeId === 3) {
+      setSubmitStatus();
+    }
+  }, [isSubmit,isProcessed]);
   const HtmlTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
