@@ -47,7 +47,9 @@ const EnhancedTableHead = (props) => {
                             {headCell.label}
                             {orderBy === headCell.id ? (
                                 <Box component="span" sx={visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                    {order ? 'sorted descending' : 'sorted ascending'}
+                                    sortDirection={orderBy === headCell.id ? (order ? 'desc' : 'asc') : false}
+                                    {/* {order === 'desc' ? 'sorted descending' : 'sorted ascending'} */}
                                 </Box>
                             ) : null}
                         </TableSortLabel>
