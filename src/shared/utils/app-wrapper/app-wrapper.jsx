@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { storeApi } from "store/slices/api-slice";
+import { removeApi, storeApi } from "store/slices/api-slice";
 import PfcRequiest from "server/utils/pfc-request";
 import CommonHookFunctionWrapper from "shared/components/shared-hooks";
 import {
@@ -114,8 +114,8 @@ import {
   GetMannualVerificationData_URL,
   PostReuploadDocuments_URL
 } from "shared/constants/constants";
-import { storeDropdownList } from "store/slices/dropdown-slice";
-import { storeFunction } from "store/slices/function-slice";
+import { removeDropdownList, storeDropdownList } from "store/slices/dropdown-slice";
+import { removeFunction, storeFunction } from "store/slices/function-slice";
 import AppointeeView from "modules/appointee/view/appointee-view";
 import ManualverifidView from "modules/appointee/view/manual-verified-details-view"
 import ConfirmationModel from "../models/confirmation-modal";
@@ -137,6 +137,8 @@ import PassbookView from "modules/appointee/view/passbook-details-view";
 import EmploymentView from "modules/appointee/view/employment-details-view";
 import RemarksInputModel from "../models/remarks-modal";
 import ConfirmationYesNoModal from "../models/confirmation-modal-yes-no";
+import { removePopUpSetFunction } from "store/slices/popup-slice";
+import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
 
 
 const AppWrapper = (App) => {
@@ -148,7 +150,7 @@ const AppWrapper = (App) => {
     const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);
     const [isEmploymentViewOpen, setEmploymentIsViewOpen] = useState(false);
     const [appointeeId, setAppointeeId] = useState();
-    const [passbookDetails,setPassbookDetails]=useState();
+    const [passbookDetails, setPassbookDetails] = useState();
     const [appointeePersonalDetails, setAppointeePersonalDetails] = useState();
     const [confirmationModelOpen, setConfirmationModelOpen] = useState(false);
     const [confirmationModelContent, setConfirmationModelContent] = useState();
@@ -177,7 +179,7 @@ const AppWrapper = (App) => {
     const [documentModelOpen, setDocumentModelOpen] = useState(false);
     const [documentModelProps, setDocumentModelProps] = useState();
     const [userId, setUserId] = useState();
-    const[epfoDetails,SetepfoDetails]=useState()
+    const [epfoDetails, SetepfoDetails] = useState()
     const [isUserViewOpen, setIsUserViewOpen] = useState(false);
 
     const closeRemedyModel = () => {
@@ -330,7 +332,7 @@ const AppWrapper = (App) => {
     const closeVerify = () => {
       setIsManualVerificationViewOpen(false)
     }
-    const openPassbookViewModel = (appointeeId,passbookDetails) => {
+    const openPassbookViewModel = (appointeeId, passbookDetails) => {
       setAppointeeId(appointeeId);
       setPassbookDetails(passbookDetails);
       setPassbookIsViewOpen(true);
@@ -339,7 +341,7 @@ const AppWrapper = (App) => {
     const closePassbookViewModel = () => {
       setPassbookIsViewOpen(false);
     };
-    const openEmploymentViewModel = (appointeeId, userId,epfoDetails) => {
+    const openEmploymentViewModel = (appointeeId, userId, epfoDetails) => {
       setAppointeeId(appointeeId);
       setUserId(userId);
       SetepfoDetails(epfoDetails);
@@ -361,9 +363,9 @@ const AppWrapper = (App) => {
     const closeDocumentModel = () => {
       setDocumentModelOpen(false);
     };
-    const openDocumentModel = (fileDetails, filename,fileType) => {
+    const openDocumentModel = (fileDetails, filename, fileType) => {
       setDocumentModelOpen(true);
-      setDocumentModelProps({ fileDetails, filename,fileType });
+      setDocumentModelProps({ fileDetails, filename, fileType });
     };
     const openPasswordSubmitionModel = (passwordModelContent) => {
       setPasswordSubmitionModelOpen(true);
@@ -755,7 +757,7 @@ const AppWrapper = (App) => {
             value: "A",
           }
         ],
-         dayscoustom : [
+        dayscoustom: [
           {
             lable: "Monthly",
             value: 30,
@@ -776,8 +778,8 @@ const AppWrapper = (App) => {
             lable: "Coustom",
             value: "A",
           }
-      ],
-      
+        ],
+
         upcomingRecruitsStatusList: [
           {
             id: 1,

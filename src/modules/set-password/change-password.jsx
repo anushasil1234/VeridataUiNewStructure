@@ -23,7 +23,7 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
     const [loading, setLoading] = useState(false);
     const [passwordErrorMsg, setPasswordErrorMsg] = useState(false);
     const [confirmPasswordErrorMsg, setConfirmPasswordErrorMsg] = useState(false);
-
+const [isOtpSubmnittedSuccessfully, setIsOtpSubmnittedSuccessfully] = useState(false);
 
     const popUpSlice = useSelector(state => state.popUpSlice);
     const apiSlice = useSelector(state => state.apiSlice);
@@ -49,6 +49,7 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
                             const { responseInfo } = response;
                             if (responseInfo) {
                                 showSuccessMessage(passwordChangeSuccessMsg);
+                                setIsOtpSubmnittedSuccessfully(true);
                                 setTimeout(() => {
                                     PasswordChangeSuccessAction();
                                     setLoading(false);
@@ -60,6 +61,7 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
 
                         }
                     } else {
+                        console.log('passwordPattern 3');
                         showErrorMessage(passwordPattern);
                     }
                 } else {
@@ -126,21 +128,26 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
     // }, [newPassword])
 
     useEffect(() => {
-        const trimmedPassword = newPassword.trim();
-        if (hasValue(newPassword)) {
-            if (isPaswordValid(trimmedPassword)) {
-                setIsConfPasswrdDisable(false);
-                setPasswordErrorMsg(false);
-                showErrorMessage();
+        if (isOtpSubmnittedSuccessfully === false) {
+            const trimmedPassword = newPassword.trim();
+            if (hasValue(newPassword)) {
+                if (isPaswordValid(trimmedPassword)) {
+                    setIsConfPasswrdDisable(false);
+                    setPasswordErrorMsg(false);
+                    showErrorMessage();
+                } else {
+                    console.log('passwordPattern 2');
+                    showErrorMessage(passwordPattern);
+                    setIsConfPasswrdDisable(true);
+                    setPasswordErrorMsg(true);
+                }
             } else {
-                showErrorMessage(passwordPattern);
                 setIsConfPasswrdDisable(true);
-                setPasswordErrorMsg(true);
             }
-        } else {
-            setIsConfPasswrdDisable(true);
         }
     }, [newPassword])
+    console.log('newPassword123', newPassword);
+
 
     useEffect(() => {
         const trimmedPassword = newPassword.trim();
@@ -158,14 +165,16 @@ const ChangePassword = ({ userId, clientId, userCode, PasswordChangeSuccessActio
                     // setConfirmPassword('');
                 }
             } else {
+                console.log('passwordPattern 1');
+
                 showErrorMessage(passwordPattern);
                 setIsOTPDisable(true);
             }
-        } else { 
+        } else {
             setIsOTPDisable(true);
         }
     }, [confirmPassword])
-    
+
 
     useEffect(() => {
         if (isPasswordVisibilityOn) {

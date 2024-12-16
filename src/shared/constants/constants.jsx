@@ -2614,7 +2614,6 @@ export const passwordMaxFieldErrorMsg = "Length exceeded. Password can be of max
 export const notProcessedDataVerificationConfirmationMsg = `Do you want to send verification portal link to the appointees? [Note: Appointees will be removed from this page and moved to the "Processing" page]`;
 export const submitConfirmationMsg = `Your data will be submitted to PwC HC for verification. After submission, you will no longer be able to make any changes. Any updates or re-verification will be at the discretion of PwC HC. Are you sure you want to proceed with the submission?`;
 export const reUploadsubmitConfirmationMsg = "Your re-uploaded document(s) will be submitted to PwC HC for verification. Hence you will no longer be able to change your data. Are you sure you want to submit?";
-  export const epfoPassfileUploadeConfirmationMsg = `Please upload your entire Trust / private PF passbook(s) before submission`;
 export const visafileUploadeConfirmationMsg = `Please upload your visa copy before submission`;
 export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details has been verified and submitted successfully. You have completed your verification process. Please wait for the HR to reply for further processing of your application`;
 export const docResubmissionSuccessDialogContentText = `Your documents have been submitted successfully. Please wait for your documents to be verified by PwC HC. .`;
