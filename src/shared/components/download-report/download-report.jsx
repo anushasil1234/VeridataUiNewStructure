@@ -192,7 +192,6 @@ const DownloadReport = ({
             </DarkTooltip>
           </Grid>
         )}
-       
         <Grid item>
             {infoDetails && hasValue(infoDetails) ?
             <DarkTooltip placement="right" title={infoDetails} arrow>
