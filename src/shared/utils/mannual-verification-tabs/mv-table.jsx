@@ -52,7 +52,8 @@ export const MVTable = (filters) => {
   const setTableRows = async (payload_MV) => {
     const response = await getMannualVerificationDataList(payload_MV);
     if (response) {
-
+      dispatch(removeManualValidationResponseStatusSlice());
+      dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited: false }));
       // dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited: false }));
       const { responseInfo } = response;
       const { manualVerificationList, filedata } = responseInfo;
@@ -161,7 +162,7 @@ export const MVTable = (filters) => {
     }
   };
   const handleDownloadExcel = () => {
-    console.log("isDownloadExcel",isDownloadExcel,isDownload);
+    console.log("isDownloadExcel", isDownloadExcel, isDownload);
     if (responseList && responseList?.length > 0) {
       if (responseFileDetails?.fileData && typeof responseFileDetails?.fileData === "string") {
         const base64String = responseFileDetails?.fileData;
@@ -181,9 +182,9 @@ export const MVTable = (filters) => {
       return;
     }
   };
-  
+
   useEffect(() => {
-   
+
     if (isDownloadExcel === true) {
       handleDownloadExcel();
       setIsDownloadExcel(false);
@@ -199,12 +200,8 @@ export const MVTable = (filters) => {
 
   useEffect(() => {
     dispatch(removeActionRoute());
-    console.log("hasPermission if out", hasPermission,);
-    console.log("actionRouteSlice24 if out", actionRouteSlice);
 
     if (actionRouteSlice.length === 0 && hasPermission) {
-      console.log("hasPermission in", hasPermission, actionRouteSlice);
-
       setTableRows(payload_MV);
 
       // if (manualValidationResponseStatus && manualValidationResponseStatus.hasOwnProperty('isdataSubmited')) {
@@ -217,8 +214,9 @@ export const MVTable = (filters) => {
       //   setTableRows(payload_MV);
       // }
     }
-  }, [actionRouteSlice, props, payload, hasPermission, manualValidationResponseStatus?.isdataSubmited]);
+  }, [actionRouteSlice, props, payload, hasPermission]);
   // todo use single useeffect here for the funtion setTableRows
+  
   useEffect(() => {
     // dispatch(removeActionRoute());
     if (manualValidationResponseStatus?.isdataSubmited) {
