@@ -77,12 +77,12 @@ export const attentionInfo = `The appointees with the nearest joining dates are 
 export const linkNotSentInfo = `The following appointees, for whom the verification link has not been sent, are listed below along with their respective details: Appointee Name, Email ID and Date of Joining (DOJ).`
 export const pfUsersInfo =`This list provides detailed information about PF users, including key fields such as Appointee Name, Aadhaar Number, PAN, UAN (Universal Account Number), Aadhaar-UAN Link Status, EPS Membership Status, and other relevant details. It serves as a comprehensive record for managing and tracking employee provident fund data efficiently`
 export const cancelledInfo = `The following appointees have been rejected during the verification process. Their details, including Appointee Name, Aadhaar Number, PAN, Date of Joining (DOJ), and the reason for rejection, are provided below.`
-export const generateNoMovementReportDesc = (days) => {
+export const generateNoResponseReportDesc = (days) => {
   return `This report analyzes appointees who have not started verification process ${
     days > 0 ? `for ${days} days ` : ""
   }during a specified period. It includes detailed information about these candidates to help PwC understand progress patterns, identify issues and potential candidate disinterest.`;
 };
-export const generateNoResponseReportDesc = (days) => {
+export const generateNoMovementReportDesc = (days) => {
   return `This report analyzes appointees who have made no progress ${
     days > 0 ? `for ${days} days ` : ""
   }during a specified period. It includes detailed information about these candidates to help PwC understand progress patterns, identify issues and potential candidate disinterest.`;
