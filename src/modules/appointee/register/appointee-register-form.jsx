@@ -900,15 +900,15 @@ const AppointeeRegisterForm = () => {
 
   const handleFileUpload =
     (fileTypeAlias, setFileName, fileNameList = [], uploadType) =>
-    ({ target }) => {
-      uploadFile({
-        files: target.files,
-        uploadTypeAlias: fileTypeAlias,
-        setFileName,
-        _filenameList: fileNameList,
-        uploadType,
-      });
-    };
+      ({ target }) => {
+        uploadFile({
+          files: target.files,
+          uploadTypeAlias: fileTypeAlias,
+          setFileName,
+          _filenameList: fileNameList,
+          uploadType,
+        });
+      };
   const uploadTrustEPFOFile = handleFileUpload(
     trustEpfoFileTypeAlias,
     setTrustEpfoFileName,
@@ -1146,7 +1146,7 @@ const AppointeeRegisterForm = () => {
 
   const handleConfirmSave = async () => {
     // Once the user confirms, save the details
-    await saveDetails();
+    await saveDetails(true);
     handleCloseModal(); // Close the confirmation modal after saving
     setIsThirdNextVisible(true);
     //setCurrentPageNo(3);
@@ -1182,17 +1182,31 @@ const AppointeeRegisterForm = () => {
     setIsUANAvailableState(isUANAvailable);
 
     // Proceed with the rest of the logic if verification passes
+    let payLoad = {
+        appointeeId: appointeeId,
+        userId: userId,
+        appointeeCode: userCode,
+        trustPassbookAvailable: isTrustEpfoAvailable,
+        IsUanAvailable: isUANAvailable,
+        FileDetails: fileDetails,
+        fileUploaded: uploadedFile,
+        IsFinalSubmit: false
+    };
     // Use the buildFormData helper function to create the formData
 
+
+    let formData = buildFormData(payLoad);
+
     // Make the API call
+    const response = await PostUpdatePfUanDetails(formData, formSaveSuccess);
     // if (response) {
     //   clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
     //   clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
     //   clearFileVaribles(passportFileTypeAlias, setPassportFileName);
     // }
-  };
+};
 
-  const saveDetails = async () => {
+  const saveDetails = async (IsFinalSubmit) => {
     let isUANAvailable = uanNumberAvailable === "yes" ? true : false;
     setIsUANAvailableState(isUANAvailable);
 
@@ -1205,7 +1219,7 @@ const AppointeeRegisterForm = () => {
       IsUanAvailable: isUANAvailable,
       FileDetails: fileDetails,
       fileUploaded: uploadedFile,
-      IsFinalSubmit: true,
+      IsFinalSubmit: IsFinalSubmit,
     };
     // Use the buildFormData helper function to create the formData
     let formData = buildFormData(payLoad);
@@ -1474,29 +1488,29 @@ const AppointeeRegisterForm = () => {
     setUanNumberAvailable(value);
   };
 
-    const handleEpfoButtonClick = () => {
-        if (!hasValue(UAN)) {
-            if (isPanVarified === false || isAadhaarVarified === false) {
-                const confirmationModelContent = {
-                    dialogContentText: fetchUanConfirmationtMsg,
-                };
-                openConfirmationModel(confirmationModelContent, handleGetUANNumber);
-            } else {
-                handleGetUANNumber();
-            }
-        }else if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
-            showErrorMessage(UANPatterErrorMsg);
-        }
-        else handleEpfoVerifiaction();
-    };
-    const handleGetUANNumber = async () => {
-        const payLoad = {
-            aaddharNumber: hasValue(aadhar) ? removeExtraSpaces(aadhar) : null,
-            appointeeId,
-            panNumber: hasValue(pan) ? removeExtraSpaces(pan) : null,
-            mobileNumber: hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null,
-            userId,
+  const handleEpfoButtonClick = () => {
+    if (!hasValue(UAN)) {
+      if (isPanVarified === false || isAadhaarVarified === false) {
+        const confirmationModelContent = {
+          dialogContentText: fetchUanConfirmationtMsg,
         };
+        openConfirmationModel(confirmationModelContent, handleGetUANNumber);
+      } else {
+        handleGetUANNumber();
+      }
+    } else if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
+      showErrorMessage(UANPatterErrorMsg);
+    }
+    else handleEpfoVerifiaction();
+  };
+  const handleGetUANNumber = async () => {
+    const payLoad = {
+      aaddharNumber: hasValue(aadhar) ? removeExtraSpaces(aadhar) : null,
+      appointeeId,
+      panNumber: hasValue(pan) ? removeExtraSpaces(pan) : null,
+      mobileNumber: hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null,
+      userId,
+    };
 
     const response = await getUANNumber(payLoad);
     if (response) {
@@ -1725,11 +1739,11 @@ const AppointeeRegisterForm = () => {
     } else {
       const formattedMessage = passportExpireddMsg
         ? passportExpireddMsg.split(". ").map((sentence, index) => (
-            <React.Fragment key={index}>
-              {`${sentence}.`}
-              {index < passportExpireddMsg.split(". ").length - 1 && <br />}
-            </React.Fragment>
-          ))
+          <React.Fragment key={index}>
+            {`${sentence}.`}
+            {index < passportExpireddMsg.split(". ").length - 1 && <br />}
+          </React.Fragment>
+        ))
         : "";
       showErrorMessage(formattedMessage);
     }
