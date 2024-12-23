@@ -900,15 +900,15 @@ const AppointeeRegisterForm = () => {
 
   const handleFileUpload =
     (fileTypeAlias, setFileName, fileNameList = [], uploadType) =>
-      ({ target }) => {
-        uploadFile({
-          files: target.files,
-          uploadTypeAlias: fileTypeAlias,
-          setFileName,
-          _filenameList: fileNameList,
-          uploadType,
-        });
-      };
+    ({ target }) => {
+      uploadFile({
+        files: target.files,
+        uploadTypeAlias: fileTypeAlias,
+        setFileName,
+        _filenameList: fileNameList,
+        uploadType,
+      });
+    };
   const uploadTrustEPFOFile = handleFileUpload(
     trustEpfoFileTypeAlias,
     setTrustEpfoFileName,
@@ -1183,17 +1183,16 @@ const AppointeeRegisterForm = () => {
 
     // Proceed with the rest of the logic if verification passes
     let payLoad = {
-        appointeeId: appointeeId,
-        userId: userId,
-        appointeeCode: userCode,
-        trustPassbookAvailable: isTrustEpfoAvailable,
-        IsUanAvailable: isUANAvailable,
-        FileDetails: fileDetails,
-        fileUploaded: uploadedFile,
-        IsFinalSubmit: false
+      appointeeId: appointeeId,
+      userId: userId,
+      appointeeCode: userCode,
+      trustPassbookAvailable: isTrustEpfoAvailable,
+      IsUanAvailable: isUANAvailable,
+      FileDetails: fileDetails,
+      fileUploaded: uploadedFile,
+      IsFinalSubmit: false,
     };
     // Use the buildFormData helper function to create the formData
-
 
     let formData = buildFormData(payLoad);
 
@@ -1204,7 +1203,7 @@ const AppointeeRegisterForm = () => {
     //   clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
     //   clearFileVaribles(passportFileTypeAlias, setPassportFileName);
     // }
-};
+  };
 
   const saveDetails = async (IsFinalSubmit) => {
     let isUANAvailable = uanNumberAvailable === "yes" ? true : false;
@@ -1498,10 +1497,9 @@ const AppointeeRegisterForm = () => {
       } else {
         handleGetUANNumber();
       }
-    } else if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
+    } else if (hasValue(UAN) && !validationsCheck(UAN, "UAN")) {
       showErrorMessage(UANPatterErrorMsg);
-    }
-    else handleEpfoVerifiaction();
+    } else handleEpfoVerifiaction();
   };
   const handleGetUANNumber = async () => {
     const payLoad = {
@@ -1537,7 +1535,7 @@ const AppointeeRegisterForm = () => {
     }
   };
 
-  const generateUANOTPDialog = (UAN) => {
+  const generateUANOTPDialog = (UAN, mobileNo) => {
     // Perform the below actions using the already existing 'uan' state
     setEpfoButton("Auto UAN Verification");
     // setDisabledPanInput(true);
@@ -1545,11 +1543,16 @@ const AppointeeRegisterForm = () => {
     //epfostatusMessage.color = "";
     epfostatusMessage.success = null;
     setEpfostatusMessage(epfostatusMessage);
+    const mobileNumber = hasValue(mobileNo)
+      ? removeExtraSpaces(mobileNo)
+      : null;
+
     // Proceed to open OTP form for UAN verification
     openOtpForm(
       UAN,
+      mobileNumber,
       "UAN Number",
-      () => validateUANOtp(UAN),
+      () => validateUANOtp(UAN, mobileNumber),
       "Generate OTP for PF Verification"
     );
   };
@@ -1650,9 +1653,10 @@ const AppointeeRegisterForm = () => {
       setEpfostatusMessage(new VerificationStatus(isVarified, "V"));
     }
   };
-  const validateUANOtp = async (uanNumber) => {
+  const validateUANOtp = async (uanNumber, mobileNumber) => {
     const payLoad = {
       uanNumber,
+      mobileNumber,
       appointeeId,
       userId,
     };
@@ -1677,10 +1681,14 @@ const AppointeeRegisterForm = () => {
   };
 
   const handleEpfoVerifiaction = () => {
+    const mobileNumber = hasValue(mobileNo)
+      ? removeExtraSpaces(mobileNo)
+      : null;
     openOtpForm(
       UAN,
+      mobileNumber,
       "UAN Number",
-      () => validateUANOtp(UAN),
+      () => validateUANOtp(UAN, mobileNumber),
       "Generate OTP for PF Verification"
     );
     //setIsEmployementDataVarified(true);
@@ -1739,11 +1747,11 @@ const AppointeeRegisterForm = () => {
     } else {
       const formattedMessage = passportExpireddMsg
         ? passportExpireddMsg.split(". ").map((sentence, index) => (
-          <React.Fragment key={index}>
-            {`${sentence}.`}
-            {index < passportExpireddMsg.split(". ").length - 1 && <br />}
-          </React.Fragment>
-        ))
+            <React.Fragment key={index}>
+              {`${sentence}.`}
+              {index < passportExpireddMsg.split(". ").length - 1 && <br />}
+            </React.Fragment>
+          ))
         : "";
       showErrorMessage(formattedMessage);
     }

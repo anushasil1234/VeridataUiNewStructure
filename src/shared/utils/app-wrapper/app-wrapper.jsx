@@ -229,12 +229,14 @@ const AppWrapper = (App) => {
     };
     const openOtpForm = (
       generateOtpInput,
+      generateOtpInput2,
       generateOtpLable,
       generateOtpFunc,
       headerText
     ) => {
       setGenerateOtpProps({
         generateOtpInput,
+        generateOtpInput2,
         generateOtpLable,
         generateOtpFunc,
         headerText
