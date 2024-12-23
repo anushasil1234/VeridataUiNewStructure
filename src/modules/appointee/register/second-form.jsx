@@ -1,5 +1,5 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, FormControlLabel, Grid, IconButton, Radio, RadioGroup, Stack, Switch, Tooltip, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import FormHeadingContainer from 'shared/components/grid-container/form-heading-container'
 import FormHeading from './form-heading'
 import GridRow from 'shared/components/grid-container/grid-row'
@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux'
 import PassportFileNoSample from "assets/images/backgrounds/file-number-in-indian-passport.png";
 import { DisableSection } from 'shared/components/disble-section/disble-section'
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section'
+import { useMsal } from '@azure/msal-react'
 
 
 const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload10thCertificateFile, tenthCertificateFileName,
@@ -27,6 +28,12 @@ const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload1
     const {
         openInfoModel,
     } = functionSlice[0];
+
+    // const { accounts } = useMsal();
+    // const loggedInData = useSelector((state) => state.loggedInData)
+    // const { isDefaultPassword, isPasswordExpire } = loggedInData.length > 0 && loggedInData[0];
+    // const loggedInTokendData = useSelector((state) => state.loggedinTokenData);
+
 
     const handlePassporFileNumbertHelp = () => {
         const passportHelpContent = {
@@ -44,6 +51,18 @@ const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload1
         };
         openInfoModel(passportHelpContent);
     };
+
+    const handleNavigationToHelpPage = () => {
+        // const channel = new BroadcastChannel('auth-channel');
+        // const authData = {
+        //     accounts: accounts,
+        //     isDefaultPassword: isDefaultPassword, 
+        //     isPasswordExpire: isPasswordExpire,
+        //     loggedInTokendData: loggedInTokendData
+        // }
+        // channel.postMessage({ type: 'AUTH_DATA', data: authData });
+        // window.open(toHelp, '_blank', 'noopener,noreferrer');
+    }
     return (
         <Box sx={{ width: "100%" }}>
             <form ref={formElement}>
@@ -85,7 +104,8 @@ const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload1
                                             <p>{'Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year.'}</p>
                                             <a
                                                 href={toHelp}
-                                                target="_blank"
+                                                // onClick={handleNavigationToHelpPage}
+                                                // target="_blank"
                                                 rel="noopener noreferrer"
                                                 style={{
                                                     color: "#F57264",
@@ -154,7 +174,7 @@ const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload1
                                         <p>{'Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card.'}</p>
                                         <a
                                             href={toHelp}
-                                            target="_blank"
+                                            // target="_blank"
                                             rel="noopener noreferrer"
                                             style={{
                                                 color: "#F57264",
@@ -389,7 +409,7 @@ const SecondForm = ({ formElement, stepsList, isPreviousSectionDisabled, upload1
                                                 <p>{'Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO'}</p>
                                                 <a
                                                     href={toHelp}
-                                                    target="_blank"
+                                                    // target="_blank"
                                                     rel="noopener noreferrer"
                                                     style={{
                                                         color: "#F57264",

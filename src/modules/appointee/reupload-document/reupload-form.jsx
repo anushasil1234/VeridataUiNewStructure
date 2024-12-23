@@ -288,7 +288,7 @@ export const ReuploadForm = () => {
                                                 <p>{'Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year.'}</p>
                                                 <a
                                                     href={toHelp}
-                                                    target="_blank"
+                                                    // target="_blank"
                                                     rel="noopener noreferrer"
                                                     style={{
                                                         color: "#F57264",
@@ -363,7 +363,7 @@ export const ReuploadForm = () => {
                                             <p>{'Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card.'}</p>
                                             <a
                                                 href={toHelp}
-                                                target="_blank"
+                                                // target="_blank"
                                                 rel="noopener noreferrer"
                                                 style={{
                                                     color: "#F57264",

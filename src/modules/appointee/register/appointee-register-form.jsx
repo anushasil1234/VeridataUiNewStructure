@@ -1192,6 +1192,7 @@ const AppointeeRegisterForm = () => {
         fileUploaded: uploadedFile,
         IsFinalSubmit: false
     };
+    
     // Use the buildFormData helper function to create the formData
 
 

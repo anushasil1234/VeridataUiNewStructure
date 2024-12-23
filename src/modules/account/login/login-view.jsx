@@ -57,8 +57,7 @@ export const LoginView = () => {
       dispatch(storeLoggedinData(userDetails));
       dispatch(storeLoggedinTokenData(tokenDetails));
       dispatch(removeLoggeoutData());
-      dispatch(storeLoggeoutData({ handleClickOnLogout }));
-     
+      dispatch(storeLoggeoutData({ handleClickOnLogout }));    
 
       await setDropdownList();
       navigate(`${toDashboard}`)

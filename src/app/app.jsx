@@ -48,7 +48,6 @@ const App = () => {
   useEffect(() => {
     
     if (userTypeId && isDefaultPassword === false) {
-     
       setDropdownList();
     }
   }, [userTypeId])
