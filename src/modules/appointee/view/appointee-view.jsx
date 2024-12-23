@@ -912,7 +912,7 @@ let AppointeeViewForm = ({
                   fieldValue={maritalStatus}
                 />
                 <PersonalInformation
-                  fieldName={"Physically Handicaped"}
+                  fieldName={"Physically Handicap"}
                   fieldValue={isPhysicallyHandicap}
                 />
                 {isPhysicallyHandicap === "Yes" && (
