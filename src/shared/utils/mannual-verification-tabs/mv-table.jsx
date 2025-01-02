@@ -1,6 +1,9 @@
 import {
   docReuploadListTableHeadCell,
+  generatDocUploadReportDesc,
+  generateManualAppointeeReportDesc,
   generateProcessingAppointeeReportDesc,
+  generatReverificationReportDesc,
   mannualReverificationListTableHeadCell,
   mannualVerificationListTableHeadCell,
   MRVListPdfTableHeadCell,
@@ -20,15 +23,30 @@ import jsPDFReportDataTemplate from "../associate/js-pdf-report";
 import moment from "moment";
 import generateBlobFromBase64 from "../associate/generateBlob";
 import downloadFile from "../associate/download-file";
-import { removeManualValidationResponseStatusSlice, storeManualValidationResponseStatusSlice } from "store/slices/manual-validation-response-status-slice";
+import {
+  removeManualValidationResponseStatusSlice,
+  storeManualValidationResponseStatusSlice,
+} from "store/slices/manual-validation-response-status-slice";
 
 export const MVTable = (filters) => {
+  const {
+    props,
+    payload,
+    setIsDownload,
+    isDownload,
+    setIsDownloadExcel,
+    isDownloadExcel,
+    hasPermission,
+  } = filters;
 
-  const { props, payload, setIsDownload, isDownload, setIsDownloadExcel, isDownloadExcel, hasPermission } = filters;
+  const manualValidationResponseStatusSlice = useSelector(
+    (state) => state.manualValidationResponseStatusSlice
+  );
 
-  const manualValidationResponseStatusSlice = useSelector((state) => state.manualValidationResponseStatusSlice);
-
-  const manualValidationResponseStatus = manualValidationResponseStatusSlice[manualValidationResponseStatusSlice.length - 1]; // todo change syntax
+  const manualValidationResponseStatus =
+    manualValidationResponseStatusSlice[
+      manualValidationResponseStatusSlice.length - 1
+    ]; // todo change syntax
 
   // dispatch(storeLoggedinData(loginData));
   const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -53,20 +71,23 @@ export const MVTable = (filters) => {
     const response = await getMannualVerificationDataList(payload_MV);
     if (response) {
       dispatch(removeManualValidationResponseStatusSlice());
-      dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited: false }));
+      dispatch(
+        storeManualValidationResponseStatusSlice({ isdataSubmited: false })
+      );
       // dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited: false }));
       const { responseInfo } = response;
       const { manualVerificationList, filedata } = responseInfo;
       setResponseList(manualVerificationList);
-      manualVerificationList.length > 0 && setResponseListLength(manualVerificationList.length)
+      manualVerificationList.length > 0 &&
+        setResponseListLength(manualVerificationList.length);
       setResponseFileDetails(filedata);
       let generatedCells = generateTableRowData(
         manualVerificationList,
         props === "MV"
           ? mannualVerificationListTableHeadCell
           : props === "RD"
-            ? docReuploadListTableHeadCell
-            : mannualReverificationListTableHeadCell,
+          ? docReuploadListTableHeadCell
+          : mannualReverificationListTableHeadCell,
         null,
         hasPermission
       );
@@ -75,8 +96,8 @@ export const MVTable = (filters) => {
           props === "MV"
             ? mannualVerificationListTableHeadCell
             : props === "RD"
-              ? docReuploadListTableHeadCell
-              : mannualReverificationListTableHeadCell,
+            ? docReuploadListTableHeadCell
+            : mannualReverificationListTableHeadCell,
         tableRows: generatedCells,
       });
     }
@@ -84,7 +105,6 @@ export const MVTable = (filters) => {
 
   const handleDownload = () => {
     if (responseList && responseList.length > 0) {
-
       const tableHeadList = (() => {
         let sourceList = [];
         switch (props) {
@@ -120,10 +140,10 @@ export const MVTable = (filters) => {
 
       const tableBodyList = responseList
         ? responseList.map((tableRows) =>
-          selectedTableHeadCell
-            ? CreatePdfTableBody(tableRows, selectedTableHeadCell)
-            : null
-        )
+            selectedTableHeadCell
+              ? CreatePdfTableBody(tableRows, selectedTableHeadCell)
+              : null
+          )
         : [];
 
       const tableObj = {
@@ -138,53 +158,59 @@ export const MVTable = (filters) => {
             props === "MV"
               ? `_Manual_Verification_Required_List_${currentDate}`
               : props === "RD"
-                ? `_Document_Reupload_Request_List_${currentDate}`
-                : `_Manual_Reverification_Required_List_${currentDate}`,
+              ? `_Document_Reupload_Request_List_${currentDate}`
+              : `_Manual_Reverification_Required_List_${currentDate}`,
           label:
             props === "MV"
               ? "Manual Verification Required List"
               : props === "RD"
-                ? "Document Reupload Request List"
-                : "Manual Reverification Required List",
+              ? "Document Reupload Request List"
+              : "Manual Reverification Required List",
           //  fromDate: fromDate,
           //  toDate: toDate,
-          rptDesc: generateProcessingAppointeeReportDesc,
+          rptDesc:
+            props === "MV"
+              ? generateManualAppointeeReportDesc
+              : props === "RD"
+              ? generatDocUploadReportDesc
+              : generatReverificationReportDesc,
           companyName: "PWC REPORT", // or use a dynamic company name
         },
         tables: [tableObj],
-        countFlag: responseListLength
+        countFlag: responseListLength,
         //clientDetailsFlag : false
       });
     } else {
       showErrorMessage(reportGenarate);
       return;
-
     }
   };
   const handleDownloadExcel = () => {
     console.log("isDownloadExcel", isDownloadExcel, isDownload);
     if (responseList && responseList?.length > 0) {
-      if (responseFileDetails?.fileData && typeof responseFileDetails?.fileData === "string") {
+      if (
+        responseFileDetails?.fileData &&
+        typeof responseFileDetails?.fileData === "string"
+      ) {
         const base64String = responseFileDetails?.fileData;
         const fileName =
           props === "MV"
             ? `_Manual_Verification_Required_List_${currentDate}`
             : props === "RD"
-              ? `_Document_Reupload_Request_List_${currentDate}`
-              : `_Manual_Reverification_Required_List_${currentDate}`;
+            ? `_Document_Reupload_Request_List_${currentDate}`
+            : `_Manual_Reverification_Required_List_${currentDate}`;
         const blob = generateBlobFromBase64(base64String);
         const blobUrl = window.URL.createObjectURL(blob);
         downloadFile(blobUrl, fileName);
         window.URL.revokeObjectURL(blobUrl);
       }
     } else {
-      showErrorMessage(reportGenarate)
+      showErrorMessage(reportGenarate);
       return;
     }
   };
 
   useEffect(() => {
-
     if (isDownloadExcel === true) {
       handleDownloadExcel();
       setIsDownloadExcel(false);
@@ -192,11 +218,8 @@ export const MVTable = (filters) => {
     if (isDownload === true) {
       handleDownload();
       setIsDownload(false);
-
     }
   }, [isDownloadExcel, isDownload]);
-
-
 
   useEffect(() => {
     dispatch(removeActionRoute());
@@ -216,11 +239,10 @@ export const MVTable = (filters) => {
     }
   }, [actionRouteSlice, props, payload, hasPermission]);
   // todo use single useeffect here for the funtion setTableRows
-  
+
   useEffect(() => {
     // dispatch(removeActionRoute());
     if (manualValidationResponseStatus?.isdataSubmited) {
-
       setTableRows(payload_MV);
 
       // if (manualValidationResponseStatus && manualValidationResponseStatus.hasOwnProperty('isdataSubmited')) {
@@ -242,8 +264,8 @@ export const MVTable = (filters) => {
         props === "MV"
           ? mannualVerificationListTableHeadCell
           : props === "RD"
-            ? docReuploadListTableHeadCell
-            : mannualReverificationListTableHeadCell
+          ? docReuploadListTableHeadCell
+          : mannualReverificationListTableHeadCell
       }
     />
   );
