@@ -41,7 +41,7 @@ import {
   
 
     const { getDashboardWidgetCardData } = apiSlice[0];
-    const { userTypeId } = loggedInData[0];
+    const userTypeId = loggedInData[0].userTypeId;
     const [loading, setLoading] = useState(false);
   
     const [filtertotaloffer, setfiltertotaloffer] = useState(null);

@@ -49,7 +49,7 @@ const Header = (props) => {
   }));
   const loggedInData = useSelector(state => state.loggedInData)
   const userDetails = loggedInData[0];
-  const consentStatus = userDetails?.consentStatus;
+  const consentStatus = userDetails && userDetails?.consentStatus;
 
 
   const appointeeConsent = () => {
@@ -78,7 +78,7 @@ const Header = (props) => {
         </IconButton>
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">
-          {loggedInData[0].roleId !== 5 ?
+          {loggedInData[0] && loggedInData[0]?.roleId !== 5 ?
             <SearchAppBar />
             :
             props?.showRevokeConsentCallToAction !== false &&

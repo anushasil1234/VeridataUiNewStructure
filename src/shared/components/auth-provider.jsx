@@ -39,8 +39,9 @@ const RequireAuth = (Component) => {
     // useEffect(() => {
 
     // },[]);
+    
     return (
-      accounts.length > 0 || token ?
+      accounts.length > 0 || loggedInTokendData[0] && loggedInTokendData[0].token ?
         (isDefaultPassword || isPasswordExpire) ?
           <BlankLayoutWithHeader><SetPassword /></BlankLayoutWithHeader> :
           <Component setToken={setToken} {...props} /> :

@@ -17,7 +17,7 @@ const SidebarItems = () => {
   const loggedInData = useSelector((state) => state.loggedInData);
   const apiSlice = useSelector((state) => state.apiSlice);
 
-  const { userId } = loggedInData && loggedInData[0];
+  const userId = loggedInData && loggedInData[0] && loggedInData[0].userId;
   const { getMenuList } = apiSlice && apiSlice[0];
   const setMenu = async () => {
     const response = await getMenuList(userId);
@@ -30,11 +30,13 @@ const SidebarItems = () => {
     }
   }
   useEffect(() => {
-    setMenu();
+    if(userId){
+      setMenu();
+    }
     return () => {
       setMenuitems(null);
     }
-  }, [])
+  }, [userId])
 
   const handleToggle = (e) => {
     const menuHeaderID = GetAttribute(e, "id");

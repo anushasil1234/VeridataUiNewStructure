@@ -9,7 +9,7 @@ import { roleTypeEnums } from "shared/constants/constants";
 const HomeView = () => {
 
   const loggedInData = useSelector((state) => state.loggedInData);
-  const { userTypeId } = loggedInData[0];
+  const userTypeId = loggedInData && loggedInData[0] && loggedInData[0].userTypeId;
 
   return (
     <>
