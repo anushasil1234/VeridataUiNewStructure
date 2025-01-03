@@ -44,7 +44,7 @@ const PrerequisiteInformation = () => {
         {
             StepNumber: 'UAN',
             primaryHeading: 'UAN',
-            secondaryText: 'If you have a UAN account, make sure you have a activate it.',
+            secondaryText: 'As per Govt. of India rules, all EPFO subscribers must have an Aadhaar-linked Universal Account Number (UAN) activated by creating a login on the Member Portal. An activated UAN allows access to various facilities, including viewing/downloading PF passbooks, submitting claims, updating details, and tracking claim status in real-time.',
             secondaryComponent:
                 <>
                     {" — Please login to the EPFO portal at least once and then try verifying you details."}
