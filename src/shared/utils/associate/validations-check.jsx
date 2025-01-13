@@ -18,6 +18,8 @@ export const validationsCheck = (arrvalue, validation_type) => {
 
         case 'indPassport':
             return /^[a-zA-Z0-9]{12}$/.test(arrvalue);
+        case 'indPassportFile':
+            return /^[a-zA-Z0-9]{12,20}$/.test(arrvalue);
         case 'UAN':
             return /^\d{12}$/.test(arrvalue);
         case `${fileVerificationEnums.docComplete}_${epfoServiceHistoryFileTypeAlias}`:

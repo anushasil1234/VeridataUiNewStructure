@@ -1559,7 +1559,7 @@ const AppointeeRegisterForm = () => {
   };
 
   const handlePassportVerification = async () => {
-    if (!validationsCheck(passportFileNumber, "indPassport")) {
+    if (!validationsCheck(passportFileNumber, "indPassportFile")) {
       showErrorMessage(passportFilePatternErrorMsg);
       setPassportFileNumberError(true);
       return;
