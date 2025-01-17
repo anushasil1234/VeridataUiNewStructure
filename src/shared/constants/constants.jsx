@@ -2581,11 +2581,11 @@ export const EmployementDetails_URL = (AppointeeId, userId) => {
   let _EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails`;
   return `${_EmployementDetails_URL}?AppointeeId=${AppointeeId}&userId=${userId}`;
 };
-export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetailsPriorityBase`;
-export const VerifyPanDetails_URL = `${AadhaarValidate}/VerifyPanDetailsPriorityBase`;
+export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetails`;
+export const VerifyPanDetails_URL = `${AadhaarValidate}/VerifyPanDetails`;
 export const VerifyAadharViaXml_URL = `${AadhaarValidate}/VerifyAadharViaXml`;
 export const GenerateUANOTP_URL = `${AadhaarValidate}/UANGenerateOTP`;
-export const GetUANNumber_URL = `${AadhaarValidate}/VerifyUanDetailsPriorityBase`;
+export const GetUANNumber_URL = `${AadhaarValidate}/GetUANDetails`;
 export const UANSubmitOTP_URL = `${AadhaarValidate}/UANSubmitOTP`;
 export const GetAdminUserList_URL = `${Users}/GetAdminUserList`;
 export const CreateUser_URL = `${Users}/CreateUser`;
@@ -3007,6 +3007,3 @@ export const yesNoList = [
     value: "N"
   }
 ];
-export const clientIdSet = {
-  PwC: "PwC"
-}
