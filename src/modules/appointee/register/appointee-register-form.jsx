@@ -1161,10 +1161,10 @@ const AppointeeRegisterForm = () => {
         } else {
           if (property === "fileUploaded") {
             formData.append(`${property}`, JSON.stringify(payLoad[property]));
-          } else if (property === "FileDetails") {
-            if (payLoad?.FileDetails?.length > 0) {
+          } else if (property === "fileDetails") {
+            if (payLoad?.fileDetails?.length > 0) {
               // If FileDetails is not empty, append the first element
-              payLoad?.FileDetails?.forEach((element, index) => {
+              payLoad?.fileDetails?.forEach((element, index) => {
                 formData.append(`${property}`, payLoad[property][index]);
               });
             }
@@ -1188,7 +1188,7 @@ const AppointeeRegisterForm = () => {
       appointeeCode: userCode,
       trustPassbookAvailable: isTrustEpfoAvailable,
       IsUanAvailable: isUANAvailable,
-      FileDetails: fileDetails,
+      fileDetails: fileDetails,
       fileUploaded: uploadedFile,
       IsFinalSubmit: false,
     };
@@ -1217,7 +1217,7 @@ const AppointeeRegisterForm = () => {
       appointeeCode: userCode,
       trustPassbookAvailable: isTrustEpfoAvailable,
       IsUanAvailable: isUANAvailable,
-      FileDetails: fileDetails,
+      fileDetails: fileDetails,
       fileUploaded: uploadedFile,
       IsFinalSubmit: IsFinalSubmit,
     };
@@ -1425,9 +1425,9 @@ const AppointeeRegisterForm = () => {
       appointeeCode: userCode,
       isSubmit: true,
       userId: userId,
-      FileDetails: fileDetails,
+      fileDetails: fileDetails,
       fileUploaded: uploadedFile,
-      IsManualPassbookUploaded: isUanManualUpload,
+      isManualPassbookUploaded: isUanManualUpload,
     };
     // Use the buildFormData helper function to create the formData
     let formData = buildFormData(payLoad);
