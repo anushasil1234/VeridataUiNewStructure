@@ -53,10 +53,10 @@ const UnWrappedMannualVerification = (props) => {
     setIsDownloadListOpened(!isDownloadListOpened);
   };
   const handleSearch = () => {
-    if (!hasValue(fromDate)) {
-      showErrorMessage(FromDateEmptyMsg);
-      return;
-    }
+    // if (!hasValue(fromDate)) {
+    //   showErrorMessage(FromDateEmptyMsg);
+    //   return;
+    // }
     const reqPayload = {
       fromDate: DateFormatYYYYMMDD(fromDate?.toString()),
       toDate: DateFormatYYYYMMDD(toDate?.toString()),

@@ -43,7 +43,7 @@ const ListTable = ({ rows }) => {
                 </TableContainer>
             </Box>
             <Box>
-                {noteList.length > 0 && <Typography sx={heading3}>Notes</Typography>}
+                {noteList.length > 0 && <Typography sx={heading3}>Notes : </Typography>}
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableBody>

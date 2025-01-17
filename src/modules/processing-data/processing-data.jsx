@@ -213,10 +213,10 @@ const UnWrappedProcessing = (props) => {
     setIsDownloadListOpened(!isDownloadListOpened)
   }
   const handleSearch = () => {
-    if (!hasValue (fromDate)) {
-      showErrorMessage(FromDateEmptyMsg);
-      return;
-    }
+    // if (!hasValue (fromDate)) {
+    //   showErrorMessage(FromDateEmptyMsg);
+    //   return;
+    // }
     setTableRows(payLoad);
   };
   

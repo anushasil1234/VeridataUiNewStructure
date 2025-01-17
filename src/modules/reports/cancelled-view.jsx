@@ -87,10 +87,10 @@ const UnwrappedCancelled = (props) => {
     }
   }
   const handleSearch = () => {
-    if (!hasValue (fromDate)) {
-      showErrorMessage(FromDateEmptyMsg);
-      return;
-    }
+    // if (!hasValue (fromDate)) {
+    //   showErrorMessage(FromDateEmptyMsg);
+    //   return;
+    // }
     setTableRows(payLoad);
   };
   const dispatch = useDispatch();

@@ -189,12 +189,12 @@ const NationalityReportView = (props) => {
   //   jsPDFReportTemplate({ tableObj });
   // };
   const handleReportSearch = () => {
-    if (filterType !== 0) {
-      if (!hasValue (fromDate)) {
-        showErrorMessage(FromDateEmptyMsg);
-        return;
-      }
-    }
+    // if (filterType !== 0) {
+    //   if (!hasValue (fromDate)) {
+    //     showErrorMessage(FromDateEmptyMsg);
+    //     return;
+    //   }
+    // }
   
     const _payLoad = filterType === 0 
       ? { ...payLoad, fromDate: null, toDate: null, nationalityType: null } 

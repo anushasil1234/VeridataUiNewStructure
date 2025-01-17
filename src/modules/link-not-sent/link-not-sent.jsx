@@ -133,10 +133,10 @@ const UnwrapedLinkNotSent = (props) => {
         navigateTo(toLinknotsent, { state: false });
     }
     const handleClickOnsearch = () => {
-        if (!hasValue(fromDate)) {
-            showErrorMessage(uploadedFromDateEmptyMsg);
-            return
-        }
+        // if (!hasValue(fromDate)) {
+        //     showErrorMessage(uploadedFromDateEmptyMsg);
+        //     return
+        // }
         handleSearch();
     }
     const handleRowSelection = ({rowsPerPage, page}) => {

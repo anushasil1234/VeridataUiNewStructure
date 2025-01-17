@@ -65,10 +65,10 @@ const UnwrappedAttention = (props) => {
     setPayLoad(payLoad);
   }, [fromDate, toDate])
   const handleSearch = () => {
-    if (!hasValue (fromDate)) {
-      showErrorMessage(FromDateEmptyMsg);
-      return;
-    }
+    // if (!hasValue (fromDate)) {
+    //   showErrorMessage(FromDateEmptyMsg);
+    //   return;
+    // }
     setTableRows(payLoad);
   };
   const handelsearch=()=>{
