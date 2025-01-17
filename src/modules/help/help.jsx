@@ -10,7 +10,7 @@ const Help = () => {
     const { GetFaqData } = apiSlice[0];
     const handleGetHalpData = async () => {
         const response = await GetFaqData();
-        console.log('response',response)
+        // console.log('response',response)
         if (response) {
             const { responseInfos } = response;
             setResponseList(responseInfos);

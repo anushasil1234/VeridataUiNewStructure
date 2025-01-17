@@ -3,7 +3,7 @@ import { removeFile } from "..";
 
 const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
     uploadType, uploadedFile, fileDetails, fileTypeList }) => {
-        console.log('uploadType12321', uploadType, uploadTypeAlias, uploadedFile, fileTypeList);
+        // console.log('uploadType12321', uploadType, uploadTypeAlias, uploadedFile, fileTypeList);
 
     let fileNameList = [..._filenameList];
     let updatedUploadedFileList = [...uploadedFile];

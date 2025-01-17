@@ -285,11 +285,11 @@ const AppointeeRegisterForm = () => {
     setFileDetails(updatedFileDetails);
     setFileName(updatedFileNameList);
 
-    console.log("Final State:", {
-      updatedFileDetails,
-      updatedUploadedFiles,
-      updatedFileNameList,
-    });
+    // console.log("Final State:", {
+    //   updatedFileDetails,
+    //   updatedUploadedFiles,
+    //   updatedFileNameList,
+    // });
   };
 
   const disablePassportVerifyBtn = () => {
@@ -479,7 +479,7 @@ const AppointeeRegisterForm = () => {
       setEpfoPassBookFiles(epfoPassBookFiles);
       setEpfoServiceHistoryFile(epfoServiceHistoryFile);
       // setUploadedFile([...upDatedFileUploaded]);
-      console.log("AAAAAA)", uanAadharLink);
+      // console.log("AAAAAA)", uanAadharLink);
       // fileUploaded.forEach(
       //   ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
       //     const fileDetails = `data:${mimeType};base64,${fileData}`;
@@ -1625,7 +1625,7 @@ const AppointeeRegisterForm = () => {
     const value = target.value;
     value !== "none" && setMaritalStatus(value);
   };
-  console.log("maritalStatus", maritalStatus);
+  // console.log("maritalStatus", maritalStatus);
 
   const verifyUAN = async (otp, clientId) => {
     const payLoad = {
@@ -1738,7 +1738,7 @@ const AppointeeRegisterForm = () => {
     const { value } = target;
     value !== "none" && setCountryOfOrigin(value);
   };
-  console.log("isPhysicallyHandicap", isPhysicallyHandicap);
+  // console.log("isPhysicallyHandicap", isPhysicallyHandicap);
 
   const PasswordExpiryValidity = (expiryDate) => {
     // const expiryDate = e.target.value;
@@ -1808,7 +1808,7 @@ const AppointeeRegisterForm = () => {
       }
     }
   };
-  console.log("isPassportAvailable", passportAvailable);
+  // console.log("isPassportAvailable", passportAvailable);
 
   const handleChangeUanVerification = ({ target }) => {
     const value = target.value;

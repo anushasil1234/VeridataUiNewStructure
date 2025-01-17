@@ -16,7 +16,6 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
     const { fileDetails, fileType } = documentModelProps;
     const { fileName } = fileDetails;
     const mimeType = fileDetails.split(';')[0].split(':')[1];
-
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });

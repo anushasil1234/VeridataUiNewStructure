@@ -51,7 +51,7 @@ const DownloadAgingReport = ({
   handelxlsxDownload,
   reportType
 }) => {
-  console.log('noOfDays',noOfDays);
+  // console.log('noOfDays',noOfDays);
   const { popUpSlice } = useSelector((state) => state);
   const currentDate = moment();
   const _currentDate = currentDate.format("DD/MM/YYYY");

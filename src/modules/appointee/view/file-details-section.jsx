@@ -70,10 +70,10 @@ const FiledetailsSection = ({
 }) => {
   const dispatch = useDispatch();
 
-  console.log("filesrc", fileSrc);
+  // console.log("filesrc", fileSrc);
   const mimeType = fileSrc.split(";")[0].split(":")[1];
 
-  console.log("mimeType", mimeType);
+  // console.log("mimeType", mimeType);
   const loggedInData = useSelector((state) => state.loggedInData);
   const popUpSlice = useSelector((state) => state.popUpSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -124,7 +124,7 @@ const FiledetailsSection = ({
       const response = await UpdateAppointeeManualVerification(payload);
       if (response) {
         const { responseInfo } = response;
-        console.log("responseInfo", responseInfo);
+        // console.log("responseInfo", responseInfo);
         // store into redux
         // dispatch(storeLoggedinData(loginData));
         setIsVarified(responseInfo);
@@ -149,7 +149,7 @@ const FiledetailsSection = ({
             showErrorMessage(fileEmptyerror);
             return;
         }
-        console.log("handleVerificationSubmit", verificationUpdate);
+        // console.log("handleVerificationSubmit", verificationUpdate);
 
         const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
 

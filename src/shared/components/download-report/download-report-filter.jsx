@@ -50,7 +50,7 @@ const DownloadReportFilter = ({
   const { showErrorMessage } = popUpSlice[0];
   const[isDownloadListOpened,setIsDownloadListOpened]=useState(false);
   const handleDownloadClick =()=>{
-    console.log('clikoutside')
+    // console.log('clikoutside')
 
     setIsDownloadListOpened(!isDownloadListOpened);
   }
@@ -70,7 +70,7 @@ const DownloadReportFilter = ({
   // Close download list on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
-      console.log('clikoutside',event.target)
+      // console.log('clikoutside',event.target)
       if (downloadListRef.current && !downloadListRef.current.contains(event.target)) {
         setIsDownloadListOpened(false);
       }

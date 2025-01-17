@@ -61,7 +61,7 @@ const [isOtpSubmnittedSuccessfully, setIsOtpSubmnittedSuccessfully] = useState(f
 
                         }
                     } else {
-                        console.log('passwordPattern 3');
+                        // console.log('passwordPattern 3');
                         showErrorMessage(passwordPattern);
                     }
                 } else {
@@ -136,7 +136,7 @@ const [isOtpSubmnittedSuccessfully, setIsOtpSubmnittedSuccessfully] = useState(f
                     setPasswordErrorMsg(false);
                     showErrorMessage();
                 } else {
-                    console.log('passwordPattern 2');
+                    // console.log('passwordPattern 2');
                     showErrorMessage(passwordPattern);
                     setIsConfPasswrdDisable(true);
                     setPasswordErrorMsg(true);
@@ -146,7 +146,7 @@ const [isOtpSubmnittedSuccessfully, setIsOtpSubmnittedSuccessfully] = useState(f
             }
         }
     }, [newPassword])
-    console.log('newPassword123', newPassword);
+    // console.log('newPassword123', newPassword);
 
 
     useEffect(() => {
@@ -165,7 +165,7 @@ const [isOtpSubmnittedSuccessfully, setIsOtpSubmnittedSuccessfully] = useState(f
                     // setConfirmPassword('');
                 }
             } else {
-                console.log('passwordPattern 1');
+                // console.log('passwordPattern 1');
 
                 showErrorMessage(passwordPattern);
                 setIsOTPDisable(true);

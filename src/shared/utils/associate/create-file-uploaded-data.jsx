@@ -2,7 +2,7 @@ import React from 'react'
 import { uploadAliasCategory } from 'shared/constants/constants';
 
 const createFileUploadedData = ({ fileUploaded, verificationFieldModal = null }) => {
-    console.log('fileUploaded', fileUploaded);
+    // console.log('fileUploaded', fileUploaded);
 //   const test =  fileUploaded.filter(({ uploadTypeAlias }) => {
 //         console.log('verificationFieldModal2342', verificationFieldModal, uploadTypeAlias, uploadAliasCategory[uploadTypeAlias]?.categoryType);
 //         const _currentCategoryType = uploadAliasCategory[uploadTypeAlias]?.categoryType;

@@ -13,8 +13,7 @@ const filterDocVerificationList = (
     let verificationFilteredCategoryList = [];
     let _filteredFileInfo;
     if (currentFileCategory) {
-        console.log("uploadedFileData", uploadedFileData, currentFileCategory
-        );
+        // console.log("uploadedFileData", uploadedFileData, currentFileCategory        );
 
         const safeUploadedFileData = Array.isArray(uploadedFileData) ? uploadedFileData : [];
         verificationFilteredCategoryList = safeUploadedFileData.filter(({ fileCategory }) => fileCategory === currentFileCategory)[0]?.files;

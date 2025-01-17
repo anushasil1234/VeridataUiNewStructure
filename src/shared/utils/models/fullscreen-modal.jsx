@@ -11,7 +11,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 export default function FullScreenModel({ fullScreen, open, closeModel, content, screensize, headerText,headerInfo, actionButton, zoomControls }) {
-console.log("fullScreen", fullScreen, screensize);
+// console.log("fullScreen", fullScreen, screensize);
 
     
     return (

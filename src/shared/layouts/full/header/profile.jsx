@@ -61,10 +61,10 @@ const Profile = () => {
   const handleNo = () => {
     // loggeoutFunction.handleClickOnLogout();
   }
-  console.log('loggedout',loggeoutFunction)
+  // console.log('loggedout',loggeoutFunction)
   useEffect(() => {
     const handleStorageChange = (event) => {
-      console.log('storage',event)
+      // console.log('storage',event)
       if (event.key === 'logout') {
         loggeoutFunction.handleClickOnLogout();
       }

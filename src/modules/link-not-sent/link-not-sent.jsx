@@ -98,7 +98,7 @@ const UnwrapedLinkNotSent = (props) => {
             userId: userId,
             isUnprocessed: true
         }
-        console.log('isCheckedAddedRows', isCheckedAddedRows);
+        // console.log('isCheckedAddedRows', isCheckedAddedRows);
 
         const response = await postRawFileData(postRawDatapayLoad);
 

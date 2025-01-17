@@ -311,7 +311,7 @@ let AppointeeViewForm = ({
         ? setIsPanVarified(isPanVarified)
         : isPanVarified === false
           ? setIsPanVarified(isPanVarified)
-          : setIsPanVarified(NA);
+          : isProcessed===true?setIsPanVarified(null) :setIsPanVarified(NA);
       isProcessed ? setIsProcessed(isProcessed) : setIsProcessed(false);
       isFnameVarified
         ? setIsFnameVarified(isFnameVarified)
