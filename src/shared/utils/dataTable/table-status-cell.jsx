@@ -116,7 +116,7 @@ const TableStatusCell = (props) => {
   }
   
   if (cellName==="epfoPassBookStatus"){
-    if(hasValue(cellValue)){
+    if(hasValue(cellValue) && cellValue === "EPFO"){
       labelValue = (
         <DarkTooltip title="EPFO Passbook Status Submitted"  placement="top" arrow>
           <span>{cellValue}</span>
