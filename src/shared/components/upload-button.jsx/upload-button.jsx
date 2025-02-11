@@ -2,16 +2,16 @@ import { SaveAlt } from '@mui/icons-material'
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 
-const UploadButton = ({ disabled, fileName }) => {
+const UploadButton = ({ disabled, fileName ,multiple}) => {
     const isReupload = Array.isArray(fileName) && fileName.length > 0;
     const iconColor = disabled ? 'gray' : 'none';
-    const iconText = isReupload ? (
+    const iconText = multiple || !isReupload ? (
         <Typography sx={{fontSize:"16px"}} >
-            Choose a file to <Typography component="span" sx={{ color: "#9A208C", fontWeight: 'bold' }}>Reupload</Typography>
+            Choose a file to <Typography component="span" sx={{ color: iconColor, fontWeight: 'bold' }}>Upload</Typography>
         </Typography>
     ) : (
         <Typography  sx={{fontSize:"16px"}}  >
-            Choose a file to <Typography component="span" sx={{ color: iconColor, fontWeight: 'bold' }}>Upload</Typography>
+            Choose a file to <Typography component="span" sx={{ color: "#9A208C", fontWeight: 'bold' }}>Reupload</Typography>
         </Typography>
     );
 

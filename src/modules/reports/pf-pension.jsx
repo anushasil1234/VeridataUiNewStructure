@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadPFReport from "shared/components/download-report/download-PF-report";
-import { FromDateEmptyMsg, pfPensionReportDesc, pfPensionTableHeadCell, pfPensionTablereportHeadCell, reportGenarate, topfPension, uploadedFromDateEmptyMsg, verifiedReportInfo } from "shared/constants/constants";
+import { companyName, FromDateEmptyMsg, pfPensionReportDesc, pfPensionTableHeadCell, pfPensionTablereportHeadCell, reportGenarate, topfPension, uploadedFromDateEmptyMsg, verifiedReportInfo } from "shared/constants/constants";
 import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from "shared/utils";
 import { removeActionRoute } from "store/slices/action-route-slice";
 import downloadFile from "shared/utils/associate/download-file";
@@ -165,7 +165,7 @@ const UnWrappedpf = (props) => {
         fromDate: fromDate,
         toDate: toDate,
         rptDesc: pfPensionReportDesc,
-        companyName: "PWC REPORT",
+        companyName: `${companyName} REPORT`,
       },
       tables: [tableObj],
     });

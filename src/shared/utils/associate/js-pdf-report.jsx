@@ -3,6 +3,7 @@ import autoTable from "jspdf-autotable";
 import moment from "moment";
 import { DateFormatYYYYMMDD } from "shared/utils";
 import goldenLogo from "assets/images/logos/elogix_logo.png";
+import { companyName } from "shared/constants/constants";
 
 const svgToBase64PNG = (svgString) => {
   return new Promise((resolve, reject) => {
@@ -38,7 +39,7 @@ const jsPDFReportDataTemplate = async ({
     toDate,
     rptDesc,
     reportDate = new Date(),
-    companyName: defaultCompanyName = "PWC REPORT",
+    companyName: defaultCompanyName = `${companyName} REPORT`,
   } = reportDetails;
   const svgContent = `
   <svg id="Veridata_logo_SVG" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 118.32 118.32">

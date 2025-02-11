@@ -112,7 +112,10 @@ import {
   UpdateAppointeeManualVerification_URL,
   dataSubmitionMsg,
   GetMannualVerificationData_URL,
-  PostReuploadDocuments_URL
+  PostReuploadDocuments_URL,
+  generateOtpSucces,
+  SubmitOTP_URL,
+  GenerateOTP_URL
 } from "shared/constants/constants";
 import { removeDropdownList, storeDropdownList } from "store/slices/dropdown-slice";
 import { removeFunction, storeFunction } from "store/slices/function-slice";
@@ -151,6 +154,7 @@ const AppWrapper = (App) => {
     const [isEmploymentViewOpen, setEmploymentIsViewOpen] = useState(false);
     const [appointeeId, setAppointeeId] = useState();
     const [passbookDetails, setPassbookDetails] = useState();
+    const [passbookStatusCode, setPassbookStatusCode] = useState();
     const [appointeePersonalDetails, setAppointeePersonalDetails] = useState();
     const [confirmationModelOpen, setConfirmationModelOpen] = useState(false);
     const [confirmationModelContent, setConfirmationModelContent] = useState();
@@ -334,19 +338,21 @@ const AppWrapper = (App) => {
     const closeVerify = () => {
       setIsManualVerificationViewOpen(false)
     }
-    const openPassbookViewModel = (appointeeId, passbookDetails) => {
+    const openPassbookViewModel = (appointeeId, passbookDetails,passbookStatusCode) => {
       setAppointeeId(appointeeId);
       setPassbookDetails(passbookDetails);
+      setPassbookStatusCode(passbookStatusCode);
       setPassbookIsViewOpen(true);
     };
 
     const closePassbookViewModel = () => {
       setPassbookIsViewOpen(false);
     };
-    const openEmploymentViewModel = (appointeeId, userId, epfoDetails) => {
+    const openEmploymentViewModel = (appointeeId, userId, epfoDetails,passbookStatusCode) => {
       setAppointeeId(appointeeId);
       setUserId(userId);
       SetepfoDetails(epfoDetails);
+      setPassbookStatusCode(passbookStatusCode);
       setEmploymentIsViewOpen(true);
     };
     const closeEmploymentViewModel = () => {
@@ -710,6 +716,14 @@ const AppWrapper = (App) => {
     const PostReuploadDocuments = async (payLoad) => {
       return await PfcRequest(`${PostReuploadDocuments_URL}`, "POST", payLoad, dataSubmitionMsg);
     }
+    const GenerateAadharOtp = async (payLoad) => {
+      console.log('payLoad23',payLoad);
+      
+      return await PfcRequest(`${GenerateOTP_URL}`, "POST", payLoad, generateOtpSucces);
+    }
+    const PostAadharOtp = async (payLoad) => {
+      return await PfcRequest(`${SubmitOTP_URL}`, "POST", payLoad, generateOtpSucces);
+    }
 
     // const getAppointeeAgingFilterReport = async (payLoad) => {
     //   return await PfcRequest(AppointeeAgingFilterReport_URL, "POST", payLoad);
@@ -937,7 +951,9 @@ const AppWrapper = (App) => {
           GetUnderProcessReport,
           getUploadFileData,
           UpdateAppointeeManualVerification,
-          PostReuploadDocuments
+          PostReuploadDocuments,
+          GenerateAadharOtp,
+          PostAadharOtp
         })
       );
     }
@@ -1013,6 +1029,7 @@ const AppWrapper = (App) => {
           openViewModel={openPassbookViewModel}
           appointeeId={appointeeId}
           passbookDetails={passbookDetails}
+          passbookStatusCode={passbookStatusCode}
           closeViewModel={closePassbookViewModel}
           openView={isPassbookViewOpen}
         />
@@ -1021,6 +1038,7 @@ const AppWrapper = (App) => {
           appointeeId={appointeeId}
           userId={userId}
           epfoDetails={epfoDetails}
+          passbookStatusCode={passbookStatusCode}
           closeViewModel={closeEmploymentViewModel}
           openView={isEmploymentViewOpen}
         />

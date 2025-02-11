@@ -1,13 +1,51 @@
-import { Box, Button, Grid, IconButton, InputAdornment, Link, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Link,
+  Paper,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
-import { InputField, PageHeading1, PageHeading2, InputFieldProps, setLocalStorageItem, removeLocalStorageItems } from "shared/utils";
-import { styles, imageContainer, loginImageStyle, loginFieldIconStyle, noBtnIconStyle, logoImageStyle } from "app";
+import {
+  InputField,
+  PageHeading1,
+  PageHeading2,
+  InputFieldProps,
+  setLocalStorageItem,
+  removeLocalStorageItems,
+} from "shared/utils";
+import {
+  styles,
+  imageContainer,
+  loginImageStyle,
+  loginFieldIconStyle,
+  noBtnIconStyle,
+  logoImageStyle,
+} from "app";
 import { useNavigate } from "react-router-dom";
-import { emptyPasswordField, emptyUserNameField, otpToMailMsg, passwordMaxFieldErrorMsg, toDashboard, toForgotPassword, toSetPassword, welcomeMsg } from "shared/constants/constants";
-import loginImage from 'assets/images/backgrounds/loginimage.png';
-import logo from 'assets/images/logos/pfc_logo1.png';
-import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
-import { removeLoggedinTokenData, storeLoggedinTokenData } from "store/slices/login-token-slice";
+import {
+  emptyPasswordField,
+  emptyUserNameField,
+  otpToMailMsg,
+  passwordMaxFieldErrorMsg,
+  toDashboard,
+  toForgotPassword,
+  toSetPassword,
+  welcomeMsg,
+} from "shared/constants/constants";
+import loginImage from "assets/images/backgrounds/loginimage.png";
+import logo from "assets/images/logos/pfc_logo1.png";
+import {
+  removeLoggedinData,
+  storeLoggedinData,
+} from "store/slices/login-slice";
+import {
+  removeLoggedinTokenData,
+  storeLoggedinTokenData,
+} from "store/slices/login-token-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useEffect } from "react";
@@ -19,17 +57,21 @@ import { storeLoggeoutData } from "store/slices/logout-slice";
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
 import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
 import { roleTypeEnums } from "shared/constants/constants";
+import AppointeeWelcomeDetails from "shared/components/form-dialog/appointee-welcome-details";
 
 export const UserLoginView = () => {
-  const apiSlice = useSelector(state => state.apiSlice);
-  const functionSlice = useSelector(state => state.functionSlice);
-  const popUpSlice = useSelector(state => state.popUpSlice);
+  const apiSlice = useSelector((state) => state.apiSlice);
+  const functionSlice = useSelector((state) => state.functionSlice);
+  const popUpSlice = useSelector((state) => state.popUpSlice);
 
-  const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-  const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
+  const showErrorMessage =
+    popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+  const showSuccessMessage =
+    popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
 
   const { postLoginCredDetails, postLoginDetails } = apiSlice[0];
-  const { openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } = functionSlice[0];
+  const { openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } =
+    functionSlice[0];
 
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
@@ -37,51 +79,52 @@ export const UserLoginView = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordType, setPasswordType] = useState("password");
   const [isPasswordVisibilityOn, setIsPasswordVisibilityOn] = useState(false);
-  const [passwordFieldIcon, setPasswordFieldIcon] = useState(<VisibilityOff sx={loginFieldIconStyle} />);
+  const [passwordFieldIcon, setPasswordFieldIcon] = useState(
+    <VisibilityOff sx={loginFieldIconStyle} />
+  );
   const [timeoutTimer, setTimeoutTimer] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handlePasswordVisibility = () => {
     setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
-  }
+  };
 
   const userNameInput = new InputFieldProps(
     setUserName,
     "Appointee Username",
-    null,
+    "Enter Appointee Username",
     null
   );
   const userNameInputProps = {
     endAdornment: (
-      <InputAdornment position='end'>
+      <InputAdornment position="end">
         <AccountCircle sx={noBtnIconStyle} />
       </InputAdornment>
     ),
-  }
+  };
   const handlePassword = (value) => {
     setPasswordError(false);
     setPassword(value);
-  }
+  };
   const passwordInput = new InputFieldProps(
     handlePassword,
-    "password",
-    null,
+    "Appointee Password",
+    "Enter Appointee  Password",
     passwordType
   );
   const passwordInputProps = {
     endAdornment: (
-      <InputAdornment position='end'>
+      <InputAdornment position="end">
         <IconButton
-          aria-label='toggle password visibility'
+          aria-label="toggle password visibility"
           onClick={handlePasswordVisibility}
         >
           {passwordFieldIcon}
         </IconButton>
       </InputAdornment>
     ),
-  }
-
+  };
 
   const startLoader = () => setLoading(true);
   const stopLoader = () => setLoading(false);
@@ -98,30 +141,28 @@ export const UserLoginView = () => {
     dispatch(removeFunction());
     dispatch(removePopUpSetFunction());
     dispatch(removeSideMenuItems());
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (userName === "") {
       showErrorMessage(emptyUserNameField);
-      return
+      return;
     }
     if (password === "") {
       showErrorMessage(emptyPasswordField);
       setPasswordError(true);
-      return
+      return;
     }
     if (password.trim().length > 12) {
       showErrorMessage(passwordMaxFieldErrorMsg);
       setPasswordError(true);
-      return
-    }
-
-    else {
+      return;
+    } else {
       const payLoad = {
         userCode: userName.trim(),
-        password: password.trim()
+        password: password.trim(),
       };
 
       try {
@@ -138,7 +179,7 @@ export const UserLoginView = () => {
             const payLoad = {
               clientId: clientId,
               dbUserType: dbUserType,
-              otp: otp
+              otp: otp,
             };
 
             const response = await postLoginDetails(payLoad);
@@ -146,28 +187,30 @@ export const UserLoginView = () => {
             if (response) {
               const { responseInfo } = response;
               const { userDetails, tokenDetails } = responseInfo;
-              const { userName, consentStatus, userTypeId, isDefaultPassword, isPasswordExpire } = userDetails;
-
+              const {
+                userName,
+                consentStatus,
+                userTypeId,
+                isDefaultPassword,
+                isPasswordExpire,
+              } = userDetails;
 
               // Show welcome message if needed
-              if (roleTypeEnums.candidate.includes(userTypeId) && consentStatus === 0 && !isDefaultPassword && !isPasswordExpire) {
+              if (
+                roleTypeEnums.candidate.includes(userTypeId) &&
+                consentStatus === 0 &&
+                !isDefaultPassword &&
+                !isPasswordExpire
+              ) {
                 const wellcomeMsgContent = {
                   dialogContentText: "",
                   dialogTitle: "",
-                  dialogContentComponent: <Box>
-                    <Typography style={{ fontSize: "1.5rem" }}>
-                      Hi {userName.split(' ')[0]} !
-                    </Typography>
-                    <Typography style={{ fontSize: ".9rem", textAlign: "left", color: '#6e6d7a' }}>
-                      {welcomeMsg}
-                    </Typography>
-                  </Box>,
-                  maxWidth: 'sm',
-                  btnName: 'Close'
+                  dialogContentComponent: <AppointeeWelcomeDetails userName ={userName} />,
+                  maxWidth: "sm",
+                  btnName: "Close",
                 };
                 openInfoModel(wellcomeMsgContent);
               }
-
 
               // Store user and token data
               setLocalStorageItem("pfc-user", userDetails);
@@ -202,20 +245,19 @@ export const UserLoginView = () => {
                 handlePostUserDetails(otp);
               },
               timeoutTimer: timeoutTimer,
-              setTimeoutTimer: setTimeoutTimer
+              setTimeoutTimer: setTimeoutTimer,
             });
           } else {
             startLoader(); //
             handlePostUserDetails();
             stopLoader(); // Stop loader if no response
-
           }
         } else {
           navigate("/");
           stopLoader(); // Stop loader if no response
         }
       } catch (error) {
-        console.error("Error during login:", error);
+        // console.error("Error during login:", error);
         stopLoader(); // Stop loader in case of any errors
         showErrorMessage("An error occurred during login. Please try again.");
       }
@@ -229,43 +271,51 @@ export const UserLoginView = () => {
       setPasswordType("password");
       setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
     }
-  }, [isPasswordVisibilityOn])
+  }, [isPasswordVisibilityOn]);
 
   return (
     <>
       {loading && <CircularIndeterminate />}
-      <Grid container spacing={1} justifyContent="center" alignItems="center" sx={{ ...styles.containerStyles }}>
+      <Grid
+        container
+        spacing={1}
+        justifyContent="center"
+        alignItems="center"
+        sx={{ ...styles.containerStyles }}
+      >
         <Paper elevation={8} sx={{ ...styles.paperStyle }}>
           <Grid container align="center" sx={styles.stackimageContainer}>
-            <Grid item md={8} sx={{ ...styles.loginsection, display: { xs: "none", md: "block" } }}>
-              <img
-                style={loginImageStyle}
-                src={loginImage}
-                alt="text"
-              />
+            <Grid
+              item
+              md={8}
+              sx={{
+                ...styles.loginsection,
+                display: { xs: "none", md: "block" },
+              }}
+            >
+              <img style={loginImageStyle} src={loginImage} alt="text" />
             </Grid>
             <Grid item md={4} sx={styles.loginsection}>
               {/* <Grid> */}
               <Box>
                 <Box sx={imageContainer}>
-                  <img
-                    style={logoImageStyle}
-                    src={logo}
-                    alt="text"
-                  />
+                  <img style={logoImageStyle} src={logo} alt="text" />
                 </Box>
                 <Box my={1.25}>
                   <PageHeading1
                     heading={
                       <>
                         {" VERIDATA"}
-                        <span style={{ fontSize: '0.8rem', verticalAlign: 'super' }}>® </span>
+                        <span
+                          style={{ fontSize: "0.8rem", verticalAlign: "super" }}
+                        >
+                          ®{" "}
+                        </span>
                       </>
                     }
                   />
                   <Box my={1}>
                     <PageHeading2
-
                       heading={"Your Onboarding Compliance Ally"}
                       fontSize="166rem"
                     />
@@ -274,8 +324,15 @@ export const UserLoginView = () => {
                 {/* </Grid> */}
                 <Box>
                   <form onSubmit={handleSubmit}>
-                    <InputField inputProps={userNameInputProps} props={userNameInput} />
-                    <InputField error={passwordError} inputProps={passwordInputProps} props={passwordInput} />
+                    <InputField
+                      inputProps={userNameInputProps}
+                      props={userNameInput}
+                    />
+                    <InputField
+                      error={passwordError}
+                      inputProps={passwordInputProps}
+                      props={passwordInput}
+                    />
                     <Button
                       type="submit"
                       color="primary"
@@ -283,7 +340,7 @@ export const UserLoginView = () => {
                       style={styles.btnstyle}
                       fullWidth
                     >
-                     Appointee Sign In
+                      Appointee Sign In
                     </Button>
                   </form>
                   <hr />
@@ -304,4 +361,3 @@ export const UserLoginView = () => {
   );
 };
 export default UserLoginView;
-

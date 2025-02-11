@@ -1,4 +1,5 @@
 import {
+  companyName,
   docReuploadListTableHeadCell,
   generatDocUploadReportDesc,
   generateManualAppointeeReportDesc,
@@ -174,7 +175,7 @@ export const MVTable = (filters) => {
               : props === "RD"
               ? generatDocUploadReportDesc
               : generatReverificationReportDesc,
-          companyName: "PWC REPORT", // or use a dynamic company name
+          companyName: `${companyName} REPORT`, // or use a dynamic company name
         },
         tables: [tableObj],
         countFlag: responseListLength,

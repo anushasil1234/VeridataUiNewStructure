@@ -10,7 +10,8 @@ import {
   reportGenarate,
   issueFilterList,
   uploadedFromDateEmptyMsg,
-  FromDateEmptyMsg
+  FromDateEmptyMsg,
+  companyName
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -179,7 +180,7 @@ const UnWrappedProcessing = (props) => {
         fromDate: fromDate,
         toDate: toDate,
         rptDesc: generateProcessingAppointeeReportDesc,
-        companyName: "PWC REPORT", // or use a dynamic company name
+        companyName: `${companyName} REPORT`, // or use a dynamic company name
       },
       tables: [tableObj],
       //clientDetailsFlag : false
@@ -331,7 +332,7 @@ const UnWrappedProcessing = (props) => {
                     setStatusCode(e.target.value);
                   }}
                 >
-                  <MenuItem value={"All"}>Select All</MenuItem>
+                  <MenuItem value={"All"}>All</MenuItem>
                   <MenuItem value={"0"}>No Response</MenuItem>
                   <MenuItem value={"1"}>Ongoing</MenuItem>
                   <MenuItem value={"2"}>Submitted</MenuItem>
@@ -351,7 +352,7 @@ const UnWrappedProcessing = (props) => {
                   label="Passbook Status"
                   onChange={handlePassbookStatusChange}
                 >
-                  <MenuItem value={'All'}>Select All</MenuItem>
+                  <MenuItem value={'All'}>All</MenuItem>
                   <MenuItem value="true">Manual</MenuItem>
                   <MenuItem value="false">Auto</MenuItem>
                 </Select>
@@ -369,7 +370,7 @@ const UnWrappedProcessing = (props) => {
                 label="Issue"
                 onChange={handleIssueChange}
               >
-                {/* <MenuItem value={'All'}>Select all</MenuItem> */}
+                {/* <MenuItem value={'All'}>all</MenuItem> */}
                 {issueFilterList.map(({ value, label }, index) => {
                   return (
                     <MenuItem key={index} value={value}>{label}</MenuItem>

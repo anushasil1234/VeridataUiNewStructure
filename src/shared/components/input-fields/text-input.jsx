@@ -3,7 +3,7 @@ import React from 'react'
 import Label from './label';
 import { FormControl, TextField } from '@mui/material';
 
-const TextInput = ({ value, onChange, label, required = false, readOnly = false, disabled = false, error = false, onKeyDown,
+const TextInput = ({ value, onChange, label, required = false, readOnly = false, disabled = false, error = false, onKeyDown,onBlur,
     onPaste, maxLength = 0, inputProps
 }) => {
     const _inputProps = inputProps ? inputProps : {
@@ -21,6 +21,7 @@ const TextInput = ({ value, onChange, label, required = false, readOnly = false,
                 onChange={(e) => {
                     onChange && onChange(e.target.value);
                 }}
+                onBlur={onBlur}
                 onKeyDown={(e) => onKeyDown ? onKeyDown(e) : false}
                 onPaste={(e) => onPaste ? onPaste(e) : false}
                 error={error}

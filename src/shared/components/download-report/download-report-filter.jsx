@@ -142,7 +142,7 @@ const DownloadReportFilter = ({
                   label="Nationality"
                   onChange={(e) => dropdownFilterTypeChange(e.target.value)}
                 >
-                  <MenuItem value="All">Select all</MenuItem>
+                  <MenuItem value="All">All</MenuItem>
                   <MenuItem value="IN">Indian</MenuItem>
                   <MenuItem value="OTH">Foreigner</MenuItem>
                 </Select>
@@ -157,7 +157,7 @@ const DownloadReportFilter = ({
                   label="Status"
                   onChange={(e) => dropdownFilterTypeChange(e.target.value)}
                 >
-                  <MenuItem value="All">Select all</MenuItem>
+                  <MenuItem value="All"> All</MenuItem>
                   <MenuItem value="001">Under Process</MenuItem>
                   <MenuItem value="003">Verified</MenuItem>
                   <MenuItem value="004">Rejected</MenuItem>

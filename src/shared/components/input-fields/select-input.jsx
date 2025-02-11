@@ -4,7 +4,6 @@ import { useTheme } from '@mui/material/styles';
 import Label from './label';
 const SelectInput = ({ itemList, label, onChange, value, required = false, disabled = false, handleClickOnMenuItem, sx, selectProperty = 'value' }) => {
     const theme = useTheme();
-    console.log('itemList12321', itemList, value);
 
     return (
         <FormControl fullWidth>

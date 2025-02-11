@@ -127,11 +127,13 @@ export const TableActionCell = (props1, props2) => {
       const { pfUan, companies } = response?.responseInfo || {};
       if (pfUan && pfUan.length >= 12  && Array.isArray(companies) && companies.length > 0) {
          const passbookDetails=response.responseInfo
-        openPassbookViewModel(appointeeId,passbookDetails);
+        openPassbookViewModel(appointeeId,passbookDetails,passbookStatusCode);
       } else {
         if (passbookStatusCode === "MNL") {
-          showErrorMessage(noPassBookMsg);
-          setIsPassbookAvailable(false);
+          const passbookDetails=null
+          openPassbookViewModel(appointeeId,passbookDetails,passbookStatusCode);
+          // showErrorMessage(noPassBookMsg);
+          // setIsPassbookAvailable(false);
           return;
         }
         // setIsPassbookAvailable(false);
@@ -150,9 +152,16 @@ export const TableActionCell = (props1, props2) => {
       const { pfUan, companies } = response?.responseInfo || {};
       if (pfUan && Array.isArray(companies) && companies.length > 0) {
          const epfoDetails=response.responseInfo
-         openEmploymentViewModel(appointeeId,userId,epfoDetails);
+         openEmploymentViewModel(appointeeId,userId,epfoDetails,passbookStatusCode);
       } else {
-        setIsEmploymentAvailable(false)
+        if (passbookStatusCode === "MNL") {
+          const epfoDetails=null
+          openEmploymentViewModel(appointeeId,userId,epfoDetails,passbookStatusCode);
+          // showErrorMessage(noPassBookMsg);
+          // setIsPassbookAvailable(false);
+          return;
+        }
+        // setIsEmploymentAvailable(false)
         showErrorMessage(noEmployementMsg);
       }
     } catch (error) {
@@ -188,126 +197,18 @@ export const TableActionCell = (props1, props2) => {
   };
   // const [_isManualPassbook,setIsManualPassbook] = useState()
   const handleGetAppointeeDetails = async (appointeeId) => {
-    // const response = await getAppointeeDetails(appointeeId);
-   
-    // const {
-    //   appointeeName,
-    //   dateOfBirth,
-    //   gender,
-    //   memberName,
-    //   memberRelation,
-    //   handicapeType,
-    //   isHandicap,
-    //   maratialStatus,
-    //   qualification,
-    //   appointeeEmailId,
-    //   mobileNo,
-    //   nationality,
-    //   isFnameVarified,
-    //   isUanVarified,
-    //   isManualPassbook,
-    //   dateOfJoining,
-    //   userId
-    // } = response?.responseInfo;
-    // setIsManualPassbook(isManualPassbook? isManualPassbook :NA)
+  
     const personalInfo = {
       appointeeId,
-      // appointeeName: appointeeName ? appointeeName : NA,
-      // dateOfBirth: dateOfBirth ? DDMMYYYY(dateOfBirth) : NA,
-      // gender: gender ? filteredObjectProperty(genderList, gender) : NA,
-      // member: memberName ? memberName : NA,
-      // relationshipWithMember: memberRelation
-      //   ? filteredObjectProperty(relationList, memberRelation)
-      //   : NA,
-      // handicapType:
-      //   isHandicap === "N" || !isHandicap
-      //     ? NA
-      //     : filteredObjectProperty(disabilityList, handicapeType),
-      // isPhysicallyHandicap: hasValue(isHandicap)
-      //   ? isHandicap === "Y"
-      //     ? "Yes"
-      //     : "No"
-      //   : NA,
-      // maritalStatus: maratialStatus
-      //   ? filteredObjectProperty(maritalStatusList, maratialStatus)
-      //   : NA,
-      // qualification: qualification
-      //   ? filteredObjectProperty(qualificationList, qualification)
-      //   : NA,
-      // email: appointeeEmailId ? appointeeEmailId : NA,
-      // mobileNo: mobileNo ? mobileNo : NA,
-      // nationality: nationality ? nationality : NA,
-      // isFnameVarified: isFnameVarified ? isFnameVarified : NA,
-      // isUanVerified: isUanVarified
-      //   ? isUanVarified
-      //   : isUanVarified === false
-      //   ? isUanVarified
-      //   : NA,
-      //   dateOfJoining:dateOfJoining,
-      //   userId:userId
+      
     };
-    // const personalInfo = {
-    //   appointeeId,
-    //   appointeeName,
-    //   dateOfBirth,
-    //   gender,
-    //   relationshipWithMember,
-    //   member,
-    //   handicapType,
-    //   isPhysicallyHandicap,
-    //   maritalStatus,
-    //   qualification,
-    //   email,
-    //   mobileNo,
-    //   nationality,
-    //   isFnameVarified,
-    //   isUanVerified
-    // }
-  
+    
 
     openVerify(personalInfo);
   };
  
 
-  // const handleClick =(appointeeId)=>{
-  //   handleGetAppointeeDetails(appointeeId)
-  //   const personalInfo = {
-  //     appointeeId,
-  //     appointeeName: _appointeeName,
-  //     dateOfBirth :_dateOfBirth,
-  //     gender:_gender,
-  //     member: _member,
-  //     relationshipWithMember: _relationshipWithMember,
-  //     handicapType :_handicapType,
-  //     isPhysicallyHandicap :_isPhysicallyHandicap,
-  //     maritalStatus : _maritalStatus,
-  //     qualification : _qualification,
-  //     email :_email,
-  //     mobileNo : _mobileNo,
-  //     nationality :_nationality,
-  //     isFnameVarified :_isFnameVarified,
-  //     isUanVerified : _isUanVerified,
-  //   };
-  //   console.log('personalInfo',personalInfo)
-  //   // const personalInfo = {
-  //   //   appointeeId,
-  //   //   appointeeName,
-  //   //   dateOfBirth,
-  //   //   gender,
-  //   //   relationshipWithMember,
-  //   //   member,
-  //   //   handicapType,
-  //   //   isPhysicallyHandicap,
-  //   //   maritalStatus,
-  //   //   qualification,
-  //   //   email,
-  //   //   mobileNo,
-  //   //   nationality,
-  //   //   isFnameVarified,
-  //   //   isUanVerified
-  //   // }
-  //   openVerify(personalInfo);
-  // }
+  
   let actionListData;
   // console.log('actionList', actionList, actionPermissionList);
 

@@ -1,34 +1,39 @@
 import {
+  ArrowForward,
+  CheckCircle,
   Female,
   Male,
   Transgender,
   TroubleshootTwoTone,
 } from "@mui/icons-material";
-import { Checkbox, Typography } from "@mui/material";
+import { Box, Checkbox, Typography } from "@mui/material";
 import { TableActionCell } from "shared/utils/dataTable/table-action-cell";
 import TableClickableCell from "shared/utils/dataTable/table-clickable-cell";
 import TableStatusCell from "shared/utils/dataTable/table-status-cell";
+export const companyName = `PwC`;
 export const reportGenarate = `There is no data to export a report`;
 export const maxUploadSize = `Max size: 2MB`;
 export const emptyUserNameField = `Username can't be empty`;
 export const invalidUserCodeMsg = `User code should contain alphabet's and number only`;
 export const defaultUploadFormat = `Accepted format: pdf, jpg, png`;
 export const noRemarks = `No Remarks Available`;
-export const noPassBookMsg = ` Please go to the Document Details section under the Open Details page.`;
+export const noPassBookMsg = ` Please go to the Document Details section under the Appointee Details page.`;
 export const noEmployementMsg = `Employment History not available`;
 export const configurationSuccessMsg = `Configuration updated`;
 export const userCreationSuccessMsg = `User has been created successfully`;
 export const userUpdateSuccessMsg = `User has been updated successfully`;
 export const userDeletedSuccessMsg = `User has been deleted successfully`;
-export const invalidOtpMsg = `Otp must be of 6 digits`;
+export const invalidOtpMsg = `OTP must be of 6 digits`;
 export const emptyAadharMsg = `Aadhaar name is empty`;
 export const emptyShareCodeMsg = `Aadhaar share code is empty`;
+export const emptyAadharNoMsg = `Aadhaar can't be empty`;
+export const aadharPatternErrorMsg = `Aadhaar should be a 12 digit number`;
 export const emptyPanMsg = `PAN number or name on PAN is missing`;
 export const aadharVerifySuccessMsg = `Aadhaar has been verified successfully`;
 export const aadharVerifyFailedMsg = `Aadhaar has not been verified`;
 export const uanVerifyFailedMsg = `UAN has not been verified`;
 export const uanVerifySuccessMsg = `UAN has been verified successfully`;
-export const generateOtpRety = `Otp sending is unsuccessful, please retry`;
+export const generateOtpRety = `OTP sending is unsuccessful, please retry`;
 export const generateOtpSucces = `OTP has sent successfully, Please fill the otp and submit`;
 export const aadharNoValidationError = `Your phone number is not linked with Aadhaar. Link your phone number then retry or submit anyway`;
 export const remarksError = `Remarks should have at least 15 charecters long`;
@@ -72,33 +77,34 @@ export const UANPatterErrorMsg = `UAN should have 12 digits`;
 export const aadharVerificationErrorMsg = `Please verify your Aadhar before submit`;
 export const PANVerifictionErrorMsg = `Please verify your PAN before submit`;
 export const dataSubmitionMsg = `Data submited successfully`;
+// export const dataSubmitionMsg = `Data submited successfully`;
 
-export const attentionInfo = `The appointees with the nearest joining dates are listed below, including the following details: Appointee Name, Date of Joining (DOJ), and Days to Join.`
-export const linkNotSentInfo = `The following appointees, for whom the verification link has not been sent, are listed below along with their respective details: Appointee Name, Email ID and Date of Joining (DOJ).`
-export const pfUsersInfo =`This list provides detailed information about PF users, including key fields such as Appointee Name, Aadhaar Number, PAN, UAN (Universal Account Number), Aadhaar-UAN Link Status, EPS Membership Status, and other relevant details. It serves as a comprehensive record for managing and tracking employee provident fund data efficiently`
-export const cancelledInfo = `The following appointees have been rejected during the verification process. Their details, including Appointee Name, Aadhaar Number, PAN, Date of Joining (DOJ), and the reason for rejection, are provided below.`
+export const attentionInfo = `The appointees with the nearest joining dates are listed below, including the following details: Appointee Name, Date of Joining (DOJ), and Days to Join.`;
+export const linkNotSentInfo = `The following appointees, for whom the verification link has not been sent, are listed below along with their respective details: Appointee Name, Email ID and Date of Joining (DOJ).`;
+export const pfUsersInfo = `This list provides detailed information about PF users, including key fields such as Appointee Name, Aadhaar Number, PAN, UAN (Universal Account Number), Aadhaar-UAN Link Status, EPS Membership Status, and other relevant details. It serves as a comprehensive record for managing and tracking employee provident fund data efficiently`;
+export const cancelledInfo = `The following appointees have been rejected during the verification process. Their details, including Appointee Name, Aadhaar Number, PAN, Date of Joining (DOJ), and the reason for rejection, are provided below.`;
 export const generateNoResponseReportDesc = (days) => {
   return `This report analyzes appointees who have not started verification process ${
     days > 0 ? `for ${days} days ` : ""
-  }during a specified period. It includes detailed information about these candidates to help PwC understand progress patterns, identify issues and potential candidate disinterest.`;
+  }during a specified period. It includes detailed information about these candidates to help ${companyName} understand progress patterns, identify issues and potential candidate disinterest.`;
 };
 export const generateNoMovementReportDesc = (days) => {
   return `This report analyzes appointees who have made no progress ${
     days > 0 ? `for ${days} days ` : ""
-  }during a specified period. It includes detailed information about these candidates to help PwC understand progress patterns, identify issues and potential candidate disinterest.`;
+  }during a specified period. It includes detailed information about these candidates to help ${companyName} understand progress patterns, identify issues and potential candidate disinterest.`;
 };
 export const generatePassbookDetailsReportDesc = `The purpose of this report is to allow for easy navigation and understanding of the employee's career progression and financial contributions across various positions and companies.This structure is aimed at providing a comprehensive view of both professional history and financial records for review and reference.`;
 export const generateEmploymentHistoryReportDesc = `The purpose of this report is to provide a comprehensive summary of the employment history for the selected employee, detailing their previous roles, companies they have worked for, and their associated employment accounts. This report serves as a detailed record of the employee’s professional background, intended for use in verification, reference checks, or as part of an internal assessment.`;
-export const generateAppointeeCountReportDesc = `The purpose of this report is to provide an overview and analysis of the appointee count added to the system on a daily basis during a specified period. This report includes details such as the total number of appointees added each day, the total number of links sent, and the total number of links not sent. The goal is to help PwC understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help PwC understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help PwC understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generateManualAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users who are requesting manual verification for their father's name and EPFO details.This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help PwC understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generatDocUploadReportDesc = `The purpose of this report is to provide an overview and analysis of users who have been sent document upload requests for the manual verification of their father’s name and EPFO details.This report includes information such as names, email addresses, joining dates, and other relevant details. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help PwC understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generatReverificationReportDesc = `The purpose of this report is to provide an overview and analysis of users who have uploaded documents after completing the manual verification process. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help PwC understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
-export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help PwC understand the usage patterns, identify any issues and improve the efficiency of the API system.`;
-export const pfPensionReportDesc = `This report provides an overview of PF and Pension information for appointees within a specified date range, including appointee name, Aadhaar number, UAN, joining date, PF and pension status, and passbook status (manual or automatic). It helps PwC monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
+export const generateAppointeeCountReportDesc = `The purpose of this report is to provide an overview and analysis of the appointee count added to the system on a daily basis during a specified period. This report includes details such as the total number of appointees added each day, the total number of links sent, and the total number of links not sent. The goal is to help ${companyName} understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generateLapsedAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of lapsed users within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help ${companyName} understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generateProcessingAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users that has been sent the verification link within the system during a specified period. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help ${companyName} understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generateManualAppointeeReportDesc = `The purpose of this report is to provide an overview and analysis of users who are requesting manual verification for their father's name and EPFO details.This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help ${companyName} understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generatDocUploadReportDesc = `The purpose of this report is to provide an overview and analysis of users who have been sent document upload requests for the manual verification of their father’s name and EPFO details.This report includes information such as names, email addresses, joining dates, and other relevant details. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help ${companyName} understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generatReverificationReportDesc = `The purpose of this report is to provide an overview and analysis of users who have uploaded documents after completing the manual verification process. This report includes details such as the names, email addresses, joining dates, and other relevant information of lapsed users. The goal is to help ${companyName} understand the usage patterns, identify any issues, and improve the efficiency of the system.`;
+export const generateapiCountReportDesc = `The purpose of this report is to provide an overview and analysis of the API calls made during a specified period. This report includes details such as the total number of API calls, the success and failure rates, and invalid requests. The goal is to help ${companyName} understand the usage patterns, identify any issues and improve the efficiency of the API system.`;
+export const pfPensionReportDesc = `This report provides an overview of PF and Pension information for appointees within a specified date range, including appointee name, Aadhaar number, UAN, joining date, PF and pension status, and passbook status (manual or automatic). It helps ${companyName} monitor appointees' provident fund and pension statuses, track essential details, and ensure all records are up-to-date and compliant with organizational policies.`;
 export const verificatiosucess = `Your verification has been successfully completed.`;
-export const appointeeReportdesc = `This report provides an analysis of appointees, including names, email ID, date of joining (DOJ), link-sent dates, and status. It aids Pwc in identifying trends, resolving bottlenecks, and evaluating candidate interest.`;
+export const appointeeReportdesc = `This report provides an analysis of appointees, including names, email ID, date of joining (DOJ), link-sent dates, and status. It aids ${companyName} in identifying trends, resolving bottlenecks, and evaluating candidate interest.`;
 
 export const appointeeBillingdesc = `This billing report provides a detailed summary of the costs associated with new appointees for each entity.It includes the entity name,time period, cost per new appointee,total number of new appointees, and the total billing amount.`;
 
@@ -171,7 +177,7 @@ export const toCreateUser = "/createuser";
 export const toUpdateUser = "/updateuser";
 export const toUserlist = "/userlist";
 export const toAppointeecount = "/appointeecount";
-export const toAppointeeInvoice = "/appointeeinvoice"
+export const toAppointeeInvoice = "/appointeeinvoice";
 export const topfPension = "/PfPension";
 export const toDataUploaded = "/datauploaded";
 export const toLogin = "/auth/login";
@@ -206,6 +212,7 @@ const procesingListActions = [
   "NOTIFYMAIL",
   "USERMAILRESEND",
   "REDIRECTMANVER",
+  "VIEWPSSBK",
 ];
 const mannualVerListActions = ["VIEWDETAILS", "MANUALVER"];
 const mannualReverListActions = ["VIEWDETAILS", "MANUALREVER"];
@@ -222,22 +229,22 @@ export const verifiedListTableHeadCell = [
     type: "string",
     disablePadding: false,
     label: "Name",
-    enums: ["appointeeName", "mobileNo", "appointeeEmailId"],
+    enums: ["appointeeName","candidateId", "mobileNo", "appointeeEmailId"],
     component: {
       element: Typography,
     },
   },
-  {
-    id: "candidateId",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "Candidate ID",
-    enums: ["candidateId"],
-    component: {
-      element: Typography,
-    },
-  },
+  // {
+  //   id: "candidateId",
+  //   numeric: true,
+  //   type: "string",
+  //   disablePadding: false,
+  //   label: "Candidate ID",
+  //   enums: ["candidateId"],
+  //   component: {
+  //     element: Typography,
+  //   },
+  // },
   {
     id: "dateOfJoining",
     numeric: true,
@@ -260,17 +267,7 @@ export const verifiedListTableHeadCell = [
       element: Typography,
     },
   },
-  {
-    id: "panNo",
-    numeric: true,
-    type: "string",
-    disablePadding: false,
-    label: "PAN No.",
-    enums: ["panNo"],
-    component: {
-      element: Typography,
-    },
-  },
+ 
 
   {
     id: "uanNo",
@@ -301,6 +298,17 @@ export const verifiedListTableHeadCell = [
     disablePadding: false,
     label: " EPS Member",
     enums: ["isPensionApplicable"],
+    component: {
+      element: Typography,
+    },
+  },
+  {
+    id: "IsDualEmployement",
+    numeric: true,
+    type: "boolean",
+    disablePadding: false,
+    label: "Dual Employement Possibility",
+    enums: ["IsDualEmployement"],
     component: {
       element: Typography,
     },
@@ -465,119 +473,120 @@ export const latestAppointeeListTableHeadCell = [
 ];
 //PFUsers
 export const GetPfCreationListTableHeadCell = [
-    {
-        id: 'appointeeName',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Name',
-        enums: ['appointeeName', 'mobileNo', 'appointeeEmailId'],
-        component: {
-            element: Typography
-        }
+  {
+    id: "appointeeName",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Name",
+    enums: ["appointeeName", "mobileNo", "appointeeEmailId"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'candidateId',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Candidate ID',
-        enums: ['candidateId'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "candidateId",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Candidate ID",
+    enums: ["candidateId"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'dateOfJoining',
-        numeric: true,
-        type: "date",
-        disablePadding: false,
-        label: 'Date Of Joining  ',
-        enums: ['dateOfJoining'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "dateOfJoining",
+    numeric: true,
+    type: "date",
+    disablePadding: false,
+    label: "Date Of Joining  ",
+    enums: ["dateOfJoining"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'adhaarNo',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Aadhaar No.',
-        enums: ['adhaarNo'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "adhaarNo",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Aadhaar No.",
+    enums: ["adhaarNo"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'panNo',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'PAN No.',
-        enums: ['panNo'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "panNo",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "PAN No.",
+    enums: ["panNo"],
+    component: {
+      element: Typography,
     },
+  },
 
-    {
-        id: 'uanNo',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'UAN',
-        enums: ['uanNo'],
-        component: {
-            element: Typography
-        }
+  {
+    id: "uanNo",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "UAN",
+    enums: ["uanNo"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'uanAadharLink',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Aadhar-UAN Link',
-        enums: ['uanAadharLink'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "uanAadharLink",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Aadhar-UAN Link",
+    enums: ["uanAadharLink"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'isPensionApplicable',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'EPS Member',
-        enums: ['isPensionApplicable'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "isPensionApplicable",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "EPS Member",
+    enums: ["isPensionApplicable"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'status',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Template Status',
-        enums: ['status'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "status",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Template Status",
+    enums: ["status"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'viewDetails',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Open Details',
-        enums: ['viewDetails'],
-        component: {
-            element: (props) => TableActionCell({ actionList: verifiedListActions, ...props }),
-            attribute: ['appointeeId']
-        }
-    }
-]
+  },
+  {
+    id: "viewDetails",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Open Details",
+    enums: ["viewDetails"],
+    component: {
+      element: (props) =>
+        TableActionCell({ actionList: verifiedListActions, ...props }),
+      attribute: ["appointeeId"],
+    },
+  },
+];
 export const rejectedListTableHeadCell = [
   {
     id: "appointeeName",
@@ -661,72 +670,72 @@ export const rejectedListTableHeadCell = [
   },
 ];
 export const pfPensionTableHeadCell = [
-    {
-        id: 'appointeeName',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Name',
-        enums: ['appointeeName', 'mobileNo', 'emailId'],
-        component: {
-            element: Typography
-        }
+  {
+    id: "appointeeName",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Name",
+    enums: ["appointeeName", "mobileNo", "emailId"],
+    component: {
+      element: Typography,
     },
-    {
-        id: "candidateId",
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Candidate ID',
-        enums: ['candidateId'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "candidateId",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Candidate ID",
+    enums: ["candidateId"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'adhaarNo',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Aadhaar No.',
-        enums: ['aadharNumber'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "adhaarNo",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Aadhaar No.",
+    enums: ["aadharNumber"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'uanNo',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'UAN',
-        enums: ['uan'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "uanNo",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "UAN",
+    enums: ["uan"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'isUanAadharLink',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Aadhar-UAN Link',
-        enums: ['isUanAadharLink'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "isUanAadharLink",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Aadhar-UAN Link",
+    enums: ["isUanAadharLink"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'dateOfJoining',
-        numeric: true,
-        type: "date",
-        disablePadding: false,
-        label: 'Date Of Joining  ',
-        enums: ['dateOfJoining'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "dateOfJoining",
+    numeric: true,
+    type: "date",
+    disablePadding: false,
+    label: "Date Of Joining  ",
+    enums: ["dateOfJoining"],
+    component: {
+      element: Typography,
     },
+  },
 
   {
     id: "pfinfo",
@@ -776,45 +785,43 @@ export const pfPensionTableHeadCell = [
   },
 ];
 export const pfPensionTablereportHeadCell = [
-    {
-        label: 'Name',
-        enums: ['appointeeName', 'candidateId'],
-        component: {
-            element: Typography
-        }
+  {
+    label: "Name",
+    enums: ["appointeeName", "candidateId"],
+    component: {
+      element: Typography,
     },
-    {
-        type: "string",
-        label: 'Email',
-        enums: ['emailId'],
-
-    },
-    {
-        type: "string",
-        label: 'Mobile No',
-        enums: ['mobileNo'],
-
-    },
-    {
-        type: "string",
-        label: 'Aadhaar No.',
-        enums: ['aadharNumber'],
-    },
-    {
-        type: "string",
-        label: 'UAN',
-        enums: ['uan']
-    },
-    {
-        type: "string",
-        label: 'Aadhar-UAN Link',
-        enums: ['isUanAadharLink'],
-    },
-    {
-        type: "date",
-        label: 'Date Of Joining  ',
-        enums: ['dateOfJoining'],
-    },
+  },
+  {
+    type: "string",
+    label: "Email",
+    enums: ["emailId"],
+  },
+  {
+    type: "string",
+    label: "Mobile No",
+    enums: ["mobileNo"],
+  },
+  {
+    type: "string",
+    label: "Aadhaar No.",
+    enums: ["aadharNumber"],
+  },
+  {
+    type: "string",
+    label: "UAN",
+    enums: ["uan"],
+  },
+  {
+    type: "string",
+    label: "Aadhar-UAN Link",
+    enums: ["isUanAadharLink"],
+  },
+  {
+    type: "date",
+    label: "Date Of Joining  ",
+    enums: ["dateOfJoining"],
+  },
 
   {
     type: "badge",
@@ -822,24 +829,22 @@ export const pfPensionTablereportHeadCell = [
     enums: ["trustPassBookStatus", "epfoPassBookStatus"],
   },
 
-    {
-
-        type: "string",
-        label: 'EPS Membership',
-        enums: ['isEpsMember'],
-    },
-    {
-        type: "string",
-        label: 'EPS Gap',
-        enums: ['pensionStatus']
-    },
-    {
-        type: "string",
-        label: 'Verification Type',
-        enums: ['isManual']
-    },
-
-]
+  {
+    type: "string",
+    label: "EPS Membership",
+    enums: ["isEpsMember"],
+  },
+  {
+    type: "string",
+    label: "EPS Gap",
+    enums: ["pensionStatus"],
+  },
+  {
+    type: "string",
+    label: "Verification Type",
+    enums: ["isManual"],
+  },
+];
 export const LinkNotSentTableHeadCell = [
   {
     id: "checkBox",
@@ -1325,97 +1330,98 @@ export const docReuploadListTableHeadCell = [
   },
 ];
 export const processingListTableHeadCell = [
-    {
-        id: 'appointeeName',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Name',
-        enums: ['appointeeName', 'mobileNo', 'appointeeEmailId'],
-        component: {
-            element: Typography
-        }
+  {
+    id: "appointeeName",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Name",
+    enums: ["appointeeName", "mobileNo", "appointeeEmailId"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'candidateId',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Candidate ID',
-        enums: ['candidateId'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "candidateId",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Candidate ID",
+    enums: ["candidateId"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'createdDate',
-        numeric: true,
-        type: "date",
-        disablePadding: false,
-        label: 'Link Sent Date',
-        enums: ['createdDate'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "createdDate",
+    numeric: true,
+    type: "date",
+    disablePadding: false,
+    label: "Link Sent Date",
+    enums: ["createdDate"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'dateOfJoining',
-        numeric: true,
-        type: "date",
-        disablePadding: false,
-        label: 'Date Of Joining',
-        enums: ['dateOfJoining'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "dateOfJoining",
+    numeric: true,
+    type: "date",
+    disablePadding: false,
+    label: "Date Of Joining",
+    enums: ["dateOfJoining"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'consentStatusCode',
-        numeric: true,
-        type: "badge",
-        disablePadding: false,
-        label: 'Consent',
-        enums: ['consentStatusCode'],
-        component: {
-            element: (props) => TableStatusCell(props),
-        }
+  },
+  {
+    id: "consentStatusCode",
+    numeric: true,
+    type: "badge",
+    disablePadding: false,
+    label: "Consent",
+    enums: ["consentStatusCode"],
+    component: {
+      element: (props) => TableStatusCell(props),
     },
-    {
-        id: 'status',
-        numeric: true,
-        type: "badge",
-        disablePadding: false,
-        label: 'Status',
-        enums: ['status', 'isNoIsuueinVerification', 'isReprocess'],
-        component: {
-            element: (props) => TableStatusCell(props),
-            attribute: ['appointeeId']
-        }
+  },
+  {
+    id: "status",
+    numeric: true,
+    type: "badge",
+    disablePadding: false,
+    label: "Status",
+    enums: ["status", "isNoIsuueinVerification", "isReprocess"],
+    component: {
+      element: (props) => TableStatusCell(props),
+      attribute: ["appointeeId"],
     },
-    {
-        id: 'passbookStatus',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Verification Type',
-        enums: ['passbookStatus'],
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "passbookStatus",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Verification Type",
+    enums: ["passbookStatus"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'viewDetails',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Actions',
-        enums: ['viewDetails'],
-        component: {
-            element: (props) => TableActionCell({ actionList: procesingListActions, ...props }),
-            attribute: ['appointeeId', 'verificationStatusCode']
-        }
-    }
-]
+  },
+  {
+    id: "viewDetails",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Actions",
+    enums: ["viewDetails"],
+    component: {
+      element: (props) =>
+        TableActionCell({ actionList: procesingListActions, ...props }),
+      attribute: ["appointeeId", "verificationStatusCode","passbookStatusCode","uanNo"],
+    },
+  },
+];
 export const lapsedListTableHeadCell = [
   {
     id: "appointeeName",
@@ -1774,163 +1780,160 @@ export const consoidateApiCountHeadCell = [
   },
 ];
 export const appointeeCountDetailsHeadCell = [
-    {
-        id: 'date',
-        numeric: true,
-        type: "string",
-        disablePadding: false,
-        label: 'Date',
-        enums: ['date'],
-        component: {
-            element: Typography
-        }
+  {
+    id: "date",
+    numeric: true,
+    type: "string",
+    disablePadding: false,
+    label: "Date",
+    enums: ["date"],
+    component: {
+      element: Typography,
     },
-    {
-        id: 'candidateId',
-        numeric: true,
-        type: "string",
-        enums: ['candidateId'],
-        disablePadding: false,
-        label: 'Candidate ID',
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "candidateId",
+    numeric: true,
+    type: "string",
+    enums: ["candidateId"],
+    disablePadding: false,
+    label: "Candidate ID",
+    component: {
+      element: Typography,
     },
-    {
-        id: 'companyName',
-        numeric: true,
-        type: "string",
-        enums: ['companyName'],
-        disablePadding: false,
-        label: 'Entity Name',
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "companyName",
+    numeric: true,
+    type: "string",
+    enums: ["companyName"],
+    disablePadding: false,
+    label: "Entity Name",
+    component: {
+      element: Typography,
     },
-    {
-        id: 'appointeeName',
-        numeric: true,
-        type: "string",
-        enums: ['appointeeName'],
-        disablePadding: false,
-        label: 'AppointeeName',
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "appointeeName",
+    numeric: true,
+    type: "string",
+    enums: ["appointeeName"],
+    disablePadding: false,
+    label: "AppointeeName",
+    component: {
+      element: Typography,
     },
-    {
-        id: 'emailId',
-        numeric: true,
-        type: "string",
-        enums: ['companyName'],
-        disablePadding: false,
-        label: 'Entity Name',
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "emailId",
+    numeric: true,
+    type: "string",
+    enums: ["companyName"],
+    disablePadding: false,
+    label: "Entity Name",
+    component: {
+      element: Typography,
     },
-    {
-        id: 'appointeeStatus',
-        numeric: true,
-        type: "string",
-        enums: ['appointeeStatus'],
-        disablePadding: false,
-        label: 'Appointee Status',
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "appointeeStatus",
+    numeric: true,
+    type: "string",
+    enums: ["appointeeStatus"],
+    disablePadding: false,
+    label: "Appointee Status",
+    component: {
+      element: Typography,
     },
-]
+  },
+];
 export const appointeeCountDetailsHeadCell1 = [
-    {
-        id: 'companyName',
-        numeric: true,
-        type: "string",
-        enums: ['companyName'],
-        disablePadding: false,
-        label: 'Entity Name',
-        component: {
-            element: Typography
-        }
+  {
+    id: "companyName",
+    numeric: true,
+    type: "string",
+    enums: ["companyName"],
+    disablePadding: false,
+    label: "Entity Name",
+    component: {
+      element: Typography,
     },
-    {
-        id: 'timePeriod',
-        numeric: false,
-        type: "string",
-        enums: ['timePeriod'],
-        disablePadding: false,
-        label: 'Time Period',
-        component: {
-            element: Typography,
-        },
+  },
+  {
+    id: "timePeriod",
+    numeric: false,
+    type: "string",
+    enums: ["timePeriod"],
+    disablePadding: false,
+    label: "Time Period",
+    component: {
+      element: Typography,
     },
+  },
 
-    {
-        id: 'ratePerTotalAppointeeCount',
-        numeric: true,
-        type: "string",
-        enums: ['ratePerTotalAppointeeCount'],
-        disablePadding: false,
-        label: 'Cost Per New Appointee : INR',
-        component: {
-            element: Typography
-        }
+  {
+    id: "ratePerTotalAppointeeCount",
+    numeric: true,
+    type: "string",
+    enums: ["ratePerTotalAppointeeCount"],
+    disablePadding: false,
+    label: "Cost Per New Appointee : INR",
+    component: {
+      element: Typography,
     },
-    {
-        id: 'totalAppointeeCount',
-        numeric: true,
-        type: "string",
-        enums: ['totalAppointeeCount'],
-        disablePadding: false,
-        label: 'Total Number Of New Appointees',
-        component: {
-            element: Typography
-        }
+  },
+  {
+    id: "totalAppointeeCount",
+    numeric: true,
+    type: "string",
+    enums: ["totalAppointeeCount"],
+    disablePadding: false,
+    label: "Total Number Of New Appointees",
+    component: {
+      element: Typography,
     },
+  },
 
-    {
-        id: 'grandTotal',
-        numeric: true,
-        type: "string",
-        enums: ['grandTotal'],
-        disablePadding: false,
-        label: 'Total Billing : INR ',
-        component: {
-            element: Typography
-        }
+  {
+    id: "grandTotal",
+    numeric: true,
+    type: "string",
+    enums: ["grandTotal"],
+    disablePadding: false,
+    label: "Total Billing : INR ",
+    component: {
+      element: Typography,
     },
-
-
-]
+  },
+];
 export const appointeeCountDetailsreportHeadCell = [
-    {
-        type: "string",
-        enums: ['companyName'],
-        label: 'Entity Name',
-    },
-    {
-        type: "string",
-        enums: ['timePeriod'],
-        label: 'Time Period',
-    },
+  {
+    type: "string",
+    enums: ["companyName"],
+    label: "Entity Name",
+  },
+  {
+    type: "string",
+    enums: ["timePeriod"],
+    label: "Time Period",
+  },
 
-    {
-        type: "string",
-        enums: ['ratePerTotalAppointeeCount'],
-        label: 'Cost Per New Appointee : INR',
-    },
-    {
-        type: "string",
-        enums: ['totalAppointeeCount'],
-        label: 'Total Number Of New Appointees',
-    },
-    {
-        type: "string",
-        enums: ['grandTotal'],
-        label: 'Total Billing : INR '
-    },
-
-]
+  {
+    type: "string",
+    enums: ["ratePerTotalAppointeeCount"],
+    label: "Cost Per New Appointee : INR",
+  },
+  {
+    type: "string",
+    enums: ["totalAppointeeCount"],
+    label: "Total Number Of New Appointees",
+  },
+  {
+    type: "string",
+    enums: ["grandTotal"],
+    label: "Total Billing : INR ",
+  },
+];
 export const apiCountDetailsHeadCell = [
   {
     id: "date",
@@ -2486,13 +2489,13 @@ export const stepperDefaultList = {
     step: 2,
   },
   OD: {
-    name: "Others Details",
+    name: "Handicap Details",
     step: 3,
   },
-  CF: {
-    name: "Cerificate / File Upload",
-    step: 4,
-  },
+  // CF: {
+  //   name: "Cerificate / File Upload",
+  //   step: 4,
+  // },
 };
 const AppointeeReports = `/AppointeeReports`;
 const AppoienteeWorkFlow = `/AppoienteeWorkFlow`;
@@ -2567,7 +2570,7 @@ export const AppointeeAgingFilterReport_URL = `${AppointeeReports}/AppointeeAgin
 export const AppointeeNationalityReport_URL = `${AppointeeReports}/NationalityFilterReport`;
 export const AppointeeDataReport_URL = `${AppointeeReports}/AppointeeDataFilterReport`;
 export const AppointeeCounterReport_URL = `${AppointeeReports}/AppointeeCounterReport`;
-export const AppointeecounterBillingreport_URL= `${AppointeeReports}/AppointeeCounterBillingReport`
+export const AppointeecounterBillingreport_URL = `${AppointeeReports}/AppointeeCounterBillingReport`;
 export const ApiCounterReport_URL = (fromDate, toDate) => {
   let ApiCounterReportUrl = `${AppointeeReports}/ApiCounterReport`;
   if (fromDate && toDate) {
@@ -2587,6 +2590,8 @@ export const VerifyAadharViaXml_URL = `${AadhaarValidate}/VerifyAadharViaXml`;
 export const GenerateUANOTP_URL = `${AadhaarValidate}/UANGenerateOTP`;
 export const GetUANNumber_URL = `${AadhaarValidate}/GetUANDetails`;
 export const UANSubmitOTP_URL = `${AadhaarValidate}/UANSubmitOTP`;
+export const GenerateOTP_URL = `${AadhaarValidate}/GenerateOTP`;
+export const SubmitOTP_URL = `${AadhaarValidate}/SubmitOTP`;
 export const GetAdminUserList_URL = `${Users}/GetAdminUserList`;
 export const CreateUser_URL = `${Users}/CreateUser`;
 export const UpdateAdminUser_URL = `${Users}/UpdateAdminUser`;
@@ -2602,28 +2607,48 @@ export const aaddharNumberverify = `Please complete Aadhaar verification before 
 export const approveConfirmation = `Auto / manual verification process of appointee has not been completed successfully. Do you still want to force approve?`;
 export const pensionConfirmation = `Does appointee have Pension under EPFO? Yes / No"?`;
 export const uploadSizeErrorMsg = `File upload size limit has exceeded`;
-export const indianpassportFilePatternErrorMsg =
-  "Indian Passport File Number must be 12 digits alphanumeric code";
+export const indianpassportNumberPatternErrorMsg =
+  "Indian Passport File Number must be 8 digits alphanumeric code";
 export const passportFilePatternErrorMsg =
-  "Passport File Number must be of maximum 20 digits";
-  export const passportNoEmptyMsg = "Passport Number cannot be empty";
+  "Passport File Number must be of 20 digits";
+export const passportNoEmptyMsg = "Passport Number cannot be empty";
 export const uploadFormatErrorMsg = `Upload valid formatted file`;
 export const verificationConfirmationMsg = `Do you want to send verification portal link to the appointee(s)? [Note: Appointee(s) will be removed from this page. The checked appointee(s) will be moved to the "Processing" page and the unchecked appointee(s) will be moved to the "Link not sent" page]`;
 export const appointeerejetionConfirmationMsg = `Are you sure you want to reject the appointee?`;
 export const verificationRemiderMsg = `Reminder alert will be sent to appointee, asking them to complete the verification process. Do you want to continue?`;
 export const credentialRemiderMsg = `An alert with login credentials will be sent to the appointee to complete the verification process. Would you like to proceed?`;
 export const appointeeTerminationConfirmationMsg = `Do you want to terminate the process?`;
-export const passwordMaxFieldErrorMsg = "Length exceeded. Password can be of maximum 12 characters.";
+export const passwordMaxFieldErrorMsg =
+  "Length exceeded. Password can be of maximum 12 characters.";
 export const notProcessedDataVerificationConfirmationMsg = `Do you want to send verification portal link to the appointees? [Note: Appointees will be removed from this page and moved to the "Processing" page]`;
-export const submitConfirmationMsg = `Your data will be submitted to PwC HC for verification. After submission, you will no longer be able to make any changes. Any updates or re-verification will be at the discretion of PwC HC. Are you sure you want to proceed with the submission?`;
-export const reUploadsubmitConfirmationMsg = "Your re-uploaded document(s) will be submitted to PwC HC for verification. Hence you will no longer be able to change your data. Are you sure you want to submit?";
+export const submitConfirmationMsg = `Your data will be submitted to ${companyName} HC for verification. After submission, you will no longer be able to make any changes. Any updates or re-verification will be at the discretion of ${companyName} HC. Are you sure you want to proceed with the submission?`;
+export const reUploadsubmitConfirmationMsg = `Your re-uploaded document(s) will be submitted to ${companyName} HC for verification. Hence you will no longer be able to change your data. Are you sure you want to submit?`;
 export const visafileUploadeConfirmationMsg = `Please upload your visa copy before submission`;
 export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details has been verified and submitted successfully. You have completed your verification process. Please wait for the HR to reply for further processing of your application`;
-export const docResubmissionSuccessDialogContentText = `Your documents have been submitted successfully. Please wait for your documents to be verified by PwC HC. .`;
-export const welcomeMsg = `Welcome to VERIDATA, PwC's onboarding assistant for you.\n
+export const docResubmissionSuccessDialogContentText = `Your documents have been submitted successfully. Please wait for your documents to be verified by ${companyName} HC. .`;
+export const welcomeMsg1 = `Welcome to VERIDATA, ${companyName}'s onboarding assistant for you.
   1. Review the Prerequisite Details.\n
 2. Click 'Start Verification' to begin the process (which includes giving consent).\n
 Fill in the required information to complete verification.`;
+export const welcomeMsg = (
+  <>
+    Welcome to VERIDATA, {companyName}'s onboarding assistant for you.
+    <Box sx={{ display: "flex", alignItems: "center", gap: "8px", mt: 1 }}>
+      <CheckCircle sx={{ fontSize: "1rem", color: "#4caf50" }} />
+      1. Review the Prerequisite Details.
+    </Box>
+    <Box sx={{ display: "flex", alignItems: "center", gap: "8px", mt: 1 }}>
+      <ArrowForward sx={{ fontSize: "1rem", color: "#2196f3" }} />
+      2. Click 'Start Verification' to begin the process (which includes giving
+      consent).
+    </Box>
+    <Box sx={{ display: "flex", alignItems: "center", gap: "8px", mt: 1 }}>
+      <CheckCircle sx={{ fontSize: "1rem", color: "#4caf50" }} />
+      3. Fill in the required information to complete verification.
+    </Box>
+  </>
+);
+
 export const congratulationDialogContentTitle = `Congratulations!👍`;
 export const useCodeEmptyMsg = `User code cant not be empty`;
 export const passwordEmptyMsg = `Password cant not be empty`;
@@ -2634,8 +2659,8 @@ export const passwordPattern = `Password should be of atleast 8 - 12 characters 
 export const invalidPasswordPatternMsg = `Password should contain atleast one special character, one lower case and one upper case character, one number of minlength 8 and maxlength 15`;
 export const remarksEmptyMsg = `Remarks cannot be empty`;
 export const remarksissuemessage = `No remarks/issues available.`;
-export const otpToMailMsg = `A verification code has been sent to your email address, Please check and enter `;
-export const setPasswordOtpToMailMsg = `A verification code has been sent to your email address. Please check and enter it in OTP field. `;
+export const otpToMailMsg = `An OTP has been sent to your email address. Please check your inbox and enter it.`;
+export const setPasswordOtpToMailMsg = `An OTP has been sent to your email address. Please check and enter it in OTP field. `;
 export const emailEmptyMsg = `Email cannot be empty`;
 export const invalidEmailMsg = `Enter a valid Email ID`;
 export const contactNoEmptyMsg = `Contact no. can't be empty`;
@@ -2647,7 +2672,7 @@ export const manualSubmitConfirmatonMsg = `Based on your answers, Veridata will 
 export const uploadedFromDateEmptyMsg = `"Upload From" Date cannot be empty`;
 export const FromDateEmptyMsg = `"From Date" cannot be empty`;
 export const manualverificationinfo = `You can do manual verification only in the "Manual Verification" & "Manual Re-Verification" tabs. You can't do so in the "Document Reupload Request" tab.`;
-export const manuallyVerificationInfo = `In this page, you will have to manually verify the candidate uploaded documents, in the "Verification Section" below. Please review all the dropdown options and corresponding documents, answer all the "enabled" questions and submit your response.You can force Approve or force Cancel any candidature from the "Open Action / +" icon at the top right corner of the page.`
+export const manuallyVerificationInfo = `In this page, you will have to manually verify the candidate uploaded documents, in the "Verification Section" below. Please review all the dropdown options and corresponding documents, answer all the "enabled" questions and submit your response.You can force Approve or force Cancel any candidature from the "Open Action / +" icon at the top right corner of the page.`;
 export const noResponseInfo = (days) => {
   return (
     <div>
@@ -2671,7 +2696,6 @@ export const noMovementInfo = (days) => {
   return (
     <div>
       <p>{generateNoMovementReportDesc(days)}</p>
-
     </div>
   );
 };
@@ -2679,14 +2703,12 @@ export const nationalityInfo = (type) => {
   return (
     <div>
       <p>{generatenationlityReportDesc(type)}</p>
-
     </div>
   );
 };
 export const appointeeCountInfo = (
   <div>
     <p>{appointeeReportdesc}</p>
-
   </div>
 );
 export const pfPensionInfo = (
@@ -2764,7 +2786,6 @@ export const getHandicapTypeDescription = (type) => {
   }
 };
 
-
 export const FILE_SIZE_LIMIT = 4000000; // 4MB
 export const imgAndPdfMaxSize = "2MB";
 export const imgAndPdfMaxSizeValue = 2000000;
@@ -2782,15 +2803,15 @@ export const roleTypeEnums = {
 export const issueFilterList = [
   {
     value: "All",
-    label: "Select All",
+    label: "With + Without",
   },
   {
     value: true,
-    label: "Candidates with issues",
+    label: "Candidates With Issues",
   },
   {
     value: false,
-    label: "Candidates without issues",
+    label: "Candidates Without Issues",
   },
 ];
 
@@ -2807,14 +2828,13 @@ export const passbookCategoryTypeList = [
 export const fatherDocCategoryTypeList = [
   {
     value: "10THCERTIFICATE",
-    label: "10th pass Certificate",
+    label: "10th Pass Certificate",
   },
   {
     value: "OTHERID",
     label: "Others Certificate",
   },
 ];
-
 
 export const verificationCategoryModel = {
   EPFO: passbookCategoryTypeList,
@@ -2843,7 +2863,7 @@ export const defaultVerificationTypeList = [
 export const fileTypeList = [
   {
     value: "All",
-    label: "Select All",
+    label: "All",
   },
   {
     value: "Type 1",
@@ -3000,10 +3020,10 @@ export const defaultDropdownValue = "none";
 export const yesNoList = [
   {
     label: "Yes",
-    value: "Y"
+    value: "Y",
   },
   {
     label: "No",
-    value: "N"
-  }
+    value: "N",
+  },
 ];

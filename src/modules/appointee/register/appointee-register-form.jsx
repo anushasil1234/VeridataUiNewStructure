@@ -16,10 +16,12 @@ import {
   aadharVerificationErrorMsg,
   passportFilePatternErrorMsg,
   aaddharNumberverify,
-  indianpassportFilePatternErrorMsg,
+  indianpassportNumberPatternErrorMsg,
   passportNoEmptyMsg,
   epfoServiceHistoryFileTypeAlias,
   UANPatterErrorMsg,
+  emptyAadharNoMsg,
+  aadharPatternErrorMsg,
 } from "shared/constants/constants";
 import {
   CreateStepSequience,
@@ -81,6 +83,7 @@ import SecondForm from "./second-form";
 import ThirdForm from "./third-form";
 
 const AppointeeRegisterForm = () => {
+  const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
   const steps = ["Step 1", "Step 2", "Step 3"];
   //const today = dayjs();
   // Function to retrieve saved step from localStorage
@@ -121,6 +124,8 @@ const AppointeeRegisterForm = () => {
     generateUANOtp,
     submitUANOTP,
     verifyPANDetails,
+    GenerateAadharOtp,
+    PostAadharOtp
   } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { userId, appointeeId, userCode } = loggedInData[0];
@@ -239,7 +244,9 @@ const AppointeeRegisterForm = () => {
     useState("auto");
   const [panNumberError, setPanNumberError] = useState(false);
   const [updatedRealtionList, setUpdatedRealtionList] = useState([]);
-  const stepCounter = 4;
+  const [aadharNumber, setAadharNumber] = useState("");
+
+  const stepCounter = 3;
 
   const initialTimeOfOtpTimer = () => {
     setTimeoutTimer(10 * 60);
@@ -577,7 +584,7 @@ const AppointeeRegisterForm = () => {
     if (autoSubmit) {
       handleAppointeeFormPage2Save({
         isUanManualUpload: isManual,
-        status: "Approved",
+        status: "Verified",
       });
     } else {
       handleAppointeeFormPage3Save();
@@ -900,15 +907,15 @@ const AppointeeRegisterForm = () => {
 
   const handleFileUpload =
     (fileTypeAlias, setFileName, fileNameList = [], uploadType) =>
-    ({ target }) => {
-      uploadFile({
-        files: target.files,
-        uploadTypeAlias: fileTypeAlias,
-        setFileName,
-        _filenameList: fileNameList,
-        uploadType,
-      });
-    };
+      ({ target }) => {
+        uploadFile({
+          files: target.files,
+          uploadTypeAlias: fileTypeAlias,
+          setFileName,
+          _filenameList: fileNameList,
+          uploadType,
+        });
+      };
   const uploadTrustEPFOFile = handleFileUpload(
     trustEpfoFileTypeAlias,
     setTrustEpfoFileName,
@@ -944,7 +951,7 @@ const AppointeeRegisterForm = () => {
     setOtherFileName
   );
 
-  const verifyAadhar = async () => {
+  const verifyAadharByXML = async () => {
     let formData = new FormData();
     formData.append("appointeeId", appointeeId);
     formData.append("aadharName", nameAsOnAadhar.trim());
@@ -974,15 +981,83 @@ const AppointeeRegisterForm = () => {
     }
   };
 
-  const handleAadharVerifiaction = () => {
-    if (!(hasValue(aadharShareCode) && hasValue(nameAsOnAadhar))) {
-      if (!hasValue(aadharShareCode)) {
-        showErrorMessage(emptyShareCodeMsg);
+  const handleAadharotpSubmition = async (otp, client_id) => {
+    const payload = {
+      appointeeId: appointeeId,
+      userId: userId,
+      client_id: client_id,
+      otp: otp,
+      aadharNumber: aadhar.trim(),
+      aadharName: nameAsOnAadhar,
+      shareCode: '',
+    }
+    const response = await PostAadharOtp(payload);
+    if (response) {
+      const { remarks, isVarified } = response.responseInfo;
+      if (isVarified) {
+        showSuccessMessage(aadharVerifySuccessMsg);
       } else {
-        showErrorMessage(emptyAadharMsg);
+        showErrorMessage(aadharVerifyFailedMsg);
+        if (hasValue(remarks)) {
+          const generatedRemarks = generateRemarks(remarks);
+          openRemarksModel(generatedRemarks);
+        }
       }
-    } else {
-      verifyAadhar();
+      setisAadhaarVarified(isVarified);
+      setIsOfflineXmlDownloaded(true);
+      // setIsPanSectionDisabled(false);
+      closeOtpSubmitionModel();
+      setAadharstatusMessage(new VerificationStatus(isVarified, "V"));
+    }
+  }
+  const verifAadharByNumber = async () => {
+    console.log('VerifAadharByNumber');
+    const payload = {
+      appointeeId: appointeeId,
+      userId: userId,
+      aadharNumber: aadhar.trim(),
+      aadharName: nameAsOnAadhar,
+    }
+    const response = await GenerateAadharOtp(payload);
+    if (response) {
+      const { if_number, otp_sent, client_id, valid_aadhaar } = response?.responseInfo
+      if (otp_sent && valid_aadhaar) {
+
+        openOtpSubmitionModel({
+          otpSubmitionFunction: async (otp) => await handleAadharotpSubmition(otp, client_id),
+          timeoutTimer: timeoutTimer,
+          setTimeoutTimer: setTimeoutTimer,
+        });
+
+      }
+    }
+
+  }
+
+  const handleAadharVerifiaction = () => {
+
+    if (AADHARVERIFICATION_BY === "XML") {
+      if (!(hasValue(aadharShareCode) && hasValue(nameAsOnAadhar))) {
+        if (!hasValue(aadharShareCode)) {
+          showErrorMessage(emptyShareCodeMsg);
+        } else {
+          showErrorMessage(emptyAadharMsg);
+        }
+      } else {
+        verifyAadharByXML();
+      }
+    }
+
+    if (AADHARVERIFICATION_BY === "OTP") {
+      if (!hasValue(aadhar)) {
+        showErrorMessage(emptyAadharNoMsg);
+        return;
+      }
+      if (hasValue(aadhar) && !validationsCheck(aadhar, "AADHAR")) {
+        showErrorMessage(aadharPatternErrorMsg);
+        return;
+      }
+      verifAadharByNumber();
     }
   };
 
@@ -1132,7 +1207,8 @@ const AppointeeRegisterForm = () => {
   };
 
   const handleSaveClick = () => {
-    if (!checkTenthPassCertificateUpload()) return;
+    if (process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH === 'true')
+      if (!checkTenthPassCertificateUpload()) return;
     if (!checkFathersDocCertificateUpload()) return;
     if (!checkHandicapCertificateUpload()) return;
     if (!checkTrustEpfoUpload()) return;
@@ -1192,7 +1268,7 @@ const AppointeeRegisterForm = () => {
       fileUploaded: uploadedFile,
       IsFinalSubmit: false,
     };
-    
+
     // Use the buildFormData helper function to create the formData
 
     let formData = buildFormData(payLoad);
@@ -1315,15 +1391,15 @@ const AppointeeRegisterForm = () => {
 
   const handleAppointeeFormPage1Save = async (formElement) => {
     formElement.preventDefault();
-    if (passportAvailable === "Y") {
+    if (passportAvailable === "Y" && clickedButton !== "S") {
       if (!hasValue(passportNo)) {
         setPassportNumberError(true);
         showErrorMessage(passportNoEmptyMsg);
         return;
       }
-      if (nationality.toLowerCase() === "indian" && passportNo.length !== 12) {
+      if (nationality.toLowerCase() === "indian" && passportNo.length !== 8) {
         setPassportNumberError(true);
-        showErrorMessage(indianpassportFilePatternErrorMsg);
+        showErrorMessage(indianpassportNumberPatternErrorMsg);
         return;
       }
     }
@@ -1748,11 +1824,11 @@ const AppointeeRegisterForm = () => {
     } else {
       const formattedMessage = passportExpireddMsg
         ? passportExpireddMsg.split(". ").map((sentence, index) => (
-            <React.Fragment key={index}>
-              {`${sentence}.`}
-              {index < passportExpireddMsg.split(". ").length - 1 && <br />}
-            </React.Fragment>
-          ))
+          <React.Fragment key={index}>
+            {`${sentence}.`}
+            {index < passportExpireddMsg.split(". ").length - 1 && <br />}
+          </React.Fragment>
+        ))
         : "";
       showErrorMessage(formattedMessage);
     }
@@ -1849,14 +1925,48 @@ const AppointeeRegisterForm = () => {
     setPassportNo(value);
   };
 
+  // const handelPANNumberChange = (value) => {
+  //   if (value !== "none") {
+  //     setPanNumberError(false);
+  //     if (isAadhaarVarified) {
+  //       setPan(value.toUpperCase());
+  //     } else {
+  //       showErrorMessage(aaddharNumberverify);
+  //     }
+  //   }
+  // };
   const handelPANNumberChange = (value) => {
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
     if (value !== "none") {
-      setPanNumberError(false);
-      if (isAadhaarVarified) {
-        setPan(value.toUpperCase());
-      } else {
-        showErrorMessage(aaddharNumberverify);
+      if (value.length <= 10) {
+        const upperCaseValue = value.toUpperCase();
+        setPan(upperCaseValue);
+        if (upperCaseValue.length === 10) {
+          if (panRegex.test(upperCaseValue)) {
+            setPanNumberError(false);
+            if (isAadhaarVarified) {
+              setPan(upperCaseValue);
+            } else {
+              showErrorMessage(aaddharNumberverify);
+            }
+          }
+          else {
+            setPanNumberError(true);
+            showErrorMessage("Invalid PAN number format. Please enter a valid PAN.");
+          }
+        } else {
+          setPanNumberError(false);
+        }
       }
+    }
+  };
+  const handleBlurPAN = () => {
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+    if (pan.length === 10 && !panRegex.test(pan)) {
+      setPanNumberError(true);
+      showErrorMessage("Invalid PAN number format. Please enter a valid PAN.");
     }
   };
   const handleChangeNameOnAadhar = (value) => {
@@ -1865,6 +1975,11 @@ const AppointeeRegisterForm = () => {
   const handleChangeRelationship = ({ target }) => {
     target.value !== "none" && setRelationshipWithMember(target.value);
   };
+  const handleChangeAadharNumber = (value) => {
+    setAadhar(value);
+  }
+
+
   useEffect(() => {
     if (relationList) {
       const _updatedRelationList = relationList.map(({ code, value }) => {
@@ -2015,6 +2130,7 @@ const AppointeeRegisterForm = () => {
                   aadharXmlFileName={aadharXmlFileName}
                   pan={pan}
                   handelPANNumberChange={handelPANNumberChange}
+                  handleBlurPAN={handleBlurPAN}
                   disabledPanInput={disabledPanInput}
                   panNumberError={panNumberError}
                   isPanVarified={isPanVarified}
@@ -2043,6 +2159,8 @@ const AppointeeRegisterForm = () => {
                   epfoPassBookFiles={epfoPassBookFiles}
                   handleBack={handleBack}
                   submitDetails={submitDetails}
+                  aadharNumber={aadhar}
+                  handleChangeAadharNumber={handleChangeAadharNumber}
                 />
               </>
             ) : null}

@@ -41,6 +41,7 @@ import {
     appointeeCountDetailsHeadCell1,
     appointeeCountDetailsreportHeadCell,
     appointeeCountHeadCell,
+    companyName,
     generateAppointeeCountReportDesc,
     reportGenarate,
     toAppointeeInvoice
@@ -203,7 +204,7 @@ const AppointeeInvoice = () => {
             headerList: tableHeadList,
             rows: tableBodyList,
             tableName: "Report Details",
-            companyName: "PWC REPORT",
+            companyName: `${companyName} REPORT`,
         };
 
         jsPDFinvoiceReportDataTemplate({

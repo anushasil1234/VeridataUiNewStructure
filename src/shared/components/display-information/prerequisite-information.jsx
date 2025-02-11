@@ -16,12 +16,11 @@ const PrerequisiteInformation = () => {
             secondaryComponent:
                 <>
                     {' — If you dont have an Aadhaar please contact with your HR'}
-                    <Box >
-                        {/* <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}> */}
+                    {/* <Box >
                         <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "ADHAR" })}>
                             ...show more info
                         </Button>
-                    </Box>
+                    </Box> */}
                 </>
 
         },

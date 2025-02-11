@@ -79,6 +79,7 @@ const ThirdForm = ({
   handleIsOfflineXmlDownloadedOnChange,
   nameAsOnAadhar,
   handleChangeNameOnAadhar,
+  handleChangeAadharNumber,
   aadharShareCode,
   setAadharShareCode,
   disabledAadharInput,
@@ -89,6 +90,7 @@ const ThirdForm = ({
   aadharXmlFileName,
   pan,
   handelPANNumberChange,
+  handleBlurPAN,
   disabledPanInput,
   panNumberError,
   isPanVarified,
@@ -115,7 +117,12 @@ const ThirdForm = ({
   epfoPassBookFiles,
   handleBack,
   submitDetails,
+  aadharNumber
 }) => {
+  const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
+
+  console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
+  
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openInfoModel } = functionSlice[0];
   const [openModal, setOpenModal] = useState(false);
@@ -137,6 +144,7 @@ const ThirdForm = ({
   const handleCloseModal = () => {
     setOpenModal(false); // Close modal
   };
+
   return (
     <Box sx={{ width: "100%" }}>
       <form ref={formElement}>
@@ -156,74 +164,80 @@ const ThirdForm = ({
               }
             />
           </FormHeadingContainer>
-
-          <GridRow>
-            <Typography sx={headingType1}>
-              As part of onboarding process, Please generate your offline KYC
-              verification file and upload it here. To see the details steps,
-              {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
+          {
+            AADHARVERIFICATION_BY === "XML" && (
+              <>
+                <GridRow>
+                  <Typography sx={headingType1}>
+                    As part of onboarding process, Please generate your e-KYC
+                    verification file and upload it here. To see the details steps,
+                    {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
                         Aadhaar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
-            </Typography>
-            <Typography
-              sx={{
-                cursor: "pointer",
-                color: "#9A208C",
-                fontWeight: 500,
-              }}
-              onClick={() => openOfflineKycInfoModel()}
-            >
-              Click here
-            </Typography>
-
-            <FormControl sx={{ flexDirection: "row" }}>
-              {isAadhaarVarified ? (
-                <>
-                  <FormControlLabel
-                    sx={checkBoxLabelStyle}
-                    control={
-                      <Checkbox
-                        disabled
-                        checked
-                        inputProps={{ "aria-label": "controlled" }}
-                        sx={checkBoxStyle}
-                      />
-                    }
-                  ></FormControlLabel>
-                  <Typography
-                    onClick={() =>
-                      setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)
-                    }
-                    sx={checkBoxLabelStyle}
-                  >
-                    I have downloaded the Aadhar offline KYC file
                   </Typography>
-                </>
-              ) : (
-                <>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={isOfflineXmlDownloaded}
-                        sx={{ paddingLeft: 0 }}
-                        onChange={handleIsOfflineXmlDownloadedOnChange}
-                        inputProps={{ "aria-label": "controlled" }}
-                      />
-                    }
-                  ></FormControlLabel>
                   <Typography
-                    onClick={() =>
-                      setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)
-                    }
-                    sx={checkBoxLabelStyle}
+                    sx={{
+                      cursor: "pointer",
+                      color: "#9A208C",
+                      fontWeight: 500,
+                    }}
+                    onClick={() => openOfflineKycInfoModel()}
                   >
-                    I have downloaded the Aadhar offline KYC file
+                    Click here
                   </Typography>
-                </>
-              )}
-            </FormControl>
-          </GridRow>
+                </GridRow>
+                <GridRow>
+                  <FormControl sx={{ flexDirection: "row", alignItems: "center", flexWrap: "wrap" }}>
+                    {isAadhaarVarified ? (
+                      <>
+                        <FormControlLabel
+                          sx={checkBoxLabelStyle}
+                          control={
+                            <Checkbox
+                              disabled
+                              checked
+                              inputProps={{ "aria-label": "controlled" }}
+                              sx={checkBoxStyle}
+                            />
+                          }
+                        ></FormControlLabel>
+                        <Typography
+                          onClick={() =>
+                            setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)
+                          }
+                          sx={checkBoxLabelStyle}
+                        >
+                          I have downloaded the Aadhar e-KYC file
+                        </Typography>
+                      </>
+                    ) : (
+                      <>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={isOfflineXmlDownloaded}
+                              sx={{ paddingLeft: 0 }}
+                              onChange={handleIsOfflineXmlDownloadedOnChange}
+                              inputProps={{ "aria-label": "controlled" }}
+                            />
+                          }
+                        ></FormControlLabel>
+                        <Typography
+                          onClick={() =>
+                            setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)
+                          }
+                          sx={checkBoxLabelStyle}
+                        >
+                          I have downloaded the Aadhar e-KYC file
+                        </Typography>
+                      </>
+                    )}
+                  </FormControl>
+                </GridRow>
+              </>
+            )
+          }
           <GridRow sx={positionRelative}>
-            {!isOfflineXmlDownloaded && <DisableSection />}
+            {(AADHARVERIFICATION_BY === "XML" && !isOfflineXmlDownloaded) && <DisableSection />}
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <TextInput
                 label={"Name On Aadhaar"}
@@ -231,12 +245,26 @@ const ThirdForm = ({
                 onChange={handleChangeNameOnAadhar}
                 disabled={true}
               />
-              <TextInput
+              {
+                AADHARVERIFICATION_BY === "XML" && (
+                  <TextInput
+                    label={"Share Code (to be provided after uploading)"}
+                    value={aadharShareCode}
+                    onChange={setAadharShareCode}
+                    disabled={disabledAadharInput || !isAadhaarXmlUploaded}
+                  //maxLength={4}
+                  />
+                )
+              }
+          
+              {/* <TextInput
                 label={"Share Code (to be provided after uploading)"}
                 value={aadharShareCode}
                 onChange={setAadharShareCode}
                 disabled={disabledAadharInput || !isAadhaarXmlUploaded}
-              />
+                //maxLength={4}
+              /> */}
+
               <Button
                 sx={{ ...submitBtnStyle, margin: "5px 0" }}
                 disabled={isAadhaarVarified}
@@ -256,13 +284,27 @@ const ThirdForm = ({
                 paddingLeft: { xs: "0px !important", md: "20px!important" },
               }}
             >
-              <FileUploadSection
-                chooseFile={uploadAadharXmlFile}
-                fileName={aadharXmlFileName}
-                accept={".rar, .zip"}
-                disabled={isAadhaarVarified}
-                uploadTypeAlias={aadharFileTypeAlias}
-              />
+              {
+                AADHARVERIFICATION_BY === "OTP" && (
+                  <TextInput
+                    label={"Aadhar Number"}
+                    value={aadharNumber}
+                    onChange={handleChangeAadharNumber}
+                    disabled={isAadhaarVarified}
+                  />
+                )
+              }
+              {
+                AADHARVERIFICATION_BY === "XML" && (
+                  <FileUploadSection
+                    chooseFile={uploadAadharXmlFile}
+                    fileName={aadharXmlFileName}
+                    accept={".rar, .zip"}
+                    disabled={isAadhaarVarified}
+                    uploadTypeAlias={aadharFileTypeAlias}
+                  />
+                )
+              }
             </Grid>
           </GridRow>
           {/* ######  Aadhar Verification Section End ###### */}
@@ -271,7 +313,7 @@ const ThirdForm = ({
             <FormHeading
               step={stepsList?.PAV?.step}
               heading={stepsList?.PAV?.name}
-              info={"Enter your PAN Numebr to verify."}
+              info={"Enter your PAN Number to verify."}
             />
           </FormHeadingContainer>
 
@@ -281,10 +323,11 @@ const ThirdForm = ({
                 label={"PAN Number"}
                 value={pan}
                 onChange={handelPANNumberChange}
-                required={true}
+                // required={true}
                 disabled={disabledPanInput}
                 error={panNumberError}
-                maxLength={10}
+                onBlur={handleBlurPAN}
+              //  maxLength={10}
               />
               <Button
                 sx={{ ...submitBtnStyle, margin: "5px 0" }}
@@ -347,7 +390,11 @@ const ThirdForm = ({
             <Grid item xs={12} md={6} sx={{ paddingLeft: "0px !important" }}>
               <TextInput
                 label={"Universal Account Number(UAN)"}
-                onChange={setUAN}
+                onChange={(val) => {
+                  if (/^\d{0,12}$/.test(val)) {
+                    setUAN(val);
+                  }
+                }}
                 value={UAN}
               />
               <Button
@@ -363,9 +410,9 @@ const ThirdForm = ({
               <VerificationStatusSection docType={epfostatusMessage} />
               <Stack direction={"row"} alignItems={"center"}>
                 <Typography sx={{ margin: "5px 0", color: "#000" }}>
-                  {"UAN Aadhar Link : "}{" "}
+                  {"UAN Aadhar Link"}
                 </Typography>
-                <Typography>{uanAadharLink}</Typography>
+                <Typography>{`: ${uanAadharLink}`}</Typography>
               </Stack>
             </Grid>
             <Grid
@@ -411,7 +458,7 @@ const ThirdForm = ({
                         arrow
                         title={
                           <Box sx={{ ...statusBoxstyle }}>
-                            <Typography variant="body2" sx={{ ...statusstyle }}>
+                            <Typography variant="body2" sx={{ ...statusstyle, fontSize: "16px" }}>
                               It is mandatory for EPFO members to upload all PF
                               passbooks 2005 onwards (if applicable).
                             </Typography>
@@ -459,7 +506,8 @@ const ThirdForm = ({
                           <Typography variant="subtitle2">Notes :</Typography>
                           <Typography variant="subtitle2" sx={{ mt: 1 }}>
                             1. Upload your EPFO service history to provide
-                            accurate details about your employment contributions.
+                            accurate details about your employment
+                            contributions.
                           </Typography>
                           <Typography variant="subtitle2" sx={{ mt: 1 }}>
                             {`2. Log in to the EPFO Member Portal. Navigate to ‘View’ -> ‘Service History’. Download the service history file.`}
@@ -506,7 +554,7 @@ const ThirdForm = ({
                         accept={"application/pdf"}
                         maxUploadSize={imgAndPdfMaxSize}
                         uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
-                        // handleRemoveFile={removeEPFOServiceHistory}
+                      // handleRemoveFile={removeEPFOServiceHistory}
                       />
                     </Box>
                   </Grid>

@@ -1,4 +1,4 @@
-import { Grid, Typography, Chip, Button } from "@mui/material";
+import { Grid, Typography, Chip, Button, Skeleton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import {
@@ -11,8 +11,10 @@ import {
   TaskAlt,
   WarningAmber,
   PermMedia,
+  MenuBook,
+  AccountBox,
 } from "@mui/icons-material";
-import exclamation from "assets/images/exclamation.png"
+import exclamation from "assets/images/exclamation.png";
 import FullScreenModel from "shared/utils/models/fullscreen-modal";
 import {
   DATEDIFF,
@@ -60,6 +62,8 @@ import {
   epfoServiceHistoryFileTypeAlias,
   toMannualVerification,
   remarksissuemessage,
+  noPassBookMsg,
+  noEmployementMsg,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -104,7 +108,7 @@ let AppointeeViewForm = ({
   const dropdownList = useSelector((state) => state.dropdownList);
   const functionSlice = useSelector((state) => state.functionSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
-
+  const [isLoading, setIsLoading] = useState(false);
   const { navigateTo } = commonHooksFunctionSlice[0];
 
   const { showErrorMessage } = popUpSlice[0];
@@ -116,6 +120,8 @@ let AppointeeViewForm = ({
     openConfirmationYesNoModal,
     openDocumentModel,
     openVerify,
+    openPassbookViewModel,
+    openEmploymentViewModel,
   } = functionSlice[0];
   const {
     relationList,
@@ -135,6 +141,8 @@ let AppointeeViewForm = ({
     getAppointeeDetails,
     getAppointeeActivity,
     getRemarks,
+    getPassbookDetails,
+    getEmployementDetails,
   } = apiSlice[0];
   const [UAN, setUAN] = useState(null);
   const [uanNumber, setUanNumber] = useState(null);
@@ -185,8 +193,8 @@ let AppointeeViewForm = ({
   const [actionIconListDisplay, setActionIconListDisplay] = useState(false);
   const [isSaveStep, setIsSaveStep] = useState(null);
   const [isTrustPassbook, setIsTrustPassbook] = useState(null);
-  const [uanAadhar,setUanAadhar]=useState(null);
-  const[candidateId,SetcandidateId]=useState(null);
+  const [uanAadhar, setUanAadhar] = useState(null);
+  const [candidateId, SetcandidateId] = useState(null);
   const [isManualPassbook, setIsManualPassbook] = useState(null);
   const [isPensionApplicable, setIsPensionApplicable] = useState(null);
   const [filesByAlias, setFilesByAlias] = useState(new Map());
@@ -255,7 +263,6 @@ let AppointeeViewForm = ({
 
   const setAppointeeDetails = async () => {
     const response = await getAppointeeDetails(appointeeId);
-  
 
     if (response) {
       const {
@@ -296,7 +303,7 @@ let AppointeeViewForm = ({
         isManualPassbook,
         workFlowStatus,
         isUanLinkWithAadhar,
-        candidateId
+        candidateId,
       } = response.responseInfo;
 
       setAppointeeDetailsResponse(response.responseInfo);
@@ -310,20 +317,24 @@ let AppointeeViewForm = ({
       isPanVarified
         ? setIsPanVarified(isPanVarified)
         : isPanVarified === false
-          ? setIsPanVarified(isPanVarified)
-          : isProcessed===true?setIsPanVarified(null) :setIsPanVarified(NA);
+        ? setIsPanVarified(isPanVarified)
+        : isProcessed === true
+        ? setIsPanVarified(null)
+        : setIsPanVarified(NA);
       isProcessed ? setIsProcessed(isProcessed) : setIsProcessed(false);
       isFnameVarified
         ? setIsFnameVarified(isFnameVarified)
         : setIsFnameVarified(null);
       appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
-      isUanLinkWithAadhar?setUanAadhar(isUanLinkWithAadhar):setUanAadhar(NA);
-      candidateId?SetcandidateId(candidateId):SetcandidateId(null);
+      isUanLinkWithAadhar
+        ? setUanAadhar(isUanLinkWithAadhar)
+        : setUanAadhar(NA);
+      candidateId ? SetcandidateId(candidateId) : SetcandidateId(null);
       isUanVarified
         ? setIsUanVerified(isUanVarified)
         : isUanVarified === false
-          ? setIsUanVerified(isUanVarified)
-          : setIsUanVerified(NA);
+        ? setIsUanVerified(isUanVarified)
+        : setIsUanVerified(NA);
       isPassportAvailable
         ? setIsPassportAvailable(isPassportAvailable)
         : setIsPassportAvailable(NA);
@@ -337,34 +348,34 @@ let AppointeeViewForm = ({
         : setGender(NA);
       memberRelation
         ? setRelationshipWithMember(
-          filteredObjectProperty(relationList, memberRelation)
-        )
+            filteredObjectProperty(relationList, memberRelation)
+          )
         : setRelationshipWithMember(NA);
       mobileNo ? setMobileNo(mobileNo) : setMobileNo(NA);
       appointeeEmailId ? setEmail(appointeeEmailId) : setEmail(NA);
       nationality ? setNationality(nationality) : setNationality(NA);
       qualification
         ? setQualification(
-          filteredObjectProperty(qualificationList, qualification)
-        )
+            filteredObjectProperty(qualificationList, qualification)
+          )
         : setQualification(NA);
       maratialStatus
         ? setMaritalStatus(
-          filteredObjectProperty(maritalStatusList, maratialStatus)
-        )
+            filteredObjectProperty(maritalStatusList, maratialStatus)
+          )
         : setMaritalStatus(NA);
       hasValue(isInternationalWorker)
         ? isInternationalWorker === "Y"
           ? setisInterNationalWorker("Yes")
           : isPassportAvailable === "Y"
-            ? setisInterNationalWorker("No")
-            : setisInterNationalWorker(NA)
+          ? setisInterNationalWorker("No")
+          : setisInterNationalWorker(NA)
         : setisInterNationalWorker(NA);
       isAadhaarVarified
         ? setIsAadharVerified(isAadhaarVarified)
         : isAadhaarVarified === false
-          ? setIsAadharVerified(isAadhaarVarified)
-          : setIsAadharVerified(NA);
+        ? setIsAadharVerified(isAadhaarVarified)
+        : setIsAadharVerified(NA);
       if (isAadhaarVarified && isUanVarified) {
         setIsDocumentVerified(true);
       }
@@ -399,8 +410,8 @@ let AppointeeViewForm = ({
       isHandicap === "N" || !isHandicap
         ? setHandicapType(NA)
         : setHandicapType(
-          filteredObjectProperty(disabilityList, handicapeType)
-        );
+            filteredObjectProperty(disabilityList, handicapeType)
+          );
 
       aadhaarNumberView ? setAadhar(aadhaarNumberView) : setAadhar(NA);
       aadhaarName ? setNameAsOnAadhar(aadhaarName) : setNameAsOnAadhar(NA);
@@ -456,6 +467,7 @@ let AppointeeViewForm = ({
         }
       );
     }
+    setIsLoading(true);
   };
 
   const setAppointeeActivity = async () => {
@@ -473,7 +485,6 @@ let AppointeeViewForm = ({
   // }, [appointeeId]);
   useEffect(() => {
     if (appointeeId && !hasFetchedData) {
-      
       setAppointeeDetails();
       setAppointeeActivity();
       setHasFetchedData(true); // Mark as fetched
@@ -484,43 +495,55 @@ let AppointeeViewForm = ({
     if (response && response.responseInfo && response.responseInfo.length > 0) {
       const remarks = response.responseInfo;
       openRemarksModel(remarks);
-    }else{
-      showErrorMessage(remarksissuemessage)
+    } else {
+      showErrorMessage(remarksissuemessage);
     }
   };
 
-  const handleClickOnMannualUpload = () => { };
+  const handleClickOnMannualUpload = () => {};
   const handelclick = () => {
     const personalInfo = {
       appointeeId,
-      // appointeeName,
-      // dateOfBirth,
-      // gender,
-      // relationshipWithMember,
-      // member,
-      // handicapType,
-      // isPhysicallyHandicap,
-      // maritalStatus,
-      // qualification,
-      // email,
-      // mobileNo,
-      // nationality,
-      // isFnameVarified,
-      // isUanVerified,
-      // dateOfJoining,
-      // userId,
     };
     openVerify(personalInfo);
   };
 
   let verifyIconStyle;
-  if (isdocumentVerified === null) {
+  if (
+    (isAadharVerified === true &&
+      (isPanVarified === true ||
+        isPanVarified === null ||
+        isPanVarified === "N/A") &&
+      isUanVerified === false &&
+      isManualPassbook === true) ||
+    (isAadharVerified === true &&
+      isPanVarified === null &&
+      isUanVerified === false &&
+      isManualPassbook === true) ||
+    (isAadharVerified === true &&
+      isUanVerified === "N/A" &&
+      isPanVarified === true) ||
+    (isAadharVerified === "N/A" &&
+      isUanVerified === "N/A" &&
+      isPanVarified === "N/A") ||
+    (isAadharVerified === true &&
+      (isUanVerified === "N/A"|| isUanVerified ===null) &&
+      (isPanVarified === "N/A"|| isPanVarified === null)) ||
+    (isAadharVerified === true &&
+      isUanVerified === true &&
+      (isPanVarified === "N/A" || isPanVarified === null))
+  ) {
     verifyIconStyle = notVerifySuccessIconStyle;
   }
-  if (isdocumentVerified === true) {
+  if (
+    isdocumentVerified === true &&
+    (isPanVarified === true )
+  ) {
     verifyIconStyle = verifySuccessIconStyle;
   }
-  if (isdocumentVerified === false) {
+  if (
+    (isAadharVerified === true && isPanVarified === true && isUanVerified === false && isManualPassbook === null)||(isAadharVerified === true && isUanVerified === false  && isManualPassbook===null) ||(isAadharVerified === true && isPanVarified === false )||isAadharVerified === false
+  ) {
     verifyIconStyle = verifyFailedIconStyle;
   }
 
@@ -600,11 +623,60 @@ let AppointeeViewForm = ({
     };
     openRemarksInputModel(confirmationModelContent);
   };
-  const handleRprocess = () => { };
+  const handleRprocess = () => {};
   const handleClickOnManualPassbook = () => {
     openManualVerifiedView();
   };
+  const handlePassbookView = async () => {
+    try {
+      const response = await getPassbookDetails(appointeeId);
+      const { pfUan, companies } = response?.responseInfo || {};
+      if (
+        pfUan &&
+        pfUan.length >= 12 &&
+        Array.isArray(companies) &&
+        companies.length > 0
+      ) {
+        const passbookDetails = response.responseInfo;
+        openPassbookViewModel(appointeeId, passbookDetails, "AF");
+      } else {
+        if (isManualPassbook === true) {
+          const passbookDetails = null;
+          openPassbookViewModel(appointeeId, passbookDetails, "MNL");
 
+          return;
+        }
+        // setIsPassbookAvailable(false);
+        showErrorMessage(noPassBookMsg);
+      }
+    } catch (error) {
+      // setIsPassbookAvailable(false);
+      showErrorMessage("Failed to fetch passbook details. Please try again.");
+    }
+  };
+
+  const handleServiceHistoryView = async () => {
+    try {
+      const response = await getEmployementDetails(appointeeId, userId);
+      const { pfUan, companies } = response?.responseInfo || {};
+      if (pfUan && Array.isArray(companies) && companies.length > 0) {
+        const epfoDetails = response.responseInfo;
+        openEmploymentViewModel(appointeeId, userId, epfoDetails, "AF");
+      } else {
+        if (isManualPassbook === true) {
+          const epfoDetails = null;
+          openEmploymentViewModel(appointeeId, userId, epfoDetails, "MNL");
+          // showErrorMessage(noPassBookMsg);
+          // setIsPassbookAvailable(false);
+          return;
+        }
+        // setIsEmploymentAvailable(false)
+        showErrorMessage(noEmployementMsg);
+      }
+    } catch (error) {
+      showErrorMessage("Failed to fetch epfo details.");
+    }
+  };
   const addFabProps = new FabIconPropsModel(
     addFabStyle,
     handleToggleActionList,
@@ -654,6 +726,22 @@ let AppointeeViewForm = ({
     <PermMedia />,
     "Mannual upload"
   );
+  const viewPassbookFabProps = new FabIconPropsModel(
+    actionIconStyle,
+    handlePassbookView,
+    "warning",
+    "EPFOPassbook",
+    <MenuBook />,
+    "EPFO Passbook"
+  );
+  const viewServiceHistFabProps = new FabIconPropsModel(
+    actionIconStyle,
+    handleServiceHistoryView,
+    "warning",
+    "EPFOServiceHist",
+    <AccountBox />,
+    "EPFO Service History"
+  );
   // const verifyFabProps = new FabIconPropsModel(
   //   actionIconStyle,
   //   handelclick,
@@ -667,20 +755,20 @@ let AppointeeViewForm = ({
       isAadharVerified === false
         ? { label: "Aadhaar Verification failed", color: "error" }
         : isPanVarified === false
-          ? { label: "PAN Verification failed", color: "error" }
-          : isUanVerified === false && isManualPassbook === true
-            ? { label: "Manual Passbook Uploaded", color: "warning" }
-            : isUanVerified === false
-              ? { label: "UAN Verification failed", color: "error" }
-              : isAadharVerified === "N/A"
-                ? { label: "Aadhaar Verification Pending", color: "warning" }
-                : isPanVarified === "N/A"
-                  ? { label: "PAN Verification Pending", color: "warning" }
-                  : isUanVerified === "N/A"
-                    ? { label: "UAN Verification Pending", color: "warning" }
-                    : isUanVerified === true && !hasValue(uanNumber)
-                      ? { label: "No UAN Available", color: "success" }
-                      : { label: null, color: null };
+        ? { label: "PAN Verification failed", color: "error" }
+        : isUanVerified === false && isManualPassbook === true
+        ? { label: "Manual Passbook Uploaded", color: "warning" }
+        : isUanVerified === false
+        ? { label: "UAN Verification failed", color: "error" }
+        : isAadharVerified === "N/A"
+        ? { label: "Aadhaar Verification Pending", color: "warning" }
+        : isPanVarified === "N/A" || isPanVarified === null
+        ? { label: "PAN Verification Pending", color: "warning" }
+        : isUanVerified === "N/A"
+        ? { label: "UAN Verification Pending", color: "warning" }
+        : isUanVerified === true && !hasValue(uanNumber)
+        ? { label: "No UAN Available", color: "success" }
+        : { label: null, color: null };
 
     return label ? (
       <Chip
@@ -694,7 +782,7 @@ let AppointeeViewForm = ({
     navigateTo(`${toMannualVerification}`, { state: manualVerificationStatus });
     closeViewModel();
   };
- 
+
   return (
     <Box bgcolor={"#E2E8F0"} sx={{ position: "relative", borderRadius: "8px" }}>
       <Box sx={gridContainerStyle}>
@@ -708,7 +796,40 @@ let AppointeeViewForm = ({
             <Box sx={cardStyle} onClick={() => setRemarks(appointeeId)}>
               <Stack alignItems={"center"}>
                 <Box>
-                  <Security sx={verifyIconStyle} />
+                  {/* <Security sx={verifyIconStyle} /> */}
+                  {isLoading &&
+                  isdocumentVerified === true &&
+                  (isPanVarified === true) ? (
+                    <TaskAlt sx={verifyIconStyle} />
+                  ) : (isLoading &&
+                      isAadharVerified === true &&
+                      (isPanVarified === true ||
+                        isPanVarified === null ||
+                        isPanVarified === "N/A") &&
+                      isUanVerified === false &&
+                      isManualPassbook === true) ||
+                    (isAadharVerified === true &&
+                      isPanVarified === true &&
+                      isUanVerified === false &&
+                      isManualPassbook === null) ||
+                    (isAadharVerified === true &&
+                      isUanVerified === "N/A" &&
+                      isPanVarified === true) ||
+                    (isAadharVerified === "N/A" &&
+                      isUanVerified === "N/A" &&
+                      isPanVarified === "N/A") ||
+                    (isAadharVerified === true &&
+                      (isUanVerified === "N/A" || isUanVerified === null ) &&
+                      (isPanVarified === "N/A" || isPanVarified === null)) ||
+                    (isAadharVerified === true &&
+                      isUanVerified === true &&
+                      (isPanVarified === "N/A" || isPanVarified === null)) ? (
+                    <WarningAmber sx={verifyIconStyle} />
+                  ) : (isLoading && isAadharVerified === true && isPanVarified === true && isUanVerified === false && isManualPassbook === null)||(isAadharVerified === true && isUanVerified === false && isManualPassbook===null)||(isAadharVerified === true && isPanVarified === false) ||isAadharVerified === false  ? (<WarningAmber sx={verifyIconStyle} />
+                  ) : (
+                    //  isLoading && isAadharVerified === true && isPanVarified && isUanVerified === false && isManualPassbook === true ? <WarningAmber sx={verifyIconStyle} /> :
+                    <Skeleton variant="circular" width={80} height={80} />
+                  )}
                 </Box>
                 <Box>
                   {isSaveStep === 1 ? <>{getVerificationChip()}</> : null}
@@ -949,10 +1070,9 @@ let AppointeeViewForm = ({
                   fieldName={"Date of Joining"}
                   fieldValue={dateOfJoining}
                 />
-                
 
                 <PersonalInformation
-                 // fieldName={"Father's Name Verification Document"}
+                  // fieldName={"Father's Name Verification Document"}
                   fieldName={"PAN Card"}
                   fieldValue={
                     otherFile ? (
@@ -966,7 +1086,9 @@ let AppointeeViewForm = ({
                     )
                   }
                 />
-                <PersonalInformation
+                        {console.log("1111",process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH)}
+
+                 {process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH === 'true' && <PersonalInformation
                   fieldName={"10th Pass Certificate"}
                   fieldValue={
                     tenFile ? (
@@ -979,77 +1101,106 @@ let AppointeeViewForm = ({
                       "N/A"
                     )
                   }
-                />
+                />}
               </Grid>
             </Box>
           </Grid>
 
           <Grid item xs={12} md={3.5}>
+            <Box
+              sx={{
+                ...cardStyle,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                onClick={handleClickOnReview}
+                variant="contained"
+                sx={{ ...buttonStyleSx }}
+                startIcon={
+                  <img
+                    src={exclamation}
+                    alt="exclamation"
+                    style={{
+                      width: 25,
+                      height: 25,
+                      filter: "invert(1) brightness(100%)",
+                    }}
+                  />
+                }
+              >
+                View Remarks / Issues
+              </Button>
+            </Box>
             {!roleTypeEnums.candidate.includes(userTypeId)
               ? isManualPassbook &&
-              (manualVerificationStatus === "MV" ||
-                manualVerificationStatus === "MRV") && 
-               hasPermission &&
-              hasPermission["A015"] && (
-                <Box
-                  sx={{
-                    ...cardStyle,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Button
-                    onClick={handelclick}
-                    variant="contained"
-                    sx={{ ...buttonStyleSx }}
-                    startIcon={
-                      <img
-                        src={exclamation}
-                        alt="exclamation"
-                        style={{
-                          width: 25,
-                          height: 25,
-                          filter: "invert(1) brightness(100%)",
-                        }}
-                      />
-                    }
+                (manualVerificationStatus === "MV" ||
+                  manualVerificationStatus === "MRV") &&
+                hasPermission &&
+                hasPermission["A015"] && (
+                  <Box
+                    sx={{
+                      ...cardStyle,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    Verify Manually
-                  </Button>
-                </Box>
-              )
+                    <Button
+                      onClick={handelclick}
+                      variant="contained"
+                      sx={{ ...buttonStyleSx }}
+                      startIcon={
+                        <img
+                          src={exclamation}
+                          alt="exclamation"
+                          style={{
+                            width: 25,
+                            height: 25,
+                            filter: "invert(1) brightness(100%)",
+                          }}
+                        />
+                      }
+                    >
+                      Verify Manually
+                    </Button>
+                  </Box>
+                )
               : null}
             {!roleTypeEnums.candidate.includes(userTypeId)
-              ? isManualPassbook && hasPermission &&
-              hasPermission["A016"] &&
-              (["MV", "MRV", "RD"].includes(manualVerificationStatus)) && (
-                <Box
-                  sx={{
-                    ...cardStyle,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Button
-
-                    onClick={() => handleGetManualVerifiedFilter(manualVerificationStatus)}
-                    variant="contained"
-                    sx={{ ...buttonStyleSx }}
-                    startIcon={
-                      <img
-                        width={18}
-                        src={"./playground_assets/redirect.svg"}
-                        alt="YourSVG"
-                        style={{ width: "100%", height: "auto" }}
-                      />
-                    }
+              ? isManualPassbook &&
+                hasPermission &&
+                hasPermission["A016"] &&
+                ["MV", "MRV", "RD"].includes(manualVerificationStatus) && (
+                  <Box
+                    sx={{
+                      ...cardStyle,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    Visit Manual Verification Page
-                  </Button>
-                </Box>
-              )
+                    <Button
+                      onClick={() =>
+                        handleGetManualVerifiedFilter(manualVerificationStatus)
+                      }
+                      variant="contained"
+                      sx={{ ...buttonStyleSx }}
+                      startIcon={
+                        <img
+                          width={18}
+                          src={"./playground_assets/redirect.svg"}
+                          alt="YourSVG"
+                          style={{ width: "100%", height: "auto" }}
+                        />
+                      }
+                    >
+                      Visit Manual Verification Page
+                    </Button>
+                  </Box>
+                )
               : null}
 
             <Box sx={{ margin: "1rem 0" }}>
@@ -1079,17 +1230,17 @@ let AppointeeViewForm = ({
                     <>
                       {isSaveStep && isSaveStep > 0
                         ? hasPermission &&
-                        hasPermission["A002"] && (
-                          <FabIcon
-                            props={{
-                              ...approveFabProps,
-                              selectedIndex: 1,
-                              index: 1,
-                              placement: "left-end",
-                              size: "small",
-                            }}
-                          />
-                        )
+                          hasPermission["A002"] && (
+                            <FabIcon
+                              props={{
+                                ...approveFabProps,
+                                selectedIndex: 1,
+                                index: 1,
+                                placement: "left-end",
+                                size: "small",
+                              }}
+                            />
+                          )
                         : null}
                       {hasPermission && hasPermission["A003"] && (
                         <FabIcon
@@ -1112,8 +1263,27 @@ let AppointeeViewForm = ({
                           }}
                         />
                       )}
+                      {hasValue(uanNumber) && (
+                        <>
+                          <FabIcon
+                            props={{
+                              ...viewPassbookFabProps,
+                              selectedIndex: 3,
+                              index: 3,
+                            }}
+                          />
+                          <FabIcon
+                            props={{
+                              ...viewServiceHistFabProps,
+                              selectedIndex: 3,
+                              index: 3,
+                            }}
+                          />
+                        </>
+                      )}
                     </>
                   ) : null}
+
                   <FabIcon
                     props={{ ...remarksFabProps, selectedIndex: 4, index: 4 }}
                   />

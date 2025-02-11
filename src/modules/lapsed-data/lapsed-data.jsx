@@ -294,7 +294,7 @@ const UnwrappedLapseddata = (props) => {
                     setStatusCode(e.target.value);
                   }}
                 >
-                  <MenuItem value={"All"}>Select All</MenuItem>
+                  <MenuItem value={"All"}>All</MenuItem>
                   <MenuItem value={"0"}>No Response</MenuItem>
                   <MenuItem value={"1"}>Ongoing</MenuItem>
                   <MenuItem value={"2"}>Submitted</MenuItem>

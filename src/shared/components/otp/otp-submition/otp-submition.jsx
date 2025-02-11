@@ -153,7 +153,7 @@ let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
         <Typography
           sx={otpModalTextStyle}
         >
-          Type OTP - Copy/Paste is disabled
+          Type OTP - Copy / Paste is disabled
         </Typography>
         <Stack
           justifyContent={"center"}

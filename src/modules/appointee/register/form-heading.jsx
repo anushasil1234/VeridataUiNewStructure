@@ -12,7 +12,17 @@ const FormHeading = ({ step, heading, info, Children }) => {
                 <Stack sx={stepNumberContainerStyle}>
                     <Typography fontWeight={500}>{step}</Typography>
                 </Stack>}
-            <Tooltip title={info} placement="right">
+            {/* <Tooltip title={info} placement="right">
+                <Typography sx={stepHeadingStyle}>{heading}</Typography>
+            </Tooltip> */}
+            <Tooltip 
+                title={
+                    <Typography fontSize="16px"> 
+                        {info}
+                    </Typography>
+                } 
+                placement="right"
+            >
                 <Typography sx={stepHeadingStyle}>{heading}</Typography>
             </Tooltip>
             {Children}

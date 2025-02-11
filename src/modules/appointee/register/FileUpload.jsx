@@ -897,7 +897,7 @@ const FileUpload = ({ stepsList, mode }) => {
                                                                     alignItems: "center",
                                                                 }}
                                                             >
-                                                                {"10th pass Certificate"}
+                                                                {"10th Pass Certificate"}
                                                             </Typography>
                                                             {mode !== 'R' && (
                                                                 <Tooltip
@@ -991,7 +991,7 @@ const FileUpload = ({ stepsList, mode }) => {
                                                         <FileUploadSection
                                                             chooseFile={uploadFathersDocFile}
                                                             fileName={otherFileName}
-                                                            accept={"image/png, image/jpeg"}
+                                                            accept={"image/png, image/jpeg,application/pdf"}
                                                             disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
                                                             uploadTypeAlias={otherFileTypeAlias}
                                                         />
@@ -1044,7 +1044,7 @@ const FileUpload = ({ stepsList, mode }) => {
                                                             <FileUploadSection
                                                                 chooseFile={uploadHandicapFile}
                                                                 fileName={handicapFileName}
-                                                                accept={"image/png, image/jpeg"}
+                                                                accept={"image/png, image/jpeg,application/pdf"}
                                                                 disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
                                                                 uploadTypeAlias={handicapFileTypeAlias}
                                                             />
@@ -1192,7 +1192,7 @@ const FileUpload = ({ stepsList, mode }) => {
                                                         }}
                                                     >
                                                         {
-                                                            "Do you have PF under any Trust, in the past or present"
+                                                            "Do you have PF under any Trust/Private, i.e non-EPFO PF, in the past or present"
                                                         }
                                                     </Typography>
                                                     {mode !== 'R' && (
@@ -1242,14 +1242,14 @@ const FileUpload = ({ stepsList, mode }) => {
                                                 <Typography
                                                     sx={{ ...lable1Style, textAlign: "center" }}
                                                 >
-                                                    Please upload Trust PF Details
+                                                    Please upload Trust/Private, i.e non-EPFO PF Details
                                                     <span className="requiredField">*</span>
                                                 </Typography>
                                                 <Box sx={fileUploadSectionContainerStyle}>
                                                     <FileUploadSection
                                                         chooseFile={uploadTrustEPFOFile}
                                                         fileName={trustEpfoFileName}
-                                                        accept={"image/png, image/jpeg"}
+                                                        accept={"image/png, image/jpeg,application/pdf"}
                                                         disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
                                                         uploadTypeAlias={trustEpfoFileTypeAlias}
                                                     />

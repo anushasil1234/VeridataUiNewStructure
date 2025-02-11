@@ -258,7 +258,7 @@ export const ReuploadForm = () => {
                                 />
                             </Grid>
                         </Grid>
-                        <Grid
+                         {process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH === 'true' && <Grid
                             container
                             rowSpacing={1}
                             columnSpacing={2.5}
@@ -280,7 +280,7 @@ export const ReuploadForm = () => {
                                                 alignItems: "center",
                                             }}
                                         >
-                                            {"10th pass Certificate"}
+                                            {"10th Pass Certificate"}
                                         </Typography>
                                         <Tooltip
                                             arrow="bottom"
@@ -327,7 +327,7 @@ export const ReuploadForm = () => {
                                         //     : tenthCertificateFileName
                                         // }
                                         fileName={tenthCertificateFileName}
-                                        accept={"image/png, image/jpeg"}
+                                        accept={"image/png, image/jpeg,application/pdf"}
                                         // disabled={isPreviousSectionDisabled}
                                         maxUploadSize={imgAndPdfMaxSize}
                                         uploadTypeAlias={tenthCertificateFileTypeAlias}
@@ -335,7 +335,7 @@ export const ReuploadForm = () => {
                                     />
                                 </Box>
                             </Grid>
-                        </Grid>
+                        </Grid>}
                         <Grid
                             container
                             rowSpacing={1}
@@ -400,7 +400,7 @@ export const ReuploadForm = () => {
                                     <FileUploadSection
                                         chooseFile={uploadFathersDocFile}
                                         fileName={otherFileName}
-                                        accept={"image/png, image/jpeg"}
+                                        accept={"image/png, image/jpeg,application/pdf"}
                                         // disabled={isPreviousSectionDisabled}
                                         maxUploadSize={imgAndPdfMaxSize}
                                         uploadTypeAlias={otherFileTypeAlias}

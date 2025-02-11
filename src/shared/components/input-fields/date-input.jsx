@@ -21,6 +21,7 @@ const DateInput = ({value, onChange, label, disableFuture=false, error=false, re
                 InputLabelProps={{
                     shrink: true
                 }}
+                disabled={readOnly} 
                 InputProps={{
                     readOnly: readOnly
                 }}

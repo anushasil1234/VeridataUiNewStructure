@@ -19,17 +19,20 @@ import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { hasValue } from "shared/utils";
 
 const DownloadReport = ({
+  isDownloadFilter,
   handleSearch,
   clearSearch,
   downloadApi,
   processStatus,
   passbookStatus,
+  downloadStatus,
   toDate,
   setToDate,
   fromDate,
   setFromDate,
   handleProcessStatusChange,
   handlePassbookStatusChange,
+  handleDownloadStatusChange,
   isStatusFilter,
   hasPermission,
   infoDetails,
@@ -105,6 +108,30 @@ const DownloadReport = ({
           />
         </Box>
       </Grid>
+
+      {isDownloadFilter && isDownloadFilter === true ? (
+      <Grid item xs={12} sm={6} md={3} lg={2}>
+          <FormControl sx={{ width: "100%" }} size="small">
+            <InputLabel sx={{padding:'8px'}} id="demo-select-small" >Template Status</InputLabel>
+            {downloadStatus !== undefined && (
+              <Select
+                sx={{ height: '57px' }}
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={downloadStatus}
+                label="Template Status"
+                onChange={handleDownloadStatusChange}
+              >
+                <MenuItem value={"All"}>All</MenuItem>
+                <MenuItem value={true}>Downloaded</MenuItem>
+                <MenuItem value={false}>Not Downloaded</MenuItem>
+              </Select>
+            )}
+          </FormControl>
+        
+      </Grid>
+       ) : null}
+
       {isStatusFilter && isStatusFilter === true ? (
       <Grid item xs={12} sm={6} md={3} lg={2}>
           <FormControl sx={{ width: "100%" }} size="small">
@@ -118,7 +145,7 @@ const DownloadReport = ({
                 label="Verification Status"
                 onChange={handleProcessStatusChange}
               >
-                <MenuItem value={"All"}>Select All</MenuItem>
+                <MenuItem value={"All"}>All</MenuItem>
                 <MenuItem value={"AP"}>Verified</MenuItem>
                 <MenuItem value={"FA"}>Manual Override</MenuItem>
               </Select>
@@ -141,7 +168,7 @@ const DownloadReport = ({
                 label="Passbook Status"
                 onChange={handlePassbookStatusChange}
               >
-                <MenuItem value={'All'}>Select All</MenuItem>
+                <MenuItem value={'All'}>All</MenuItem>
                 <MenuItem value={true}>Manual</MenuItem>
                 <MenuItem value={false}>Auto</MenuItem>
               </Select>

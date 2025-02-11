@@ -1,6 +1,8 @@
 export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCounter }) => {
     let _steps = {};
     let _stepCounter = stepCounter;
+
+
     if (isHandicap === 'Y') {
         _stepCounter = _stepCounter + 1;
         _steps = {
@@ -22,6 +24,15 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         }
     }
     _stepCounter = _stepCounter + 1;
+    _steps = {
+        ..._steps,
+        CF: {
+            step: _stepCounter,
+            name: 'Certificate / File Upload'
+        }
+    }
+    _stepCounter = _stepCounter + 1;
+
     _steps = {
         ..._steps,
         PFD: {

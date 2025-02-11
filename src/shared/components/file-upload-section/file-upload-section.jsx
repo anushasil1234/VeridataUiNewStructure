@@ -20,7 +20,11 @@ const FileUploadSection = ({
   handleRemoveFile = null,
   uploadTypeAlias,
 }) => {
-  const fileType = `Accepted format: ${accept}`;
+   const fileType = `Accepted format: ${accept}`;
+  // const fileType = `Accepted format: ${accept
+  //   .split(", ") // Split into an array
+  //   .map(type => type.split("/").pop()) // Extract the file extension
+  //   .join(", ")}`;
   const fileLimitText = multiple
     ? "You can upload multiple file(s) at a time."
     : "You can only upload one file at a time.";
@@ -36,7 +40,11 @@ const FileUploadSection = ({
       handleRemoveFile(filename);
     }
   };
-
+  const isValidFileType = (filename) => {
+    const allowedExtensions = ["pdf", "jpg", "jpeg", "png"];
+    const extension = filename.split(".").pop().toLowerCase();
+    return allowedExtensions.includes(extension);
+  };
   return (
     <Grid
       sx={{
@@ -56,7 +64,7 @@ const FileUploadSection = ({
           onChange={handleFileChange}
           disabled={disabled}
         />
-        <UploadButton disabled={disabled} fileName={fileName} />
+        <UploadButton disabled={disabled} fileName={fileName} multiple={multiple} />
       </Box>
 
       <Typography
@@ -66,6 +74,19 @@ const FileUploadSection = ({
       >
         {fileLimitText}
       </Typography>
+
+
+      {Array.isArray(fileName) && fileName.some(isValidFileType) && (
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ textAlign: "center"}}
+        >
+          Please crop out blank spaces / other objects and upload the actual document copy only.
+        </Typography>
+      )}
+
+
       {Array.isArray(fileName) && fileName.length > 0 ? (
         <Grid container gap={1} sx={{ ...filenameContainer }}>
           {fileName.map((_filename) => (

@@ -30,15 +30,18 @@ const UnwappedPFUsers = (props) => {
   const [toDate, setToDate] = useState(_today);
   const [fromDate, setFromDate] = useState(_fromday);
   const [processStatus, setProcessStatus] = useState("All");
+  const [downloadStatus, setDownloadStatus] = useState("All");
   let [payLoad, setPayLoad] = useState({
-    isFiltered: state && state.dayRangePayLoad ? true : false,
-    noOfDays: state && state.dayRangePayLoad ? state.dayRangePayLoad : 0,
-    filterType: state && state.filterType,
-    appointeeName: state && state.appointeeName,
-    isPfRequired: null,
-    processStatus: null,
+    // isFiltered: state && state.dayRangePayLoad ? true : false,
+    // noOfDays: state && state.dayRangePayLoad ? state.dayRangePayLoad : 0,
+    // filterType: state && state.filterType,
+    // appointeeName: state && state.appointeeName,
+    // isPfRequired: null,
+    // processStatus: null,
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
-    toDate: toDate && DateFormatYYYYMMDD(toDate?.toString())
+    toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
+    isDownloaded : null,
+    filePassword :null
   });
   const [rows, setRows] = useState([]);
   const handleProcessStatusChange = async (e) => {
@@ -52,23 +55,35 @@ const UnwappedPFUsers = (props) => {
   
     setPayLoad(updatedPayLoad);
   };
+  const handleDownloadStatusChange = async (e) => {
+    const { value } = e.target;
+    setDownloadStatus(value);
   
+    const updatedPayLoad = {
+      ...payLoad,
+      isDownloaded: value === "All" ? null : value,
+    };
+  
+    setPayLoad(updatedPayLoad);
+  };
 
   const clearSearch = () => {
     setFromDate(null);
     setToDate(null);
-    setProcessStatus('All');
+    setDownloadStatus(null);
     const newPayLoad = {
       ...payLoad,
       fromDate: null,
       toDate: null,
-      isFiltered: false,
-      noOfDays: 0,
-      filterType: null,
-      appointeeName: null,
-      candidateId: null,
-      isPfRequired: null,
-      processStatus: null,
+      IsDownloaded: null,
+      filePassword: null,
+      // isFiltered: false,
+      // noOfDays: 0,
+      // filterType: null,
+      // appointeeName: null,
+      // candidateId: null,
+      // isPfRequired: null,
+      // processStatus: null,
     };
     setPayLoad(newPayLoad);
     setTableRows(newPayLoad); 
@@ -126,7 +141,7 @@ const UnwappedPFUsers = (props) => {
   }, [fromDate, toDate]);
  
   return (
-    <PageLayout pageName={"PF Users List"}>
+    <PageLayout pageName={"PF Users Gen List"}>
       <CardLayout>
         <DownloadReport
           handleSearch={handleSearch}
@@ -134,12 +149,15 @@ const UnwappedPFUsers = (props) => {
           payLoad={payLoad}
           downloadApi={downloadPfCreationApponteeList_URL}
           processStatus={processStatus}
+          downloadStatus={downloadStatus}
           toDate={toDate}
           setToDate={setToDate}
           fromDate={fromDate}
           setFromDate={setFromDate}
           handleProcessStatusChange={handleProcessStatusChange}
+          handleDownloadStatusChange={handleDownloadStatusChange}
           isStatusFilter={false}
+          isDownloadFilter ={true}
           hasPermission={hasPermission}
           infoDetails={pfUsersInfo}
         />

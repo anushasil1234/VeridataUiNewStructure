@@ -38,7 +38,7 @@ const Help = () => {
                             {element.contenttype==='text' ?  <Typography>
                                 {element.faqDescription}
                             </Typography>: element.contenttype==='html' ? <Typography>
-                             { console.log('aaaa',element.faqDescription)}
+                             {/* { console.log('aaaa',element.faqDescription)} */}
                                 {parse(element.faqDescription)}
                             </Typography>:''}
                            

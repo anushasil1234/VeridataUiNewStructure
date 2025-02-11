@@ -1,6 +1,20 @@
-import { Box, Button, Grid, Typography, Chip, Tooltip, tooltipClasses, Fab } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import { getStatusTooltip, getTooltipforStatus, toReuploadDoc } from "shared/constants/constants";
+import {
+  Box,
+  Button,
+  Grid,
+  Typography,
+  Chip,
+  Tooltip,
+  tooltipClasses,
+  Fab,
+  Divider,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import {
+  getStatusTooltip,
+  getTooltipforStatus,
+  toReuploadDoc,
+} from "shared/constants/constants";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -28,7 +42,7 @@ import {
   storeLoggedinData,
 } from "store/slices/login-slice";
 import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
-import Button1 from 'shared/utils/button/button1';
+import Button1 from "shared/utils/button/button1";
 import { Info } from "@mui/icons-material";
 import { dark } from "@mui/material/styles/createPalette";
 
@@ -56,9 +70,9 @@ const CandidateView = () => {
     statusCode,
     isSubmit,
     isProcessed,
-    candidateId
+    candidateId,
   } = loggedInData[0];
- 
+
   const [isPrerequisiteDataAvailable, setIsPrerequisiteDataAvailable] =
     useState(prerquistdata);
   const [loading, setLoading] = useState(false);
@@ -198,12 +212,10 @@ const CandidateView = () => {
     }
   };
   const setSubmitStatus = async () => {
-   // const response = await getAppointeeDetails(appointeeId);
-  //  if (response) {
-      setIsSubmitExternal(
-       isSubmit || isProcessed
-      );
-   // }
+    // const response = await getAppointeeDetails(appointeeId);
+    //  if (response) {
+    setIsSubmitExternal(isSubmit || isProcessed);
+    // }
   };
   const appointeeDocReupload = async () => {
     navigateTo(toReuploadDoc);
@@ -217,16 +229,16 @@ const CandidateView = () => {
     if (userTypeId === 3) {
       setSubmitStatus();
     }
-  }, [isSubmit,isProcessed]);
+  }, [isSubmit, isProcessed]);
   const HtmlTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: '#f5f5f9',
-      color: 'rgba(0, 0, 0, 0.87)',
+      backgroundColor: "#f5f5f9",
+      color: "rgba(0, 0, 0, 0.87)",
       maxWidth: 220,
       fontSize: theme.typography.pxToRem(12),
-      border: '1px solid #dadde9',
+      border: "1px solid #dadde9",
     },
   }));
   return (
@@ -257,7 +269,7 @@ const CandidateView = () => {
                 </Grid>
                 <Grid item lg={3} xs={12}>
                   Status:
-                  <Tooltip
+                  {/* <Tooltip
                     title={
                       <Typography sx={{ maxWidth: 200, whiteSpace: "normal" }}>
                         {getTooltipforStatus(statusCode)}
@@ -265,42 +277,57 @@ const CandidateView = () => {
                     }
                     arrow
                     placement="bottom"
-                  >
-                    <Chip
-                      label={status}
-                      sx={{
-                        ...getStatusChipStyle(status),
+                  > */}
+                  <Chip
+                    label={status}
+                    sx={{
+                      ...getStatusChipStyle(status),
 
-                        marginLeft: "8px",
-                      }}
-                      size="small"
-                      aria-label={`Status: ${status}`}
-                    />
-                  </Tooltip>
-                  <Tooltip backgroundColor="dark"
+                      marginLeft: "8px",
+                    }}
+                    size="small"
+                    aria-label={`Status: ${status}`}
+                  />
+                  {/* </Tooltip> */}
+                  <Tooltip
                     arrow
                     title={
-                      <Box sx={{... statusBoxstyle}}>
-                        <Typography variant="body2" sx={{... statusstyle}}>
-                          <strong>Submitted:</strong> Your data has been submitted successfully.
+                      <Box sx={{ ...statusBoxstyle }}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            mb: 1,
+                          }}
+                        >
+                          Verification Progress Status
                         </Typography>
-                        <Typography variant="body2" sx={{... statusstyle }}>
-                          <strong>Approved:</strong> Approved successfully.
+                        <Divider sx={{ mb: 1}} />
+                        <Typography variant="body2" sx={{ ...statusstyle }}>
+                          <strong>Submitted:</strong> Your data has been
+                          submitted successfully.
                         </Typography>
-                        <Typography variant="body2" sx={{...statusstyle }}>
+                        <Typography variant="body2" sx={{ ...statusstyle }}>
+                          <strong>Verified:</strong> Verified successfully.
+                        </Typography>
+                        <Typography variant="body2" sx={{ ...statusstyle }}>
                           <strong>Ongoing:</strong> Verification in progress.
                         </Typography>
-                        <Typography variant="body2" sx={{...statusstyle}}>
+                        <Typography variant="body2" sx={{ ...statusstyle }}>
                           <strong>Rejected:</strong> You are rejected by Admin.
                         </Typography>
-                        <Typography variant="body2" sx={{...statusstyle }}>
-                          <strong>Approved Manually:</strong> The data has been manually verified and approved by the admin.
+                        <Typography variant="body2" sx={{ ...statusstyle }}>
+                          <strong>Verified Manually:</strong> The data has been
+                          manually verified and approved by the admin.
                         </Typography>
-                        <Typography variant="body2" sx={{...statusstyle }}>
-                          <strong>No Response:</strong> There has been no response yet.
+                        <Typography variant="body2" sx={{ ...statusstyle }}>
+                          <strong>No Response:</strong> There has been no
+                          response yet.
                         </Typography>
-                        <Typography variant="body2" sx={{...statusstyle }}>
-                          <strong>Doc Reupload:</strong> Request for Doc Reupload.
+                        <Typography variant="body2" sx={{ ...statusstyle }}>
+                          <strong>Doc Reupload:</strong> Request for Doc
+                          Reupload.
                         </Typography>
                       </Box>
                     }
@@ -308,12 +335,101 @@ const CandidateView = () => {
                     <Fab
                       variant="contained"
                       size="small"
-
                       sx={{ ...primaryFabStyle, ml: 1.7 }}
                     >
                       <Info width={18} sx={{ color: "#fff" }} />
                     </Fab>
                   </Tooltip>
+                  {/* <Tooltip
+  arrow
+  title={
+    <Box sx={{ ...statusBoxstyle}}>
+
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold", textAlign: "center", mb: 1 }}>
+        Verification Progress Status
+      </Typography>
+      <Divider sx={{ mb: 1 }} />
+      
+
+      {[
+        { label: "Submitted", text: "Your data has been submitted successfully." },
+        { label: "Verified", text: "Verified successfully." },
+        { label: "Ongoing", text: "Verification in progress." },
+        { label: "Rejected", text: "You are rejected by Admin." },
+        { label: "Verified Manually", text: "The data has been manually verified and approved by the admin." },
+        { label: "No Response", text: "There has been no response yet." },
+        { label: "Doc Reupload", text: "Request for Doc Reupload." },
+      ].map((status, index) => (
+        <Typography
+          key={index}
+          variant="body2"
+          sx={{ ...statusstyle, display: "flex", alignItems: "center", mb: 0.5 }}
+        >
+          <strong>{status.label}:</strong>&nbsp; {status.text}
+        </Typography>
+      ))}
+    </Box>
+  }
+>
+  <Fab variant="contained" size="small" sx={{ ...primaryFabStyle, ml: 1.7 }}>
+    <Info width={18} sx={{ color: "#fff" }} />
+  </Fab>
+</Tooltip> */}
+                  {/* <Tooltip
+  arrow
+  title={
+    <Box
+      sx={{
+        ...statusBoxstyle,
+        p: 2,
+        maxWidth: 350,
+        bgcolor: "rgba(255, 255, 255, 0.85)", 
+        backdropFilter: "blur(6px)", 
+        borderRadius: 2,
+        boxShadow: 3,
+      }}
+    >
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold", textAlign: "center", mb: 1 }}>
+        Verification Progress Status
+      </Typography>
+      <Divider sx={{ mb: 1 }} />
+
+      <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
+        {[
+          { label: "Submitted", text: "Your data has been submitted successfully." },
+          { label: "Verified", text: "Verified successfully." },
+          { label: "Ongoing", text: "Verification in progress." },
+          { label: "Rejected", text: "You are rejected by Admin." },
+          { label: "Verified Manually", text: "Manually verified and approved by the admin." },
+          { label: "No Response", text: "There has been no response yet." },
+          { label: "Doc Reupload", text: "Request for document reupload." },
+        ].map((status, index) => (
+          <Box key={index} component="li" sx={{ display: "flex", mb: 0.5 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: "bold",
+                minWidth: "130px", 
+                textAlign: "left",
+                pr: 1,
+                color: "#222",
+              }}
+            >
+              {status.label}:
+            </Typography>
+            <Typography variant="body2" sx={{ flex: 1, color: "#444" }}>
+              {status.text}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  }
+>
+  <Fab variant="contained" size="small" sx={{ ...primaryFabStyle, ml: 1.7 }}>
+    <Info width={18} sx={{ color: "#fff" }} />
+  </Fab>
+</Tooltip> */}
                 </Grid>
 
                 <Grid item lg={4} xs={12}>
@@ -344,7 +460,7 @@ const CandidateView = () => {
                         variant="contained"
                         color="primary"
                         onClick={appointeeDocReupload}
-                        sx={{...pendingverificationsx}}
+                        sx={{ ...pendingverificationsx }}
                       >
                         Pending Verification
                       </Button>
@@ -358,12 +474,12 @@ const CandidateView = () => {
                         color="primary"
                         onClick={appointeeVerification}
                         disabled={!isPrerequisiteDataAvailable}
-                        sx={{...pendingverificationsx }}
+                        sx={{ ...pendingverificationsx }}
                       >
                         {(consentStatus === 4 ||
                           consentStatus === 0 ||
                           consentStatus === 5) &&
-                          isProcessed !== true
+                        isProcessed !== true
                           ? "Start Verification"
                           : "Pending Verification"}
                       </Button>

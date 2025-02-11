@@ -129,7 +129,7 @@ const CriticalRecruits = () => {
             <Stack direction="row" spacing={1} mt={1} alignItems="center">
                 {hasValue(critical?.totalCriticalAppointee) && critical?.totalCriticalAppointee !== 0 && (
                     <Typography variant="subtitle2">
-                        Appointees with Joining Date within {critical.totalCriticalAppointee} days and yet to complete verification
+                        Appointees with Joining Date within {critical.criticalDaysNo} days and yet to complete verification
                     </Typography>
                 )}
             </Stack>
