@@ -137,7 +137,7 @@ export const TableActionCell = (props1, props2) => {
           return;
         }
         // setIsPassbookAvailable(false);
-        // showErrorMessage(noPassBookMsg);
+         showErrorMessage(noPassBookMsg);
         
       }
     } catch (error) {
