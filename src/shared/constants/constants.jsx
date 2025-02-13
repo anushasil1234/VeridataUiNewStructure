@@ -303,12 +303,12 @@ export const verifiedListTableHeadCell = [
     },
   },
   {
-    id: "IsDualEmployement",
+    id: "isDualEmployement",
     numeric: true,
     type: "boolean",
     disablePadding: false,
     label: "Dual Employement Possibility",
-    enums: ["IsDualEmployement"],
+    enums: ["isDualEmployement"],
     component: {
       element: Typography,
     },
