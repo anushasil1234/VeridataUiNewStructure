@@ -303,17 +303,6 @@ export const verifiedListTableHeadCell = [
     },
   },
   {
-    id: "isDualEmployement",
-    numeric: true,
-    type: "boolean",
-    disablePadding: false,
-    label: "Dual Employement Possibility",
-    enums: ["isDualEmployement"],
-    component: {
-      element: Typography,
-    },
-  },
-  {
     id: "isPensionGap",
     numeric: true,
     type: "boolean",
@@ -324,6 +313,7 @@ export const verifiedListTableHeadCell = [
       element: Typography,
     },
   },
+ 
   {
     id: "status",
     numeric: true,
@@ -331,6 +321,17 @@ export const verifiedListTableHeadCell = [
     disablePadding: false,
     label: "Verification Status",
     enums: ["status"],
+    component: {
+      element: Typography,
+    },
+  },
+  {
+    id: "isDualEmployement",
+    numeric: true,
+    type: "boolean",
+    disablePadding: false,
+    label: "Dual Employement Possibility",
+    enums: ["isDualEmployement"],
     component: {
       element: Typography,
     },
