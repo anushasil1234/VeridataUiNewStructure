@@ -22,6 +22,7 @@ import {
   UANPatterErrorMsg,
   emptyAadharNoMsg,
   aadharPatternErrorMsg,
+  docResubmissionSuccessDialogContentText,
 } from "shared/constants/constants";
 import {
   CreateStepSequience,
@@ -1526,7 +1527,7 @@ const AppointeeRegisterForm = () => {
       );
 
       const registrationSuccessContent = {
-        dialogContentText: registrationSuccessDialogContentText,
+        dialogContentText: isUanManualUpload === true? docResubmissionSuccessDialogContentText: registrationSuccessDialogContentText ,
         dialogTitle: congratulationDialogContentTitle,
         maxWidth: "sm",
         btnName: "Go to Dashboard",

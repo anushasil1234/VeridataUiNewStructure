@@ -2626,7 +2626,7 @@ export const submitConfirmationMsg = `Your data will be submitted to ${companyNa
 export const reUploadsubmitConfirmationMsg = `Your re-uploaded document(s) will be submitted to ${companyName} HC for verification. Hence you will no longer be able to change your data. Are you sure you want to submit?`;
 export const visafileUploadeConfirmationMsg = `Please upload your visa copy before submission`;
 export const registrationSuccessDialogContentText = `Your Aadhaar & UAN details has been verified and submitted successfully. You have completed your verification process. Please wait for the HR to reply for further processing of your application`;
-export const docResubmissionSuccessDialogContentText = `Your documents have been submitted successfully. Please wait for your documents to be verified by ${companyName} HC. .`;
+export const docResubmissionSuccessDialogContentText = `Your documents have been submitted successfully. Please wait for your documents to be verified by ${companyName} HC.`;
 export const welcomeMsg1 = `Welcome to VERIDATA, ${companyName}'s onboarding assistant for you.
   1. Review the Prerequisite Details.\n
 2. Click 'Start Verification' to begin the process (which includes giving consent).\n

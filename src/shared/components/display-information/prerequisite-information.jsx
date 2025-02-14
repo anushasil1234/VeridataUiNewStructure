@@ -46,7 +46,7 @@ const PrerequisiteInformation = () => {
             secondaryText: 'As per Govt. of India rules, all EPFO subscribers must have an Aadhaar-linked Universal Account Number (UAN) activated by creating a login on the Member Portal. An activated UAN allows access to various facilities, including viewing/downloading PF passbooks, submitting claims, updating details, and tracking claim status in real-time.',
             secondaryComponent:
                 <>
-                    {" — Please login to the EPFO portal at least once and then try verifying you details."}
+                    {" — Please login to the EPFO portal at least once and then try verifying you details. if you don't have UAN, please ignore."}
                     <Box >
                         <Button sx={prereqModalShowMoreInfoStyle} onClick={() => openRemedyModel({ remedyType: "OTH", remedySubType: "INACTUAN" })}
                         >
