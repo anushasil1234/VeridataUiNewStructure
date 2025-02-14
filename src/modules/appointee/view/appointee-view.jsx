@@ -1170,7 +1170,8 @@ let AppointeeViewForm = ({
                 )
               : null}
             {!roleTypeEnums.candidate.includes(userTypeId)
-              ? isManualPassbook &&
+              ? 
+              // isManualPassbook &&
                 hasPermission &&
                 hasPermission["A016"] &&
                 ["MV", "MRV", "RD"].includes(manualVerificationStatus) && (
