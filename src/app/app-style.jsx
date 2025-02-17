@@ -977,7 +977,7 @@ export const disableSectionStyle = {
 // verification style starts
 
 export const verificationStyle = {
-  fontSize: "16px",
+  fontSize: "1.25rem",
   ml: "2px",
 };
 export const docNotVerifiedColor = ThemeColorPalete.warning.main;
