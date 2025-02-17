@@ -142,6 +142,7 @@ import RemarksInputModel from "../models/remarks-modal";
 import ConfirmationYesNoModal from "../models/confirmation-modal-yes-no";
 import { removePopUpSetFunction } from "store/slices/popup-slice";
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
+import UploadedDocumentView from "shared/components/document-view/uploaded-document-view";
 
 
 const AppWrapper = (App) => {
@@ -182,6 +183,9 @@ const AppWrapper = (App) => {
     const [filePasswordSubmitionProps, setFilePasswordSubmitionProps] = useState(false);
     const [documentModelOpen, setDocumentModelOpen] = useState(false);
     const [documentModelProps, setDocumentModelProps] = useState();
+    const [uploadedDocumentModelOpen, setUploadedDocumentModelOpen] = useState(false);
+    const [uploadedDocumentModelProps, setUploadedDocumentModelProps] = useState();
+
     const [userId, setUserId] = useState();
     const [epfoDetails, SetepfoDetails] = useState()
     const [isUserViewOpen, setIsUserViewOpen] = useState(false);
@@ -374,6 +378,13 @@ const AppWrapper = (App) => {
     const openDocumentModel = (fileDetails, filename, fileType) => {
       setDocumentModelOpen(true);
       setDocumentModelProps({ fileDetails, filename, fileType });
+    };
+    const closeUploadedDocumentModal = () => {
+      setUploadedDocumentModelOpen(false);
+    };
+    const openUploadedDocumentModal = (previewURL,fileName,uploadTypeAlias) => {
+      setUploadedDocumentModelOpen(true);
+      setUploadedDocumentModelProps({previewURL,fileName,uploadTypeAlias});
     };
     const openPasswordSubmitionModel = (passwordModelContent) => {
       setPasswordSubmitionModelOpen(true);
@@ -984,6 +995,7 @@ const AppWrapper = (App) => {
           openRemedyModel,
           setRemarks,
           openDocumentModel,
+          openUploadedDocumentModal,
           openPasswordSubmitionModel,
           closePasswordSubmitionModel,
           openFilePasswordSubmitionModel,
@@ -1084,7 +1096,11 @@ const AppWrapper = (App) => {
           documentModelProps={documentModelProps}
           closeDocumentModel={closeDocumentModel}
         />
-
+        <UploadedDocumentView
+          open={uploadedDocumentModelOpen}
+          documentModelProps={uploadedDocumentModelProps}
+          closeDocumentModel={closeUploadedDocumentModal}
+        />
         <ProfilePasswordForm
           open={passwordSubmitionModelOpen}
           passwordSubmitionProps={passwordSubmitionProps}

@@ -1,0 +1,158 @@
+import { Download, ZoomIn, ZoomOut } from '@mui/icons-material';
+import { Box, Stack, IconButton } from '@mui/material';
+import { actionIconStyle, downloadIconStyle, fileImageStyle, imageFileContainerStackStyle, imageFileContainerStyle, pdfFileContainerStyle, zoombuttonStyle, zoomOutstackStyle } from 'app';
+import React from 'react'
+import { useEffect } from 'react'
+import { FabIcon } from 'shared/utils';
+import downloadFile from 'shared/utils/associate/download-file';
+import FabIconPropsModel from 'shared/utils/fab-icon/fab-icon-model';
+import FullScreenModel from 'shared/utils/models/fullscreen-modal'
+import { useState } from 'react';
+import { handleZoom } from 'shared/utils/associate/Zoomin-out';
+import { calculateDragPosition } from 'shared/utils/associate/dragein'
+import { calculateContainerHeight } from './calculateContainerHeight';
+import { MouseEventHandler } from 'shared/utils/associate/dragable';
+const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
+    const {previewURL,fileName,uploadTypeAlias } = documentModelProps;
+    //const { fileName } = fileDetails;
+    console.log('documentModelProps: ',documentModelProps);
+    
+    const mimeType = fileName?.split(';')[0].split(':')[1];
+    const [isDragging, setIsDragging] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
+    const [containerHeight, setContainerHeight] = useState();
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setLastMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        const currentMousePosition = { x: e.clientX, y: e.clientY };
+        setPosition((prevPosition) =>
+            calculateDragPosition(isDragging, lastMousePosition, currentMousePosition, prevPosition)
+        );
+        setLastMousePosition(currentMousePosition);
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+    useEffect(() => {
+        if (mimeType !== "application/pdf") {
+            calculateContainerHeight(previewURL, setContainerHeight);
+        }
+    }, [ mimeType]);
+
+
+    return (
+        <Stack sx={{ position: 'relative' }}>
+            <Stack sx={{ ...imageFileContainerStackStyle, height:containerHeight}}>
+                <Box
+                    sx={{
+                       // ...(mimeType === 'application/pdf' ? pdfFileContainerStyle : imageFileContainerStyle),
+                        transform: `scale(${zoomLevel})`,
+                        transformOrigin: 'center',
+                        transition: 'transform 0.3s',
+                        position: 'relative',
+                        cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
+                        left: isDragging ? `${position.x}px` : 'auto',
+                        top: isDragging ? `${position.y}px` : 'auto',
+                    }}
+                    {...MouseEventHandler({
+                        zoomLevel,
+                        handleMouseMove,
+                        handleMouseUp,
+                        handleMouseDown,
+                    })}
+                >
+                    {/* {mimeType === 'application/pdf' ? (
+                        <embed
+                            src={`${previewURL}#toolbar=0`}
+                            height="500"
+                            width="100%"
+                            style={{
+                                transform: `scale(${zoomLevel})`,
+                                transformOrigin: 'center',
+                            }}
+                        />
+                    ) : (
+                        <img
+                            src={previewURL}
+                            style={{
+                                ...fileImageStyle,
+                                transform: `scale(${zoomLevel})`,
+                                transformOrigin: 'center',
+                            }}
+                            alt={fileName}
+                        />
+                    )} */}
+                    <embed
+                            src={`${previewURL}#toolbar=0`}
+                            height="500"
+                            width="100%"
+                            style={{
+                                transform: `scale(${zoomLevel})`,
+                                transformOrigin: 'center',
+                                height:"500",
+                                width:"100vh"
+                            }}
+                        />
+                </Box>
+            </Stack>
+
+        </Stack>
+    );
+};
+
+
+const UploadedDocumentView = (props) => {
+    const { documentModelProps = {} } = props;
+    const {previewURL,fileName ,uploadTypeAlias} = documentModelProps;
+    const [zoomLevel, setZoomLevel] = useState(1);
+
+    const handleZoomIn = () => {
+        setZoomLevel(handleZoom('in'));
+    };
+    const handleZoomOut = () => {
+        setZoomLevel(handleZoom('out'));
+    };
+
+    // const downloadFabProps = new FabIconPropsModel(
+    //     downloadIconStyle,
+    //     () => downloadFile(fileDetails, filename),
+    //     "secondary",
+    //     "download",
+    //     <Download />,
+    //     "Download"
+    // );
+
+    // const downloadButton = fileType === "EPFPSHF" && (
+    //     <FabIcon props={{ ...downloadFabProps, size: "small", selectedIndex: 2, index: 2 }} />
+    // );
+    const zoomControls = (
+        <>
+            <IconButton sx={{ ...zoombuttonStyle }} onClick={handleZoomOut} aria-label="zoom out">
+                <ZoomOut />
+            </IconButton>
+            <IconButton sx={{ ...zoombuttonStyle }} onClick={handleZoomIn} aria-label="zoom in">
+                <ZoomIn />
+            </IconButton>
+        </>
+    );
+    return (
+        <FullScreenModel
+            headerText={fileName}
+            open={props.open}
+            closeModel=
+            {props.closeDocumentModel}
+            screensize={"500"}
+            fullScreen={false}
+            content={<UnWrappedDocumentView documentModelProps={documentModelProps} handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} zoomLevel={zoomLevel} />}
+           // actionButton={downloadButton}
+            zoomControls={zoomControls}
+        />
+    )
+}
+export default UploadedDocumentView

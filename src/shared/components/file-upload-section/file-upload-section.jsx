@@ -19,6 +19,7 @@ const FileUploadSection = ({
   multiple = false,
   handleRemoveFile = null,
   uploadTypeAlias,
+  handleViewFile = () => {}
 }) => {
    const fileType = `Accepted format: ${accept}`;
   // const fileType = `Accepted format: ${accept
@@ -101,9 +102,10 @@ const FileUploadSection = ({
                   size="small"
                   label={_filename}
                   onDelete={(event) => handleRemove(_filename, event)}
+                  onClick={(event) => handleViewFile(_filename)}
                 />
               ) : (
-                <Chip size="small" label={_filename} />
+                <Chip size="small" label={_filename} onClick={(event) => handleViewFile(_filename)}/>
               )}
             </Grid>
           ))}

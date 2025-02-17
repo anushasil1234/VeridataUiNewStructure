@@ -117,7 +117,8 @@ const ThirdForm = ({
   epfoPassBookFiles,
   handleBack,
   submitDetails,
-  aadharNumber
+  aadharNumber,
+  handleViewFile
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -555,6 +556,8 @@ const ThirdForm = ({
                         maxUploadSize={imgAndPdfMaxSize}
                         uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
                       // handleRemoveFile={removeEPFOServiceHistory}
+                      handleViewFile={handleViewFile}
+
                       />
                     </Box>
                   </Grid>
@@ -582,6 +585,8 @@ const ThirdForm = ({
                         maxUploadSize={imgAndPdfMaxSize}
                         multiple={true}
                         uploadTypeAlias={epfoPassbookFileTypeAlias}
+                        handleViewFile={handleViewFile}
+
                       />
                     </Box>
                   </Grid>

@@ -88,6 +88,7 @@ const SecondForm = ({
   handleConfirmSave,
   passportFileNumber,
   setIsTrustEpfoAvailable,
+  handleViewFile
 }) => {
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openInfoModel } = functionSlice[0];
@@ -231,6 +232,8 @@ const SecondForm = ({
                         disabled={isPreviousSectionDisabled}
                         maxUploadSize={imgAndPdfMaxSize}
                         uploadTypeAlias={passportFileTypeAlias}
+                        handleViewFile={handleViewFile}
+
                       />
                     </>
                   )}
@@ -359,6 +362,8 @@ const SecondForm = ({
                   maxUploadSize={imgAndPdfMaxSize}
                   uploadTypeAlias={tenthCertificateFileTypeAlias}
                   // handleRemoveFile={remove10thPassCertificate}
+                  handleViewFile={handleViewFile}
+
                 />
               </Box>
             </Grid>
@@ -441,6 +446,8 @@ const SecondForm = ({
                   disabled={isPreviousSectionDisabled}
                   maxUploadSize={imgAndPdfMaxSize}
                   uploadTypeAlias={otherFileTypeAlias}
+                  handleViewFile={handleViewFile}
+
                   // handleRemoveFile={removeFathersDocCertificate}
                 />
               </Box>
@@ -501,6 +508,8 @@ const SecondForm = ({
                       disabled={isPreviousSectionDisabled}
                       maxUploadSize={imgAndPdfMaxSize}
                       uploadTypeAlias={handicapFileTypeAlias}
+                      handleViewFile={handleViewFile}
+
                     />
                   </Box>
                 </Grid>
@@ -626,6 +635,8 @@ const SecondForm = ({
                       maxUploadSize={imgAndPdfMaxSize}
                       uploadTypeAlias={trustEpfoFileTypeAlias}
                       multiple={true}
+                      handleViewFile={handleViewFile}
+
                     />
                   </Box>
                 </Box>

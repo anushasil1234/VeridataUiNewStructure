@@ -97,6 +97,8 @@ const AppointeeRegisterForm = () => {
   );
   const functionSlice = useSelector((state) => state.functionSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
+  const { openDocumentModel, openUploadedDocumentModal} = functionSlice[0];
+  const { GetUploadedFileDetailsById } = apiSlice[0];
   const {
     openOtpForm,
     closeOtpForm,
@@ -1992,6 +1994,65 @@ const AppointeeRegisterForm = () => {
       setUpdatedRealtionList(_updatedRelationList);
     }
   }, [relationList]);
+
+  const handleViewFile = async (fileName) => {
+    const file = fileUploaded?.find(f => f.fileName === fileName);
+    const fileUnsaved = uploadedFile?.filter((file) => file.uploadDetailsId === 0);
+
+    if (!file) {
+        console.log('File not found from api');
+        const fileWithDetails = fileUnsaved?.map((file) => {
+        let previewURL = null;
+      
+        const matchedFile = fileDetails.find((fileDetail) => file.fileName === fileDetail.name);
+        console.log('matched',matchedFile);
+        if (matchedFile) {
+          previewURL = window.URL.createObjectURL(matchedFile);
+        }
+      
+        return {
+          previewURL,
+          fileName: file.fileName,
+          uploadTypeAlias: file.uploadTypeAlias
+        };
+      }).filter(file => file.previewURL); 
+      
+      console.log("fileWithDetails", fileWithDetails);
+      fileWithDetails.map((fileWithDetail)=>{
+        if(fileWithDetail.fileName === fileName){
+          openUploadedDocumentModal(
+            fileWithDetail.previewURL,
+            fileWithDetail.fileName,
+            fileWithDetail.uploadTypeAlias
+          );
+        }
+      })
+    } 
+  else{
+    const payload = {
+      appointeeId: appointeeId,
+      fileCategory: file?.uploadTypeAlias,
+      fileId: file?.uploadDetailsId,
+    };
+
+    // const payload = {
+    //   appointeeId: appointeeId,
+    //   fileCategory: fileType,
+    //   fileId: selectedFile.uploadDetailsId,
+    // };
+    const response = await GetUploadedFileDetailsById(payload);
+    console.log('Uploaded file details',response);
+    
+    if (response && response.responseInfo) {
+      const { mimeType, fileData } = response.responseInfo;
+      const fileDetails = `data:${mimeType};base64,${fileData}`;
+      // const filename = file.fileName;
+      // console.log("mimeType",filename);
+
+      openDocumentModel(fileDetails, file?.fileName, file?.uploadTypeAlias);
+    }
+  }
+  };
   return (
     <>
       {currentPageNo === 2 && (
@@ -2104,6 +2165,8 @@ const AppointeeRegisterForm = () => {
                   handleConfirmSave={handleConfirmSave}
                   passportFileNumber={passportFileNumber}
                   setIsTrustEpfoAvailable={setIsTrustEpfoAvailable}
+                  handleViewFile={handleViewFile}
+
                 />
               </>
             ) : null}
@@ -2162,6 +2225,8 @@ const AppointeeRegisterForm = () => {
                   submitDetails={submitDetails}
                   aadharNumber={aadhar}
                   handleChangeAadharNumber={handleChangeAadharNumber}
+                  handleViewFile={handleViewFile}
+
                 />
               </>
             ) : null}
