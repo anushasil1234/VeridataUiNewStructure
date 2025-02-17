@@ -40,6 +40,7 @@ import {
 import {
   CardLayout,
   CreatePdfTableBody,
+  DDMMYYYY,
   DateFormatYYYYMMDD,
   PageLayout,
   generateTableRowData,
@@ -267,12 +268,11 @@ const AppointeeCount = () => {
   };
 
   const handleSearch = () => {
-
     const payLoad = {
       appointeeName: appointeeName ? appointeeName.trim() : "",
       statusCode: statusCode ? statusCode.toString() : "",
-      fromDate: fromDate ? DateFormatYYYYMMDD(fromDate) : null,
-      toDate: toDate ? DateFormatYYYYMMDD(toDate) : null,
+      fromDate: fromDate ? fromDate : null,
+      toDate: toDate ? toDate : null,
       entityId: entityId || null,
     };
     fetchTableRows(payLoad);
