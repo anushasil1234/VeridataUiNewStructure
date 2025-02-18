@@ -23,6 +23,7 @@ import {
   emptyAadharNoMsg,
   aadharPatternErrorMsg,
   docResubmissionSuccessDialogContentText,
+  NA,
 } from "shared/constants/constants";
 import {
   CreateStepSequience,
@@ -433,14 +434,14 @@ const AppointeeRegisterForm = () => {
         : setIsUanVerificationProcessManual("auto");
       hasValue(isUanLinkWithAadhar)
         ? setUanAadharLink(isUanLinkWithAadhar)
-        : setUanAadharLink("NA");
+        : setUanAadharLink(NA);
       // setIsEmployementDataVarified(isEmployementVarified);
 
       if (
         hasValue(uanNumber)
         //&& isEmployementVarified === null
       ) {
-        epfostatusMessage.message = "N/A";
+        epfostatusMessage.message = NA ;
         //epfostatusMessage.color = "";
         epfostatusMessage.success = null;
         setEpfostatusMessage(epfostatusMessage);
@@ -1619,7 +1620,7 @@ const AppointeeRegisterForm = () => {
     // Perform the below actions using the already existing 'uan' state
     setEpfoButton("Auto UAN Verification");
     // setDisabledPanInput(true);
-    epfostatusMessage.message = "N/A";
+    epfostatusMessage.message = NA;
     //epfostatusMessage.color = "";
     epfostatusMessage.success = null;
     setEpfostatusMessage(epfostatusMessage);

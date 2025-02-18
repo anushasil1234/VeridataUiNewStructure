@@ -3,6 +3,7 @@ import { cardStyle, listHeadingConteinerStyle, listHeadingStyle } from 'app';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { PersonalInformation } from 'shared/components/display-information/personal-information';
+import { NA } from 'shared/constants/constants';
 import { hasValue } from 'shared/utils';
 import FullScreenModel from 'shared/utils/models/fullscreen-modal';
 
@@ -30,11 +31,11 @@ const _UserView = (props) => {
         if (response) {
             const { responseInfo } = response;
             const { emailId, roleId, userName, password, phone, userCode } = responseInfo;
-            hasValue(userName) ? setUserName(userName) : setUserName("N/A");
-            hasValue(password) ? setPassword(password) : setPassword("N/A");
-            hasValue(emailId) ? setUserEmail(emailId) : setUserEmail("N/A");
-            hasValue(phone) ? setContactNumber(phone) : setContactNumber("N/A");
-            hasValue(userCode) ? setUserCode(userCode) : setUserCode("N/A");
+            hasValue(userName) ? setUserName(userName) : setUserName(NA);
+            hasValue(password) ? setPassword(password) : setPassword(NA);
+            hasValue(emailId) ? setUserEmail(emailId) : setUserEmail(NA);
+            hasValue(phone) ? setContactNumber(phone) : setContactNumber(NA);
+            hasValue(userCode) ? setUserCode(userCode) : setUserCode(NA);
             if (hasValue(roleId)) {
                 const role = roleList && roleList.find(({ id }) => id === roleId);
                 if (role) {

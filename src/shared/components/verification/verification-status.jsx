@@ -1,3 +1,5 @@
+import { NA } from "shared/constants/constants";
+
 class VerificationStatus {
 
     constructor(success, action) {
@@ -9,7 +11,7 @@ class VerificationStatus {
             this.color = "#000";
         }
         if (success === null) {
-            this.message = "NA";
+            this.message = NA;
         } else {
             if (action === "V") {
                 this.message = new VerificationMessage(success).message;

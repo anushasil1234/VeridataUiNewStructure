@@ -25,6 +25,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     getHandicapTypeDescription,
+    NA,
     otherFileTypeAlias,
     tenthCertificateFileTypeAlias,
 } from "shared/constants/constants";
@@ -354,7 +355,7 @@ const FileUpload = ({ stepsList, mode }) => {
             setIsEmployementDataVarified(isEmployementVarified);
 
             if (hasValue(uanNumber) && isEmployementVarified === null) {
-                epfostatusMessage.message = "N/A";
+                epfostatusMessage.message =NA;
                 epfostatusMessage.success = null;
                 setEpfostatusMessage(epfostatusMessage);
             } else {

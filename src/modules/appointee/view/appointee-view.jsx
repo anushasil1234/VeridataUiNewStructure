@@ -513,7 +513,7 @@ let AppointeeViewForm = ({
     (isAadharVerified === true &&
       (isPanVarified === true ||
         isPanVarified === null ||
-        isPanVarified === "N/A") &&
+        isPanVarified === NA) &&
       isUanVerified === false &&
       isManualPassbook === true) ||
     (isAadharVerified === true &&
@@ -521,17 +521,17 @@ let AppointeeViewForm = ({
       isUanVerified === false &&
       isManualPassbook === true) ||
     (isAadharVerified === true &&
-      isUanVerified === "N/A" &&
+      isUanVerified ===NA &&
       isPanVarified === true) ||
-    (isAadharVerified === "N/A" &&
-      isUanVerified === "N/A" &&
-      isPanVarified === "N/A") ||
+    (isAadharVerified ===NA &&
+      isUanVerified ===NA &&
+      isPanVarified ===NA) ||
     (isAadharVerified === true &&
-      (isUanVerified === "N/A"|| isUanVerified ===null) &&
-      (isPanVarified === "N/A"|| isPanVarified === null)) ||
+      (isUanVerified ===NA|| isUanVerified ===null) &&
+      (isPanVarified ===NA|| isPanVarified === null)) ||
     (isAadharVerified === true &&
       isUanVerified === true &&
-      (isPanVarified === "N/A" || isPanVarified === null))
+      (isPanVarified ===NA || isPanVarified === null))
   ) {
     verifyIconStyle = notVerifySuccessIconStyle;
   }
@@ -760,11 +760,11 @@ let AppointeeViewForm = ({
         ? { label: "Manual Passbook Uploaded", color: "warning" }
         : isUanVerified === false
         ? { label: "UAN Verification failed", color: "error" }
-        : isAadharVerified === "N/A"
+        : isAadharVerified ===NA
         ? { label: "Aadhaar Verification Pending", color: "warning" }
-        : isPanVarified === "N/A" || isPanVarified === null
+        : isPanVarified ===NA || isPanVarified === null
         ? { label: "PAN Verification Pending", color: "warning" }
-        : isUanVerified === "N/A"
+        : isUanVerified ===NA
         ? { label: "UAN Verification Pending", color: "warning" }
         : isUanVerified === true && !hasValue(uanNumber)
         ? { label: "No UAN Available", color: "success" }
@@ -805,7 +805,7 @@ let AppointeeViewForm = ({
                       isAadharVerified === true &&
                       (isPanVarified === true ||
                         isPanVarified === null ||
-                        isPanVarified === "N/A") &&
+                        isPanVarified ===NA) &&
                       isUanVerified === false &&
                       isManualPassbook === true) ||
                     (isAadharVerified === true &&
@@ -813,17 +813,17 @@ let AppointeeViewForm = ({
                       isUanVerified === false &&
                       isManualPassbook === null) ||
                     (isAadharVerified === true &&
-                      isUanVerified === "N/A" &&
+                      isUanVerified ===NA &&
                       isPanVarified === true) ||
-                    (isAadharVerified === "N/A" &&
-                      isUanVerified === "N/A" &&
-                      isPanVarified === "N/A") ||
+                    (isAadharVerified ===NA &&
+                      isUanVerified ===NA &&
+                      isPanVarified ===NA) ||
                     (isAadharVerified === true &&
-                      (isUanVerified === "N/A" || isUanVerified === null ) &&
-                      (isPanVarified === "N/A" || isPanVarified === null)) ||
+                      (isUanVerified ===NA || isUanVerified === null ) &&
+                      (isPanVarified ===NA || isPanVarified === null)) ||
                     (isAadharVerified === true &&
                       isUanVerified === true &&
-                      (isPanVarified === "N/A" || isPanVarified === null)) ? (
+                      (isPanVarified ===NA || isPanVarified === null)) ? (
                     <WarningAmber sx={verifyIconStyle} />
                   ) : (isLoading && isAadharVerified === true && isPanVarified === true && isUanVerified === false && isManualPassbook === null)||(isAadharVerified === true && isUanVerified === false && isManualPassbook===null)||(isAadharVerified === true && isPanVarified === false) ||isAadharVerified === false  ? (<WarningAmber sx={verifyIconStyle} />
                   ) : (
@@ -1082,7 +1082,7 @@ let AppointeeViewForm = ({
                         filesByAlias={filesByAlias}
                       />
                     ) : (
-                      "N/A"
+                     NA
                     )
                   }
                 />
@@ -1098,7 +1098,7 @@ let AppointeeViewForm = ({
                         filesByAlias={filesByAlias}
                       />
                     ) : (
-                      "N/A"
+                     NA
                     )
                   }
                 />}
