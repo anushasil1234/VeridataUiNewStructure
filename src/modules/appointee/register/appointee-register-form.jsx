@@ -1395,13 +1395,15 @@ const AppointeeRegisterForm = () => {
 
   const handleAppointeeFormPage1Save = async (formElement) => {
     formElement.preventDefault();
-    if (passportAvailable === "Y" && clickedButton !== "S") {
+    if (passportAvailable === "Y" 
+      // && clickedButton !== "S"
+    ) {
       if (!hasValue(passportNo)) {
         setPassportNumberError(true);
         showErrorMessage(passportNoEmptyMsg);
         return;
       }
-      if (nationality.toLowerCase() === "indian" && passportNo.length !== 8) {
+      if ((nationality.toLowerCase() === "indian" || countryOfOrigin === "India")&& passportNo.length !== 8) {
         setPassportNumberError(true);
         showErrorMessage(indianpassportNumberPatternErrorMsg);
         return;
@@ -2014,7 +2016,8 @@ const AppointeeRegisterForm = () => {
         return {
           previewURL,
           fileName: file.fileName,
-          uploadTypeAlias: file.uploadTypeAlias
+          uploadTypeAlias: file.uploadTypeAlias,
+          mimeType: file.mimeType
         };
       }).filter(file => file.previewURL); 
       
@@ -2024,7 +2027,8 @@ const AppointeeRegisterForm = () => {
           openUploadedDocumentModal(
             fileWithDetail.previewURL,
             fileWithDetail.fileName,
-            fileWithDetail.uploadTypeAlias
+            fileWithDetail.uploadTypeAlias,
+            fileWithDetail.mimeType
           );
         }
       })

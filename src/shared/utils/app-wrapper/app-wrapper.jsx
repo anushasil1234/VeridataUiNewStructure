@@ -382,9 +382,9 @@ const AppWrapper = (App) => {
     const closeUploadedDocumentModal = () => {
       setUploadedDocumentModelOpen(false);
     };
-    const openUploadedDocumentModal = (previewURL,fileName,uploadTypeAlias) => {
+    const openUploadedDocumentModal = (previewURL,fileName,uploadTypeAlias,mimeType) => {
       setUploadedDocumentModelOpen(true);
-      setUploadedDocumentModelProps({previewURL,fileName,uploadTypeAlias});
+      setUploadedDocumentModelProps({previewURL,fileName,uploadTypeAlias,mimeType});
     };
     const openPasswordSubmitionModel = (passwordModelContent) => {
       setPasswordSubmitionModelOpen(true);
