@@ -12,16 +12,17 @@ import { useSelector } from "react-redux";
 import { invalidOtpMsg } from "shared/constants/constants";
 import { ckeckValidNumber } from "shared/utils";
 import secondsToMinuteString from "shared/utils/associate/seconds-to-minute-string";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 import Button1 from "shared/utils/button/button1";
-import FullScreenModel from "shared/utils/models/fullscreen-modal";
+import FullScreenModel from "shared/utils/modals/fullscreen-modal";
 
 let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
   const { otpSubmitionFunction, timeoutTimer, setTimeoutTimer } =
     otpSubmitionProps || "";
 
-  const popUpSlice = useSelector((state) => state.popUpSlice);
-  const showErrorMessage =
-    popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const showErrorMessage =
+  //   popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
 
 
   const [submitButtonStatus, setSubmitButtonStatus] = useState(false);

@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import { GetPfCreationApponteeReport_URL } from "shared/constants/constants";
+
+const getPfCreationAppointeeReportList = (payLoad) => 
+    ServerRequest(GetPfCreationApponteeReport_URL, "POST", payLoad, null, true);
+
+export { getPfCreationAppointeeReportList };

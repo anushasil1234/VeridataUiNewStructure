@@ -68,6 +68,8 @@ import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
 import jsPDFinvoiceReportDataTemplate from "shared/utils/associate/js-pdfInvoice";
 import DatePickerolt from "shared/utils/date-picker/date-picker1";
 import dayjs from "dayjs";
+import { getAppointeeCounterBillingReport } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 const AppointeeInvoice = () => {
     const popUpSlice = useSelector(state => state.popUpSlice);
     const apiSlice = useSelector((state) => state.apiSlice);
@@ -78,7 +80,7 @@ const AppointeeInvoice = () => {
     const { dayscoustom } = dropdownList.length > 0 && dropdownList[0];
     const { navigateTo } = commonHooksFunctionSlice[0];
 
-    const { getAppointeeCounterBillingReport } = apiSlice[0];
+    // const { getAppointeeCounterBillingReport } = apiSlice[0];
     const { reportFilterStatusList, entityList } = dropdownList && dropdownList.length > 0 && dropdownList[0];
     const [toDate, setToDate] = useState(null);
     const [fromDate, setFromDate] = useState(null);
@@ -87,7 +89,7 @@ const AppointeeInvoice = () => {
     const [appointeeCountListDetails, setAppointeeCountListDetails] = useState();
     const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
     const [isExalListOpened, setisExalListOpened] = useState(false)
-    const { showErrorMessage } = popUpSlice[0]
+    // const { showErrorMessage } = popUpSlice[0]
     const [appointeeName, setAppointeeName] = useState(null);
     const [statusCode, setStatusCode] = useState(null);
     const [entityId, setEntityId] = useState([]);

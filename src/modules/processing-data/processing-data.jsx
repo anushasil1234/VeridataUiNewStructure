@@ -44,13 +44,15 @@ import ArticleIcon from '@mui/icons-material/Article';
 import Button from '@mui/material/Button';
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
+import { getProessingDataList, GetUnderProcessReport } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 const UnWrappedProcessing = (props) => {
   const { hasPermission } = props;
  
   const { state } = useLocation();
  
-  const popUpSlice = useSelector((state) => state.popUpSlice);
-  const { showErrorMessage } = popUpSlice[0]
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const { showErrorMessage } = popUpSlice[0]
   let noOfDays = 0;
   let isFiltered = false;
 
@@ -62,8 +64,8 @@ const UnWrappedProcessing = (props) => {
   );
 
   const { companyId } = loggedInData[0];
-  const { getProessingDataList } = apiSlice[0];
-  const { GetUnderProcessReport } = apiSlice[0];
+  // const { getProessingDataList } = apiSlice[0];
+  // const { GetUnderProcessReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
 
   if (state) {

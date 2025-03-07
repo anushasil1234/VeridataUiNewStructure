@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { getVerifiedAppointeeList } from "server/apis";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReport from "shared/components/download-report/download-report";
 import { downloadVerifiedList_URL, FromDateEmptyMsg, toVerified, uploadedFromDateEmptyMsg, verifiedListTableHeadCell, verifiedReportInfo } from "shared/constants/constants";
@@ -93,10 +94,10 @@ const UnWrappedVerified = (props) => {
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
-  const { getVerifiedAppointeeList } = apiSlice[0];
+  // const { getVerifiedAppointeeList } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const popUpSlice = useSelector((state) => state.popUpSlice);
-  const { showErrorMessage } = popUpSlice[0]
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const { showErrorMessage } = popUpSlice[0]
 
   const setTableRows = async (payLoad) => {
     setPageName(

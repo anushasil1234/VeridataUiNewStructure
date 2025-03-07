@@ -1,0 +1,6 @@
+import ServerRequest from "server/utils/server-request";
+import { GetUANNumber_URL } from "shared/constants/constants";
+
+const getUANNumber = (payLoad) => ServerRequest(GetUANNumber_URL, "POST", payLoad);
+
+export { getUANNumber };

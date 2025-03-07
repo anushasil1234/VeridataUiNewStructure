@@ -16,6 +16,8 @@ import checkFileReuploadValidation from 'shared/utils/associate/check-file-reupl
 import { removeLoggedinData, storeLoggedinData } from 'store/slices/login-slice'
 import MergeWithUniqueKey from 'shared/utils/associate/merge-with-unique-key'
 import TextInput from 'shared/components/input-fields/text-input'
+import { getAppointeeDetails, PostReuploadDocuments } from 'server/apis'
+import showErrorMessage from 'shared/utils/associate/show-error-message'
 
 export const ReuploadForm = () => {
 
@@ -32,7 +34,7 @@ export const ReuploadForm = () => {
 
     const { navigateTo } = commonHooksFunctionSlice[0];
     const { userId, appointeeId, userCode, status } = loggedInData[0];
-    const { showErrorMessage } = popUpSlice[0];
+    // const { showErrorMessage } = popUpSlice[0];
 
     const {
         fileTypeList,
@@ -42,10 +44,10 @@ export const ReuploadForm = () => {
         openConfirmationModel,
         openInfoModel
     } = functionSlice[0];
-    const {
-        getAppointeeDetails,
-        PostReuploadDocuments
-    } = apiSlice[0];
+    // const {
+    //     // getAppointeeDetails,
+    //     PostReuploadDocuments
+    // } = apiSlice[0];
 
     const [uploadedFile, setUploadedFile] = useState([]);
     const [updatedFilesUnfiltered, setUpdatedFilesUnfiltered] = useState([]);
@@ -153,11 +155,16 @@ export const ReuploadForm = () => {
 
     }
     const handleSubmit = async () => {
+      
+        
         if (!fathersName || fathersName.trim() === '') {
+            console.log('handleSubmit2');
+
             showErrorMessage("Father's Name is required.");
             return;
         }
         if(fathersName.trim().toLowerCase() ===  responseFathersName.trim().toLowerCase()){
+            console.log('handleSubmit');
             const verificationFieldModal = {
                 isUanVarified: isUANVarified,
                 isFnameVarified: isFathersNameVarified

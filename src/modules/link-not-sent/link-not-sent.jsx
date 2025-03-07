@@ -12,6 +12,8 @@ import { primaryFabStyle } from 'app';
 import checkPastDay from 'shared/utils/associate/check-is-pastday';
 import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';
 import ActionPermission from 'shared/components/action-permission/action-permission';
+import { getLinkNotSentList, postRawFileData } from 'server/apis';
+import showErrorMessage from 'shared/utils/associate/show-error-message';
 
 const UnwrapedLinkNotSent = (props) => {
     const { hasPermission } = props;
@@ -21,11 +23,12 @@ const UnwrapedLinkNotSent = (props) => {
     const functionSlice = useSelector((state) => state.functionSlice);
     const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
     const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
-    const popUpSlice = useSelector((state) => state.popUpSlice);
-    const { showErrorMessage } = popUpSlice[0]
+    // const popUpSlice = useSelector((state) => state.popUpSlice);
+    // const { showErrorMessage } = popUpSlice[0]
 
     const { openConfirmationModel } = functionSlice[0];
-    const { getLinkNotSentList, postRawFileData } = apiSlice[0];
+    // const { getLinkNotSentList, postRawFileData } = apiSlice[0];
+    // const {  postRawFileData } = apiSlice[0];
     const { navigateTo } = commonHooksFunctionSlice[0];
     const { companyId, userId } = loggedInData[0];
     const { state } = useLocation();
@@ -92,18 +95,23 @@ const UnwrapedLinkNotSent = (props) => {
     }
 
     const startProcessRawData = async () => {
-        const isCheckedAddedRows = selectCheckedRows(responseInfos, selected, rowsPerPage, page);
-        const postRawDatapayLoad = {
-            rawDataList: isCheckedAddedRows,
-            userId: userId,
-            isUnprocessed: true
-        }
-        // console.log('isCheckedAddedRows', isCheckedAddedRows);
-
-        const response = await postRawFileData(postRawDatapayLoad);
-
-        if (response) {
-            setTableRows(payLoad);
+        try {
+            
+            const isCheckedAddedRows = selectCheckedRows(responseInfos, selected, rowsPerPage, page);
+            const postRawDatapayLoad = {
+                rawDataList: isCheckedAddedRows,
+                userId: userId,
+                isUnprocessed: true
+            }
+            // console.log('isCheckedAddedRows', isCheckedAddedRows);
+    
+            const response = await postRawFileData(postRawDatapayLoad);
+    
+            if (response) {
+                setTableRows(payLoad);
+            }
+        } catch (error) {
+            showErrorMessage(error);
         }
     }
     const handleStartProcess = () => {

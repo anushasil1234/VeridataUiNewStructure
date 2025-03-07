@@ -2,6 +2,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { getAppointeeDataReport } from "server/apis";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReportFilter from "shared/components/download-report/download-report-filter";
 import { appointeeListTableHeadCell, appointeeReportTableHeadCell, toAppointeeReport, reportGenarate, uploadedFromDateEmptyMsg, appointeeReportdesc, FromDateEmptyMsg } from "shared/constants/constants";
@@ -9,6 +10,7 @@ import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayo
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 
 const AppointeeDataReportView = (props) => {
@@ -20,18 +22,18 @@ const AppointeeDataReportView = (props) => {
   const [appointeeDetails, setAppointeeDetails] = useState();
   const[fileData,setFiledata]=useState(null)
   const apiSlice = useSelector(state => state.apiSlice);
-  const popUpSlice = useSelector(state => state.popUpSlice);
+  // const popUpSlice = useSelector(state => state.popUpSlice);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
-  const { getAppointeeDataReport } = apiSlice[0];
+  // const { getAppointeeDataReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   let payloadData = {
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
     StatusCode: statusCode,
   }
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
 
   let [payLoad, setPayLoad] = useState(payloadData);
   const [filterType, setFilterType] = useState(0);

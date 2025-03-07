@@ -1,7 +1,7 @@
 import { Grid, Typography, Accordion, Card } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
-import FullScreenModel from "shared/utils/models/fullscreen-modal";
+import FullScreenModel from "shared/utils/modals/fullscreen-modal";
 import DownloadIcon from "@mui/icons-material/Download";
 import {
   _addFabStyle,
@@ -32,20 +32,21 @@ import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import viewImage from "assets/images/profile/file_upload_icon.png";
 import FileSelectionPopup from "./FileSelectionPopup ";
+import { getAppointeeDetails, getUploadedFileDetailsById } from "server/apis";
 
 let EmploymentViewDetails = ({
   appointeeId,
   epfoDetails,
   passbookStatusCode,
 }) => {
-  const apiSlice = useSelector((state) => state.apiSlice);
-  const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const apiSlice = useSelector((state) => state.apiSlice);
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
   const [responseInfo, setResponseInfo] = useState([]);
-  const {
-    getAppointeeDetails,
-    GetUploadedFileDetailsById,
-  } = apiSlice[0];
+  // const {
+  //   // getAppointeeDetails,
+  //   GetUploadedFileDetailsById,
+  // } = apiSlice[0];
   const { openDocumentModel } = functionSlice[0];
   const [serviceHistoryFile, setServiceHistoryFile] = useState();
   const [filesByAlias, setFilesByAlias] = useState(new Map());
@@ -63,7 +64,7 @@ let EmploymentViewDetails = ({
   const [pfUan, setPfUan] = useState();
   const [companies, setCompanies] = useState();
 
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
   useEffect(() => {
     if (epfoDetails) {
       setTableRows(epfoDetails);
@@ -114,7 +115,7 @@ let EmploymentViewDetails = ({
       fileCategory: epfoServiceHistoryFileTypeAlias,
       fileId: selectedFile.uploadDetailsId,
     };
-    const response = await GetUploadedFileDetailsById(payload);
+    const response = await getUploadedFileDetailsById(payload);
     if (response && response.responseInfo) {
       const { mimeType, fileData } = response.responseInfo;
       const fileDetails = `data:${mimeType};base64,${fileData}`;

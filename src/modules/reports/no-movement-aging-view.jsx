@@ -9,6 +9,8 @@ import { CardLayout, CreatePdfTableBody, DataTable, DateFormatYYYYMMDD, PageLayo
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
+import { getAppointeeAgingFilterReport } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 const NoMovementAgingReportView = (props) => {
   const { hasPermission } = props;
@@ -18,18 +20,18 @@ const NoMovementAgingReportView = (props) => {
   const [appointeeDetails, setAppointeeDetails] = useState();
   const [fileData, setFileData] = useState(null);
   const apiSlice = useSelector(state => state.apiSlice);
-  const popUpSlice = useSelector(state => state.popUpSlice);
+  // const popUpSlice = useSelector(state => state.popUpSlice);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
-  const { getAppointeeAgingFilterReport } = apiSlice[0];
+  // const { getAppointeeAgingFilterReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   let payloadData = {
     startDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     reportType: '',
     noOfDays: noOfDays ?? 0,
   }
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
 
   let [payLoad, setPayLoad] = useState(payloadData);
   const [filterType, setFilterType] = useState(0);

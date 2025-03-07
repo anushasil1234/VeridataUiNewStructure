@@ -24,6 +24,7 @@ import moment from "moment";
 import ArticleIcon from '@mui/icons-material/Article';
 import Button from '@mui/material/Button';
 import { appointeeCountInfo, generateAppointeeCountReportDesc, generatenationlityReportDesc, nationalityInfo } from "shared/constants/constants";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 const DownloadReportFilter = ({
   filterType,
   setFilterType,
@@ -40,14 +41,14 @@ const DownloadReportFilter = ({
   hasPermission,
   handleDownloadxlsx
 }) => {
-  const { popUpSlice } = useSelector(
-    (state) => state
-  );
+  // const { popUpSlice } = useSelector(
+  //   (state) => state
+  // );
   const downloadListRef = useRef(null);
   
   const currentDate = moment();
   const _currentDate = currentDate.format("DD-MMM-YYYY");
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
   const[isDownloadListOpened,setIsDownloadListOpened]=useState(false);
   const handleDownloadClick =()=>{
     // console.log('clikoutside')

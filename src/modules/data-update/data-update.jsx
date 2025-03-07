@@ -10,11 +10,12 @@ import { Typography, Box, Fab, Dialog, DialogContent, Button, DialogTitle, Dialo
 import { primaryFabStyle } from "app";
 import { Info } from "@mui/icons-material";
 import myImage from 'assets/images/profile/candidateUpdateTemplate.jpg';
+import { downloadReport } from "server/apis";
 
 const UnWrrappedDataUpdate = (props) => {
   const { hasPermission } = props;
   const apiSlice = useSelector((state) => state.apiSlice);
-  const { downloadReport } = apiSlice[0];
+  // const { downloadReport } = apiSlice[0];
 
   const [files, setFiles] = useState([]);
   const [openModal, setOpenModal] = useState(false); // State for modal visibility

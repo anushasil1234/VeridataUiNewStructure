@@ -10,6 +10,8 @@ import Button1 from 'shared/utils/button/button1';
 import downloadFile from 'shared/utils/associate/download-file';
 import UploadButton from 'shared/components/upload-button.jsx/upload-button';
 import UploadButtonforxlsx from '../upload-xlsx/upload-xlsx';
+import { postExcel } from 'server/apis';
+// import { postExcel } from 'server/apis/post-excel';
 
 
 const dialogComponent =
@@ -32,7 +34,7 @@ const FileUpload = ({ modalConfirmation, SetFileId, files, setFiles, removeFile,
 
     const { companyId, userId } = loggedInData[0];
     const { openConfirmationModel, openInfoModel } = functionSlice[0];
-    const { postExcel } = apiSlice[0];
+    // const { postExcel } = apiSlice[0];
     const { navigateTo } = commonHooksFunctionSlice[0];
 
     const taskAfterClickOnOk = (rawFileDataCount, fileId) => {

@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import { AppointeeNationalityReport_URL } from "shared/constants/constants";
+
+const getAppointeeNationalityReport = (payLoad) => 
+    ServerRequest(AppointeeNationalityReport_URL, "POST", payLoad, null, true);
+
+export { getAppointeeNationalityReport };

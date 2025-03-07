@@ -51,12 +51,14 @@ import Button from "@mui/material/Button";
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
 import { hasValue } from "shared/utils";
+import { getLapsedDataList, GetLapsedDataReport } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 const UnwrappedLapseddata = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
   const popUpSlice = useSelector((state) => state.popUpSlice);
   let noOfDays = 0;
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
@@ -65,8 +67,8 @@ const UnwrappedLapseddata = (props) => {
   );
 
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const { getLapsedDataList } = apiSlice[0];
-  const { GetLapsedDataReport } = apiSlice[0];
+  // const { getLapsedDataList } = apiSlice[0];
+  // const { GetLapsedDataReport } = apiSlice[0];
   const { companyId } = loggedInData[0];
 
   if (state) {

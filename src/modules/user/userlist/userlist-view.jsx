@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { getAdminUserDetails } from 'server/apis';
 import ActionPermission from 'shared/components/action-permission/action-permission';
 import { toCreateUser, userListTableHeadCell } from 'shared/constants/constants';
 import { CardLayout, DataTable, PageLayout, generateTableRowData } from 'shared/utils'
@@ -13,7 +14,7 @@ const UnwrappedUserListView = (props) => {
 
     const [rows, setRows] = useState([]);
 
-    const { getAdminUserDetails } = apiSlice[0];
+    // const { getAdminUserDetails } = apiSlice[0];
 
     const setTableRows = async () => {
         const response = await getAdminUserDetails();

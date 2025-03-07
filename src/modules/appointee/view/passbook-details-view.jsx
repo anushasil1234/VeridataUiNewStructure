@@ -11,7 +11,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
-import FullScreenModel from "shared/utils/models/fullscreen-modal";
+import FullScreenModel from "shared/utils/modals/fullscreen-modal";
 import DownloadIcon from "@mui/icons-material/Download";
 
 import {
@@ -41,6 +41,7 @@ import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import viewImage from "assets/images/profile/file_upload_icon.png";
 import FileSelectionPopup from "./FileSelectionPopup ";
+import { getAppointeeDetails, getUploadedFileDetailsById } from "server/apis";
 
 let PassbookViewDetails = ({
   appointeeId,
@@ -48,13 +49,13 @@ let PassbookViewDetails = ({
   passbookStatusCode,
 }) => {
   const apiSlice = useSelector((state) => state.apiSlice);
-  const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
 
   const {
     getPassbookDetails,
-    getAppointeeDetails,
-    GetUploadedFileDetailsById,
+    // getAppointeeDetails,
+    // GetUploadedFileDetailsById,
   } = apiSlice[0];
   const { closePassbookViewModel, openDocumentModel } = functionSlice[0];
   const handleChange = (panel) => (event, isExpanded) => {
@@ -112,7 +113,7 @@ let PassbookViewDetails = ({
   const [filesByAlias, setFilesByAlias] = useState(new Map());
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
   useEffect(() => {
     if (passbookDetails) {
       setTableRows(passbookDetails);
@@ -176,7 +177,7 @@ let PassbookViewDetails = ({
       fileCategory: epfoPassbookFileTypeAlias,
       fileId: selectedFile.uploadDetailsId,
     };
-    const response = await GetUploadedFileDetailsById(payload);
+    const response = await getUploadedFileDetailsById(payload);
     if (response && response.responseInfo) {
       const { mimeType, fileData } = response.responseInfo;
       const fileDetails = `data:${mimeType};base64,${fileData}`;

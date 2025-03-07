@@ -58,18 +58,27 @@ import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
 import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
 import { roleTypeEnums } from "shared/constants/constants";
 import AppointeeWelcomeDetails from "shared/components/form-dialog/appointee-welcome-details";
+import Message from "shared/utils/models/message";
+import showErrorMessage from "shared/utils/associate/show-error-message";
+// import { postLoginCredentialDetails } from "server/apis/post-login-credential-details";
+import startLoader from "shared/utils/associate/start-loader";
+import stopLoader from "shared/utils/associate/stop-loader";
+import showSuccessMessage from "shared/utils/associate/show-success-message";
+import { postLoginCredentialDetails, postLoginDetails } from "server/apis";
+// import postLoginDetails from "server/apis/post-login-details";
 
 export const UserLoginView = () => {
   const apiSlice = useSelector((state) => state.apiSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
 
-  const showErrorMessage =
-    popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-  const showSuccessMessage =
-    popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
+  // const showErrorMessage =
+  //   popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+  // const showSuccessMessage =
+  //   popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
 
-  const { postLoginCredDetails, postLoginDetails } = apiSlice[0];
+  // const { postLoginCredDetails, postLoginDetails } = apiSlice[0];
+  // const {  postLoginDetails } = apiSlice[0];
   const { openOtpSubmitionModel, closeOtpSubmitionModel, openInfoModel } =
     functionSlice[0];
 
@@ -126,8 +135,8 @@ export const UserLoginView = () => {
     ),
   };
 
-  const startLoader = () => setLoading(true);
-  const stopLoader = () => setLoading(false);
+  // const startLoader = () => setLoading(true);
+  // const stopLoader = () => setLoading(false);
 
   const handleClickOnLogout = () => {
     localStorage.clear();
@@ -147,6 +156,11 @@ export const UserLoginView = () => {
     e.preventDefault();
 
     if (userName === "") {
+      // const event = new CustomEvent("show-error", Message(emptyUserNameField));
+
+      // showErrorMessage(emptyUserNameField);
+      console.log('handleSubmit');
+
       showErrorMessage(emptyUserNameField);
       return;
     }
@@ -169,7 +183,7 @@ export const UserLoginView = () => {
         // Start the loader before making the API call
         startLoader();
 
-        const response = await postLoginCredDetails(payLoad);
+        const response = await postLoginCredentialDetails(payLoad);
 
         if (response) {
           const { responseInfo } = response;
@@ -205,7 +219,7 @@ export const UserLoginView = () => {
                 const wellcomeMsgContent = {
                   dialogContentText: "",
                   dialogTitle: "",
-                  dialogContentComponent: <AppointeeWelcomeDetails userName ={userName} />,
+                  dialogContentComponent: <AppointeeWelcomeDetails userName={userName} />,
                   maxWidth: "sm",
                   btnName: "Close",
                 };
@@ -238,6 +252,8 @@ export const UserLoginView = () => {
 
           // If the user type requires OTP submission
           if (dbUserType === 3) {
+            console.log('dbUserType');
+            
             stopLoader(); // Stop loader if no response
             showSuccessMessage(otpToMailMsg);
             openOtpSubmitionModel({
@@ -258,8 +274,10 @@ export const UserLoginView = () => {
         }
       } catch (error) {
         // console.error("Error during login:", error);
-        stopLoader(); // Stop loader in case of any errors
-        showErrorMessage("An error occurred during login. Please try again.");
+        // stopLoader(); // Stop loader in case of any errors
+        // showErrorMessage("An error occurred during login. Please try again.");
+      }finally{
+        stopLoader();
       }
     }
   };
@@ -275,7 +293,7 @@ export const UserLoginView = () => {
 
   return (
     <>
-      {loading && <CircularIndeterminate />}
+      {/* {loading && <CircularIndeterminate />} */}
       <Grid
         container
         spacing={1}

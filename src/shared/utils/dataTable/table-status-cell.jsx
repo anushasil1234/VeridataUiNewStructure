@@ -29,7 +29,9 @@ const TableStatusCell = (props) => {
   let { cellName, cellValue, rowAttribute } = props;
 
   const { appointeeId } = rowAttribute;
-  const { setRemarks } = functionSlice[0];
+  const setRemarksFunctionSlice = useSelector((state) => state.SetRemarksFunctionSlice);
+  const setRemarks = setRemarksFunctionSlice && setRemarksFunctionSlice[0] && setRemarksFunctionSlice[0].setRemarks;
+
   let labelValue;
   let chipStyle;
   let chipIconStyle = null;

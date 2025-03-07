@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import ArrowDropDownIcon from '@mui/icons-material/ExpandMore';
 import parse from "html-react-parser";
+import { GetFaqData } from 'server/apis';
 
 const Help = () => {
     const [responseList, setResponseList] = useState(null);
     const apiSlice = useSelector((state) => state.apiSlice);
-    const { GetFaqData } = apiSlice[0];
+    // const { GetFaqData } = apiSlice[0];
     const handleGetHalpData = async () => {
         const response = await GetFaqData();
         // console.log('response',response)

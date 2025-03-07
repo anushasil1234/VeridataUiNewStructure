@@ -12,6 +12,8 @@ import sideMenuItemsSlice from "./slices/side-menu-items-slice";
 import setTableRowsSlice from "./slices/set-table-rows-slice";
 import dataSlice from "./slices/data-slice";
 import ManualValidationResponseStatusSlice from "./slices/manual-validation-response-status-slice";
+import SetDropDownFunctionSlice from "./slices/set-dropdown-functions-slice"; 
+import SetRemarksFunctionSlice from "./slices/set-remarks-functions-slice"; 
 
 const store = configureStore(
     {
@@ -28,7 +30,9 @@ const store = configureStore(
             actionRouteSlice: actionRouteSlice,    
             sideMenuItemsSlice : sideMenuItemsSlice,
             setTableRowsSlice : setTableRowsSlice,
-            DataSlice: dataSlice
+            DataSlice: dataSlice,
+            SetDropDownFunctionSlice: SetDropDownFunctionSlice,
+            SetRemarksFunctionSlice: SetRemarksFunctionSlice
         }       
     }
 );

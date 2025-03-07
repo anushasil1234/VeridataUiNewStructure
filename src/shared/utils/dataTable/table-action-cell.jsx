@@ -38,25 +38,41 @@ import CloseAppointeeAddRemarks from "shared/components/form-dialog/close-appoin
 import { DDMMYYYY, filteredObjectProperty, GetAttribute, hasValue } from "..";
 import downloadFile from "../associate/download-file";
 import { useState } from "react";
- import exclamation from "assets/images/exclamation.png"
+import exclamation from "assets/images/exclamation.png"
+import ViewFab from "shared/fabs/ViewFab";
+import RedirectFab from "shared/fabs/RedirectFab";
+import NotifyFab from "shared/fabs/NotifyFab";
+import ExclamationFab from "shared/fabs/ExclamationFab";
+import EmailFab from "shared/fabs/EmailFab";
+import CancelFab from "shared/fabs/CancelFab";
+import DownLoadFab from "shared/fabs/DownLoadFab";
+import MenuBookFab from "shared/fabs/MenuBookFab";
+import AccountBoxFab from "shared/fabs/AccountBoxFab";
+import EditFab from "shared/fabs/EditFab";
+import { deleteUserDetails, getEmploymentDetails, getPassbookDetails, getPassbookFileData, postRemainderMail, postResendCredMail } from "server/apis";
+import showErrorMessage from "../associate/show-error-message";
 
 export const TableActionCell = (props1, props2) => {
-  const { actionList, rowAttribute, actionPermissionList, setTableRows } =    props1;
-  
-  const { appointeeId, userId: id, isPassbookVerified, uanNo,passbookStatusCode,verificationStatusCode } = rowAttribute;
+  const { actionList, rowAttribute, actionPermissionList, setTableRows } = props1;
+
+  const { appointeeId, userId: id, isPassbookVerified, uanNo, passbookStatusCode, verificationStatusCode } = rowAttribute;
   const commonHooksFunctionSlice = useSelector(
     (state) => state.commonHooksFunctionSlice
   );
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const apiSlice = useSelector((state) => state.apiSlice);
-  const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
   const dropdownList = useSelector((state) => state.dropdownList);
-  const { getPassbookDetails,getEmployementDetails } = apiSlice[0];
+  // const {
+  //   //  getPassbookDetails, 
+  //   getEmployementDetails } = apiSlice[0];
   const { getAppointeeDetails } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { openConfirmationModel, openVerify } = functionSlice[0];
-  const { showErrorMessage } = popUpSlice[0];
+  // console.log('functionSlice[0]', functionSlice[0])
+
+  // const { showErrorMessage } = popUpSlice[0];
   const { openViewModel, openUserViewModel } = functionSlice[0];
   const { openSubmitModel } = functionSlice[0];
   const { openPassbookViewModel, openEmploymentViewModel } = functionSlice[0];
@@ -67,13 +83,13 @@ export const TableActionCell = (props1, props2) => {
     maritalStatusList,
     genderList,
   } = dropdownList.length > 0 && dropdownList[0];
-  const [isPassbookAvailable, setIsPassbookAvailable] = useState(true); 
+  const [isPassbookAvailable, setIsPassbookAvailable] = useState(true);
   const [isEmploymentAvailable, setIsEmploymentAvailable] = useState(true);
   const {
-    getPassbookFileData,
-    postRemainderMail,
-    postResendCredMail,
-    deleteUserDetails,
+    // getPassbookFileData,
+    // postRemainderMail,
+    // postResendCredMail,
+    // deleteUserDetails,
   } = apiSlice[0];
   const { userId } = loggedInData[0];
   const downloadPassbook = async (pasbooktype) => {
@@ -106,6 +122,8 @@ export const TableActionCell = (props1, props2) => {
     const confirmationModelContent = {
       dialogContentText: verificationRemiderMsg,
     };
+    console.log('openConfirmationModel', openConfirmationModel);
+
     openConfirmationModel(
       confirmationModelContent,
       async () => await postRemainderMail(appointeeId, userId)
@@ -116,6 +134,8 @@ export const TableActionCell = (props1, props2) => {
     const confirmationModelContent = {
       dialogContentText: credentialRemiderMsg,
     };
+    console.log("openConfirmationModel");
+
     openConfirmationModel(
       confirmationModelContent,
       async () => await postResendCredMail(appointeeId, userId)
@@ -137,8 +157,8 @@ export const TableActionCell = (props1, props2) => {
           return;
         }
         // setIsPassbookAvailable(false);
-         showErrorMessage(noPassBookMsg);
-        
+        // showErrorMessage(noPassBookMsg);
+
       }
     } catch (error) {
       setIsPassbookAvailable(false);
@@ -146,13 +166,13 @@ export const TableActionCell = (props1, props2) => {
     }
   };
 
-  const handleEpfoView=async(appointeeId, userId)=>{
+  const handleEpfoView = async (appointeeId, userId) => {
     try {
-      const response = await getEmployementDetails(appointeeId, userId);
+      const response = await getEmploymentDetails(appointeeId, userId);
       const { pfUan, companies } = response?.responseInfo || {};
       if (pfUan && Array.isArray(companies) && companies.length > 0) {
-         const epfoDetails=response.responseInfo
-         openEmploymentViewModel(appointeeId,userId,epfoDetails,passbookStatusCode);
+        const epfoDetails = response.responseInfo
+        openEmploymentViewModel(appointeeId, userId, epfoDetails,passbookStatusCode);
       } else {
         if (passbookStatusCode === "MNL") {
           const epfoDetails=null
@@ -182,8 +202,8 @@ export const TableActionCell = (props1, props2) => {
       setTableRows();
     }
   };
-  const handleCloseUserDetails = (event) => {
-    const id = GetAttribute(event, "id");
+  const handleCloseUserDetails = (id) => {
+    // const id = GetAttribute(event, "id");
     const dialogComponent = (
       <Typography mt={2}>Do you want to delete the user?</Typography>
     );
@@ -197,7 +217,7 @@ export const TableActionCell = (props1, props2) => {
   };
   // const [_isManualPassbook,setIsManualPassbook] = useState()
   const handleGetAppointeeDetails = async (appointeeId) => {
-  
+
     const personalInfo = {
       appointeeId,
       
@@ -206,299 +226,94 @@ export const TableActionCell = (props1, props2) => {
 
     openVerify(personalInfo);
   };
- 
+
 
   
   let actionListData;
-  // console.log('actionList', actionList, actionPermissionList);
+
 
   actionListData =
     actionList &&
     actionList.map((action) => {
       return (
         <>
-          {action === "VIEWDETAILS" 
-              && actionPermissionList && actionPermissionList['A001']
-             ? (
-            <DarkTooltip placement="top" title={"Open Details"} arrow>
-              <Fab
-                mood="V"
-                variant="contained"
-                size="small"
-                onClick={() => openViewModel(appointeeId)}
-                sx={greenFabStyle}
-              >
-                <Article width={18} />
-              </Fab>
-            </DarkTooltip>
-          ) : null}
+          {action === "VIEWDETAILS"
+            && actionPermissionList && actionPermissionList['A001']
+            ? (
+              <ViewFab onClick={() => openViewModel(appointeeId)} title={"Open Details"} />
+            ) : null}
           {action === "VIEWUSERDETAILS" &&
-          actionPermissionList &&
-          actionPermissionList["A001"] ? (
-            <DarkTooltip placement="top" title={"Open Details"} arrow>
-              <Fab
-                mood="V"
-                variant="contained"
-                size="small"
-                onClick={() => openUserViewModel(id)}
-                sx={greenFabStyle}
-              >
-                <Article width={18} />
-              </Fab>
-            </DarkTooltip>
+            actionPermissionList &&
+            actionPermissionList["A001"] ? (
+            <ViewFab onClick={() => openUserViewModel(id)} title={"Open Details"} />
           ) : null}
-           {action === "REDIRECTMANVER" &&  ["MV", "MRV", "RD"].includes(verificationStatusCode)
-           && actionPermissionList &&
-           actionPermissionList['A016'] 
-          ? (
-            <DarkTooltip placement="top" title={"Visit Manual Verification Page"} arrow>
-              <Fab
-                mood="V"
-                variant="contained"
-                size="small"
-                onClick={() => navigateTo(`${toMannualVerification}`,{ state:  verificationStatusCode })}
-                sx={{
-                  background: 'linear-gradient(45deg, #7851A9, #5E3D8D)',
-                  ...primaryFabStyle
-                }}
-              >
-                {/* <Navigation width={18} /> */}
-      <img width={18} src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '70%', height: 'auto' }}/> 
-
-              </Fab>
-            </DarkTooltip>
-          ) : null}
-          {action === "NOTIFYMAIL" 
-           && actionPermissionList && actionPermissionList['A005']
-          ? (
-            <DarkTooltip placement="top" title={"Notify Appointee"} arrow>
-              <Fab
-                appointeeId={appointeeId}
-                mood="V"
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={notiFyAppointee}
-                sx={primaryFabStyle}
-              >
-                <Notifications width={18} />
-              </Fab>
-            </DarkTooltip>
-          ) : null}
+          {action === "REDIRECTMANVER" && ["MV", "MRV", "RD"].includes(verificationStatusCode)
+            && actionPermissionList &&
+            actionPermissionList['A016']
+            ? (
+              <RedirectFab
+                onClick={() => navigateTo(`${toMannualVerification}`, { state: verificationStatusCode })}
+                tooltip={"Visit Manual Verification Page"} />
+            ) : null}
+          {action === "NOTIFYMAIL"
+            && actionPermissionList && actionPermissionList['A005']
+            ? (
+              <NotifyFab onClick={notiFyAppointee} title={"Notify Appointee"} />
+            ) : null}
           {action === "MANUALVER"
-             && actionPermissionList && actionPermissionList['A015']
-             ? (
-            <DarkTooltip placement="top" title={"Manual Verification"} arrow>
-              <Fab
-                appointeeId={appointeeId}
-                mood="V"
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={() => handleGetAppointeeDetails(appointeeId)}
-                sx={{
-                  background: 'linear-gradient(45deg, #7851A9, #5E3D8D)',
-                  ...primaryFabStyle
-                }}
-             //   sx={ primaryFabStyle}
-                //sx={{...buttonStyleSx}}
-              >
-                <img
-                    src={exclamation}
-                    alt="exclamation"
-                    style={{ width: 20, height: 20 , filter: 'invert(1) brightness(100%)'}}
-                  />
-              </Fab>
-              {/* <Button
-                //  onClick={handelclick}
-                  variant="contained"
-                  sx={{...buttonStyleSx}}
-                  startIcon={ <img
-                    src={exclamation}
-                    alt="exclamation"
-                    style={{ width: 25, height: 25 , filter: 'invert(1) brightness(100%)'}}
-                  />}
-                >
-                  verify manually
-                </Button> */}
-            </DarkTooltip>
-          ) : null}
+            && actionPermissionList && actionPermissionList['A015']
+            ? (
+              <ExclamationFab onClick={() => handleGetAppointeeDetails(appointeeId)} title={"Manual Verification"} />
+            ) : null}
           {action === "MANUALREVER"
-             && actionPermissionList && actionPermissionList['A015']
-             ? (
-            <DarkTooltip placement="top" title={"Manual Re-Verification"} arrow>
-              <Fab
-                appointeeId={appointeeId}
-                mood="V"
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={() => handleGetAppointeeDetails(appointeeId)}
-                sx={{
-                  background: 'linear-gradient(45deg, #7851A9, #5E3D8D)',
-                  ...primaryFabStyle
-                }}
-              >
-                <img
-                    src={exclamation}
-                    alt="exclamation"
-                    style={{ width: 20, height: 20 , filter: 'invert(1) brightness(100%)'}}
-                  />
-              </Fab>
-            </DarkTooltip>
-          ) : null}
+            && actionPermissionList && actionPermissionList['A015']
+            ? (
+              <ExclamationFab onClick={() => handleGetAppointeeDetails(appointeeId)} title={"Manual Re-Verification"} />
+            ) : null}
           {action === "USERMAILRESEND" ? (
-            <DarkTooltip
-              placement="top"
-              title={"Resend Appointee Login Info"}
-              arrow
-            >
-              <Fab
-                appointeeId={appointeeId}
-                mood="V"
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={resendUserCredAppointee}
-                sx={primaryFabStyle}
-              >
-                <MarkEmailReadIcon width={18} />
-              </Fab>
-            </DarkTooltip>
+            <EmailFab onClick={() => resendUserCredAppointee()} title={"Resend Appointee Login Info"} />
           ) : null}
           {action === "CLOSEAPNTEE" ? (
-            <DarkTooltip placement="top" title={"Cancel Appointee"} arrow>
-              <Fab
-                appointeeId={appointeeId}
-                mood="V"
-                variant="contained"
-                size="small"
-                button={"C"}
-                onClick={handleClickOnCancel}
-                sx={redFabStyle}
-              >
-                <Cancel width={18} />
-              </Fab>
-            </DarkTooltip>
+            <CancelFab onClick={handleClickOnCancel} title={"Cancel Appointee"} />
           ) : null}
           {action === "CLOSEUSERDETAILS" ? (
-            <DarkTooltip placement="top" title={"Inactive User"} arrow>
-              <Fab
-                id={id}
-                mood="V"
-                variant="contained"
-                size="small"
-                button={"C"}
-                onClick={handleCloseUserDetails}
-                sx={redFabStyle}
-              >
-                <Cancel width={18} />
-              </Fab>
-            </DarkTooltip>
+            <CancelFab onClick={(e) => handleCloseUserDetails(id)} title={"Inactive User"} />
           ) : null}
           {action === "DWNLDPSSBK" &&
-          actionPermissionList &&
-          actionPermissionList["A013"] ? (
-            <DarkTooltip placement="top" title={"Download Passbook"} arrow>
-              <Fab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={() => downloadPassbook("EPFPSBK")}
-                sx={primaryFabStyle}
-              >
-                <Download width={18} />
-              </Fab>
-            </DarkTooltip>
+            actionPermissionList &&
+            actionPermissionList["A013"] ? (
+            <DownLoadFab onClick={() => downloadPassbook("EPFPSBK")} title={"Download Passbook"} />
           ) : null}
           {action === "VIEWPSSBK" &&
-          actionPermissionList &&
-          actionPermissionList["A012"]&& uanNo &&
-          uanNo.length >= 12  ? (
-            <DarkTooltip placement="top" title={"EPFO Passbook"} arrow>
-              <Fab
-                variant="contained"
-                size="small"
-                button={"N"}
-                disabled={!isPassbookAvailable}
-                onClick={() => handlePassbookView(appointeeId)}
-                sx={primaryFabStyle}
-              >
-                {/* <Article width={18} /> */}
-                <MenuBook width={18} />
-              </Fab>
-            </DarkTooltip>
+            actionPermissionList &&
+            actionPermissionList["A012"] && uanNo &&
+            uanNo.length >= 12 ? (
+            <MenuBookFab title={"EPFO Passbook"} onClick={() => handlePassbookView(appointeeId)} disabled={!isPassbookAvailable} />
           ) : null}
           {action === "VIEWPSSBK" &&
-          actionPermissionList &&
-          actionPermissionList["A012"] &&
-          hasValue(uanNo) ? (
-            <DarkTooltip
-              placement="top"
-              title={"EPFO Employment History"}
-              arrow
-            >
-              <Fab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={() => handleEpfoView(appointeeId, userId)}
-                disabled={!isEmploymentAvailable}
-                sx={primaryFabStyle}
-              >
-                <AccountBox width={18} />
-              </Fab>
-            </DarkTooltip>
+            actionPermissionList &&
+            actionPermissionList["A012"] &&
+            hasValue(uanNo) ? (
+            <AccountBoxFab title={"EPFO Employment History"} onClick={() => handleEpfoView(appointeeId, userId)} disabled={!isEmploymentAvailable} />
           ) : null}
           {(action === "DWNLDTRUSTPSSBK") &
-          (rowAttribute.isTrustPFApplicable === true) ? (
-            <DarkTooltip
-              placement="top"
-              title={"Download Trust Passbook"}
-              arrow
-            >
-              <Fab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={() => downloadPassbook("EPFPSBKTRUST")}
-                sx={redFabStyle}
-              >
-                <Download width={18} />
-              </Fab>
-            </DarkTooltip>
+            (rowAttribute.isTrustPFApplicable === true) ? (
+            <DownLoadFab onClick={() => downloadPassbook("EPFPSBKTRUST")} title={"Download Trust Passbook"} sx={redFabStyle} />
           ) : null}
           {action === "UPDTEAPNTEE" &&
-          actionPermissionList &&
-          actionPermissionList["A007"] ? (
-            <DarkTooltip placement="top" title={"Edit Appointee"} arrow>
-              <Fab
-                variant="contained"
-                size="small"
-                onClick={() => UpdateDateOfJoin(rowAttribute)}
-                sx={yellowFabStyle}
-              >
-                <Edit width={18} />
-              </Fab>
-            </DarkTooltip>
+            actionPermissionList &&
+            actionPermissionList["A007"] ? (
+            <EditFab onClick={() => UpdateDateOfJoin(rowAttribute)} title={"Edit Appointee"} />
           ) : null}
           {action === "UPDATEUSER" &&
-          actionPermissionList &&
-          actionPermissionList["A007"] ? (
-            <DarkTooltip placement="top" title={"Edit User"} arrow>
-              <Fab
-                variant="contained"
-                size="small"
-                onClick={() => updateUser(rowAttribute)}
-                sx={yellowFabStyle}
-              >
-                <Edit width={18} />
-              </Fab>
-            </DarkTooltip>
+            actionPermissionList &&
+            actionPermissionList["A007"] ? (
+            <EditFab onClick={() => updateUser(rowAttribute)} title={"Edit User"} />
           ) : null}
         </>
       );
     });
+  console.log('actionListData', actionListData);
 
   return <Stack flexDirection={"row"}>{actionListData}</Stack>;
 };

@@ -64,7 +64,7 @@ import {
 } from "shared/constants/constants";
 
 import VerificationStatus from "../../../shared/components/verification/verification-status";
-import FormDialog from "shared/utils/models/form-dialog";
+import FormDialog from "shared/utils/modals/form-dialog";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import uploadFileMessage from "shared/utils/associate/upload-file-message";
 import selectUANmessage from "shared/utils/associate/select-uan-message";
@@ -83,6 +83,10 @@ import FormContainer from "shared/components/grid-container/form-container";
 import FirstForm from "./first-form";
 import SecondForm from "./second-form";
 import ThirdForm from "./third-form";
+import { GenerateAadharOtp, generateUANOtp, getAppointeeDetails, getPassportDetails, getUANNumber, getUploadedFileDetailsById, PostAadharOtp, postAppointeeDetails, postAppointeeFileDetails, postUpdatePfUanDetails, verifyAadharDetails, verifyPANDetails } from "server/apis";
+import { submitUANOTP } from "server/apis/verify/submit-uan-otp";
+import showSuccessMessage from "shared/utils/associate/show-success-message";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 const AppointeeRegisterForm = () => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
@@ -109,7 +113,7 @@ const AppointeeRegisterForm = () => {
     openConfirmationModel,
     openInfoModel,
   } = functionSlice[0];
-  const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
+  // const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
   const { countryList, nationalityList, relationList, fileTypeList } =
     dropdownList && dropdownList.length > 0 && dropdownList[0];
   const genderDropdownList =
@@ -118,18 +122,18 @@ const AppointeeRegisterForm = () => {
     dropdownList[0] &&
     dropdownList[0].genderList;
   const {
-    postAppointeeDetails,
-    getAppointeeDetails,
-    getPassportDetails,
-    postAppointeeFileDetails,
-    PostUpdatePfUanDetails,
-    getUANNumber,
-    verifyAadharDetails,
-    generateUANOtp,
-    submitUANOTP,
-    verifyPANDetails,
-    GenerateAadharOtp,
-    PostAadharOtp
+    // postAppointeeDetails,
+    // getAppointeeDetails,
+    // getPassportDetails,
+    // postAppointeeFileDetails,
+    // PostUpdatePfUanDetails,
+    // getUANNumber,
+    // verifyAadharDetails,
+    // generateUANOtp,
+    // submitUANOTP,
+    // verifyPANDetails,
+    // GenerateAadharOtp,
+    // PostAadharOtp
   } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { userId, appointeeId, userCode } = loggedInData[0];
@@ -596,6 +600,8 @@ const AppointeeRegisterForm = () => {
   };
   const selectGender = (genderCode) => {
     const selectedGender = genderCode;
+    console.log('genderDropdownList', genderDropdownList);
+    
     const updatedGender =
       genderDropdownList &&
       genderDropdownList.map((gender, index) => {
@@ -1278,7 +1284,7 @@ const AppointeeRegisterForm = () => {
     let formData = buildFormData(payLoad);
 
     // Make the API call
-    const response = await PostUpdatePfUanDetails(formData, formSaveSuccess);
+    const response = await postUpdatePfUanDetails(formData, formSaveSuccess);
     // if (response) {
     //   clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
     //   clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
@@ -1305,7 +1311,7 @@ const AppointeeRegisterForm = () => {
     let formData = buildFormData(payLoad);
 
     // Make the API call
-    const response = await PostUpdatePfUanDetails(
+    const response = await postUpdatePfUanDetails(
       formData,
       formSubmitionSuccess
     );
@@ -1395,15 +1401,13 @@ const AppointeeRegisterForm = () => {
 
   const handleAppointeeFormPage1Save = async (formElement) => {
     formElement.preventDefault();
-    if (passportAvailable === "Y" 
-      // && clickedButton !== "S"
-    ) {
+    if (passportAvailable === "Y" && clickedButton !== "S") {
       if (!hasValue(passportNo)) {
         setPassportNumberError(true);
         showErrorMessage(passportNoEmptyMsg);
         return;
       }
-      if ((nationality.toLowerCase() === "indian" || countryOfOrigin === "India")&& passportNo.length !== 8) {
+      if (nationality.toLowerCase() === "indian" && passportNo.length !== 8) {
         setPassportNumberError(true);
         showErrorMessage(indianpassportNumberPatternErrorMsg);
         return;
@@ -2001,7 +2005,8 @@ const AppointeeRegisterForm = () => {
   const handleViewFile = async (fileName) => {
     const file = fileUploaded?.find(f => f.fileName === fileName);
     const fileUnsaved = uploadedFile?.filter((file) => file.uploadDetailsId === 0);
-
+    console.log('hello',file,fileUnsaved)
+    console.log('hello2',fileUploaded,uploadedFile)
     if (!file) {
         console.log('File not found from api');
         const fileWithDetails = fileUnsaved?.map((file) => {
@@ -2016,8 +2021,7 @@ const AppointeeRegisterForm = () => {
         return {
           previewURL,
           fileName: file.fileName,
-          uploadTypeAlias: file.uploadTypeAlias,
-          mimeType: file.mimeType
+          uploadTypeAlias: file.uploadTypeAlias
         };
       }).filter(file => file.previewURL); 
       
@@ -2027,8 +2031,7 @@ const AppointeeRegisterForm = () => {
           openUploadedDocumentModal(
             fileWithDetail.previewURL,
             fileWithDetail.fileName,
-            fileWithDetail.uploadTypeAlias,
-            fileWithDetail.mimeType
+            fileWithDetail.uploadTypeAlias
           );
         }
       })
@@ -2039,13 +2042,13 @@ const AppointeeRegisterForm = () => {
       fileCategory: file?.uploadTypeAlias,
       fileId: file?.uploadDetailsId,
     };
-
+console.log("aaaaa",payload)
     // const payload = {
     //   appointeeId: appointeeId,
     //   fileCategory: fileType,
     //   fileId: selectedFile.uploadDetailsId,
     // };
-    const response = await GetUploadedFileDetailsById(payload);
+    const response = await getUploadedFileDetailsById(payload);
     console.log('Uploaded file details',response);
     
     if (response && response.responseInfo) {

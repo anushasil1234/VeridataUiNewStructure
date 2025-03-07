@@ -6,6 +6,7 @@ import { WidgetCard } from ".";
 import { useSelector } from "react-redux";
 import { latestAppointeeListTableHeadCell } from "shared/constants/constants";
 import ActionPermission from "shared/components/action-permission/action-permission";
+import { getLatestAppointees } from "server/apis";
 
 const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
   const [recruits, setRecruits] = useState([]);
@@ -19,7 +20,7 @@ const UnwrappedUpcomingRecruits = ({ fitToContaner, hasPermission }) => {
   const navigate = useNavigate(); 
 
  
-  const { getLatestAppointees } = apiSlice[0] || {};
+  // const { getLatestAppointees } = apiSlice[0] || {};
 
  
   const upcomingRecruitsStatusList =

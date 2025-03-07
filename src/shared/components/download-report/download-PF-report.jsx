@@ -18,6 +18,7 @@ import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { hasValue } from "shared/utils";
 import { useSelector } from "react-redux";
 import { pfPensionInfo } from "shared/constants/constants";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 
 const DownloadPFReport = ({
@@ -43,10 +44,10 @@ const DownloadPFReport = ({
   handelprocessEPSgapchange
 }) => {
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
-  const {popUpSlice} = useSelector(
-    (state) => state
-  );
-  const { showErrorMessage } = popUpSlice[0];
+  // const {popUpSlice} = useSelector(
+  //   (state) => state
+  // );
+  // const { showErrorMessage } = popUpSlice[0];
   const handleClickOnDownload = () => {
     setIsDownloadListOpened(!isDownloadListOpened);
   };

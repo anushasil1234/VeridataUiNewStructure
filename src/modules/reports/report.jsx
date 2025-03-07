@@ -30,17 +30,19 @@ import { removeActionRoute } from "store/slices/action-route-slice";
 import ArticleIcon from '@mui/icons-material/Article';
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
+import { getApiCounterReport } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 const UnwrappedReport = (props) => {
   const { hasPermission } = props;
-  const popUpSlice = useSelector(state => state.popUpSlice);
+  // const popUpSlice = useSelector(state => state.popUpSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
   const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(
     (state) => state.commonHooksFunctionSlice
   );
 
-  const { getApiCounterReport } = apiSlice[0];
+  // const { getApiCounterReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
 
   const [toDate, setToDate] = useState();
@@ -49,7 +51,7 @@ const UnwrappedReport = (props) => {
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
   const [apiCountList, setApiCountList] = useState();
   const [apiConsolidateCountList, setApiConsolidateCountList] = useState();
-  const {showErrorMessage} =popUpSlice[0]
+  // const {showErrorMessage} =popUpSlice[0]
   const [fileData, setFileData] = useState(null);
   const setTableRows = async (fromDate = null, toDate = null) => {
     const response = await getApiCounterReport(fromDate, toDate);

@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { getPfCreationAppointeeReportList } from "server/apis";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import DownloadReport from "shared/components/download-report/download-report";
 import { FromDateEmptyMsg, GetPfCreationListTableHeadCell, downloadPfCreationApponteeList_URL, pfUsersInfo, toPFUsers, uploadedFromDateEmptyMsg } from "shared/constants/constants";
@@ -96,9 +97,9 @@ const UnwappedPFUsers = (props) => {
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
  
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const { getPfCreationAppointeeReportList } = apiSlice[0];
-  const popUpSlice = useSelector((state) => state.popUpSlice);
-  const { showErrorMessage } = popUpSlice[0]
+  // const { getPfCreationAppointeeReportList } = apiSlice[0];
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const { showErrorMessage } = popUpSlice[0]
   const setTableRows = async (updatedPayLoad) => {
     const response = await getPfCreationAppointeeReportList(updatedPayLoad);
     if (response) {

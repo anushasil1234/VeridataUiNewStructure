@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import { EmployementDetails_URL } from "shared/constants/constants";
+
+const getEmploymentDetails = (appointeeId, userId) => 
+    ServerRequest(EmployementDetails_URL(appointeeId, userId), "POST");
+
+export { getEmploymentDetails };

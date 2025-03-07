@@ -1,0 +1,33 @@
+import React from 'react';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import Button1 from '../button/button1';
+
+const ConfirmationYesNoModal = ({ open, confirmationYesNoModelContent, handleClose }) => {
+  const { dialogTitle, dialogComponent, dialogContentText, confirmedYes, confirmedNo, firstButtonName = "Yes", secondButtonName = "No", fullWidth = false, maxWidth = 'sm' } = confirmationYesNoModelContent || "";
+
+  return (
+    <Dialog open={open} onClose={handleClose} fullWidth={fullWidth} maxWidth={maxWidth}>
+      <DialogTitle>
+        {dialogTitle}
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{ position: 'absolute', right: 8, top: 8, color: 'grey.500' }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent>
+        {dialogContentText && <DialogContentText>{dialogContentText}</DialogContentText>}
+        {dialogComponent}
+      </DialogContent>
+      <DialogActions>
+        <Button1 onClick={confirmedYes}>{firstButtonName}</Button1>
+        <Button1 onClick={confirmedNo}>{secondButtonName}</Button1>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+export default ConfirmationYesNoModal;

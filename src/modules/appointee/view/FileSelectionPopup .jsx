@@ -30,6 +30,8 @@ const FileSelectionPopup = ({
   }, [viewedFiles]);
 
   const handleChipClick = (fileOption) => {
+    console.log('handleChipClick', fileOption, viewedFiles);
+    
     if (!viewedFiles.some((file) => file.fileName === fileOption.fileName)) {
       setViewedFiles([...viewedFiles, fileOption]);
     }

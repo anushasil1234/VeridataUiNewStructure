@@ -12,11 +12,12 @@ import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 
 
 import myImage from 'assets/images/profile/candidateUploadTemplate_new.JPG';
+import { downloadReport } from 'server/apis';
 
 const UnWrrappedDataUpload = (props) => {
     const { hasPermission } = props;
-    const apiSlice = useSelector(state => state.apiSlice);
-    const { downloadReport } = apiSlice[0];
+    // const apiSlice = useSelector(state => state.apiSlice);
+    // const { downloadReport } = apiSlice[0];
 
     const [files, setFiles] = useState([]);
     const [tableFileUpload, setTableFileUpload] = useState({

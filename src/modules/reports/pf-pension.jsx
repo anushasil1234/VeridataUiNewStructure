@@ -11,6 +11,8 @@ import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import moment from "moment";
+import { AppointeeDataPfFilteRList } from "server/apis/appointee/appointee-reports/appointee-data-pf-filter-list";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 const UnWrappedpf = (props) => {
   const { hasPermission } = props;
@@ -41,8 +43,8 @@ const UnWrappedpf = (props) => {
   const[EpsGap,setEpsgap]=useState(null);
   const [appointeeDetails, setappointeeDetails] = useState()
   const [fileData, setFileData] = useState(null);
-  const popUpSlice = useSelector(state => state.popUpSlice);
-  const { showErrorMessage } = popUpSlice[0]
+  // const popUpSlice = useSelector(state => state.popUpSlice);
+  // const { showErrorMessage } = popUpSlice[0]
 
   let payloadData = {
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
@@ -112,7 +114,7 @@ const UnWrappedpf = (props) => {
   const apiSlice = useSelector(state => state.apiSlice);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
-  const { AppointeeDataPfFilteRList } = apiSlice[0];
+  // const { AppointeeDataPfFilteRList } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
 
 

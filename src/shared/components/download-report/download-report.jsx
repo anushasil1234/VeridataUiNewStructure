@@ -17,6 +17,7 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import { hasValue } from "shared/utils";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 const DownloadReport = ({
   isDownloadFilter,
@@ -38,10 +39,10 @@ const DownloadReport = ({
   infoDetails,
   payLoad
 }) => {
-  const { functionSlice, popUpSlice, loggedInData } = useSelector(
+  const { functionSlice, loggedInData } = useSelector(
     (state) => state
   );
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
   const { isSetProfilePassword } =
     loggedInData && loggedInData.length > 0 && loggedInData[0];
 

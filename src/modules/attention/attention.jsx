@@ -3,9 +3,11 @@ import { Box, Fab,  Stack } from '@mui/material';
 import { primaryFabStyle } from 'app';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { getCriticalAppointeeList } from 'server/apis';
 import ActionPermission from 'shared/components/action-permission/action-permission';
 import { attentionInfo, criticalListTableHeadCell, FromDateEmptyMsg, uploadedFromDateEmptyMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, DateFormatYYYYMMDD, PageLayout, generateTableRowData, hasValue } from 'shared/utils';
+import showErrorMessage from 'shared/utils/associate/show-error-message';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';
 import { removeActionRoute } from 'store/slices/action-route-slice';
@@ -18,9 +20,9 @@ const UnwrappedAttention = (props) => {
   const apiSlice = useSelector(state => state.apiSlice);
   const loggedInData = useSelector(state => state.loggedInData);
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
-  const popUpSlice = useSelector((state) => state.popUpSlice);
-  const {showErrorMessage} =popUpSlice[0]
-  const { getCriticalAppointeeList } = apiSlice[0];
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const {showErrorMessage} =popUpSlice[0]
+  // const { getCriticalAppointeeList } = apiSlice[0];
   const { companyId } = loggedInData[0];
 
   const [rows, setRows] = useState([]);

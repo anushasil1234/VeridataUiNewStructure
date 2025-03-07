@@ -16,6 +16,7 @@ import { removeApi } from "store/slices/api-slice";
 import { removeFunction } from "store/slices/function-slice";
 import { removePopUpSetFunction } from "store/slices/popup-slice";
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
+import setDropdownList from "shared/utils/associate/set-dropdown-list";
 
 const App = () => {
   const routing = useRoutes(CustomRouter);
@@ -36,19 +37,22 @@ const App = () => {
     dispatch(removeSideMenuItems());
   }
   const loggedInData = useSelector(state => state.loggedInData);
-  const functionSlice = useSelector(state => state.functionSlice);
+  // const functionSlice = useSelector(state => state.functionSlice);
+  const SetDropDownFunctionSlice = useSelector(state => state.SetDropDownFunctionSlice);
 
-  const { setDropdownList } = functionSlice[0];
+  // const setDropdownList = SetDropDownFunctionSlice && SetDropDownFunctionSlice[0] && SetDropDownFunctionSlice[0].setDropdownList;
   if (loginData && loggedInData.length === 0) {
     dispatch(storeLoggedinData(loginData));
     dispatch(storeLoggedinTokenData(tokenData));
     dispatch(storeLoggeoutData({ handleClickOnLogout }));
   }
+ 
+
   const { userTypeId, isDefaultPassword } = loggedInData.length > 0 && loggedInData[0];
   useEffect(() => {
-    
+
     if (userTypeId && isDefaultPassword === false) {
-      setDropdownList();
+       setDropdownList()
     }
   }, [userTypeId])
 

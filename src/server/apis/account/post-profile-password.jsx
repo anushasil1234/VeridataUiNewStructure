@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import { ValidateProfilePassword_URL } from "shared/constants/constants";
+
+const postProfilePassword = (payLoad) => 
+    ServerRequest(ValidateProfilePassword_URL, "POST", payLoad);
+
+export { postProfilePassword };

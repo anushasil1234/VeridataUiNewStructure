@@ -1,0 +1,24 @@
+import { Cancel } from '@mui/icons-material'
+import { Fab } from '@mui/material'
+import { redFabStyle } from 'app'
+import React from 'react'
+import DarkTooltip from 'shared/utils/tooltip/dark-tooltip'
+
+const CancelFab = ({onClick, title}) => {
+    return (
+        <DarkTooltip placement="top" title={title} arrow>
+            <Fab
+                mood="V"
+                variant="contained"
+                size="small"
+                button={"C"}
+                onClick={()=>onClick()}
+                sx={redFabStyle}
+            >
+                <Cancel width={18} />
+            </Fab>
+        </DarkTooltip>
+    )
+}
+
+export default CancelFab

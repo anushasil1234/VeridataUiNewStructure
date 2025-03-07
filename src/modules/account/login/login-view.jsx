@@ -18,6 +18,8 @@ import { removeLoggeoutData, storeLoggeoutData } from "store/slices/logout-slice
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
 import { useMsal } from '@azure/msal-react';
 import { loginRequest } from "authConfig";
+import { postLoginByEmailDetails } from "server/apis";
+import setDropdownList from "shared/utils/associate/set-dropdown-list";
 
 export const LoginView = () => {
   const { accounts, instance } = useMsal();
@@ -25,10 +27,11 @@ export const LoginView = () => {
   const dispatch = useDispatch();
   const apiSlice = useSelector(state => state.apiSlice);
   const functionSlice = useSelector(state => state.functionSlice);
+  const SetDropDownFunctionSlice = useSelector(state => state.SetDropDownFunctionSlice);
 
 
-  const { postLoginByEmailDetails } = apiSlice[0];
-  const { setDropdownList } = functionSlice[0];
+  // const { postLoginByEmailDetails } = apiSlice[0];
+  // const { setDropdownList } = SetDropDownFunctionSlice[0];
 
 
   const handleClickOnLogout = () => {
@@ -57,10 +60,10 @@ export const LoginView = () => {
       dispatch(storeLoggedinData(userDetails));
       dispatch(storeLoggedinTokenData(tokenDetails));
       dispatch(removeLoggeoutData());
-      dispatch(storeLoggeoutData({ handleClickOnLogout }));    
+      dispatch(storeLoggeoutData({ handleClickOnLogout }));
 
-      await setDropdownList();
-      navigate(`${toDashboard}`)
+      setDropdownList();
+      navigate(`${toDashboard}`);
     } else {
       navigate("/");
     }

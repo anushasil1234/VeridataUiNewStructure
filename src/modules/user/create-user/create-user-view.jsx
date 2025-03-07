@@ -4,20 +4,22 @@ import { useSelector } from 'react-redux'
 import { invalidEmailMsg, contactNoEmptyMsg, emailEmptyMsg, emptyUserNameField, passwordEmptyMsg, roleEmptyMsg, toUserlist, invalidPasswordPatternMsg, invalidcontactNoMsg } from 'shared/constants/constants'
 import { CardLayout, PageLayout, hasValue, validationsCheck } from 'shared/utils'
 import UserCreationForm from '../user-creation-form/user-creation-form'
+import { postUserDetails } from 'server/apis'
+import showErrorMessage from 'shared/utils/associate/show-error-message'
 
 const CreateUserView = () => {
 
     const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
     const apiSlice = useSelector(state => state.apiSlice);
     const loggedInData = useSelector(state => state.loggedInData);
-    const popUpSlice = useSelector(state => state.popUpSlice);
+    // const popUpSlice = useSelector(state => state.popUpSlice);
    
    
     const { navigateTo } = commonHooksFunctionSlice[0];
-    const { postUserDetails } = apiSlice[0];
+    // const { postUserDetails } = apiSlice[0];
 
     const { userId, userTypeId, companyId } = loggedInData[0];
-    const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+    // const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
 
 
     const [userName, setUserName] = useState("");

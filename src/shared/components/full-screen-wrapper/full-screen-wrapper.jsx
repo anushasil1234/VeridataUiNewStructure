@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import FullScreenModel from 'shared/utils/models/fullscreen-modal';
+import FullScreenModel from 'shared/utils/modals/fullscreen-modal';
 
 const FullScreenWrapper = (Component) => {
     const FullScreenWrapperAdded = () => {

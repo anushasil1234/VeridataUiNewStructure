@@ -34,6 +34,7 @@ import moment from "moment";
 import ArticleIcon from "@mui/icons-material/Article";
 import Button from "@mui/material/Button";
 import { noMovementInfo, noResponseInfo, toHelp } from "shared/constants/constants";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 const DownloadAgingReport = ({
   filterType,
   setFilterType,
@@ -52,10 +53,10 @@ const DownloadAgingReport = ({
   reportType
 }) => {
   // console.log('noOfDays',noOfDays);
-  const { popUpSlice } = useSelector((state) => state);
+  // const { popUpSlice } = useSelector((state) => state);
   const currentDate = moment();
   const _currentDate = currentDate.format("DD/MM/YYYY");
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
   const handleDownloadClick = () => {
     setIsDownloadListOpened(!isDownloadListOpened);

@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import { AppointeeDetailsUpdate_URL, editSuccess } from "shared/constants/constants";
+
+const appointeeDetailsUpdate = (payLoad) => 
+    ServerRequest(AppointeeDetailsUpdate_URL, "POST", payLoad, editSuccess);
+
+export { appointeeDetailsUpdate };

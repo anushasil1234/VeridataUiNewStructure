@@ -45,6 +45,7 @@ import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
 import Button1 from "shared/utils/button/button1";
 import { Info } from "@mui/icons-material";
 import { dark } from "@mui/material/styles/createPalette";
+import { getRemarks, postAppointeePrerequisiteStatus } from "server/apis";
 
 const CandidateView = () => {
   const commonHooksFunctionSlice = useSelector(
@@ -58,7 +59,9 @@ const CandidateView = () => {
     hasValue(userDetails.isPrerequisiteDataAvailable) &&
     userDetails.isPrerequisiteDataAvailable;
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const { getRemarks, getAppointeeDetails, postAppointeePrerequisiteStatus } =
+  const {  getAppointeeDetails, 
+    // postAppointeePrerequisiteStatus
+   } =
     apiSlice[0];
   const {
     userTypeId,

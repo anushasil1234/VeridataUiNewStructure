@@ -1,0 +1,6 @@
+import ServerRequest from "server/utils/server-request";
+import { processStarted, RawDataProcess_URL } from "shared/constants/constants";
+
+const postRawFileData = (payLoad) => ServerRequest(RawDataProcess_URL, "POST", payLoad, processStarted);
+
+export { postRawFileData };

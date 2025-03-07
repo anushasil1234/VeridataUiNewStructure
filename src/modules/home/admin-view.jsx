@@ -30,6 +30,7 @@ import {
   } from "./widget";
   import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
   import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
+import { getDashboardWidgetCardData } from "server/apis";
   
   const AdminView = () => {
 
@@ -40,7 +41,7 @@ import {
     const { days } = dropdownList.length > 0 && dropdownList[0];
   
 
-    const { getDashboardWidgetCardData } = apiSlice[0];
+    // const { getDashboardWidgetCardData } = apiSlice[0];
     const userTypeId = loggedInData[0].userTypeId;
     const [loading, setLoading] = useState(false);
   

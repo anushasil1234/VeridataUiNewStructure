@@ -10,6 +10,7 @@ import {
 import { loginFieldIconStyle, lableRedStyle } from "app";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { ChangePasswordGenerateOTP, postPasswordChange } from "server/apis";
 import {
   changePassword,
   confirmpasswordNotMsg,
@@ -27,6 +28,8 @@ import {
   hasValue,
 } from "shared/utils";
 import isPasswordValid from "shared/utils/associate/is-pasword-valid";
+import showErrorMessage from "shared/utils/associate/show-error-message";
+import showSuccessMessage from "shared/utils/associate/show-success-message";
 // import isPaswordValid from "shared/utils/associate/is-pasword-valid";
 import CircularIndeterminate from "shared/utils/loader/circularIndeterminate";
 
@@ -57,11 +60,13 @@ const ChangePassword = ({
 
   const popUpSlice = useSelector((state) => state.popUpSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
-  const { postPasswordChange, ChangePasswordGenerateOTP } = apiSlice[0];
-  const showErrorMessage =
-    popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-  const showSuccessMessage =
-    popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
+  // const { 
+  //   // postPasswordChange,
+  //    ChangePasswordGenerateOTP } = apiSlice[0];
+  // const showErrorMessage =
+  //   popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+  // const showSuccessMessage =
+  //   popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
 
   const handlePasswordChange = async () => {
     const validationResult = isPasswordValid(newPassword);

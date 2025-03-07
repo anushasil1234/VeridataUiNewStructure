@@ -28,6 +28,8 @@ import {
   removeManualValidationResponseStatusSlice,
   storeManualValidationResponseStatusSlice,
 } from "store/slices/manual-validation-response-status-slice";
+import { getMannualVerificationDataList } from "server/apis";
+import showErrorMessage from "../associate/show-error-message";
 
 export const MVTable = (filters) => {
   const {
@@ -50,7 +52,7 @@ export const MVTable = (filters) => {
     ]; // todo change syntax
 
   // dispatch(storeLoggedinData(loginData));
-  const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
   var date = moment();
   var currentDate = date.format("DDMMYYYY");
 
@@ -60,9 +62,9 @@ export const MVTable = (filters) => {
   const [responseFileDetails, setResponseFileDetails] = useState(null);
   const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
-  const { getMannualVerificationDataList } = apiSlice[0];
+  // const { getMannualVerificationDataList } = apiSlice[0];
   const dispatch = useDispatch();
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
   const payload_MV = {
     filterType: props,
     ...payload,

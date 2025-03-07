@@ -12,6 +12,8 @@ import { removeActionRoute } from "store/slices/action-route-slice";
 import {generatenationlityReportDesc } from "shared/constants/constants"
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
 import downloadFile from "shared/utils/associate/download-file";
+import { getAppointeeNationalityReport } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 const NationalityReportView = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
@@ -21,19 +23,19 @@ const NationalityReportView = (props) => {
   const [nationalityDetails, setNationalityDetails] = useState();
   const[fileData,setFiledata]=useState(null)
   const apiSlice = useSelector(state => state.apiSlice);
-   const popUpSlice = useSelector(state => state.popUpSlice);
+  //  const popUpSlice = useSelector(state => state.popUpSlice);
    
   const actionRouteSlice = useSelector(state => state.actionRouteSlice);
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
-  const { getAppointeeNationalityReport } = apiSlice[0];
+  // const { getAppointeeNationalityReport } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   let payloadData = {
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
     nationalityType: nationalityType,
   }
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
 
   let [payLoad, setPayLoad] = useState(payloadData);
   const [filterType, setFilterType] = useState(0);

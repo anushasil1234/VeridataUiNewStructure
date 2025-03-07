@@ -2,8 +2,10 @@ import { FormControl, Grid, MenuItem, Select, TextField, Typography } from '@mui
 import { inputFieldStyle, lable1Style } from 'app';
 import React from 'react'
 import { useSelector } from 'react-redux';
+import { validateUserCode } from 'server/apis';
 import { useCodeEmptyMsg } from 'shared/constants/constants';
 import { hasValue,validationsCheck } from 'shared/utils';
+import showErrorMessage from 'shared/utils/associate/show-error-message';
 
 const UserCreationForm = (formData) => {
 
@@ -26,10 +28,10 @@ const UserCreationForm = (formData) => {
 
     const dropdownList = useSelector(state => state.dropdownList);
     const apiSlice = useSelector(state => state.apiSlice);
-    const popUpSlice = useSelector(state => state.popUpSlice);
+    // const popUpSlice = useSelector(state => state.popUpSlice);
 
-    const { validateUserCode } = apiSlice[0];
-    const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+    // const { validateUserCode } = apiSlice[0];
+    // const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
 
     const {
         roleList

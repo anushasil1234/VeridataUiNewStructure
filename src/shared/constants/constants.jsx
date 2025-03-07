@@ -84,14 +84,12 @@ export const linkNotSentInfo = `The following appointees, for whom the verificat
 export const pfUsersInfo = `This list provides detailed information about PF users, including key fields such as Appointee Name, Aadhaar Number, PAN, UAN (Universal Account Number), Aadhaar-UAN Link Status, EPS Membership Status, and other relevant details. It serves as a comprehensive record for managing and tracking employee provident fund data efficiently`;
 export const cancelledInfo = `The following appointees have been rejected during the verification process. Their details, including Appointee Name, Aadhaar Number, PAN, Date of Joining (DOJ), and the reason for rejection, are provided below.`;
 export const generateNoResponseReportDesc = (days) => {
-  return `This report analyzes appointees who have not started verification process ${
-    days > 0 ? `for ${days} days ` : ""
-  }during a specified period. It includes detailed information about these candidates to help ${companyName} understand progress patterns, identify issues and potential candidate disinterest.`;
+  return `This report analyzes appointees who have not started verification process ${days > 0 ? `for ${days} days ` : ""
+    }during a specified period. It includes detailed information about these candidates to help ${companyName} understand progress patterns, identify issues and potential candidate disinterest.`;
 };
 export const generateNoMovementReportDesc = (days) => {
-  return `This report analyzes appointees who have made no progress ${
-    days > 0 ? `for ${days} days ` : ""
-  }during a specified period. It includes detailed information about these candidates to help ${companyName} understand progress patterns, identify issues and potential candidate disinterest.`;
+  return `This report analyzes appointees who have made no progress ${days > 0 ? `for ${days} days ` : ""
+    }during a specified period. It includes detailed information about these candidates to help ${companyName} understand progress patterns, identify issues and potential candidate disinterest.`;
 };
 export const generatePassbookDetailsReportDesc = `The purpose of this report is to allow for easy navigation and understanding of the employee's career progression and financial contributions across various positions and companies.This structure is aimed at providing a comprehensive view of both professional history and financial records for review and reference.`;
 export const generateEmploymentHistoryReportDesc = `The purpose of this report is to provide a comprehensive summary of the employment history for the selected employee, detailing their previous roles, companies they have worked for, and their associated employment accounts. This report serves as a detailed record of the employee’s professional background, intended for use in verification, reference checks, or as part of an internal assessment.`;
@@ -229,7 +227,7 @@ export const verifiedListTableHeadCell = [
     type: "string",
     disablePadding: false,
     label: "Name",
-    enums: ["appointeeName","candidateId", "mobileNo", "appointeeEmailId"],
+    enums: ["appointeeName", "candidateId", "mobileNo", "appointeeEmailId"],
     component: {
       element: Typography,
     },
@@ -267,7 +265,7 @@ export const verifiedListTableHeadCell = [
       element: Typography,
     },
   },
- 
+
 
   {
     id: "uanNo",
@@ -1419,7 +1417,7 @@ export const processingListTableHeadCell = [
     component: {
       element: (props) =>
         TableActionCell({ actionList: procesingListActions, ...props }),
-      attribute: ["appointeeId", "verificationStatusCode","passbookStatusCode","uanNo"],
+      attribute: ["appointeeId", "verificationStatusCode", "passbookStatusCode", "uanNo"],
     },
   },
 ];
@@ -3028,3 +3026,96 @@ export const yesNoList = [
     value: "N",
   },
 ];
+export const genderList = [
+  { id: 1, code: "M", value: "MALE" },
+
+  { id: 2, code: "F", value: "FEMALE" },
+
+  { id: 3, code: "T", value: "OTHERS" }
+]
+export const days = [
+  {
+    lable: "last 30 days",
+    value: 30,
+  },
+  {
+    lable: "last 60 days",
+    value: 60,
+  },
+  {
+    lable: "last 90 days",
+    value: 90,
+  },
+  {
+    lable: "more than 90 days",
+    value: "A",
+  }
+]
+export const dayscoustom = [
+  {
+    lable: "Monthly",
+    value: 30,
+  },
+  {
+    lable: "Quarterly",
+    value: 90,
+  },
+  {
+    lable: "Halfially",
+    value: 180,
+  },
+  {
+    lable: "Annually",
+    value: 365,
+  },
+  {
+    lable: "Coustom",
+    value: "A",
+  }
+]
+
+export const upcomingRecruitsStatusList = [
+  {
+    id: 1,
+    type: "002",
+    label: "Link not sent",
+    route: toLinknotsent,
+  },
+  {
+    id: 2,
+    type: "001",
+    label: "Under Process",
+    route: toProcessing,
+  },
+  {
+    id: 3,
+    type: "003",
+    label: "Verified",
+    route: toVerified,
+  },
+  {
+    id: 4,
+    type: "004",
+    label: "Cancelled",
+    route: toCancelled,
+  },
+  {
+    id: 5,
+    type: "005",
+    label: "Lapsed",
+    route: toLapseddata,
+  }
+]
+
+export const relationList = [
+  {
+    id: 1,
+    code: "F",
+    value: "Father"
+  },
+  {
+    id: 2,
+    code: "H",
+    value: "Husband"
+  }
+]

@@ -9,6 +9,7 @@ import { toDataUploaded } from 'shared/constants/constants';
 import Button1 from 'shared/utils/button/button1';
 import downloadFile from 'shared/utils/associate/download-file';
 import UpdateButton from '../update-button.jsx/update-button';
+import { postUpdateExcel } from 'server/apis';
 
 
 const dialogComponent =
@@ -31,7 +32,7 @@ const FileUpdate = ({ files, setFiles, removeFile,
 
     const { companyId, userId } = loggedInData[0];
     const { openConfirmationModel, openInfoModel } = functionSlice[0];
-    const { postUpdateExcel } = apiSlice[0];
+    // const { postUpdateExcel } = apiSlice[0];
     const { navigateTo } = commonHooksFunctionSlice[0];
 
     const taskAfterClickOnOk = (rawFileDataCount, fileId) => {

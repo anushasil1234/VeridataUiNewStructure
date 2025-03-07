@@ -6,12 +6,15 @@ import { useEffect } from 'react'
 import { FabIcon } from 'shared/utils';
 import downloadFile from 'shared/utils/associate/download-file';
 import FabIconPropsModel from 'shared/utils/fab-icon/fab-icon-model';
-import FullScreenModel from 'shared/utils/models/fullscreen-modal'
+// import FullScreenModel from 'shared/utils/modals/fullscreen-modal'
 import { useState } from 'react';
 import { handleZoom } from 'shared/utils/associate/Zoomin-out';
 import { calculateDragPosition } from 'shared/utils/associate/dragein'
 import { calculateContainerHeight } from './calculateContainerHeight';
+// import { MouseEventHandler } from 'shared/utils/associate/dragable';
+import FullScreenModel from "shared/utils/modals/fullscreen-modal";
 import { MouseEventHandler } from 'shared/utils/associate/dragable';
+// import FullScreenModel from 'shared/utils/modals/fullscreen-modal';
 const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
     const { fileDetails, fileType } = documentModelProps;
     const { fileName } = fileDetails;
@@ -43,10 +46,11 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
         }
     }, [fileDetails, mimeType]);
 
+    console.log('fileDetails', fileDetails);
 
     return (
         <Stack sx={{ position: 'relative' }}>
-            <Stack sx={{ ...imageFileContainerStackStyle, height:containerHeight}}>
+            <Stack sx={{ ...imageFileContainerStackStyle, height: containerHeight }}>
                 <Box
                     sx={{
                         ...(mimeType === 'application/pdf' ? pdfFileContainerStyle : imageFileContainerStyle),
@@ -66,15 +70,25 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
                     })}
                 >
                     {mimeType === 'application/pdf' ? (
-                        <embed
-                            src={`${fileDetails}#toolbar=0`}
-                            height="500"
-                            width="100%"
-                            style={{
-                                transform: `scale(${zoomLevel})`,
-                                transformOrigin: 'center',
-                            }}
-                        />
+                        <>
+                            {console.log('fileDetails111', fileDetails)
+                            }
+                            {/* <iframe src={`${fileDetails}`} width="100%" height="600px"></iframe> */}
+                            {/* <object data={fileDetails} type="application/pdf" width="100%" height="600px">
+                                <p>PDF cannot be displayed. <a href={fileDetails} download="document.pdf">Download PDF</a></p>
+                            </object> */}
+
+                            <embed
+                                src={`${fileDetails}`}
+                                height="500"
+                                width="100%"
+                                style={{
+                                    transform: `scale(${zoomLevel})`,
+                                    transformOrigin: 'center',
+                                }}
+                                type="application/pdf"
+                            />
+                        </>
                     ) : (
                         <img
                             src={fileDetails}

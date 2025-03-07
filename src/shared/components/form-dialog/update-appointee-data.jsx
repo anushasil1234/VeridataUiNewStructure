@@ -1,6 +1,7 @@
 import { Box, Grid, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { appointeeDetailsUpdate } from "server/apis";
 import { DateFormatYYYYMMDD, StringToDate, hasValue } from "shared/utils";
 import Button1 from "shared/utils/button/button1";
 import  { storeActionRoute } from "store/slices/action-route-slice";
@@ -17,7 +18,7 @@ const UpdateAppointeeForm = ({ props }) => {
   const apiSlice = useSelector((state) => state.apiSlice);
 
   const {
-    appointeeDetailsUpdate
+    // appointeeDetailsUpdate
   } = apiSlice[0];
   const { userId } = loggedInData[0];
   const { closeSubmitModel } = functionSlice[0];

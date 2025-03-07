@@ -42,6 +42,9 @@ import {
   storeManualValidationResponseStatusSlice,
 } from "store/slices/manual-validation-response-status-slice";
 import Button1 from "shared/utils/button/button1";
+import { UpdateAppointeeManualVerification } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
+import showSuccessMessage from "shared/utils/associate/show-success-message";
 
 const FiledetailsSection = ({
   verificationType,
@@ -84,8 +87,8 @@ const FiledetailsSection = ({
   const { userId } = (loggedInData && loggedInData[0]) || {
     userId: null,
   };
-  const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
-  const { UpdateAppointeeManualVerification } = apiSlice[0];
+  // const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
+  // const { UpdateAppointeeManualVerification } = apiSlice[0];
   const { openConfirmationModel } = functionSlice[0];
   const [zoomLevel, setZoomLevel] = useState(1);
   const [remarks, setRemarks] = useState("");

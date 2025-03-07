@@ -8,16 +8,18 @@ import { noRecordsMsg } from 'shared/constants/constants';
 import { GetAttribute } from '..';
 import { Search } from '@mui/icons-material';
 import { useEffect, useRef, useState } from 'react';
+import { postAppointeeSearch } from 'server/apis';
+import showErrorMessage from '../associate/show-error-message';
 
 
 export default function SearchAppBar() {
 
     const apiSlice = useSelector(state => state.apiSlice);
     const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
-    const popUpSlice = useSelector(state => state.popUpSlice);
+    // const popUpSlice = useSelector(state => state.popUpSlice);
 
-    const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-    const { postAppointeeSearch } = apiSlice[0];
+    // const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+    // const { postAppointeeSearch } = apiSlice[0];
     const { navigateTo } = commonHooksFunctionSlice[0];
 
     const [searchInput, setSearchInput] = useState("");

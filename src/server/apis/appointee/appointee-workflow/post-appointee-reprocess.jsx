@@ -1,0 +1,6 @@
+import ServerRequest from "server/utils/server-request";
+import { PostAppointeeReprocess_URL } from "shared/constants/constants";
+
+const postAppointeeReprocess = (payLoad) => ServerRequest(PostAppointeeReprocess_URL, "POST", payLoad);
+
+export { postAppointeeReprocess };

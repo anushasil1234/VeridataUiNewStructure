@@ -13,7 +13,6 @@ import {
   FormControlLabel,
   Grid,
   IconButton,
-  InputAdornment,
   Radio,
   RadioGroup,
   Stack,
@@ -21,7 +20,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import FormHeadingContainer from "shared/components/grid-container/form-heading-container";
 import FormHeading from "./form-heading";
 import GridRow from "shared/components/grid-container/grid-row";
@@ -32,7 +31,6 @@ import {
   fileUploadSectionContainerStyle,
   headingType1,
   lable1CopyStyle,
-  loginFieldIconStyle,
   positionRelative,
   primaryFabStyle,
   responsiveBtnType1Style,
@@ -47,8 +45,6 @@ import {
   HelpOutline,
   Info,
   InfoOutlined,
-  Visibility,
-  VisibilityOff,
 } from "@mui/icons-material";
 import {
   aadharFileTypeAlias,
@@ -150,41 +146,6 @@ const ThirdForm = ({
     setOpenModal(false); // Close modal
   };
 
-  const [passwordType, setPasswordType] = useState("password");
-  const [isPasswordVisibilityOn, setIsPasswordVisibilityOn] = useState(false);
-  const [passwordFieldIcon, setPasswordFieldIcon] = useState(
-    <VisibilityOff sx={loginFieldIconStyle} />
-  );
-const handleShareCodeVisibility = () => {
-  setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
-};
-const handleAadharShareCode = (val) => {
-  console.log('sharecode',val)
-  if (/^\d{0,4}$/.test(val)) {
-    setAadharShareCode(val);
-  }
-}
-const shareCodeProps = {
-  endAdornment: (
-    <InputAdornment position="end">
-      <IconButton
-        aria-label="toggle password visibility"
-        onClick={handleShareCodeVisibility}
-      >
-        {passwordFieldIcon}
-      </IconButton>
-    </InputAdornment>
-  ),
-};
-  useEffect(() => {
-    if (isPasswordVisibilityOn) {
-      setPasswordType("text");
-      setPasswordFieldIcon(<Visibility sx={loginFieldIconStyle} />);
-    } else {
-      setPasswordType("password");
-      setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
-    }
-  }, [isPasswordVisibilityOn]);
   return (
     <Box sx={{ width: "100%" }}>
       <form ref={formElement}>
@@ -289,24 +250,9 @@ const shareCodeProps = {
                 AADHARVERIFICATION_BY === "XML" && (
                   <TextInput
                     label={"Share Code (to be provided after uploading)"}
-                    onChange={(e) => handleAadharShareCode(e)}
-                    // onChange={(val) => {
-                    //   if (/^\d{0,4}$/.test(val)) {
-                    //     setAadharShareCode(val);
-                    //   }
-                    // }}
-                    onKeyDown={(e) => {
-                      // Allow only digits and restrict any other key presses
-                    // /  const regex = /^[0-4]*$/;
-                      if (!/^\d{0,4}$/.test(e.key) && e.key !== 'Backspace') {
-                        e.preventDefault();
-                      }
-                    }}
                     value={aadharShareCode}
-                  //  onChange={setAadharShareCode}
+                    onChange={setAadharShareCode}
                     disabled={disabledAadharInput || !isAadhaarXmlUploaded}
-                    inputProps={shareCodeProps}
-                    type={passwordType}
                   //maxLength={4}
                   />
                 )

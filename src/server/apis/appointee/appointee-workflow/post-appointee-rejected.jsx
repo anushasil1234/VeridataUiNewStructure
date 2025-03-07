@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import { appointeeRejectionSuccess, PostAppointeeRejected_URL } from "shared/constants/constants";
+
+const postAppointeeRejected = (payLoad) =>
+    ServerRequest(PostAppointeeRejected_URL, "POST", payLoad, appointeeRejectionSuccess, true);
+
+export { postAppointeeRejected };

@@ -1,0 +1,6 @@
+import ServerRequest from "server/utils/server-request";
+import { UserSignInDetails_URL } from "shared/constants/constants";
+
+const postLoginDetails = (payLoad) => ServerRequest(UserSignInDetails_URL, "POST", payLoad);
+
+export  {postLoginDetails}

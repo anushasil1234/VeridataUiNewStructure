@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { getRejectedAppointeeList } from 'server/apis';
 import ActionPermission from 'shared/components/action-permission/action-permission';
 import DownloadReport from 'shared/components/download-report/download-report';
 import { cancelledInfo, downloadRejectedList_URL, FromDateEmptyMsg, rejectedListTableHeadCell, toCancelled, uploadedFromDateEmptyMsg } from 'shared/constants/constants';
@@ -11,8 +12,8 @@ import { removeActionRoute } from 'store/slices/action-route-slice';
 const UnwrappedCancelled = (props) => {
   const { hasPermission } = props;
   const { state } = useLocation();
-  const popUpSlice = useSelector((state) => state.popUpSlice);
-  const { showErrorMessage } = popUpSlice[0]
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const { showErrorMessage } = popUpSlice[0]
   let noOfDays = 0;
 
   if (state) {
@@ -73,7 +74,7 @@ const UnwrappedCancelled = (props) => {
   const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
  
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const { getRejectedAppointeeList } = apiSlice[0];
+  // const { getRejectedAppointeeList } = apiSlice[0];
 
   const setTableRows = async (payLoad) => {
     const response = await getRejectedAppointeeList(payLoad);

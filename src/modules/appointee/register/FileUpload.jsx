@@ -75,6 +75,8 @@ import {
 } from "@mui/material";
 
 import { FILE_SIZE_LIMIT } from "shared/constants/constants";
+import { getAppointeeDetails } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 const FileUpload = ({ stepsList, mode }) => {
 
@@ -87,12 +89,12 @@ const FileUpload = ({ stepsList, mode }) => {
         (state) => state.commonHooksFunctionSlice
     );
     const functionSlice = useSelector((state) => state.functionSlice);
-    const popUpSlice = useSelector((state) => state.popUpSlice);
+    // const popUpSlice = useSelector((state) => state.popUpSlice);
     const {
         openRemarksModel,
         openInfoModel,
     } = functionSlice[0];
-    const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
+    // const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
     const {
         countryList,
         nationalityList,
@@ -104,9 +106,9 @@ const FileUpload = ({ stepsList, mode }) => {
         dropdownList[0] &&
         dropdownList[0].genderList;
     const {
-        getAppointeeDetails,
+        // getAppointeeDetails,
         getPassportDetails,
-        postAppointeeFileDetails,
+        // postAppointeeFileDetails,
         PostUpdatePfUanDetails,
     } = apiSlice[0];
     const { navigateTo } = commonHooksFunctionSlice[0];

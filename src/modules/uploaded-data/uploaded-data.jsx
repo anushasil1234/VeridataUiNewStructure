@@ -3,9 +3,11 @@ import { Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { getRawFileData, postRawFileData } from 'server/apis';
 import ActionPermission from 'shared/components/action-permission/action-permission';
 import { emptyRowMsg, notProcessedDataVerificationConfirmationMsg, rawAppointeeListTableHeadCell, startVerification, verificationConfirmationMsg } from 'shared/constants/constants';
 import { CardLayout, DataTable, PageLayout, addIsCheckFlag, generateTableRowData, hasValue } from 'shared/utils'
+import showErrorMessage from 'shared/utils/associate/show-error-message';
 
 const UnWrappedUploadedData = (props) => {
   const { hasPermission } = props;
@@ -14,12 +16,13 @@ const UnWrappedUploadedData = (props) => {
   const apiSlice = useSelector(state => state.apiSlice);
   const loggedInData = useSelector(state => state.loggedInData);
   const functionSlice = useSelector(state => state.functionSlice);
-  const popUpSlice = useSelector(state => state.popUpSlice);
+  // const popUpSlice = useSelector(state => state.popUpSlice);
 
 
-  const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+  // const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
   const { openConfirmationModel } = functionSlice[0];
-  const { getRawFileData, postRawFileData } = apiSlice[0];
+  // const { postRawFileData } = apiSlice[0];
+  // const { getRawFileData, postRawFileData } = apiSlice[0];
   const { companyId, userId } = loggedInData[0];
 
   const [selected, setSelected] = useState([]);

@@ -1,0 +1,4 @@
+const stopLoader = () =>  window.dispatchEvent(new CustomEvent("stop-loader"));
+
+
+export default stopLoader

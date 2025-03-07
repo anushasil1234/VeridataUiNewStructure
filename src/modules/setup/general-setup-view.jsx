@@ -24,6 +24,7 @@ import {
 } from "app";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { configerationSetUp, getConfigedData } from "server/apis";
 import ActionPermission from "shared/components/action-permission/action-permission";
 import { CardLayout,validationsCheck } from "shared/utils";
 import InputCard from "shared/utils/layout/input-card";
@@ -45,7 +46,8 @@ const UnwrappedGeneralSetupView = (props) => {
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
 
-  const { configerationSetUp, getConfigedData } = apiSlice[0];
+  // const { configerationSetUp, getConfigedData } = apiSlice[0];
+  // const {  getConfigedData } = apiSlice[0];
   const { userId } = loggedInData[0];
 
   const [criticalDays, setCriticalDays] = useState(null);

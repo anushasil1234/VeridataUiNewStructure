@@ -1,6 +1,6 @@
 import React from 'react'
 import ListTable from 'shared/utils/list-table/list-table'
-import FullScreenModel from 'shared/utils/models/fullscreen-modal'
+import FullScreenModel from 'shared/utils/modals/fullscreen-modal'
 
 const RemarksTable = (props) => {
     return (

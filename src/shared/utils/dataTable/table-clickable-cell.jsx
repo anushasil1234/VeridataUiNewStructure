@@ -5,9 +5,11 @@ import { clickableCell } from 'app'
 import { Typography } from '@mui/material'
 
 const TableClickableCell = (props) => {
-    const functionSlice = useSelector(state => state.functionSlice);
+    // const functionSlice = useSelector(state => state.functionSlice);
     
-    const { setRemarks } = functionSlice[0];
+      const setRemarksFunctionSlice = useSelector((state) => state.SetRemarksFunctionSlice);
+      const setRemarks = setRemarksFunctionSlice && setRemarksFunctionSlice[0] && setRemarksFunctionSlice[0].setRemarks;
+   
     let { cellValue, rowAttribute } = props;
     const { appointeeId } = rowAttribute;
     return (

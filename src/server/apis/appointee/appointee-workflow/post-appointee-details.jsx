@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import { PostAppointeeDetailsSave_URL } from "shared/constants/constants";
+
+const postAppointeeDetails = (payLoad, successMsg) => 
+    ServerRequest(PostAppointeeDetailsSave_URL, "POST", payLoad, successMsg);
+
+export { postAppointeeDetails };

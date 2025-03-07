@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import ChangePassword from './change-password';
 import { hasValue } from 'shared/utils';
 import { setPasswordOtpToMailMsg } from 'shared/constants/constants';
+import { ChangePasswordGenerateOTP } from 'server/apis';
 
 const SetPassword = () => {
 
@@ -15,12 +16,12 @@ const SetPassword = () => {
     const { userId, userCode } = loggedInData[0];
 
     const apiSlice = useSelector(state => state.apiSlice);
-    const popUpSlice = useSelector(state => state.popUpSlice);
+    // const popUpSlice = useSelector(state => state.popUpSlice);
 
-    const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-    const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
+    // const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+    // const showSuccessMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showSuccessMessage;
 
-    const { ChangePasswordGenerateOTP } = apiSlice[0];
+    // const { ChangePasswordGenerateOTP } = apiSlice[0];
 
     const handleOtpGenerate = async (e) => {
         // e.preventDefault();

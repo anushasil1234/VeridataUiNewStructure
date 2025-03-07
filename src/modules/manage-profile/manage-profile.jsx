@@ -7,14 +7,16 @@ import ProfileImg from 'assets/images/profile/user-2.jpg';
 import { PersonalInformation } from 'shared/components/display-information/personal-information';
 import { useSelector } from 'react-redux';
 import { invalidPasswordPatternMsg, passwordEmptyMsg } from 'shared/constants/constants';
+import { editUserProfileDetails } from 'server/apis';
+import showErrorMessage from 'shared/utils/associate/show-error-message';
 
 const ManageProfile = () => {
     const loggedInData = useSelector(state => state.loggedInData);
     const apiSlice = useSelector(state => state.apiSlice);
     const popUpSlice = useSelector(state => state.popUpSlice);
 
-    const { editUserProfileDetails } = apiSlice[0];
-    const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
+    // const { editUserProfileDetails } = apiSlice[0];
+    // const { showErrorMessage, showSuccessMessage } = popUpSlice[0];
     const { roleName, userName, emailId, isSetProfilePassword, userId } = loggedInData && loggedInData.length > 0 && loggedInData[0];
 
     const [profilePassword, setProfilePassword] = useState('');

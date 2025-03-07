@@ -8,6 +8,8 @@ import loginImage from 'assets/images/backgrounds/loginimage.png';
 import logo from 'assets/images/logos/pfc_logo1.png';
 import { useSelector } from "react-redux";
 import { AccountCircle } from "@mui/icons-material";
+import { ChangePasswordGenerateOTP } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 
 export const ForgotPasswordView = () => {
@@ -33,8 +35,8 @@ export const ForgotPasswordView = () => {
 
   const apiSlice = useSelector(state => state.apiSlice);
   const popUpSlice = useSelector(state => state.popUpSlice);
-  const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-  const { ChangePasswordGenerateOTP } = apiSlice[0];
+  // const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+  // const { ChangePasswordGenerateOTP } = apiSlice[0];
 
   const handleSubmit = async (e) => {
     e.preventDefault();

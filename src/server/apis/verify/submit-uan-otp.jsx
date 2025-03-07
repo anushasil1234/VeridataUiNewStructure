@@ -1,0 +1,6 @@
+import ServerRequest from "server/utils/server-request";
+import { UANSubmitOTP_URL } from "shared/constants/constants";
+
+const submitUANOTP = (payLoad) => ServerRequest(UANSubmitOTP_URL, "POST", payLoad);
+
+export { submitUANOTP };

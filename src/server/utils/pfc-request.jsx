@@ -25,6 +25,11 @@ import axios from "axios";
 import { toLogin } from 'shared/constants/constants';
 import { useNavigate } from 'react-router-dom';
 import { roleTypeEnums } from 'shared/constants/constants';
+import startLoader from 'shared/utils/associate/start-loader';
+import stopLoader from 'shared/utils/associate/stop-loader';
+import showSuccessMessage from 'shared/utils/associate/show-success-message';
+import showErrorMessage from 'shared/utils/associate/show-error-message';
+import handleClickOnLogout from './handle-logout';
 
 const PfcRequest = (Component) => {
     const PfcRequestWrapper = () => {
@@ -35,7 +40,8 @@ const PfcRequest = (Component) => {
         const [popUpAlertMessage, setPopUpAlertMessage] = useState();
         const dispatch = useDispatch();
         const timeoutRef = useRef(null);
-        const inactivityTime = 10 * 60 * 1000; // 10 minutes in milliseconds
+        // const inactivityTime = 10 * 60 * 1000; // 10 minutes in milliseconds
+        const inactivityTime = 1 * 60 * 1000; // 10 minutes in milliseconds
         const API_KEY = (process.env.REACT_APP_API_API_KEY || '');
         const SECRET_KEY = (process.env.REACT_APP_API_API_SECRET || '');
         const PROXY_AUTH = (process.env.REACT_APP_API_PROXY_AUTH || '');
@@ -43,9 +49,10 @@ const PfcRequest = (Component) => {
 
         // Manual loader control
         // Start loader if there are pending requests
-        const startLoader = () => setPendingRequests(prev => prev + 1);
+
+        const startLoaderEvent = () => setPendingRequests(prev => prev + 1);
         // Stop loader only when all requests are finished
-        const stopLoader = () => setPendingRequests(prev => Math.max(prev - 1, 0));
+        const stopLoaderEvent = () => setPendingRequests(prev => Math.max(prev - 1, 0));
 
         useEffect(() => {
             // Show the loader only if there are pending requests
@@ -60,17 +67,29 @@ const PfcRequest = (Component) => {
             timeoutRef.current = setTimeout(handleClickOnLogout, inactivityTime);
         };
 
-        const showSuccessMessage = (message) => {
+        const showSuccessMessageEvent = (event) => {
+            console.log('event1121', event);
+
+            const { message } = event?.detail || '';
             setSeverity("success");
+            console.log('message333', message);
+
             setPopUpAlertMessage(message);
         };
 
-        const showErrorMessage = (message) => {
+        // const showErrorMessage = (message) => {
+        //     setSeverity("error");
+        //     setPopUpAlertMessage(message);
+        // };
+        const showErrorMessageEvent = (event) => {
+            const { message } = event?.detail || '';
             setSeverity("error");
             setPopUpAlertMessage(message);
         };
 
-        const handleClickOnLogout = () => {
+        const handleClickOnLogoutEvent = () => {
+            console.log('handleClickOnLogoutEvent');
+            
             const IsAdminUser = isAdmin();
             localStorage.clear();
             sessionStorage.clear();
@@ -113,11 +132,11 @@ const PfcRequest = (Component) => {
                                     return api(originalRequest);
                                 }
                             } else {
-                                handleClickOnLogout();
+                                // handleClickOnLogoutEvent();
                                 showErrorMessage("Your session has expired. Please login again.");
                             }
                         } catch (e) {
-                            handleClickOnLogout();
+                            // handleClickOnLogoutEvent();
                             showErrorMessage("Your session has expired. Please login again.");
                         }
                     } else {
@@ -168,50 +187,59 @@ const PfcRequest = (Component) => {
             }, methodHeader);
         };
 
-        const PfcRequest = async (url, type, payload, successMessage, isInternal = false) => {
-            let APiSecretHeader = {};
-            if (hasValue(API_KEY) && hasValue(SECRET_KEY) && hasValue(PROXY_AUTH)) {
-                APiSecretHeader = {
-                    'proxyauthorization': PROXY_AUTH,
-                    'apikey': API_KEY,
-                    'apikeysecret': SECRET_KEY,
-                };
-            }
-            const methodHeader = {
-                headers: {
-                    ...AuthHeader(),
-                    ...APiSecretHeader
-                }
-            };
-            const BASE_URL = isInternal ? await decryptedData(process.env.REACT_APP_API_INTERNAL_URL) : await decryptedData(process.env.REACT_APP_API_URL);
-            const api = axios.create({ baseURL: BASE_URL });
-            setupAxiosInterceptors(api);
+        // const PfcRequest = async (url, type, payload, successMessage, isInternal = false) => {
+        //     let APiSecretHeader = {};
+        //     console.log("payload2222", payload);
+        //     if (hasValue(API_KEY) && hasValue(SECRET_KEY) && hasValue(PROXY_AUTH)) {
+        //         APiSecretHeader = {
+        //             'proxyauthorization': PROXY_AUTH,
+        //             'apikey': API_KEY,
+        //             'apikeysecret': SECRET_KEY,
+        //         };
+        //     }
+        //     const methodHeader = {
+        //         headers: {
+        //             ...AuthHeader(),
+        //             ...APiSecretHeader
+        //         }
+        //     };
+        //     const BASE_URL = isInternal ? await decryptedData(process.env.REACT_APP_API_INTERNAL_URL) : await decryptedData(process.env.REACT_APP_API_URL);
+        //     const api = axios.create({ baseURL: BASE_URL });
+        //     setupAxiosInterceptors(api);
 
-            try {
-                startLoader();
-                const response = type === "POST"
-                    ? await api.post(url, payload, methodHeader)
-                    : await api.get(url, methodHeader);
+        //     try {
+        //         startLoader();
+        //         const response = type === "POST"
+        //             ? await api.post(url, payload, methodHeader)
+        //             : await api.get(url, methodHeader);
 
-                const { errorResponse, responseInfo, responseInfos, statusCode } = response.data;
-                if (statusCode === 200) {
-                    successMessage && showSuccessMessage(successMessage);
-                    return { responseInfo, responseInfos, errorResponse };
-                } else {
-                    errorResponse?.userMessage && showErrorMessage(errorResponse.userMessage);
-                }
-            } catch (error) {
-                handleOtherErrors(error);
-            } finally {
-                stopLoader();
-            }
-        };
-
-
-        // Pass the loader control methods along with the PfcRequest function
-        dispatch(storePopUpSetFunction({ showErrorMessage, showSuccessMessage }));
+        //         const { errorResponse, responseInfo, responseInfos, statusCode } = response.data;
+        //         if (statusCode === 200) {
+        //             successMessage && showSuccessMessage(successMessage);
+        //             return { responseInfo, responseInfos, errorResponse };
+        //         } else {
+        //             errorResponse?.userMessage && showErrorMessage(errorResponse.userMessage);
+        //         }
+        //     } catch (error) {
+        //         handleOtherErrors(error);
+        //     } finally {
+        //         stopLoader();
+        //     }
+        // };
 
         useEffect(() => {
+            // const handleToastEvent = (event) => {
+            //     const { message, type } = event.detail;
+
+            // }
+
+        }, []);
+
+        // Pass the loader control methods along with the PfcRequest function
+        // dispatch(storePopUpSetFunction({ showErrorMessage, showSuccessMessage }));
+
+        useEffect(() => {
+
             if (roleTypeEnums.candidate.includes(userDetails?.userTypeId)) {
                 resetTimeout();
                 return () => {
@@ -220,6 +248,18 @@ const PfcRequest = (Component) => {
                     }
                 };
             }
+            window.addEventListener("logout", handleClickOnLogoutEvent);
+            window.addEventListener("show-error", showErrorMessageEvent);
+            window.addEventListener("show-success", showSuccessMessageEvent);
+            window.addEventListener("start-loader", startLoaderEvent);
+            window.addEventListener("stop-loader", stopLoaderEvent);
+            return () => {
+                window.removeEventListener("show-success", showSuccessMessageEvent);
+                window.removeEventListener("show-error", showErrorMessageEvent);
+                window.removeEventListener("start-loader", startLoaderEvent);
+                window.removeEventListener("stop-loader", stopLoaderEvent);
+                window.removeEventListener("logout", handleClickOnLogoutEvent);
+            };
         }, []);
 
         return (
@@ -232,7 +272,7 @@ const PfcRequest = (Component) => {
                     />
                 )}
                 {loading && <CircularIndeterminate />} {/* Loader is now controlled by the pendingRequests */}
-                <Component PfcRequest={PfcRequest} startLoader={startLoader} stopLoader={stopLoader} />
+                <Component  startLoader={startLoader} stopLoader={stopLoader} />
             </>
         );
     };

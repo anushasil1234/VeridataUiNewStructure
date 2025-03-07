@@ -6,10 +6,11 @@ import { WidgetCard } from '.';
 import { useSelector } from 'react-redux';
 import { statusChartColorList } from 'app';
 import { Tooltip, Typography } from '@mui/material';
+import { getTotalWidgetData } from 'server/apis';
 
 const CumulativeStatus = () => {
     const apiSlice = useSelector((state) => state.apiSlice);
-    const { getTotalWidgetData } = apiSlice[0];
+    // const { getTotalWidgetData } = apiSlice[0];
     const title = "Status"; // Define the title
 
     const [seriescolumnchart, setSeriescolumnchart] = useState([]);

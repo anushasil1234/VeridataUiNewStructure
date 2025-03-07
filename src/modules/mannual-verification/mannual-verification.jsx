@@ -19,6 +19,7 @@ import ActionPermission from "shared/components/action-permission/action-permiss
 import moment from "moment";
 import CustomTab from "shared/utils/customTab/custom-tab";
 import { FromDateEmptyMsg, manualverificationinfo, uploadedFromDateEmptyMsg } from "shared/constants/constants";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 const UnWrappedMannualVerification = (props) => {
 
@@ -28,8 +29,8 @@ const UnWrappedMannualVerification = (props) => {
 
   const [isDownload, setIsDownload] = useState(false);
   const [isDownloadExcel, setIsDownloadExcel] = useState(false);
-  const popUpSlice = useSelector((state) => state.popUpSlice);
-  const { showErrorMessage } = popUpSlice[0]
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const { showErrorMessage } = popUpSlice[0]
   let _fromday;
   let _today;
   const now = new Date();

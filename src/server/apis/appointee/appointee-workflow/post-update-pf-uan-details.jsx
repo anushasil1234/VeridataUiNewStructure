@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import { PostUpdatePfUanDetails_URL } from "shared/constants/constants";
+
+const postUpdatePfUanDetails = (payLoad, successMsg) => 
+    ServerRequest(PostUpdatePfUanDetails_URL, "POST", payLoad, successMsg);
+
+export { postUpdatePfUanDetails };

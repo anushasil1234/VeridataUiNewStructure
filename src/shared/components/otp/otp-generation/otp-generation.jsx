@@ -2,7 +2,7 @@ import { Grid, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { useState } from 'react';
 import Button1 from 'shared/utils/button/button1';
-import FullScreenModel from 'shared/utils/models/fullscreen-modal';
+import FullScreenModel from 'shared/utils/modals/fullscreen-modal';
 
 let UnWrappedOtpGenerationForm = (
     {

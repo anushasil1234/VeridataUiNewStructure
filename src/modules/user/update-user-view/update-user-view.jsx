@@ -5,6 +5,8 @@ import { contactNoEmptyMsg, emailEmptyMsg, emptyUserNameField, invalidEmailMsg, 
 import { CardLayout, PageLayout, hasValue, validationsCheck } from 'shared/utils'
 import UserCreationForm from '../user-creation-form/user-creation-form'
 import { useLocation } from 'react-router-dom'
+import { getInputList, postUpdateUserDetails } from 'server/apis'
+import showErrorMessage from 'shared/utils/associate/show-error-message'
 
 const UpdateUserView = () => {
 
@@ -16,10 +18,12 @@ const UpdateUserView = () => {
     const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
 
     const { navigateTo } = commonHooksFunctionSlice[0];
-    const { postUpdateUserDetails, getInputList } = apiSlice[0];
+    // const { postUpdateUserDetails
+    //     //  getInputList 
+    //     } = apiSlice[0];
     const { userId, userTypeId } = loggedInData[0];
-    const popUpSlice = useSelector(state => state.popUpSlice);
-    const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+    // const popUpSlice = useSelector(state => state.popUpSlice);
+    // const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
 
     const [userName, setUserName] = useState();
     const [userEmail, setUserEmail] = useState();

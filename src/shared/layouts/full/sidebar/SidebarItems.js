@@ -6,6 +6,8 @@ import NavGroup from './NavGroup/NavGroup';
 import { ArrangeSidebarItems, GetAttribute } from 'shared/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { storeSideMenuItems } from 'store/slices/side-menu-items-slice';
+import { getMenuList } from 'server/apis';
+// import { getMenuList } from 'server/apis/get-menu-list';
 
 const SidebarItems = () => {
   const { pathname } = useLocation();
@@ -18,8 +20,10 @@ const SidebarItems = () => {
   const apiSlice = useSelector((state) => state.apiSlice);
 
   const userId = loggedInData && loggedInData[0] && loggedInData[0].userId;
-  const { getMenuList } = apiSlice && apiSlice[0];
+  // const { getMenuList } = apiSlice && apiSlice[0];
   const setMenu = async () => {
+    console.log('userId', userId);
+    
     const response = await getMenuList(userId);
     if (response) {
       const { responseInfo } = response;

@@ -3,9 +3,10 @@ import { Box } from '@mui/system'
 import { smallFormModelHeadingSx } from 'app';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { downloadReport } from 'server/apis';
 import { encryptedData } from 'shared/utils';
 import Button1 from 'shared/utils/button/button1';
-import FullScreenModel from 'shared/utils/models/fullscreen-modal';
+import FullScreenModel from 'shared/utils/modals/fullscreen-modal';
 import { removeData } from 'store/slices/data-slice';
 
 let UnWrappedFilePasswordFormSubmitionForm = (
@@ -14,14 +15,14 @@ let UnWrappedFilePasswordFormSubmitionForm = (
     const { filePasswordSubmitionProps, closeFilePasswordSubmitionModel } = props;
     const { downloadApi, payLoad } = filePasswordSubmitionProps;
 
-    const apiSlice = useSelector((state) => state.apiSlice);
+    // const apiSlice = useSelector((state) => state.apiSlice);
     // const DataSlice = useSelector((state) => state.DataSlice);
 
     //    const dispatch = useDispatch();
 
     // const fileSubmitionPayLoad = DataSlice[0] && DataSlice[0].fileSubmitionPayLoad;
 
-    const { downloadReport } = apiSlice && apiSlice[0];
+    // const { downloadReport } = apiSlice && apiSlice[0];
 
     const [filePassword, setFilePassword] = useState();
     const [displayfilePassword, setDisplayfilePassword] = useState();

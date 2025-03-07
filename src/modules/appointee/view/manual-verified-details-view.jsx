@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
-import FullScreenModel from "shared/utils/models/fullscreen-modal";
+import FullScreenModel from "shared/utils/modals/fullscreen-modal";
 import {
     Comment,
     ThumbDown,
@@ -50,10 +50,12 @@ import getFileCategoryByFileType from "shared/utils/associate/get-file-category"
 import isEPFOSelectionDisabled from "shared/utils/associate/is-epfo-disabled";
 import { DATEDIFF, DateFormatYYYYMMDD, FabIcon, toggleActionMenu, hasValue, DDMMYYYY, filteredObjectProperty } from "shared/utils";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
-import RemarksInputModel from "shared/utils/models/remarks-modal";
+import RemarksInputModel from "shared/utils/modals/remarks-modal";
 import { storeActionRoute } from "store/slices/action-route-slice";
 import GridContainer from "shared/components/grid-container/grid-container";
 import Button1 from "shared/utils/button/button1";
+import { getAppointeeDetails, getRemarks, getUploadedFileDetailsById, getUploadFileData, postAppointeeApproved, postAppointeeRejected } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 const ManualVerifiedPageSectionContainer = ({ children, sx }) => {
     return (
@@ -107,11 +109,12 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     } = dropdownList.length > 0 && dropdownList[0];
     const functionSlice = useSelector((state) => state.functionSlice);
     const {
-        getUploadFileData,
+        // getUploadFileData,
         GetUploadedFileDetailsById,
-        getRemarks,
-        postAppointeeRejected,
-        getAppointeeDetails, postAppointeeApproved
+        // getRemarks,
+        // postAppointeeRejected,
+        // getAppointeeDetails, 
+        // postAppointeeApproved
     } = apiSlice[0];
     const {
         openRemarksModel,
@@ -119,8 +122,8 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         closeRemarksInputModel,
         openConfirmationYesNoModal
     } = functionSlice[0];
-    const popUpSlice = useSelector(state => state.popUpSlice);
-    const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
+    // const popUpSlice = useSelector(state => state.popUpSlice);
+    // const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
 
 
     // useEffect(() => {
@@ -251,7 +254,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         // }
     }
     const approve = async (remarks) => {
-        showErrorMessage();
+        // showErrorMessage();
         if (hasValue(remarks)) {
             const payLoad = {
                 appointeeId,
@@ -291,7 +294,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
             fileCategory: fileTypeCategory,
             fileId: file
         };
-        const response = await GetUploadedFileDetailsById(payload);
+        const response = await getUploadedFileDetailsById(payload);
         if (response && response.responseInfo) {
             const { fileSrc } = GetImageSrc(response.responseInfo);
             const { fileName } = response.responseInfo

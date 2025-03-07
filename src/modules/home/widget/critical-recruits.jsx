@@ -9,6 +9,7 @@ import { toAttention } from 'shared/constants/constants';
 import { hasValue } from 'shared/utils';
 import { barcharcolour, dashBoardwidget } from 'app';
 import { ResponsiveFab } from 'app';
+import { getTotalCriticalAppointee } from 'server/apis';
 
 const CriticalRecruits = () => {
 
@@ -16,7 +17,7 @@ const CriticalRecruits = () => {
     const apiSlice = useSelector((state) => state.apiSlice);
 
     const { navigateTo } = commonHooksFunctionSlice[0];
-    const { getTotalCriticalAppointee } = apiSlice[0];
+    // const { getTotalCriticalAppointee } = apiSlice[0];
 
     const theme = useTheme();
     const primary = theme.palette.secondary.main;

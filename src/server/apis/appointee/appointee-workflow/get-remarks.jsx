@@ -1,0 +1,6 @@
+import ServerRequest from "server/utils/server-request";
+import { GetRemarks_URL } from "shared/constants/constants";
+
+const getRemarks = (appointeeId) => ServerRequest(`${GetRemarks_URL}${appointeeId}`, "GET");
+
+export { getRemarks };

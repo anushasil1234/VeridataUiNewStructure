@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import { PostRemainderMail_URL, remiderSuccessMsg } from "shared/constants/constants";
+
+const postRemainderMail = (appointeeId, userId) => 
+    ServerRequest(PostRemainderMail_URL(appointeeId, userId), "POST", {}, remiderSuccessMsg, true);
+
+export { postRemainderMail };

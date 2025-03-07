@@ -55,15 +55,17 @@ import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
 import ArticleIcon from '@mui/icons-material/Article';
 import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
+import { getAppointeeCounterReport } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 const AppointeeCount = () => {
-  const popUpSlice = useSelector(state => state.popUpSlice);
+  // const popUpSlice = useSelector(state => state.popUpSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
   const dropdownList = useSelector((state) => state.dropdownList);
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
 
   const { navigateTo } = commonHooksFunctionSlice[0];
 
-  const { getAppointeeCounterReport } = apiSlice[0];
+  // const { getAppointeeCounterReport } = apiSlice[0];
   const { reportFilterStatusList, entityList } = dropdownList && dropdownList.length > 0 && dropdownList[0];
   const [toDate, setToDate] = useState(null);
   const [fromDate, setFromDate] = useState(null);
@@ -72,7 +74,7 @@ const AppointeeCount = () => {
   const [appointeeCountListDetails, setAppointeeCountListDetails] = useState();
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
   const [isExalListOpened, setisExalListOpened] = useState(false)
-  const { showErrorMessage } = popUpSlice[0]
+  // const { showErrorMessage } = popUpSlice[0]
   const [appointeeName, setAppointeeName] = useState(null);
   const [statusCode, setStatusCode] = useState(null);
   const [entityId, setEntityId] = useState([]);

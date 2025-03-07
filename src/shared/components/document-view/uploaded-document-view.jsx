@@ -6,17 +6,19 @@ import { useEffect } from 'react'
 import { FabIcon } from 'shared/utils';
 import downloadFile from 'shared/utils/associate/download-file';
 import FabIconPropsModel from 'shared/utils/fab-icon/fab-icon-model';
-import FullScreenModel from 'shared/utils/models/fullscreen-modal'
+// import FullScreenModel from 'shared/utils/models/fullscreen-modal'
 import { useState } from 'react';
 import { handleZoom } from 'shared/utils/associate/Zoomin-out';
 import { calculateDragPosition } from 'shared/utils/associate/dragein'
 import { calculateContainerHeight } from './calculateContainerHeight';
 import { MouseEventHandler } from 'shared/utils/associate/dragable';
+import FullScreenModel from 'shared/utils/modals/fullscreen-modal';
 const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
-    const {previewURL,fileName,uploadTypeAlias,mimeType } = documentModelProps;
+    const {previewURL,fileName,uploadTypeAlias } = documentModelProps;
     //const { fileName } = fileDetails;
+    console.log('documentModelProps: ',documentModelProps);
     
- //   const mimeType = fileName?.split(';')[0].split(':')[1];
+    const mimeType = fileName?.split(';')[0].split(':')[1];
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
@@ -50,7 +52,7 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
             <Stack sx={{ ...imageFileContainerStackStyle, height:containerHeight}}>
                 <Box
                     sx={{
-                        ...(mimeType === 'application/pdf' ? pdfFileContainerStyle : imageFileContainerStyle),
+                       // ...(mimeType === 'application/pdf' ? pdfFileContainerStyle : imageFileContainerStyle),
                         transform: `scale(${zoomLevel})`,
                         transformOrigin: 'center',
                         transition: 'transform 0.3s',
@@ -66,7 +68,7 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
                         handleMouseDown,
                     })}
                 >
-                    {mimeType === 'application/pdf' ? (
+                    {/* {mimeType === 'application/pdf' ? (
                         <embed
                             src={`${previewURL}#toolbar=0`}
                             height="500"
@@ -86,8 +88,8 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
                             }}
                             alt={fileName}
                         />
-                    )}
-                    {/* <embed
+                    )} */}
+                    <embed
                             src={`${previewURL}#toolbar=0`}
                             height="500"
                             width="100%"
@@ -97,7 +99,7 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
                                 height:"500",
                                 width:"100vh"
                             }}
-                        /> */}
+                        />
                 </Box>
             </Stack>
 

@@ -3,23 +3,25 @@ import { Box } from '@mui/system'
 import { smallFormModelHeadingSx } from 'app';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { postProfilePassword } from 'server/apis';
 import { invalidProfilePasswordMsg } from 'shared/constants/constants';
 import { encryptedData, hasValue } from 'shared/utils';
+import showErrorMessage from 'shared/utils/associate/show-error-message';
 import Button1 from 'shared/utils/button/button1';
-import FullScreenModel from 'shared/utils/models/fullscreen-modal';
+import FullScreenModel from 'shared/utils/modals/fullscreen-modal';
 
 let UnWrappedProfilePasswordFormSubmitionForm = (
     {
         passwordSubmitionProps
     }) => {
 
-    const popUpSlice = useSelector((state) => state.popUpSlice);
+    // const popUpSlice = useSelector((state) => state.popUpSlice);
     const loggedInData = useSelector((state) => state.loggedInData);
     const apiSlice = useSelector((state) => state.apiSlice);
 
     const { userId } = loggedInData && loggedInData.length > 0 && loggedInData[0];
-    const { postProfilePassword } = apiSlice[0];
-    const { showErrorMessage } = popUpSlice[0];
+    // const { postProfilePassword } = apiSlice[0];
+    // const { showErrorMessage } = popUpSlice[0];
     const { callBack } = passwordSubmitionProps;
 
     const [password, setPassword] = useState();

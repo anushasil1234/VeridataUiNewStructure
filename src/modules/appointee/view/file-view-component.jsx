@@ -5,6 +5,7 @@ import viewImage from "assets/images/profile/file_upload_icon.png";
 import { useSelector } from "react-redux";
 import { appointeeImageViewStyle, fileNameStyle, displayImageStyle } from "app";
 import FileSelectionPopup from "modules/appointee/view/FileSelectionPopup ";
+import { getUploadedFileDetailsById } from "server/apis";
 
 export const FileViewComponent = ({
   file,
@@ -16,7 +17,7 @@ export const FileViewComponent = ({
   const functionSlice = useSelector((state) => state.functionSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
   const { openDocumentModel } = functionSlice[0];
-  const { GetUploadedFileDetailsById } = apiSlice[0];
+  // const { GetUploadedFileDetailsById } = apiSlice[0];
 
   const handleFileClick = async (selectedFile) => {
     const payload = {
@@ -24,18 +25,21 @@ export const FileViewComponent = ({
       fileCategory: fileType,
       fileId: selectedFile.uploadDetailsId,
     };
-    const response = await GetUploadedFileDetailsById(payload);
+    const response = await getUploadedFileDetailsById(payload);
     if (response && response.responseInfo) {
       const { mimeType, fileData } = response.responseInfo;
       const fileDetails = `data:${mimeType};base64,${fileData}`;
-      const filename = file.fileName;
+      // const filename = file.fileName;
       //   console.log("mimeType",filename)
+console.log('fileDetails', fileDetails);
 
       openDocumentModel(fileDetails, selectedFile.fileName, fileType);
     }
   };
 
   const handleImageClick = () => {
+    console.log('handleImageClick');
+    
     const files = filesByAlias?.get(fileType) || [];
     if (files.length > 1) {
       setIsPopupOpen(true);

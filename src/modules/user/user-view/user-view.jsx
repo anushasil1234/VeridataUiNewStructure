@@ -2,10 +2,11 @@ import { Box, Grid, Stack, Typography } from '@mui/material';
 import { cardStyle, listHeadingConteinerStyle, listHeadingStyle } from 'app';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { getInputList } from 'server/apis';
 import { PersonalInformation } from 'shared/components/display-information/personal-information';
 import { NA } from 'shared/constants/constants';
 import { hasValue } from 'shared/utils';
-import FullScreenModel from 'shared/utils/models/fullscreen-modal';
+import FullScreenModel from 'shared/utils/modals/fullscreen-modal';
 
 
 const _UserView = (props) => {
@@ -17,7 +18,7 @@ const _UserView = (props) => {
     const {
         roleList
     } = dropdownList && dropdownList.length > 0 && dropdownList[0];
-    const { getInputList } = apiSlice[0];
+    // const { getInputList } = apiSlice[0];
 
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");

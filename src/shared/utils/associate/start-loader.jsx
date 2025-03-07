@@ -1,0 +1,4 @@
+const startLoader = () =>  window.dispatchEvent(new CustomEvent("start-loader"));
+
+
+export default startLoader
