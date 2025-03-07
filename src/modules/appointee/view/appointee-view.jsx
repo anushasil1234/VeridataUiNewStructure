@@ -1,4 +1,4 @@
-import { Grid, Typography, Chip, Button, Skeleton } from "@mui/material";
+import { Grid, Typography, Chip, Button, Skeleton, Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import {
@@ -64,6 +64,7 @@ import {
   remarksissuemessage,
   noPassBookMsg,
   noEmployementMsg,
+  AadhaarProfileImageTypeAlias,
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -77,6 +78,7 @@ import {
 import RemarksInputModel from "shared/utils/models/remarks-modal";
 // import viewImage from 'assets/images/profile/view_image.png';
 import { FileViewComponent } from "./file-view-component";
+import ProfileImg from 'assets/images/profile/user-2.jpg';
 
 const DocumentDetails = ({ fieldName, fieldValue, isVerified }) => {
   return (
@@ -143,6 +145,7 @@ let AppointeeViewForm = ({
     getRemarks,
     getPassbookDetails,
     getEmployementDetails,
+    GetUploadedFileDetailsById
   } = apiSlice[0];
   const [UAN, setUAN] = useState(null);
   const [uanNumber, setUanNumber] = useState(null);
@@ -174,6 +177,7 @@ let AppointeeViewForm = ({
   const [otherFile, setOtherFile] = useState();
   const [trustPfFile, setTrustPfFile] = useState();
   const [manualPassbookFile, setManualPassbookFile] = useState();
+  const [otherFilePayload, setOtherFilePayload] = useState();
   const [EPFOServiceHistoryFile, setEPFOServiceHistoryFile] = useState();
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
@@ -198,6 +202,8 @@ let AppointeeViewForm = ({
   const [isManualPassbook, setIsManualPassbook] = useState(null);
   const [isPensionApplicable, setIsPensionApplicable] = useState(null);
   const [filesByAlias, setFilesByAlias] = useState(new Map());
+const [fileDataStore, setFileDataStore] = useState();
+
   const dispatch = useDispatch();
 
   const actionsAfterProcess = (actionRoute) => {
@@ -435,7 +441,11 @@ let AppointeeViewForm = ({
             uploadDetailsId,
             fileName,
           };
-
+          const filepayload = {
+            appointeeId,
+            uploadDetailsId,
+            uploadTypeAlias
+          }
           if (!updatedFilesByAlias.has(uploadTypeAlias)) {
             updatedFilesByAlias.set(uploadTypeAlias, []);
           }
@@ -447,7 +457,10 @@ let AppointeeViewForm = ({
           if (uploadTypeAlias === otherFileTypeAlias) {
             setOtherFile(file);
           }
-
+          if (uploadTypeAlias === AadhaarProfileImageTypeAlias) {
+            setOtherFile(file);
+            setOtherFilePayload(filepayload);
+          }
           if (uploadTypeAlias === passportFileTypeAlias) {
             setVisaFile(file);
           }
@@ -469,7 +482,19 @@ let AppointeeViewForm = ({
     }
     setIsLoading(true);
   };
-
+  const handleGetImageFromId = async () =>{
+    const payload = {
+      appointeeId : otherFilePayload?.appointeeId,
+      fileCategory : otherFilePayload?.uploadTypeAlias,
+      fileId : otherFilePayload?.uploadDetailsId
+    }
+    const response1 = await GetUploadedFileDetailsById(payload);
+    console.log('Uploaded file details',response1);
+    const {responseInfo} = response1;
+    const {fileData} = responseInfo;
+    const base64Image = `data:image/png;base64,${fileData}`;
+    setFileDataStore(base64Image);
+  }
   const setAppointeeActivity = async () => {
     const response = await getAppointeeActivity(appointeeId);
     if (response) {
@@ -477,6 +502,11 @@ let AppointeeViewForm = ({
     }
   };
   const [hasFetchedData, setHasFetchedData] = useState(false);
+  useEffect(() => {
+    if (otherFilePayload) {
+      handleGetImageFromId();
+    }
+  }, [otherFilePayload]);
   // useEffect(() => {
   //   if (appointeeId) {
   //     setAppointeeDetails();
@@ -797,39 +827,55 @@ let AppointeeViewForm = ({
               <Stack alignItems={"center"}>
                 <Box>
                   {/* <Security sx={verifyIconStyle} /> */}
-                  {isLoading &&
-                  isdocumentVerified === true &&
-                  (isPanVarified === true) ? (
-                    <TaskAlt sx={verifyIconStyle} />
-                  ) : (isLoading &&
-                      isAadharVerified === true &&
-                      (isPanVarified === true ||
-                        isPanVarified === null ||
-                        isPanVarified ===NA) &&
-                      isUanVerified === false &&
-                      isManualPassbook === true) ||
-                    (isAadharVerified === true &&
-                      isPanVarified === true &&
-                      isUanVerified === false &&
-                      isManualPassbook === null) ||
-                    (isAadharVerified === true &&
-                      isUanVerified ===NA &&
-                      isPanVarified === true) ||
-                    (isAadharVerified ===NA &&
-                      isUanVerified ===NA &&
-                      isPanVarified ===NA) ||
-                    (isAadharVerified === true &&
-                      (isUanVerified ===NA || isUanVerified === null ) &&
-                      (isPanVarified ===NA || isPanVarified === null)) ||
-                    (isAadharVerified === true &&
-                      isUanVerified === true &&
-                      (isPanVarified ===NA || isPanVarified === null)) ? (
-                    <WarningAmber sx={verifyIconStyle} />
-                  ) : (isLoading && isAadharVerified === true && isPanVarified === true && isUanVerified === false && isManualPassbook === null)||(isAadharVerified === true && isUanVerified === false && isManualPassbook===null)||(isAadharVerified === true && isPanVarified === false) ||isAadharVerified === false  ? (<WarningAmber sx={verifyIconStyle} />
-                  ) : (
+                  {isLoading && otherFilePayload && otherFilePayload.uploadTypeAlias === "ADHPRF" ?
+                  // isdocumentVerified === true &&
+                  // (isPanVarified === true) ? (
+                  //   <TaskAlt sx={verifyIconStyle} />
+                  <Avatar src={fileDataStore} sx={verifyIconStyle}/>
+
+                  // ) : (isLoading &&
+                  //     isAadharVerified === true &&
+                  //     (isPanVarified === true ||
+                  //       isPanVarified === null ||
+                  //       isPanVarified ===NA) &&
+                  //     isUanVerified === false &&
+                  //     isManualPassbook === true) ||
+                  //   (isAadharVerified === true &&
+                  //     isPanVarified === true &&
+                  //     isUanVerified === false &&
+                  //     isManualPassbook === null) ||
+                  //   (isAadharVerified === true &&
+                  //     isUanVerified ===NA &&
+                  //     isPanVarified === true) ||
+                  //   (isAadharVerified ===NA &&
+                  //     isUanVerified ===NA &&
+                  //     isPanVarified ===NA) ||
+                  //   (isAadharVerified === true &&
+                  //     (isUanVerified ===NA || isUanVerified === null ) &&
+                  //     (isPanVarified ===NA || isPanVarified === null)) ||
+                  //   (isAadharVerified === true &&
+                  //     isUanVerified === true &&
+                  //     (isPanVarified ===NA || isPanVarified === null)) ? (
+                  //   <WarningAmber sx={verifyIconStyle} />
+                  // ) : (isLoading && isAadharVerified === true && isPanVarified === true && isUanVerified === false && isManualPassbook === null)||(isAadharVerified === true && isUanVerified === false && isManualPassbook===null)||(isAadharVerified === true && isPanVarified === false) ||isAadharVerified === false  ? (<WarningAmber sx={verifyIconStyle} />
+                  // ) 
+                  
+                  : (
                     //  isLoading && isAadharVerified === true && isPanVarified && isUanVerified === false && isManualPassbook === true ? <WarningAmber sx={verifyIconStyle} /> :
-                    <Skeleton variant="circular" width={80} height={80} />
-                  )}
+                    //<Skeleton variant="circular" width={80} height={80} />
+                    <Avatar
+                    src={ProfileImg}
+                    alt={ProfileImg}
+                    sx={verifyIconStyle}
+                     width={38} 
+                     height={40}
+                    // sx={{
+                    // width: 36,
+                    // height: 34,
+                    // }}
+                />
+                  )
+                }
                 </Box>
                 <Box>
                   {isSaveStep === 1 ? <>{getVerificationChip()}</> : null}
