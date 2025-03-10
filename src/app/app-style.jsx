@@ -985,26 +985,24 @@ export const docVerifySuccess = ThemeColorPalete.success.main;
 export const docVerifyFailed = ThemeColorPalete.error.main;
 
 const verifyIconStyle = {
-  // height: "6rem",
-  // width: "12rem",
-    height: "8.3rem",
-  width: "8rem",
+  height: "6rem",
+  width: "12rem",
 };
 export const verifyFailedIconStyle = {
  // color: ThemeColorPalete.error.main,
- //color:'#D32F2F',
+ color:'#D32F2F',
   ...verifyIconStyle,
   cursor: "pointer",
 };
 export const verifySuccessIconStyle = {
 //  color: ThemeColorPalete.success.main,
-//color: '#2E7D32',
+color: '#2E7D32',
   ...verifyIconStyle,
   cursor: "pointer",
 };
 export const notVerifySuccessIconStyle = {
  // color: ThemeColorPalete.warning.main,
- //color : '#ED6C02',
+ color : '#ED6C02',
   ...verifyIconStyle,
   cursor: "text",
 };

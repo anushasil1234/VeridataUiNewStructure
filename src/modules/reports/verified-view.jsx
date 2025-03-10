@@ -37,7 +37,6 @@ const UnWrappedVerified = (props) => {
   const [fromDate, setFromDate] = useState(_fromday);
   const [processStatus, setProcessStatus] = useState("All");
   const [passbookStatus, setPassbookStatus] = useState('All');
-  const [isPensionApplicable, setIsPensionApplicable] = useState("All");
 
   let payloadData = {
     isFiltered: state && state.dayRangePayLoad ? true : false,
@@ -50,8 +49,6 @@ const UnWrappedVerified = (props) => {
     fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
     toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
     IsManualPassbook: null,
-    isPensionApplicable: null
-
   }
 
   let [payLoad, setPayLoad] = useState(payloadData);
@@ -71,20 +68,12 @@ const UnWrappedVerified = (props) => {
     const _payLoad = {...payLoad, IsManualPassbook: _passbookStatus }
     setPayLoad(_payLoad);
   };
-  const handlePensionStatusChange = async (e) => {
-    const { value } = e.target;
-    setIsPensionApplicable(value);
-     const _pensionStatus = value === "All" ? null : value;
-    const _payLoad = {...payLoad, isPensionApplicable: _pensionStatus }
-    setPayLoad(_payLoad);
-  };
+
   const clearSearch = () => {
     setFromDate(null);
     setToDate(null);
     setProcessStatus('All');
     setPassbookStatus('All');
-    setIsPensionApplicable('All');
-
     const payLoad = {
       isFiltered: false,
       noOfDays: 0,
@@ -93,8 +82,7 @@ const UnWrappedVerified = (props) => {
       candidateId: null,
       isPfRequired: null,
       processStatus: null,
-      IsManualPassbook:null,
-      isPensionApplicable:null
+      IsManualPassbook:null
     }
     setPayLoad(payLoad);
     setTableRows(payLoad);
@@ -183,15 +171,12 @@ const UnWrappedVerified = (props) => {
           updatDatePayLoad={updatDatePayLoad}
           processStatus={processStatus}
           passbookStatus={passbookStatus}
-          isPensionApplicable={isPensionApplicable}
-          pensionStatus = {true}
           toDate={toDate}
           setToDate={setToDate}
           fromDate={fromDate}
           setFromDate={setFromDate}
           handleProcessStatusChange={handleProcessStatusChange}
           handlePassbookStatusChange={handlePassbookStatusChange}
-          handlePensionStatusChange={handlePensionStatusChange}
           isStatusFilter={true}
           hasPermission={hasPermission}
           infoDetails={verifiedReportInfo}

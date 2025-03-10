@@ -48,10 +48,14 @@ const setupAxiosInterceptors = (api) => {
                         showErrorMessage("Your session has expired. Please login again.");
                     }
                 } catch (e) {
+                    console.log('An error occurred', e);
+                    
                     handleClickOnLogout();
                     showErrorMessage("Your session has expired. Please login again.");
                 }
             } else {
+                console.log('error23', error);
+                
                 handleOtherErrors(error);
             }
             return Promise.reject(error);

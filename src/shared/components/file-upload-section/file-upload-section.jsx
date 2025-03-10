@@ -21,12 +21,11 @@ const FileUploadSection = ({
   uploadTypeAlias,
   handleViewFile = () => {}
 }) => {
-  //  const fileType = `Accepted format: ${accept}`;
-   const fileType = `accepted format: ${accept
-    ? accept.split(", ") 
-        .map(type => type.split("/").pop()) // extract the file extension
-        .join(", ")
-    : "No accepted formats available"}`;
+   const fileType = `Accepted format: ${accept}`;
+  // const fileType = `Accepted format: ${accept
+  //   .split(", ") // Split into an array
+  //   .map(type => type.split("/").pop()) // Extract the file extension
+  //   .join(", ")}`;
   const fileLimitText = multiple
     ? "You can upload multiple file(s) at a time."
     : "You can only upload one file at a time.";

@@ -13,8 +13,8 @@ import {
   submitBtnContainerStyle,
   submitBtnStyle,
 } from "app";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import FormHeadingContainer from "shared/components/grid-container/form-heading-container";
 import GridRow from "shared/components/grid-container/grid-row";
 import CustomeDatePicker from "shared/components/input-fields/custome-date-picker";
@@ -36,57 +36,37 @@ import { HelpOutline } from "@mui/icons-material";
 import PassportSample from "assets/images/backgrounds/PassportSample2.jpeg";
 import dayjs from "dayjs";
 import DateInput from "shared/components/input-fields/date-input";
+import { getLocalStorageItem, hasValue, setLocalStorageItem } from "shared/utils";
+import showErrorMessage from "shared/utils/associate/show-error-message";
+import { postAppointeeDetails } from "server/apis";
+import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
 
 const FirstForm = ({
   stepsList,
-  setGender,
-  memberName,
-  dateOfBirth,
-  setDateOfBirth,
-  fathersOrHusbandName,
-  relationshipWithMember,
-  handleChangeRelationship,
   isRelationShipWithMemberDisabled,
-  mobileNo,
-  email,
-  nationality,
-  handleNationalityChange,
-  qualification,
-  maritalStatus,
-  handleMaritalStatusChange,
   passportAvailable,
-  passportNo,
-  handleAppointeeFormPage1Save,
   isAadhaarVarified,
-  setFathersOrHusbandName,
-  handleQualificationChange,
-  handleIsPassportAvailableOnChange,
-  isPassportAvailableDisable,
-  isInterNationalWorker,
-  handleInternationalWorkerOnChange,
   isPassportVarified,
-  countryOfOrigin,
   disabledIsInterNationalWorker,
-  handleChangeCountryOfOrigin,
-  handlePassportNoChange,
-  passportNumberError,
-  passportNoMaxLength,
-  passportValidForDate,
-  setPassportValidForDate,
-  setPassportValidTillDate,
-  passportValidTillDate,
-  PasswordExpiryValidity,
-  dateOfJoining,
-  isPhysicallyHandicap,
-  handleIsPhysicallyHandicapOnChange,
-  handicapType,
-  handleHandicapTypeOnChange,
   isDraft,
   handleSecondNext,
-  setClickedButton,
-  selectGender,
-  genderList,
+  firstPageForm,
+  handleChangeDateofIssue,
+  handleChangeinDateofexpiry,
+  setFirstPageForm,
+  setActiveStep,
+  setCurrentPageNo,
+  setIsDraft,
+  updateStep,
+  defaultCountry,
+  setPassPortMaxLength,
+  passportNoMaxLength
 }) => {
+
+  // console.log('genderList', genderList);
+
+  const dispatch = useDispatch();
+
   const dropdownList = useSelector((state) => state.dropdownList);
   const functionSlice = useSelector((state) => state.functionSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
@@ -106,6 +86,13 @@ const FirstForm = ({
     dropdownList[0] &&
     dropdownList[0].genderList;
   const { openInfoModel } = functionSlice[0];
+  const [passportNumberError, setPassportNumberError] = useState(false);
+  const [genderList, setGenderList] = useState();
+  const [clickedButton, setClickedButton] = useState(null);
+  const [isPassportAvailableDisable, setIsPassportAvailableDisable] =
+    useState(false);
+  // const [passportNoMaxLength, setPassportNoMaxLength] = useState(null);
+
 
   const passportNumberInputProps = {
     maxLength: passportNoMaxLength,
@@ -150,7 +137,7 @@ const FirstForm = ({
   const handleYes = (e) => {
     handleSecondNext();
   };
-  const handleNo = (e) => {};
+  const handleNo = (e) => { };
   const handleClickOnNext = async () => {
     const ConfirmationModelContent = {
       dialogTitle: (
@@ -179,7 +166,170 @@ const FirstForm = ({
     };
     openConfirmationYesNoModal(ConfirmationModelContent, handleYes, handleNo);
   };
+  const handleFirstPageFormInputChange = (value, name) => {
+    setFirstPageForm({ ...firstPageForm, [name]: value });
+  }
+  const handlePassportNoChange = (value, name) => {
+    setPassportNumberError(false);
+    handleFirstPageFormInputChange(value, name);
+  };
+  const selectGender = (genderCode) => {
+    const selectedGender = genderCode;
+    console.log('genderDropdownList', genderDropdownList);
 
+    const updatedGender =
+      genderDropdownList &&
+      genderDropdownList.map((gender, index) => {
+        let selected = false;
+        if (gender.code === selectedGender) {
+          selected = true;
+          // setGender(gender.code);
+          handleFirstPageFormInputChange(gender.code, 'gender');
+          // setFirstPageForm({ ...firstPageForm, gender: gender.code });
+        }
+        return {
+          ...gender,
+          selected: selected,
+          icon: genders[index].icon,
+          selectGender,
+        };
+      }, genders);
+    console.log('updatedGender12', updatedGender);
+
+    setGenderList(updatedGender);
+  };
+  console.log('firstPageForm22', firstPageForm);
+
+  const handleNationalityChange = (value, name) => {
+    // const value = target.value;
+    if (value !== "none") {
+      let _firstPageForm = { ...firstPageForm, [name]: value, passportNo: "", passportValidFrom: null, passportValidTill: null };
+      if (
+        value.toLowerCase() !== "indian" &&
+        value.toLowerCase() !== "nepalese" &&
+        value.toLowerCase() !== "bhutanese"
+      ) {
+        // setPassportAvailable("Y");
+        _firstPageForm = { ..._firstPageForm, isPassportAvailable: 'Y' };
+        setIsPassportAvailableDisable(true);
+      } else {
+        setIsPassportAvailableDisable(false);
+        // setPassportAvailable("");
+        _firstPageForm = { ..._firstPageForm, isPassportAvailable: '' };
+      }
+      setFirstPageForm({ ..._firstPageForm });
+      setPassPortMaxLength(value);
+    }
+  };
+  const handleAppointeeFormPage1Save = async (formElement) => {
+    formElement.preventDefault();
+    if (passportAvailable === "Y"
+      // && clickedButton !== "S"
+    ) {
+      if (!hasValue(firstPageForm.passportNo)) {
+        setPassportNumberError(true);
+        showErrorMessage(passportNoEmptyMsg);
+        return;
+      }
+      if ((firstPageForm.nationality.toLowerCase() === "indian" ||
+        firstPageForm.originCountry.toLowerCase() === "india")
+        && firstPageForm.passportNo.length !== 8) {
+        setPassportNumberError(true);
+        showErrorMessage(indianpassportNumberPatternErrorMsg);
+        return;
+      }
+    }
+    const loginUserData = getLocalStorageItem("pfc-user");
+    const formPostSuccessMessage =
+      clickedButton === "S" ? formSaveSuccess : formSubmitionSuccess;
+    let payLoad = {
+      ...firstPageForm,
+      isSubmit: clickedButton === "S" ? false : true,
+    }
+
+    const response = await postAppointeeDetails(
+      payLoad,
+      formPostSuccessMessage
+    );
+    if (response) {
+      setLocalStorageItem("pfc-user", {
+        ...loginUserData,
+        //isSubmit: true,
+        status: "Ongoing",
+      });
+      dispatch(removeLoggedinData());
+      dispatch(
+        storeLoggedinData({
+          ...loginUserData,
+          //isSubmit: true,
+          status: "Ongoing",
+        })
+      );
+      if (clickedButton === "N") {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setCurrentPageNo(2);
+        setIsDraft(false);
+        updateStep({
+          isHandicap: firstPageForm.isHandicap,
+          isPassportAvailable: passportAvailable,
+        });
+      }
+    }
+  };
+  const handleIsPhysicallyHandicapOnChange = (value, name) => {
+    if (value !== "none") {
+      handleFirstPageFormInputChange(value, name);
+    }
+  };
+  const handleHandicapTypeOnChange = (value, name) => {
+    // const { value } = target;
+    if (value !== "none") {
+      handleFirstPageFormInputChange(value, name);
+    }
+  };
+  const handleChangeCountryOfOrigin = (value, name) => {
+    value !== "none" && handleFirstPageFormInputChange(value, name);
+  };
+  const handleInternationalWorkerOnChange = (value, name) => {
+
+    if (value !== "none") {
+      let _firstPageForm = { ...firstPageForm, [name]: value };
+      if (value === "Y") {
+        const nationalityLower = firstPageForm.nationality?.toLowerCase();
+        const matchedNationality = nationalityList.find(
+          (element) => element.value?.toLowerCase() === nationalityLower
+        );
+        const index = nationalityList.indexOf(matchedNationality);
+        _firstPageForm = { ..._firstPageForm, originCountry: countryList[index]?.value };
+      }
+      if (value === "N") {
+        _firstPageForm = { ..._firstPageForm, originCountry: defaultCountry };
+      }
+      setFirstPageForm(_firstPageForm);
+    }
+  };
+  const handleChangeIspassportAvailable = (value, name) => {
+    if (value === 'Y') {
+      handleFirstPageFormInputChange(value, name);
+    }
+    if (value === 'N') {
+      setFirstPageForm({
+        ...firstPageForm,
+        [name]: value,
+        passportNo: null,
+        passportValidFrom: null,
+        passportValidTill: null
+      })
+    }
+  }
+
+
+
+  useEffect(() => {
+    if (genderDropdownList) {
+      selectGender(firstPageForm.gender);
+    }
+  }, [genderDropdownList, firstPageForm.gender]);
   return (
     <Box sx={{ marginTop: "1.8rem" }}>
       <form onSubmit={handleAppointeeFormPage1Save}>
@@ -249,9 +399,10 @@ const FirstForm = ({
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <TextInput
                 label={"Name"}
-                value={memberName}
+                value={firstPageForm.appointeeName}
                 disabled={true}
                 required={true}
+                name={'appointeeName'}
               />
             </Grid>
             <Grid
@@ -264,19 +415,19 @@ const FirstForm = ({
             >
               <CustomeDatePicker
                 label={"Date Of Birth"}
-                value={dateOfBirth ? dayjs(dateOfBirth) : null}
-                setValue={(newDate) => {
+                value={firstPageForm.dateOfBirth ? dayjs(firstPageForm.dateOfBirth) : null}
+                setValue={(newDate, name) => {
                   if (newDate) {
-                    setDateOfBirth(newDate.format("YYYY-MM-DD"));
+                    handleFirstPageFormInputChange(newDate.format("YYYY-MM-DD"), 'dateOfBirth');
                   } else {
-                    setDateOfBirth(null); // Clear the value if the date is cleared
+                    handleFirstPageFormInputChange(null, 'dateOfBirth'); // Clear the value if the date is cleared
                   }
                 }}
                 required={true}
                 disableFuture={true}
                 maxDate={dayjs()}
                 minDate={dayjs().subtract(150, "year")}
-                disabled={isAadhaarVarified}
+                disabled={firstPageForm.isAadhaarVarified}
               />
             </Grid>
           </GridRow>
@@ -284,8 +435,9 @@ const FirstForm = ({
             <Grid item xs={12} md={6} sx={{ paddingLeft: "0px !important" }}>
               <TextInput
                 label={`Father's/ Husband's Name`}
-                value={fathersOrHusbandName}
-                onChange={setFathersOrHusbandName}
+                value={firstPageForm.memberName}
+                name={'memberName'}
+                onChange={handleFirstPageFormInputChange}
                 onKeyDown={handleSpacialcharecter}
                 onPaste={handelSpacialCharecterPaste}
                 required={true}
@@ -304,8 +456,9 @@ const FirstForm = ({
               <SelectInput
                 label={"Relationship"}
                 itemList={relationList}
-                value={relationshipWithMember}
-                onChange={handleChangeRelationship}
+                name={"memberRelation"}
+                value={firstPageForm.memberRelation}
+                onChange={handleFirstPageFormInputChange}
                 disabled={isRelationShipWithMemberDisabled}
                 sx={inputFieldStyle2}
                 required={true}
@@ -317,7 +470,7 @@ const FirstForm = ({
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <TextInput
                 label={"Mobile No"}
-                value={mobileNo}
+                value={firstPageForm.mobileNo}
                 disabled={true}
                 required={true}
               />
@@ -332,7 +485,7 @@ const FirstForm = ({
             >
               <TextInput
                 label={"Email"}
-                value={email}
+                value={firstPageForm.appointeeEmailId}
                 disabled={true}
                 required={true}
               />
@@ -343,7 +496,8 @@ const FirstForm = ({
               <SelectInput
                 label={"Nationality"}
                 itemList={nationalityList}
-                value={nationality}
+                name={'nationality'}
+                value={firstPageForm.nationality}
                 onChange={handleNationalityChange}
                 sx={inputFieldStyle2}
                 required={true}
@@ -361,8 +515,9 @@ const FirstForm = ({
               <SelectInput
                 label={"Qualification"}
                 itemList={qualificationList}
-                value={qualification}
-                onChange={handleQualificationChange}
+                name={'qualification'}
+                value={firstPageForm.qualification}
+                onChange={handleFirstPageFormInputChange}
                 sx={inputFieldStyle2}
                 selectProperty={"code"}
               />
@@ -373,8 +528,9 @@ const FirstForm = ({
               <SelectInput
                 label={"Marital status"}
                 itemList={maritalStatusList}
-                value={maritalStatus}
-                onChange={handleMaritalStatusChange}
+                name={'maratialStatus'}
+                value={firstPageForm.maratialStatus}
+                onChange={handleFirstPageFormInputChange}
                 sx={inputFieldStyle2}
                 selectProperty={"code"}
                 required={true}
@@ -403,14 +559,15 @@ const FirstForm = ({
               <SelectInput
                 label={"Is Passport Available"}
                 itemList={yesNoList}
-                value={passportAvailable}
-                onChange={handleIsPassportAvailableOnChange}
+                value={firstPageForm.isPassportAvailable}
+                name={'isPassportAvailable'}
+                onChange={handleChangeIspassportAvailable}
                 sx={inputFieldStyle2}
                 disabled={isPassportAvailableDisable}
                 required={true}
               />
             </Grid>
-            {passportAvailable === "Y" ? (
+            {firstPageForm.isPassportAvailable === "Y" ? (
               <Grid
                 item
                 xs={12}
@@ -422,7 +579,8 @@ const FirstForm = ({
                 <SelectInput
                   label={"Is International Worker"}
                   itemList={yesNoList}
-                  value={isInterNationalWorker}
+                  value={firstPageForm.isInternationalWorker}
+                  name={'isInternationalWorker'}
                   onChange={handleInternationalWorkerOnChange}
                   sx={inputFieldStyle2}
                   required={true}
@@ -432,7 +590,7 @@ const FirstForm = ({
             ) : null}
           </GridRow>
 
-          {passportAvailable === "Y" ? (
+          {firstPageForm.isPassportAvailable === "Y" ? (
             <>
               <GridRow>
                 <Grid
@@ -444,11 +602,12 @@ const FirstForm = ({
                   <SelectInput
                     label={"Country of origin"}
                     itemList={countryList}
-                    value={countryOfOrigin}
+                    value={firstPageForm.originCountry}
+                    name={'originCountry'}
                     onChange={handleChangeCountryOfOrigin}
                     sx={inputFieldStyle2}
                     required={true}
-                    disabled={isInterNationalWorker === "N"}
+                    disabled={firstPageForm.isInternationalWorker === "N"}
                     selectProperty={"code"}
                   />
                 </Grid>
@@ -462,7 +621,8 @@ const FirstForm = ({
                 >
                   <TextInput
                     label={"Passport Number"}
-                    value={passportNo}
+                    value={firstPageForm.passportNo}
+                    name={'passportNo'}
                     onChange={handlePassportNoChange}
                     disabled={isPassportVarified}
                     required={true}
@@ -481,20 +641,10 @@ const FirstForm = ({
                   <CustomeDatePicker
                     label={"Date Of Issue"}
                     value={
-                      passportValidForDate ? dayjs(passportValidForDate) : null
+                      firstPageForm.passportValidFrom ? dayjs(firstPageForm.passportValidFrom) : null
                     }
-                    setValue={(newDate) => {
-                      if (newDate) {
-                        setPassportValidForDate(newDate.format("YYYY-MM-DD"));
-                        const expiryDate = newDate
-                          .add(10, "year")
-                          .subtract(1, "day")
-                          .format("YYYY-MM-DD");
-                        setPassportValidTillDate(expiryDate);
-                      } else {
-                        setPassportValidForDate(null); // Clear the value if the date is cleared
-                      }
-                    }}
+                    name={'passportValidFrom'}
+                    setValue={handleChangeDateofIssue}
                     required={true}
                     disabled={isPassportVarified}
                     maxDate={dayjs()}
@@ -513,17 +663,12 @@ const FirstForm = ({
                   <CustomeDatePicker
                     label={"Date of Expiry"}
                     value={
-                      passportValidTillDate
-                        ? dayjs(passportValidTillDate)
+                      firstPageForm.passportValidTill
+                        ? dayjs(firstPageForm.passportValidTill)
                         : null
                     }
-                    setValue={(newDate) => {
-                      if (newDate) {
-                        PasswordExpiryValidity(newDate.format("YYYY-MM-DD"));
-                      } else {
-                        PasswordExpiryValidity(null); // Clear the value if the date is cleared
-                      }
-                    }}
+                    name={'passportValidTill'}
+                    setValue={handleChangeinDateofexpiry}
                     disableFuture={false}
                     minDate={dayjs()}
                     required={true}
@@ -544,32 +689,26 @@ const FirstForm = ({
             />
           </FormHeadingContainer>
           <GridRow>
-            {/* <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
-              <DateInput
-                label={"Date Of Joining"}
-                value={dateOfJoining}
-                // required={true}
-                readOnly={true}
-              />
-            </Grid> */}
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <SelectInput
                 label={"Is Physically Handicap"}
                 itemList={yesNoList}
-                value={isPhysicallyHandicap}
+                value={firstPageForm.isHandicap}
+                name={'isHandicap'}
                 onChange={handleIsPhysicallyHandicapOnChange}
                 sx={inputFieldStyle2}
                 required={true}
               />
             </Grid>
             {/* </GridRow> */}
-            {isPhysicallyHandicap === "Y" ? (
+            {firstPageForm.isHandicap === "Y" ? (
               // <GridRow>
-              <Grid sx={{ paddingLeft: { xs: "0px !important", md: "20px!important" }}}item xs={12} md={6}>
+              <Grid sx={{ paddingLeft: { xs: "0px !important", md: "20px!important" } }} item xs={12} md={6}>
                 <SelectInput
                   label={"Handicap type"}
                   itemList={disabilityList}
-                  value={handicapType}
+                  value={firstPageForm.handicapeType}
+                  name={'handicapeType'}
                   onChange={handleHandicapTypeOnChange}
                   sx={inputFieldStyle2}
                   required={true}

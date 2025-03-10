@@ -4,6 +4,8 @@ const addNewQuestion = ({
     verificationType,
     verificationQuestionSet
 }) => {
+    console.log('verificationType234', verificationType);
+    
     const _fatherVerificationQuestionSet = JSON.parse(JSON.stringify(fatherVerificationQuestionSet));
     const _passbookVerificationQuestionSet = JSON.parse(JSON.stringify(passbookVerificationQuestionSet));
     let updatedQuestion;

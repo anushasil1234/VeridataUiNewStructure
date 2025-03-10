@@ -1,37 +1,16 @@
 import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  Radio,
-  RadioGroup,
-  Stack,
-  Switch,
-  Tooltip,
-  Typography,
+  Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, FormControlLabel,
+  Grid, IconButton, Radio, RadioGroup, Stack, Switch, Tooltip, Typography
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import FormHeadingContainer from "shared/components/grid-container/form-heading-container";
 import FormHeading from "./form-heading";
 import GridRow from "shared/components/grid-container/grid-row";
-import {
-  divederStyle,
-  fileUploadSectionContainerStyle,
-  lable1CopyStyle,
-  positionRelative,
-  submitBtnContainerStyle,
-  submitBtnStyle,
-} from "app";
+import { divederStyle, fileUploadSectionContainerStyle, lable1CopyStyle, positionRelative, submitBtnContainerStyle, submitBtnStyle } from "app";
 import { Autorenew, HelpOutline, InfoOutlined } from "@mui/icons-material";
 import {
+  formSaveSuccess,
+  formSubmitionSuccess,
   getHandicapTypeDescription,
   handicapFileTypeAlias,
   imgAndPdfMaxSize,
@@ -49,17 +28,22 @@ import PassportFileNoSample from "assets/images/backgrounds/file-number-in-india
 import { DisableSection } from "shared/components/disble-section/disble-section";
 import { VerificationStatusSection } from "shared/components/verification/verification-status-section";
 import { useMsal } from "@azure/msal-react";
+import { useState } from "react";
+import { hasValue } from "shared/utils";
+import buildFormData from "shared/utils/associate/build-form-data";
+import { postUpdatePfUanDetails } from "server/apis";
 
 const SecondForm = ({
-  formElement,
+  // formElement,
   stepsList,
-  isPreviousSectionDisabled,
+  // isPreviousSectionDisabled,
   upload10thCertificateFile,
   tenthCertificateFileName,
   uploadFathersDocFile,
   otherFileName,
-  isPhysicallyHandicap,
-  handicapType,
+  // isPhysicallyHandicap,
+  // handicapType,
+  firstPageForm,
   uploadHandicapFile,
   handicapFileName,
   passportAvailable,
@@ -79,23 +63,39 @@ const SecondForm = ({
   uanNumberAvailable,
   handleChange,
   handleBack,
-  DraftSave,
+  // DraftSave,
   handleSaveClick,
   handleNext,
   isthirdNextVisible,
   isModalOpen,
   handleCloseModal,
-  handleConfirmSave,
+  // handleConfirmSave,
   passportFileNumber,
   setIsTrustEpfoAvailable,
-  handleViewFile
+  handleViewFile,
+  isAppointeeUanAvailable,
+  setIsUANAvailableState,
+  fileDetails,
+  uploadedFile,
+  clearFileVaribles,
+  setTrustEpfoFileName,
+  setHandicapFileName,
+  setPassportFileName,
+  setIsThirdNextVisible
 }) => {
   const functionSlice = useSelector((state) => state.functionSlice);
+  const loggedInData = useSelector((state) => state.loggedInData);
+
   const { openInfoModel } = functionSlice[0];
+  const { userId, appointeeId, userCode } = loggedInData[0];
   // const { accounts } = useMsal();
   // const loggedInData = useSelector((state) => state.loggedInData)
   // const { isDefaultPassword, isPasswordExpire } = loggedInData.length > 0 && loggedInData[0];
   // const loggedInTokendData = useSelector((state) => state.loggedinTokenData);
+
+  const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] =
+    useState(false);
+
 
   const handlePassporFileNumbertHelp = () => {
     const passportHelpContent = {
@@ -113,7 +113,89 @@ const SecondForm = ({
     };
     openInfoModel(passportHelpContent);
   };
+  const saveDetails = async (IsFinalSubmit) => {
+    let isUANAvailable = uanNumberAvailable === "yes" ? true : false;
+    setIsUANAvailableState(isUANAvailable);
 
+    // Proceed with the rest of the logic if verification passes
+    let payLoad = {
+      appointeeId: appointeeId,
+      userId: userId,
+      appointeeCode: userCode,
+      trustPassbookAvailable: isTrustEpfoAvailable,
+      IsUanAvailable: isUANAvailable,
+      fileDetails: fileDetails,
+      fileUploaded: uploadedFile,
+      IsFinalSubmit: IsFinalSubmit,
+    };
+    // Use the buildFormData helper function to create the formData
+    let formData = buildFormData(payLoad);
+
+    // Make the API call
+    const response = await postUpdatePfUanDetails(
+      formData,
+      formSubmitionSuccess
+    );
+    if (response) {
+      handleNext();
+      setIsPreviousSectionDisabled(true);
+      // setShowAdditionalSection(true);
+
+      //setIsUANappointeeAvailable(true)
+      clearFileVaribles(
+        trustEpfoFileTypeAlias,
+        setTrustEpfoFileName,
+        trustEpfoFileName
+      );
+      clearFileVaribles(
+        handicapFileTypeAlias,
+        setHandicapFileName,
+        handicapFileName
+      );
+      clearFileVaribles(
+        passportFileTypeAlias,
+        setPassportFileName,
+        passportFileName
+      );
+    }
+  };
+  const DraftSave = async () => {
+    let isUANAvailable = uanNumberAvailable === "yes" ? true : false;
+    setIsUANAvailableState(isUANAvailable);
+
+    // Proceed with the rest of the logic if verification passes
+    let payLoad = {
+      appointeeId: appointeeId,
+      userId: userId,
+      appointeeCode: userCode,
+      IsUanAvailable: isUANAvailable,
+      trustPassbookAvailable: isTrustEpfoAvailable,
+      fileDetails: fileDetails,
+      fileUploaded: uploadedFile,
+      IsFinalSubmit: false,
+    };
+    console.log('payLoad21', payLoad);
+
+    // Use the buildFormData helper function to create the formData
+
+    let formData = buildFormData(payLoad);
+    console.log('formData', formData);
+
+    // Make the API call
+    const response = await postUpdatePfUanDetails(formData, formSaveSuccess);
+    // if (response) {
+    //   clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName);
+    //   clearFileVaribles(handicapFileTypeAlias, setHandicapFileName);
+    //   clearFileVaribles(passportFileTypeAlias, setPassportFileName);
+    // }
+  };
+  const handleConfirmSave = async () => {
+    // Once the user confirms, save the details
+    await saveDetails(true);
+    handleCloseModal(); // Close the confirmation modal after saving
+    setIsThirdNextVisible(true);
+    //setCurrentPageNo(3);
+  };
   const handleNavigationToHelpPage = () => {
     // const channel = new BroadcastChannel('auth-channel');
     // const authData = {
@@ -125,9 +207,15 @@ const SecondForm = ({
     // channel.postMessage({ type: 'AUTH_DATA', data: authData });
     // window.open(toHelp, '_blank', 'noopener,noreferrer');
   };
+  useEffect(() => {
+    if (hasValue(isAppointeeUanAvailable)) {
+      setIsPreviousSectionDisabled(true);
+    }
+  }, [isAppointeeUanAvailable]);
   return (
     <Box sx={{ width: "100%" }}>
-      <form ref={formElement}>
+      {/* <form ref={formElement}> */}
+      <form >
         <Grid
           sx={{ paddingLeft: "20px" }}
           container
@@ -136,7 +224,7 @@ const SecondForm = ({
         >
 
           {/* ######  Passport upload Section Start ###### */}
-          {passportAvailable === "Y" ? (
+          {firstPageForm.isPassportAvailable === "Y" ? (
             <>
               <FormHeadingContainer>
                 <FormHeading
@@ -155,7 +243,7 @@ const SecondForm = ({
 
               <GridRow sx={positionRelative}>
                 <Grid sx={{ ...positionRelative }} item xs={12} md={12}>
-                  {!passportAvailable && <DisableSection />}
+                  {!firstPageForm.isPassportAvailable && <DisableSection />}
                 </Grid>
 
                 <Grid
@@ -166,10 +254,10 @@ const SecondForm = ({
                 >
                   <TextInput
                     label={"Passport Number"}
-                    value={passportNo}
+                    value={firstPageForm.passportNo}
                     disabled={isPreviousSectionDisabled}
                   />
-                  {countryOfOrigin === "India" && (
+                  {firstPageForm.originCountry === "India" && (
                     <>
                       <Button
                         sx={{
@@ -200,7 +288,7 @@ const SecondForm = ({
                     paddingLeft: { xs: "0px !important", md: "20px!important" },
                   }}
                 >
-                  {countryOfOrigin === "India" ? (
+                  {firstPageForm.originCountry === "India" ? (
                     <>
                       <TextInput
                         label={"Passport File Number"}
@@ -246,31 +334,31 @@ const SecondForm = ({
           {/* ######  Certificate Upload Section Start ###### */}
           <FormHeadingContainer>
             <FormHeading
-              step={stepsList.CF.step}
-              heading={stepsList.CF.name}
+              step={stepsList?.CF?.step}
+              heading={stepsList?.CF?.name}
               info={"Upload file details ."}
             />
           </FormHeadingContainer>
 
-          {process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH === 'true' && 
-          <GridRow>
-            <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
-              <Stack
-                flexDirection={"row"}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-              >
-                <Stack direction="row">
-                  <Typography
-                    sx={{
-                      ...lable1CopyStyle,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    {"10th pass Certificate"}
-                  </Typography>
-                  {/* <Tooltip
+          {process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH === 'true' &&
+            <GridRow>
+              <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
+                <Stack
+                  flexDirection={"row"}
+                  justifyContent={"space-between"}
+                  alignItems={"center"}
+                >
+                  <Stack direction="row">
+                    <Typography
+                      sx={{
+                        ...lable1CopyStyle,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      {"10th pass Certificate"}
+                    </Typography>
+                    {/* <Tooltip
                     arrow="bottom"
                     title={
                       <div>
@@ -299,75 +387,75 @@ const SecondForm = ({
                       <InfoOutlined />
                     </IconButton>
                   </Tooltip> */}
-                  <Tooltip
-                    arrow
-                    placement="bottom"
-                    title={
-                      <div style={{ fontSize: "16px" }}>
-                        {" "}
-                    
-                        <p>
-                          {
-                            "Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year."
-                          }
-                        </p>
-                        <a
-                          href={toHelp}
-                          rel="noopener noreferrer"
-                          style={{
-                            color: "#F57264",
-                            cursor: "pointer",
-                          }}
-                        >
-                          Read More
-                        </a>
-                      </div>
-                    }
-                  >
-                    <IconButton disabled={isPreviousSectionDisabled}>
-                      <InfoOutlined />
-                    </IconButton>
-                  </Tooltip>
+                    <Tooltip
+                      arrow
+                      placement="bottom"
+                      title={
+                        <div style={{ fontSize: "16px" }}>
+                          {" "}
+
+                          <p>
+                            {
+                              "Please upload a clear and legible scanned copy or photo of your 10th pass certificate. The certificate should clearly display your name, school name, and passing year."
+                            }
+                          </p>
+                          <a
+                            href={toHelp}
+                            rel="noopener noreferrer"
+                            style={{
+                              color: "#F57264",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Read More
+                          </a>
+                        </div>
+                      }
+                    >
+                      <IconButton disabled={isPreviousSectionDisabled}>
+                        <InfoOutlined />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
                 </Stack>
-              </Stack>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={6}
-              sx={{
-                paddingLeft: { xs: "0px !important", md: "20px!important" },
-              }}
-            >
-              <Typography
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={6}
                 sx={{
-                  ...lable1CopyStyle,
-                  textAlign: "center",
+                  paddingLeft: { xs: "0px !important", md: "20px!important" },
                 }}
               >
-                Please upload 10th pass certificate
-                <span className="requiredField">*</span>
-              </Typography>
-              <Box sx={fileUploadSectionContainerStyle}>
-                <FileUploadSection
-                  chooseFile={upload10thCertificateFile}
-                  // fileName={
-                  //   fileUploaded.some(file => file.uploadTypeAlias === "10THCERT")
-                  //     ? fileUploaded.find(file => file.uploadTypeAlias === "10THCERT").fileName
-                  //     : tenthCertificateFileName
-                  // }
-                  fileName={tenthCertificateFileName}
-                  accept={"image/png, image/jpeg,application/pdf"}
-                  disabled={isPreviousSectionDisabled}
-                  maxUploadSize={imgAndPdfMaxSize}
-                  uploadTypeAlias={tenthCertificateFileTypeAlias}
-                  // handleRemoveFile={remove10thPassCertificate}
-                  handleViewFile={handleViewFile}
+                <Typography
+                  sx={{
+                    ...lable1CopyStyle,
+                    textAlign: "center",
+                  }}
+                >
+                  Please upload 10th pass certificate
+                  <span className="requiredField">*</span>
+                </Typography>
+                <Box sx={fileUploadSectionContainerStyle}>
+                  <FileUploadSection
+                    chooseFile={upload10thCertificateFile}
+                    // fileName={
+                    //   fileUploaded.some(file => file.uploadTypeAlias === "10THCERT")
+                    //     ? fileUploaded.find(file => file.uploadTypeAlias === "10THCERT").fileName
+                    //     : tenthCertificateFileName
+                    // }
+                    fileName={tenthCertificateFileName}
+                    accept={"image/png, image/jpeg,application/pdf"}
+                    disabled={isPreviousSectionDisabled}
+                    maxUploadSize={imgAndPdfMaxSize}
+                    uploadTypeAlias={tenthCertificateFileTypeAlias}
+                    // handleRemoveFile={remove10thPassCertificate}
+                    handleViewFile={handleViewFile}
 
-                />
-              </Box>
-            </Grid>
-          </GridRow>}
+                  />
+                </Box>
+              </Grid>
+            </GridRow>}
           <GridRow>
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <Stack direction="row">
@@ -383,7 +471,7 @@ const SecondForm = ({
                 <Tooltip
                   arrow="bottom"
                   title={
-                    <div style={{fontSize:'16px'}}>
+                    <div style={{ fontSize: '16px' }}>
                       <p>
                         {
                           "Please upload a clear and legible scanned copy or photo of your PAN card. The image should clearly display your PAN number, name, and date of birth as mentioned on the card."
@@ -448,7 +536,7 @@ const SecondForm = ({
                   uploadTypeAlias={otherFileTypeAlias}
                   handleViewFile={handleViewFile}
 
-                  // handleRemoveFile={removeFathersDocCertificate}
+                // handleRemoveFile={removeFathersDocCertificate}
                 />
               </Box>
             </Grid>
@@ -456,7 +544,7 @@ const SecondForm = ({
           {/* ######  Certificate Upload Section End ###### */}
 
           {/* ######  Handicaped Section Start ###### */}
-          {isPhysicallyHandicap === "Y" && (
+          {firstPageForm.isHandicap === "Y" && (
             <>
               <FormHeadingContainer>
                 <FormHeading
@@ -474,7 +562,7 @@ const SecondForm = ({
                 >
                   <TextInput
                     label={"Handicap Type"}
-                    value={getHandicapTypeDescription(handicapType)}
+                    value={getHandicapTypeDescription(firstPageForm.handicapeType)}
                     disabled={isPreviousSectionDisabled}
                   />
                 </Grid>
@@ -522,8 +610,8 @@ const SecondForm = ({
           {/* ######  PF Verification Section Start ###### */}
           <FormHeadingContainer>
             <FormHeading
-              step={stepsList.PFD.step}
-              heading={stepsList.PFD.name}
+              step={stepsList?.PFD?.step}
+              heading={stepsList?.PFD?.name}
               info={"Upload file details ."}
             />
           </FormHeadingContainer>
@@ -549,7 +637,7 @@ const SecondForm = ({
                     <Tooltip
                       arrow="bottom"
                       title={
-                        <div style={{fontSize:'16px'}}> 
+                        <div style={{ fontSize: '16px' }}>
                           <p>
                             {
                               "Trust PF is privately managed by an employer like Reliance. Normal PF is government-managed like EPFO"

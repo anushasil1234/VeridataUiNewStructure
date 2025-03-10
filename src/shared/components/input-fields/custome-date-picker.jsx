@@ -5,7 +5,7 @@ import Label from './label';
 import DatePicker from 'shared/utils/date-picker/date-picker';
 import dayjs from 'dayjs';
 
-const CustomeDatePicker = ({ label, value, setValue, disabled, required, disableFuture = false, maxDate = null, minDate = null }) => {
+const CustomeDatePicker = ({ label, value, name, setValue, disabled, required, disableFuture = false, maxDate = null, minDate = null }) => {
     return (
         <FormControl sx={{ ...datePickerinputFieldStyle2 }} fullWidth>
             <Label required={required}>{label}</Label>
@@ -13,7 +13,7 @@ const CustomeDatePicker = ({ label, value, setValue, disabled, required, disable
                 disabled={disabled}
                 style={{ ...datePickerinputFieldStyle2 }}
                 value={value ? dayjs(value) : null}
-                setValue={(newDate) => { setValue(newDate) }}
+                setValue={(newDate) => { setValue(newDate, name) }}
                 disableFuture={disableFuture}
                 maxDate={maxDate}
                 minDate={minDate}

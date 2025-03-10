@@ -15,7 +15,7 @@ import EmploymentView from "modules/appointee/view/employment-details-view";
 import UserView from "modules/user/user-view/user-view";
 import RemarksInputModel from "../modals/remarks-modal";
 import RemarksTable from "shared/components/remarks-table/remarks-table";
-import { noRemarks, noRemarksMsg, toLogin } from "shared/constants/constants";
+import { noRemarks, noRemarksMsg, toLogin, toUserLogin } from "shared/constants/constants";
 import SubmitModal from "../modals/submit-modal";
 import IssueRemedy from "../issue-remedy/issue-remedy";
 import DocumentView from "shared/components/document-view/document-view";
@@ -317,9 +317,9 @@ const Modals = ({ closeModal }) => {
   const closeUploadedDocumentModal = () => {
     setUploadedDocumentModelOpen(false);
   };
-  const openUploadedDocumentModal = (previewURL, fileName, uploadTypeAlias) => {
+  const openUploadedDocumentModal = (previewURL, fileName, uploadTypeAlias, mimeType) => {
     setUploadedDocumentModelOpen(true);
-    setUploadedDocumentModelProps({ previewURL, fileName, uploadTypeAlias });
+    setUploadedDocumentModelProps({ previewURL, fileName, uploadTypeAlias,  mimeType});
   };
 
 
@@ -416,20 +416,26 @@ const Modals = ({ closeModal }) => {
   ]);
 
   useEffect(() => {
-    if (pathname === toLogin) {
-      closeViewModel();
-      closeUserViewModel();
+    if (pathname === toLogin || pathname === toUserLogin) {
       closeConfirmationModel();
-      closeConsentModal();
+      closeConfirmationYesNoModel();
+      closeOtpSubmitionModel();
+      closeViewModel();
+      closeVerify();
+      closePassbookViewModel();
+      closeEmploymentViewModel();
+      closeUserViewModel();
+      closeOtpForm();
+      closeRemarksInputModel();
       closeRemarksModel();
-      closeDocumentModel();
-
-      closeInfoModel();
       closeSubmitModel();
       closeRemedyModel();
-      closeOtpForm();
+      closeDocumentModel();
       closePasswordSubmitionModel();
       closeFilePasswordSubmitionModel();
+      closeUploadedDocumentModal();
+      closeConsentModal();
+      closeInfoModel();
     }
   }, [pathname]);
 

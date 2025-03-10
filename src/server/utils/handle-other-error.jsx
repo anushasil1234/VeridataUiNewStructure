@@ -10,6 +10,8 @@ const handleOtherErrors = (error) => {
         if (status === 500) {
             message = data.ErrorResponse?.UserMessage || "Internal Server Error";
         } else {
+            console.log('data2342', data);
+            
             message = data.title || data.errorResponse?.userMessage || statusText;
             if (data.errorResponse?.internalMessages?.length) {
                 message = data.errorResponse.internalMessages.map((element, index) => (
@@ -18,6 +20,8 @@ const handleOtherErrors = (error) => {
             }
         }
     }
+    console.log('message12', message);
+    
     message && showErrorMessage(message);
 };
 export default handleOtherErrors;

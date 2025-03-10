@@ -27,8 +27,6 @@ const DownloadReport = ({
   processStatus,
   passbookStatus,
   downloadStatus,
-  isPensionApplicable,
-  pensionStatus,
   toDate,
   setToDate,
   fromDate,
@@ -36,7 +34,6 @@ const DownloadReport = ({
   handleProcessStatusChange,
   handlePassbookStatusChange,
   handleDownloadStatusChange,
-  handlePensionStatusChange,
   isStatusFilter,
   hasPermission,
   infoDetails,
@@ -175,29 +172,6 @@ const DownloadReport = ({
                 <MenuItem value={'All'}>All</MenuItem>
                 <MenuItem value={true}>Manual</MenuItem>
                 <MenuItem value={false}>Auto</MenuItem>
-              </Select>
-            )}
-          </FormControl>
-       
-      </Grid>
-        ) : null}
-        
-    {pensionStatus && pensionStatus === true ? (
-      <Grid item xs={12} sm={6} md={3} lg={2}>
-          <FormControl sx={{ width: "100%" }} size="small">
-            <InputLabel id="demo-select-small" >Pension Applicable</InputLabel>
-            {isPensionApplicable !== undefined && (
-              <Select
-                sx={{ height: '57px' }}
-                labelId="demo-select-small"
-                id="demo-select-small"
-                value={isPensionApplicable}
-                label="Pension Applicable"
-                onChange={handlePensionStatusChange}
-              >
-                <MenuItem value={'All'}>All</MenuItem>
-                <MenuItem value={true}>Yes</MenuItem>
-                <MenuItem value={false}>No</MenuItem>
               </Select>
             )}
           </FormControl>

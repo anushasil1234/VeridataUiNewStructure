@@ -164,6 +164,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     // const [userId, setUserId] = useState(null);
     const [isVarified, setIsVarified] = useState();
     const dispatch = useDispatch();
+ 
     const clearSubDropdownListofVerificationType = (currentValue) => {
         clearCategoryRelatedVariables();
         setFiles([]);
@@ -178,11 +179,14 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     };
     const selectDefaultVerificationType = (value, _uploadedFileData) => {
         const target = { value };
-        handleChangeVerificationType({ target }, _uploadedFileData);
+        handleChangeVerificationType(value,'', _uploadedFileData);
     }
 
-    const handleChangeVerificationType = ({ target }, _uploadedFileData) => {
-        const { value: currentValue } = target;
+    const handleChangeVerificationType = (currentValue,name, _uploadedFileData) => {
+        const target = { value: currentValue };
+        // const { value: currentValue } = target;
+        console.log('currentValue', currentValue);
+        
         if (currentValue !== 'none') {
             const isSelectedItemDisabled = verificationTypeList.find(({ isDisabled, value }) =>
                 value === currentValue && isDisabled === true);
@@ -199,7 +203,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
             });
             setVerificationCategoryList(verificationCategoryList);
             // setFileTypeCategory(verificationCategoryList[0].value);
-            const { updatedQuestionSet } = addNewQuestion({ verificationType: target, verificationQuestionSet: [] });
+            const { updatedQuestionSet } = addNewQuestion({ verificationType:  target, verificationQuestionSet: [] });
 
             let currentDefaultVerificationUpdate;
             if (currentValue === fatherFileCategoryTypeAlias) {
@@ -230,9 +234,8 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
         setFile(value);
         await setFileImage(value);
     }
-    const handleCategoryChange = async ({ target }) => {
+    const handleCategoryChange = async (value) => {
 
-        const { value } = target;
         if (value !== defaultDropdownValue) {
             setFileTypeCategory(value);
             setCategorySelected(true);
@@ -302,8 +305,8 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
             setFileSrc(fileSrc);
         }
     }
-    const handleFileChange = async ({ target }) => {
-        const { value } = target;
+    const handleFileChange = async (value) => {
+        // const { value } = target;
         if (value !== 'none') {
             if (files.length === 1 && selectedFiles.length === 0) {
                 setSelectedFiles([value]);
@@ -411,6 +414,8 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
             setVerificationTypeList(verificationTypeList);
         }
     };
+ 
+ 
     useEffect(() => {
         if (files.length === 1 && selectedFiles.length === 0) {
             setSelectedFiles([files[0].value]);

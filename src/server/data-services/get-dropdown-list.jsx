@@ -1,10 +1,12 @@
 import { getCountryList, getDisabilityList, getEntityList, getFileTypeList, getGenderList, getMaritalStatusList, getNationalityList, getQualificationList, getReportFilterStatusList, getRoleList } from "server/apis";
 import { days, dayscoustom, genderList, relationList, upcomingRecruitsStatusList } from "shared/constants/constants";
 import showErrorMessage from "shared/utils/associate/show-error-message";
+import startLoader from "shared/utils/associate/start-loader";
+import stopLoader from "shared/utils/associate/stop-loader";
 
 export const getDropdownList = async () => {
   try {
-
+    startLoader();
     const nationalityList = await getNationalityList();
     const countryList = await getCountryList();
     const maritalStatusList = await getMaritalStatusList();
@@ -37,6 +39,8 @@ export const getDropdownList = async () => {
     return dropdownList;
   } catch (error) {
     showErrorMessage(error);
+  } finally {
+    stopLoader();
   }
 
 };

@@ -2,6 +2,6 @@ import ServerRequest from "server/utils/server-request";
 import { GetReportFilterStatus_URL } from "shared/constants/constants";
 
 const getReportFilterStatusList = () => 
-    ServerRequest(GetReportFilterStatus_URL, "GET");
+    ServerRequest(GetReportFilterStatus_URL, "GET", "", "", "", false);
 
 export { getReportFilterStatusList };

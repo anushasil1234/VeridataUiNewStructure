@@ -40,8 +40,8 @@ const PfcRequest = (Component) => {
         const [popUpAlertMessage, setPopUpAlertMessage] = useState();
         const dispatch = useDispatch();
         const timeoutRef = useRef(null);
-        // const inactivityTime = 10 * 60 * 1000; // 10 minutes in milliseconds
-        const inactivityTime = 1 * 60 * 1000; // 10 minutes in milliseconds
+        const inactivityTime = 10 * 60 * 1000; // 10 minutes in milliseconds
+        // const inactivityTime = 1 * 60 * 1000; // 1 minutes in milliseconds
         const API_KEY = (process.env.REACT_APP_API_API_KEY || '');
         const SECRET_KEY = (process.env.REACT_APP_API_API_SECRET || '');
         const PROXY_AUTH = (process.env.REACT_APP_API_PROXY_AUTH || '');
@@ -89,7 +89,7 @@ const PfcRequest = (Component) => {
 
         const handleClickOnLogoutEvent = () => {
             console.log('handleClickOnLogoutEvent');
-            
+
             const IsAdminUser = isAdmin();
             localStorage.clear();
             sessionStorage.clear();
@@ -115,77 +115,77 @@ const PfcRequest = (Component) => {
             return !roleTypeEnums.candidate.includes(userDetails.userTypeId);
         };
 
-        const setupAxiosInterceptors = (api) => {
-            api.interceptors.response.use(
-                response => response,
-                async error => {
-                    const originalRequest = error.config;
-                    if (error.response.status === 401 && !originalRequest._retry) {
-                        originalRequest._retry = true;
-                        try {
-                            if (isAdmin()) {
-                                const tokenResponse = await refreshAuthToken();
-                                if (tokenResponse.status === 200) {
-                                    const newTokenDetails = tokenResponse.data.responseInfo;
-                                    setLocalStorageItem("pfc-token", newTokenDetails);
-                                    originalRequest.headers['Authorization'] = `Bearer ${userDetails.userCode}|~|${userDetails.userId}|~|${newTokenDetails.token}`;
-                                    return api(originalRequest);
-                                }
-                            } else {
-                                // handleClickOnLogoutEvent();
-                                showErrorMessage("Your session has expired. Please login again.");
-                            }
-                        } catch (e) {
-                            // handleClickOnLogoutEvent();
-                            showErrorMessage("Your session has expired. Please login again.");
-                        }
-                    } else {
-                        handleOtherErrors(error);
-                    }
-                    return Promise.reject(error);
-                }
-            );
-        };
+        // const setupAxiosInterceptors = (api) => {
+        //     api.interceptors.response.use(
+        //         response => response,
+        //         async error => {
+        //             const originalRequest = error.config;
+        //             if (error.response.status === 401 && !originalRequest._retry) {
+        //                 originalRequest._retry = true;
+        //                 try {
+        //                     if (isAdmin()) {
+        //                         const tokenResponse = await refreshAuthToken();
+        //                         if (tokenResponse.status === 200) {
+        //                             const newTokenDetails = tokenResponse.data.responseInfo;
+        //                             setLocalStorageItem("pfc-token", newTokenDetails);
+        //                             originalRequest.headers['Authorization'] = `Bearer ${userDetails.userCode}|~|${userDetails.userId}|~|${newTokenDetails.token}`;
+        //                             return api(originalRequest);
+        //                         }
+        //                     } else {
+        //                         // handleClickOnLogoutEvent();
+        //                         showErrorMessage("Your session has expired. Please login again.");
+        //                     }
+        //                 } catch (e) {
+        //                     // handleClickOnLogoutEvent();
+        //                     showErrorMessage("Your session has expired. Please login again.");
+        //                 }
+        //             } else {
+        //                 handleOtherErrors(error);
+        //             }
+        //             return Promise.reject(error);
+        //         }
+        //     );
+        // };
 
-        const handleOtherErrors = (error) => {
-            let message;
-            if (error.response) {
-                const { status, statusText } = error.response;
-                const { data } = error.response;
+        // const handleOtherErrors = (error) => {
+        //     let message;
+        //     if (error.response) {
+        //         const { status, statusText } = error.response;
+        //         const { data } = error.response;
 
-                if (status === 500) {
-                    message = data.ErrorResponse?.UserMessage || "Internal Server Error";
-                } else {
-                    message = data.title || data.errorResponse?.userMessage || statusText;
-                    if (data.errorResponse?.internalMessages?.length) {
-                        message = data.errorResponse.internalMessages.map((element, index) => (
-                            <Typography key={index}>{element}</Typography>
-                        ));
-                    }
-                }
-            }
-            message && showErrorMessage(message);
-        };
+        //         if (status === 500) {
+        //             message = data.ErrorResponse?.UserMessage || "Internal Server Error";
+        //         } else {
+        //             message = data.title || data.errorResponse?.userMessage || statusText;
+        //             if (data.errorResponse?.internalMessages?.length) {
+        //                 message = data.errorResponse.internalMessages.map((element, index) => (
+        //                     <Typography key={index}>{element}</Typography>
+        //                 ));
+        //             }
+        //         }
+        //     }
+        //     message && showErrorMessage(message);
+        // };
 
-        const refreshAuthToken = async () => {
-            let methodHeader = {};
-            if (hasValue(API_KEY) && hasValue(SECRET_KEY) && hasValue(PROXY_AUTH)) {
-                methodHeader = {
-                    headers: {
-                        'proxyauthorization': PROXY_AUTH,
-                        'apikey': API_KEY,
-                        'apikeysecret': SECRET_KEY,
-                    }
-                };
-            }
-            const tokenDetails = getLocalStorageItem("pfc-token");
-            const BASE_URL = await decryptedData(process.env.REACT_APP_API_URL);
+        // const refreshAuthToken = async () => {
+        //     let methodHeader = {};
+        //     if (hasValue(API_KEY) && hasValue(SECRET_KEY) && hasValue(PROXY_AUTH)) {
+        //         methodHeader = {
+        //             headers: {
+        //                 'proxyauthorization': PROXY_AUTH,
+        //                 'apikey': API_KEY,
+        //                 'apikeysecret': SECRET_KEY,
+        //             }
+        //         };
+        //     }
+        //     const tokenDetails = getLocalStorageItem("pfc-token");
+        //     const BASE_URL = await decryptedData(process.env.REACT_APP_API_URL);
 
-            return axios.post(`${BASE_URL}/Account/GenerateRefreshToken`, {
-                token: tokenDetails.token,
-                refreshToken: tokenDetails.refreshToken
-            }, methodHeader);
-        };
+        //     return axios.post(`${BASE_URL}/Account/GenerateRefreshToken`, {
+        //         token: tokenDetails.token,
+        //         refreshToken: tokenDetails.refreshToken
+        //     }, methodHeader);
+        // };
 
         // const PfcRequest = async (url, type, payload, successMessage, isInternal = false) => {
         //     let APiSecretHeader = {};
@@ -227,38 +227,35 @@ const PfcRequest = (Component) => {
         //     }
         // };
 
-        useEffect(() => {
-            // const handleToastEvent = (event) => {
-            //     const { message, type } = event.detail;
 
-            // }
-
-        }, []);
 
         // Pass the loader control methods along with the PfcRequest function
         // dispatch(storePopUpSetFunction({ showErrorMessage, showSuccessMessage }));
 
         useEffect(() => {
-
+            console.log('addEventListener');
             if (roleTypeEnums.candidate.includes(userDetails?.userTypeId)) {
                 resetTimeout();
-                return () => {
-                    if (timeoutRef.current) {
-                        clearTimeout(timeoutRef.current);
-                    }
-                };
             }
+            console.log('addEventListener2');
+
+
             window.addEventListener("logout", handleClickOnLogoutEvent);
             window.addEventListener("show-error", showErrorMessageEvent);
             window.addEventListener("show-success", showSuccessMessageEvent);
             window.addEventListener("start-loader", startLoaderEvent);
             window.addEventListener("stop-loader", stopLoaderEvent);
             return () => {
+                console.log('removeEventListener');
+
                 window.removeEventListener("show-success", showSuccessMessageEvent);
                 window.removeEventListener("show-error", showErrorMessageEvent);
                 window.removeEventListener("start-loader", startLoaderEvent);
                 window.removeEventListener("stop-loader", stopLoaderEvent);
                 window.removeEventListener("logout", handleClickOnLogoutEvent);
+                if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current);
+                }
             };
         }, []);
 
@@ -272,7 +269,7 @@ const PfcRequest = (Component) => {
                     />
                 )}
                 {loading && <CircularIndeterminate />} {/* Loader is now controlled by the pendingRequests */}
-                <Component  startLoader={startLoader} stopLoader={stopLoader} />
+                <Component startLoader={startLoader} stopLoader={stopLoader} />
             </>
         );
     };

@@ -2,7 +2,7 @@ import { FormControl, MenuItem, Select, Typography } from '@mui/material'
 import { dropdownMenuItemStyle, inputFieldStyle2, inputFieldStylesx, lable1CopyStyle } from 'app'
 import { useTheme } from '@mui/material/styles';
 import Label from './label';
-const SelectInput = ({ itemList, label, onChange, value, required = false, disabled = false, handleClickOnMenuItem, sx, selectProperty = 'value' }) => {
+const SelectInput = ({ itemList, label, onChange, value, name, required = false, disabled = false, handleClickOnMenuItem, sx, selectProperty = 'value' }) => {
     const theme = useTheme();
 
     return (
@@ -15,7 +15,7 @@ const SelectInput = ({ itemList, label, onChange, value, required = false, disab
                 className="customeTextField"
                 disabled={disabled}
                 sx={sx ? sx : inputFieldStylesx}
-                onChange={onChange}
+                onChange={({target})=>onChange(target.value, name) }
                 value={value}
             >
                 <MenuItem

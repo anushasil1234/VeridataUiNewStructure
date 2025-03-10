@@ -13,7 +13,7 @@ import {
   rightMostBtnStyle,
   submitBtnStyle,
 } from "app";
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import VerificationQuiestions from "./verification-quiestions";
 import GridContainer from "shared/components/grid-container/grid-container";
@@ -140,21 +140,21 @@ const FiledetailsSection = ({
     return false;
   };
 
-    const handleVerificationSubmit = async () => {
-        let submitconfModelContent = {
-            dialogContentText: "",
-        };
-        if (selectedMandatoryCategoryList.length === 0) {
-            showErrorMessage(categoryFileEmptyerror);
-            return;
-        }
-        if (selectedFiles.length === 0) {
-            showErrorMessage(fileEmptyerror);
-            return;
-        }
-        // console.log("handleVerificationSubmit", verificationUpdate);
+  const handleVerificationSubmit = async () => {
+    let submitconfModelContent = {
+      dialogContentText: "",
+    };
+    if (selectedMandatoryCategoryList.length === 0) {
+      showErrorMessage(categoryFileEmptyerror);
+      return;
+    }
+    if (selectedFiles.length === 0) {
+      showErrorMessage(fileEmptyerror);
+      return;
+    }
+    // console.log("handleVerificationSubmit", verificationUpdate);
 
-        const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
+    const { error } = validateQuestionSet(verificationQuestionSet, verificationUpdate);
 
     if (error) {
       showErrorMessage(error);
@@ -171,7 +171,7 @@ const FiledetailsSection = ({
 
     if (
       selectedMandatoryCategoryList.length !==
-        verificationCategoryList.length &&
+      verificationCategoryList.length &&
       verificationType.verificationFieldName === fileVerificationEnums.docEPFO
     ) {
       submitconfModelContent.dialogContentText = (
@@ -287,7 +287,7 @@ const FiledetailsSection = ({
                       handleMouseDown,
                     })}
                   >
-                    {(mimeType === "image/jpeg" || mimeType ==='image/png') ? (
+                    {(mimeType === "image/jpeg" || mimeType === 'image/png') ? (
                       <img
                         style={{
                           position: "absolute",
@@ -320,11 +320,11 @@ const FiledetailsSection = ({
                       //   alt="File Preview"
                       // />
                       <embed
-                            src={`${fileSrc}#toolbar=0`}
-                            height="230px"
-                            width="500px"
-                            style={{
-                            position: "absolute",
+                        src={`${fileSrc}#toolbar=0`}
+                        height="230px"
+                        width="500px"
+                        style={{
+                          position: "absolute",
                           transform: `scale(${zoomLevel})`,
                           transition: "transform 0.3s ease",
                           transformOrigin: "center",
@@ -332,8 +332,8 @@ const FiledetailsSection = ({
                           maxHeight: "100%",
                           left: isDragging ? `${position.x}px` : "auto",
                           top: isDragging ? `${position.y}px` : "auto",
-                            }}
-                        />
+                        }}
+                      />
                     ) : (
                       ""
                     )}
@@ -351,7 +351,7 @@ const FiledetailsSection = ({
             <TextAreaInput
               label={"Remarks"}
               value={remarks}
-                            required={true}
+              required={true}
               onChange={handleRemarksChanged}
             />
           </GridContainer>

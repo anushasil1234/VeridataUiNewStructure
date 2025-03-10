@@ -148,7 +148,6 @@ export const epfoServiceHistoryFileTypeAlias = "EPFPSHF";
 export const tenthCertificateFileTypeAlias = "10THCERT";
 export const otherFileTypeAlias = "OTHID";
 export const handicapFileTypeAlias = "HANDCERT";
-export const AadhaarProfileImageTypeAlias = "ADHPRF";
 export const aadharFileTypeAlias = "ADH";
 export const passportFileTypeAlias = "VISA";
 export const epfTypeAlias = "EPFPSBK";
@@ -233,17 +232,6 @@ export const verifiedListTableHeadCell = [
       element: Typography,
     },
   },
-  // {
-  //   id: "candidateId",
-  //   numeric: true,
-  //   type: "string",
-  //   disablePadding: false,
-  //   label: "Candidate ID",
-  //   enums: ["candidateId"],
-  //   component: {
-  //     element: Typography,
-  //   },
-  // },
   {
     id: "dateOfJoining",
     numeric: true,
@@ -312,7 +300,7 @@ export const verifiedListTableHeadCell = [
       element: Typography,
     },
   },
- 
+
   {
     id: "status",
     numeric: true,
@@ -2491,7 +2479,7 @@ export const stepperDefaultList = {
   OD: {
     name: "Handicap Details",
     step: 3,
-  },
+  }
   // CF: {
   //   name: "Cerificate / File Upload",
   //   step: 4,
@@ -3120,3 +3108,42 @@ export const relationList = [
     value: "Husband"
   }
 ]
+
+export const defaultFirstPageForm = {
+  gender: null,
+  appointeeName: null,
+  dateOfBirth: null,
+  memberName: null,
+  memberRelation: null,
+  nationality: null,
+  qualification: null,
+  maratialStatus: null,
+  isPassportAvailable: null,
+  isInternationalWorker: null,
+  originCountry: null,
+  passportNo: null,
+  mobileNo: null,
+  appointeeEmailId: null,
+  passportValidFrom: null,
+  passportValidTill: null,
+  isHandicap: null,
+  uanNumber: null,
+  dateOfJoining: null,
+  epfWages: null,
+  handicapeType: null,
+  isPFverificationReq: null,
+  panName: null,
+  panNumber: null,
+  isAadhaarVarified: null,
+  isPensionApplicable: null,
+  isUanVarified: null,
+  // userId: userId,
+  // companyName,
+  // isSubmit: clickedButton === "S" ? false : true,
+}
+
+export const defaultSecondPageForm = {
+  trustPassbookAvailable: true,
+  fileDetails: [],
+  fileUploaded: [],
+}

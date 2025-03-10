@@ -14,6 +14,7 @@ import dataSlice from "./slices/data-slice";
 import ManualValidationResponseStatusSlice from "./slices/manual-validation-response-status-slice";
 import SetDropDownFunctionSlice from "./slices/set-dropdown-functions-slice"; 
 import SetRemarksFunctionSlice from "./slices/set-remarks-functions-slice"; 
+import CandidatePageSlice from "./slices/candidate-page-slice"; 
 
 const store = configureStore(
     {
@@ -32,7 +33,8 @@ const store = configureStore(
             setTableRowsSlice : setTableRowsSlice,
             DataSlice: dataSlice,
             SetDropDownFunctionSlice: SetDropDownFunctionSlice,
-            SetRemarksFunctionSlice: SetRemarksFunctionSlice
+            SetRemarksFunctionSlice: SetRemarksFunctionSlice,
+            CandidatePageSlice: CandidatePageSlice
         }       
     }
 );

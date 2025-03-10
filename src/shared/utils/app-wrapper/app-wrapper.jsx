@@ -577,7 +577,6 @@ const AppWrapper = (App) => {
 
 
 
-
     return (
       <>
         <App />
