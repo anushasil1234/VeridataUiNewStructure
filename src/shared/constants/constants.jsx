@@ -147,6 +147,7 @@ export const epfoPassbookFileTypeAlias = "EPFPSSBKMNL";
 export const epfoServiceHistoryFileTypeAlias = "EPFPSHF";
 export const tenthCertificateFileTypeAlias = "10THCERT";
 export const otherFileTypeAlias = "OTHID";
+export const AadhaarProfileImageTypeAlias = "ADHPRF";
 export const handicapFileTypeAlias = "HANDCERT";
 export const aadharFileTypeAlias = "ADH";
 export const passportFileTypeAlias = "VISA";
