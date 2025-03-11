@@ -1,0 +1,15 @@
+import { hasValue } from "..";
+
+const  generateRemarks = (remarks) => {
+    let remarksList = [];
+    if (hasValue(remarks)) {
+      remarksList = remarks.split(",").map((remark) => {
+        return {
+          remarksCategory: "NRML",
+          remarks: remark,
+        };
+      });
+    }
+    return remarksList;
+};
+export default generateRemarks;

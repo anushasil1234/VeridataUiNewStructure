@@ -26,6 +26,8 @@ import {
   NA,
   defaultFirstPageForm,
   defaultSecondPageForm,
+  emptyAccountNumberMsg,
+  emptyIFSCMsg,
 } from "shared/constants/constants";
 import {
   CreateStepSequience,
@@ -85,11 +87,12 @@ import FormContainer from "shared/components/grid-container/form-container";
 import FirstForm from "./first-form";
 import SecondForm from "./second-form";
 import ThirdForm from "./third-form";
-import { GenerateAadharOtp, generateUANOtp, getAppointeeDetails, getPassportDetails, getUANNumber, PostAadharOtp, postAppointeeDetails, postAppointeeFileDetails, postUpdatePfUanDetails, verifyAadharDetails, verifyPANDetails } from "server/apis";
+import { GenerateAadharOtp, generateUANOtp, getAppointeeDetails, getPassportDetails, getUANNumber, getUploadedFileDetailsById, PostAadharOtp, postAppointeeDetails, postAppointeeFileDetails, postUpdatePfUanDetails, verifyAadharDetails, verifyPANDetails } from "server/apis";
 import { submitUANOTP } from "server/apis/verify/submit-uan-otp";
 import showSuccessMessage from "shared/utils/associate/show-success-message";
 import showErrorMessage from "shared/utils/associate/show-error-message";
 import { storeCurrentPageNo } from "store/slices/candidate-page-slice";
+import { verifyBankDetails } from "server/apis/verify/verify-bank-details";
 
 const AppointeeRegisterForm = () => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
@@ -109,7 +112,7 @@ const AppointeeRegisterForm = () => {
   const functionSlice = useSelector((state) => state.functionSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
   const { openDocumentModel, openUploadedDocumentModal } = functionSlice[0];
-  const { GetUploadedFileDetailsById } = apiSlice[0];
+  // const { GetUploadedFileDetailsById } = apiSlice[0];
   const {
     openOtpForm,
     closeOtpForm,
@@ -213,11 +216,14 @@ const AppointeeRegisterForm = () => {
   const [panstatusMessage, setPANStatusMessage] = useState(
     new VerificationStatus()
   );
-
+  const [bankstatusMessage, setBankStatusMessage] = useState(
+    new VerificationStatus()
+  );
   const [isAadhaarVarified, setisAadhaarVarified] = useState(false);
   const [isAadhaarXmlUploaded, setIsAadhaarXmlUploaded] = useState(false);
   const [isOfflineXmlDownloaded, setIsOfflineXmlDownloaded] = useState(false);
   const [isPanVarified, setIsPanVarified] = useState(null);
+  const [isBankVarified, setIsBankVarified] = useState(null);
   const [isPassportVarified, setIsPassportVarified] = useState(false);
   const [isUanVarified, setisUanVarified] = useState(null);
   const [epfoButton, setEpfoButton] = useState(null);
@@ -237,6 +243,8 @@ const AppointeeRegisterForm = () => {
   const [aadharXmlFileName, setAadharXmlFileName] = useState([]);
   const [passportFileName, setPassportFileName] = useState([]);
   const [tenthCertificateFileName, setTenthCertificateFileName] = useState([]);
+  const [accountNumber, setAccountNumber] = useState(null);
+  const [IFSCCode, setIFSCCode] = useState(null);
   const [otherFileName, setOtherFileName] = useState([]);
   const [
     isRelationShipWithMemberDisabled,
@@ -1098,7 +1106,57 @@ const AppointeeRegisterForm = () => {
       setPANStatusMessage(new VerificationStatus(isValid, "V"));
     }
   };
+  const handleBankAccountVerification = async () => {
+    if (!isAadhaarVarified) {
+      showErrorMessage(aaddharNumberverify);
+      setPanNumberError(true);
+      return;
+    }
+    if (accountNumber === null) {
+      showErrorMessage(emptyAccountNumberMsg);
+    //  setPanNumberError(true);
+    } 
+    else if (IFSCCode === null) {
+      showErrorMessage(emptyIFSCMsg);
+    //  setPanNumberError(true);
+    } 
+    // else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
+    //   showErrorMessage(invalidPanMsg);
+    //   setPanNumberError(true);
+    // } 
+    else {
+      verifyBank();
+    }
+  }
+  const verifyBank = async () => {
+    const payLoad = {
+      appointeeId: appointeeId,
+      accountNumber: accountNumber,
+      Ifsc: hasValue(IFSCCode) ? removeExtraSpaces(IFSCCode) : null,
+      userId: userId,
+    };
+    const response = await verifyBankDetails(payLoad);
+    if (response) {
+      const { remarks, isValid } = response.responseInfo;
+      setIsBankVarified(isValid);
+      if (isValid) {
+       // setIsEpfoSectionDisabled(false);
+        //showSuccessMessage(panSuccessMsg);
+        //setIsPANModalOpen(true);
+        //console.log('panmodal');
 
+        //handleGetUANNumber();
+        // setPanNumberError(false);
+      } else {
+       // displayPanError(panVerifyFailedMsg);
+        if (hasValue(remarks)) {
+          const generatedRemarks = generateRemarks(remarks);
+          openRemarksModel(generatedRemarks);
+        }
+      }
+      setBankStatusMessage(new VerificationStatus(isValid, "V"));
+    }
+  } 
   // Function to handle dialog confirmation
   const handleDialogConfirm = () => {
     setIsPANModalOpen(false); // Close the dialog
@@ -1493,10 +1551,66 @@ const AppointeeRegisterForm = () => {
       }
     }
   };
+  const handleAccountNumberChange = (value) => {
+    // const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    setAccountNumber(value);
+    // if (value !== "none") {
+    //   if (value.length <= 10) {
+    //     const upperCaseValue = value.trim().toUpperCase();
+    //     setPan(upperCaseValue);
+    //     if (upperCaseValue.length === 10) {
+    //       if (panRegex.test(upperCaseValue)) {
+    //         setPanNumberError(false);
+    //         if (isAadhaarVarified) {
+    //           setPan(upperCaseValue);
+    //         } else {
+    //           showErrorMessage(aaddharNumberverify);
+    //         }
+    //       }
+    //       else {
+    //         setPanNumberError(true);
+    //         console.log('handelPANNumberChange');
+    //         showErrorMessage("Invalid PAN number format. Please enter a valid PAN.");
+    //       }
+    //     } 
+    //     else {
+    //       setPanNumberError(false);
+    //     }
+    //   }
+    // }
+  };
+  const handleIFSCCodeChange = (value) => {
+    // const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    setIFSCCode(value);
+    // if (value !== "none") {
+    //   if (value.length <= 10) {
+    //     const upperCaseValue = value.trim().toUpperCase();
+    //     setPan(upperCaseValue);
+    //     if (upperCaseValue.length === 10) {
+    //       if (panRegex.test(upperCaseValue)) {
+    //         setPanNumberError(false);
+    //         if (isAadhaarVarified) {
+    //           setPan(upperCaseValue);
+    //         } else {
+    //           showErrorMessage(aaddharNumberverify);
+    //         }
+    //       }
+    //       else {
+    //         setPanNumberError(true);
+    //         console.log('handelPANNumberChange');
+    //         showErrorMessage("Invalid PAN number format. Please enter a valid PAN.");
+    //       }
+    //     } 
+    //     else {
+    //       setPanNumberError(false);
+    //     }
+    //   }
+    // }
+  };
   const handleBlurPAN = () => {
     const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 
-    if (pan.length === 10 && !panRegex.test(pan)) {
+    if (pan?.length === 10 && !panRegex.test(pan)) {
       setPanNumberError(true);
       showErrorMessage("Invalid PAN number format. Please enter a valid PAN.");
     }
@@ -1571,7 +1685,7 @@ const AppointeeRegisterForm = () => {
       //   fileCategory: fileType,
       //   fileId: selectedFile.uploadDetailsId,
       // };
-      const response = await GetUploadedFileDetailsById(payload);
+      const response = await getUploadedFileDetailsById(payload);
       console.log('Uploaded file details', response);
 
       if (response && response.responseInfo) {
@@ -1751,17 +1865,25 @@ const AppointeeRegisterForm = () => {
                     aadharXmlFileName={aadharXmlFileName}
                     pan={pan}
                     handelPANNumberChange={handelPANNumberChange}
+                    handleAccountNumberChange={handleAccountNumberChange}
+                    handleIFSCCodeChange={handleIFSCCodeChange}
                     handleBlurPAN={handleBlurPAN}
                     disabledPanInput={disabledPanInput}
                     panNumberError={panNumberError}
                     isPanVarified={isPanVarified}
                     handlePanVerifiaction={handlePanVerifiaction}
+                    handleBankAccountVerification = {handleBankAccountVerification}
                     isPANModalOpen={isPANModalOpen}
                     handleDialogCancel={handleDialogCancel}
                     handleDialogConfirm={handleDialogConfirm}
                     panstatusMessage={panstatusMessage}
+                    bankstatusMessage = {bankstatusMessage}
                     nameAsOnPan={nameAsOnPan}
                     isEpfoSectionDisabled={isEpfoSectionDisabled}
+                    accountNumber={accountNumber}
+                    setAccountNumber={setAccountNumber}
+                    IFSCCode = {IFSCCode}
+                    setIFSCCode = {setIFSCCode}
                     setUAN={setUAN}
                     UAN={UAN}
                     isUanVarified={isUanVarified}
@@ -1785,6 +1907,7 @@ const AppointeeRegisterForm = () => {
                     handleViewFile={handleViewFile}
                     handleChangeinDateofexpiry={handleChangeinDateofexpiry}
 
+                   // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>
               ) : null}

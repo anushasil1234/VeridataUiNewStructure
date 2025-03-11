@@ -73,6 +73,7 @@ import { Link } from "react-router-dom";
 import VerficationAadharSteps from "shared/components/verification/verfication-aadhar";
 import { hasValue } from "shared/utils";
 import myImage from "assets/images/profile/instrucToServiceHistory.png";
+import BankVerification from "./bank-verifications";
 
 const ThirdForm = ({
   formElement,
@@ -99,14 +100,20 @@ const ThirdForm = ({
   panNumberError,
   isPanVarified,
   handlePanVerifiaction,
+  handleBankAccountVerification,
   isPANModalOpen,
   handleDialogCancel,
   handleDialogConfirm,
   panstatusMessage,
+  bankstatusMessage,
   nameAsOnPan,
   isEpfoSectionDisabled,
   setUAN,
   UAN,
+  setAccountNumber,
+  accountNumber,
+  setIFSCCode,
+  IFSCCode,
   isUanVarified,
   handleEpfoButtonClick,
   isUanVerificationProcessManual,
@@ -122,7 +129,8 @@ const ThirdForm = ({
   handleBack,
   submitDetails,
   aadharNumber,
-  handleViewFile  
+  handleViewFile,
+  otherVerification 
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -431,7 +439,20 @@ const shareCodeProps = {
             </Grid>
           </GridRow>
           {/* ######  PAN Verification Section End ###### */}
-          {/* ######  UAN Verification Section Start ###### */}
+
+
+          {/* ###### Bank Verification Section End ###### */}
+          <BankVerification isAadhaarVarified={isAadhaarVarified} stepsList = {stepsList}/>
+
+
+         
+
+
+          {/* ###### Bank Verification Section End ###### */}
+
+
+
+          {/* ###### UAN Verification Section Start ###### */}
           <FormHeadingContainer>
             <FormHeading
               step={stepsList?.UAV?.step}

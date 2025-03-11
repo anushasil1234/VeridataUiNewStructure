@@ -15,7 +15,7 @@ import {
   AccountBox,
 } from "@mui/icons-material";
 import exclamation from "assets/images/exclamation.png";
-import FullScreenModel from "shared/utils/models/fullscreen-modal";
+import FullScreenModel from "shared/utils/modals/fullscreen-modal";
 import {
   DATEDIFF,
   DDMMYYYY,
@@ -70,15 +70,17 @@ import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
 import { storeActionRoute } from "store/slices/action-route-slice";
 import ActionPermission from "shared/components/action-permission/action-permission";
+import ProfileImg from 'assets/images/profile/user-2.jpg';
 import {
   FieldName,
   FieldValue,
   PersonalInformation,
 } from "shared/components/display-information/personal-information";
-import RemarksInputModel from "shared/utils/models/remarks-modal";
+import RemarksInputModel from "shared/utils/modals/remarks-modal";
 // import viewImage from 'assets/images/profile/view_image.png';
 import { FileViewComponent } from "./file-view-component";
-import ProfileImg from 'assets/images/profile/user-2.jpg';
+import { getAppointeeActivity, getAppointeeDetails, getEmploymentDetails, getPassbookDetails, getRemarks, getUploadedFileDetailsById, postAppointeeApproved, postAppointeePensionApplicable, postAppointeeRejected  } from "server/apis";
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 const DocumentDetails = ({ fieldName, fieldValue, isVerified }) => {
   return (
@@ -109,14 +111,18 @@ let AppointeeViewForm = ({
   const apiSlice = useSelector((state) => state.apiSlice);
   const dropdownList = useSelector((state) => state.dropdownList);
   const functionSlice = useSelector((state) => state.functionSlice);
-  const popUpSlice = useSelector((state) => state.popUpSlice);
+  // const popUpSlice = useSelector((state) => state.popUpSlice);
+  const setRemarksFunctionSlice = useSelector((state) => state.SetRemarksFunctionSlice);
+  const setRemarks = setRemarksFunctionSlice && setRemarksFunctionSlice[0] && setRemarksFunctionSlice[0].setRemarks;
+
+  console.log('setRemarks11', setRemarks);
+  
   const [isLoading, setIsLoading] = useState(false);
   const { navigateTo } = commonHooksFunctionSlice[0];
 
-  const { showErrorMessage } = popUpSlice[0];
+  // const { showErrorMessage } = popUpSlice[0];
   const {
     openRemarksModel,
-    setRemarks,
     openRemarksInputModel,
     closeRemarksInputModel,
     openConfirmationYesNoModal,
@@ -137,15 +143,14 @@ let AppointeeViewForm = ({
     userId: null,
   };
   const {
-    postAppointeeRejected,
-    postAppointeeApproved,
-    postAppointeePensionApplicable,
-    getAppointeeDetails,
-    getAppointeeActivity,
-    getRemarks,
-    getPassbookDetails,
-    getEmployementDetails,
-    GetUploadedFileDetailsById
+    // postAppointeeRejected,
+    // postAppointeeApproved,
+    // postAppointeePensionApplicable,
+    // getAppointeeDetails,
+    // getAppointeeActivity,
+    // getRemarks,
+    // getPassbookDetails,
+    // getEmployementDetails,
   } = apiSlice[0];
   const [UAN, setUAN] = useState(null);
   const [uanNumber, setUanNumber] = useState(null);
@@ -177,7 +182,6 @@ let AppointeeViewForm = ({
   const [otherFile, setOtherFile] = useState();
   const [trustPfFile, setTrustPfFile] = useState();
   const [manualPassbookFile, setManualPassbookFile] = useState();
-  const [otherFilePayload, setOtherFilePayload] = useState();
   const [EPFOServiceHistoryFile, setEPFOServiceHistoryFile] = useState();
   const [isdocumentVerified, setIsDocumentVerified] = useState(null);
   const [isUanVerified, setIsUanVerified] = useState(null);
@@ -202,8 +206,8 @@ let AppointeeViewForm = ({
   const [isManualPassbook, setIsManualPassbook] = useState(null);
   const [isPensionApplicable, setIsPensionApplicable] = useState(null);
   const [filesByAlias, setFilesByAlias] = useState(new Map());
-const [fileDataStore, setFileDataStore] = useState();
-
+  const [fileDataStore, setFileDataStore] = useState();
+  const [otherFilePayload, setOtherFilePayload] = useState();
   const dispatch = useDispatch();
 
   const actionsAfterProcess = (actionRoute) => {
@@ -488,7 +492,7 @@ const [fileDataStore, setFileDataStore] = useState();
       fileCategory : otherFilePayload?.uploadTypeAlias,
       fileId : otherFilePayload?.uploadDetailsId
     }
-    const response1 = await GetUploadedFileDetailsById(payload);
+    const response1 = await getUploadedFileDetailsById(payload);
     console.log('Uploaded file details',response1);
     const {responseInfo} = response1;
     const {fileData} = responseInfo;
@@ -687,7 +691,7 @@ const [fileDataStore, setFileDataStore] = useState();
 
   const handleServiceHistoryView = async () => {
     try {
-      const response = await getEmployementDetails(appointeeId, userId);
+      const response = await getEmploymentDetails(appointeeId, userId);
       const { pfUan, companies } = response?.responseInfo || {};
       if (pfUan && Array.isArray(companies) && companies.length > 0) {
         const epfoDetails = response.responseInfo;

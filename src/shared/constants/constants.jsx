@@ -29,6 +29,8 @@ export const emptyShareCodeMsg = `Aadhaar share code is empty`;
 export const emptyAadharNoMsg = `Aadhaar can't be empty`;
 export const aadharPatternErrorMsg = `Aadhaar should be a 12 digit number`;
 export const emptyPanMsg = `PAN number or name on PAN is missing`;
+export const emptyAccountNumberMsg = `Bank account number is missing`;
+export const emptyIFSCMsg = `IFSC is missing`;
 export const aadharVerifySuccessMsg = `Aadhaar has been verified successfully`;
 export const aadharVerifyFailedMsg = `Aadhaar has not been verified`;
 export const uanVerifyFailedMsg = `UAN has not been verified`;
@@ -2575,6 +2577,7 @@ export const EmployementDetails_URL = (AppointeeId, userId) => {
 };
 export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetails`;
 export const VerifyPanDetails_URL = `${AadhaarValidate}/VerifyPanDetails`;
+export const VerifyBankAccountDetails_URL = `${AadhaarValidate}/VerifyBanKDetails`;
 export const VerifyAadharViaXml_URL = `${AadhaarValidate}/VerifyAadharViaXml`;
 export const GenerateUANOTP_URL = `${AadhaarValidate}/UANGenerateOTP`;
 export const GetUANNumber_URL = `${AadhaarValidate}/GetUANDetails`;
