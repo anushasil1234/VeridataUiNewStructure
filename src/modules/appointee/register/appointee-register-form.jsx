@@ -87,6 +87,7 @@ import FormContainer from "shared/components/grid-container/form-container";
 import FirstForm from "./first-form";
 import SecondForm from "./second-form";
 import ThirdForm from "./third-form";
+import FourthForm from "./fourth-form";
 import { GenerateAadharOtp, generateUANOtp, getAppointeeDetails, getPassportDetails, getUANNumber, getUploadedFileDetailsById, PostAadharOtp, postAppointeeDetails, postAppointeeFileDetails, postUpdatePfUanDetails, verifyAadharDetails, verifyPANDetails } from "server/apis";
 import { submitUANOTP } from "server/apis/verify/submit-uan-otp";
 import showSuccessMessage from "shared/utils/associate/show-success-message";
@@ -97,7 +98,7 @@ import { verifyBankDetails } from "server/apis/verify/verify-bank-details";
 const AppointeeRegisterForm = () => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
   const loginUserData = getLocalStorageItem("pfc-user");
-  const steps = ["Step 1", "Step 2", "Step 3"];
+  const steps = ["Step 1", "Step 2", "Step 3","Step 4"];
   //const today = dayjs();
   // Function to retrieve saved step from localStorage
   const [activeStep, setActiveStep] = useState(0);
@@ -1259,6 +1260,11 @@ const AppointeeRegisterForm = () => {
     setCurrentPageNo(2);
   };
 
+  const handleThirdNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setCurrentPageNo(4);
+  };
+
   const handleChange = (event) => {
     const value = event.target.value;
     setUanNumberAvailable(value);
@@ -1906,6 +1912,41 @@ const AppointeeRegisterForm = () => {
                     handleChangeAadharNumber={handleChangeAadharNumber}
                     handleViewFile={handleViewFile}
                     handleChangeinDateofexpiry={handleChangeinDateofexpiry}
+                    currentPageNo = {currentPageNo}
+                    setCurrentPageNo={setCurrentPageNo}
+                    handleThirdNext={handleThirdNext}
+                    activeStep = {activeStep}
+                    setActiveStep={setActiveStep}
+
+                   // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
+                  />
+                </>
+              ) : null}
+
+              {currentPageNo === 4 ? (
+                <>
+                  <FourthForm
+                    formElement={formElement}
+                    stepsList={stepsList}
+                    pan={pan}
+                    handelPANNumberChange={handelPANNumberChange}
+                    handleAccountNumberChange={handleAccountNumberChange}
+                    handleIFSCCodeChange={handleIFSCCodeChange}
+                    handleBlurPAN={handleBlurPAN}
+                    disabledPanInput={disabledPanInput}
+                    panNumberError={panNumberError}
+                    isPanVarified={isPanVarified}
+                    handlePanVerifiaction={handlePanVerifiaction}
+                    handleBankAccountVerification = {handleBankAccountVerification}
+                    isPANModalOpen={isPANModalOpen}
+                    handleDialogCancel={handleDialogCancel}
+                    handleDialogConfirm={handleDialogConfirm}
+                    panstatusMessage={panstatusMessage}
+                    bankstatusMessage = {bankstatusMessage}
+                    nameAsOnPan={nameAsOnPan}
+                    currentPageNo = {currentPageNo}
+                    setCurrentPageNo={setCurrentPageNo}
+                    handleBack={handleBack}
 
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />

@@ -21,7 +21,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import FormHeadingContainer from "shared/components/grid-container/form-heading-container";
 import FormHeading from "./form-heading";
 import GridRow from "shared/components/grid-container/grid-row";
@@ -130,11 +130,19 @@ const ThirdForm = ({
   submitDetails,
   aadharNumber,
   handleViewFile,
-  otherVerification 
+  otherVerification,
+  currentPageNo,
+  setCurrentPageNo,
+  activeStep,
+  setActiveStep
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
   console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
+
+  console.log("currentPageNo", currentPageNo);
+
+  console.log("activeStep", activeStep);
 
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openInfoModel } = functionSlice[0];
@@ -163,27 +171,27 @@ const ThirdForm = ({
   const [passwordFieldIcon, setPasswordFieldIcon] = useState(
     <VisibilityOff sx={loginFieldIconStyle} />
   );
-const handleShareCodeVisibility = () => {
-  setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
-};
-const handleAadharShareCode = (val) => {
-  console.log('sharecode',val)
-  if (/^\d{0,4}$/.test(val)) {
-    setAadharShareCode(val);
+  const handleShareCodeVisibility = () => {
+    setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
+  };
+  const handleAadharShareCode = (val) => {
+    console.log('sharecode', val)
+    if (/^\d{0,4}$/.test(val)) {
+      setAadharShareCode(val);
+    }
   }
-}
-const shareCodeProps = {
-  endAdornment: (
-    <InputAdornment position="end">
-      <IconButton
-        aria-label="toggle password visibility"
-        onClick={handleShareCodeVisibility}
-      >
-        {passwordFieldIcon}
-      </IconButton>
-    </InputAdornment>
-  ),
-};
+  const shareCodeProps = {
+    endAdornment: (
+      <InputAdornment position="end">
+        <IconButton
+          aria-label="toggle password visibility"
+          onClick={handleShareCodeVisibility}
+        >
+          {passwordFieldIcon}
+        </IconButton>
+      </InputAdornment>
+    ),
+  };
   useEffect(() => {
     if (isPasswordVisibilityOn) {
       setPasswordType("text");
@@ -193,6 +201,8 @@ const shareCodeProps = {
       setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
     }
   }, [isPasswordVisibilityOn]);
+
+
   return (
     <Box sx={{ width: "100%" }}>
       <form ref={formElement}>
@@ -305,13 +315,13 @@ const shareCodeProps = {
                     // }}
                     onKeyDown={(e) => {
                       // Allow only digits and restrict any other key presses
-                    // /  const regex = /^[0-4]*$/;
+                      // /  const regex = /^[0-4]*$/;
                       if (!/^\d{0,4}$/.test(e.key) && e.key !== 'Backspace') {
                         e.preventDefault();
                       }
                     }}
                     value={aadharShareCode}
-                  //  onChange={setAadharShareCode}
+                    //  onChange={setAadharShareCode}
                     disabled={disabledAadharInput || !isAadhaarXmlUploaded}
                     inputProps={shareCodeProps}
                     type={passwordType}
@@ -442,10 +452,10 @@ const shareCodeProps = {
 
 
           {/* ###### Bank Verification Section End ###### */}
-          <BankVerification isAadhaarVarified={isAadhaarVarified} stepsList = {stepsList}/>
+          <BankVerification isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} />
 
 
-         
+
 
 
           {/* ###### Bank Verification Section End ###### */}
@@ -682,6 +692,18 @@ const shareCodeProps = {
                   color="primary"
                 >
                   {previousButton}
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    setCurrentPageNo(4);  // Set currentPageNo to 4
+                    setActiveStep(3);     // Set active step to 3
+                  }}
+                  sx={submitBtnStyle}
+                  variant="contained"
+                  color="primary"
+                >
+                  {"Next"}
                 </Button>
 
                 {isUanVerificationProcessManual === "manual" && (
