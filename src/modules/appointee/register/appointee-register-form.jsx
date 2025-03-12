@@ -95,11 +95,12 @@ import showSuccessMessage from "shared/utils/associate/show-success-message";
 import showErrorMessage from "shared/utils/associate/show-error-message";
 import { storeCurrentPageNo } from "store/slices/candidate-page-slice";
 import { verifyBankDetails } from "server/apis/verify/verify-bank-details";
+import SixthForm from "./sixth-form";
 
 const AppointeeRegisterForm = () => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
   const loginUserData = getLocalStorageItem("pfc-user");
-  const steps = ["Step 1", "Step 2", "Step 3","Step 4","Step 5"];
+  const steps = ["Step 1", "Step 2", "Step 3","Step 4","Step 5","Step 6"];
   //const today = dayjs();
   // Function to retrieve saved step from localStorage
   const [activeStep, setActiveStep] = useState(0);
@@ -1872,8 +1873,8 @@ const AppointeeRegisterForm = () => {
                     aadharXmlFileName={aadharXmlFileName}
                     pan={pan}
                     handelPANNumberChange={handelPANNumberChange}
-                    handleAccountNumberChange={handleAccountNumberChange}
-                    handleIFSCCodeChange={handleIFSCCodeChange}
+                   // handleAccountNumberChange={handleAccountNumberChange}
+                   // handleIFSCCodeChange={handleIFSCCodeChange}
                     handleBlurPAN={handleBlurPAN}
                     disabledPanInput={disabledPanInput}
                     panNumberError={panNumberError}
@@ -1887,10 +1888,10 @@ const AppointeeRegisterForm = () => {
                     bankstatusMessage = {bankstatusMessage}
                     nameAsOnPan={nameAsOnPan}
                     isEpfoSectionDisabled={isEpfoSectionDisabled}
-                    accountNumber={accountNumber}
-                    setAccountNumber={setAccountNumber}
-                    IFSCCode = {IFSCCode}
-                    setIFSCCode = {setIFSCCode}
+                    //  accountNumber={accountNumber}
+                    //  setAccountNumber={setAccountNumber}
+                    // IFSCCode = {IFSCCode}
+                    //  setIFSCCode = {setIFSCCode}
                     setUAN={setUAN}
                     UAN={UAN}
                     isUanVarified={isUanVarified}
@@ -1918,7 +1919,8 @@ const AppointeeRegisterForm = () => {
                     handleThirdNext={handleThirdNext}
                     activeStep = {activeStep}
                     setActiveStep={setActiveStep}
-
+                    firstPageForm = {firstPageForm}
+                    setFirstPageForm = {setFirstPageForm}
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>
@@ -1940,6 +1942,7 @@ const AppointeeRegisterForm = () => {
                   />
                 </>
               ) : null}
+              
 
               {currentPageNo === 5 ? (
                 <>
@@ -1958,7 +1961,29 @@ const AppointeeRegisterForm = () => {
                   />
                 </>
               ) : null}
-
+              {currentPageNo === 6 ? (
+                <>
+                  <SixthForm
+                    isAadhaarVarified={isAadhaarVarified}
+                    formElement={formElement}
+                    stepsList={stepsList}
+                    currentPageNo = {currentPageNo}
+                    setCurrentPageNo={setCurrentPageNo}
+                    handleBack={handleBack}
+                    handleViewFile = {handleViewFile}
+                    firstPageForm = {firstPageForm}
+                    epfoButton={epfoButton}
+                    epfostatusMessage={epfostatusMessage}
+                    uanAadharLink={uanAadharLink}
+                    handleChangeUanVerification={handleChangeUanVerification}
+                    uploadEpfoServiceHistoryFile={uploadEpfoServiceHistoryFile}
+                    epfoServiceHistoryFile={epfoServiceHistoryFile}
+                    uploadEpfoPassBookFile={uploadEpfoPassBookFile}
+                    removeEPFOPassbookFile={removeEPFOPassbookFile}
+                    epfoPassBookFiles={epfoPassBookFiles}
+                  />
+                </>
+              ) : null}
             </FormContainer>
           </Box>
           <FormDialog

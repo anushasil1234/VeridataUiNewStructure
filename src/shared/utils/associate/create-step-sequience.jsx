@@ -48,6 +48,15 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
             name: 'Aadhaar Verification'
         }
     }
+
+    _stepCounter = _stepCounter + 1;
+    _steps = {
+        ..._steps,
+        DLV: {
+            step: _stepCounter,
+            name: 'Driving License Verification'
+        }
+    }
     _stepCounter = _stepCounter + 1;
     _steps = {
         ..._steps,
@@ -61,7 +70,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         BAV: {
             step: _stepCounter,
-            name: 'Bank Account Verification'
+            name: 'Bank Verification'
         }
     }
     _stepCounter = _stepCounter + 1;

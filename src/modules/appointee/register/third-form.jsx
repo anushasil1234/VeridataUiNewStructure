@@ -38,6 +38,7 @@ import {
   responsiveBtnType1Style,
   statusBoxstyle,
   statusstyle,
+  subHeadingContentTextStyle,
   submitBtnContainerStyle,
   submitBtnStyle,
   verificationBtnStyle,
@@ -74,6 +75,7 @@ import VerficationAadharSteps from "shared/components/verification/verfication-a
 import { hasValue } from "shared/utils";
 import myImage from "assets/images/profile/instrucToServiceHistory.png";
 import BankVerification from "./bank-verifications";
+import DrivingLicenseVerification from "./driving-licence-verification";
 
 const ThirdForm = ({
   formElement,
@@ -100,20 +102,20 @@ const ThirdForm = ({
   panNumberError,
   isPanVarified,
   handlePanVerifiaction,
-  handleBankAccountVerification,
+  // handleBankAccountVerification,
   isPANModalOpen,
   handleDialogCancel,
   handleDialogConfirm,
   panstatusMessage,
-  bankstatusMessage,
+  // bankstatusMessage,
   nameAsOnPan,
   isEpfoSectionDisabled,
   setUAN,
   UAN,
-  setAccountNumber,
-  accountNumber,
-  setIFSCCode,
-  IFSCCode,
+  // setAccountNumber,
+  // accountNumber,
+  // setIFSCCode,
+  // IFSCCode,
   isUanVarified,
   handleEpfoButtonClick,
   isUanVerificationProcessManual,
@@ -134,7 +136,9 @@ const ThirdForm = ({
   currentPageNo,
   setCurrentPageNo,
   activeStep,
-  setActiveStep
+  setActiveStep,
+  firstPageForm,
+  setFirstPageForm
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -175,11 +179,11 @@ const ThirdForm = ({
     setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
   };
   const handleAadharShareCode = (val) => {
-    console.log('sharecode', val)
+    console.log("sharecode", val);
     if (/^\d{0,4}$/.test(val)) {
       setAadharShareCode(val);
     }
-  }
+  };
   const shareCodeProps = {
     endAdornment: (
       <InputAdornment position="end">
@@ -201,8 +205,34 @@ const ThirdForm = ({
       setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
     }
   }, [isPasswordVisibilityOn]);
-
-
+    const handleClickOnNext = async () => {
+      // const ConfirmationModelContent = {
+      //   dialogTitle: (
+      //     <div
+      //       style={{
+      //         display: "flex",
+      //         justifyContent: "space-between",
+      //         alignItems: "center",
+      //       }}
+      //     >
+      //       <Typography>Confirmation to save changes?</Typography>
+      //     </div>
+      //   ),
+      //   dialogContentText: (
+      //     <>
+      //       <Typography sx={subHeadingContentTextStyle}>
+      //         {/* {pensionConfirmation} */}
+      //         This won't save the changes you have made. Do you want to proceed
+      //         without saving changes?
+      //       </Typography>
+      //       <Typography> </Typography>
+      //     </>
+      //   ),
+      //   fullWidth: true,
+      //   mxWidth: "md",
+      // };
+      // openConfirmationYesNoModal(ConfirmationModelContent, handleYes, handleNo);
+    };
   return (
     <Box sx={{ width: "100%" }}>
       <form ref={formElement}>
@@ -222,80 +252,87 @@ const ThirdForm = ({
               }
             />
           </FormHeadingContainer>
-          {
-            AADHARVERIFICATION_BY === "XML" && (
-              <>
-                <GridRow>
-                  <Typography sx={headingType1}>
-                    As part of onboarding process, Please generate your e-KYC
-                    verification file and upload it here. To see the details steps,
-                    {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
+          {AADHARVERIFICATION_BY === "XML" && (
+            <>
+              <GridRow>
+                <Typography sx={headingType1}>
+                  As part of onboarding process, Please generate your e-KYC
+                  verification file and upload it here. To see the details
+                  steps,
+                  {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
                         Aadhaar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      cursor: "pointer",
-                      color: "#9A208C",
-                      fontWeight: 500,
-                    }}
-                    onClick={() => openOfflineKycInfoModel()}
-                  >
-                    Click here
-                  </Typography>
-                </GridRow>
-                <GridRow>
-                  <FormControl sx={{ flexDirection: "row", alignItems: "center", flexWrap: "wrap" }}>
-                    {isAadhaarVarified ? (
-                      <>
-                        <FormControlLabel
-                          sx={checkBoxLabelStyle}
-                          control={
-                            <Checkbox
-                              disabled
-                              checked
-                              inputProps={{ "aria-label": "controlled" }}
-                              sx={checkBoxStyle}
-                            />
-                          }
-                        ></FormControlLabel>
-                        <Typography
-                          onClick={() =>
-                            setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)
-                          }
-                          sx={checkBoxLabelStyle}
-                        >
-                          I have downloaded the Aadhar e-KYC file
-                        </Typography>
-                      </>
-                    ) : (
-                      <>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={isOfflineXmlDownloaded}
-                              sx={{ paddingLeft: 0 }}
-                              onChange={handleIsOfflineXmlDownloadedOnChange}
-                              inputProps={{ "aria-label": "controlled" }}
-                            />
-                          }
-                        ></FormControlLabel>
-                        <Typography
-                          onClick={() =>
-                            setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)
-                          }
-                          sx={checkBoxLabelStyle}
-                        >
-                          I have downloaded the Aadhar e-KYC file
-                        </Typography>
-                      </>
-                    )}
-                  </FormControl>
-                </GridRow>
-              </>
-            )
-          }
+                </Typography>
+                <Typography
+                  sx={{
+                    cursor: "pointer",
+                    color: "#9A208C",
+                    fontWeight: 500,
+                  }}
+                  onClick={() => openOfflineKycInfoModel()}
+                >
+                  Click here
+                </Typography>
+              </GridRow>
+              <GridRow>
+                <FormControl
+                  sx={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {isAadhaarVarified ? (
+                    <>
+                      <FormControlLabel
+                        sx={checkBoxLabelStyle}
+                        control={
+                          <Checkbox
+                            disabled
+                            checked
+                            inputProps={{ "aria-label": "controlled" }}
+                            sx={checkBoxStyle}
+                          />
+                        }
+                      ></FormControlLabel>
+                      <Typography
+                        onClick={() =>
+                          setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)
+                        }
+                        sx={checkBoxLabelStyle}
+                      >
+                        I have downloaded the Aadhar e-KYC file
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isOfflineXmlDownloaded}
+                            sx={{ paddingLeft: 0 }}
+                            onChange={handleIsOfflineXmlDownloadedOnChange}
+                            inputProps={{ "aria-label": "controlled" }}
+                          />
+                        }
+                      ></FormControlLabel>
+                      <Typography
+                        onClick={() =>
+                          setIsOfflineXmlDownloaded(!isOfflineXmlDownloaded)
+                        }
+                        sx={checkBoxLabelStyle}
+                      >
+                        I have downloaded the Aadhar e-KYC file
+                      </Typography>
+                    </>
+                  )}
+                </FormControl>
+              </GridRow>
+            </>
+          )}
           <GridRow sx={positionRelative}>
-            {(AADHARVERIFICATION_BY === "XML" && !isOfflineXmlDownloaded) && <DisableSection />}
+            {AADHARVERIFICATION_BY === "XML" && !isOfflineXmlDownloaded && (
+              <DisableSection />
+            )}
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <TextInput
                 label={"Name On Aadhaar"}
@@ -303,32 +340,30 @@ const ThirdForm = ({
                 onChange={handleChangeNameOnAadhar}
                 disabled={true}
               />
-              {
-                AADHARVERIFICATION_BY === "XML" && (
-                  <TextInput
-                    label={"Share Code (to be provided after uploading)"}
-                    onChange={(e) => handleAadharShareCode(e)}
-                    // onChange={(val) => {
-                    //   if (/^\d{0,4}$/.test(val)) {
-                    //     setAadharShareCode(val);
-                    //   }
-                    // }}
-                    onKeyDown={(e) => {
-                      // Allow only digits and restrict any other key presses
-                      // /  const regex = /^[0-4]*$/;
-                      if (!/^\d{0,4}$/.test(e.key) && e.key !== 'Backspace') {
-                        e.preventDefault();
-                      }
-                    }}
-                    value={aadharShareCode}
-                    //  onChange={setAadharShareCode}
-                    disabled={disabledAadharInput || !isAadhaarXmlUploaded}
-                    inputProps={shareCodeProps}
-                    type={passwordType}
+              {AADHARVERIFICATION_BY === "XML" && (
+                <TextInput
+                  label={"Share Code (to be provided after uploading)"}
+                  onChange={(e) => handleAadharShareCode(e)}
+                  // onChange={(val) => {
+                  //   if (/^\d{0,4}$/.test(val)) {
+                  //     setAadharShareCode(val);
+                  //   }
+                  // }}
+                  onKeyDown={(e) => {
+                    // Allow only digits and restrict any other key presses
+                    // /  const regex = /^[0-4]*$/;
+                    if (!/^\d{0,4}$/.test(e.key) && e.key !== "Backspace") {
+                      e.preventDefault();
+                    }
+                  }}
+                  value={aadharShareCode}
+                  //  onChange={setAadharShareCode}
+                  disabled={disabledAadharInput || !isAadhaarXmlUploaded}
+                  inputProps={shareCodeProps}
+                  type={passwordType}
                   //maxLength={4}
-                  />
-                )
-              }
+                />
+              )}
 
               {/* <TextInput
                 label={"Share Code (to be provided after uploading)"}
@@ -357,329 +392,38 @@ const ThirdForm = ({
                 paddingLeft: { xs: "0px !important", md: "20px!important" },
               }}
             >
-              {
-                AADHARVERIFICATION_BY === "OTP" && (
-                  <TextInput
-                    label={"Aadhar Number"}
-                    value={aadharNumber}
-                    onChange={handleChangeAadharNumber}
-                    disabled={isAadhaarVarified}
-                  />
-                )
-              }
-              {
-                AADHARVERIFICATION_BY === "XML" && (
-                  <FileUploadSection
-                    chooseFile={uploadAadharXmlFile}
-                    fileName={aadharXmlFileName}
-                    accept={".rar, .zip"}
-                    disabled={isAadhaarVarified}
-                    uploadTypeAlias={aadharFileTypeAlias}
-                  />
-                )
-              }
-            </Grid>
-          </GridRow>
-          {/* ######  Aadhar Verification Section End ###### */}
-          {/* ######  PAN Verification Section Start ###### */}
-          <FormHeadingContainer>
-            <FormHeading
-              step={stepsList?.PAV?.step}
-              heading={stepsList?.PAV?.name}
-              info={"Enter your PAN Number to verify."}
-            />
-          </FormHeadingContainer>
-
-          <GridRow>
-            <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
-              <TextInput
-                label={"PAN Number"}
-                value={pan}
-                onChange={handelPANNumberChange}
-                // required={true}
-                disabled={disabledPanInput}
-                error={panNumberError}
-                onBlur={handleBlurPAN}
-              //  maxLength={10}
-              />
-              <Button
-                sx={{ ...submitBtnStyle, margin: "5px 0" }}
-                disabled={isPanVarified}
-                variant="contained"
-                onClick={handlePanVerifiaction}
-                endIcon={<Autorenew />}
-              >
-                Verify
-              </Button>
-              <Dialog open={isPANModalOpen} onClose={handleDialogCancel}>
-                <DialogTitle>PAN Verified</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Your PAN is successfully verified. To fetch and verify UAN
-                    automatically please click on OK.
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button
-                    onClick={handleDialogConfirm}
-                    variant="contained"
-                    color="primary"
-                    sx={submitBtnStyle}
-                    autoFocus
-                  >
-                    OK
-                  </Button>
-                </DialogActions>
-              </Dialog>
-              <VerificationStatusSection docType={panstatusMessage} />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={6}
-              sx={{
-                paddingLeft: { xs: "0px !important", md: "20px!important" },
-              }}
-            >
-              <TextInput
-                label={"Name on PAN"}
-                value={nameAsOnPan}
-                disabled={true}
-              />
-            </Grid>
-          </GridRow>
-          {/* ######  PAN Verification Section End ###### */}
-
-
-          {/* ###### Bank Verification Section End ###### */}
-          <BankVerification isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} />
-
-
-
-
-
-          {/* ###### Bank Verification Section End ###### */}
-
-
-
-          {/* ###### UAN Verification Section Start ###### */}
-          <FormHeadingContainer>
-            <FormHeading
-              step={stepsList?.UAV?.step}
-              heading={stepsList?.UAV?.name}
-              info={"Enter your Universal Account Number(UAN) to verify."}
-            />
-          </FormHeadingContainer>
-          <GridRow sx={positionRelative}>
-            {isEpfoSectionDisabled && <DisableSection />}
-
-            <Grid item xs={12} md={6} sx={{ paddingLeft: "0px !important" }}>
-              <TextInput
-                label={"Universal Account Number(UAN)"}
-                onChange={(val) => {
-                  if (/^\d{0,12}$/.test(val)) {
-                    setUAN(val);
-                  }
-                }}
-                value={UAN}
-              />
-              <Button
-                sx={verificationBtnStyle}
-                enabled={isUanVarified}
-                variant="contained"
-                onClick={handleEpfoButtonClick}
-                endIcon={<Autorenew />}
-                disabled={isUanVerificationProcessManual === "manual"}
-              >
-                {epfoButton}
-              </Button>
-              <VerificationStatusSection docType={epfostatusMessage} />
-              <Stack direction={"row"} alignItems={"center"}>
-                <Typography sx={{ margin: "5px 0", color: "#000" }}>
-                  {"UAN Aadhar Link"}
-                </Typography>
-                <Typography>{`: ${uanAadharLink}`}</Typography>
-              </Stack>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={6}
-              sx={{
-                paddingLeft: {
-                  xs: "0px !important",
-                  md: "20px!important",
-                  ...positionRelative,
-                },
-              }}
-            >
-              <Grid item xs={12} sx={{ paddingLeft: "0px !important" }}>
-                <Stack
-                  flexDirection="column"
-                  justifyContent="space-between"
-                  alignItems="start"
-                >
-                  <Typography sx={{ ...lable1CopyStyle }}>
-                    {"UAN Verification"}
-                  </Typography>
-                  <RadioGroup
-                    row
-                    value={isUanVerificationProcessManual}
-                    onChange={handleChangeUanVerification}
-                  >
-                    <FormControlLabel
-                      value="auto"
-                      control={<Radio />}
-                      label="Automatic"
-                      disabled={!hasValue(UAN)}
-                    />
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <FormControlLabel
-                        value="manual"
-                        control={<Radio />}
-                        label="Manual"
-                        disabled={!hasValue(UAN)}
-                      />
-                      <Tooltip
-                        arrow
-                        title={
-                          <Box sx={{ ...statusBoxstyle }}>
-                            <Typography variant="body2" sx={{ ...statusstyle, fontSize: "16px" }}>
-                              It is mandatory for EPFO members to upload all PF
-                              passbooks 2005 onwards (if applicable).
-                            </Typography>
-                          </Box>
-                        }
-                      >
-                        <Fab
-                          variant="contained"
-                          size="small"
-                          sx={{ ...primaryFabStyle, ml: 1 }}
-                          onClick={handleOpenModal} // Open modal on click
-                        >
-                          <Info width={18} sx={{ color: "#fff" }} />
-                        </Fab>
-                      </Tooltip>
-
-                      <Dialog
-                        open={openModal}
-                        onClose={handleCloseModal}
-                        maxWidth="lg"
-                        fullWidth
-                      >
-                        <DialogTitle>How To Access Service History</DialogTitle>
-                        <DialogContent
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <img
-                            src={myImage}
-                            alt="Description"
-                            style={{ maxWidth: "100%", maxHeight: "100%" }}
-                          />
-                        </DialogContent>
-                        <DialogContent
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "left",
-                            alignItems: "flex-start",
-                          }}
-                        >
-                          <Typography variant="subtitle2">Notes :</Typography>
-                          <Typography variant="subtitle2" sx={{ mt: 1 }}>
-                            1. Upload your EPFO service history to provide
-                            accurate details about your employment
-                            contributions.
-                          </Typography>
-                          <Typography variant="subtitle2" sx={{ mt: 1 }}>
-                            {`2. Log in to the EPFO Member Portal. Navigate to ‘View’ -> ‘Service History’. Download the service history file.`}
-                          </Typography>
-                        </DialogContent>
-
-                        <DialogActions>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            sx={{ ...responsiveBtnType1Style }}
-                            onClick={handleCloseModal}
-                          >
-                            CLOSE
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-                    </Box>
-                  </RadioGroup>
-                </Stack>
-              </Grid>
-
-              {isUanVerificationProcessManual === "manual" && (
-                <Grid>
-                  <Grid item xs={12} sx={{ paddingLeft: "0px !important" }}>
-                    <Typography
-                      sx={{
-                        ...lable1CopyStyle,
-                        textAlign: "center",
-                      }}
-                    >
-                      Please upload your EPFO Service History
-                      <span className="requiredField">*</span>
-                    </Typography>
-                    <Box sx={fileUploadSectionContainerStyle}>
-                      <FileUploadSection
-                        chooseFile={uploadEpfoServiceHistoryFile}
-                        // fileName={
-                        //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSSBKMNL")
-                        //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSSBKMNL").fileName
-                        //     : handicapFileName
-                        // }
-                        fileName={epfoServiceHistoryFile}
-                        accept={"application/pdf"}
-                        maxUploadSize={imgAndPdfMaxSize}
-                        uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
-                        // handleRemoveFile={removeEPFOServiceHistory}
-                        handleViewFile={handleViewFile}
-
-                      />
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sx={{ paddingLeft: "0px !important" }}>
-                    <Typography
-                      sx={{
-                        ...lable1CopyStyle,
-                        textAlign: "center",
-                      }}
-                    >
-                      Please upload your EPFO passbook
-                      <span className="requiredField">*</span>
-                    </Typography>
-                    <Box sx={fileUploadSectionContainerStyle}>
-                      <FileUploadSection
-                        chooseFile={uploadEpfoPassBookFile}
-                        handleRemoveFile={removeEPFOPassbookFile}
-                        // fileName={
-                        //   fileUploaded.some(file => file.uploadTypeAlias === "EPFPSSBKMNL")
-                        //     ? fileUploaded.find(file => file.uploadTypeAlias === "EPFPSSBKMNL").fileName
-                        //     : handicapFileName
-                        // }
-                        fileName={epfoPassBookFiles}
-                        accept={"application/pdf"}
-                        maxUploadSize={imgAndPdfMaxSize}
-                        multiple={true}
-                        uploadTypeAlias={epfoPassbookFileTypeAlias}
-                        handleViewFile={handleViewFile}
-
-                      />
-                    </Box>
-                  </Grid>
-                </Grid>
+              {AADHARVERIFICATION_BY === "OTP" && (
+                <TextInput
+                  label={"Aadhar Number"}
+                  value={aadharNumber}
+                  onChange={handleChangeAadharNumber}
+                  disabled={isAadhaarVarified}
+                />
+              )}
+              {AADHARVERIFICATION_BY === "XML" && (
+                <FileUploadSection
+                  chooseFile={uploadAadharXmlFile}
+                  fileName={aadharXmlFileName}
+                  accept={".rar, .zip"}
+                  disabled={isAadhaarVarified}
+                  uploadTypeAlias={aadharFileTypeAlias}
+                />
               )}
             </Grid>
           </GridRow>
-          {/* ######  UAN Verification Section End ###### */}
+          {/* ######  Aadhar Verification Section End ###### */}
+
+          {/* ###### Driving license Verification Section End ###### */}
+          {/* <BankVerification isAadhaarVarified={isAadhaarVarified} stepsList = {stepsList}/> */}
+          <DrivingLicenseVerification
+            isAadhaarVarified={isAadhaarVarified}
+            stepsList={stepsList}
+            firstPageForm={firstPageForm}
+            setFirstPageForm = {setFirstPageForm}
+          />
+
+          {/* ###### Driving license Verification Section End ###### */}
+
           <GridRow>
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12}>
               <Stack flexDirection={"row"}>
@@ -719,7 +463,7 @@ const ThirdForm = ({
                       {"Submit"}
                     </Button>
                   </>
-                )}
+                )} 
               </Stack>
             </Grid>
           </GridRow>
