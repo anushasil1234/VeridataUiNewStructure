@@ -1928,22 +1928,6 @@ const AppointeeRegisterForm = () => {
                   <FourthForm
                     formElement={formElement}
                     stepsList={stepsList}
-                    // pan={pan}
-                    // handelPANNumberChange={handelPANNumberChange}
-                    // handleAccountNumberChange={handleAccountNumberChange}
-                    // handleIFSCCodeChange={handleIFSCCodeChange}
-                    // handleBlurPAN={handleBlurPAN}
-                    // disabledPanInput={disabledPanInput}
-                    // panNumberError={panNumberError}
-                    // isPanVarified={isPanVarified}
-                    // handlePanVerifiaction={handlePanVerifiaction}
-                    // handleBankAccountVerification = {handleBankAccountVerification}
-                    // isPANModalOpen={isPANModalOpen}
-                    // handleDialogCancel={handleDialogCancel}
-                    // handleDialogConfirm={handleDialogConfirm}
-                    // panstatusMessage={panstatusMessage}
-                    // bankstatusMessage = {bankstatusMessage}
-                    // nameAsOnPan={nameAsOnPan}
                     currentPageNo = {currentPageNo}
                     setCurrentPageNo={setCurrentPageNo}
                     handleBack={handleBack}
