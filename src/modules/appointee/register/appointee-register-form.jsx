@@ -88,6 +88,7 @@ import FirstForm from "./first-form";
 import SecondForm from "./second-form";
 import ThirdForm from "./third-form";
 import FourthForm from "./fourth-form";
+import FifthForm from "./fifth-form";
 import { GenerateAadharOtp, generateUANOtp, getAppointeeDetails, getPassportDetails, getUANNumber, getUploadedFileDetailsById, PostAadharOtp, postAppointeeDetails, postAppointeeFileDetails, postUpdatePfUanDetails, verifyAadharDetails, verifyPANDetails } from "server/apis";
 import { submitUANOTP } from "server/apis/verify/submit-uan-otp";
 import showSuccessMessage from "shared/utils/associate/show-success-message";
@@ -1926,16 +1927,38 @@ const AppointeeRegisterForm = () => {
               {currentPageNo === 4 ? (
                 <>
                   <FourthForm
+                    isAadhaarVarified={isAadhaarVarified}
                     formElement={formElement}
                     stepsList={stepsList}
                     currentPageNo = {currentPageNo}
                     setCurrentPageNo={setCurrentPageNo}
                     handleBack={handleBack}
+                    activeStep = {activeStep}
+                    setActiveStep={setActiveStep}
 
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>
               ) : null}
+
+              {currentPageNo === 5 ? (
+                <>
+                  <FifthForm
+                    isAadhaarVarified={isAadhaarVarified}
+                    formElement={formElement}
+                    stepsList={stepsList}
+                    currentPageNo = {currentPageNo}
+                    setCurrentPageNo={setCurrentPageNo}
+                    handleBack={handleBack}
+                    activeStep = {activeStep}
+                    setActiveStep={setActiveStep}
+                    firstPageForm={firstPageForm}
+
+                   // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
+                  />
+                </>
+              ) : null}
+
             </FormContainer>
           </Box>
           <FormDialog

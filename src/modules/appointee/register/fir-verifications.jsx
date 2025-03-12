@@ -1,4 +1,3 @@
-
 import {
     Box,
     Button,
@@ -37,18 +36,12 @@ import VerificationStatus from "../../../shared/components/verification/verifica
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import { verifyPANDetails } from "server/apis";
 import { storeCurrentPageNo } from "store/slices/candidate-page-slice";
-import PANVerification from "./pan-verification";
+import { DDMMYYYY } from "shared/utils";
 
-const FourthForm = ({
-    formElement,
+const FIRVerification = ({
     stepsList,
     isAadhaarVarified,
-    handleBack,
-    currentPageNo,
-    setCurrentPageNo,
-    activeStep,
-    setActiveStep
-
+    firstPageForm
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -56,6 +49,8 @@ const FourthForm = ({
 
     const functionSlice = useSelector((state) => state.functionSlice);
     const { openRemarksModel } = functionSlice[0];
+
+    console.log("stepsList",stepsList);
 
     const [pan, setPan] = useState(null);
     const [panNumberError, setPanNumberError] = useState(false);
@@ -67,11 +62,11 @@ const FourthForm = ({
     );
     const [nameAsOnPan, setNameAsOnPan] = useState(null);
     const loggedInData = useSelector((state) => state.loggedInData);
-    const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
+    const { userId, appointeeId, userCode, candidateId,userName } = loggedInData[0];
     const dispatch = useDispatch();
-    // const setCurrentPageNo = (currentPageNo)=>{
-    //     dispatch(storeCurrentPageNo(currentPageNo));
-    //   }
+    const setCurrentPageNo = (currentPageNo) => {
+        dispatch(storeCurrentPageNo(currentPageNo));
+    }
 
     const handelPANNumberChange = (value) => {
         const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
@@ -184,67 +179,82 @@ const FourthForm = ({
         }
         return remarksList;
     };
-
-
-
     return (
-        <Box sx={{ width: "100%" }}>
-            <form ref={formElement}>
-                <Grid
-                    sx={{ paddingLeft: "20px" }}
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                >
 
+        <>
 
-                    {/* ######  PAN Verification Section Start ###### */}
-                    <PANVerification isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} />
-                    {/* ######  PAN Verification Section End ###### */}
+            {/* ######  PAN Verification Section Start ###### */}
+            < FormHeadingContainer >
+                <FormHeading
+                    step={stepsList?.FIRV?.step}
+                    heading={stepsList?.FIRV?.name}
+                    //info={"Enter your PAN Number to verify."}
+                />
+            </FormHeadingContainer >
 
-                    {/* ###### Bank Verification Section End ###### */}
-                    <BankVerification isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} />
-
-
-                    {/* ###### Bank Verification Section End ###### */}
-
-                    <GridRow>
-                        <Grid sx={{ paddingLeft: "0px !important" }} item xs={12}>
-                            <Stack flexDirection={"row"}>
-                                <Button
-                                    //onClick={() => setCurrentPageNo(1)}
-                                    onClick={handleBack}
-                                    //sx={{ m: "15px 5px", ml: 3 }}
-                                    sx={submitBtnStyle}
-                                    variant="contained"
-                                    color="primary"
-                                >
-                                    {previousButton}
-                                </Button>
-
-
-                                <Button
-                                    //onClick={() => setCurrentPageNo(1)}
-                                    //onClick={}
-                                    //sx={{ m: "15px 5px", ml: 3 }}
-                                    onClick={() => {
-                                        setCurrentPageNo(5);  // Set currentPageNo to 4
-                                        setActiveStep(4);     // Set active step to 3
-                                    }}
-                                    sx={submitBtnStyle}
-                                    variant="contained"
-                                    color="primary"
-                                >
-                                    {"Next"}
-                                </Button>
-
-                            </Stack>
-                        </Grid>
-                    </GridRow>
+            <GridRow>
+                <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
+                    <TextInput
+                        label={"Candidate Name"}
+                        value={userName}
+                        onChange={handelPANNumberChange}
+                        // required={true}
+                        disabled={true}
+                        error={panNumberError}
+                        onBlur={handleBlurPAN}
+                    //  maxLength={10}
+                    />
+                    <Button
+                        sx={{ ...submitBtnStyle, margin: "5px 0" }}
+                        disabled={isPanVarified}
+                        variant="contained"
+                        onClick={handlePanVerifiaction}
+                        endIcon={<Autorenew />}
+                    >
+                        Verify
+                    </Button>
+                    <Dialog open={isPANModalOpen} onClose={handleDialogCancel}>
+                        <DialogTitle>PAN Verified</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Your PAN is successfully verified. To fetch and verify UAN
+                                automatically please click on OK.
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                onClick={handleDialogConfirm}
+                                variant="contained"
+                                color="primary"
+                                sx={submitBtnStyle}
+                                autoFocus
+                            >
+                                OK
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <VerificationStatusSection docType={panstatusMessage} />
                 </Grid>
-            </form>
-        </Box>
+                <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    sx={{
+                        paddingLeft: { xs: "0px !important", md: "20px!important" },
+                    }}
+                >
+                    <TextInput
+                        label={"Date of Birth"}
+                        //value={firstPageForm.dateOfBirth}
+                        value={firstPageForm.dateOfBirth ? DDMMYYYY(firstPageForm.dateOfBirth) : null}
+                        disabled={true}
+                    />
+                </Grid>
+            </GridRow>
+            {/* ######  PAN Verification Section End ###### */}
+
+        </>
     );
 };
 
-export default FourthForm;
+export default FIRVerification;

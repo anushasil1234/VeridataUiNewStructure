@@ -67,6 +67,22 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
     _stepCounter = _stepCounter + 1;
     _steps = {
         ..._steps,
+        FIRV: {
+            step: _stepCounter,
+            name: 'FIR Verification'
+        }
+    }
+    _stepCounter = _stepCounter + 1;
+    _steps = {
+        ..._steps,
+        ID: {
+            step: _stepCounter,
+            name: 'Insurance Details'
+        }
+    }
+    _stepCounter = _stepCounter + 1;
+    _steps = {
+        ..._steps,
         UAV: {
             step: _stepCounter,
             name: 'UAN Verification'
