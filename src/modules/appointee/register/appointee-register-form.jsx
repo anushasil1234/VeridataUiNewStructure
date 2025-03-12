@@ -98,7 +98,7 @@ import { verifyBankDetails } from "server/apis/verify/verify-bank-details";
 const AppointeeRegisterForm = () => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
   const loginUserData = getLocalStorageItem("pfc-user");
-  const steps = ["Step 1", "Step 2", "Step 3","Step 4"];
+  const steps = ["Step 1", "Step 2", "Step 3","Step 4","Step 5"];
   //const today = dayjs();
   // Function to retrieve saved step from localStorage
   const [activeStep, setActiveStep] = useState(0);
@@ -1928,22 +1928,22 @@ const AppointeeRegisterForm = () => {
                   <FourthForm
                     formElement={formElement}
                     stepsList={stepsList}
-                    pan={pan}
-                    handelPANNumberChange={handelPANNumberChange}
-                    handleAccountNumberChange={handleAccountNumberChange}
-                    handleIFSCCodeChange={handleIFSCCodeChange}
-                    handleBlurPAN={handleBlurPAN}
-                    disabledPanInput={disabledPanInput}
-                    panNumberError={panNumberError}
-                    isPanVarified={isPanVarified}
-                    handlePanVerifiaction={handlePanVerifiaction}
-                    handleBankAccountVerification = {handleBankAccountVerification}
-                    isPANModalOpen={isPANModalOpen}
-                    handleDialogCancel={handleDialogCancel}
-                    handleDialogConfirm={handleDialogConfirm}
-                    panstatusMessage={panstatusMessage}
-                    bankstatusMessage = {bankstatusMessage}
-                    nameAsOnPan={nameAsOnPan}
+                    // pan={pan}
+                    // handelPANNumberChange={handelPANNumberChange}
+                    // handleAccountNumberChange={handleAccountNumberChange}
+                    // handleIFSCCodeChange={handleIFSCCodeChange}
+                    // handleBlurPAN={handleBlurPAN}
+                    // disabledPanInput={disabledPanInput}
+                    // panNumberError={panNumberError}
+                    // isPanVarified={isPanVarified}
+                    // handlePanVerifiaction={handlePanVerifiaction}
+                    // handleBankAccountVerification = {handleBankAccountVerification}
+                    // isPANModalOpen={isPANModalOpen}
+                    // handleDialogCancel={handleDialogCancel}
+                    // handleDialogConfirm={handleDialogConfirm}
+                    // panstatusMessage={panstatusMessage}
+                    // bankstatusMessage = {bankstatusMessage}
+                    // nameAsOnPan={nameAsOnPan}
                     currentPageNo = {currentPageNo}
                     setCurrentPageNo={setCurrentPageNo}
                     handleBack={handleBack}
