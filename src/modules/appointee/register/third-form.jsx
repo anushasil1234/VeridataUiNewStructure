@@ -138,7 +138,9 @@ const ThirdForm = ({
   activeStep,
   setActiveStep,
   firstPageForm,
-  setFirstPageForm
+  setFirstPageForm,
+  isLicenseAvailable,
+  setIsLicenseAvailable
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -420,6 +422,8 @@ const ThirdForm = ({
             stepsList={stepsList}
             firstPageForm={firstPageForm}
             setFirstPageForm = {setFirstPageForm}
+            isLicenseAvailable={isLicenseAvailable}
+            setIsLicenseAvailable={setIsLicenseAvailable}
           />
 
           {/* ###### Driving license Verification Section End ###### */}

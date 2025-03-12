@@ -91,7 +91,9 @@ const DrivingLicenseVerification = ({
   isAadhaarVarified,
   stepsList,
   firstPageForm,
-  setFirstPageForm
+  setFirstPageForm,
+  isLicenseAvailable,
+  setIsLicenseAvailable
 }) => {
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -112,7 +114,7 @@ const DrivingLicenseVerification = ({
   const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
   const [licenseNumber, setLicenseNumber] = useState(null);
   const [dob, setDob] = useState(null);
-  const [isLicenseAvailable, setIsLicenseAvailable] = useState(true);
+  //const [isLicenseAvailable, setIsLicenseAvailable] = useState(true);
   const [isLicenseVerified, setIsLicenseVerified] = useState();
   const [bankstatusMessage, setLicenseStatusMessage] = useState(
     new VerificationStatus()

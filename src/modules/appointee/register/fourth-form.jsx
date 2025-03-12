@@ -38,7 +38,10 @@ const FourthForm = ({
     currentPageNo,
     setCurrentPageNo,
     activeStep,
-    setActiveStep
+    setActiveStep,
+    isPANAvailable,
+    setIsPANAvailable
+
 
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
@@ -46,7 +49,7 @@ const FourthForm = ({
     console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
 
     const functionSlice = useSelector((state) => state.functionSlice);
-   
+
 
 
 
@@ -67,7 +70,13 @@ const FourthForm = ({
 
 
                     {/* ######  PAN Verification Section Start ###### */}
-                    <PANVerification isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} />
+                    <PANVerification
+                        isAadhaarVarified={isAadhaarVarified}
+                        stepsList={stepsList}
+                        isPANAvailable={isPANAvailable}
+                        setIsPANAvailable={setIsPANAvailable}
+
+                    />
                     {/* ######  PAN Verification Section End ###### */}
 
                     {/* ###### Bank Verification Section Start ###### */}

@@ -8,6 +8,10 @@ import {
     DialogTitle,
     Grid,
     Stack,
+    Typography,
+    Radio,
+    RadioGroup,
+    FormControlLabel
 } from "@mui/material";
 import React, { useState } from "react";
 import FormHeadingContainer from "shared/components/grid-container/form-heading-container";
@@ -16,6 +20,7 @@ import GridRow from "shared/components/grid-container/grid-row";
 import showErrorMessage from "shared/utils/associate/show-error-message";
 import {
     submitBtnStyle,
+    headingType1
 } from "app";
 import {
     Autorenew,
@@ -40,6 +45,8 @@ import { storeCurrentPageNo } from "store/slices/candidate-page-slice";
 const PANVerification = ({
     stepsList,
     isAadhaarVarified,
+    isPANAvailable,
+    setIsPANAvailable
 
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
@@ -60,6 +67,7 @@ const PANVerification = ({
     const [nameAsOnPan, setNameAsOnPan] = useState(null);
     const loggedInData = useSelector((state) => state.loggedInData);
     const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
+    //const [isPANAvailable, setIsPANAvailable] = useState(true);
     const dispatch = useDispatch();
     const setCurrentPageNo = (currentPageNo) => {
         dispatch(storeCurrentPageNo(currentPageNo));
@@ -176,6 +184,10 @@ const PANVerification = ({
         }
         return remarksList;
     };
+
+    const handleChangePANAvailable = (event) => {
+        setIsPANAvailable(event.target.value === "Yes");
+    };
     return (
 
         <>
@@ -188,65 +200,104 @@ const PANVerification = ({
                     info={"Enter your PAN Number to verify."}
                 />
             </FormHeadingContainer >
-
-            <GridRow>
-                <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
-                    <TextInput
-                        label={"PAN Number"}
-                        value={pan}
-                        onChange={handelPANNumberChange}
-                        // required={true}
-                        disabled={disabledPanInput}
-                        error={panNumberError}
-                        onBlur={handleBlurPAN}
-                    //  maxLength={10}
-                    />
-                    <Button
-                        sx={{ ...submitBtnStyle, margin: "5px 0" }}
-                        disabled={isPanVarified}
-                        variant="contained"
-                        onClick={handlePanVerifiaction}
-                        endIcon={<Autorenew />}
-                    >
-                        Verify
-                    </Button>
-                    <Dialog open={isPANModalOpen} onClose={handleDialogCancel}>
-                        <DialogTitle>PAN Verified</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Your PAN is successfully verified. To fetch and verify UAN
-                                automatically please click on OK.
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button
-                                onClick={handleDialogConfirm}
-                                variant="contained"
-                                color="primary"
-                                sx={submitBtnStyle}
-                                autoFocus
-                            >
-                                OK
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                    <VerificationStatusSection docType={panstatusMessage} />
-                </Grid>
-                <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{
-                        paddingLeft: { xs: "0px !important", md: "20px!important" },
-                    }}
+            <>
+                <Typography sx={{ ...headingType1, lineHeight: "2.4375em", marginLeft: '34px' }}>
+                    Do you have PAN Detail ?
+                    {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
+                        Aadhaar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
+                </Typography>
+                {/* <Typography sx={{ ...lable1CopyStyle }}>
+                    {"UAN Verification"}
+                  </Typography> */}
+                <RadioGroup
+                    row
+                    value={isPANAvailable ? "Yes" : "No"}
+                    //   value={isUanVerificationProcessManual}
+                    onChange={handleChangePANAvailable}
                 >
-                    <TextInput
-                        label={"Name on PAN"}
-                        value={nameAsOnPan}
-                        disabled={true}
-                    />
-                </Grid>
-            </GridRow>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            paddingLeft: "20px",
+                        }}
+                    >
+                        <FormControlLabel
+                            value="Yes"
+                            control={<Radio />}
+                            label="Yes"
+                        // disabled={!hasValue(UAN)}
+                        />
+
+                        <FormControlLabel
+                            value="No"
+                            control={<Radio />}
+                            label="No"
+                        //disabled={!hasValue(UAN)}
+                        />
+                    </Box>
+                </RadioGroup>
+                {isPANAvailable && (
+                    <GridRow>
+                        <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
+                            <TextInput
+                                label={"PAN Number"}
+                                value={pan}
+                                onChange={handelPANNumberChange}
+                                // required={true}
+                                disabled={disabledPanInput}
+                                error={panNumberError}
+                                onBlur={handleBlurPAN}
+                            //  maxLength={10}
+                            />
+                            <Button
+                                sx={{ ...submitBtnStyle, margin: "5px 0" }}
+                                disabled={isPanVarified}
+                                variant="contained"
+                                onClick={handlePanVerifiaction}
+                                endIcon={<Autorenew />}
+                            >
+                                Verify
+                            </Button>
+                            <Dialog open={isPANModalOpen} onClose={handleDialogCancel}>
+                                <DialogTitle>PAN Verified</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        Your PAN is successfully verified. To fetch and verify UAN
+                                        automatically please click on OK.
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button
+                                        onClick={handleDialogConfirm}
+                                        variant="contained"
+                                        color="primary"
+                                        sx={submitBtnStyle}
+                                        autoFocus
+                                    >
+                                        OK
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                            <VerificationStatusSection docType={panstatusMessage} />
+                        </Grid>
+                        <Grid
+                            item
+                            xs={12}
+                            md={6}
+                            sx={{
+                                paddingLeft: { xs: "0px !important", md: "20px!important" },
+                            }}
+                        >
+                            <TextInput
+                                label={"Name on PAN"}
+                                value={nameAsOnPan}
+                                disabled={true}
+                            />
+                        </Grid>
+                    </GridRow>
+                )}
+            </>
             {/* ######  PAN Verification Section End ###### */}
 
         </>

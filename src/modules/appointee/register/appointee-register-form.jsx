@@ -207,6 +207,9 @@ const AppointeeRegisterForm = () => {
   // const [isUANModalOpen, setIsUANModalOpen] = useState(false);
   const [isUANAvailableState, setIsUANAvailableState] = useState(false);
 
+  const [isPANAvailable, setIsPANAvailable] = useState(true);
+  const [isLicenseAvailable, setIsLicenseAvailable] = useState(true);
+
   const [epfostatusMessage, setEpfostatusMessage] = useState(
     new VerificationStatus()
   );
@@ -1871,22 +1874,22 @@ const AppointeeRegisterForm = () => {
                     aadharstatusMessage={aadharstatusMessage}
                     uploadAadharXmlFile={uploadAadharXmlFile}
                     aadharXmlFileName={aadharXmlFileName}
-                    pan={pan}
-                    handelPANNumberChange={handelPANNumberChange}
-                   // handleAccountNumberChange={handleAccountNumberChange}
-                   // handleIFSCCodeChange={handleIFSCCodeChange}
-                    handleBlurPAN={handleBlurPAN}
-                    disabledPanInput={disabledPanInput}
-                    panNumberError={panNumberError}
-                    isPanVarified={isPanVarified}
-                    handlePanVerifiaction={handlePanVerifiaction}
-                    handleBankAccountVerification = {handleBankAccountVerification}
-                    isPANModalOpen={isPANModalOpen}
+                  //   pan={pan}
+                  //   handelPANNumberChange={handelPANNumberChange}
+                  //  // handleAccountNumberChange={handleAccountNumberChange}
+                  //  // handleIFSCCodeChange={handleIFSCCodeChange}
+                  //   handleBlurPAN={handleBlurPAN}
+                  //   disabledPanInput={disabledPanInput}
+                  //   panNumberError={panNumberError}
+                  //   isPanVarified={isPanVarified}
+                  //   handlePanVerifiaction={handlePanVerifiaction}
+                  //   handleBankAccountVerification = {handleBankAccountVerification}
+                  //   isPANModalOpen={isPANModalOpen}
                     handleDialogCancel={handleDialogCancel}
                     handleDialogConfirm={handleDialogConfirm}
                     panstatusMessage={panstatusMessage}
                     bankstatusMessage = {bankstatusMessage}
-                    nameAsOnPan={nameAsOnPan}
+                    //nameAsOnPan={nameAsOnPan}
                     isEpfoSectionDisabled={isEpfoSectionDisabled}
                     //  accountNumber={accountNumber}
                     //  setAccountNumber={setAccountNumber}
@@ -1921,6 +1924,8 @@ const AppointeeRegisterForm = () => {
                     setActiveStep={setActiveStep}
                     firstPageForm = {firstPageForm}
                     setFirstPageForm = {setFirstPageForm}
+                    isLicenseAvailable={isLicenseAvailable}
+                    setIsLicenseAvailable={setIsLicenseAvailable}
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>
@@ -1937,6 +1942,8 @@ const AppointeeRegisterForm = () => {
                     handleBack={handleBack}
                     activeStep = {activeStep}
                     setActiveStep={setActiveStep}
+                    isPANAvailable={isPANAvailable}
+                    setIsPANAvailable={setIsPANAvailable}
 
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
@@ -1956,6 +1963,8 @@ const AppointeeRegisterForm = () => {
                     activeStep = {activeStep}
                     setActiveStep={setActiveStep}
                     firstPageForm={firstPageForm}
+                    isPANAvailable={isPANAvailable}
+                    setIsPANAvailable={setIsPANAvailable}
 
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />

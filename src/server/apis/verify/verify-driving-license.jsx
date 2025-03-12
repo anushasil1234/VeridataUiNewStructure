@@ -1,0 +1,8 @@
+
+
+import ServerRequest from "server/utils/server-request";
+import { VerifyDrivingLicenseDetails_URL } from "shared/constants/constants";
+
+const verifyDrivingLicenseDetails = (payLoad) => ServerRequest(VerifyDrivingLicenseDetails_URL, "POST", payLoad);
+
+export { verifyDrivingLicenseDetails };

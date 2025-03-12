@@ -2578,6 +2578,7 @@ export const EmployementDetails_URL = (AppointeeId, userId) => {
 export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetails`;
 export const VerifyPanDetails_URL = `${AadhaarValidate}/VerifyPanDetails`;
 export const VerifyBankAccountDetails_URL = `${AadhaarValidate}/VerifyBanKDetails`;
+export const VerifyDrivingLicenseDetails_URL = `${AadhaarValidate}/VerifyDlDetails`;
 export const VerifyAadharViaXml_URL = `${AadhaarValidate}/VerifyAadharViaXml`;
 export const GenerateUANOTP_URL = `${AadhaarValidate}/UANGenerateOTP`;
 export const GetUANNumber_URL = `${AadhaarValidate}/GetUANDetails`;
