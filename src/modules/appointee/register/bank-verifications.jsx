@@ -255,7 +255,7 @@ stepsList}) => {
         >
           {/* <Grid item xs={12} sx={{ paddingLeft: "0px !important" }}> */}
           <TextInput
-            label={"IFSC"}
+            label={"IFSC Code"}
             // onChange={(val) => {
             //   // if (/^\d{0,12}$/.test(val)) {
             //   setIFSCCode(val);
@@ -266,6 +266,9 @@ stepsList}) => {
             value={IFSCCode}
           />
         </Grid>
+        
+        <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
+
         <Button
           sx={{ ...submitBtnStyle, margin: "5px 0" }}
           // disabled={isPanVarified}
@@ -275,6 +278,11 @@ stepsList}) => {
         >
           Verify
         </Button>
+
+        
+        <VerificationStatusSection docType={bankstatusMessage} />
+        </Grid>
+        
       </GridRow>
     </>
   );

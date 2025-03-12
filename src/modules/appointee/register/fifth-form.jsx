@@ -23,13 +23,12 @@ import {
 import { useSelector,useDispatch } from "react-redux";
 
 import { hasValue,patternChecking } from "shared/utils";
-import BankVerification from "./bank-verifications";
 import VerificationStatus from "../../../shared/components/verification/verification-status";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import { verifyPANDetails } from "server/apis";
 import FIRVerification from "./fir-verifications";
+import InsuranceDetails from "./insurance-detail";
 
-import PANVerification from "./pan-verification";
 
 const FifthForm = ({
     formElement,
@@ -68,15 +67,13 @@ const FifthForm = ({
                 >
 
 
-                    {/* ######  PAN Verification Section Start ###### */}
+                    {/* ######  FIR Verification Section Start ###### */}
                     <FIRVerification isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} firstPageForm={firstPageForm} />
-                    {/* ######  PAN Verification Section End ###### */}
+                    {/* ######  FIR Verification Section End ###### */}
 
-                    {/* ###### Bank Verification Section End ###### */}
-                    <BankVerification isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} />
-
-
-                    {/* ###### Bank Verification Section End ###### */}
+                    {/* ###### Insurance Detail Section Start ###### */}
+                    <InsuranceDetails isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} firstPageForm={firstPageForm}/>
+                    {/* ###### Insurance Detail Section End ###### */}
 
                     <GridRow>
                         <Grid sx={{ paddingLeft: "0px !important" }} item xs={12}>
@@ -118,3 +115,4 @@ const FifthForm = ({
 };
 
 export default FifthForm;
+

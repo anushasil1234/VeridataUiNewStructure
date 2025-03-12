@@ -83,6 +83,7 @@ import generateRemarks from "shared/utils/associate/generate-remarks";
 import VerificationStatus from "shared/components/verification/verification-status";
 import dayjs from "dayjs";
 import CustomeDatePicker from "shared/components/input-fields/custome-date-picker";
+import { DDMMYYYY } from "shared/utils";
 
 const DrivingLicenseVerification = ({
   // accountNumber,
@@ -148,30 +149,7 @@ const DrivingLicenseVerification = ({
   const handleDOBChange = (value) => {
     // const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     setDob(value);
-    // if (value !== "none") {
-    //   if (value.length <= 10) {
-    //     const upperCaseValue = value.trim().toUpperCase();
-    //     setPan(upperCaseValue);
-    //     if (upperCaseValue.length === 10) {
-    //       if (panRegex.test(upperCaseValue)) {
-    //         setPanNumberError(false);
-    //         if (isAadhaarVarified) {
-    //           setPan(upperCaseValue);
-    //         } else {
-    //           showErrorMessage(aaddharNumberverify);
-    //         }
-    //       }
-    //       else {
-    //         setPanNumberError(true);
-    //         console.log('handelPANNumberChange');
-    //         showErrorMessage("Invalid PAN number format. Please enter a valid PAN.");
-    //       }
-    //     }
-    //     else {
-    //       setPanNumberError(false);
-    //     }
-    //   }
-    // }
+
   };
   const handleBankAccountVerification = async () => {
     if (!isAadhaarVarified) {
@@ -237,121 +215,101 @@ const DrivingLicenseVerification = ({
           info={"Enter your Driving License Details to verify."}
         />
       </FormHeadingContainer>
-        {/* {isEpfoSectionDisabled && <DisableSection />} */}
+      {/* {isEpfoSectionDisabled && <DisableSection />} */}
 
-        {
-          // AADHARVERIFICATION_BY === "XML" && (
-          <>
-            <Typography sx={{ ...headingType1, lineHeight: "2.4375em",marginLeft:'34px' }}>
-              Do you have Driving License ?
-              {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
+      {
+        // AADHARVERIFICATION_BY === "XML" && (
+        <>
+          <Typography sx={{ ...headingType1, lineHeight: "2.4375em", marginLeft: '34px' }}>
+            Do you have Driving License ?
+            {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
                         Aadhaar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
-            </Typography>
-            {/* <Typography sx={{ ...lable1CopyStyle }}>
+          </Typography>
+          {/* <Typography sx={{ ...lable1CopyStyle }}>
                     {"UAN Verification"}
                   </Typography> */}
-            <RadioGroup
-              row
-              value={isLicenseAvailable ? "Yes" : "No"}
-              //   value={isUanVerificationProcessManual}
-              onChange={handleChangeLicenseAvailable}
+          <RadioGroup
+            row
+            value={isLicenseAvailable ? "Yes" : "No"}
+            //   value={isUanVerificationProcessManual}
+            onChange={handleChangeLicenseAvailable}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                paddingLeft: "20px",
+              }}
             >
-              <Box
+              <FormControlLabel
+                value="Yes"
+                control={<Radio />}
+                label="Yes"
+              // disabled={!hasValue(UAN)}
+              />
+
+              <FormControlLabel
+                value="No"
+                control={<Radio />}
+                label="No"
+              //disabled={!hasValue(UAN)}
+              />
+            </Box>
+          </RadioGroup>
+
+          {/* {isEpfoSectionDisabled && <DisableSection />} */}
+          {isLicenseAvailable && (
+            <GridRow>
+              <Grid
+                item
+                xs={12}
+                md={6}
+                sx={{ paddingLeft: "0px !important" }}
+              >
+                <TextInput
+                  label={"Driving License Number"}
+                  // onChange={(val) => {
+                  //   // if (/^\d{0,12}$/.test(val)) {
+                  //   setAccountNumber(val);
+                  //   // }
+                  // }}
+                  onChange={handleLicenseNumberChange}
+                  value={licenseNumber}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={6}
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  paddingLeft: "20px",
+                  paddingLeft: {
+                    xs: "0px !important",
+                    md: "20px!important",
+                    ...positionRelative,
+                  },
                 }}
               >
-                <FormControlLabel
-                  value="Yes"
-                  control={<Radio />}
-                  label="Yes"
-                  // disabled={!hasValue(UAN)}
+                <TextInput
+                  label={"Date of Birth"}
+                  //value={firstPageForm.dateOfBirth}
+                  value={firstPageForm.dateOfBirth ? DDMMYYYY(firstPageForm.dateOfBirth) : null}
+                  disabled={true}
                 />
+              </Grid>
+              <Button
+                sx={{ ...submitBtnStyle, margin: "5px 0" }}
+                // disabled={isPanVarified}
+                variant="contained"
+                onClick={handleBankAccountVerification}
+                endIcon={<Autorenew />}
+              >
+                Verify
+              </Button>
+            </GridRow>
+          )}
+        </>
+      }
 
-                <FormControlLabel
-                  value="No"
-                  control={<Radio />}
-                  label="No"
-                  //disabled={!hasValue(UAN)}
-                />
-              </Box>
-            </RadioGroup>
-
-            {/* {isEpfoSectionDisabled && <DisableSection />} */}
-            {isLicenseAvailable && (
-              <GridRow>
-                <Grid
-                  item
-                  xs={12}
-                  md={6}
-                  sx={{ paddingLeft: "0px !important" }}
-                >
-                  <TextInput
-                    label={"Driving License Number"}
-                    // onChange={(val) => {
-                    //   // if (/^\d{0,12}$/.test(val)) {
-                    //   setAccountNumber(val);
-                    //   // }
-                    // }}
-                    onChange={handleLicenseNumberChange}
-                    value={licenseNumber}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={6}
-                  sx={{
-                    paddingLeft: {
-                      xs: "0px !important",
-                      md: "20px!important",
-                      ...positionRelative,
-                    },
-                  }}
-                >
-                  {/* <TextInput
-                    label={"Date Of Birth"}
-                    // onChange={(val) => {
-                    //   // if (/^\d{0,12}$/.test(val)) {
-                    //   setIFSCCode(val);
-                    //   // }
-                    // }}
-                    onChange={handleDOBChange}
-                    value={dob}
-                  /> */}
-                  <CustomeDatePicker
-                label={"Date Of Birth"}
-                value={firstPageForm.dateOfBirth ? dayjs(firstPageForm.dateOfBirth) : null}
-                setValue={(newDate, name) => {
-                  if (newDate) {
-                    handleFirstPageFormInputChange(newDate.format("YYYY-MM-DD"), 'dateOfBirth');
-                  } else {
-                    handleFirstPageFormInputChange(null, 'dateOfBirth'); // Clear the value if the date is cleared
-                  }
-                }}
-                required={true}
-                disableFuture={true}
-                maxDate={dayjs()}
-                minDate={dayjs().subtract(150, "year")}
-              //  disabled={firstPageForm.isAadhaarVarified}
-              />
-                </Grid>
-                <Button
-                  sx={{ ...submitBtnStyle, margin: "5px 0" }}
-                  // disabled={isPanVarified}
-                  variant="contained"
-                  onClick={handleBankAccountVerification}
-                  endIcon={<Autorenew />}
-                >
-                  Verify
-                </Button>
-              </GridRow>
-            )}
-          </>
-        }
-    
     </>
   );
 };

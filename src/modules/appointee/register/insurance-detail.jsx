@@ -38,7 +38,7 @@ import { verifyPANDetails } from "server/apis";
 import { storeCurrentPageNo } from "store/slices/candidate-page-slice";
 import { DDMMYYYY } from "shared/utils";
 
-const FIRVerification = ({
+const InsuranceDetails = ({
     stepsList,
     isAadhaarVarified,
     firstPageForm
@@ -186,8 +186,8 @@ const FIRVerification = ({
             {/* ######  PAN Verification Section Start ###### */}
             < FormHeadingContainer >
                 <FormHeading
-                    step={stepsList?.FIRV?.step}
-                    heading={stepsList?.FIRV?.name}
+                    step={stepsList?.ID?.step}
+                    heading={stepsList?.ID?.name}
                     //info={"Enter your PAN Number to verify."}
                 />
             </FormHeadingContainer >
@@ -195,8 +195,8 @@ const FIRVerification = ({
             <GridRow>
                 <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
                     <TextInput
-                        label={"Candidate Name"}
-                        value={userName}
+                        label={"PAN Number"}
+                        value={firstPageForm.panNummber}
                         //onChange={handelPANNumberChange}
                         // required={true}
                         disabled={true}
@@ -211,7 +211,7 @@ const FIRVerification = ({
                         //onClick={handlePanVerifiaction}
                         endIcon={<Autorenew />}
                     >
-                        Verify
+                        Check
                     </Button>
                     {/* <Dialog open={isPANModalOpen} onClose={handleDialogCancel}>
                         <DialogTitle>PAN Verified</DialogTitle>
@@ -244,9 +244,9 @@ const FIRVerification = ({
                     }}
                 >
                     <TextInput
-                        label={"Date of Birth"}
-                        //value={firstPageForm.dateOfBirth}
-                        value={firstPageForm.dateOfBirth ? DDMMYYYY(firstPageForm.dateOfBirth) : null}
+                        label={"Name on PAN"}
+                        value={firstPageForm.panName}
+                        //value={firstPageForm.dateOfBirth ? DDMMYYYY(firstPageForm.dateOfBirth) : null}
                         disabled={true}
                     />
                 </Grid>
@@ -257,4 +257,4 @@ const FIRVerification = ({
     );
 };
 
-export default FIRVerification;
+export default InsuranceDetails;
