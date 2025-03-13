@@ -67,8 +67,8 @@ import showSuccessMessage from "shared/utils/associate/show-success-message";
 import UANPrerequisiteInformation from "./uan-prerequiestic-info";
 
 const SixthForm = ({
-  UAN,
-  setUAN,
+//   UAN,
+//   setUAN,
   formElement,
   stepsList,
   isAadhaarVarified,
@@ -111,7 +111,7 @@ const SixthForm = ({
     openConfirmationModel,
     openInfoModel,
   } = functionSlice[0];
-//   const [UAN, setUAN] = useState("");
+   const [UAN, setUAN] = useState("");
   const [timeoutTimer, setTimeoutTimer] = useState();
 
   const loggedInData = useSelector((state) => state.loggedInData);
