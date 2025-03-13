@@ -140,7 +140,9 @@ const ThirdForm = ({
   firstPageForm,
   setFirstPageForm,
   isLicenseAvailable,
-  setIsLicenseAvailable
+  setIsLicenseAvailable,
+  isDLVarified,
+  setisDLVarified
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -424,6 +426,8 @@ const ThirdForm = ({
             setFirstPageForm = {setFirstPageForm}
             isLicenseAvailable={isLicenseAvailable}
             setIsLicenseAvailable={setIsLicenseAvailable}
+            isDLVarified={isDLVarified}
+            setisDLVarified={setisDLVarified}
           />
 
           {/* ###### Driving license Verification Section End ###### */}
@@ -450,6 +454,7 @@ const ThirdForm = ({
                   sx={submitBtnStyle}
                   variant="contained"
                   color="primary"
+                  disabled={!(isAadhaarVarified && (!isLicenseAvailable || isDLVarified))}
                 >
                   {"Next"}
                 </Button>

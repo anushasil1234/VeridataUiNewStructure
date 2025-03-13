@@ -30,6 +30,7 @@ export const emptyAadharNoMsg = `Aadhaar can't be empty`;
 export const aadharPatternErrorMsg = `Aadhaar should be a 12 digit number`;
 export const emptyPanMsg = `PAN number or name on PAN is missing`;
 export const emptyAccountNumberMsg = `Bank account number is missing`;
+export const emptyDLNumberMsg = `Driving License number is missing`;
 export const emptyIFSCMsg = `IFSC is missing`;
 export const aadharVerifySuccessMsg = `Aadhaar has been verified successfully`;
 export const aadharVerifyFailedMsg = `Aadhaar has not been verified`;
@@ -43,6 +44,9 @@ export const remarksemptyerror = `Please provide your Remarks before submitting.
 export const categoryFileEmptyerror = `Please go through all the Category(s) and Files, and select the required answers, mention Remarks to be able to Submit`;
 export const fileEmptyerror = `Please select a file`;
 export const invalidPanMsg = `PAN number should be of 10 digits and properly formatted`;
+export const invalidDLMsg = `Invalid Driving License number. It must be 13-character alphanumeric code`;
+export const dlAvailabilitySuccessMsg = `Driving License Availability Details saved successfully`;
+export const dlAvailabilityErrorMsg = `Driving License Availability Details not saved successfully`;
 export const invalidAadharMsg = `Aadhaar number should be of 12 digits`;
 export const emptyAadharFileMsg = `Please upload Aadhaar`;
 export const emptyPasswordField = `Password can't be empty`;
@@ -61,6 +65,8 @@ export const editSuccess = `Appointee details has been updated successfully`;
 export const appointteTerminationSuccess = `The process has been successfully terminated for this appointee`;
 export const passportSuccessMsg = `Passport has been verified successfully`;
 export const panSuccessMsg = `PAN details has been verified successfully`;
+export const panAvailabilitySuccessMsg = `PAN Availability Details saved successfully`;
+export const panAvailabilityErrorMsg = `PAN Availability Details not saved successfully`;
 export const panVerifyFailedMsg = `PAN has not been verified`;
 export const passportVerifyFailedMsg = `Passport details has not been verified`;
 export const passportExpireddMsg = `Your passport has expired. Please set the Date of Expiry to a future date or mark 'Is Passport Available' as 'No'`;
@@ -2545,6 +2551,7 @@ export const GetRemarksRemedyData_URL = `${AppoienteeWorkFlow}/GetRemarksRemedy`
 export const GetRemarks_URL = `${AppoienteeWorkFlow}/GetRemarks?AppointeeId=`;
 export const GetMannualVerificationData_URL = `${AppoienteeWorkFlow}/GetManualVeificationProcessData`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`;
+export const PostAppointeeDocAvailibility_URL = `${AppoienteeWorkFlow}/PostAppointeeDocAvailibility`;
 export const PostRemainderMail_URL = (appointeeId, userId) =>
   `${AppoienteeWorkFlow}/PostRemainderMail?AppointeeId=${appointeeId}&UserId=${userId}`;
 export const PostCandidateMailResend_URL = (appointeeId, userId) =>

@@ -52,19 +52,10 @@ import {
 } from "@mui/icons-material";
 import {
   aaddharNumberverify,
-  aadharFileTypeAlias,
-  emptyAccountNumberMsg,
-  emptyIFSCMsg,
-  epfoPassbookFileTypeAlias,
-  epfoServiceHistoryFileTypeAlias,
-  getHandicapTypeDescription,
-  handicapFileTypeAlias,
-  imgAndPdfMaxSize,
-  otherFileTypeAlias,
-  passportFileTypeAlias,
-  previousButton,
-  tenthCertificateFileTypeAlias,
-  trustEpfoFileTypeAlias,
+  emptyDLNumberMsg,
+  invalidDLMsg,
+  dlAvailabilitySuccessMsg,
+  dlAvailabilityErrorMsg
 } from "shared/constants/constants";
 import TextInput from "shared/components/input-fields/text-input";
 import FileUploadSection from "shared/components/file-upload-section/file-upload-section";
@@ -74,16 +65,18 @@ import { DisableSection } from "shared/components/disble-section/disble-section"
 import { VerificationStatusSection } from "shared/components/verification/verification-status-section";
 import { Link } from "react-router-dom";
 import VerficationAadharSteps from "shared/components/verification/verfication-aadhar";
-import { hasValue } from "shared/utils";
+import { hasValue,patternChecking } from "shared/utils";
 import myImage from "assets/images/profile/instrucToServiceHistory.png";
 import showErrorMessage from "shared/utils/associate/show-error-message";
-import { verifyBankDetails } from "server/apis/verify/verify-bank-details";
+import showSuccessMessage from "shared/utils/associate/show-success-message";
+import { verifyDrivingLicenseDetails } from "server/apis/verify/verify-driving-license";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import generateRemarks from "shared/utils/associate/generate-remarks";
 import VerificationStatus from "shared/components/verification/verification-status";
 import dayjs from "dayjs";
 import CustomeDatePicker from "shared/components/input-fields/custome-date-picker";
 import { DDMMYYYY } from "shared/utils";
+import { postAppointeeDocAvailibility } from "server/apis/appointee/appointee-workflow/post-appointee-doc-availability";
 
 const DrivingLicenseVerification = ({
   // accountNumber,
@@ -93,7 +86,9 @@ const DrivingLicenseVerification = ({
   firstPageForm,
   setFirstPageForm,
   isLicenseAvailable,
-  setIsLicenseAvailable
+  setIsLicenseAvailable,
+  isDLVarified,
+  setisDLVarified
 }) => {
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -116,72 +111,41 @@ const DrivingLicenseVerification = ({
   const [dob, setDob] = useState(null);
   //const [isLicenseAvailable, setIsLicenseAvailable] = useState(true);
   const [isLicenseVerified, setIsLicenseVerified] = useState();
-  const [bankstatusMessage, setLicenseStatusMessage] = useState(
+  const [licensestatusMessage, setLicenseStatusMessage] = useState(
     new VerificationStatus()
   );
+  const [dlNumberError, setDLNumberError] = useState(false);
 
   const handleLicenseNumberChange = (value) => {
-    // const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     setLicenseNumber(value);
-    // if (value !== "none") {
-    //   if (value.length <= 10) {
-    //     const upperCaseValue = value.trim().toUpperCase();
-    //     setPan(upperCaseValue);
-    //     if (upperCaseValue.length === 10) {
-    //       if (panRegex.test(upperCaseValue)) {
-    //         setPanNumberError(false);
-    //         if (isAadhaarVarified) {
-    //           setPan(upperCaseValue);
-    //         } else {
-    //           showErrorMessage(aaddharNumberverify);
-    //         }
-    //       }
-    //       else {
-    //         setPanNumberError(true);
-    //         console.log('handelPANNumberChange');
-    //         showErrorMessage("Invalid PAN number format. Please enter a valid PAN.");
-    //       }
-    //     }
-    //     else {
-    //       setPanNumberError(false);
-    //     }
-    //   }
-    // }
-  };
-  const handleDOBChange = (value) => {
-    // const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    setDob(value);
 
   };
-  const handleBankAccountVerification = async () => {
+
+  const handleDrivingLicenseVerification = async () => {
     if (!isAadhaarVarified) {
       showErrorMessage(aaddharNumberverify);
       //setPanNumberError(true);
       return;
     }
     if (licenseNumber === null) {
-      showErrorMessage(emptyAccountNumberMsg);
+      showErrorMessage(emptyDLNumberMsg);
       //  setPanNumberError(true);
-    } else if (dob === null) {
-      showErrorMessage(emptyIFSCMsg);
-      //  setPanNumberError(true);
+    } 
+    else if (!patternChecking(licenseNumber, /^(?:[A-Z]{2}\d{2}-?|\w{2}-\d{2}|\w{2}\d{2} ?)\d{4}\d{7}$/)) {
+      showErrorMessage(invalidDLMsg);
+      setDLNumberError(true);
     }
-    // else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
-    //   showErrorMessage(invalidPanMsg);
-    //   setPanNumberError(true);
-    // }
     else {
-      verifyBank();
+      verifyDrivingLicense();
     }
   };
-  const verifyBank = async () => {
+  const verifyDrivingLicense = async () => {
     const payLoad = {
       appointeeId: appointeeId,
-      //  accountNumber: accountNumber,
-      // Ifsc: hasValue(IFSCCode) ? removeExtraSpaces(IFSCCode) : null,
+      dlNumber: hasValue(licenseNumber) ? removeExtraSpaces(licenseNumber) : null,
       userId: userId,
     };
-    const response = await verifyBankDetails(payLoad);
+    const response = await verifyDrivingLicenseDetails(payLoad);
     if (response) {
       const { remarks, isValid } = response.responseInfo;
       // setIsBankVerified(isValid);
@@ -199,12 +163,40 @@ const DrivingLicenseVerification = ({
           openRemarksModel(generatedRemarks);
         }
       }
-      //    / setBankStatusMessage(new VerificationStatus(isValid, "V"));
+      setisDLVarified(isValid);
+      setLicenseStatusMessage(new VerificationStatus(isValid, "V"));
     }
   };
-  const handleChangeLicenseAvailable = (event) => {
-    setIsLicenseAvailable(event.target.value === "Yes");
+
+  const handleChangeLicenseAvailable = async (event) => {
+    const selectedValue = event.target.value === "Yes"; // Boolean (true/false)
+  
+    setIsLicenseAvailable(selectedValue); // Update state
+  
+    const payLoad = {
+      appointeeId: appointeeId,
+      userId: userId,
+      type: "DL",
+      value: selectedValue, // Send as Boolean (true/false)
+    };
+  
+    try {
+      const response = await postAppointeeDocAvailibility(payLoad);
+      if (response.responseInfo === "success") {
+        showSuccessMessage(dlAvailabilitySuccessMsg);
+        //console.log("License availability saved successfully");
+      } else {
+        showErrorMessage(dlAvailabilityErrorMsg);
+        //console.error("Error saving license availability:", response);
+      }
+    } catch (error) {
+      showErrorMessage(dlAvailabilityErrorMsg);
+      //console.error("API call failed:", error);
+    }
   };
+  
+  
+  
   const handleFirstPageFormInputChange = (value, name) => {
     setFirstPageForm({ ...firstPageForm, [name]: value });
   }
@@ -298,15 +290,19 @@ const DrivingLicenseVerification = ({
                   disabled={true}
                 />
               </Grid>
-              <Button
-                sx={{ ...submitBtnStyle, margin: "5px 0" }}
-                // disabled={isPanVarified}
-                variant="contained"
-                onClick={handleBankAccountVerification}
-                endIcon={<Autorenew />}
-              >
-                Verify
-              </Button>
+              <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
+                <Button
+                  sx={{ ...submitBtnStyle, margin: "5px 0" }}
+                  // disabled={isPanVarified}
+                  variant="contained"
+                  onClick={handleDrivingLicenseVerification}
+                  endIcon={<Autorenew />}
+                >
+                  Verify
+                </Button>
+
+                <VerificationStatusSection docType={licensestatusMessage} />
+              </Grid>
             </GridRow>
           )}
         </>

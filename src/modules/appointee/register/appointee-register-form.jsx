@@ -149,6 +149,8 @@ const AppointeeRegisterForm = () => {
   } = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
+
+  console.log("userId",userId);
   const currentPageNo = useSelector((state) => state.CandidatePageSlice.currentPageNo);
 
   const setCurrentPageNo = (currentPageNo)=>{
@@ -226,6 +228,7 @@ const AppointeeRegisterForm = () => {
     new VerificationStatus()
   );
   const [isAadhaarVarified, setisAadhaarVarified] = useState(false);
+  const [isDLVarified, setisDLVarified] = useState(false);
   const [isAadhaarXmlUploaded, setIsAadhaarXmlUploaded] = useState(false);
   const [isOfflineXmlDownloaded, setIsOfflineXmlDownloaded] = useState(false);
   const [isPanVarified, setIsPanVarified] = useState(null);
@@ -1926,6 +1929,8 @@ const AppointeeRegisterForm = () => {
                     setFirstPageForm = {setFirstPageForm}
                     isLicenseAvailable={isLicenseAvailable}
                     setIsLicenseAvailable={setIsLicenseAvailable}
+                    isDLVarified={isDLVarified}
+                    setisDLVarified={setisDLVarified}
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>

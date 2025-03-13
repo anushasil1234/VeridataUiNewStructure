@@ -18,6 +18,7 @@ import FormHeadingContainer from "shared/components/grid-container/form-heading-
 import FormHeading from "./form-heading";
 import GridRow from "shared/components/grid-container/grid-row";
 import showErrorMessage from "shared/utils/associate/show-error-message";
+import showSuccessMessage from "shared/utils/associate/show-success-message";
 import {
     submitBtnStyle,
     headingType1
@@ -31,6 +32,8 @@ import {
     emptyPanMsg,
     invalidPanMsg,
     panVerifyFailedMsg,
+    panAvailabilitySuccessMsg,
+    panAvailabilityErrorMsg
 } from "shared/constants/constants";
 import TextInput from "shared/components/input-fields/text-input";
 import { useSelector, useDispatch } from "react-redux";
@@ -41,6 +44,7 @@ import VerificationStatus from "../../../shared/components/verification/verifica
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import { verifyPANDetails } from "server/apis";
 import { storeCurrentPageNo } from "store/slices/candidate-page-slice";
+import { postAppointeeDocAvailibility } from "server/apis/appointee/appointee-workflow/post-appointee-doc-availability";
 
 const PANVerification = ({
     stepsList,
@@ -185,9 +189,37 @@ const PANVerification = ({
         return remarksList;
     };
 
-    const handleChangePANAvailable = (event) => {
-        setIsPANAvailable(event.target.value === "Yes");
-    };
+    // const handleChangePANAvailable = (event) => {
+    //     setIsPANAvailable(event.target.value === "Yes");
+    // };
+
+    const handleChangePANAvailable = async (event) => {
+        const selectedValue = event.target.value === "Yes"; // Boolean (true/false)
+      
+        setIsPANAvailable(selectedValue); // Update state
+      
+        const payLoad = {
+          appointeeId: appointeeId,
+          userId: userId,
+          type: "PAN",
+          value: selectedValue, // Send as Boolean (true/false)
+        };
+      
+        try {
+          const response = await postAppointeeDocAvailibility(payLoad);
+          //console.log("response",response);
+          if (response.responseInfo === "success") {
+            showSuccessMessage(panAvailabilitySuccessMsg);
+            //console.log("License availability saved successfully");
+          } else {
+            showErrorMessage(panAvailabilityErrorMsg);
+            //console.error("Error saving license availability:", response);
+          }
+        } catch (error) {
+            showErrorMessage(panAvailabilityErrorMsg);
+          //console.error("API call failed:", error);
+        }
+      };
     return (
 
         <>
