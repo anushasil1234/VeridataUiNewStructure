@@ -271,6 +271,67 @@ const AppointeeRegisterForm = () => {
   const [isUanVerificationProcessManual, setIsUanVerificationProcessManual] =
     useState("auto");
   const [panNumberError, setPanNumberError] = useState(false);
+  // const defaultFirstPageForm = {
+  //   gender: null,
+  //   appointeeName: null,
+  //   dateOfBirth: null,
+  //   memberName: null,
+  //   memberRelation: null,
+  //   nationality: null,
+  //   qualification: null,
+  //   maratialStatus: null,
+  //   isPassportAvailable: null,
+  //   isInternationalWorker: null,
+  //   originCountry: null,
+  //   passportNo: null,
+  //   mobileNo: null,
+  //   appointeeEmailId: null,
+  //   passportValidFrom: null,
+  //   passportValidTill: null,
+  //   isHandicap: null,
+  //   uanNumber: null,
+  //   dateOfJoining: null,
+  //   epfWages: null,
+  //   handicapeType: null,
+  //   isPFverificationReq: null,
+  //   panName: null,
+  //   panNumber: null,
+  //   isAadhaarVarified: null,
+  //   isPensionApplicable: null,
+  //   isUanVarified: null,
+  //   // userId: userId,
+  //   // companyName,
+  //   // isSubmit: clickedButton === "S" ? false : true,
+  // }
+  const defaultFirstPageForm = {
+    gender: "", 
+    appointeeName: "", 
+    dateOfBirth: "", 
+    memberName: "", 
+    memberRelation: "",
+    nationality: "", 
+    qualification: "", 
+    maratialStatus: "", 
+    isPassportAvailable: "", 
+    isInternationalWorker: "", 
+    originCountry: "", 
+    passportNo: "", 
+    mobileNo: "", 
+    appointeeEmailId: "", 
+    passportValidFrom: "", 
+    passportValidTill: "", 
+    isHandicap: "", 
+    uanNumber: "", 
+    dateOfJoining: "", 
+    epfWages: "", 
+    handicapeType: "", 
+    isPFverificationReq: "", 
+    panName: "", 
+    panNumber: "", 
+    isAadhaarVarified: "", 
+    isPensionApplicable: "", 
+    isUanVarified: "", 
+};
   const [firstPageForm, setFirstPageForm] = useState({
     ...defaultFirstPageForm,
     appointeeDetailsId: appointeeDetailsId,
@@ -342,12 +403,13 @@ const AppointeeRegisterForm = () => {
     if (response) {
       let {
         appointeeDetailsId, candidateId, companyId, appointeeName, appointeeEmailId, aadhaarName, aadhaarNumber,
-        panName, panNumber, handicapeType, isHandicap, passportValidTill, passportValidFrom, passportNo,
+        panName, panNumber,isPanAvailable, handicapeType, isHandicap, passportValidTill, passportValidFrom, passportNo,
         originCountry, isPassportAvailable, isInternationalWorker, maratialStatus, qualification, epfWages, nationality,
         memberRelation, memberName, dateOfJoining, uanNumber, mobileNo, gender, dateOfBirth, passportFileNo, isPassportValid, isPFverificationReq,
         isUanVarified, isAadhaarVarified, isPanVarified, isPensionApplicable, saveStep, companyName, isSubmit, fileUploaded, isUanAvailable,
         isTrustPassbook, isManualPassbook, isUanLinkWithAadhar
       } = response.responseInfo;
+      setIsPANAvailable(isPanAvailable);
       setIsSubmit(isSubmit);
       setCompanyName(companyName);
       setCompanyId(companyId);
@@ -529,6 +591,7 @@ const AppointeeRegisterForm = () => {
   };
 
   const submitDetails = (autoSubmit, isManual) => {
+    console.log('submitsixthform',autoSubmit,isManual)
     if (autoSubmit) {
       handleAppointeeFormPage2Save({
         isUanManualUpload: isManual,
@@ -1169,8 +1232,8 @@ const AppointeeRegisterForm = () => {
   // Function to handle dialog confirmation
   const handleDialogConfirm = () => {
     setIsPANModalOpen(false); // Close the dialog
-    handleGetUANNumber(); // Now call the function to get UAN number
-    setCurrentPageNo(3);
+   // handleGetUANNumber(); // Now call the function to get UAN number
+   // setCurrentPageNo(3);
   };
 
   const handleDialogCancel = () => {
@@ -1949,7 +2012,9 @@ const AppointeeRegisterForm = () => {
                     setActiveStep={setActiveStep}
                     isPANAvailable={isPANAvailable}
                     setIsPANAvailable={setIsPANAvailable}
-
+                    nameAsOnPan={nameAsOnPan}
+                    panstatusMessage={panstatusMessage}
+                    setPANStatusMessage = {setPANStatusMessage}
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>
@@ -1986,15 +2051,24 @@ const AppointeeRegisterForm = () => {
                     handleBack={handleBack}
                     handleViewFile = {handleViewFile}
                     firstPageForm = {firstPageForm}
+                    aadhaarNumber = {aadhar} 
                     epfoButton={epfoButton}
+                    setEpfoButton={setEpfoButton}
                     epfostatusMessage={epfostatusMessage}
+                    setEpfostatusMessage={setEpfostatusMessage}
                     uanAadharLink={uanAadharLink}
                     handleChangeUanVerification={handleChangeUanVerification}
                     uploadEpfoServiceHistoryFile={uploadEpfoServiceHistoryFile}
+                    setIsUanVerificationProcessManual = {setIsUanVerificationProcessManual}
+                    isUanVerificationProcessManual={isUanVerificationProcessManual}
                     epfoServiceHistoryFile={epfoServiceHistoryFile}
                     uploadEpfoPassBookFile={uploadEpfoPassBookFile}
                     removeEPFOPassbookFile={removeEPFOPassbookFile}
                     epfoPassBookFiles={epfoPassBookFiles}
+                    isUANAvailableState={isUANAvailableState}
+                    setisUanVarified = {setisUanVarified}
+                    submitDetails={submitDetails}
+
                   />
                 </>
               ) : null}
