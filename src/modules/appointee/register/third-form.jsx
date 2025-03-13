@@ -77,6 +77,8 @@ import myImage from "assets/images/profile/instrucToServiceHistory.png";
 import BankVerification from "./bank-verifications";
 import DrivingLicenseVerification from "./driving-licence-verification";
 
+
+
 const ThirdForm = ({
   formElement,
   stepsList,
@@ -142,7 +144,14 @@ const ThirdForm = ({
   isLicenseAvailable,
   setIsLicenseAvailable,
   isDLVarified,
-  setisDLVarified
+  setisDLVarified,
+  licensestatusMessage,
+  setLicenseStatusMessage,
+  isDLAvailable,
+  setIsDLAvailable,
+  drivingLicense,
+  setDrivingLicense
+
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -155,6 +164,8 @@ const ThirdForm = ({
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openInfoModel } = functionSlice[0];
   const [openModal, setOpenModal] = useState(false);
+  const [isDLVerificationDisabled, setIsDLVerificationDisabled] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   const openOfflineKycInfoModel = () => {
     const offlineKycContent = {
@@ -188,6 +199,10 @@ const ThirdForm = ({
       setAadharShareCode(val);
     }
   };
+
+  const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] =
+    useState(false);
+
   const shareCodeProps = {
     endAdornment: (
       <InputAdornment position="end">
@@ -209,34 +224,45 @@ const ThirdForm = ({
       setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
     }
   }, [isPasswordVisibilityOn]);
-    const handleClickOnNext = async () => {
-      // const ConfirmationModelContent = {
-      //   dialogTitle: (
-      //     <div
-      //       style={{
-      //         display: "flex",
-      //         justifyContent: "space-between",
-      //         alignItems: "center",
-      //       }}
-      //     >
-      //       <Typography>Confirmation to save changes?</Typography>
-      //     </div>
-      //   ),
-      //   dialogContentText: (
-      //     <>
-      //       <Typography sx={subHeadingContentTextStyle}>
-      //         {/* {pensionConfirmation} */}
-      //         This won't save the changes you have made. Do you want to proceed
-      //         without saving changes?
-      //       </Typography>
-      //       <Typography> </Typography>
-      //     </>
-      //   ),
-      //   fullWidth: true,
-      //   mxWidth: "md",
-      // };
-      // openConfirmationYesNoModal(ConfirmationModelContent, handleYes, handleNo);
-    };
+
+  useEffect(() => {
+    if (hasValue(firstPageForm.isDLAvailable)) {
+      setIsPreviousSectionDisabled(true);
+    }
+  }, [firstPageForm.isDLAvailable]);
+
+  useEffect(() => {
+    console.log("isDLVerificationDisabled changed:", isDLVerificationDisabled);
+  }, [isDLVerificationDisabled]);
+
+  const handleClickOnNext = async () => {
+    // const ConfirmationModelContent = {
+    //   dialogTitle: (
+    //     <div
+    //       style={{
+    //         display: "flex",
+    //         justifyContent: "space-between",
+    //         alignItems: "center",
+    //       }}
+    //     >
+    //       <Typography>Confirmation to save changes?</Typography>
+    //     </div>
+    //   ),
+    //   dialogContentText: (
+    //     <>
+    //       <Typography sx={subHeadingContentTextStyle}>
+    //         {/* {pensionConfirmation} */}
+    //         This won't save the changes you have made. Do you want to proceed
+    //         without saving changes?
+    //       </Typography>
+    //       <Typography> </Typography>
+    //     </>
+    //   ),
+    //   fullWidth: true,
+    //   mxWidth: "md",
+    // };
+    // openConfirmationYesNoModal(ConfirmationModelContent, handleYes, handleNo);
+  };
   return (
     <Box sx={{ width: "100%" }}>
       <form ref={formElement}>
@@ -365,7 +391,7 @@ const ThirdForm = ({
                   disabled={disabledAadharInput || !isAadhaarXmlUploaded}
                   inputProps={shareCodeProps}
                   type={passwordType}
-                  //maxLength={4}
+                //maxLength={4}
                 />
               )}
 
@@ -423,11 +449,18 @@ const ThirdForm = ({
             isAadhaarVarified={isAadhaarVarified}
             stepsList={stepsList}
             firstPageForm={firstPageForm}
-            setFirstPageForm = {setFirstPageForm}
+            setFirstPageForm={setFirstPageForm}
             isLicenseAvailable={isLicenseAvailable}
             setIsLicenseAvailable={setIsLicenseAvailable}
             isDLVarified={isDLVarified}
             setisDLVarified={setisDLVarified}
+            licensestatusMessage={licensestatusMessage}
+            setLicenseStatusMessage={setLicenseStatusMessage}
+            isDLVerificationDisabled={isDLVerificationDisabled}
+            isDLAvailable={isDLAvailable}
+            setIsDLAvailable={setIsDLAvailable}
+            drivingLicense= {drivingLicense}
+            setDrivingLicense= {setDrivingLicense}
           />
 
           {/* ###### Driving license Verification Section End ###### */}
@@ -449,15 +482,46 @@ const ThirdForm = ({
                 <Button
                   onClick={() => {
                     setCurrentPageNo(4);  // Set currentPageNo to 4
-                    setActiveStep(3);     // Set active step to 3
+                    setActiveStep(3); 
+
+                      // Set active step to 3
                   }}
+                  //onClick={() => setShowDialog(true)}
                   sx={submitBtnStyle}
                   variant="contained"
                   color="primary"
-                  disabled={!(isAadhaarVarified && (!isLicenseAvailable || isDLVarified))}
+                  disabled={!(isAadhaarVarified && (!isLicenseAvailable || isDLVarified) || (!isDLAvailable || isDLVarified))}
                 >
                   {"Next"}
                 </Button>
+
+                {/* {showDialog && (
+                  <Dialog open={showDialog} onClose={() => setShowDialog(false)}>
+                    <DialogTitle>Confirmation</DialogTitle>
+                    <DialogContent>
+                      <Typography>
+                        Once you proceed, Driving License Verification details cannot be modified.
+                      </Typography>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={() => setShowDialog(false)} color="secondary">
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setIsDLVerificationDisabled(true); // Disable DrivingLicenseVerification
+                          setShowDialog(false);
+                          setCurrentPageNo(4);
+                          setActiveStep(3);
+                        }}
+                        color="primary"
+                        variant="contained"
+                      >
+                        Confirm
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                )} */}
 
                 {isUanVerificationProcessManual === "manual" && (
                   <>
@@ -472,7 +536,7 @@ const ThirdForm = ({
                       {"Submit"}
                     </Button>
                   </>
-                )} 
+                )}
               </Stack>
             </Grid>
           </GridRow>

@@ -41,7 +41,13 @@ const FifthForm = ({
     setActiveStep,
     firstPageForm,
     isPANAvailable,
-    setIsPANAvailable
+    setIsPANAvailable,
+    firstatusMessage,
+    isPoliceVarified,
+    setisPoliceVarified,
+    setFIRStatusMessage,
+    firDetails,
+    setFIRDetails
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -70,7 +76,18 @@ const FifthForm = ({
 
 
                     {/* ######  FIR Verification Section Start ###### */}
-                    <FIRVerification isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} firstPageForm={firstPageForm} />
+                    <FIRVerification 
+                    isAadhaarVarified={isAadhaarVarified} 
+                    stepsList={stepsList} 
+                    firstPageForm={firstPageForm} 
+                    firstatusMessage={firstatusMessage}
+                    setFIRStatusMessage={setFIRStatusMessage}
+                    isPoliceVarified={isPoliceVarified}
+                    setisPoliceVarified={setisPoliceVarified}
+                    firDetails= {firDetails}
+                    setFIRDetails= {setFIRDetails}
+
+                    />
                     {/* ######  FIR Verification Section End ###### */}
 
                     {/* ###### Insurance Detail Section Start ###### */}

@@ -85,6 +85,7 @@ export const UANPatterErrorMsg = `UAN should have 12 digits`;
 export const aadharVerificationErrorMsg = `Please verify your Aadhar before submit`;
 export const PANVerifictionErrorMsg = `Please verify your PAN before submit`;
 export const dataSubmitionMsg = `Data submited successfully`;
+export const firVerifyFailedMsg = `FIR has not been verified`;
 // export const dataSubmitionMsg = `Data submited successfully`;
 
 export const attentionInfo = `The appointees with the nearest joining dates are listed below, including the following details: Appointee Name, Date of Joining (DOJ), and Days to Join.`;
@@ -2584,6 +2585,7 @@ export const EmployementDetails_URL = (AppointeeId, userId) => {
 };
 export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetails`;
 export const VerifyPanDetails_URL = `${AadhaarValidate}/VerifyPanDetails`;
+export const CheckFIRDetails_URL = `${AadhaarValidate}/VerifyFirDetails`;
 export const VerifyBankAccountDetails_URL = `${AadhaarValidate}/VerifyBanKDetails`;
 export const VerifyDrivingLicenseDetails_URL = `${AadhaarValidate}/VerifyDlDetails`;
 export const VerifyAadharViaXml_URL = `${AadhaarValidate}/VerifyAadharViaXml`;

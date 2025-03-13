@@ -8,7 +8,14 @@ import {
     DialogTitle,
     Grid,
     Stack,
+    Typography,
+    Table, TableHead, TableBody, TableRow, TableCell, TableContainer,
+    AppBar,
+    IconButton,
+    Toolbar,
 } from "@mui/material";
+import { modelToolbar } from "app";
+import { Close } from "@mui/icons-material";
 import React, { useState } from "react";
 import FormHeadingContainer from "shared/components/grid-container/form-heading-container";
 import FormHeading from "./form-heading";
@@ -19,6 +26,7 @@ import {
 } from "app";
 import {
     Autorenew,
+
 } from "@mui/icons-material";
 import {
     previousButton,
@@ -26,6 +34,7 @@ import {
     emptyPanMsg,
     invalidPanMsg,
     panVerifyFailedMsg,
+    firVerifyFailedMsg
 } from "shared/constants/constants";
 import TextInput from "shared/components/input-fields/text-input";
 import { useSelector, useDispatch } from "react-redux";
@@ -34,14 +43,20 @@ import { hasValue, patternChecking } from "shared/utils";
 import BankVerification from "./bank-verifications";
 import VerificationStatus from "../../../shared/components/verification/verification-status";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
-import { verifyPANDetails } from "server/apis";
+import { checkFIRDetails } from "server/apis/verify/check-fir-details";
 import { storeCurrentPageNo } from "store/slices/candidate-page-slice";
 import { DDMMYYYY } from "shared/utils";
 
 const FIRVerification = ({
     stepsList,
     isAadhaarVarified,
-    firstPageForm
+    firstPageForm,
+    firstatusMessage,
+    isPoliceVarified,
+    setisPoliceVarified,
+    setFIRStatusMessage,
+    firDetails,
+    setFIRDetails
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -50,19 +65,37 @@ const FIRVerification = ({
     const functionSlice = useSelector((state) => state.functionSlice);
     const { openRemarksModel } = functionSlice[0];
 
-    console.log("stepsList",stepsList);
+    console.log("stepsList", stepsList);
 
     const [pan, setPan] = useState(null);
     const [panNumberError, setPanNumberError] = useState(false);
     const [disabledPanInput, setDisabledPanInput] = useState(false);
-    const [isPanVarified, setIsPanVarified] = useState(null);
-    const [isPANModalOpen, setIsPANModalOpen] = useState(false);
-    const [panstatusMessage, setPANStatusMessage] = useState(
-        new VerificationStatus()
-    );
+    //const [isFIRVarified, setIsFIRVarified] = useState(null);
+    const [isFIRModalOpen, setIsFIRModalOpen] = useState(false);
+    //const [firDetails, setFIRDetails] = useState([]);
+    // const [firDetails, setFIRDetails] = useState([
+    //     {
+    //         FirNumber: "FIR2025001",
+    //         Date: "2025-03-10",
+    //         PoliceStation: "Mumbai Central Police Station",
+    //         CrimeType: "Fraud",
+    //         Status: "Under Investigation"
+    //     },
+    //     {
+    //         FirNumber: "FIR2025002",
+    //         Date: "2025-02-28",
+    //         PoliceStation: "Delhi Cantt Police Station",
+    //         CrimeType: "Theft",
+    //         Status: "Closed"
+    //     }
+    // ]);
+    const [isViewFIREnabled, setIsViewFIREnabled] = useState(false);
+    // const [firstatusMessage, setFIRStatusMessage] = useState(
+    //     new VerificationStatus()
+    // );
     const [nameAsOnPan, setNameAsOnPan] = useState(null);
     const loggedInData = useSelector((state) => state.loggedInData);
-    const { userId, appointeeId, userCode, candidateId,userName } = loggedInData[0];
+    const { userId, appointeeId, userCode, candidateId, userName } = loggedInData[0];
     const dispatch = useDispatch();
     const setCurrentPageNo = (currentPageNo) => {
         dispatch(storeCurrentPageNo(currentPageNo));
@@ -109,62 +142,90 @@ const FIRVerification = ({
         showErrorMessage(msg);
         setPanNumberError(true);
     };
-    const handlePanVerifiaction = () => {
-        if (!isAadhaarVarified) {
-            showErrorMessage(aaddharNumberverify);
-            setPanNumberError(true);
-            return;
-        }
-        if (pan === null || nameAsOnPan === null || nameAsOnPan === "") {
-            showErrorMessage(emptyPanMsg);
-            setPanNumberError(true);
-        } else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
-            showErrorMessage(invalidPanMsg);
-            setPanNumberError(true);
-        } else {
-            verifyPAN();
-        }
+    // const handlePanVerifiaction = () => {
+    //     if (!isAadhaarVarified) {
+    //         showErrorMessage(aaddharNumberverify);
+    //         setPanNumberError(true);
+    //         return;
+    //     }
+    //     if (pan === null || nameAsOnPan === null || nameAsOnPan === "") {
+    //         showErrorMessage(emptyPanMsg);
+    //         setPanNumberError(true);
+    //     } else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
+    //         showErrorMessage(invalidPanMsg);
+    //         setPanNumberError(true);
+    //     } else {
+    //         checkFIR();
+    //     }
+    // };
+
+    const handleFIRChecking = () => {
+        checkFIR();
     };
 
-    const verifyPAN = async () => {
+    const checkFIR = async () => {
         const payLoad = {
             appointeeId: appointeeId,
-            panNummber: pan,
-            panName: hasValue(nameAsOnPan) ? removeExtraSpaces(nameAsOnPan) : null,
             userId: userId,
         };
-        const response = await verifyPANDetails(payLoad);
-        if (response) {
-            const { remarks, isValid } = response.responseInfo;
-            setIsPanVarified(isValid);
-            if (isValid) {
-                //setIsEpfoSectionDisabled(false);
-                //showSuccessMessage(panSuccessMsg);
-                setIsPANModalOpen(true);
-                console.log('panmodal');
+        const response = await checkFIRDetails(payLoad);
 
-                //handleGetUANNumber();
-                // setPanNumberError(false);
+        // const response = {
+        //     "PoliceFirDetails": [
+        //         {
+        //             "FirNumber": "FIR2025001",
+        //             "Date": "2025-03-10",
+        //             "PoliceStation": "Mumbai Central Police Station",
+        //             "CrimeType": "Fraud",
+        //             "Status": "Under Investigation"
+        //         },
+        //         {
+        //             "FirNumber": "FIR2025002",
+        //             "Date": "2025-02-28",
+        //             "PoliceStation": "Delhi Cantt Police Station",
+        //             "CrimeType": "Theft",
+        //             "Status": "Closed"
+        //         }
+        //     ],
+        //     "IsValid": false,
+        //     "Remarks": "No serious offenses found."
+        // }
+
+
+        if (response) {
+            const { PoliceFirDetails, IsValid, Remarks } = response;
+
+            setisPoliceVarified(IsValid);
+            setFIRDetails(PoliceFirDetails); // Store FIR details
+            setIsViewFIREnabled(PoliceFirDetails.length > 0); // Enable "View FIR" button if details exist
+
+            if (IsValid) {
+                setIsFIRModalOpen(true);
             } else {
-                displayPanError(panVerifyFailedMsg);
-                if (hasValue(remarks)) {
-                    const generatedRemarks = generateRemarks(remarks);
+                displayPanError(firVerifyFailedMsg);
+                if (hasValue(Remarks)) {
+                    const generatedRemarks = generateRemarks(Remarks);
                     openRemarksModel(generatedRemarks);
                 }
             }
-            setPANStatusMessage(new VerificationStatus(isValid, "V"));
+            setFIRStatusMessage(new VerificationStatus(IsValid, "V"));
         }
     };
 
+    //console.log("isViewFIREnabled", isViewFIREnabled);
+
+    const parsedFIRDetails = typeof firDetails === "string" ? JSON.parse(firDetails) : firDetails || [];
+
+
     // Function to handle dialog confirmation
     const handleDialogConfirm = () => {
-        setIsPANModalOpen(false); // Close the dialog
+        setIsFIRModalOpen(false); // Close the dialog
         //handleGetUANNumber(); // Now call the function to get UAN number
-        setCurrentPageNo(3);
+        //setCurrentPageNo(3);
     };
 
     const handleDialogCancel = () => {
-        setIsPANModalOpen(false); // Just close the dialog without calling UAN
+        setIsFIRModalOpen(false); // Just close the dialog without calling UAN
     };
 
     const generateRemarks = (remarks) => {
@@ -188,7 +249,7 @@ const FIRVerification = ({
                 <FormHeading
                     step={stepsList?.FIRV?.step}
                     heading={stepsList?.FIRV?.name}
-                    //info={"Enter your PAN Number to verify."}
+                //info={"Enter your PAN Number to verify."}
                 />
             </FormHeadingContainer >
 
@@ -200,20 +261,71 @@ const FIRVerification = ({
                         //onChange={handelPANNumberChange}
                         // required={true}
                         disabled={true}
-                        //error={panNumberError}
-                        //onBlur={handleBlurPAN}
+                    //error={panNumberError}
+                    //onBlur={handleBlurPAN}
                     //  maxLength={10}
                     />
                     <Button
-                        sx={{ ...submitBtnStyle, margin: "5px 0" }}
+                        sx={{ ...submitBtnStyle, margin: "5px 10px 5px 0" }}
                         //disabled={isPanVarified}
                         variant="contained"
-                        //onClick={handlePanVerifiaction}
+                        onClick={handleFIRChecking}
                         endIcon={<Autorenew />}
                     >
-                        Verify
+                        Check
                     </Button>
-                    {/* <Dialog open={isPANModalOpen} onClose={handleDialogCancel}>
+                    {isViewFIREnabled && (
+                        <Button
+                            sx={{ ...submitBtnStyle, margin: "5px 0" }}
+                            variant="contained"
+                            onClick={() => setIsFIRModalOpen(true)}
+                        >
+                            View FIR
+                        </Button>
+                    )}
+
+                    <Dialog open={isFIRModalOpen} onClose={handleDialogCancel}>
+                        <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0' }}>
+                            <Toolbar>
+                                <IconButton edge="start" onClick={handleDialogCancel} aria-label="close">
+                                    <Close sx={{ color: "#fff" }} />
+                                </IconButton>
+                            </Toolbar>
+                        </AppBar>
+                        <DialogTitle>FIR Details</DialogTitle>
+                        <DialogContent>
+                            {parsedFIRDetails.length > 0 ? (
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell><strong>FIR Number</strong></TableCell>
+                                            <TableCell><strong>Date</strong></TableCell>
+                                            <TableCell><strong>Police Station</strong></TableCell>
+                                            <TableCell><strong>Crime Type</strong></TableCell>
+                                            <TableCell><strong>Status</strong></TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {parsedFIRDetails.map((fir, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell>{fir.FirNumber}</TableCell>
+                                                <TableCell>{fir.Date}</TableCell>
+                                                <TableCell>{fir.PoliceStation}</TableCell>
+                                                <TableCell>{fir.CrimeType}</TableCell>
+                                                <TableCell>{fir.Status}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            ) : (
+                                <Typography>No FIR records found.</Typography>
+                            )}
+                        </DialogContent>
+
+                    </Dialog>
+
+
+                    {/* <Dialog open={isFIRModalOpen} onClose={handleDialogCancel}>
                         <DialogTitle>PAN Verified</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
@@ -233,7 +345,7 @@ const FIRVerification = ({
                             </Button>
                         </DialogActions>
                     </Dialog> */}
-                    <VerificationStatusSection docType={panstatusMessage} />
+                    <VerificationStatusSection docType={firstatusMessage} />
                 </Grid>
                 <Grid
                     item

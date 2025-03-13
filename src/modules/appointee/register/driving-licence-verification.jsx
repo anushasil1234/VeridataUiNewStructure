@@ -65,7 +65,7 @@ import { DisableSection } from "shared/components/disble-section/disble-section"
 import { VerificationStatusSection } from "shared/components/verification/verification-status-section";
 import { Link } from "react-router-dom";
 import VerficationAadharSteps from "shared/components/verification/verfication-aadhar";
-import { hasValue,patternChecking } from "shared/utils";
+import { hasValue, patternChecking } from "shared/utils";
 import myImage from "assets/images/profile/instrucToServiceHistory.png";
 import showErrorMessage from "shared/utils/associate/show-error-message";
 import showSuccessMessage from "shared/utils/associate/show-success-message";
@@ -88,7 +88,14 @@ const DrivingLicenseVerification = ({
   isLicenseAvailable,
   setIsLicenseAvailable,
   isDLVarified,
-  setisDLVarified
+  setisDLVarified,
+  licensestatusMessage,
+  setLicenseStatusMessage,
+  isDLVerificationDisabled,
+  isDLAvailable,
+  setIsDLAvailable,
+  drivingLicense,
+  setDrivingLicense
 }) => {
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -111,15 +118,17 @@ const DrivingLicenseVerification = ({
   const [dob, setDob] = useState(null);
   //const [isLicenseAvailable, setIsLicenseAvailable] = useState(true);
   const [isLicenseVerified, setIsLicenseVerified] = useState();
-  const [licensestatusMessage, setLicenseStatusMessage] = useState(
-    new VerificationStatus()
-  );
+  // const [licensestatusMessage, setLicenseStatusMessage] = useState(
+  //   new VerificationStatus()
+  // );
   const [dlNumberError, setDLNumberError] = useState(false);
 
   const handleLicenseNumberChange = (value) => {
-    setLicenseNumber(value);
+    setDrivingLicense(value);
 
   };
+
+  console.log("isDLVerificationDisabled", isDLVerificationDisabled);
 
   const handleDrivingLicenseVerification = async () => {
     if (!isAadhaarVarified) {
@@ -130,7 +139,7 @@ const DrivingLicenseVerification = ({
     if (licenseNumber === null) {
       showErrorMessage(emptyDLNumberMsg);
       //  setPanNumberError(true);
-    } 
+    }
     else if (!patternChecking(licenseNumber, /^(?:[A-Z]{2}\d{2}-?|\w{2}-\d{2}|\w{2}\d{2} ?)\d{4}\d{7}$/)) {
       showErrorMessage(invalidDLMsg);
       setDLNumberError(true);
@@ -170,16 +179,17 @@ const DrivingLicenseVerification = ({
 
   const handleChangeLicenseAvailable = async (event) => {
     const selectedValue = event.target.value === "Yes"; // Boolean (true/false)
-  
-    setIsLicenseAvailable(selectedValue); // Update state
-  
+
+    //setIsLicenseAvailable(selectedValue); // Update state
+    setIsDLAvailable(selectedValue);
+
     const payLoad = {
       appointeeId: appointeeId,
       userId: userId,
       type: "DL",
       value: selectedValue, // Send as Boolean (true/false)
     };
-  
+
     try {
       const response = await postAppointeeDocAvailibility(payLoad);
       if (response.responseInfo === "success") {
@@ -194,14 +204,26 @@ const DrivingLicenseVerification = ({
       //console.error("API call failed:", error);
     }
   };
+
+  // useEffect(() => {
+  //   console.log("Updated isLicenseAvailable:", isLicenseAvailable);
+  // }, [isLicenseAvailable]);
   
+  // useEffect(() => {
+  //   console.log("Updated isLicenseAvailablef:", firstPageForm.isDLAvailable);
+  // }, [firstPageForm.isDLAvailable]);
   
-  
+
+
+
+
+
   const handleFirstPageFormInputChange = (value, name) => {
     setFirstPageForm({ ...firstPageForm, [name]: value });
   }
   return (
     <>
+
       <FormHeadingContainer>
         <FormHeading
           step={stepsList?.DLV?.step}
@@ -224,7 +246,9 @@ const DrivingLicenseVerification = ({
                   </Typography> */}
           <RadioGroup
             row
-            value={isLicenseAvailable ? "Yes" : "No"}
+            //value={isDLAvailable !== null ? (isDLAvailable ? "Yes" : "No") : (isLicenseAvailable ? "Yes" : "No")}
+            value={ (isDLAvailable ? "Yes" : "No")}
+            
             //   value={isUanVerificationProcessManual}
             onChange={handleChangeLicenseAvailable}
           >
@@ -239,20 +263,20 @@ const DrivingLicenseVerification = ({
                 value="Yes"
                 control={<Radio />}
                 label="Yes"
-              // disabled={!hasValue(UAN)}
+                disabled={isDLVerificationDisabled}
               />
 
               <FormControlLabel
                 value="No"
                 control={<Radio />}
                 label="No"
-              //disabled={!hasValue(UAN)}
+                disabled={isDLVerificationDisabled}
               />
             </Box>
           </RadioGroup>
 
           {/* {isEpfoSectionDisabled && <DisableSection />} */}
-          {isLicenseAvailable && (
+          { isDLAvailable  && (
             <GridRow>
               <Grid
                 item
@@ -268,7 +292,7 @@ const DrivingLicenseVerification = ({
                   //   // }
                   // }}
                   onChange={handleLicenseNumberChange}
-                  value={licenseNumber}
+                  value={drivingLicense? drivingLicense: licenseNumber}
                 />
               </Grid>
               <Grid
@@ -293,7 +317,7 @@ const DrivingLicenseVerification = ({
               <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
                 <Button
                   sx={{ ...submitBtnStyle, margin: "5px 0" }}
-                  // disabled={isPanVarified}
+                  disabled={isDLVarified}
                   variant="contained"
                   onClick={handleDrivingLicenseVerification}
                   endIcon={<Autorenew />}

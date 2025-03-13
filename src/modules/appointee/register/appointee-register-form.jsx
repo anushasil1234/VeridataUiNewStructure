@@ -188,6 +188,8 @@ const AppointeeRegisterForm = () => {
   const [isPhysicallyHandicap, setIsPhysicallyHandicap] = useState("");
   const [handicapType, setHandicapType] = useState("");
   const [pan, setPan] = useState(null);
+  const [drivingLicense, setDrivingLicense] = useState(null);
+  const [firDetails, setFIRDetails] = useState(null);
   const [nameAsOnPan, setNameAsOnPan] = useState(null);
   const [aadhar, setAadhar] = useState(null);
   const [nameAsOnAadhar, setNameAsOnAadhar] = useState(null);
@@ -211,6 +213,7 @@ const AppointeeRegisterForm = () => {
 
   const [isPANAvailable, setIsPANAvailable] = useState(true);
   const [isLicenseAvailable, setIsLicenseAvailable] = useState(true);
+  const [isDLAvailable, setIsDLAvailable] = useState(true);
 
   const [epfostatusMessage, setEpfostatusMessage] = useState(
     new VerificationStatus()
@@ -227,6 +230,14 @@ const AppointeeRegisterForm = () => {
   const [bankstatusMessage, setBankStatusMessage] = useState(
     new VerificationStatus()
   );
+  const [firstatusMessage, setFIRStatusMessage] = useState(
+    new VerificationStatus()
+  );
+  const [licensestatusMessage, setLicenseStatusMessage] = useState(
+    new VerificationStatus()
+  );
+
+
   const [isAadhaarVarified, setisAadhaarVarified] = useState(false);
   const [isDLVarified, setisDLVarified] = useState(false);
   const [isAadhaarXmlUploaded, setIsAadhaarXmlUploaded] = useState(false);
@@ -234,6 +245,7 @@ const AppointeeRegisterForm = () => {
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isBankVarified, setIsBankVarified] = useState(null);
   const [isPassportVarified, setIsPassportVarified] = useState(false);
+  const [isPoliceVarified, setisPoliceVarified] = useState(null);
   const [isUanVarified, setisUanVarified] = useState(null);
   const [epfoButton, setEpfoButton] = useState(null);
   const [disabledAadharInput, setDisabledAadharInput] = useState(false);
@@ -407,10 +419,12 @@ const AppointeeRegisterForm = () => {
         originCountry, isPassportAvailable, isInternationalWorker, maratialStatus, qualification, epfWages, nationality,
         memberRelation, memberName, dateOfJoining, uanNumber, mobileNo, gender, dateOfBirth, passportFileNo, isPassportValid, isPFverificationReq,
         isUanVarified, isAadhaarVarified, isPanVarified, isPensionApplicable, saveStep, companyName, isSubmit, fileUploaded, isUanAvailable,
-        isTrustPassbook, isManualPassbook, isUanLinkWithAadhar
+        isTrustPassbook, isManualPassbook, isUanLinkWithAadhar,isDLAvailable,isDLVarified,isPoliceVarified,
+        drivingLicense, firDetails
       } = response.responseInfo;
       setIsBankVarified(isBankAccVarified);
       setIsPANAvailable(isPanAvailable);
+      setIsDLAvailable(isDLAvailable);
       setIsSubmit(isSubmit);
       setCompanyName(companyName);
       setCompanyId(companyId);
@@ -429,6 +443,8 @@ const AppointeeRegisterForm = () => {
         ? setPassportFileNumber(passportFileNo)
         : setPassportFileNumber("");
       setisAadhaarVarified(isAadhaarVarified);
+      setisDLVarified(isDLVarified);
+      setisPoliceVarified(isPoliceVarified);
       setIsPassportVarified(isPassportValid);
       setisUanVarified(isUanVarified);
       setIsPanVarified(isPanVarified);
@@ -454,6 +470,8 @@ const AppointeeRegisterForm = () => {
       setIsOfflineXmlDownloaded(isAadhaarVarified);
       setPassportStatusMessage(new VerificationStatus(isPassportValid, "V"));
       setPANStatusMessage(new VerificationStatus(isPanVarified, "V"));
+      setFIRStatusMessage(new VerificationStatus(isPoliceVarified, "V"));
+      setLicenseStatusMessage(new VerificationStatus(isDLVarified, "V"));
       setIsDraft(saveStep == 0);
       if (hasValue(isUanAvailable)) {
         setCurrentPageNo(saveStep + 2);
@@ -498,6 +516,7 @@ const AppointeeRegisterForm = () => {
       updateStep({
         isHandicap: isHandicap,
         isPassportAvailable: isPassportAvailable,
+        isDLAvailable: isDLAvailable
       });
       setFirstPageForm({
         ...firstPageForm,
@@ -510,6 +529,7 @@ const AppointeeRegisterForm = () => {
         qualification: qualification,
         maratialStatus: maratialStatus,
         isPassportAvailable: hasValue(isPassportAvailable) ? isPassportAvailable : null,
+        isDLAvailable: hasValue(isDLAvailable) ? isDLAvailable : null,        
         isInternationalWorker: isInternationalWorker,
         originCountry: originCountry,
         passportNo: passportNo,
@@ -526,6 +546,8 @@ const AppointeeRegisterForm = () => {
         isPFverificationReq: isPFverificationReq,
         panName: hasValue(panName) ? panName : null,
         panNumber: panNumber,
+        drivingLicense: drivingLicense,
+        firDetails:firDetails,
         isAadhaarVarified: isAadhaarVarified,
         isPensionApplicable: isPensionApplicable,
         isUanVarified: isUanVarified
@@ -1995,6 +2017,12 @@ const AppointeeRegisterForm = () => {
                     setIsLicenseAvailable={setIsLicenseAvailable}
                     isDLVarified={isDLVarified}
                     setisDLVarified={setisDLVarified}
+                    licensestatusMessage = {licensestatusMessage}
+                    setLicenseStatusMessage={setLicenseStatusMessage}
+                    isDLAvailable={isDLAvailable}
+                    setIsDLAvailable={setIsDLAvailable}
+                    drivingLicense= {drivingLicense}
+                    setDrivingLicense= {setDrivingLicense}
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>
@@ -2042,6 +2070,12 @@ const AppointeeRegisterForm = () => {
                     firstPageForm={firstPageForm}
                     isPANAvailable={isPANAvailable}
                     setIsPANAvailable={setIsPANAvailable}
+                    firstatusMessage={firstatusMessage}
+                    setFIRStatusMessage={setFIRStatusMessage}
+                    isPoliceVarified={isPoliceVarified}
+                    setisPoliceVarified={setisPoliceVarified}
+                    firDetails= {firDetails}
+                    setFIRDetails= {setFIRDetails}
 
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
