@@ -403,12 +403,13 @@ const AppointeeRegisterForm = () => {
     if (response) {
       let {
         appointeeDetailsId, candidateId, companyId, appointeeName, appointeeEmailId, aadhaarName, aadhaarNumber,
-        panName, panNumber,isPanAvailable, handicapeType, isHandicap, passportValidTill, passportValidFrom, passportNo,
+        panName, panNumber,isPanAvailable,isBankAccVarified,bankAccNumber,bankIfscNumber, handicapeType, isHandicap, passportValidTill, passportValidFrom, passportNo,
         originCountry, isPassportAvailable, isInternationalWorker, maratialStatus, qualification, epfWages, nationality,
         memberRelation, memberName, dateOfJoining, uanNumber, mobileNo, gender, dateOfBirth, passportFileNo, isPassportValid, isPFverificationReq,
         isUanVarified, isAadhaarVarified, isPanVarified, isPensionApplicable, saveStep, companyName, isSubmit, fileUploaded, isUanAvailable,
         isTrustPassbook, isManualPassbook, isUanLinkWithAadhar
       } = response.responseInfo;
+      setIsBankVarified(isBankAccVarified);
       setIsPANAvailable(isPanAvailable);
       setIsSubmit(isSubmit);
       setCompanyName(companyName);
@@ -1954,7 +1955,7 @@ const AppointeeRegisterForm = () => {
                     handleDialogCancel={handleDialogCancel}
                     handleDialogConfirm={handleDialogConfirm}
                     panstatusMessage={panstatusMessage}
-                    bankstatusMessage = {bankstatusMessage}
+                    
                     //nameAsOnPan={nameAsOnPan}
                     isEpfoSectionDisabled={isEpfoSectionDisabled}
                     //  accountNumber={accountNumber}
@@ -2015,6 +2016,12 @@ const AppointeeRegisterForm = () => {
                     nameAsOnPan={nameAsOnPan}
                     panstatusMessage={panstatusMessage}
                     setPANStatusMessage = {setPANStatusMessage}
+                    bankstatusMessage = {bankstatusMessage}
+                    setBankStatusMessage = {setBankStatusMessage}
+                    isPanVarified={isPanVarified}
+                    setIsPanVarified = {setIsPanVarified}
+                    setIsBankVarified = {setIsBankVarified}
+                    isBankVarified={isBankVarified}
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>

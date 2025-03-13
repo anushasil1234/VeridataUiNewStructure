@@ -50,8 +50,13 @@ const PANVerification = ({
     stepsList,
     isAadhaarVarified,
     isPANAvailable,
-    setIsPANAvailable
-
+    setIsPANAvailable,
+    nameAsOnPan,
+    panstatusMessage,
+    setPANStatusMessage,
+    isPanVarified,
+    setIsPanVarified,
+    disabledPanInput
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -62,13 +67,13 @@ const PANVerification = ({
 
     const [pan, setPan] = useState(null);
     const [panNumberError, setPanNumberError] = useState(false);
-    const [disabledPanInput, setDisabledPanInput] = useState(false);
-    const [isPanVarified, setIsPanVarified] = useState(null);
+    // const [disabledPanInput, setDisabledPanInput] = useState(false);
+    //const [isPanVarified, setIsPanVarified] = useState(null);
     const [isPANModalOpen, setIsPANModalOpen] = useState(false);
-    const [panstatusMessage, setPANStatusMessage] = useState(
-        new VerificationStatus()
-    );
-    const [nameAsOnPan, setNameAsOnPan] = useState(null);
+    // const [panstatusMessage, setPANStatusMessage] = useState(
+    //     new VerificationStatus()
+    // );
+    // const [nameAsOnPan, setNameAsOnPan] = useState(null);
     const loggedInData = useSelector((state) => state.loggedInData);
     const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
     //const [isPANAvailable, setIsPANAvailable] = useState(true);
@@ -169,7 +174,7 @@ const PANVerification = ({
     const handleDialogConfirm = () => {
         setIsPANModalOpen(false); // Close the dialog
         //handleGetUANNumber(); // Now call the function to get UAN number
-        setCurrentPageNo(3);
+       // setCurrentPageNo(3);
     };
 
     const handleDialogCancel = () => {
@@ -277,7 +282,7 @@ const PANVerification = ({
                                 value={pan}
                                 onChange={handelPANNumberChange}
                                 // required={true}
-                                disabled={disabledPanInput}
+                                disabled={isPanVarified}
                                 error={panNumberError}
                                 onBlur={handleBlurPAN}
                             //  maxLength={10}
@@ -295,8 +300,9 @@ const PANVerification = ({
                                 <DialogTitle>PAN Verified</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
-                                        Your PAN is successfully verified. To fetch and verify UAN
-                                        automatically please click on OK.
+                                        Your PAN is successfully verified. 
+                                        {/* To fetch and verify UAN
+                                        automatically please click on OK. */}
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>

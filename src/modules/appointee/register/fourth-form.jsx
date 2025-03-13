@@ -1,23 +1,15 @@
-
-import {
-    Box,
-    Button,
-    Grid,
-    Stack,
-} from "@mui/material";
+import { Box, Button, Grid, Stack } from "@mui/material";
 import React, { useState } from "react";
 import GridRow from "shared/components/grid-container/grid-row";
 import showErrorMessage from "shared/utils/associate/show-error-message";
-import {
-    submitBtnStyle,
-} from "app";
+import { submitBtnStyle } from "app";
 
 import {
-    previousButton,
-    aaddharNumberverify,
-    emptyPanMsg,
-    invalidPanMsg,
-    panVerifyFailedMsg,
+  previousButton,
+  aaddharNumberverify,
+  emptyPanMsg,
+  invalidPanMsg,
+  panVerifyFailedMsg,
 } from "shared/constants/constants";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -31,97 +23,108 @@ import { verifyPANDetails } from "server/apis";
 import PANVerification from "./pan-verification";
 
 const FourthForm = ({
-    formElement,
-    stepsList,
-    isAadhaarVarified,
-    handleBack,
-    currentPageNo,
-    setCurrentPageNo,
-    activeStep,
-    setActiveStep,
-    isPANAvailable,
-    setIsPANAvailable
-
-
+  formElement,
+  stepsList,
+  isAadhaarVarified,
+  handleBack,
+  currentPageNo,
+  setCurrentPageNo,
+  activeStep,
+  setActiveStep,
+  isPANAvailable,
+  setIsPANAvailable,
+  nameAsOnPan,
+  panstatusMessage,
+  setPANStatusMessage,
+  bankstatusMessage,
+  setBankStatusMessage,
+  setIsPanVarified,
+  isPanVarified,
+  isBankVarified,
+  setIsBankVarified,
+  disabledPanInput
 }) => {
-    const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
+  const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
-    console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
+  console.log("AADHARVERIFICATION_BY", AADHARVERIFICATION_BY);
 
-    const functionSlice = useSelector((state) => state.functionSlice);
+  const functionSlice = useSelector((state) => state.functionSlice);
 
+  const loggedInData = useSelector((state) => state.loggedInData);
+  const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
 
+  const dispatch = useDispatch();
 
+  return (
+    <Box sx={{ width: "100%" }}>
+      <form ref={formElement}>
+        <Grid
+          sx={{ paddingLeft: "20px" }}
+          container
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
+          {/* ######  PAN Verification Section Start ###### */}
+          <PANVerification
+            isAadhaarVarified={isAadhaarVarified}
+            stepsList={stepsList}
+            isPANAvailable={isPANAvailable}
+            setIsPANAvailable={setIsPANAvailable}
+            nameAsOnPan={nameAsOnPan}
+            panstatusMessage={panstatusMessage}
+            setPANStatusMessage={setPANStatusMessage}
+            setIsPanVarified={setIsPanVarified}
+            isPanVarified={isPanVarified}
+            disabledPanInput = {disabledPanInput}
+          />
+          {/* ######  PAN Verification Section End ###### */}
 
-    const loggedInData = useSelector((state) => state.loggedInData);
-    const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
+          {/* ###### Bank Verification Section Start ###### */}
+          <BankVerification
+            isAadhaarVarified={isAadhaarVarified}
+            stepsList={stepsList}
+            bankstatusMessage={bankstatusMessage}
+            setBankStatusMessage={setBankStatusMessage}
+            isBankVarified = {isBankVarified}
+            setIsBankVarified = {setIsBankVarified}
+          />
+          {/* ###### Bank Verification Section End ###### */}
 
-  
-    const dispatch = useDispatch();
-
-
-    return (
-        <Box sx={{ width: "100%" }}>
-            <form ref={formElement}>
-                <Grid
-                    sx={{ paddingLeft: "20px" }}
-                    container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          <GridRow>
+            <Grid sx={{ paddingLeft: "0px !important" }} item xs={12}>
+              <Stack flexDirection={"row"}>
+                <Button
+                  //onClick={() => setCurrentPageNo(1)}
+                  onClick={handleBack}
+                  //sx={{ m: "15px 5px", ml: 3 }}
+                  sx={submitBtnStyle}
+                  variant="contained"
+                  color="primary"
                 >
+                  {previousButton}
+                </Button>
 
-
-                    {/* ######  PAN Verification Section Start ###### */}
-                    <PANVerification
-                        isAadhaarVarified={isAadhaarVarified}
-                        stepsList={stepsList}
-                        isPANAvailable={isPANAvailable}
-                        setIsPANAvailable={setIsPANAvailable}
-
-                    />
-                    {/* ######  PAN Verification Section End ###### */}
-
-                    {/* ###### Bank Verification Section Start ###### */}
-                    <BankVerification isAadhaarVarified={isAadhaarVarified} stepsList={stepsList} />
-                    {/* ###### Bank Verification Section End ###### */}
-
-                    <GridRow>
-                        <Grid sx={{ paddingLeft: "0px !important" }} item xs={12}>
-                            <Stack flexDirection={"row"}>
-                                <Button
-                                    //onClick={() => setCurrentPageNo(1)}
-                                    onClick={handleBack}
-                                    //sx={{ m: "15px 5px", ml: 3 }}
-                                    sx={submitBtnStyle}
-                                    variant="contained"
-                                    color="primary"
-                                >
-                                    {previousButton}
-                                </Button>
-
-
-                                <Button
-                                    //onClick={() => setCurrentPageNo(1)}
-                                    //onClick={}
-                                    //sx={{ m: "15px 5px", ml: 3 }}
-                                    onClick={() => {
-                                        setCurrentPageNo(5);  // Set currentPageNo to 4
-                                        setActiveStep(4);     // Set active step to 3
-                                    }}
-                                    sx={submitBtnStyle}
-                                    variant="contained"
-                                    color="primary"
-                                >
-                                    {"Next"}
-                                </Button>
-
-                            </Stack>
-                        </Grid>
-                    </GridRow>
-                </Grid>
-            </form>
-        </Box>
-    );
+                <Button
+                  //onClick={() => setCurrentPageNo(1)}
+                  //onClick={}
+                  //sx={{ m: "15px 5px", ml: 3 }}
+                  onClick={() => {
+                    setCurrentPageNo(5); // Set currentPageNo to 4
+                    setActiveStep(4); // Set active step to 3
+                  }}
+                  sx={submitBtnStyle}
+                  variant="contained"
+                  color="primary"
+                >
+                  {"Next"}
+                </Button>
+              </Stack>
+            </Grid>
+          </GridRow>
+        </Grid>
+      </form>
+    </Box>
+  );
 };
 
 export default FourthForm;

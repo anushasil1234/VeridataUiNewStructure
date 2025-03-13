@@ -85,7 +85,11 @@ import VerificationStatus from "shared/components/verification/verification-stat
 const BankVerification = ({
   // accountNumber,
   // IFSCCode,
+  bankstatusMessage,
+  setBankStatusMessage,
   isAadhaarVarified,
+  isBankVarified,
+  setIsBankVarified,
 stepsList}) => {
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -106,10 +110,8 @@ stepsList}) => {
   const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
   const [accountNumber, setAccountNumber] = useState(null);
   const [IFSCCode, setIFSCCode] = useState(null);
-  const [isBankVerified,setIsBankVerified] = useState();
-  const [bankstatusMessage, setBankStatusMessage] = useState(
-    new VerificationStatus()
-  );
+  // const [isBankVerified,setIsBankVerified] = useState();
+
   const handleAccountNumberChange = (value) => {
     // const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     setAccountNumber(value);
@@ -167,11 +169,11 @@ stepsList}) => {
     // }
   };
   const handleBankAccountVerification = async () => {
-    if (!isAadhaarVarified) {
-      showErrorMessage(aaddharNumberverify);
-      //setPanNumberError(true);
-      return;
-    }
+    // if (!isAadhaarVarified) {
+    //   showErrorMessage(aaddharNumberverify);
+    //   //setPanNumberError(true);
+    //   return;
+    // }
     if (accountNumber === null) {
       showErrorMessage(emptyAccountNumberMsg);
     //  setPanNumberError(true);
@@ -198,7 +200,7 @@ stepsList}) => {
     const response = await verifyBankDetails(payLoad);
     if (response) {
       const { remarks, isValid } = response.responseInfo;
-      setIsBankVerified(isValid);
+      setIsBankVarified(isValid);
       if (isValid) {
        // setIsEpfoSectionDisabled(false);
         //showSuccessMessage(panSuccessMsg);
@@ -271,7 +273,7 @@ stepsList}) => {
 
         <Button
           sx={{ ...submitBtnStyle, margin: "5px 0" }}
-          // disabled={isPanVarified}
+          disabled={isBankVarified}
           variant="contained"
           onClick={handleBankAccountVerification}
           endIcon={<Autorenew />}
