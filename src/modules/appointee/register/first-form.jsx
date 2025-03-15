@@ -232,14 +232,14 @@ const FirstForm = ({
     if (passportAvailable === "Y"
       // && clickedButton !== "S"
     ) {
-      if (!hasValue(firstPageForm.passportNo)) {
+      if (!hasValue(firstPageForm?.passportNo)) {
         setPassportNumberError(true);
         showErrorMessage(passportNoEmptyMsg);
         return;
       }
-      if ((firstPageForm.nationality.toLowerCase() === "indian" ||
-        firstPageForm.originCountry.toLowerCase() === "india")
-        && firstPageForm.passportNo.length !== 8) {
+      if ((firstPageForm?.nationality.toLowerCase() === "indian" ||
+        firstPageForm?.originCountry.toLowerCase() === "india")
+        && firstPageForm?.passportNo.length !== 8) {
         setPassportNumberError(true);
         showErrorMessage(indianpassportNumberPatternErrorMsg);
         return;
@@ -278,7 +278,7 @@ const FirstForm = ({
         setCurrentPageNo(2);
         setIsDraft(false);
         updateStep({
-          isHandicap: firstPageForm.isHandicap,
+          isHandicap: firstPageForm?.isHandicap,
           isPassportAvailable: passportAvailable,
         });
       }
@@ -303,7 +303,7 @@ const FirstForm = ({
     if (value !== "none") {
       let _firstPageForm = { ...firstPageForm, [name]: value };
       if (value === "Y") {
-        const nationalityLower = firstPageForm.nationality?.toLowerCase();
+        const nationalityLower = firstPageForm?.nationality?.toLowerCase();
         const matchedNationality = nationalityList.find(
           (element) => element.value?.toLowerCase() === nationalityLower
         );
@@ -335,9 +335,9 @@ const FirstForm = ({
 
   useEffect(() => {
     if (genderDropdownList) {
-      selectGender(firstPageForm.gender);
+      selectGender(firstPageForm?.gender);
     }
-  }, [genderDropdownList, firstPageForm.gender]);
+  }, [genderDropdownList, firstPageForm?.gender]);
   return (
     <Box sx={{ marginTop: "1.8rem" }}>
       <form onSubmit={handleAppointeeFormPage1Save}>
@@ -407,7 +407,7 @@ const FirstForm = ({
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <TextInput
                 label={"Name"}
-                value={firstPageForm.appointeeName}
+                value={firstPageForm?.appointeeName}
                 disabled={true}
                 required={true}
                 name={'appointeeName'}
@@ -423,7 +423,7 @@ const FirstForm = ({
             >
               <CustomeDatePicker
                 label={"Date Of Birth"}
-                value={firstPageForm.dateOfBirth ? dayjs(firstPageForm.dateOfBirth) : null}
+                value={firstPageForm?.dateOfBirth ? dayjs(firstPageForm?.dateOfBirth) : null}
                 setValue={(newDate, name) => {
                   if (newDate) {
                     handleFirstPageFormInputChange(newDate.format("YYYY-MM-DD"), 'dateOfBirth');
@@ -435,7 +435,7 @@ const FirstForm = ({
                 disableFuture={true}
                 maxDate={dayjs()}
                 minDate={dayjs().subtract(150, "year")}
-                disabled={firstPageForm.isAadhaarVarified}
+                disabled={firstPageForm?.isAadhaarVarified}
               />
             </Grid>
           </GridRow>
@@ -443,7 +443,7 @@ const FirstForm = ({
             <Grid item xs={12} md={6} sx={{ paddingLeft: "0px !important" }}>
               <TextInput
                 label={`Father's/ Husband's Name`}
-                value={firstPageForm.memberName}
+                value={firstPageForm?.memberName}
                 name={'memberName'}
                 onChange={handleFirstPageFormInputChange}
                 onKeyDown={handleSpacialcharecter}
@@ -465,7 +465,7 @@ const FirstForm = ({
                 label={"Relationship"}
                 itemList={relationList}
                 name={"memberRelation"}
-                value={firstPageForm.memberRelation}
+                value={firstPageForm?.memberRelation}
                 onChange={handleFirstPageFormInputChange}
                 disabled={isRelationShipWithMemberDisabled}
                 sx={inputFieldStyle2}
@@ -478,7 +478,7 @@ const FirstForm = ({
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <TextInput
                 label={"Mobile No"}
-                value={firstPageForm.mobileNo}
+                value={firstPageForm?.mobileNo}
                 disabled={true}
                 required={true}
               />
@@ -493,7 +493,7 @@ const FirstForm = ({
             >
               <TextInput
                 label={"Email"}
-                value={firstPageForm.appointeeEmailId}
+                value={firstPageForm?.appointeeEmailId}
                 disabled={true}
                 required={true}
               />
@@ -505,7 +505,7 @@ const FirstForm = ({
                 label={"Nationality"}
                 itemList={nationalityList}
                 name={'nationality'}
-                value={firstPageForm.nationality}
+                value={firstPageForm?.nationality}
                 onChange={handleNationalityChange}
                 sx={inputFieldStyle2}
                 required={true}
@@ -524,7 +524,7 @@ const FirstForm = ({
                 label={"Qualification"}
                 itemList={qualificationList}
                 name={'qualification'}
-                value={firstPageForm.qualification}
+                value={firstPageForm?.qualification}
                 onChange={handleFirstPageFormInputChange}
                 sx={inputFieldStyle2}
                 selectProperty={"code"}
@@ -537,7 +537,7 @@ const FirstForm = ({
                 label={"Marital status"}
                 itemList={maritalStatusList}
                 name={'maratialStatus'}
-                value={firstPageForm.maratialStatus}
+                value={firstPageForm?.maratialStatus}
                 onChange={handleFirstPageFormInputChange}
                 sx={inputFieldStyle2}
                 selectProperty={"code"}
@@ -567,7 +567,7 @@ const FirstForm = ({
               <SelectInput
                 label={"Is Passport Available"}
                 itemList={yesNoList}
-                value={firstPageForm.isPassportAvailable}
+                value={firstPageForm?.isPassportAvailable}
                 name={'isPassportAvailable'}
                 onChange={handleChangeIspassportAvailable}
                 sx={inputFieldStyle2}
@@ -575,7 +575,7 @@ const FirstForm = ({
                 required={true}
               />
             </Grid>
-            {firstPageForm.isPassportAvailable === "Y" ? (
+            {firstPageForm?.isPassportAvailable === "Y" ? (
               <Grid
                 item
                 xs={12}
@@ -587,7 +587,7 @@ const FirstForm = ({
                 <SelectInput
                   label={"Is International Worker"}
                   itemList={yesNoList}
-                  value={firstPageForm.isInternationalWorker}
+                  value={firstPageForm?.isInternationalWorker}
                   name={'isInternationalWorker'}
                   onChange={handleInternationalWorkerOnChange}
                   sx={inputFieldStyle2}
@@ -598,7 +598,7 @@ const FirstForm = ({
             ) : null}
           </GridRow>
 
-          {firstPageForm.isPassportAvailable === "Y" ? (
+          {firstPageForm?.isPassportAvailable === "Y" ? (
             <>
               <GridRow>
                 <Grid
@@ -610,12 +610,12 @@ const FirstForm = ({
                   <SelectInput
                     label={"Country of origin"}
                     itemList={countryList}
-                    value={firstPageForm.originCountry}
+                    value={firstPageForm?.originCountry}
                     name={'originCountry'}
                     onChange={handleChangeCountryOfOrigin}
                     sx={inputFieldStyle2}
                     required={true}
-                    disabled={firstPageForm.isInternationalWorker === "N"}
+                    disabled={firstPageForm?.isInternationalWorker === "N"}
                     selectProperty={"code"}
                   />
                 </Grid>
@@ -629,7 +629,7 @@ const FirstForm = ({
                 >
                   <TextInput
                     label={"Passport Number"}
-                    value={firstPageForm.passportNo}
+                    value={firstPageForm?.passportNo}
                     name={'passportNo'}
                     onChange={handlePassportNoChange}
                     disabled={isPassportVarified}
@@ -649,7 +649,7 @@ const FirstForm = ({
                   <CustomeDatePicker
                     label={"Date Of Issue"}
                     value={
-                      firstPageForm.passportValidFrom ? dayjs(firstPageForm.passportValidFrom) : null
+                      firstPageForm?.passportValidFrom ? dayjs(firstPageForm?.passportValidFrom) : null
                     }
                     name={'passportValidFrom'}
                     setValue={handleChangeDateofIssue}
@@ -671,8 +671,8 @@ const FirstForm = ({
                   <CustomeDatePicker
                     label={"Date of Expiry"}
                     value={
-                      firstPageForm.passportValidTill
-                        ? dayjs(firstPageForm.passportValidTill)
+                      firstPageForm?.passportValidTill
+                        ? dayjs(firstPageForm?.passportValidTill)
                         : null
                     }
                     name={'passportValidTill'}
@@ -701,7 +701,7 @@ const FirstForm = ({
               <SelectInput
                 label={"Is Physically Handicap"}
                 itemList={yesNoList}
-                value={firstPageForm.isHandicap}
+                value={firstPageForm?.isHandicap}
                 name={'isHandicap'}
                 onChange={handleIsPhysicallyHandicapOnChange}
                 sx={inputFieldStyle2}
@@ -709,13 +709,13 @@ const FirstForm = ({
               />
             </Grid>
             {/* </GridRow> */}
-            {firstPageForm.isHandicap === "Y" ? (
+            {firstPageForm?.isHandicap === "Y" ? (
               // <GridRow>
               <Grid sx={{ paddingLeft: { xs: "0px !important", md: "20px!important" } }} item xs={12} md={6}>
                 <SelectInput
                   label={"Handicap type"}
                   itemList={disabilityList}
-                  value={firstPageForm.handicapeType}
+                  value={firstPageForm?.handicapeType}
                   name={'handicapeType'}
                   onChange={handleHandicapTypeOnChange}
                   sx={inputFieldStyle2}
