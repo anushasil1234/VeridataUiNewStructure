@@ -150,7 +150,9 @@ const ThirdForm = ({
   isDLAvailable,
   setIsDLAvailable,
   drivingLicense,
-  setDrivingLicense
+  setDrivingLicense,
+  dateOfBirth,
+  setDateOfBirth
 
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
@@ -461,6 +463,8 @@ const ThirdForm = ({
             setIsDLAvailable={setIsDLAvailable}
             drivingLicense= {drivingLicense}
             setDrivingLicense= {setDrivingLicense}
+            dateOfBirth= {dateOfBirth}
+            setDateOfBirth= {setDateOfBirth}
           />
 
           {/* ###### Driving license Verification Section End ###### */}

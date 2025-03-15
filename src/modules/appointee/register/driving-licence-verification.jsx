@@ -95,7 +95,9 @@ const DrivingLicenseVerification = ({
   isDLAvailable,
   setIsDLAvailable,
   drivingLicense,
-  setDrivingLicense
+  setDrivingLicense,
+  dateOfBirth,
+  setDateOfBirth
 }) => {
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -130,17 +132,19 @@ const DrivingLicenseVerification = ({
 
   console.log("isDLVerificationDisabled", isDLVerificationDisabled);
 
+  console.log("isDLAvailable", isDLAvailable);
+
   const handleDrivingLicenseVerification = async () => {
     if (!isAadhaarVarified) {
       showErrorMessage(aaddharNumberverify);
       //setPanNumberError(true);
       return;
     }
-    if (licenseNumber === null) {
+    if ( drivingLicense === null) {
       showErrorMessage(emptyDLNumberMsg);
       //  setPanNumberError(true);
     }
-    else if (!patternChecking(licenseNumber, /^(?:[A-Z]{2}\d{2}-?|\w{2}-\d{2}|\w{2}\d{2} ?)\d{4}\d{7}$/)) {
+    else if (!patternChecking(drivingLicense, /^(?:[A-Z]{2}\d{2}-?|\w{2}-\d{2}|\w{2}\d{2} ?)\d{4}\d{7}$/)) {
       showErrorMessage(invalidDLMsg);
       setDLNumberError(true);
     }
@@ -151,7 +155,7 @@ const DrivingLicenseVerification = ({
   const verifyDrivingLicense = async () => {
     const payLoad = {
       appointeeId: appointeeId,
-      dlNumber: hasValue(licenseNumber) ? removeExtraSpaces(licenseNumber) : null,
+      dlNumber: hasValue(drivingLicense) ? removeExtraSpaces(drivingLicense) : null,
       userId: userId,
     };
     const response = await verifyDrivingLicenseDetails(payLoad);
@@ -292,7 +296,7 @@ const DrivingLicenseVerification = ({
                   //   // }
                   // }}
                   onChange={handleLicenseNumberChange}
-                  value={drivingLicense? drivingLicense: licenseNumber}
+                  value={drivingLicense}
                 />
               </Grid>
               <Grid
@@ -310,7 +314,7 @@ const DrivingLicenseVerification = ({
                 <TextInput
                   label={"Date of Birth"}
                   //value={firstPageForm.dateOfBirth}
-                  value={firstPageForm.dateOfBirth ? DDMMYYYY(firstPageForm.dateOfBirth) : null}
+                  value={dateOfBirth ? DDMMYYYY(dateOfBirth) : null}
                   disabled={true}
                 />
               </Grid>

@@ -47,7 +47,12 @@ const FifthForm = ({
     setisPoliceVarified,
     setFIRStatusMessage,
     firDetails,
-    setFIRDetails
+    setFIRDetails,
+    pan,
+    setPan,
+    nameAsOnPan,
+    dateOfBirth,
+    setDateOfBirth
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -86,18 +91,23 @@ const FifthForm = ({
                     setisPoliceVarified={setisPoliceVarified}
                     firDetails= {firDetails}
                     setFIRDetails= {setFIRDetails}
+                    dateOfBirth= {dateOfBirth}
+                    setDateOfBirth= {setDateOfBirth}
 
                     />
                     {/* ######  FIR Verification Section End ###### */}
 
                     {/* ###### Insurance Detail Section Start ###### */}
-                    <InsuranceDetails 
+                    {/* <InsuranceDetails 
                     isAadhaarVarified={isAadhaarVarified} 
                     stepsList={stepsList} 
                     firstPageForm={firstPageForm}
                     isPANAvailable={isPANAvailable}
                     setIsPANAvailable={setIsPANAvailable}   
-                    />
+                    pan= {pan}
+                    setPan= {setPan}
+                    nameAsOnPan={nameAsOnPan}
+                    /> */}
                     {/* ###### Insurance Detail Section End ###### */}
 
                     <GridRow>

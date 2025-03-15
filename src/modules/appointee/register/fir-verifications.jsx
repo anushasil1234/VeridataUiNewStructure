@@ -56,7 +56,9 @@ const FIRVerification = ({
     setisPoliceVarified,
     setFIRStatusMessage,
     firDetails,
-    setFIRDetails
+    setFIRDetails,
+    dateOfBirth,
+    setDateOfBirth
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -249,7 +251,7 @@ const FIRVerification = ({
                 <FormHeading
                     step={stepsList?.FIRV?.step}
                     heading={stepsList?.FIRV?.name}
-                //info={"Enter your PAN Number to verify."}
+                    info={"Check if any FIR is filed against you."}
                 />
             </FormHeadingContainer >
 
@@ -358,7 +360,7 @@ const FIRVerification = ({
                     <TextInput
                         label={"Date of Birth"}
                         //value={firstPageForm.dateOfBirth}
-                        value={firstPageForm.dateOfBirth ? DDMMYYYY(firstPageForm.dateOfBirth) : null}
+                        value={dateOfBirth ? DDMMYYYY(dateOfBirth) : null}
                         disabled={true}
                     />
                 </Grid>

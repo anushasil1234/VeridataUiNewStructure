@@ -214,6 +214,7 @@ const AppointeeRegisterForm = () => {
   const [isPANAvailable, setIsPANAvailable] = useState(true);
   const [isLicenseAvailable, setIsLicenseAvailable] = useState(true);
   const [isDLAvailable, setIsDLAvailable] = useState(true);
+  const [isPassportAvailable, setIsPassportAvailable] = useState(null);
 
   const [epfostatusMessage, setEpfostatusMessage] = useState(
     new VerificationStatus()
@@ -423,10 +424,18 @@ const AppointeeRegisterForm = () => {
         drivingLicense, firDetails
       } = response.responseInfo;
       setIsBankVarified(isBankAccVarified);
-      setIsPANAvailable(isPanAvailable);
-      setIsDLAvailable(isDLAvailable);
+      hasValue(isPanAvailable)
+        ? setIsPANAvailable(isPanAvailable)
+        : setIsPANAvailable(true);
+        setIsPassportAvailable(isPassportAvailable);
+      //setIsPANAvailable(isPanAvailable);
+      hasValue(isDLAvailable)
+        ? setIsDLAvailable(isDLAvailable)
+        : setIsDLAvailable(true);
+      //setIsDLAvailable(isDLAvailable);
       setIsSubmit(isSubmit);
       setCompanyName(companyName);
+      setDateOfBirth(dateOfBirth);
       setCompanyId(companyId);
       hasValue(appointeeDetailsId)
         ? setAppointeeDetailsId(appointeeDetailsId)
@@ -529,7 +538,8 @@ const AppointeeRegisterForm = () => {
         qualification: qualification,
         maratialStatus: maratialStatus,
         isPassportAvailable: hasValue(isPassportAvailable) ? isPassportAvailable : null,
-        isDLAvailable: hasValue(isDLAvailable) ? isDLAvailable : null,        
+        //isDLAvailable: hasValue(isDLAvailable) ? isDLAvailable : null,      
+        isDLAvailable: isDLAvailable,  
         isInternationalWorker: isInternationalWorker,
         originCountry: originCountry,
         passportNo: passportNo,
@@ -550,7 +560,8 @@ const AppointeeRegisterForm = () => {
         firDetails:firDetails,
         isAadhaarVarified: isAadhaarVarified,
         isPensionApplicable: isPensionApplicable,
-        isUanVarified: isUanVarified
+        isUanVarified: isUanVarified,
+        isPanAvailable: isPanAvailable
       }
       );
 
@@ -2023,6 +2034,8 @@ const AppointeeRegisterForm = () => {
                     setIsDLAvailable={setIsDLAvailable}
                     drivingLicense= {drivingLicense}
                     setDrivingLicense= {setDrivingLicense}
+                    dateOfBirth= {dateOfBirth}
+                    setDateOfBirth= {setDateOfBirth}
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>
@@ -2050,6 +2063,8 @@ const AppointeeRegisterForm = () => {
                     setIsPanVarified = {setIsPanVarified}
                     setIsBankVarified = {setIsBankVarified}
                     isBankVarified={isBankVarified}
+                    pan= {pan}
+                    setPan= {setPan}
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>
@@ -2076,6 +2091,11 @@ const AppointeeRegisterForm = () => {
                     setisPoliceVarified={setisPoliceVarified}
                     firDetails= {firDetails}
                     setFIRDetails= {setFIRDetails}
+                    pan= {pan}
+                    setPan= {setPan}
+                    nameAsOnPan={nameAsOnPan}
+                    dateOfBirth= {dateOfBirth}
+                    setDateOfBirth= {setDateOfBirth}
 
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />

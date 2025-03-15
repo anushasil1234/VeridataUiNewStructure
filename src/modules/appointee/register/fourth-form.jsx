@@ -42,7 +42,9 @@ const FourthForm = ({
   isPanVarified,
   isBankVarified,
   setIsBankVarified,
-  disabledPanInput
+  disabledPanInput,
+  pan,
+  setPan
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -76,6 +78,8 @@ const FourthForm = ({
             setIsPanVarified={setIsPanVarified}
             isPanVarified={isPanVarified}
             disabledPanInput = {disabledPanInput}
+            pan= {pan}
+            setPan= {setPan}
           />
           {/* ######  PAN Verification Section End ###### */}
 

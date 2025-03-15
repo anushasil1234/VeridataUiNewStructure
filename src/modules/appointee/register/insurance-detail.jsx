@@ -43,7 +43,10 @@ const InsuranceDetails = ({
     isAadhaarVarified,
     firstPageForm,
     isPANAvailable,
-    setIsPANAvailable
+    setIsPANAvailable,
+    pan,
+    setPan,
+    nameAsOnPan
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -91,7 +94,7 @@ const InsuranceDetails = ({
                         <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
                             <TextInput
                                 label={"PAN Number"}
-                                value={firstPageForm.panNummber}
+                                value={pan}
                                 //onChange={handelPANNumberChange}
                                 // required={true}
                                 disabled={true}
@@ -140,7 +143,7 @@ const InsuranceDetails = ({
                         >
                             <TextInput
                                 label={"Name on PAN"}
-                                value={firstPageForm.panName}
+                                value={nameAsOnPan}
                                 //value={firstPageForm.dateOfBirth ? DDMMYYYY(firstPageForm.dateOfBirth) : null}
                                 disabled={true}
                             />

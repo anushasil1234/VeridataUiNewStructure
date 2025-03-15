@@ -56,7 +56,9 @@ const PANVerification = ({
     setPANStatusMessage,
     isPanVarified,
     setIsPanVarified,
-    disabledPanInput
+    disabledPanInput,
+    pan,
+    setPan
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -65,7 +67,7 @@ const PANVerification = ({
     const functionSlice = useSelector((state) => state.functionSlice);
     const { openRemarksModel } = functionSlice[0];
 
-    const [pan, setPan] = useState(null);
+    //const [pan, setPan] = useState(null);
     const [panNumberError, setPanNumberError] = useState(false);
     // const [disabledPanInput, setDisabledPanInput] = useState(false);
     //const [isPanVarified, setIsPanVarified] = useState(null);

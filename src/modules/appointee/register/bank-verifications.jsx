@@ -55,6 +55,7 @@ import {
   aadharFileTypeAlias,
   emptyAccountNumberMsg,
   emptyIFSCMsg,
+  invalidIFSCMsg,
   epfoPassbookFileTypeAlias,
   epfoServiceHistoryFileTypeAlias,
   getHandicapTypeDescription,
@@ -81,6 +82,7 @@ import { verifyBankDetails } from "server/apis/verify/verify-bank-details";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import generateRemarks from "shared/utils/associate/generate-remarks";
 import VerificationStatus from "shared/components/verification/verification-status";
+import { patternChecking } from "shared/utils";
 
 const BankVerification = ({
   // accountNumber,
@@ -110,6 +112,7 @@ stepsList}) => {
   const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
   const [accountNumber, setAccountNumber] = useState(null);
   const [IFSCCode, setIFSCCode] = useState(null);
+  const [ifscCodeError, setIFSCCodeError] = useState(false);
   // const [isBankVerified,setIsBankVerified] = useState();
 
   const handleAccountNumberChange = (value) => {
@@ -182,10 +185,10 @@ stepsList}) => {
       showErrorMessage(emptyIFSCMsg);
     //  setPanNumberError(true);
     } 
-    // else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
-    //   showErrorMessage(invalidPanMsg);
-    //   setPanNumberError(true);
-    // } 
+    else if (!patternChecking(IFSCCode, /^[A-Z]{4}0[A-Z0-9]{6}$/)) {
+      showErrorMessage(invalidIFSCMsg);
+      setIFSCCodeError(true);
+    } 
     else {
       verifyBank();
     }
