@@ -44,7 +44,11 @@ const FourthForm = ({
   setIsBankVarified,
   disabledPanInput,
   pan,
-  setPan
+  setPan,
+  accountNumber,
+  setAccountNumber,
+  IFSCCode,
+  setIFSCCode
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
@@ -91,6 +95,10 @@ const FourthForm = ({
             setBankStatusMessage={setBankStatusMessage}
             isBankVarified = {isBankVarified}
             setIsBankVarified = {setIsBankVarified}
+            accountNumber={accountNumber}
+            setAccountNumber={setAccountNumber}
+            IFSCCode={IFSCCode}
+            setIFSCCode={setIFSCCode}
           />
           {/* ###### Bank Verification Section End ###### */}
 

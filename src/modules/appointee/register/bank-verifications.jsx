@@ -92,6 +92,10 @@ const BankVerification = ({
   isAadhaarVarified,
   isBankVarified,
   setIsBankVarified,
+  accountNumber,
+  setAccountNumber,
+  IFSCCode,
+  setIFSCCode,
 stepsList}) => {
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
@@ -110,8 +114,8 @@ stepsList}) => {
     openInfoModel,
   } = functionSlice[0];
   const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
-  const [accountNumber, setAccountNumber] = useState(null);
-  const [IFSCCode, setIFSCCode] = useState(null);
+  //const [accountNumber, setAccountNumber] = useState(null);
+  //const [IFSCCode, setIFSCCode] = useState(null);
   const [ifscCodeError, setIFSCCodeError] = useState(false);
   // const [isBankVerified,setIsBankVerified] = useState();
 
@@ -251,6 +255,7 @@ stepsList}) => {
             }}
             onChange={handleAccountNumberChange}
             value={accountNumber}
+            disabled={isBankVarified}
           />
         </Grid>
         <Grid
@@ -276,6 +281,7 @@ stepsList}) => {
             onChange={handleIFSCCodeChange}
 
             value={IFSCCode}
+            disabled={isBankVarified}
           />
         </Grid>
         

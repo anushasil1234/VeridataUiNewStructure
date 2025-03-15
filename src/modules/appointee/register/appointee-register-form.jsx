@@ -192,6 +192,7 @@ const AppointeeRegisterForm = () => {
   const [firDetails, setFIRDetails] = useState(null);
   const [nameAsOnPan, setNameAsOnPan] = useState(null);
   const [aadhar, setAadhar] = useState(null);
+   
   const [nameAsOnAadhar, setNameAsOnAadhar] = useState(null);
   const [aadharShareCode, setAadharShareCode] = useState(null);
   const [fetchUanConfirmation, setFetchUanConfirmation] = useState(false);
@@ -566,6 +567,9 @@ const AppointeeRegisterForm = () => {
       );
 
       setPan(panNumber);
+      setAadhar(aadhaarNumber);
+      setAccountNumber(bankAccNumber);
+      setIFSCCode(bankIfscNumber);
       setNameAsOnPan(hasValue(panName) ? panName : appointeeName);
       setMobileNo(mobileNo);
     }
@@ -2065,6 +2069,10 @@ const AppointeeRegisterForm = () => {
                     isBankVarified={isBankVarified}
                     pan= {pan}
                     setPan= {setPan}
+                    accountNumber={accountNumber}
+                    setAccountNumber={setAccountNumber}
+                    IFSCCode={IFSCCode}
+                    setIFSCCode={setIFSCCode}
                    // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
                   />
                 </>
@@ -2112,7 +2120,10 @@ const AppointeeRegisterForm = () => {
                     handleBack={handleBack}
                     handleViewFile = {handleViewFile}
                     firstPageForm = {firstPageForm}
-                    aadhaarNumber = {aadhar} 
+                    aadhar = {aadhar} 
+                    setAadhar= {setAadhar}
+                    pan= {pan}
+                    setPan= {setPan}
                     epfoButton={epfoButton}
                     setEpfoButton={setEpfoButton}
                     epfostatusMessage={epfostatusMessage}
@@ -2129,6 +2140,7 @@ const AppointeeRegisterForm = () => {
                     isUANAvailableState={isUANAvailableState}
                     setisUanVarified = {setisUanVarified}
                     submitDetails={submitDetails}
+
 
                   />
                 </>

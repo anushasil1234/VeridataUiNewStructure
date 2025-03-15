@@ -91,14 +91,19 @@ const SixthForm = ({
   removeEPFOPassbookFile,
   epfoPassBookFiles,
   firstPageForm,
-  aadhaarNumber,
   isUANAvailableState,
   setisUanVarified,
-  submitDetails
+  submitDetails,
+  aadhar,
+  setAadhar,
+  pan,
+  setPan
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
 
   console.log("AADHARVERIFICATION_BY", AADHARVERIFICATION_BY);
+
+  //console.log("aadhaarNumber", aadhaarNumber);
 
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openRemarksModel } = functionSlice[0];
@@ -154,13 +159,9 @@ const SixthForm = ({
   // };
   const handleGetUANNumber = async () => {
     const payLoad = {
-      aaddharNumber: hasValue(aadhaarNumber)
-        ? removeExtraSpaces(aadhaarNumber)
-        : null,
+      aaddharNumber: aadhar,
       appointeeId,
-      panNumber: hasValue(firstPageForm.panNumber)
-        ? removeExtraSpaces(firstPageForm.panNumber)
-        : null,
+      panNumber: pan,
       mobileNumber: hasValue(firstPageForm.mobileNo)
         ? removeExtraSpaces(firstPageForm.mobileNo)
         : null,
