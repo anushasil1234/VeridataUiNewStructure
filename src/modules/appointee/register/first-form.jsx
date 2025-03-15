@@ -166,9 +166,15 @@ const FirstForm = ({
     };
     openConfirmationYesNoModal(ConfirmationModelContent, handleYes, handleNo);
   };
+  // const handleFirstPageFormInputChange = (value, name) => {
+  //   setFirstPageForm({ ...firstPageForm, [name]: value });
+  // }
   const handleFirstPageFormInputChange = (value, name) => {
-    setFirstPageForm({ ...firstPageForm, [name]: value });
-  }
+    setFirstPageForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
   const handlePassportNoChange = (value, name) => {
     setPassportNumberError(false);
     handleFirstPageFormInputChange(value, name);

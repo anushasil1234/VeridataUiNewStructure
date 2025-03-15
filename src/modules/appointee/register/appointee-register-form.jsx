@@ -345,6 +345,16 @@ const AppointeeRegisterForm = () => {
     isAadhaarVarified: "", 
     isPensionApplicable: "", 
     isUanVarified: "", 
+    isDLAvailable:"",
+    drivingLicense: "",
+    firDetails:"",
+  //  panNumber: panNumber,
+ //   drivingLicense: drivingLicense,
+   // firDetails:firDetails,
+  //  isAadhaarVarified: isAadhaarVarified,
+    //isPensionApplicable: isPensionApplicable,
+    //isUanVarified: isUanVarified,
+    isPanAvailable: ""
 };
   const [firstPageForm, setFirstPageForm] = useState({
     ...defaultFirstPageForm,
@@ -414,6 +424,7 @@ const AppointeeRegisterForm = () => {
 
   const setAppointeeDetails = async (appointeeId) => {
     const response = await getAppointeeDetails(appointeeId);
+    console.log("appointeedeatils",response)
     if (response) {
       let {
         appointeeDetailsId, candidateId, companyId, appointeeName, appointeeEmailId, aadhaarName, aadhaarNumber,
