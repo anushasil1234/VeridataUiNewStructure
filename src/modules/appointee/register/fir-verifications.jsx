@@ -199,7 +199,7 @@ const FIRVerification = ({
 
             setisPoliceVarified(IsValid);
             setFIRDetails(PoliceFirDetails); // Store FIR details
-            setIsViewFIREnabled(PoliceFirDetails.length > 0); // Enable "View FIR" button if details exist
+            setIsViewFIREnabled(PoliceFirDetails?.length > 0); // Enable "View FIR" button if details exist
 
             if (IsValid) {
                 setIsFIRModalOpen(true);
@@ -246,7 +246,7 @@ const FIRVerification = ({
 
         <>
 
-            {/* ######  PAN Verification Section Start ###### */}
+            {/* ######  FIR Verification Section Start ###### */}
             < FormHeadingContainer >
                 <FormHeading
                     step={stepsList?.FIRV?.step}
@@ -270,13 +270,16 @@ const FIRVerification = ({
                     <Button
                         sx={{ ...submitBtnStyle, margin: "5px 10px 5px 0" }}
                         //disabled={isPanVarified}
+                        disabled={isPoliceVarified}
                         variant="contained"
                         onClick={handleFIRChecking}
                         endIcon={<Autorenew />}
                     >
                         Check
                     </Button>
-                    {isViewFIREnabled && (
+                    {
+                    isViewFIREnabled && 
+                    (
                         <Button
                             sx={{ ...submitBtnStyle, margin: "5px 0" }}
                             variant="contained"
@@ -360,12 +363,12 @@ const FIRVerification = ({
                     <TextInput
                         label={"Date of Birth"}
                         //value={firstPageForm.dateOfBirth}
-                        value={dateOfBirth ? DDMMYYYY(dateOfBirth) : null}
+                        value={firstPageForm?.dateOfBirth ? DDMMYYYY(firstPageForm?.dateOfBirth) : null}
                         disabled={true}
                     />
                 </Grid>
             </GridRow>
-            {/* ######  PAN Verification Section End ###### */}
+            {/* ######  FIR Verification Section End ###### */}
 
         </>
     );

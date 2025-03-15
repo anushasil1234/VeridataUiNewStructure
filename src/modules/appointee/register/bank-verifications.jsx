@@ -172,11 +172,11 @@ stepsList}) => {
     // }
   };
   const handleBankAccountVerification = async () => {
-    // if (!isAadhaarVarified) {
-    //   showErrorMessage(aaddharNumberverify);
-    //   //setPanNumberError(true);
-    //   return;
-    // }
+    if (!isAadhaarVarified) {
+      showErrorMessage(aaddharNumberverify);
+      //setPanNumberError(true);
+      return;
+    }
     if (accountNumber === null) {
       showErrorMessage(emptyAccountNumberMsg);
     //  setPanNumberError(true);
@@ -242,6 +242,13 @@ stepsList}) => {
             //   setAccountNumber(val);
             //   // }
             // }}
+            onKeyDown={(e) => {
+              // Allow only digits and restrict any other key presses
+              // /  const regex = /^[0-4]*$/;
+              if (!/^\d+$/.test(e.key) && e.key !== "Backspace") {
+                e.preventDefault();
+              }
+            }}
             onChange={handleAccountNumberChange}
             value={accountNumber}
           />
