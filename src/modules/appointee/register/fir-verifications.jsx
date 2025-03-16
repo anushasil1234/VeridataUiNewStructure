@@ -173,7 +173,7 @@ const FIRVerification = ({
         const response = await checkFIRDetails(payLoad);
 
         // const response = {
-        //     "PoliceFirDetails": [
+        //     "policeFirDetails": [
         //         {
         //             "FirNumber": "FIR2025001",
         //             "Date": "2025-03-10",
@@ -189,28 +189,28 @@ const FIRVerification = ({
         //             "Status": "Closed"
         //         }
         //     ],
-        //     "IsValid": false,
-        //     "Remarks": "No serious offenses found."
+        //     "isValid": false,
+        //     "remarks": "No serious offenses found."
         // }
 
 
         if (response) {
-            const { PoliceFirDetails, IsValid, Remarks } = response;
+            const { policeFirDetails, isValid, remarks } = response;
 
-            setisPoliceVarified(IsValid);
-            setFIRDetails(PoliceFirDetails); // Store FIR details
-            setIsViewFIREnabled(PoliceFirDetails?.length > 0); // Enable "View FIR" button if details exist
+            setisPoliceVarified(isValid);
+            setFIRDetails(policeFirDetails); // Store FIR details
+            setIsViewFIREnabled(policeFirDetails?.length > 0); // Enable "View FIR" button if details exist
 
-            if (IsValid) {
+            if (isValid) {
                 setIsFIRModalOpen(true);
             } else {
                 displayPanError(firVerifyFailedMsg);
-                if (hasValue(Remarks)) {
-                    const generatedRemarks = generateRemarks(Remarks);
+                if (hasValue(remarks)) {
+                    const generatedRemarks = generateRemarks(remarks);
                     openRemarksModel(generatedRemarks);
                 }
             }
-            setFIRStatusMessage(new VerificationStatus(IsValid, "V"));
+            setFIRStatusMessage(new VerificationStatus(isValid, "V"));
         }
     };
 

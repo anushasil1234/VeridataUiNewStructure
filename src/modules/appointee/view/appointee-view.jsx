@@ -2,20 +2,20 @@ import { Grid, Typography, Chip, Button, Skeleton, Avatar } from "@mui/material"
 import React, { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/system";
 import {
-    
-    
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    DialogContentText,
-    Table, TableHead, TableBody, TableRow, TableCell, TableContainer,
-    AppBar,
-    IconButton,
-    Toolbar,
+
+
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  DialogContentText,
+  Table, TableHead, TableBody, TableRow, TableCell, TableContainer,
+  AppBar,
+  IconButton,
+  Toolbar,
 } from "@mui/material";
 import {
-    submitBtnStyle,
+  submitBtnStyle,
 } from "app";
 import { modelToolbar } from "app";
 import { Close } from "@mui/icons-material";
@@ -231,6 +231,7 @@ let AppointeeViewForm = ({
   const [bankIfscNumber, setBankIfscNumber] = useState(null);
   const [firDetails, setFIRDetails] = useState(null);
   const [isFIRModalOpen, setIsFIRModalOpen] = useState(false);
+  const [parsedFIRDetails, setParsedFIRDetails] = useState([]);
   const [otherFilePayload, setOtherFilePayload] = useState();
   const dispatch = useDispatch();
 
@@ -545,6 +546,20 @@ let AppointeeViewForm = ({
   };
 
   //const parsedFIRDetails =  firDetails ? JSON.parse(firDetails) : firDetails ;
+
+  // Parse firDetails when it changes
+  useEffect(() => {
+    if (firDetails && firDetails !== "NA") {
+      try {
+        setParsedFIRDetails(JSON.parse(firDetails));
+      } catch (error) {
+        console.error("Error parsing FIR details:", error);
+        setParsedFIRDetails([]);
+      }
+    } else {
+      setParsedFIRDetails([]);
+    }
+  }, [firDetails]);
 
   const handleGetImageFromId = async () => {
     const payload = {
@@ -1106,14 +1121,18 @@ let AppointeeViewForm = ({
                 />
               )}
             </Box>
-            {/* <Box sx={{ ...cardStyle }}>
+            <Box sx={{ ...cardStyle }}>
               <Stack sx={listHeadingConteinerStyle}>
                 <Typography sx={listHeadingStyle}>FIR Details</Typography>
               </Stack>
 
-              {parsedFIRDetails.length === 0 ? (
-                <Typography sx={{ fontStyle: "italic", color: "gray" }}>NA</Typography>
-              ) : (
+              <PersonalInformation
+                fieldName={"See FIR Details"}
+                fieldValue={parsedFIRDetails === "N" ? "No" : NA}
+                width="50px"
+              />
+
+              {Array.isArray(parsedFIRDetails) && parsedFIRDetails.length > 0 && (
                 <Button
                   sx={{ ...submitBtnStyle, margin: "5px 0" }}
                   variant="contained"
@@ -1162,7 +1181,7 @@ let AppointeeViewForm = ({
                   <Typography>No FIR records found.</Typography>
                 )}
               </DialogContent>
-            </Dialog> */}
+            </Dialog>
           </Grid>
           <Grid item xs={12} md={5.5}>
             <Box sx={cardStyle}>
