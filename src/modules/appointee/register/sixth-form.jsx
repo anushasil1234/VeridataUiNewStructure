@@ -242,13 +242,13 @@ const SixthForm = ({
     const mobileNumber = hasValue(firstPageForm.mobileNo)
       ? removeExtraSpaces(firstPageForm.mobileNo)
       : null;
-    // openOtpForm(
-    //   UAN,
-    //   mobileNumber,
-    //   "UAN Number",
-    //   () => validateUANOtp(UAN, mobileNumber),
-    //   "Generate OTP for PF Verification"
-    // );
+    openOtpForm(
+      UAN,
+      mobileNumber,
+      "UAN Number",
+      () => validateUANOtp(UAN, mobileNumber),
+      "Generate OTP for PF Verification"
+    );
     //setIsEmployementDataVarified(true);
   };
   const generateUANOTPDialog = (UAN, mobileNo) => {
