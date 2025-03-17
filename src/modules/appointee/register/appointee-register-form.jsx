@@ -495,8 +495,8 @@ const AppointeeRegisterForm = () => {
       setLicenseStatusMessage(new VerificationStatus(isDLVarified, "V"));
       setIsDraft(saveStep == 0);
       if (hasValue(isUanAvailable)) {
-        setCurrentPageNo(saveStep + 2);
-        setActiveStep(saveStep + 1);
+        setCurrentPageNo(saveStep + 1);
+        setActiveStep(saveStep );
         setIsThirdNextVisible(true);
       } else {
         setActiveStep(saveStep);

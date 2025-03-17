@@ -195,7 +195,7 @@ const FIRVerification = ({
 
 
         if (response) {
-            const { policeFirDetails, isValid, remarks } = response;
+            const { policeFirDetails, isValid, remarks } = response.responseInfo;
 
             setisPoliceVarified(isValid);
             setFIRDetails(policeFirDetails); // Store FIR details
