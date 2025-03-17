@@ -83,6 +83,7 @@ import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
 import generateRemarks from "shared/utils/associate/generate-remarks";
 import VerificationStatus from "shared/components/verification/verification-status";
 import { patternChecking } from "shared/utils";
+import { bankVerifyFailedMsg } from "shared/constants/constants";
 
 const BankVerification = ({
   // accountNumber,
@@ -175,6 +176,11 @@ stepsList}) => {
     //   }
     // }
   };
+
+  const displayBankError = (msg) => {
+    showErrorMessage(msg);
+    //setPanNumberError(true);
+};
   const handleBankAccountVerification = async () => {
     if (!isAadhaarVarified) {
       showErrorMessage(aaddharNumberverify);
@@ -207,8 +213,9 @@ stepsList}) => {
     const response = await verifyBankDetails(payLoad);
     if (response) {
       const { remarks, isValid } = response.responseInfo;
-      setIsBankVarified(isValid);
+      
       if (isValid) {
+        setIsBankVarified(isValid);
        // setIsEpfoSectionDisabled(false);
         //showSuccessMessage(panSuccessMsg);
         //setIsPANModalOpen(true);
@@ -217,7 +224,7 @@ stepsList}) => {
         //handleGetUANNumber();
         // setPanNumberError(false);
       } else {
-       // displayPanError(panVerifyFailedMsg);
+        displayBankError(bankVerifyFailedMsg);
         if (hasValue(remarks)) {
           const generatedRemarks = generateRemarks(remarks);
           openRemarksModel(generatedRemarks);

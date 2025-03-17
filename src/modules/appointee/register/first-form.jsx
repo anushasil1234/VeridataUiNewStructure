@@ -45,6 +45,7 @@ const FirstForm = ({
   stepsList,
   isRelationShipWithMemberDisabled,
   passportAvailable,
+  setPassportAvailable,
   isAadhaarVarified,
   isPassportVarified,
   disabledIsInterNationalWorker,
@@ -91,6 +92,8 @@ const FirstForm = ({
   const [clickedButton, setClickedButton] = useState(null);
   const [isPassportAvailableDisable, setIsPassportAvailableDisable] =
     useState(false);
+
+  console.log("passportAvailable",passportAvailable);
   // const [passportNoMaxLength, setPassportNoMaxLength] = useState(null);
 
 
@@ -221,7 +224,7 @@ const FirstForm = ({
       } else {
         setIsPassportAvailableDisable(false);
         // setPassportAvailable("");
-        _firstPageForm = { ..._firstPageForm, isPassportAvailable: '' };
+        _firstPageForm = { ..._firstPageForm, isPassportAvailable: 'N' };
       }
       setFirstPageForm({ ..._firstPageForm });
       setPassPortMaxLength(value);

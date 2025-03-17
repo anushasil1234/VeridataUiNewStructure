@@ -140,9 +140,9 @@ const FIRVerification = ({
         }
     };
 
-    const displayPanError = (msg) => {
+    const displayFirError = (msg) => {
         showErrorMessage(msg);
-        setPanNumberError(true);
+        //setPanNumberError(true);
     };
     // const handlePanVerifiaction = () => {
     //     if (!isAadhaarVarified) {
@@ -204,7 +204,7 @@ const FIRVerification = ({
             if (isValid) {
                 setIsFIRModalOpen(true);
             } else {
-                displayPanError(firVerifyFailedMsg);
+                displayFirError(firVerifyFailedMsg);
                 if (hasValue(remarks)) {
                     const generatedRemarks = generateRemarks(remarks);
                     openRemarksModel(generatedRemarks);

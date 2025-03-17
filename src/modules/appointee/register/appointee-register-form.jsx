@@ -157,7 +157,8 @@ const AppointeeRegisterForm = () => {
     dispatch(storeCurrentPageNo(currentPageNo));
   }
 
-  console.log("currentPageNo", currentPageNo);
+  //console.log("currentPageNo", currentPageNo);
+  //console.log("activeStep",activeStep);
   
 
   const [companyId, setCompanyId] = useState(0);
@@ -181,7 +182,7 @@ const AppointeeRegisterForm = () => {
   const [isInterNationalWorker, setisInterNationalWorker] = useState("N");
   const [disabledIsInterNationalWorker, setDisabledIsInterNationalWorker] =
     useState(false);
-  const [passportAvailable, setPassportAvailable] = useState("");
+  const [passportAvailable, setPassportAvailable] = useState(null);
   // const [isPassportAvailableDisable, setIsPassportAvailableDisable] =
   //   useState(false);
   const [countryOfOrigin, setCountryOfOrigin] = useState("");
@@ -216,7 +217,7 @@ const AppointeeRegisterForm = () => {
   const [isPANAvailable, setIsPANAvailable] = useState(true);
   const [isLicenseAvailable, setIsLicenseAvailable] = useState(true);
   const [isDLAvailable, setIsDLAvailable] = useState(true);
-  const [isPassportAvailable, setIsPassportAvailable] = useState(null);
+  const [isPassportAvailable, setIsPassportAvailable] = useState(false);
 
   const [epfostatusMessage, setEpfostatusMessage] = useState(
     new VerificationStatus()
@@ -497,7 +498,8 @@ setIsPensionApplicable(isPensionApplicable);
       hasValue(isPanAvailable)
         ? setIsPANAvailable(isPanAvailable)
         : setIsPANAvailable(true);
-        setIsPassportAvailable(isPassportAvailable);
+      //setIsPassportAvailable(isPassportAvailable);
+      setPassportAvailable(isPassportAvailable);
       //setIsPANAvailable(isPanAvailable);
       hasValue(isDLAvailable)
         ? setIsDLAvailable(isDLAvailable)
@@ -1951,6 +1953,7 @@ setIsPensionApplicable(isPensionApplicable);
                       isRelationShipWithMemberDisabled
                     }
                     passportAvailable={passportAvailable}
+                    setPassportAvailable={setPassportAvailable}
                     isAadhaarVarified={isAadhaarVarified}
                     isPassportVarified={isPassportVarified}
                     disabledIsInterNationalWorker={disabledIsInterNationalWorker}
@@ -2047,27 +2050,14 @@ setIsPensionApplicable(isPensionApplicable);
                     aadharstatusMessage={aadharstatusMessage}
                     uploadAadharXmlFile={uploadAadharXmlFile}
                     aadharXmlFileName={aadharXmlFileName}
-                  //   pan={pan}
-                  //   handelPANNumberChange={handelPANNumberChange}
-                  //  // handleAccountNumberChange={handleAccountNumberChange}
-                  //  // handleIFSCCodeChange={handleIFSCCodeChange}
-                  //   handleBlurPAN={handleBlurPAN}
-                  //   disabledPanInput={disabledPanInput}
-                  //   panNumberError={panNumberError}
-                  //   isPanVarified={isPanVarified}
-                  //   handlePanVerifiaction={handlePanVerifiaction}
-                  //   handleBankAccountVerification = {handleBankAccountVerification}
-                  //   isPANModalOpen={isPANModalOpen}
+
                     handleDialogCancel={handleDialogCancel}
                     handleDialogConfirm={handleDialogConfirm}
                     panstatusMessage={panstatusMessage}
                     
-                    //nameAsOnPan={nameAsOnPan}
+              
                     isEpfoSectionDisabled={isEpfoSectionDisabled}
-                    //  accountNumber={accountNumber}
-                    //  setAccountNumber={setAccountNumber}
-                    // IFSCCode = {IFSCCode}
-                    //  setIFSCCode = {setIFSCCode}
+
                     setUAN={setUAN}
                     UAN={UAN}
                     isUanVarified={isUanVarified}

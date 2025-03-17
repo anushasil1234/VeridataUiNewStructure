@@ -87,6 +87,7 @@ export const aadharVerificationErrorMsg = `Please verify your Aadhar before subm
 export const PANVerifictionErrorMsg = `Please verify your PAN before submit`;
 export const dataSubmitionMsg = `Data submited successfully`;
 export const firVerifyFailedMsg = `FIR has not been verified`;
+export const bankVerifyFailedMsg = `Bank Details has not been verified`;
 // export const dataSubmitionMsg = `Data submited successfully`;
 
 export const attentionInfo = `The appointees with the nearest joining dates are listed below, including the following details: Appointee Name, Date of Joining (DOJ), and Days to Join.`;
