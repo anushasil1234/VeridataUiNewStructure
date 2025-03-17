@@ -168,7 +168,8 @@ const AppointeeRegisterForm = () => {
   const [memberName, setMemberName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [dateOfJoining, setDateOfJoining] = useState("");
-  const [gender, setGender] = useState();
+  const [gender, setGender] = useState("");
+  const[appointeeName,setAppointeeName] = useState("");
   const [fathersOrHusbandName, setFathersOrHusbandName] = useState("");
   const [relationshipWithMember, setRelationshipWithMember] = useState("");
   const [mobileNo, setMobileNo] = useState(null);
@@ -285,6 +286,9 @@ const AppointeeRegisterForm = () => {
   const [isUanVerificationProcessManual, setIsUanVerificationProcessManual] =
     useState("auto");
   const [panNumberError, setPanNumberError] = useState(false);
+  const [isPFverificationReq,setIsPFverificationReq] = useState();
+  const [panNumber,setPanNumber] = useState();
+  const [isPensionApplicable,setIsPensionApplicable] = useState();
   // const defaultFirstPageForm = {
   //   gender: null,
   //   appointeeName: null,
@@ -356,6 +360,45 @@ const AppointeeRegisterForm = () => {
     //isUanVarified: isUanVarified,
     isPanAvailable: ""
 };
+// const defaultFirstPageForm = {
+//   gender: gender, 
+//   appointeeName: appointeeName, 
+//   dateOfBirth: dateOfBirth, 
+//   memberName: memberName, 
+//   memberRelation: relationshipWithMember,
+//   nationality: nationality, 
+//   qualification: qualification, 
+//   maratialStatus: maritalStatus, 
+//   isPassportAvailable: isPassportAvailable, 
+//   isInternationalWorker: isInterNationalWorker, 
+//   originCountry: countryOfOrigin, 
+//   passportNo: passportNo, 
+//   mobileNo: mobileNo, 
+//   appointeeEmailId: email, 
+//   passportValidFrom: "", 
+//   passportValidTill: "", 
+//   isHandicap: isPhysicallyHandicap, 
+//   uanNumber: UAN, 
+//   dateOfJoining: dateOfJoining, 
+//   epfWages: EPFWages, 
+//   handicapeType: handicapType, 
+//   isPFverificationReq: isPFverificationReq, 
+//   panName: nameAsOnPan, 
+//   panNumber: panNumber, 
+//   isAadhaarVarified: isAadhaarVarified, 
+//   isPensionApplicable: isPensionApplicable, 
+//   isUanVarified: isUanVarified, 
+//   isDLAvailable:isDLAvailable,
+//   drivingLicense: drivingLicense,
+//   firDetails:firDetails,
+// //  panNumber: panNumber,
+// //   drivingLicense: drivingLicense,
+//  // firDetails:firDetails,
+// //  isAadhaarVarified: isAadhaarVarified,
+//   //isPensionApplicable: isPensionApplicable,
+//   //isUanVarified: isUanVarified,
+//   isPanAvailable: ""
+// };
   const [firstPageForm, setFirstPageForm] = useState({
     ...defaultFirstPageForm,
     appointeeDetailsId: appointeeDetailsId,
@@ -435,6 +478,21 @@ const AppointeeRegisterForm = () => {
         isTrustPassbook, isManualPassbook, isUanLinkWithAadhar,isDLAvailable,isDLVarified,isPoliceVarified,
         drivingLicense, firDetails
       } = response.responseInfo;
+      setGender(gender);
+      setAppointeeName(appointeeName);
+      setMemberName(memberName);
+      setRelationshipWithMember(memberRelation);
+      setNationality(nationality);
+      setQualification(qualification);
+setMaritalStatus(maritalStatus);
+setEmail(email);
+setIsPhysicallyHandicap(isHandicap);
+setUAN(uanNumber);
+setEPFWages(epfWages);
+setHandicapType(handicapeType);
+setIsPFverificationReq(isPFverificationReq);
+setPanNumber(panNumber);
+setIsPensionApplicable(isPensionApplicable);
       setIsBankVarified(isBankAccVarified);
       hasValue(isPanAvailable)
         ? setIsPANAvailable(isPanAvailable)
@@ -2151,6 +2209,8 @@ const AppointeeRegisterForm = () => {
                     isUANAvailableState={isUANAvailableState}
                     setisUanVarified = {setisUanVarified}
                     submitDetails={submitDetails}
+                    setUAN={setUAN}
+                    UAN={UAN}
 
 
                   />
