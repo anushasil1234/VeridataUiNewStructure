@@ -2,17 +2,17 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
     let _steps = {};
     let _stepCounter = stepCounter;
 
-
-    if (isHandicap === 'Y') {
-        _stepCounter = _stepCounter + 1;
-        _steps = {
-            ..._steps,
-            HV: {
-                step: _stepCounter,
-                name: 'Handicap Verification'
-            }
-        }
-    }
+    console.log('ispassportAvailable',isPassportAvailable,stepCounter,isHandicap);
+    // if (isHandicap === 'Y') {
+    //     _stepCounter = _stepCounter + 1;
+    //     _steps = {
+    //         ..._steps,
+    //         HV: {
+    //             step: _stepCounter,
+    //             name: 'Handicap Verification'
+    //         }
+    //     }
+    // }
     if (isPassportAvailable === 'Y') {
         _stepCounter = _stepCounter + 1;
         _steps = {
@@ -23,7 +23,12 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
             }
         }
     }
-    _stepCounter = _stepCounter + 1;
+    //if (isPassportAvailable === 'Y') {
+        _stepCounter = _stepCounter + 1;
+    
+    //}
+
+
     _steps = {
         ..._steps,
         CF: {
@@ -32,6 +37,19 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         }
     }
     _stepCounter = _stepCounter + 1;
+
+    if (isHandicap === 'Y') {
+       // _stepCounter = _stepCounter + 1;
+        _steps = {
+            ..._steps,
+            HV: {
+                step: _stepCounter,
+                name: 'Handicap Verification'
+            }
+        }
+    }
+    _stepCounter = _stepCounter + 1;
+
 
     _steps = {
         ..._steps,
@@ -81,14 +99,14 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
             name: 'FIR Verification'
         }
     }
-    _stepCounter = _stepCounter + 1;
-    _steps = {
-        ..._steps,
-        ID: {
-            step: _stepCounter,
-            name: 'Insurance Details'
-        }
-    }
+    // _stepCounter = _stepCounter + 1;
+    // _steps = {
+    //     ..._steps,
+    //     ID: {
+    //         step: _stepCounter,
+    //         name: 'Insurance Details'
+    //     }
+    // }
     _stepCounter = _stepCounter + 1;
     _steps = {
         ..._steps,
@@ -99,4 +117,14 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
     }
 
     return _steps;
+//    return (
+//     <div>
+//         {Object.keys(_steps).map((stepKey, index) => (
+//             <div key={stepKey}>
+//                 <h2>Step {index + 1}: {_steps[stepKey].name}</h2>
+//                 {/* Render the step content here */}
+//             </div>
+//         ))}
+//     </div>
+//);
 }

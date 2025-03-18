@@ -320,6 +320,7 @@ const FirstForm = ({
     }
   };
   const handleChangeIspassportAvailable = (value, name) => {
+    setPassportAvailable(value);
     if (value === 'Y') {
       handleFirstPageFormInputChange(value, name);
     }
