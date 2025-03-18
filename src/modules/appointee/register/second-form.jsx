@@ -412,7 +412,9 @@ const SecondForm = ({
                         </div>
                       }
                     >
-                      <IconButton disabled={isPreviousSectionDisabled}>
+                      <IconButton 
+                      //disabled={isPreviousSectionDisabled}
+                      >
                         <InfoOutlined />
                       </IconButton>
                     </Tooltip>
@@ -446,7 +448,7 @@ const SecondForm = ({
                     // }
                     fileName={tenthCertificateFileName}
                     accept={"image/png, image/jpeg,application/pdf"}
-                    disabled={isPreviousSectionDisabled}
+                    //disabled={isPreviousSectionDisabled}
                     maxUploadSize={imgAndPdfMaxSize}
                     uploadTypeAlias={tenthCertificateFileTypeAlias}
                     // handleRemoveFile={remove10thPassCertificate}
@@ -493,7 +495,7 @@ const SecondForm = ({
                   }
                 >
                   <IconButton
-                    disabled={isPreviousSectionDisabled}
+                    //disabled={isPreviousSectionDisabled}
                     sx={{
                       marginLeft: "-5px", // Moves the icon a bit to the left
                       marginTop: "-5px", // Moves the icon a bit upwards
@@ -531,7 +533,7 @@ const SecondForm = ({
                   // }
                   fileName={otherFileName}
                   accept={"image/png, image/jpeg,application/pdf"}
-                  disabled={isPreviousSectionDisabled}
+                  //disabled={isPreviousSectionDisabled}
                   maxUploadSize={imgAndPdfMaxSize}
                   uploadTypeAlias={otherFileTypeAlias}
                   handleViewFile={handleViewFile}
@@ -593,7 +595,7 @@ const SecondForm = ({
                       // }
                       fileName={handicapFileName}
                       accept={"image/png, image/jpeg,application/pdf"}
-                      disabled={isPreviousSectionDisabled}
+                      //disabled={isPreviousSectionDisabled}
                       maxUploadSize={imgAndPdfMaxSize}
                       uploadTypeAlias={handicapFileTypeAlias}
                       handleViewFile={handleViewFile}
@@ -802,7 +804,7 @@ const SecondForm = ({
                     sx={submitBtnStyle}
                     variant="contained"
                     color="primary"
-                    disabled={isPreviousSectionDisabled}
+                    //disabled={isPreviousSectionDisabled}
                   >
                     Save
                   </Button>

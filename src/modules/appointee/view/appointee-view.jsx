@@ -1,5 +1,6 @@
 import { Grid, Typography, Chip, Button, Skeleton, Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import viewImage from "assets/images/profile/file_upload_icon.png";
 import { Box, Stack } from "@mui/system";
 import {
 

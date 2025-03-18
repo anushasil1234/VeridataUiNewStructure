@@ -196,20 +196,31 @@ const FIRVerification = ({
 
         if (response) {
             const { policeFirDetails, isValid, remarks } = response.responseInfo;
+            //const { policeFirDetails, isValid, remarks } = response;
+
 
             setisPoliceVarified(isValid);
             setFIRDetails(policeFirDetails); // Store FIR details
             setIsViewFIREnabled(policeFirDetails?.length > 0); // Enable "View FIR" button if details exist
 
             if (isValid) {
-                setIsFIRModalOpen(true);
+                //setIsFIRModalOpen(true);
+                //setIsFIRModalOpen(true);
             } else {
                 displayFirError(firVerifyFailedMsg);
-                if (hasValue(remarks)) {
-                    const generatedRemarks = generateRemarks(remarks);
-                    openRemarksModel(generatedRemarks);
+
+                // if (hasValue(remarks)) {
+                //     const generatedRemarks = generateRemarks(remarks);
+                //     openRemarksModel(generatedRemarks);
+                // }
+
+                if (hasValue(policeFirDetails)) {
+                    //const generatedRemarks = generateRemarks(remarks);
+                    setIsFIRModalOpen(true);
                 }
+
             }
+            setIsFIRModalOpen(true);
             setFIRStatusMessage(new VerificationStatus(isValid, "V"));
         }
     };
@@ -278,56 +289,57 @@ const FIRVerification = ({
                         Check
                     </Button>
                     {
-                    isViewFIREnabled && 
-                    (
-                        <Button
-                            sx={{ ...submitBtnStyle, margin: "5px 0" }}
-                            variant="contained"
-                            onClick={() => setIsFIRModalOpen(true)}
-                        >
-                            View FIR
-                        </Button>
-                    )}
+                        isViewFIREnabled &&
+                        (
+                            <Button
+                                sx={{ ...submitBtnStyle, margin: "5px 0" }}
+                                variant="contained"
+                                onClick={() => setIsFIRModalOpen(true)}
+                            >
+                                FIR Details
+                            </Button>
+                        )}
+                    {parsedFIRDetails.length > 0 && (
+                        <Dialog open={isFIRModalOpen} onClose={handleDialogCancel}>
+                            <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0' }}>
+                                <Toolbar>
+                                    <IconButton edge="start" onClick={handleDialogCancel} aria-label="close">
+                                        <Close sx={{ color: "#fff" }} />
+                                    </IconButton>
+                                </Toolbar>
+                            </AppBar>
 
-                    <Dialog open={isFIRModalOpen} onClose={handleDialogCancel}>
-                        <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0' }}>
-                            <Toolbar>
-                                <IconButton edge="start" onClick={handleDialogCancel} aria-label="close">
-                                    <Close sx={{ color: "#fff" }} />
-                                </IconButton>
-                            </Toolbar>
-                        </AppBar>
-                        <DialogTitle>FIR Details</DialogTitle>
-                        <DialogContent>
-                            {parsedFIRDetails.length > 0 ? (
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell><strong>FIR Number</strong></TableCell>
-                                            <TableCell><strong>Date</strong></TableCell>
-                                            <TableCell><strong>Police Station</strong></TableCell>
-                                            <TableCell><strong>Crime Type</strong></TableCell>
-                                            <TableCell><strong>Status</strong></TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {parsedFIRDetails.map((fir, index) => (
-                                            <TableRow key={index}>
-                                                <TableCell>{fir.FirNumber}</TableCell>
-                                                <TableCell>{fir.Date}</TableCell>
-                                                <TableCell>{fir.PoliceStation}</TableCell>
-                                                <TableCell>{fir.CrimeType}</TableCell>
-                                                <TableCell>{fir.Status}</TableCell>
+                            <DialogTitle>FIR Details</DialogTitle>
+
+                            <DialogContent>
+                                {parsedFIRDetails.length > 0 && (
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell><strong>FIR Number</strong></TableCell>
+                                                <TableCell><strong>Date</strong></TableCell>
+                                                <TableCell><strong>Police Station</strong></TableCell>
+                                                <TableCell><strong>Crime Type</strong></TableCell>
+                                                <TableCell><strong>Status</strong></TableCell>
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            ) : (
-                                <Typography>No FIR records found.</Typography>
-                            )}
-                        </DialogContent>
+                                        </TableHead>
+                                        <TableBody>
+                                            {parsedFIRDetails.map((fir, index) => (
+                                                <TableRow key={index}>
+                                                    <TableCell>{fir.FirNumber}</TableCell>
+                                                    <TableCell>{fir.Date}</TableCell>
+                                                    <TableCell>{fir.PoliceStation}</TableCell>
+                                                    <TableCell>{fir.CrimeType}</TableCell>
+                                                    <TableCell>{fir.Status}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                )}
+                            </DialogContent>
 
-                    </Dialog>
+                        </Dialog>
+                    )}
 
 
                     {/* <Dialog open={isFIRModalOpen} onClose={handleDialogCancel}>

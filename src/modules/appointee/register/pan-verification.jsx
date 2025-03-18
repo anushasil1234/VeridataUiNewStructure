@@ -152,9 +152,9 @@ const PANVerification = ({
         const response = await verifyPANDetails(payLoad);
         if (response) {
             const { remarks, isValid } = response.responseInfo;
-            
+            setIsPanVarified(isValid);
             if (isValid) {
-                setIsPanVarified(isValid);
+                
                 //setIsEpfoSectionDisabled(false);
                 //showSuccessMessage(panSuccessMsg);
                 //setIsPANModalOpen(true);

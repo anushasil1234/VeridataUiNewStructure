@@ -773,7 +773,8 @@ setIsPensionApplicable(isPensionApplicable);
     ) {
       if (
         isAadhaarVarified &&
-        isUanVarified
+        isUanVarified && 
+        isPoliceVarified
       ) {
         submitDetails(true, false);
       }

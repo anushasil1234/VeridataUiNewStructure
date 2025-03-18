@@ -56,6 +56,7 @@ import {
   emptyAccountNumberMsg,
   emptyIFSCMsg,
   invalidIFSCMsg,
+  legthmismatchIFSCMsg,
   epfoPassbookFileTypeAlias,
   epfoServiceHistoryFileTypeAlias,
   getHandicapTypeDescription,
@@ -195,6 +196,10 @@ stepsList}) => {
       showErrorMessage(emptyIFSCMsg);
     //  setPanNumberError(true);
     } 
+    else if (IFSCCode.length !== 11) {
+      showErrorMessage(legthmismatchIFSCMsg);
+      setIFSCCodeError(true);
+    }
     else if (!patternChecking(IFSCCode, /^[A-Z]{4}0[A-Z0-9]{6}$/)) {
       showErrorMessage(invalidIFSCMsg);
       setIFSCCodeError(true);
@@ -213,9 +218,9 @@ stepsList}) => {
     const response = await verifyBankDetails(payLoad);
     if (response) {
       const { remarks, isValid } = response.responseInfo;
+      setIsBankVarified(isValid);
       
       if (isValid) {
-        setIsBankVarified(isValid);
        // setIsEpfoSectionDisabled(false);
         //showSuccessMessage(panSuccessMsg);
         //setIsPANModalOpen(true);
