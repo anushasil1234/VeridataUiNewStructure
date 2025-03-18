@@ -551,6 +551,7 @@ setIsPensionApplicable(isPensionApplicable);
       setIsOfflineXmlDownloaded(isAadhaarVarified);
       setPassportStatusMessage(new VerificationStatus(isPassportValid, "V"));
       setPANStatusMessage(new VerificationStatus(isPanVarified, "V"));
+      setBankStatusMessage(new VerificationStatus(isBankAccVarified, "V"));
       setFIRStatusMessage(new VerificationStatus(isPoliceVarified, "V"));
       setLicenseStatusMessage(new VerificationStatus(isDLVarified, "V"));
       setIsDraft(saveStep == 0);
