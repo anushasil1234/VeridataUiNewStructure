@@ -175,7 +175,7 @@ const SixthForm = ({
         // setIsUANModalOpen(true); // Open the dialog when UAN is available
         setUAN(uanNumber); // Save the uanNumber to the existing state
         //setisUanVarified(true);
-        generateUANOTPDialog(uanNumber);
+        generateUANOTPDialog(uanNumber,firstPageForm.mobileNo);
       } else if (
         isUANAvailableState === false &&
         !isUanAvailable &&
