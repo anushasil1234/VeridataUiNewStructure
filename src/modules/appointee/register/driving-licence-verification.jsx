@@ -314,7 +314,7 @@ const DrivingLicenseVerification = ({
                 <TextInput
                   label={"Date of Birth"}
                   //value={firstPageForm.dateOfBirth}
-                  value={dateOfBirth ? DDMMYYYY(dateOfBirth) : null}
+                  value={firstPageForm?.dateOfBirth ? DDMMYYYY(firstPageForm?.dateOfBirth) : null}
                   disabled={true}
                 />
               </Grid>
