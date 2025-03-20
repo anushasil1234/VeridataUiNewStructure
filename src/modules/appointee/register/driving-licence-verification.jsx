@@ -71,6 +71,7 @@ import showErrorMessage from "shared/utils/associate/show-error-message";
 import showSuccessMessage from "shared/utils/associate/show-success-message";
 import { verifyDrivingLicenseDetails } from "server/apis/verify/verify-driving-license";
 import removeExtraSpaces from "shared/utils/associate/remove-extra-spaces";
+import removeSingleSpaces from "shared/utils/associate/remove-single-spaces";
 import generateRemarks from "shared/utils/associate/generate-remarks";
 import VerificationStatus from "shared/components/verification/verification-status";
 import dayjs from "dayjs";
@@ -126,13 +127,12 @@ const DrivingLicenseVerification = ({
   const [dlNumberError, setDLNumberError] = useState(false);
 
   const handleLicenseNumberChange = (value) => {
-    setDrivingLicense(value);
+    //setDrivingLicense(value);
+    setDrivingLicense(value.toUpperCase());
 
   };
 
-  console.log("isDLVerificationDisabled", isDLVerificationDisabled);
 
-  console.log("isDLAvailable", isDLAvailable);
 
   const handleDrivingLicenseVerification = async () => {
     if (!isAadhaarVarified) {
@@ -155,9 +155,11 @@ const DrivingLicenseVerification = ({
   const verifyDrivingLicense = async () => {
     const payLoad = {
       appointeeId: appointeeId,
-      dlNumber: hasValue(drivingLicense) ? removeExtraSpaces(drivingLicense) : null,
+      dlNumber: hasValue(drivingLicense) ? removeSingleSpaces(drivingLicense) : null,
       userId: userId,
     };
+
+    //console.log("payload", payLoad);
     const response = await verifyDrivingLicenseDetails(payLoad);
     if (response) {
       const { remarks, isValid } = response.responseInfo;
@@ -296,6 +298,7 @@ const DrivingLicenseVerification = ({
                   //   // }
                   // }}
                   onChange={handleLicenseNumberChange}
+                  disabled={isDLVarified}
                   value={drivingLicense}
                 />
               </Grid>

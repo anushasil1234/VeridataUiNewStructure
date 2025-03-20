@@ -354,6 +354,9 @@ let AppointeeViewForm = ({
         isPoliceVarified,
         drivingLicense,
         firDetails,
+        maskedDrivingLicense,
+        maskedBankAccNumber,
+        maskedBankIfscNumber
       } = response.responseInfo;
 
       setAppointeeDetailsResponse(response.responseInfo);
@@ -396,11 +399,11 @@ let AppointeeViewForm = ({
       dateOfJoining
         ? setDateOfJoining(DDMMYYYY(dateOfJoining))
         : setDateOfJoining(NA);
-      bankAccNumber
-        ? setBankAccNumber(bankAccNumber)
+      maskedBankAccNumber
+        ? setBankAccNumber(maskedBankAccNumber)
         : setBankAccNumber(NA);
-      bankIfscNumber
-        ? setBankIfscNumber(bankIfscNumber)
+      maskedBankIfscNumber
+        ? setBankIfscNumber(maskedBankIfscNumber)
         : setBankIfscNumber(NA);
       firDetails
         ? setFIRDetails(firDetails)
@@ -426,6 +429,7 @@ let AppointeeViewForm = ({
           filteredObjectProperty(maritalStatusList, maratialStatus)
         )
         : setMaritalStatus(NA);
+      maskedDrivingLicense ? setDrivingLicense(maskedDrivingLicense) : setDrivingLicense(NA);
       hasValue(isInternationalWorker)
         ? isInternationalWorker === "Y"
           ? setisInterNationalWorker("Yes")
@@ -464,11 +468,12 @@ let AppointeeViewForm = ({
           ? setCountryOfOrigin(originCountry)
           : setCountryOfOrigin(NA);
       }
-      if (isDLAvailable === "N") {
-        setDrivingLicense(NA);
-
+      if (isDLAvailable === true) {
+        setIsDLAvailable("Yes");
+      } else if (isDLAvailable === false) {
+        setIsDLAvailable("No");
       } else {
-        drivingLicense ? setDrivingLicense(drivingLicense) : setDrivingLicense(NA);
+        setIsDLAvailable(NA);
       }
       hasValue(isHandicap)
         ? isHandicap === "Y"
@@ -1106,7 +1111,14 @@ let AppointeeViewForm = ({
               <Stack sx={listHeadingConteinerStyle}>
                 <Typography sx={listHeadingStyle}>Driving License Details</Typography>
               </Stack>
-              {isDLAvailable === "Y" ? (
+
+              <PersonalInformation
+                fieldName={"Driving License Available"}
+                fieldValue={isDLAvailable}
+                width="50px"
+              />
+
+              {isDLAvailable === "Yes" && (
                 <>
                   <PersonalInformation
                     fieldName={"Driving License Number"}
@@ -1114,12 +1126,6 @@ let AppointeeViewForm = ({
                     width="50px"
                   />
                 </>
-              ) : (
-                <PersonalInformation
-                  fieldName={"Driving License Available"}
-                  fieldValue={isDLAvailable === "N" ? "No" : NA}
-                  width="50px"
-                />
               )}
             </Box>
             <Box sx={{ ...cardStyle }}>

@@ -63,6 +63,7 @@ import {
   previousButton,
   tenthCertificateFileTypeAlias,
   trustEpfoFileTypeAlias,
+  aaddharNumberverify
 } from "shared/constants/constants";
 import TextInput from "shared/components/input-fields/text-input";
 import FileUploadSection from "shared/components/file-upload-section/file-upload-section";
@@ -76,7 +77,7 @@ import { hasValue } from "shared/utils";
 import myImage from "assets/images/profile/instrucToServiceHistory.png";
 import BankVerification from "./bank-verifications";
 import DrivingLicenseVerification from "./driving-licence-verification";
-
+import showErrorMessage from "shared/utils/associate/show-error-message";
 
 
 const ThirdForm = ({
@@ -461,10 +462,10 @@ const ThirdForm = ({
             isDLVerificationDisabled={isDLVerificationDisabled}
             isDLAvailable={isDLAvailable}
             setIsDLAvailable={setIsDLAvailable}
-            drivingLicense= {drivingLicense}
-            setDrivingLicense= {setDrivingLicense}
-            dateOfBirth= {dateOfBirth}
-            setDateOfBirth= {setDateOfBirth}
+            drivingLicense={drivingLicense}
+            setDrivingLicense={setDrivingLicense}
+            dateOfBirth={dateOfBirth}
+            setDateOfBirth={setDateOfBirth}
           />
 
           {/* ###### Driving license Verification Section End ###### */}
@@ -485,10 +486,13 @@ const ThirdForm = ({
 
                 <Button
                   onClick={() => {
-                    setCurrentPageNo(4);  // Set currentPageNo to 4
-                    setActiveStep(3); 
+                    if (!isAadhaarVarified) {
+                      showErrorMessage(aaddharNumberverify);
+                      return; // Stop further execution if Aadhaar is not verified
+                    }
 
-                      // Set active step to 3
+                    setCurrentPageNo(4);  // Set currentPageNo to 4
+                    setActiveStep(3);  // Set active step to 3
                   }}
                   //onClick={() => setShowDialog(true)}
                   sx={submitBtnStyle}

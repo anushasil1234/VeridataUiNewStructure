@@ -100,7 +100,7 @@ import SixthForm from "./sixth-form";
 const AppointeeRegisterForm = () => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
   const loginUserData = getLocalStorageItem("pfc-user");
-  const steps = ["Step 1", "Step 2", "Step 3","Step 4","Step 5","Final Step"];
+  const steps = ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5", "Final Step"];
   //const today = dayjs();
   // Function to retrieve saved step from localStorage
   const [activeStep, setActiveStep] = useState(0);
@@ -150,16 +150,16 @@ const AppointeeRegisterForm = () => {
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
 
-  console.log("userId",userId);
+  console.log("userId", userId);
   const currentPageNo = useSelector((state) => state.CandidatePageSlice.currentPageNo);
 
-  const setCurrentPageNo = (currentPageNo)=>{
+  const setCurrentPageNo = (currentPageNo) => {
     dispatch(storeCurrentPageNo(currentPageNo));
   }
 
   //console.log("currentPageNo", currentPageNo);
   //console.log("activeStep",activeStep);
-  
+
 
   const [companyId, setCompanyId] = useState(0);
   const [defaultCountry, setDefaultCountry] = useState();
@@ -170,7 +170,7 @@ const AppointeeRegisterForm = () => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [dateOfJoining, setDateOfJoining] = useState("");
   const [gender, setGender] = useState("");
-  const[appointeeName,setAppointeeName] = useState("");
+  const [appointeeName, setAppointeeName] = useState("");
   const [fathersOrHusbandName, setFathersOrHusbandName] = useState("");
   const [relationshipWithMember, setRelationshipWithMember] = useState("");
   const [mobileNo, setMobileNo] = useState(null);
@@ -194,7 +194,7 @@ const AppointeeRegisterForm = () => {
   const [firDetails, setFIRDetails] = useState(null);
   const [nameAsOnPan, setNameAsOnPan] = useState(null);
   const [aadhar, setAadhar] = useState(null);
-   
+
   const [nameAsOnAadhar, setNameAsOnAadhar] = useState(null);
   const [aadharShareCode, setAadharShareCode] = useState(null);
   const [fetchUanConfirmation, setFetchUanConfirmation] = useState(false);
@@ -287,9 +287,9 @@ const AppointeeRegisterForm = () => {
   const [isUanVerificationProcessManual, setIsUanVerificationProcessManual] =
     useState("auto");
   const [panNumberError, setPanNumberError] = useState(false);
-  const [isPFverificationReq,setIsPFverificationReq] = useState();
-  const [panNumber,setPanNumber] = useState();
-  const [isPensionApplicable,setIsPensionApplicable] = useState();
+  const [isPFverificationReq, setIsPFverificationReq] = useState();
+  const [panNumber, setPanNumber] = useState();
+  const [isPensionApplicable, setIsPensionApplicable] = useState();
   // const defaultFirstPageForm = {
   //   gender: null,
   //   appointeeName: null,
@@ -323,83 +323,83 @@ const AppointeeRegisterForm = () => {
   //   // isSubmit: clickedButton === "S" ? false : true,
   // }
   const defaultFirstPageForm = {
-    gender: "", 
-    appointeeName: "", 
-    dateOfBirth: "", 
-    memberName: "", 
+    gender: "",
+    appointeeName: "",
+    dateOfBirth: "",
+    memberName: "",
     memberRelation: "",
-    nationality: "", 
-    qualification: "", 
-    maratialStatus: "", 
-    isPassportAvailable: "", 
-    isInternationalWorker: "", 
-    originCountry: "", 
-    passportNo: "", 
-    mobileNo: "", 
-    appointeeEmailId: "", 
-    passportValidFrom: "", 
-    passportValidTill: "", 
-    isHandicap: "", 
-    uanNumber: "", 
-    dateOfJoining: "", 
-    epfWages: "", 
-    handicapeType: "", 
-    isPFverificationReq: "", 
-    panName: "", 
-    panNumber: "", 
-    isAadhaarVarified: "", 
-    isPensionApplicable: "", 
-    isUanVarified: "", 
-    isDLAvailable:"",
+    nationality: "",
+    qualification: "",
+    maratialStatus: "",
+    isPassportAvailable: "",
+    isInternationalWorker: "",
+    originCountry: "",
+    passportNo: "",
+    mobileNo: "",
+    appointeeEmailId: "",
+    passportValidFrom: "",
+    passportValidTill: "",
+    isHandicap: "",
+    uanNumber: "",
+    dateOfJoining: "",
+    epfWages: "",
+    handicapeType: "",
+    isPFverificationReq: "",
+    panName: "",
+    panNumber: "",
+    isAadhaarVarified: "",
+    isPensionApplicable: "",
+    isUanVarified: "",
+    isDLAvailable: "",
     drivingLicense: "",
-    firDetails:"",
-  //  panNumber: panNumber,
- //   drivingLicense: drivingLicense,
-   // firDetails:firDetails,
-  //  isAadhaarVarified: isAadhaarVarified,
+    firDetails: "",
+    //  panNumber: panNumber,
+    //   drivingLicense: drivingLicense,
+    // firDetails:firDetails,
+    //  isAadhaarVarified: isAadhaarVarified,
     //isPensionApplicable: isPensionApplicable,
     //isUanVarified: isUanVarified,
     isPanAvailable: ""
-};
-// const defaultFirstPageForm = {
-//   gender: gender, 
-//   appointeeName: appointeeName, 
-//   dateOfBirth: dateOfBirth, 
-//   memberName: memberName, 
-//   memberRelation: relationshipWithMember,
-//   nationality: nationality, 
-//   qualification: qualification, 
-//   maratialStatus: maritalStatus, 
-//   isPassportAvailable: isPassportAvailable, 
-//   isInternationalWorker: isInterNationalWorker, 
-//   originCountry: countryOfOrigin, 
-//   passportNo: passportNo, 
-//   mobileNo: mobileNo, 
-//   appointeeEmailId: email, 
-//   passportValidFrom: "", 
-//   passportValidTill: "", 
-//   isHandicap: isPhysicallyHandicap, 
-//   uanNumber: UAN, 
-//   dateOfJoining: dateOfJoining, 
-//   epfWages: EPFWages, 
-//   handicapeType: handicapType, 
-//   isPFverificationReq: isPFverificationReq, 
-//   panName: nameAsOnPan, 
-//   panNumber: panNumber, 
-//   isAadhaarVarified: isAadhaarVarified, 
-//   isPensionApplicable: isPensionApplicable, 
-//   isUanVarified: isUanVarified, 
-//   isDLAvailable:isDLAvailable,
-//   drivingLicense: drivingLicense,
-//   firDetails:firDetails,
-// //  panNumber: panNumber,
-// //   drivingLicense: drivingLicense,
-//  // firDetails:firDetails,
-// //  isAadhaarVarified: isAadhaarVarified,
-//   //isPensionApplicable: isPensionApplicable,
-//   //isUanVarified: isUanVarified,
-//   isPanAvailable: ""
-// };
+  };
+  // const defaultFirstPageForm = {
+  //   gender: gender, 
+  //   appointeeName: appointeeName, 
+  //   dateOfBirth: dateOfBirth, 
+  //   memberName: memberName, 
+  //   memberRelation: relationshipWithMember,
+  //   nationality: nationality, 
+  //   qualification: qualification, 
+  //   maratialStatus: maritalStatus, 
+  //   isPassportAvailable: isPassportAvailable, 
+  //   isInternationalWorker: isInterNationalWorker, 
+  //   originCountry: countryOfOrigin, 
+  //   passportNo: passportNo, 
+  //   mobileNo: mobileNo, 
+  //   appointeeEmailId: email, 
+  //   passportValidFrom: "", 
+  //   passportValidTill: "", 
+  //   isHandicap: isPhysicallyHandicap, 
+  //   uanNumber: UAN, 
+  //   dateOfJoining: dateOfJoining, 
+  //   epfWages: EPFWages, 
+  //   handicapeType: handicapType, 
+  //   isPFverificationReq: isPFverificationReq, 
+  //   panName: nameAsOnPan, 
+  //   panNumber: panNumber, 
+  //   isAadhaarVarified: isAadhaarVarified, 
+  //   isPensionApplicable: isPensionApplicable, 
+  //   isUanVarified: isUanVarified, 
+  //   isDLAvailable:isDLAvailable,
+  //   drivingLicense: drivingLicense,
+  //   firDetails:firDetails,
+  // //  panNumber: panNumber,
+  // //   drivingLicense: drivingLicense,
+  //  // firDetails:firDetails,
+  // //  isAadhaarVarified: isAadhaarVarified,
+  //   //isPensionApplicable: isPensionApplicable,
+  //   //isUanVarified: isUanVarified,
+  //   isPanAvailable: ""
+  // };
   const [firstPageForm, setFirstPageForm] = useState({
     ...defaultFirstPageForm,
     appointeeDetailsId: appointeeDetailsId,
@@ -468,15 +468,15 @@ const AppointeeRegisterForm = () => {
 
   const setAppointeeDetails = async (appointeeId) => {
     const response = await getAppointeeDetails(appointeeId);
-    console.log("appointeedeatils",response)
+    console.log("appointeedeatils", response)
     if (response) {
       let {
         appointeeDetailsId, candidateId, companyId, appointeeName, appointeeEmailId, aadhaarName, aadhaarNumber,
-        panName, panNumber,isPanAvailable,isBankAccVarified,bankAccNumber,bankIfscNumber, handicapeType, isHandicap, passportValidTill, passportValidFrom, passportNo,
+        panName, panNumber, isPanAvailable, isBankAccVarified, bankAccNumber, bankIfscNumber, handicapeType, isHandicap, passportValidTill, passportValidFrom, passportNo,
         originCountry, isPassportAvailable, isInternationalWorker, maratialStatus, qualification, epfWages, nationality,
         memberRelation, memberName, dateOfJoining, uanNumber, mobileNo, gender, dateOfBirth, passportFileNo, isPassportValid, isPFverificationReq,
         isUanVarified, isAadhaarVarified, isPanVarified, isPensionApplicable, saveStep, companyName, isSubmit, fileUploaded, isUanAvailable,
-        isTrustPassbook, isManualPassbook, isUanLinkWithAadhar,isDLAvailable,isDLVarified,isPoliceVarified,
+        isTrustPassbook, isManualPassbook, isUanLinkWithAadhar, isDLAvailable, isDLVarified, isPoliceVarified,
         drivingLicense, firDetails
       } = response.responseInfo;
       setGender(gender);
@@ -485,15 +485,15 @@ const AppointeeRegisterForm = () => {
       setRelationshipWithMember(memberRelation);
       setNationality(nationality);
       setQualification(qualification);
-setMaritalStatus(maritalStatus);
-setEmail(email);
-setIsPhysicallyHandicap(isHandicap);
-setUAN(uanNumber);
-setEPFWages(epfWages);
-setHandicapType(handicapeType);
-setIsPFverificationReq(isPFverificationReq);
-setPanNumber(panNumber);
-setIsPensionApplicable(isPensionApplicable);
+      setMaritalStatus(maritalStatus);
+      setEmail(email);
+      setIsPhysicallyHandicap(isHandicap);
+      setUAN(uanNumber);
+      setEPFWages(epfWages);
+      setHandicapType(handicapeType);
+      setIsPFverificationReq(isPFverificationReq);
+      setPanNumber(panNumber);
+      setIsPensionApplicable(isPensionApplicable);
       setIsBankVarified(isBankAccVarified);
       hasValue(isPanAvailable)
         ? setIsPANAvailable(isPanAvailable)
@@ -557,7 +557,7 @@ setIsPensionApplicable(isPensionApplicable);
       setIsDraft(saveStep == 0);
       if (hasValue(isUanAvailable)) {
         setCurrentPageNo(saveStep + 1);
-        setActiveStep(saveStep );
+        setActiveStep(saveStep);
         setIsThirdNextVisible(true);
       } else {
         setActiveStep(saveStep);
@@ -612,7 +612,7 @@ setIsPensionApplicable(isPensionApplicable);
         maratialStatus: maratialStatus,
         isPassportAvailable: hasValue(isPassportAvailable) ? isPassportAvailable : null,
         //isDLAvailable: hasValue(isDLAvailable) ? isDLAvailable : null,      
-        isDLAvailable: isDLAvailable,  
+        isDLAvailable: isDLAvailable,
         isInternationalWorker: isInternationalWorker,
         originCountry: originCountry,
         passportNo: passportNo,
@@ -630,7 +630,7 @@ setIsPensionApplicable(isPensionApplicable);
         panName: hasValue(panName) ? panName : null,
         panNumber: panNumber,
         drivingLicense: drivingLicense,
-        firDetails:firDetails,
+        firDetails: firDetails,
         isAadhaarVarified: isAadhaarVarified,
         isPensionApplicable: isPensionApplicable,
         isUanVarified: isUanVarified,
@@ -644,6 +644,8 @@ setIsPensionApplicable(isPensionApplicable);
       setIFSCCode(bankIfscNumber);
       setNameAsOnPan(hasValue(panName) ? panName : appointeeName);
       setMobileNo(mobileNo);
+      setDrivingLicense(drivingLicense);
+      
     }
   };
 
@@ -701,7 +703,7 @@ setIsPensionApplicable(isPensionApplicable);
   };
 
   const submitDetails = (autoSubmit, isManual) => {
-    console.log('submitsixthform',autoSubmit,isManual)
+    console.log('submitsixthform', autoSubmit, isManual)
     if (autoSubmit) {
       handleAppointeeFormPage2Save({
         isUanManualUpload: isManual,
@@ -773,7 +775,7 @@ setIsPensionApplicable(isPensionApplicable);
     ) {
       if (
         isAadhaarVarified &&
-        isUanVarified && 
+        isUanVarified &&
         isPoliceVarified
       ) {
         submitDetails(true, false);
@@ -1297,12 +1299,12 @@ setIsPensionApplicable(isPensionApplicable);
     }
     if (accountNumber === null) {
       showErrorMessage(emptyAccountNumberMsg);
-    //  setPanNumberError(true);
-    } 
+      //  setPanNumberError(true);
+    }
     else if (IFSCCode === null) {
       showErrorMessage(emptyIFSCMsg);
-    //  setPanNumberError(true);
-    } 
+      //  setPanNumberError(true);
+    }
     // else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
     //   showErrorMessage(invalidPanMsg);
     //   setPanNumberError(true);
@@ -1323,7 +1325,7 @@ setIsPensionApplicable(isPensionApplicable);
       const { remarks, isValid } = response.responseInfo;
       setIsBankVarified(isValid);
       if (isValid) {
-       // setIsEpfoSectionDisabled(false);
+        // setIsEpfoSectionDisabled(false);
         //showSuccessMessage(panSuccessMsg);
         //setIsPANModalOpen(true);
         //console.log('panmodal');
@@ -1331,7 +1333,7 @@ setIsPensionApplicable(isPensionApplicable);
         //handleGetUANNumber();
         // setPanNumberError(false);
       } else {
-       // displayPanError(panVerifyFailedMsg);
+        // displayPanError(panVerifyFailedMsg);
         if (hasValue(remarks)) {
           const generatedRemarks = generateRemarks(remarks);
           openRemarksModel(generatedRemarks);
@@ -1339,12 +1341,12 @@ setIsPensionApplicable(isPensionApplicable);
       }
       setBankStatusMessage(new VerificationStatus(isValid, "V"));
     }
-  } 
+  }
   // Function to handle dialog confirmation
   const handleDialogConfirm = () => {
     setIsPANModalOpen(false); // Close the dialog
-   // handleGetUANNumber(); // Now call the function to get UAN number
-   // setCurrentPageNo(3);
+    // handleGetUANNumber(); // Now call the function to get UAN number
+    // setCurrentPageNo(3);
   };
 
   const handleDialogCancel = () => {
@@ -1938,286 +1940,286 @@ setIsPensionApplicable(isPensionApplicable);
   return (
     <>
       {/* <div ref={pageWrapperRef}> */}
-        {currentPageNo === 2 && (
-          <Typography sx={{ ...heading2, mb: 3 }}>
-            Your personal details must match with your Aadhaar details
-          </Typography>
-        )}
-        <Box sx={{ width: "100%" }}>
-          <LinearStepper steps={steps} activeStep={activeStep} />
-          <Box my={"20px"}>
-            <FormContainer>
-              {currentPageNo === 1 ? (
-                <>
-                  <FirstForm
-                    stepsList={stepsList}
-                    isRelationShipWithMemberDisabled={
-                      isRelationShipWithMemberDisabled
-                    }
-                    passportAvailable={passportAvailable}
-                    setPassportAvailable={setPassportAvailable}
-                    isAadhaarVarified={isAadhaarVarified}
-                    isPassportVarified={isPassportVarified}
-                    disabledIsInterNationalWorker={disabledIsInterNationalWorker}
-                    isDraft={isDraft}
-                    handleSecondNext={handleSecondNext}
-                    firstPageForm={firstPageForm}
-                    handleChangeDateofIssue={handleChangeDateofIssue}
-                    handleChangeinDateofexpiry={handleChangeinDateofexpiry}
-                    setFirstPageForm={setFirstPageForm}
-                    setActiveStep={setActiveStep}
-                    setCurrentPageNo={setCurrentPageNo}
-                    setIsDraft={setIsDraft}
-                    updateStep={updateStep}
-                    defaultCountry={defaultCountry}
-                    setPassPortMaxLength={setPassPortMaxLength}
-                    passportNoMaxLength={passportNoMaxLength}
-                  />
-                </>
-              ) : null}
-              {currentPageNo === 2 ? (
-                <>
-                  <SecondForm
-                    // formElement={formElement}
-                    stepsList={stepsList}
-                    // isPreviousSectionDisabled={isPreviousSectionDisabled}
-                    upload10thCertificateFile={upload10thCertificateFile}
-                    tenthCertificateFileName={tenthCertificateFileName}
-                    uploadFathersDocFile={uploadFathersDocFile}
-                    otherFileName={otherFileName}
-                    firstPageForm={firstPageForm}
-                    // isPhysicallyHandicap={isPhysicallyHandicap}
+      {currentPageNo === 2 && (
+        <Typography sx={{ ...heading2, mb: 3 }}>
+          Your personal details must match with your Aadhaar details
+        </Typography>
+      )}
+      <Box sx={{ width: "100%" }}>
+        <LinearStepper steps={steps} activeStep={activeStep} />
+        <Box my={"20px"}>
+          <FormContainer>
+            {currentPageNo === 1 ? (
+              <>
+                <FirstForm
+                  stepsList={stepsList}
+                  isRelationShipWithMemberDisabled={
+                    isRelationShipWithMemberDisabled
+                  }
+                  passportAvailable={passportAvailable}
+                  setPassportAvailable={setPassportAvailable}
+                  isAadhaarVarified={isAadhaarVarified}
+                  isPassportVarified={isPassportVarified}
+                  disabledIsInterNationalWorker={disabledIsInterNationalWorker}
+                  isDraft={isDraft}
+                  handleSecondNext={handleSecondNext}
+                  firstPageForm={firstPageForm}
+                  handleChangeDateofIssue={handleChangeDateofIssue}
+                  handleChangeinDateofexpiry={handleChangeinDateofexpiry}
+                  setFirstPageForm={setFirstPageForm}
+                  setActiveStep={setActiveStep}
+                  setCurrentPageNo={setCurrentPageNo}
+                  setIsDraft={setIsDraft}
+                  updateStep={updateStep}
+                  defaultCountry={defaultCountry}
+                  setPassPortMaxLength={setPassPortMaxLength}
+                  passportNoMaxLength={passportNoMaxLength}
+                />
+              </>
+            ) : null}
+            {currentPageNo === 2 ? (
+              <>
+                <SecondForm
+                  // formElement={formElement}
+                  stepsList={stepsList}
+                  // isPreviousSectionDisabled={isPreviousSectionDisabled}
+                  upload10thCertificateFile={upload10thCertificateFile}
+                  tenthCertificateFileName={tenthCertificateFileName}
+                  uploadFathersDocFile={uploadFathersDocFile}
+                  otherFileName={otherFileName}
+                  firstPageForm={firstPageForm}
+                  // isPhysicallyHandicap={isPhysicallyHandicap}
 
-                    // handicapType={handicapType}
-                    uploadHandicapFile={uploadHandicapFile}
-                    handicapFileName={handicapFileName}
-                    passportAvailable={passportAvailable}
-                    passportNo={passportNo}
-                    countryOfOrigin={countryOfOrigin}
-                    isPassportVerifyBtnDisabled={isPassportVerifyBtnDisabled}
-                    handlePassportVerification={handlePassportVerification}
-                    passportstatusMessage={passportstatusMessage}
-                    handlePassFileNumberOnChange={handlePassFileNumberOnChange}
-                    passportFileNumberError={passportFileNumberError}
-                    uploadPassportFile={uploadPassportFile}
-                    passportFileName={passportFileName}
-                    isTrustEpfoAvailable={isTrustEpfoAvailable}
-                    uploadTrustEPFOFile={uploadTrustEPFOFile}
-                    removeEPFOFile={removeEPFOFile}
-                    trustEpfoFileName={trustEpfoFileName}
-                    uanNumberAvailable={uanNumberAvailable}
-                    handleChange={handleChange}
-                    handleBack={handleBack}
-                    // DraftSave={DraftSave}
-                    handleSaveClick={handleSaveClick}
-                    handleNext={handleNext}
-                    isthirdNextVisible={isthirdNextVisible}
-                    isModalOpen={isModalOpen}
-                    handleCloseModal={handleCloseModal}
-                    // handleConfirmSave={handleConfirmSave}
-                    passportFileNumber={passportFileNumber}
-                    setIsTrustEpfoAvailable={setIsTrustEpfoAvailable}
-                    handleViewFile={handleViewFile}
-                    isAppointeeUanAvailable={isAppointeeUanAvailable}
-                    setIsUANAvailableState={setIsUANAvailableState}
-                    fileDetails={fileDetails}
-                    uploadedFile={uploadedFile}
-                    setTrustEpfoFileName={setTrustEpfoFileName}
-                    setHandicapFileName={setHandicapFileName}
-                    setPassportFileName={setPassportFileName}
-                    setIsThirdNextVisible={setIsThirdNextVisible}
-                    clearFileVaribles={clearFileVaribles}
-                  />
-                </>
-              ) : null}
+                  // handicapType={handicapType}
+                  uploadHandicapFile={uploadHandicapFile}
+                  handicapFileName={handicapFileName}
+                  passportAvailable={passportAvailable}
+                  passportNo={passportNo}
+                  countryOfOrigin={countryOfOrigin}
+                  isPassportVerifyBtnDisabled={isPassportVerifyBtnDisabled}
+                  handlePassportVerification={handlePassportVerification}
+                  passportstatusMessage={passportstatusMessage}
+                  handlePassFileNumberOnChange={handlePassFileNumberOnChange}
+                  passportFileNumberError={passportFileNumberError}
+                  uploadPassportFile={uploadPassportFile}
+                  passportFileName={passportFileName}
+                  isTrustEpfoAvailable={isTrustEpfoAvailable}
+                  uploadTrustEPFOFile={uploadTrustEPFOFile}
+                  removeEPFOFile={removeEPFOFile}
+                  trustEpfoFileName={trustEpfoFileName}
+                  uanNumberAvailable={uanNumberAvailable}
+                  handleChange={handleChange}
+                  handleBack={handleBack}
+                  // DraftSave={DraftSave}
+                  handleSaveClick={handleSaveClick}
+                  handleNext={handleNext}
+                  isthirdNextVisible={isthirdNextVisible}
+                  isModalOpen={isModalOpen}
+                  handleCloseModal={handleCloseModal}
+                  // handleConfirmSave={handleConfirmSave}
+                  passportFileNumber={passportFileNumber}
+                  setIsTrustEpfoAvailable={setIsTrustEpfoAvailable}
+                  handleViewFile={handleViewFile}
+                  isAppointeeUanAvailable={isAppointeeUanAvailable}
+                  setIsUANAvailableState={setIsUANAvailableState}
+                  fileDetails={fileDetails}
+                  uploadedFile={uploadedFile}
+                  setTrustEpfoFileName={setTrustEpfoFileName}
+                  setHandicapFileName={setHandicapFileName}
+                  setPassportFileName={setPassportFileName}
+                  setIsThirdNextVisible={setIsThirdNextVisible}
+                  clearFileVaribles={clearFileVaribles}
+                />
+              </>
+            ) : null}
 
-              {currentPageNo === 3 ? (
-                <>
-                  <ThirdForm
-                    formElement={formElement}
-                    stepsList={stepsList}
-                    isAadhaarVarified={isAadhaarVarified}
-                    isOfflineXmlDownloaded={isOfflineXmlDownloaded}
-                    setIsOfflineXmlDownloaded={setIsOfflineXmlDownloaded}
-                    handleIsOfflineXmlDownloadedOnChange={
-                      handleIsOfflineXmlDownloadedOnChange
-                    }
-                    nameAsOnAadhar={nameAsOnAadhar}
-                    handleChangeNameOnAadhar={handleChangeNameOnAadhar}
-                    aadharShareCode={aadharShareCode}
-                    setAadharShareCode={setAadharShareCode}
-                    disabledAadharInput={disabledAadharInput}
-                    isAadhaarXmlUploaded={isAadhaarXmlUploaded}
-                    handleAadharVerifiaction={handleAadharVerifiaction}
-                    aadharstatusMessage={aadharstatusMessage}
-                    uploadAadharXmlFile={uploadAadharXmlFile}
-                    aadharXmlFileName={aadharXmlFileName}
+            {currentPageNo === 3 ? (
+              <>
+                <ThirdForm
+                  formElement={formElement}
+                  stepsList={stepsList}
+                  isAadhaarVarified={isAadhaarVarified}
+                  isOfflineXmlDownloaded={isOfflineXmlDownloaded}
+                  setIsOfflineXmlDownloaded={setIsOfflineXmlDownloaded}
+                  handleIsOfflineXmlDownloadedOnChange={
+                    handleIsOfflineXmlDownloadedOnChange
+                  }
+                  nameAsOnAadhar={nameAsOnAadhar}
+                  handleChangeNameOnAadhar={handleChangeNameOnAadhar}
+                  aadharShareCode={aadharShareCode}
+                  setAadharShareCode={setAadharShareCode}
+                  disabledAadharInput={disabledAadharInput}
+                  isAadhaarXmlUploaded={isAadhaarXmlUploaded}
+                  handleAadharVerifiaction={handleAadharVerifiaction}
+                  aadharstatusMessage={aadharstatusMessage}
+                  uploadAadharXmlFile={uploadAadharXmlFile}
+                  aadharXmlFileName={aadharXmlFileName}
 
-                    handleDialogCancel={handleDialogCancel}
-                    handleDialogConfirm={handleDialogConfirm}
-                    panstatusMessage={panstatusMessage}
-                    
-              
-                    isEpfoSectionDisabled={isEpfoSectionDisabled}
-
-                    setUAN={setUAN}
-                    UAN={UAN}
-                    isUanVarified={isUanVarified}
-                    handleEpfoButtonClick={handleEpfoButtonClick}
-                    isUanVerificationProcessManual={
-                      isUanVerificationProcessManual
-                    }
-                    epfoButton={epfoButton}
-                    epfostatusMessage={epfostatusMessage}
-                    uanAadharLink={uanAadharLink}
-                    handleChangeUanVerification={handleChangeUanVerification}
-                    uploadEpfoServiceHistoryFile={uploadEpfoServiceHistoryFile}
-                    epfoServiceHistoryFile={epfoServiceHistoryFile}
-                    uploadEpfoPassBookFile={uploadEpfoPassBookFile}
-                    removeEPFOPassbookFile={removeEPFOPassbookFile}
-                    epfoPassBookFiles={epfoPassBookFiles}
-                    handleBack={handleBack}
-                    submitDetails={submitDetails}
-                    aadharNumber={aadhar}
-                    handleChangeAadharNumber={handleChangeAadharNumber}
-                    handleViewFile={handleViewFile}
-                    handleChangeinDateofexpiry={handleChangeinDateofexpiry}
-                    currentPageNo = {currentPageNo}
-                    setCurrentPageNo={setCurrentPageNo}
-                    handleThirdNext={handleThirdNext}
-                    activeStep = {activeStep}
-                    setActiveStep={setActiveStep}
-                    firstPageForm = {firstPageForm}
-                    setFirstPageForm = {setFirstPageForm}
-                    isLicenseAvailable={isLicenseAvailable}
-                    setIsLicenseAvailable={setIsLicenseAvailable}
-                    isDLVarified={isDLVarified}
-                    setisDLVarified={setisDLVarified}
-                    licensestatusMessage = {licensestatusMessage}
-                    setLicenseStatusMessage={setLicenseStatusMessage}
-                    isDLAvailable={isDLAvailable}
-                    setIsDLAvailable={setIsDLAvailable}
-                    drivingLicense= {drivingLicense}
-                    setDrivingLicense= {setDrivingLicense}
-                    dateOfBirth= {dateOfBirth}
-                    setDateOfBirth= {setDateOfBirth}
-                   // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
-                  />
-                </>
-              ) : null}
-
-              {currentPageNo === 4 ? (
-                <>
-                  <FourthForm
-                    isAadhaarVarified={isAadhaarVarified}
-                    formElement={formElement}
-                    stepsList={stepsList}
-                    currentPageNo = {currentPageNo}
-                    setCurrentPageNo={setCurrentPageNo}
-                    handleBack={handleBack}
-                    activeStep = {activeStep}
-                    setActiveStep={setActiveStep}
-                    isPANAvailable={isPANAvailable}
-                    setIsPANAvailable={setIsPANAvailable}
-                    nameAsOnPan={nameAsOnPan}
-                    panstatusMessage={panstatusMessage}
-                    setPANStatusMessage = {setPANStatusMessage}
-                    bankstatusMessage = {bankstatusMessage}
-                    setBankStatusMessage = {setBankStatusMessage}
-                    isPanVarified={isPanVarified}
-                    setIsPanVarified = {setIsPanVarified}
-                    setIsBankVarified = {setIsBankVarified}
-                    isBankVarified={isBankVarified}
-                    pan= {pan}
-                    setPan= {setPan}
-                    accountNumber={accountNumber}
-                    setAccountNumber={setAccountNumber}
-                    IFSCCode={IFSCCode}
-                    setIFSCCode={setIFSCCode}
-                   // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
-                  />
-                </>
-              ) : null}
-              
-
-              {currentPageNo === 5 ? (
-                <>
-                  <FifthForm
-                    isAadhaarVarified={isAadhaarVarified}
-                    formElement={formElement}
-                    stepsList={stepsList}
-                    currentPageNo = {currentPageNo}
-                    setCurrentPageNo={setCurrentPageNo}
-                    handleBack={handleBack}
-                    activeStep = {activeStep}
-                    setActiveStep={setActiveStep}
-                    firstPageForm={firstPageForm}
-                    isPANAvailable={isPANAvailable}
-                    setIsPANAvailable={setIsPANAvailable}
-                    firstatusMessage={firstatusMessage}
-                    setFIRStatusMessage={setFIRStatusMessage}
-                    isPoliceVarified={isPoliceVarified}
-                    setisPoliceVarified={setisPoliceVarified}
-                    firDetails= {firDetails}
-                    setFIRDetails= {setFIRDetails}
-                    pan= {pan}
-                    setPan= {setPan}
-                    nameAsOnPan={nameAsOnPan}
-                    dateOfBirth= {dateOfBirth}
-                    setDateOfBirth= {setDateOfBirth}
-
-                   // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
-                  />
-                </>
-              ) : null}
-              {currentPageNo === 6 ? (
-                <>
-                  <SixthForm
-                    isAadhaarVarified={isAadhaarVarified}
-                    formElement={formElement}
-                    stepsList={stepsList}
-                    currentPageNo = {currentPageNo}
-                    setCurrentPageNo={setCurrentPageNo}
-                    handleBack={handleBack}
-                    handleViewFile = {handleViewFile}
-                    firstPageForm = {firstPageForm}
-                    aadhar = {aadhar} 
-                    setAadhar= {setAadhar}
-                    pan= {pan}
-                    setPan= {setPan}
-                    epfoButton={epfoButton}
-                    setEpfoButton={setEpfoButton}
-                    epfostatusMessage={epfostatusMessage}
-                    setEpfostatusMessage={setEpfostatusMessage}
-                    uanAadharLink={uanAadharLink}
-                    handleChangeUanVerification={handleChangeUanVerification}
-                    uploadEpfoServiceHistoryFile={uploadEpfoServiceHistoryFile}
-                    setIsUanVerificationProcessManual = {setIsUanVerificationProcessManual}
-                    isUanVerificationProcessManual={isUanVerificationProcessManual}
-                    epfoServiceHistoryFile={epfoServiceHistoryFile}
-                    uploadEpfoPassBookFile={uploadEpfoPassBookFile}
-                    removeEPFOPassbookFile={removeEPFOPassbookFile}
-                    epfoPassBookFiles={epfoPassBookFiles}
-                    isUANAvailableState={isUANAvailableState}
-                    setisUanVarified = {setisUanVarified}
-                    submitDetails={submitDetails}
-                    setUAN={setUAN}
-                    UAN={UAN}
+                  handleDialogCancel={handleDialogCancel}
+                  handleDialogConfirm={handleDialogConfirm}
+                  panstatusMessage={panstatusMessage}
 
 
-                  />
-                </>
-              ) : null}
-            </FormContainer>
-          </Box>
-          <FormDialog
-            open={fetchUanConfirmation}
-            DialogTitle={
-              "Your Aadhaar verification has failed. If you continue you will not be able to change your Aadhaar. Do you want to continue?"
-            }
-            shouldTakeAction={fetchUanConfirmationSubmittion}
-          />
+                  isEpfoSectionDisabled={isEpfoSectionDisabled}
+
+                  setUAN={setUAN}
+                  UAN={UAN}
+                  isUanVarified={isUanVarified}
+                  handleEpfoButtonClick={handleEpfoButtonClick}
+                  isUanVerificationProcessManual={
+                    isUanVerificationProcessManual
+                  }
+                  epfoButton={epfoButton}
+                  epfostatusMessage={epfostatusMessage}
+                  uanAadharLink={uanAadharLink}
+                  handleChangeUanVerification={handleChangeUanVerification}
+                  uploadEpfoServiceHistoryFile={uploadEpfoServiceHistoryFile}
+                  epfoServiceHistoryFile={epfoServiceHistoryFile}
+                  uploadEpfoPassBookFile={uploadEpfoPassBookFile}
+                  removeEPFOPassbookFile={removeEPFOPassbookFile}
+                  epfoPassBookFiles={epfoPassBookFiles}
+                  handleBack={handleBack}
+                  submitDetails={submitDetails}
+                  aadharNumber={aadhar}
+                  handleChangeAadharNumber={handleChangeAadharNumber}
+                  handleViewFile={handleViewFile}
+                  handleChangeinDateofexpiry={handleChangeinDateofexpiry}
+                  currentPageNo={currentPageNo}
+                  setCurrentPageNo={setCurrentPageNo}
+                  handleThirdNext={handleThirdNext}
+                  activeStep={activeStep}
+                  setActiveStep={setActiveStep}
+                  firstPageForm={firstPageForm}
+                  setFirstPageForm={setFirstPageForm}
+                  isLicenseAvailable={isLicenseAvailable}
+                  setIsLicenseAvailable={setIsLicenseAvailable}
+                  isDLVarified={isDLVarified}
+                  setisDLVarified={setisDLVarified}
+                  licensestatusMessage={licensestatusMessage}
+                  setLicenseStatusMessage={setLicenseStatusMessage}
+                  isDLAvailable={isDLAvailable}
+                  setIsDLAvailable={setIsDLAvailable}
+                  drivingLicense={drivingLicense}
+                  setDrivingLicense={setDrivingLicense}
+                  dateOfBirth={dateOfBirth}
+                  setDateOfBirth={setDateOfBirth}
+                // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
+                />
+              </>
+            ) : null}
+
+            {currentPageNo === 4 ? (
+              <>
+                <FourthForm
+                  isAadhaarVarified={isAadhaarVarified}
+                  formElement={formElement}
+                  stepsList={stepsList}
+                  currentPageNo={currentPageNo}
+                  setCurrentPageNo={setCurrentPageNo}
+                  handleBack={handleBack}
+                  activeStep={activeStep}
+                  setActiveStep={setActiveStep}
+                  isPANAvailable={isPANAvailable}
+                  setIsPANAvailable={setIsPANAvailable}
+                  nameAsOnPan={nameAsOnPan}
+                  panstatusMessage={panstatusMessage}
+                  setPANStatusMessage={setPANStatusMessage}
+                  bankstatusMessage={bankstatusMessage}
+                  setBankStatusMessage={setBankStatusMessage}
+                  isPanVarified={isPanVarified}
+                  setIsPanVarified={setIsPanVarified}
+                  setIsBankVarified={setIsBankVarified}
+                  isBankVarified={isBankVarified}
+                  pan={pan}
+                  setPan={setPan}
+                  accountNumber={accountNumber}
+                  setAccountNumber={setAccountNumber}
+                  IFSCCode={IFSCCode}
+                  setIFSCCode={setIFSCCode}
+                // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
+                />
+              </>
+            ) : null}
+
+
+            {currentPageNo === 5 ? (
+              <>
+                <FifthForm
+                  isAadhaarVarified={isAadhaarVarified}
+                  formElement={formElement}
+                  stepsList={stepsList}
+                  currentPageNo={currentPageNo}
+                  setCurrentPageNo={setCurrentPageNo}
+                  handleBack={handleBack}
+                  activeStep={activeStep}
+                  setActiveStep={setActiveStep}
+                  firstPageForm={firstPageForm}
+                  isPANAvailable={isPANAvailable}
+                  setIsPANAvailable={setIsPANAvailable}
+                  firstatusMessage={firstatusMessage}
+                  setFIRStatusMessage={setFIRStatusMessage}
+                  isPoliceVarified={isPoliceVarified}
+                  setisPoliceVarified={setisPoliceVarified}
+                  firDetails={firDetails}
+                  setFIRDetails={setFIRDetails}
+                  pan={pan}
+                  setPan={setPan}
+                  nameAsOnPan={nameAsOnPan}
+                  dateOfBirth={dateOfBirth}
+                  setDateOfBirth={setDateOfBirth}
+
+                // otherVerification = {()=> OtherVerification(accountNumber,IFSCCode)}
+                />
+              </>
+            ) : null}
+            {currentPageNo === 6 ? (
+              <>
+                <SixthForm
+                  isAadhaarVarified={isAadhaarVarified}
+                  formElement={formElement}
+                  stepsList={stepsList}
+                  currentPageNo={currentPageNo}
+                  setCurrentPageNo={setCurrentPageNo}
+                  handleBack={handleBack}
+                  handleViewFile={handleViewFile}
+                  firstPageForm={firstPageForm}
+                  aadhar={aadhar}
+                  setAadhar={setAadhar}
+                  pan={pan}
+                  setPan={setPan}
+                  epfoButton={epfoButton}
+                  setEpfoButton={setEpfoButton}
+                  epfostatusMessage={epfostatusMessage}
+                  setEpfostatusMessage={setEpfostatusMessage}
+                  uanAadharLink={uanAadharLink}
+                  handleChangeUanVerification={handleChangeUanVerification}
+                  uploadEpfoServiceHistoryFile={uploadEpfoServiceHistoryFile}
+                  setIsUanVerificationProcessManual={setIsUanVerificationProcessManual}
+                  isUanVerificationProcessManual={isUanVerificationProcessManual}
+                  epfoServiceHistoryFile={epfoServiceHistoryFile}
+                  uploadEpfoPassBookFile={uploadEpfoPassBookFile}
+                  removeEPFOPassbookFile={removeEPFOPassbookFile}
+                  epfoPassBookFiles={epfoPassBookFiles}
+                  isUANAvailableState={isUANAvailableState}
+                  setisUanVarified={setisUanVarified}
+                  submitDetails={submitDetails}
+                  setUAN={setUAN}
+                  UAN={UAN}
+
+
+                />
+              </>
+            ) : null}
+          </FormContainer>
         </Box>
+        <FormDialog
+          open={fetchUanConfirmation}
+          DialogTitle={
+            "Your Aadhaar verification has failed. If you continue you will not be able to change your Aadhaar. Do you want to continue?"
+          }
+          shouldTakeAction={fetchUanConfirmationSubmittion}
+        />
+      </Box>
       {/* </div> */}
     </>
   );
