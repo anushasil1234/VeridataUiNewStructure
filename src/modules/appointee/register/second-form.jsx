@@ -36,7 +36,9 @@ import { postUpdatePfUanDetails } from "server/apis";
 const SecondForm = ({
   // formElement,
   stepsList,
-  // isPreviousSectionDisabled,
+  isPreviousSectionDisabled,
+  setIsPreviousSectionDisabled,
+
   upload10thCertificateFile,
   tenthCertificateFileName,
   uploadFathersDocFile,
@@ -85,7 +87,7 @@ const SecondForm = ({
 }) => {
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
-
+// console.log('isHandicapSectionDisabled', isHandicapSectionDisabled);
   const { openInfoModel } = functionSlice[0];
   const { userId, appointeeId, userCode } = loggedInData[0];
   // const { accounts } = useMsal();
@@ -93,9 +95,9 @@ const SecondForm = ({
   // const { isDefaultPassword, isPasswordExpire } = loggedInData.length > 0 && loggedInData[0];
   // const loggedInTokendData = useSelector((state) => state.loggedinTokenData);
 
-  const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] =
-    useState(false);
-
+  // const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] =
+  //   useState(false);
+  // const [isSaveButtonClicked, setIsSaveButtonClicked] = useState(false);
 
   const handlePassporFileNumbertHelp = () => {
     const passportHelpContent = {
@@ -191,7 +193,10 @@ const SecondForm = ({
   };
   const handleConfirmSave = async () => {
     // Once the user confirms, save the details
+
     await saveDetails(true);
+    setIsPreviousSectionDisabled(true);
+    // setIsSaveButtonClicked(true);
     handleCloseModal(); // Close the confirmation modal after saving
     setIsThirdNextVisible(true);
     //setCurrentPageNo(3);
@@ -207,11 +212,11 @@ const SecondForm = ({
     // channel.postMessage({ type: 'AUTH_DATA', data: authData });
     // window.open(toHelp, '_blank', 'noopener,noreferrer');
   };
-  useEffect(() => {
-    if (hasValue(isAppointeeUanAvailable)) {
-      setIsPreviousSectionDisabled(true);
-    }
-  }, [isAppointeeUanAvailable]);
+  // useEffect(() => {
+  //   if (hasValue(isAppointeeUanAvailable)) {
+  //     setIsPreviousSectionDisabled(true);
+  //   }
+  // }, [isAppointeeUanAvailable]);
   return (
     <Box sx={{ width: "100%" }}>
       {/* <form ref={formElement}> */}
@@ -317,7 +322,7 @@ const SecondForm = ({
                         //     : passportFileName
                         // }
                         fileName={passportFileName}
-                        disabled={isPreviousSectionDisabled}
+                       // disabled={isPreviousSectionDisabled}
                         maxUploadSize={imgAndPdfMaxSize}
                         uploadTypeAlias={passportFileTypeAlias}
                         handleViewFile={handleViewFile}
@@ -595,7 +600,7 @@ const SecondForm = ({
                       // }
                       fileName={handicapFileName}
                       accept={"image/png, image/jpeg,application/pdf"}
-                      //disabled={isPreviousSectionDisabled}
+                      //disabled={isHandicapSectionDisabled}
                       maxUploadSize={imgAndPdfMaxSize}
                       uploadTypeAlias={handicapFileTypeAlias}
                       handleViewFile={handleViewFile}
@@ -614,7 +619,7 @@ const SecondForm = ({
             <FormHeading
               step={stepsList?.PFD?.step}
               heading={stepsList?.PFD?.name}
-              info={"Upload file details ."}
+              info={"Upload file details."}
             />
           </FormHeadingContainer>
           <GridRow>

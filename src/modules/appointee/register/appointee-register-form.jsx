@@ -287,9 +287,11 @@ const AppointeeRegisterForm = () => {
   const [isUanVerificationProcessManual, setIsUanVerificationProcessManual] =
     useState("auto");
   const [panNumberError, setPanNumberError] = useState(false);
-  const [isPFverificationReq, setIsPFverificationReq] = useState();
-  const [panNumber, setPanNumber] = useState();
-  const [isPensionApplicable, setIsPensionApplicable] = useState();
+  const [isPFverificationReq,setIsPFverificationReq] = useState();
+  const [panNumber,setPanNumber] = useState();
+  const [isPensionApplicable,setIsPensionApplicable] = useState();
+  const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] = useState(false);
+  // const [isHandicapSectionDisabled, setIsHandicapSectionDisabled] = useState(true);
   // const defaultFirstPageForm = {
   //   gender: null,
   //   appointeeName: null,
@@ -468,7 +470,7 @@ const AppointeeRegisterForm = () => {
 
   const setAppointeeDetails = async (appointeeId) => {
     const response = await getAppointeeDetails(appointeeId);
-    console.log("appointeedeatils", response)
+    // console.log("appointeedeatils",response);
     if (response) {
       let {
         appointeeDetailsId, candidateId, companyId, appointeeName, appointeeEmailId, aadhaarName, aadhaarNumber,
@@ -730,7 +732,16 @@ const AppointeeRegisterForm = () => {
       setAppointeeDetails(appointeeId);
     }
   }, [countryList]);
-
+  useEffect(() => {
+    if (hasValue(isAppointeeUanAvailable)) {
+      setIsPreviousSectionDisabled(true);
+    }
+  }, [isAppointeeUanAvailable]);
+  // useEffect(() => {
+  //   if (isPhysicallyHandicap === "Y") {
+  //     setIsHandicapSectionDisabled(false);
+  //   }
+  // }, [isPhysicallyHandicap === "Y"]);
   useEffect(() => {
     if (!hasValue(UAN)) {
       setEpfoButton("Fetch N Verify UAN");
@@ -1940,55 +1951,58 @@ const AppointeeRegisterForm = () => {
   return (
     <>
       {/* <div ref={pageWrapperRef}> */}
-      {currentPageNo === 2 && (
-        <Typography sx={{ ...heading2, mb: 3 }}>
-          Your personal details must match with your Aadhaar details
-        </Typography>
-      )}
-      <Box sx={{ width: "100%" }}>
-        <LinearStepper steps={steps} activeStep={activeStep} />
-        <Box my={"20px"}>
-          <FormContainer>
-            {currentPageNo === 1 ? (
-              <>
-                <FirstForm
-                  stepsList={stepsList}
-                  isRelationShipWithMemberDisabled={
-                    isRelationShipWithMemberDisabled
-                  }
-                  passportAvailable={passportAvailable}
-                  setPassportAvailable={setPassportAvailable}
-                  isAadhaarVarified={isAadhaarVarified}
-                  isPassportVarified={isPassportVarified}
-                  disabledIsInterNationalWorker={disabledIsInterNationalWorker}
-                  isDraft={isDraft}
-                  handleSecondNext={handleSecondNext}
-                  firstPageForm={firstPageForm}
-                  handleChangeDateofIssue={handleChangeDateofIssue}
-                  handleChangeinDateofexpiry={handleChangeinDateofexpiry}
-                  setFirstPageForm={setFirstPageForm}
-                  setActiveStep={setActiveStep}
-                  setCurrentPageNo={setCurrentPageNo}
-                  setIsDraft={setIsDraft}
-                  updateStep={updateStep}
-                  defaultCountry={defaultCountry}
-                  setPassPortMaxLength={setPassPortMaxLength}
-                  passportNoMaxLength={passportNoMaxLength}
-                />
-              </>
-            ) : null}
-            {currentPageNo === 2 ? (
-              <>
-                <SecondForm
-                  // formElement={formElement}
-                  stepsList={stepsList}
-                  // isPreviousSectionDisabled={isPreviousSectionDisabled}
-                  upload10thCertificateFile={upload10thCertificateFile}
-                  tenthCertificateFileName={tenthCertificateFileName}
-                  uploadFathersDocFile={uploadFathersDocFile}
-                  otherFileName={otherFileName}
-                  firstPageForm={firstPageForm}
-                  // isPhysicallyHandicap={isPhysicallyHandicap}
+        {currentPageNo === 2 && (
+          <Typography sx={{ ...heading2, mb: 3 }}>
+            Your personal details must match with your Aadhaar details
+          </Typography>
+        )}
+        <Box sx={{ width: "100%" }}>
+          <LinearStepper steps={steps} activeStep={activeStep} />
+          <Box my={"20px"}>
+            <FormContainer>
+              {currentPageNo === 1 ? (
+                <>
+                  <FirstForm
+                    stepsList={stepsList}
+                    isRelationShipWithMemberDisabled={
+                      isRelationShipWithMemberDisabled
+                    }
+                    passportAvailable={passportAvailable}
+                    setPassportAvailable={setPassportAvailable}
+                    isAadhaarVarified={isAadhaarVarified}
+                    isPassportVarified={isPassportVarified}
+                    disabledIsInterNationalWorker={disabledIsInterNationalWorker}
+                    isDraft={isDraft}
+                    handleSecondNext={handleSecondNext}
+                    firstPageForm={firstPageForm}
+                    handleChangeDateofIssue={handleChangeDateofIssue}
+                    handleChangeinDateofexpiry={handleChangeinDateofexpiry}
+                    setFirstPageForm={setFirstPageForm}
+                    setActiveStep={setActiveStep}
+                    setCurrentPageNo={setCurrentPageNo}
+                    setIsDraft={setIsDraft}
+                    updateStep={updateStep}
+                    defaultCountry={defaultCountry}
+                    setPassPortMaxLength={setPassPortMaxLength}
+                    passportNoMaxLength={passportNoMaxLength}
+                  />
+                </>
+              ) : null}
+              {currentPageNo === 2 ? (
+                <>
+                  <SecondForm
+                    // formElement={formElement}
+                    stepsList={stepsList}
+                    isPreviousSectionDisabled={isPreviousSectionDisabled}
+                    setIsPreviousSectionDisabled = {setIsPreviousSectionDisabled}
+                    // isHandicapSectionDisabled={isHandicapSectionDisabled}
+                    // setIsHandicapSectionDisabled={setIsHandicapSectionDisabled}
+                    upload10thCertificateFile={upload10thCertificateFile}
+                    tenthCertificateFileName={tenthCertificateFileName}
+                    uploadFathersDocFile={uploadFathersDocFile}
+                    otherFileName={otherFileName}
+                    firstPageForm={firstPageForm}
+                    isPhysicallyHandicap={isPhysicallyHandicap}
 
                   // handicapType={handicapType}
                   uploadHandicapFile={uploadHandicapFile}
