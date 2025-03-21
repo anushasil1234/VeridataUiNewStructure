@@ -8,7 +8,8 @@ const ReSetPassword = () => {
     const navigate = useNavigate();
     const location = useLocation();
     // const { userId } = location.state || {};
-    const { clientId, userId, userCode } = location.state || {};
+
+    const { clientId, userId, userCode ,userType} = location.state || {};
 
     return (
         <>
@@ -16,6 +17,7 @@ const ReSetPassword = () => {
                 userId={userId}
                 clientId={clientId}
                 userCode={userCode}
+                userType={userType}
                 PasswordChangeSuccessAction={() => navigate(`${toUserLogin}`)}
             />
             <Box mt={2}>

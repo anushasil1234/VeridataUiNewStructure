@@ -175,7 +175,7 @@ export const UserLoginView = () => {
       return;
     } else {
       const payLoad = {
-        userCode: userName.trim(),
+        userEmail: userName.trim(),
         password: password.trim(),
       };
 

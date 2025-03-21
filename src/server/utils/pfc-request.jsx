@@ -112,7 +112,7 @@ const PfcRequest = (Component) => {
         // };
 
         const isAdmin = () => {
-            return !roleTypeEnums.candidate.includes(userDetails.userTypeId);
+            return !roleTypeEnums.candidate.includes(userDetails?.userTypeId);
         };
 
         // const setupAxiosInterceptors = (api) => {

@@ -44,7 +44,10 @@ const ServerRequest = async (url, type, payload, successMessage, isInternal = fa
             ...apiSecretHeader
         }
     };
-    const BASE_URL = isInternal ? await decryptedData(process.env.REACT_APP_API_INTERNAL_URL) : await decryptedData(process.env.REACT_APP_API_URL);
+    //const BASE_URL = isInternal ? await decryptedData(process.env.REACT_APP_API_INTERNAL_URL) : await decryptedData(process.env.REACT_APP_API_URL);
+   // const BASE_URL = isInternal ? await decryptedData(process.env.REACT_APP_API_INTERNAL_URL) : await decryptedData(process.env.REACT_APP_API_URL);
+   const BASE_URL = 'http://192.168.1.116:85'
+
     const api = axios.create({ baseURL: BASE_URL });
     setupAxiosInterceptors(api);
     try {

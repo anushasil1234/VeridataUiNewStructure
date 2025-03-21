@@ -37,6 +37,7 @@ const ChangePassword = ({
   userId,
   clientId,
   userCode,
+  userType,
   PasswordChangeSuccessAction,
 }) => {
   const [newPassword, setNewPassword] = useState("");
@@ -88,6 +89,7 @@ const ChangePassword = ({
       password: trimmedPassword,
       clientId: otpClientId,
       otp: otp,
+      userType: userType,
     };
     const response = await postPasswordChange(payLoad);
     if (response) {
@@ -151,7 +153,7 @@ const ChangePassword = ({
     setShowResendButton(false);
     startTimer();
     const payLoad = {
-      userCode: userCode,
+      userEmail: userCode,
     };
     const response = await ChangePasswordGenerateOTP(payLoad);
     if (response) {

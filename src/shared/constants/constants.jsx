@@ -2504,7 +2504,9 @@ const Account = `/Account`;
 const AadhaarValidate = `/AadhaarValidate`;
 const FileUpload = `/FileUpload`;
 const Users = `/Users`;
-export const PasswordChange_URL = `${Account}/PostPasswordChange`;
+// export const PasswordChange_URL = `${Account}/PostPasswordChange`;
+export const PasswordChange_URL = `/PostPasswordChange`;
+
 export const DownloadSampleXlsFile_URL = `${FileUpload}/DownloadSampleXlsFile`;
 export const DownloadUpdateSampleXlsFile_URL = `${FileUpload}/DownloadUpdateSampleXlsFile`;
 export const UploadxlsFile_URL = `${FileUpload}/UploadxlsFile`;
@@ -2515,9 +2517,11 @@ export const PostReuploadDocuments_URL = `${FileUpload}/PostReuploadDocuments`;
 export const GetRawFileData_URL = (companyId, fileId) =>
   `${FileUpload}/GetRawFileData?companyId=${companyId}&fileId=${fileId}`;
 export const GetReportFilterStatus_URL = `${AppoienteeWorkFlow}/GetAllReportFilterStatus`;
-export const ValidateUserLogIn_URL = `${Account}/ValidateUserLogIn`;
+// export const ValidateUserLogIn_URL = `${Account}/ValidateUserLogIn`;
+export const ValidateUserLogIn_URL = `/ValidateUserLogIn`;
 export const UserSignInDetailsByEmail_URL = `${Account}/UserSignInDetailsByEmail?email=`;
-export const UserSignInDetails_URL = `${Account}/UserSignInDetails`;
+// export const UserSignInDetails_URL = `${Account}/UserSignInDetails`;
+export const UserSignInDetails_URL = `/UserSignInDetails`;
 export const GetMenuListData_URL = `${Account}/GetMenuListData?userId=`;
 export const GetDashboardWidgetCardData_URL = (filterDays, isfilterd) =>
   `${Account}/GetDashboardWidgetCardData?filterDays=${filterDays}&isfilterd=${isfilterd}`;
@@ -2604,7 +2608,9 @@ export const GetUserByUserId_URL = `${Users}/GetUserByUserId?userId=`;
 export const ValidateUserCode_URL = `${Users}/ValidateUserCode?userCode=`;
 export const AppointeeConsentUpdate_URL = `${Users}/AppointeeConsentUpdate`;
 export const AppointeePrerequisiteUpdate_URL = `${Users}/AppointeePrerequisiteUpdate`;
-export const ChangePasswordGenerateOTP_URL = `${Account}/ChangePasswordGenerateOTP`;
+// export const ChangePasswordGenerateOTP_URL = `${Account}/ChangePasswordGenerateOTP`;
+export const ChangePasswordGenerateOTP_URL = `/ChangePasswordGenerateOTP`;
+
 export const ValidateUserByOtpForgetPassword_URL = `${Account}/ValidateUserByOtpForgetPassword`;
 export const RemoveAdminUser_URL = (id, userId) =>
   `${Users}/RemoveAdminUser?id=${id}&userId=${userId}`;

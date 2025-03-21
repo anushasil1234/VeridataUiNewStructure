@@ -27,7 +27,7 @@ const SetPassword = () => {
         // e.preventDefault();
 
         const payLoad = {
-            userCode: userCode,
+            userEmail: userCode,
         };
         const response = await ChangePasswordGenerateOTP(payLoad);
         if (response) {

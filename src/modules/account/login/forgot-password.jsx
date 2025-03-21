@@ -45,13 +45,13 @@ export const ForgotPasswordView = () => {
     }
     else {
       const payLoad = {
-        userCode: userName,
+        userEmail: userName,
       };
       const response = await ChangePasswordGenerateOTP(payLoad);
       if (response) {
         const { responseInfo } = response;
         const { clientId, dbUserType, userId } = responseInfo;
-        const data = { userId, clientId, userCode: userName, dbUserType };
+        const data = { userId, clientId, userEmail: userName, dbUserType };
         navigate(`${toReSetPassword}`, { state: data });
       }
     }

@@ -40,7 +40,9 @@ const setupAxiosInterceptors = (api) => {
                         if (tokenResponse.status === 200) {
                             const newTokenDetails = tokenResponse.data.responseInfo;
                             setLocalStorageItem("pfc-token", newTokenDetails);
-                            originalRequest.headers['Authorization'] = `Bearer ${userDetails.userCode}|~|${userDetails.userId}|~|${newTokenDetails.token}`;
+                            //originalRequest.headers['Authorization'] = `Bearer ${userDetails.userCode}|~|${userDetails.userId}|~|${newTokenDetails.token}`;
+                            
+                            originalRequest.headers['Authorization'] = `Bearer ${newTokenDetails.token}`;
                             return api(originalRequest);
                         }
                     } else {
