@@ -26,10 +26,10 @@ const SidebarItems = () => {
     
     const response = await getMenuList(userId);
     if (response) {
-      const { responseInfo } = response;
-      const arrangedMenuItem = ArrangeSidebarItems(responseInfo);
+      const { responseInfos } = response;
+      const arrangedMenuItem = ArrangeSidebarItems(responseInfos);
       // set to redux store
-      dispatch(storeSideMenuItems({ menuItems: responseInfo }));
+      dispatch(storeSideMenuItems({ menuItems: responseInfos }));
       setMenuitems(arrangedMenuItem);
     }
   }
