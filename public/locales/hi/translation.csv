@@ -1,0 +1,118 @@
+key,value
+Name,नाम
+email,ईमेल
+Phone,फ़ोन
+Candidate_Id,उम्मीदवार-आईडी
+Date Of Birth,जन्मतिथि
+Father's/Husband's Name,पिता/पति का नाम
+Relationship,संबंध
+Mobile No,मोबाइल नंबर
+Email,ईमेल
+Nationality,राष्ट्रीयता
+Qualification,योग्यता 
+Marital status,वैवाहिक स्थिति 
+Is Passport Available,क्या पासपोर्ट उपलब्ध है?
+Is Physically Handicap,क्या शारीरिक रूप से विकलांग हैं?
+Is International Worker,क्या अंतरराष्ट्रीय कर्मचारी हैं?
+Country of origin,मूल देश
+Passport Number,पासपोर्ट संख्या
+Date Of Issue,जारी करने की तिथि
+Date of Expiry,समाप्ति तिथि
+Personal Details,व्यक्तिगत विवरण
+Passport Details,पासपोर्ट विवरण 
+Handicap Details,विकलांगता विवरण
+Passport Verification,पासपोर्ट सत्यापन
+Certificate / File Upload,प्रमाणपत्र / फ़ाइल अपलोड
+10th pass Certificate,10वीं उत्तीर्ण प्रमाणपत्र
+Please upload 10th pass certificate,कृपया 10वीं उत्तीर्ण प्रमाणपत्र अपलोड करें
+PAN Card,पैन कार्ड
+Please upload PAN Card,कृपया पैन कार्ड अपलोड करें
+Handicap type,विकलांगता प्रकार 
+Handicap_Type,विकलांगता प्रकार 
+Handicap Verification,विकलांगता सत्यापन
+Please upload your Handicap Certificate,कृपया अपना विकलांगता प्रमाणपत्र अपलोड करें
+PF Details,पीएफ विवरण
+Do you have PF under any Trust/Private i.e non-EPFO PF  in the past or present,क्या आपके पास किसी ट्रस्ट/निजी संस्था के तहत पीएफ है यानी गैर-ईपीएफओ पीएफ वर्तमान या पूर्व में?
+Do you have UAN number,क्या आपके पास यूएएन नंबर है?
+No,नहीं 
+Yes,हाँ
+Aadhaar Verification,आधार सत्यापन 
+Aadhaar verification by XML or External Source?,क्या आप आधार सत्यापन XML या बाहरी स्रोत के माध्यम से करना चाहते हैं?
+As part of onboarding process Please generate your e-KYC verification file and upload it here. To see the details steps,ऑनबोर्डिंग प्रक्रिया के तहत कृपया अपनी e-KYC सत्यापन फ़ाइल जनरेट करें और यहाँ अपलोड करें। विस्तृत चरण देखने के 
+Click here,यहाँ क्लिक करें
+I have downloaded the Aadhar e-KYC file,मैंने आधार e-KYC फ़ाइल डाउनलोड कर ली है।
+Name On Aadhaar,आधार पर नाम
+Share Code (to be provided after uploading),शेयर कोड (अपलोड करने के बाद प्रदान किया जाएगा)
+Verify,सत्यापित करें
+Driving License Verification,ड्राइविंग लाइसेंस सत्यापन 
+Fetch Aadhaar Details,आधार विवरण प्राप्त करें 
+Previous,पिछला
+Next,अगला
+Verification,सत्यापन
+Do you have a driving license?,क्या आपके पास ड्राइविंग लाइसेंस है ?
+Driving License Number,ड्राइविंग लाइसेंस नंबर
+PAN Verification (optional),पैन सत्यापन (वैकल्पिक)
+Do you have PAN Detail?,क्या आपके पास पैन विवरण है?
+PAN Number, पैन नंबर
+Name on PAN,पैन पर नाम
+PAN Verified, पैन सत्यापित
+Your PAN is successfully verified.,आपका पैन सफलतापूर्वक सत्यापित हो गया है।
+OK,ठीक है
+Bank Verification,बैंक सत्यापन 
+Bank Account Number,बैंक खाता नंबर 
+IFSC Code,आईएफएससी कोड
+Save as Draft,मसौदे के रूप में सहेजें 
+Save,सहेजें 
+Save and Next,सहेजें और आगे बढ़ें
+FIR Verification,एफआईआर सत्यापन
+Candidate Name,उम्मीदवार का नाम
+Check,जांचें 
+UAN Verification,यूएएन सत्यापन
+Universal Account Number(UAN),यूनिवर्सल अकाउंट नंबर (यूएएन)
+UAN Verification,यूएएन सत्यापन
+Automatic,स्वचालित 
+Manual,मैनुअल
+Submit,जमा करें 
+Please upload your EPFO passbook,कृपया अपना EPFO पासबुक अपलोड करें।
+Please upload your EPFO Service History,कृपया अपनी EPFO सेवा इतिहास अपलोड करें।
+Fetch N Verify UAN,यूएएन प्राप्त करें और सत्यापित करें।
+UAN Aadhar Link,यूएएन आधार लिंक
+Document Details,दस्तावेज़ विवरण
+Candidate ID,उम्मीदवार आईडी
+Aadhaar Name,आधार पर नाम
+Aadhaar Number,आधार नंबर
+UAN,यूएएन
+Aadhaar-UAN Link,आधार-यूएएन लिंक
+Trust PF,ट्रस्ट पीएफ
+Trust PF File,ट्रस्ट पीएफ फ़ाइल
+EPFO Passbook File,ईपीएफओ पासबुक फ़ाइल
+EPFO Service History,ईपीएफओ सेवा इतिहास
+International Worker,अंतर्राष्ट्रीय श्रमिक
+Country of Origin,मूल देश
+Passport Number, पासपोर्ट नंबर 
+Passport Details,पासपोर्ट विवरण
+Passport Issue Date,पासपोर्ट जारी करने की तिथि
+Passport Expiry Date,पासपोर्ट समाप्ति तिथि 
+Passport File,पासपोर्ट फ़ाइल
+Passport Available,पासपोर्ट उपलब्ध
+Driving License Details,ड्राइविंग लाइसेंस विवरण
+Driving License Available,ड्राइविंग लाइसेंस उपलब्ध
+Driving License Number,ड्राइविंग लाइसेंस नंबर 
+FIR Details,एफआईआर विवरण 
+See FIR Details, एफआईआर विवरण देखें 
+Personal Information,व्यक्तिगत जानकारी
+AADHAAR Verified,आधार सत्यापित 
+Gender,लिंग 
+Relationship with Member,सदस्य के साथ संबंध 
+Physically Handicap,शारीरिक रूप से विकलांग
+Handicap Certificate,विकलांगता प्रमाण पत्र 
+Date of Joining,शामिल होने की तिथि
+Bank Details, बैंक विवरण 
+View Remarks / Issues,टिप्पणियाँ / समस्याएँ देखें
+Activity Log,गतिविधियों का विवरण
+Status, स्थिति
+Other Information,अन्य जानकारी 
+View Files,फ़ाइलें देखें
+No file available,कोई फ़ाइल उपलब्ध नहीं है
+Appointee Details, नियुक्ति विवरण
+Passport File Number, पासपोर्ट फ़ाइल नंबर

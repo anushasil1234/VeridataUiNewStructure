@@ -1263,10 +1263,14 @@ export const getStatusChipStyle = (status) => {
   switch (status) {
     case "Submitted":
       return submittedStyle;
-    case "Ongoing":
+    case "ONGNG":
       return ongoingStyle;
-    case "No Response":
+    // case "Ongoing":
+    //   return ongoingStyle;
+          case "NORES":
       return noResponseStyle;
+    // case "No Response":
+    //   return noResponseStyle;
     case "Verified":
       return successStyle;
     case "Cancelled":
@@ -1916,6 +1920,32 @@ export const dropdownMenuItemStyle = {
     backgroundColor: "rgba(154, 32, 140, 0.08)",
   },
 };
-// export const submitButtonSubcontainerStyle = {
-//   flexDirection: {399:'column'},
-// }
+export const languageSelectorsx = {
+  minWidth: 80,
+  height: 32,
+  fontSize: "14px",
+  borderRadius: "40px",
+  backgroundColor: ThemeColorPalete.primary.main,
+  color: "#FFFFFF",
+  overflow: "hidden",
+
+  "& .MuiSelect-select": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "4px 10px",
+    minHeight: "unset",
+    lineHeight: 1.2,
+    maxWidth: "100%",  // avoid cutting off selected text
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
+
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#9A208C",
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    boxShadow: "0 0 5px rgba(154, 32, 140, 0.5)",
+  },
+};

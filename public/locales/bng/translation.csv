@@ -1,0 +1,117 @@
+key,value
+Name,নাম
+email,ইমেল 
+Phone,ফোন 
+Date Of Birth,জন্ম তারিখ
+Father's/Husband's Name,পিতা/স্বামীর নাম
+Relationship,সম্পর্ক
+Mobile No,মোবাইল নম্বর
+Email,ইমেইল
+Nationality,জাতীয়তা
+Qualification,যোগ্যতা 
+Marital status,বৈবাহিক অবস্থা
+Is Passport Available,পাসপোর্ট কি উপলব্ধ? 
+Is Physically Handicap,শারীরিকভাবে অক্ষম কি?
+Is International Worker,আপনি কি আন্তর্জাতিক কর্মী?
+Country of origin,উত্স দেশ
+Passport Number,পাসপোর্ট নম্বর
+Date Of Issue,ইস্যুর তারিখ
+Date of Expiry,মেয়াদ শেষের তারিখ
+Personal Details,ব্যক্তিগত বিবরণ
+Passport Details,পাসপোর্টের বিবরণ
+Handicap Details,প্রতিবন্ধকতার বিবরণ
+Passport Verification,পাসপোর্ট যাচাই
+Certificate / File Upload,সার্টিফিকেট / ফাইল আপলোড
+10th pass Certificate,১০ম শ্রেণি পাস সার্টিফিকেট 
+Please upload 10th pass certificate,অনুগ্রহ করে ১০ম শ্রেণি পাস সার্টিফিকেট আপলোড করুন
+PAN Card,প্যান কার্ড
+Please upload PAN Card,অনুগ্রহ করে প্যান কার্ড আপলোড করুন
+Handicap type,প্রতিবন্ধকতার ধরণ
+Handicap_Type,প্রতিবন্ধকতার ধরণ
+Handicap Verification,প্রতিবন্ধকতা যাচাই  
+Please upload your Handicap Certificate,অনুগ্রহ করে আপনার প্রতিবন্ধকতা সার্টিফিকেট আপলোড করুন
+PF Details,  পিএফ বিবরণ
+Do you have PF under any Trust/Private i.e non-EPFO PF  in the past or present,আপনার কি অতীতে বা বর্তমানে কোনো ট্রাস্ট/প্রাইভেট অর্থাৎ অ-EPFO PF রয়েছে?
+Do you have UAN number,আপনার কি একটি UAN নম্বর আছে?
+No,না
+Yes,হ্যাঁ 
+Aadhaar Verification,আধার যাচাই
+Aadhaar verification by XML or External Source?,আপনি কি XML বা বাইরের উৎসের মাধ্যমে আধার যাচাই করতে চান?
+As part of onboarding process Please generate your e-KYC verification file and upload it here. To see the details steps,অনবোর্ডিং প্রক্রিয়ার অংশ হিসেবে অনুগ্রহ করে আপনার e-KYC যাচাই ফাইল তৈরি করুন এবং এখানে আপলোড করুন। বিস্তারিত ধাপ দেখতে
+Click here,এখানে ক্লিক করুন
+I have downloaded the Aadhar e-KYC file,আমি আধার e-KYC ফাইল ডাউনলোড করেছি।
+Name On Aadhaar,আধারে নাম
+Share Code (to be provided after uploading),শেয়ার কোড (আপলোড করার পরে প্রদান করা হবে)
+Verify,যাচাই করুন 
+Driving License Verification,ড্রাইভিং লাইসেন্স যাচাই
+Fetch Aadhaar Details,আধার বিবরণ আনুন
+Previous,পূর্ববর্তী 
+Next,পরবর্তী
+Verification,যাচাই 
+Do you have a driving license?,আপনার কি ড্রাইভিং লাইসেন্স আছে?
+Driving License Number,ড্রাইভিং লাইসেন্স নম্বর 
+PAN Verification (optional),প্যান যাচাই (ঐচ্ছিক) 
+Do you have PAN Detail?,আপনার কি প্যানের বিবরণ আছে ?
+PAN Number,প্যান নম্বর
+Name on PAN,প্যান কার্ডের নাম 
+PAN Verified,প্যান যাচাই করা হয়েছে 
+Your PAN is successfully verified.,আপনার প্যান সফলভাবে যাচাই করা হয়েছে।
+OK,ঠিক আছে
+Bank Verification,ব্যাংক যাচাই 
+Bank Account Number,ব্যাংক অ্যাকাউন্ট নম্বর 
+IFSC Code,আইএফএসসি কোড 
+Save as Draft,খসড়া হিসেবে সংরক্ষণ করুন
+Save,সংরক্ষণ করুন
+Save and Next,সংরক্ষণ করুন এবং পরবর্তী ধাপে যান
+FIR Verification,এফআইআর যাচাই
+Candidate Name, প্রার্থীর নাম 
+Check,পরীক্ষা করুন 
+UAN Verification, ইউএএন যাচাই
+Universal Account Number(UAN),ইউনিভার্সাল অ্যাকাউন্ট নম্বর (ইউএএন)
+UAN Verification,ইউএএন যাচাই
+Automatic,স্বয়ংক্রিয় 
+Manual,ম্যানুয়াল 
+Submit, জমা দিন
+Please upload your EPFO passbook,অনুগ্রহ করে আপনার EPFO পাসবুক আপলোড করুন।
+Please upload your EPFO Service History,অনুগ্রহ করে আপনার EPFO পরিষেবা ইতিহাস আপলোড করুন।
+Fetch N Verify UAN,ইউএএন আনুন এবং যাচাই করুন।
+UAN Aadhar Link,ইউএএন আধার লিংক
+Document Details,নথির বিবরণ
+Candidate ID,প্রার্থী আইডি
+Aadhaar Name,আধারে থাকা নাম
+Aadhaar Number,আধার নম্বর 
+UAN,ইউএএন
+Aadhaar-UAN Link,আধার-ইউএএন লিংক
+Trust PF, ট্রাস্ট পিএফ
+Trust PF File,ট্রাস্ট পিএফ ফাইল 
+EPFO Passbook File,ইপিএফও পাসবুক ফাইল
+EPFO Service History,ইপিএফও পরিষেবা ইতিহাস
+International Worker,আন্তর্জাতিক কর্মী
+Country of Origin,উৎপত্তির দেশ
+Passport Number,পাসপোর্ট নম্বর
+Passport Details,পাসপোর্ট বিবরণ
+Passport Issue Date,পাসপোর্ট ইস্যু তারিখ 
+Passport Expiry Date,পাসপোর্ট মেয়াদ শেষের তারিখ 
+Passport File,পাসপোর্ট ফাইল
+Passport Available,পাসপোর্ট উপলব্ধ
+Driving License Details,ড্রাইভিং লাইসেন্স বিবরণ
+Driving License Available,ড্রাইভিং লাইসেন্স উপলব্ধ
+Driving License Number,ড্রাইভিং লাইসেন্স নম্বর
+FIR Details, এফআইআর বিবরণ 
+See FIR Details,এফআইআর বিবরণ দেখুন
+Personal Information,ব্যক্তিগত তথ্য
+AADHAAR Verified,আধার যাচাই করা হয়েছে 
+Gender,লিঙ্গ 
+Relationship with Member, সদস্যের সাথে সম্পর্ক
+Physically Handicap,শারীরিকভাবে প্রতিবন্ধী 
+Handicap Certificate,প্রতিবন্ধী সার্টিফিকেট
+Date of Joining, যোগদানের তারিখ
+Bank Details, ব্যাংক বিবরণ 
+View Remarks / Issues,মন্তব্য / সমস্যাগুলি দেখুন 
+Activity Log,কার্যকলাপ বিবরণ
+Status,অবস্থা 
+Other Information,অন্যান্য তথ্য
+View Files,ফাইলগুলি দেখুন
+No file available,কোনও ফাইল উপলব্ধ নেই 
+Appointee Details,ব্যক্তির বিবরণ
+Passport File Number,পাসপোর্ট ফাইল নম্বর

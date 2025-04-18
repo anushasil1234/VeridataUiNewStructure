@@ -17,19 +17,25 @@ import { removeFunction } from "store/slices/function-slice";
 import { removePopUpSetFunction } from "store/slices/popup-slice";
 import { removeSideMenuItems } from "store/slices/side-menu-items-slice";
 import setDropdownList from "shared/utils/associate/set-dropdown-list";
-
+import { removeAppointeeStatusDetailsData, storeAppointeeStatusDetailsData } from "store/slices/appointee-status-details-slice";
+import { I18nextProvider } from "react-i18next";
+import i18n from "i18n";
 const App = () => {
   const routing = useRoutes(CustomRouter);
   const dispatch = useDispatch();
   const loginData = getLocalStorageItem("pfc-user");
   const tokenData = getLocalStorageItem("pfc-token");
+  const candidateStatusDetails = getLocalStorageItem("candidate-status-details");
+  console.log('candidateStatusDetails', candidateStatusDetails);
   const handleClickOnLogout = () => {
     localStorage.clear();
     sessionStorage.clear();
     dispatch(removeLoggedinData());
     dispatch(removeLoggedinTokenData());
+    dispatch(removeAppointeeStatusDetailsData());
     removeLocalStorageItems(["pfc-user"]);
     removeLocalStorageItems(["pfc-token"]);
+    removeLocalStorageItems(["candidate-status-details"]);
     dispatch(removeApi());
     dispatch(removeDropdownList());
     dispatch(removeFunction());
@@ -44,6 +50,8 @@ const App = () => {
   if (loginData && loggedInData.length === 0) {
     dispatch(storeLoggedinData(loginData));
     dispatch(storeLoggedinTokenData(tokenData));
+    dispatch(storeAppointeeStatusDetailsData(candidateStatusDetails))
+
     dispatch(storeLoggeoutData({ handleClickOnLogout }));
   }
  
@@ -58,11 +66,13 @@ const App = () => {
 
 
   return (
+    <I18nextProvider i18n={i18n}>
     <ThemeProvider theme={AppStyle}>
       <LoadingContextProvider>
         {routing}
       </LoadingContextProvider>
     </ThemeProvider>
+    </I18nextProvider>
   );
 };
 

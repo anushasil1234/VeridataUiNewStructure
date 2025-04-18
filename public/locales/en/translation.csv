@@ -1,0 +1,118 @@
+key,value
+Name,Name
+email,Email
+Phone,Phone
+Candidate Id,Candidate Id
+Date Of Birth,Date Of Birth
+Father's/Husband's Name,Father's/ Husband's Name
+Relationship,Relationship
+Mobile No,Mobile No
+Email,Email
+Nationality,Nationality
+Qualification,Qualification
+Marital status,Marital status
+Is Passport Available,Is Passport Available
+Is Physically Handicap,Is Physically Handicap
+Is International Worker,Is International Worker
+Country of origin,Country of origin
+Passport Number,Passport Number
+Date Of Issue,Date Of Issue
+Date of Expiry,Date of Expiry
+Personal Details,Personal Details
+Passport Details,Passport Details
+Handicap Details,Handicap Details
+Passport Verification,Passport Verification
+Certificate / File Upload,Certificate / File Upload
+10th pass Certificate,10th pass Certificate
+Please upload 10th pass certificate, Please upload 10th pass certificate
+PAN Card,PAN Card
+Please upload PAN Card,Please upload PAN Card
+Handicap type,Handicap type
+Handicap_Type,Handicap Type
+Handicap Verification,Handicap Verification
+Please upload your Handicap Certificate,Please upload your Handicap Certificate
+PF Details,PF Details
+Do you have PF under any Trust/Private i.e non-EPFO PF  in the past or present,Do you have PF under any Trust/Private i.e non-EPFO PF in the past or present?
+Do you have UAN number,Do you have UAN number
+No,No
+Yes,Yes
+Aadhaar Verification,Aadhaar Verification
+Aadhaar verification by XML or External Source?,Aadhaar verification by XML or External Source?
+As part of onboarding process Please generate your e-KYC verification file and upload it here. To see the details steps,As part of onboarding process, Please generate your e-KYC verification file and upload it here. To see the details steps
+Click here,Click here
+I have downloaded Aadhar e-KYC file,I have downloaded the Aadhar e-KYC file.
+Name On Aadhaar,Name On Aadhaar
+Share Code (to be provided after uploading),Share Code (to be provided after uploading)
+Verify,Verify
+Driving License Verification,Driving License Verification
+Fetch Aadhaar Details, Fetch Aadhaar Details
+Previous,Previous
+Next,Next
+Verification,Verification
+Driving License Number,Driving License Number
+PAN Verification (optional),PAN Verification (optional)
+Do you have PAN Detail?,Do you have PAN Detail ?
+PAN Number,PAN Number
+Name on PAN,Name on PAN
+PAN Verified,PAN Verified
+Your PAN is successfully verified.,Your PAN is successfully verified.
+OK,OK
+Bank Verification,Bank Verification
+Bank Account Number,Bank Account Number
+IFSC Code,IFSC Code
+Save as Draft,Save as Draft
+Save,Save
+Save and Next,Save and Next
+FIR Verification,FIR Verification
+Candidate Name,Candidate Name
+Check,Check
+UAN Verification,UAN Verification
+Universal Account Number(UAN),Universal Account Number(UAN)
+UAN Verification,UAN Verification
+Automatic,Automatic
+Manual,Manual
+Submit,Submit
+Please upload your EPFO passbook,Please upload your EPFO passbook
+Please upload your EPFO Service History,Please upload your EPFO Service History
+Fetch N Verify UAN,Fetch N Verify UAN
+UAN Aadhar Link,UAN Aadhar Link
+Document Details,Document Details
+Candidate ID,Candidate ID
+Aadhaar Name,Aadhaar Name
+Aadhaar Number,Aadhaar Number
+UAN,UAN
+Aadhaar-UAN Link,Aadhaar-UAN Link
+Trust PF,Trust PF
+Trust PF File,Trust PF File
+EPFO Passbook File,EPFO Passbook File
+EPFO Service History,EPFO Service History
+International Worker,International Worker
+Country of Origin,Country of Origin
+Passport Number,Passport Number
+Passport Details,Passport Details
+Passport Issue Date,Passport Issue Date
+Passport Expiry Date,Passport Expiry Date
+Passport File,Passport File
+Passport Available,Passport Available
+Driving License Details,Driving License Details
+Driving License Available,Driving License Available
+Driving License Number,Driving License Number
+FIR Details,FIR Details
+See FIR Details,See FIR Details
+Personal Information,Personal Information
+AADHAAR Verified,AADHAAR Verified
+Gender,Gender
+Relationship with Member,Relationship with Member
+Physically Handicap,Physically Handicap
+Handicap Certificate,Handicap Certificate
+Date of Joining,Date of Joining
+Bank Details,Bank Details
+View Remarks / IssuesView Remarks / Issues
+Activity Log,Activity Log
+Status, Status
+Other Information,Other Information
+View Files,View Files
+No file available,No file available
+Appointee Details,Appointee Details
+Do you have a driving license?,Do you have a driving license?
+Passport File Number,Passport File Number

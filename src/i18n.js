@@ -1,0 +1,22 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import HttpBackend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import CsvBackend from './csvBackend';
+
+i18n
+  .use(CsvBackend)
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: 'en',
+    debug: true,
+    backend: {
+      loadPath: '/locales/{{lng}}/translation.csv',
+    },
+    interpolation: {
+      escapeValue: false,
+    },
+  });
+
+export default i18n;

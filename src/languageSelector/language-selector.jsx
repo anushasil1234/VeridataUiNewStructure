@@ -1,0 +1,52 @@
+import React, { useEffect, useState } from "react";
+import { Select, MenuItem } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { languageOptions } from "../../src/languageOptions";
+import { languageSelectorsx } from "app";
+
+const LanguageSelector = () => {
+  const { i18n } = useTranslation();
+
+  const getInitialLanguage = () => {
+    const hasJustLoggedIn = sessionStorage.getItem("hasJustLoggedIn");
+    if (hasJustLoggedIn === "true") {
+      sessionStorage.setItem("hasJustLoggedIn", "false");
+      localStorage.setItem("appLanguage", "en");
+      return "en";
+    }
+
+    return localStorage.getItem("appLanguage") || "en";
+  };
+
+  const [language, setLanguage] = useState(getInitialLanguage);
+
+  const handleChangeLanguage = (event) => {
+    const newLang = event.target.value;
+    setLanguage(newLang);
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("appLanguage", newLang);
+  };
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language, i18n]);
+
+  return (
+    <Select
+      labelId="language-select-label"
+      id="language-select"
+      value={language}
+      label="Language"
+      sx={{ ...languageSelectorsx }}
+      onChange={handleChangeLanguage}
+    >
+      {languageOptions.map((lang) => (
+        <MenuItem key={lang.value} value={lang.value}>
+          {lang.label}
+        </MenuItem>
+      ))}
+    </Select>
+  );
+};
+
+export default LanguageSelector;
