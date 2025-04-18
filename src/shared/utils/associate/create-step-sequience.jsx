@@ -1,4 +1,4 @@
-export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCounter }) => {
+export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCounter,t }) => {
     let _steps = {};
     let _stepCounter = stepCounter;
 
@@ -19,7 +19,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
             ..._steps,
             PV: {
                 step: _stepCounter,
-                name: 'Passport Verification'
+                name: t("Passport Verification"),
             }
         }
     }
@@ -33,18 +33,18 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         CF: {
             step: _stepCounter,
-            name: 'Certificate / File Upload'
+            name: t('Certificate / File Upload')
         }
     }
-    _stepCounter = _stepCounter + 1;
+    //_stepCounter = _stepCounter + 1;
 
     if (isHandicap === 'Y') {
-       // _stepCounter = _stepCounter + 1;
+        _stepCounter = _stepCounter + 1;
         _steps = {
             ..._steps,
             HV: {
                 step: _stepCounter,
-                name: 'Handicap Verification'
+                name: t('Handicap Verification'),
             }
         }
     }
@@ -55,7 +55,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         PFD: {
             step: _stepCounter,
-            name: 'PF Details'
+            name: t('PF Details')
         },
     }
     _stepCounter = _stepCounter + 1;
@@ -63,7 +63,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         AV: {
             step: _stepCounter,
-            name: 'Aadhaar Verification'
+            name: t('Aadhaar Verification')
         }
     }
 
@@ -72,7 +72,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         DLV: {
             step: _stepCounter,
-            name: 'Driving License Verification'
+            name: t('Driving License Verification')
         }
     }
     _stepCounter = _stepCounter + 1;
@@ -80,7 +80,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         PAV: {
             step: _stepCounter,
-            name: 'PAN Verification (optional)'
+            name: t('PAN Verification (optional)')
         }
     }
     _stepCounter = _stepCounter + 1;
@@ -88,7 +88,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         BAV: {
             step: _stepCounter,
-            name: 'Bank Verification'
+            name: t('Bank Verification')
         }
     }
     _stepCounter = _stepCounter + 1;
@@ -96,7 +96,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         FIRV: {
             step: _stepCounter,
-            name: 'FIR Verification'
+            name: t('FIR Verification')
         }
     }
     // _stepCounter = _stepCounter + 1;
@@ -112,7 +112,7 @@ export const CreateStepSequience = ({ isHandicap, isPassportAvailable, stepCount
         ..._steps,
         UAV: {
             step: _stepCounter,
-            name: 'UAN Verification'
+            name: t('UAN Verification')
         }
     }
 

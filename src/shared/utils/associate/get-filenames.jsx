@@ -1,4 +1,4 @@
-import { epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, handicapFileTypeAlias, otherFileTypeAlias, passportFileTypeAlias, tenthCertificateFileTypeAlias, trustEpfoFileTypeAlias } from "shared/constants/constants";
+import { epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, handicapFileTypeAlias, imageFileTypeAlias, otherFileTypeAlias, passportFileTypeAlias, tenthCertificateFileTypeAlias, trustEpfoFileTypeAlias } from "shared/constants/constants";
 
 const getFilenames = ({ fileUploaded }) => {
 
@@ -9,6 +9,7 @@ const getFilenames = ({ fileUploaded }) => {
     let trustEpfoFileName = [];
     let epfoPassBookFiles = [];
     let epfoServiceHistoryFile = [];
+    let imageFileName = [];
     fileUploaded && fileUploaded.length > 0 && fileUploaded.forEach(
         ({ uploadTypeAlias, mimeType, fileData, fileName }) => {
             const fileDetails = `data:${mimeType};base64,${fileData}`;
@@ -23,7 +24,9 @@ const getFilenames = ({ fileUploaded }) => {
             if (uploadTypeAlias === otherFileTypeAlias) {
                 otherFileName = [file.fileName];
             }
-
+            if (uploadTypeAlias === imageFileTypeAlias) {
+                imageFileName = [file.fileName];
+            }
             if (uploadTypeAlias === passportFileTypeAlias) {
                 passportFileName = [file.fileName];
             }
@@ -45,7 +48,7 @@ const getFilenames = ({ fileUploaded }) => {
     return (
         {
             tenthCertificateFileName, otherFileName, passportFileName, handicapFileName,
-            trustEpfoFileName, epfoPassBookFiles, epfoServiceHistoryFile
+            trustEpfoFileName, epfoPassBookFiles, epfoServiceHistoryFile,imageFileName
         }
     )
 }

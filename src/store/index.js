@@ -15,11 +15,14 @@ import ManualValidationResponseStatusSlice from "./slices/manual-validation-resp
 import SetDropDownFunctionSlice from "./slices/set-dropdown-functions-slice"; 
 import SetRemarksFunctionSlice from "./slices/set-remarks-functions-slice"; 
 import CandidatePageSlice from "./slices/candidate-page-slice"; 
+import AppointeeStatusDetailsData from "./slices/appointee-status-details-slice";
+
 
 const store = configureStore(
     {
         reducer: {
             loggedInData: LoggedinData,
+            appointeeStatusDetailsData : AppointeeStatusDetailsData,
             loggedinTokenData:LoggedinTokenData,
             manualValidationResponseStatusSlice:ManualValidationResponseStatusSlice,
             loggeoutData: LoggeoutData,

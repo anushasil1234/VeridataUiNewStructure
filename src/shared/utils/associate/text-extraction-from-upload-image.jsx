@@ -1,0 +1,22 @@
+import Tesseract from 'tesseract.js';
+
+export const handleImageUpload = async (event, setUploadedFileName, onTextExtracted) => {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  setUploadedFileName(file.name);
+
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const imageData = reader.result;
+
+    const { data: { text } } = await Tesseract.recognize(imageData, 'eng', {
+      logger: m => console.log(m), // optional
+    });
+
+    // Let the caller handle what to do with extracted text
+    onTextExtracted(text);
+  };
+
+  reader.readAsDataURL(file);
+};

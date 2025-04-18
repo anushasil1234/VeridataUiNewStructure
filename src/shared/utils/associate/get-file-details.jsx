@@ -3,7 +3,7 @@ import { removeFile } from "..";
 
 const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
     uploadType, uploadedFile, fileDetails, fileTypeList }) => {
-        // console.log('uploadType12321', uploadType, uploadTypeAlias, uploadedFile, fileTypeList);
+    console.log('uploadType12321', uploadType, uploadTypeAlias, uploadedFile, fileTypeList);
 
     let fileNameList = [..._filenameList];
     let updatedUploadedFileList = [...uploadedFile];
@@ -47,8 +47,8 @@ const getFileDetails = ({ files, uploadTypeAlias, setFileName, _filenameList,
                 // Find the file type ID based on the uploadTypeAlias
                 const { id } =
                     fileTypeList &&
-                    fileTypeList.length > 0 &&
-                    fileTypeList.find(({ code }) => code === uploadTypeAlias);
+                    fileTypeList?.length > 0 &&
+                    fileTypeList?.find(({ code }) => code === uploadTypeAlias);
                 // Create new file object
                 const file = {
                     uploadDetailsId: 0,

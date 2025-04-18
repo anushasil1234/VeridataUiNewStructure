@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { Box, Typography } from '@mui/material';
 import { NA } from 'shared/constants/constants';
@@ -8,6 +9,11 @@ import TableClickableCell from './table-clickable-cell';
 
 function SingleTableCell({ props }) {
     const { tableRow, headCell, Component, attribute, actionPermissionList } = props;
+
+    //console.log("tableRow", tableRow);
+
+    const isHighlighted = tableRow?.isPensionGap === "Yes" || tableRow?.isDualEmployement === "Yes";
+    const highlightStyle = { color: "#e71a64", fontWeight: 600 }; // Apply red color for "No" values
 
     return (
         <>
@@ -32,17 +38,29 @@ function SingleTableCell({ props }) {
                                     key={index}
                                 >
                                     <Box>
-                                        {index === 0 ?
-                                            <Typography sx={{ color: tableRow['isNoIsuueinVerification'] === false && issueTextStyle }} variant="subtitle2" fontWeight={550}>
-                                                {tableRow[cellValue] ? tableRow[cellValue] : NA}
-                                            </Typography> :
+                                        {index === 0 ? (
                                             <Typography
-                                                key={index}
-                                                sx={{ ...text2, color: tableRow['isNoIsuueinVerification'] === false && issueTextStyle }}
+                                                sx={{
+                                                    color: (tableRow['isNoIsuueinVerification'] === false && issueTextStyle) ||
+                                                        (isHighlighted && ["isPensionGap", "isDualEmployement"].includes(cellValue) && highlightStyle.color),
+                                                    fontWeight: isHighlighted && ["isPensionGap", "isDualEmployement"].includes(cellValue) ? highlightStyle.fontWeight : 550
+                                                }}
+                                                variant="subtitle2"
                                             >
                                                 {tableRow[cellValue] ? tableRow[cellValue] : NA}
-                                            </Typography>}
-
+                                            </Typography>
+                                        ) : (
+                                            <Typography
+                                                key={index}
+                                                sx={{
+                                                    ...text2,
+                                                    color: (tableRow['isNoIsuueinVerification'] === false && issueTextStyle) ||
+                                                        (isHighlighted && ["isPensionGap", "isDualEmployement"].includes(cellValue) && highlightStyle.color)
+                                                }}
+                                            >
+                                                {tableRow[cellValue] ? tableRow[cellValue] : NA}
+                                            </Typography>
+                                        )}
                                     </Box>
                                 </Box>
                         ))}
@@ -51,29 +69,38 @@ function SingleTableCell({ props }) {
 
                     <Box>
                         {headCell.enums && headCell.enums.map((cellValue, index) => (
-
-                            (headCell.id === "rejectReason") ?
+                            (headCell.id === "rejectReason") ? (
                                 <TableClickableCell
                                     key={index}
                                     cellName={cellValue}
                                     cellValue={tableRow[cellValue]}
                                     {...attribute}
-
-                                />:
-                                headCell.type === "badge" ?
+                                />
+                            ) : headCell.type === "badge" ? (
                                 <TableStatusCell
                                     key={index}
                                     cellName={cellValue}
                                     cellValue={tableRow[cellValue]}
                                     {...attribute}
-                                /> 
-                                :
-                                <Component key={index} actionPermissionList={actionPermissionList} sx={{ ...text1, color: tableRow['isNoIsuueinVerification'] === false && issueTextStyle }} {...attribute}>
+                                />
+                            ) : (
+                                <Component
+                                    key={index}
+                                    actionPermissionList={actionPermissionList}
+                                    sx={{
+                                        ...text1,
+                                        color: (tableRow['isNoIsuueinVerification'] === false && issueTextStyle) ||
+                                            (isHighlighted && ["isPensionGap", "isDualEmployement"].includes(cellValue) ? highlightStyle.color : "inherit"),
+                                        fontWeight: isHighlighted && ["isPensionGap", "isDualEmployement"].includes(cellValue) ? highlightStyle.fontWeight : "normal"
+                                    }}
+                                    {...attribute}
+                                >
                                     {headCell.type === "date" ? (tableRow[cellValue] ? DDMMYYYY(tableRow[cellValue]) : NA) : tableRow[cellValue]}
                                 </Component>
-
+                            )
                         ))}
-                    </Box>}
+                    </Box>
+                }
 
                 {headCell && !headCell?.enums?.length && headCell.enums && headCell?.enums[0] !== "action" ? (
                     <Box>
@@ -84,8 +111,7 @@ function SingleTableCell({ props }) {
                 ) : null}
             </Box>
         </>
-
-    )
+    );
 }
 
-export default SingleTableCell
+export default SingleTableCell;
