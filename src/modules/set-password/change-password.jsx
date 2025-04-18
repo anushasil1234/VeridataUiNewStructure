@@ -8,8 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import { loginFieldIconStyle, lableRedStyle } from "app";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ChangePasswordGenerateOTP, postPasswordChange } from "server/apis";
 import {
   changePassword,
@@ -20,6 +21,7 @@ import {
   passwordNotMsg,
   passwordPattern,
   setPasswordOtpToMailMsg,
+  toSetPassword
 } from "shared/constants/constants";
 import {
   CardLayout,
@@ -40,6 +42,44 @@ const ChangePassword = ({
   userType,
   PasswordChangeSuccessAction,
 }) => {
+  const functionSlice = useSelector((state) => state.functionSlice);
+  const { openLicenseModal } = functionSlice[0];
+  const navigate = useNavigate();
+  const userRespondedToModal = useRef(false);
+  const loggeoutData = useSelector(state => state.loggeoutData);
+  const loggeoutFunction = loggeoutData && loggeoutData.length > 0 && loggeoutData[0];
+
+
+  const isDefaultPassword = localStorage.getItem("isDefaultPassword");
+
+  if (isDefaultPassword === "true" && !userRespondedToModal.current) {
+    const handleYes = () => {
+      userRespondedToModal.current = true;
+      navigate(toSetPassword);
+    };
+  
+    const handleNo = () => {
+      userRespondedToModal.current = true;
+      loggeoutFunction.handleClickOnLogout();
+      navigate("/");
+    };
+  
+    const consentPopupContent = {
+      dialogTitle: "Consent Required",
+      dialogContentText: "You need to set a new password. Do you want to proceed?",
+      firstButtonName: "Agree",
+      secondButtonName: "Disagree",
+      confirmedYes: handleYes,
+      confirmedNo: handleNo,
+      disableCloseIcon: true,
+    };
+  
+    openLicenseModal(consentPopupContent, (response) => {
+      // Optional callback if needed
+      console.log("User responded with:", response); // "yes" or "no"
+    });
+  }
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setOtp] = useState("");

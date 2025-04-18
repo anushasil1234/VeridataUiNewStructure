@@ -84,6 +84,7 @@ import {
   noPassBookMsg,
   noEmployementMsg,
   AadhaarProfileImageTypeAlias,
+  imageFileTypeAlias
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -100,7 +101,7 @@ import RemarksInputModel from "shared/utils/modals/remarks-modal";
 import { FileViewComponent } from "./file-view-component";
 import { getAppointeeActivity, getAppointeeDetails, getEmploymentDetails, getPassbookDetails, getRemarks, getUploadedFileDetailsById, postAppointeeApproved, postAppointeePensionApplicable, postAppointeeRejected } from "server/apis";
 import showErrorMessage from "shared/utils/associate/show-error-message";
-
+import { useTranslation } from "react-i18next";
 const DocumentDetails = ({ fieldName, fieldValue, isVerified }) => {
   return (
     <Stack sx={documentListStyle}>
@@ -127,6 +128,8 @@ let AppointeeViewForm = ({
     (state) => state.commonHooksFunctionSlice
   );
   const loggedInData = useSelector((state) => state.loggedInData);
+  const { t: translationFunction } = useTranslation();
+  const t = (!loggedInData[0] || loggedInData[0]?.roleId === 5) ? translationFunction : (key) => key; 
   const apiSlice = useSelector((state) => state.apiSlice);
   const dropdownList = useSelector((state) => state.dropdownList);
   const functionSlice = useSelector((state) => state.functionSlice);
@@ -234,6 +237,11 @@ let AppointeeViewForm = ({
   const [isFIRModalOpen, setIsFIRModalOpen] = useState(false);
   const [parsedFIRDetails, setParsedFIRDetails] = useState([]);
   const [otherFilePayload, setOtherFilePayload] = useState();
+  const [profileImage, setProfileImage] = useState();
+  const [profileImageBase64, setProfileImageBase64] = useState(null);
+
+  let tempPayload = null;
+  let hasImageFile = false;
   const dispatch = useDispatch();
 
   const actionsAfterProcess = (actionRoute) => {
@@ -501,7 +509,7 @@ let AppointeeViewForm = ({
       }
       setIsPensionApplicable(isPensionApplicable);
       const updatedFilesByAlias = new Map();
-      fileUploaded.forEach(
+      fileUploaded?.forEach(
         ({ uploadTypeAlias, mimeType, fileName, uploadDetailsId }) => {
           //const fileDetails = `data:${mimeType};base64,${fileDataa}`;
           const file = {
@@ -525,9 +533,18 @@ let AppointeeViewForm = ({
           if (uploadTypeAlias === otherFileTypeAlias) {
             setOtherFile(file);
           }
+          if (uploadTypeAlias === imageFileTypeAlias) {
+            setProfileImage(file);
+            tempPayload = filepayload;
+            hasImageFile = true; // always overrides Aadhaar
+          }
           if (uploadTypeAlias === AadhaarProfileImageTypeAlias) {
             setOtherFile(file);
-            setOtherFilePayload(filepayload);
+           // setOtherFilePayload(filepayload);
+           if (!hasImageFile && !tempPayload) {
+            tempPayload = filepayload;
+          }
+
           }
           if (uploadTypeAlias === passportFileTypeAlias) {
             setVisaFile(file);
@@ -544,18 +561,53 @@ let AppointeeViewForm = ({
           if (uploadTypeAlias === epfoServiceHistoryFileTypeAlias) {
             setEPFOServiceHistoryFile(file);
           }
+          if (tempPayload) {
+            setOtherFilePayload(tempPayload);
+          }
           setFilesByAlias(updatedFilesByAlias);
         }
       );
     }
     setIsLoading(true);
   };
+  const handleProfileImageLoad = async (fileType, file, filesByAlias) => {
+    const files = filesByAlias?.get(fileType) || [];
+
+    if (files.length === 1) {
+      const selectedFile = files[0];
+      const payload = {
+        appointeeId: selectedFile.appointeeId || 0,
+        fileCategory: fileType,
+        fileId: selectedFile.uploadDetailsId,
+      };
+      const response = await getUploadedFileDetailsById(payload);
+
+      if (response && response.responseInfo) {
+        const { mimeType, fileData } = response.responseInfo;
+        const base64Image = `data:${mimeType};base64,${fileData}`;
+        setProfileImageBase64(base64Image);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (profileImage) {
+      handleProfileImageLoad(imageFileTypeAlias, profileImage, filesByAlias);
+    }
+  }, [profileImage, imageFileTypeAlias, filesByAlias]);
 
   //const parsedFIRDetails =  firDetails ? JSON.parse(firDetails) : firDetails ;
 
   // Parse firDetails when it changes
   useEffect(() => {
-    if (firDetails && firDetails !== "NA") {
+    // if (firDetails && firDetails !== "NA") {
+    if (
+      firDetails &&
+      firDetails !== "NA" &&
+      firDetails !== "N/A" &&
+      firDetails !== "null" &&
+      firDetails !== "undefined"
+    ) {
       try {
         setParsedFIRDetails(JSON.parse(firDetails));
       } catch (error) {
@@ -912,7 +964,7 @@ let AppointeeViewForm = ({
               <Stack alignItems={"center"}>
                 <Box>
                   {/* <Security sx={verifyIconStyle} /> */}
-                  {isLoading && otherFilePayload && otherFilePayload.uploadTypeAlias === "ADHPRF" ?
+                  {/* {isLoading && otherFilePayload && otherFilePayload.uploadTypeAlias === "ADHPRF" ?
                     // isdocumentVerified === true &&
                     // (isPanVarified === true) ? (
                     //   <TaskAlt sx={verifyIconStyle} />
@@ -960,6 +1012,40 @@ let AppointeeViewForm = ({
                       // }}
                       />
                     )
+                  } */}
+                   {
+                    isLoading && otherFilePayload ? (
+                      otherFilePayload.uploadTypeAlias === "PRF" ? (
+                        <Avatar
+                          src={profileImageBase64 || ProfileImg}
+                          alt={profileImageBase64 || ProfileImg}
+                          sx={verifyIconStyle}
+                          width={38}
+                          height={40}
+                        />
+                      ) : otherFilePayload.uploadTypeAlias === "ADHPRF" && otherFilePayload.uploadTypeAlias !== "PRF" ? (
+                        <Avatar
+                          src={fileDataStore}
+                          sx={verifyIconStyle}
+                        />
+                      ) : (
+                        <Avatar
+                          src={ProfileImg}
+                          alt={ProfileImg}
+                          sx={verifyIconStyle}
+                          width={38}
+                          height={40}
+                        />
+                      )
+                    ) : (
+                      <Avatar
+                        src={ProfileImg}
+                        alt={ProfileImg}
+                        sx={verifyIconStyle}
+                        width={38}
+                        height={40}
+                      />
+                    )
                   }
                 </Box>
                 <Box>
@@ -973,48 +1059,48 @@ let AppointeeViewForm = ({
             </Box>
             <Box sx={{ ...cardStyle }}>
               <Stack sx={listHeadingConteinerStyle}>
-                <Typography sx={listHeadingStyle}>Document Details</Typography>
+                <Typography sx={listHeadingStyle}>{t("Document Details")}</Typography>
               </Stack>
               <DocumentDetails
-                fieldName={"Candidate ID"}
+                fieldName={t("Candidate ID")}
                 fieldValue={candidateId}
               />
               <DocumentDetails
                 isVerified={isAadharVerified}
-                fieldName={"Aadhaar Name"}
+                fieldName={t("Aadhaar Name")}
                 fieldValue={nameAsOnAadhar}
               />
               <DocumentDetails
                 isVerified={isAadharVerified}
-                fieldName={"Aadhaar Number"}
+                fieldName={t("Aadhaar Number")}
                 fieldValue={aadhar}
               />
               <DocumentDetails
                 isVerified={isUanVerified}
-                fieldName={"UAN"}
+                fieldName={t("UAN")}
                 fieldValue={UAN}
               />
               <DocumentDetails
-                fieldName={"Aadhaar-UAN Link "}
+                fieldName={t("Aadhaar-UAN Link")}
                 fieldValue={uanAadhar}
               />
               <DocumentDetails
                 isVerified={isPanVarified}
-                fieldName={"PAN Number"}
+                fieldName={t("PAN Number")}
                 fieldValue={pan}
               />
               <DocumentDetails
                 isVerified={isPanVarified}
-                fieldName={"Name on PAN"}
+                fieldName={t("Name on PAN")}
                 fieldValue={nameAsOnPan}
               />
               <DocumentDetails
-                fieldName={"Trust PF"}
+                fieldName={t("Trust PF")}
                 fieldValue={isTrustPassbook}
               />
               {isTrustPassbook === "Yes" && trustPfFile && (
                 <DocumentDetails
-                  fieldName={"Trust PF File"}
+                  fieldName={t("Trust PF File")}
                   fieldValue={
                     <FileViewComponent
                       fileType={trustEpfoFileTypeAlias}
@@ -1028,7 +1114,7 @@ let AppointeeViewForm = ({
 
               {isManualPassbook === true && manualPassbookFile && (
                 <DocumentDetails
-                  fieldName={"EPFO Passbook File"}
+                  fieldName={t("EPFO Passbook File")}
                   fieldValue={
                     <FileViewComponent
                       fileType={epfoPassbookFileTypeAlias}
@@ -1042,7 +1128,7 @@ let AppointeeViewForm = ({
 
               {isManualPassbook === true && EPFOServiceHistoryFile && (
                 <DocumentDetails
-                  fieldName={"EPFO Service History"}
+                  fieldName={t("EPFO Service History")}
                   fieldValue={
                     <FileViewComponent
                       fileType={epfoServiceHistoryFileTypeAlias}
@@ -1061,33 +1147,33 @@ let AppointeeViewForm = ({
               {isPassportAvailable === "Y" ? (
                 <>
                   <DocumentDetails
-                    fieldName={"International Worker"}
+                    fieldName={t("International Worker")}
                     fieldValue={isInterNationalWorker}
                     width="50px"
                   />
                   <DocumentDetails
-                    fieldName={"Country of Origin"}
+                    fieldName={t("Country of Origin")}
                     fieldValue={countryOfOrigin}
                     width="50px"
                   />
                   <DocumentDetails
-                    fieldName={"Passport Number"}
+                    fieldName={t("Passport Number")}
                     fieldValue={passportNo}
                     width="50px"
                   />
                   <DocumentDetails
-                    fieldName={"Passport Issue Date"}
+                    fieldName={t("Passport Issue Date")}
                     fieldValue={passportValidFromDate}
                     width="50px"
                   />
                   <DocumentDetails
-                    fieldName={"Passport Expiry Date"}
+                    fieldName={t("Passport Expiry Date")}
                     fieldValue={passportValidTillDate}
                     width="50px"
                   />
                   {visaFile && (
                     <DocumentDetails
-                      fieldName={"Passport File"}
+                      fieldName={t("Passport File")}
                       fieldValue={
                         <FileViewComponent
                           fileType={passportFileTypeAlias}
@@ -1101,7 +1187,7 @@ let AppointeeViewForm = ({
                 </>
               ) : (
                 <DocumentDetails
-                  fieldName={"Passport Available"}
+                  fieldName={t("Passport Available")}
                   fieldValue={isPassportAvailable === "N" ? "No" : NA}
                   width="50px"
                 />
@@ -1113,7 +1199,7 @@ let AppointeeViewForm = ({
               </Stack>
 
               <PersonalInformation
-                fieldName={"Driving License Available"}
+                fieldName={t("Driving License Available")}
                 fieldValue={isDLAvailable}
                 width="50px"
               />
@@ -1121,7 +1207,7 @@ let AppointeeViewForm = ({
               {isDLAvailable === "Yes" && (
                 <>
                   <PersonalInformation
-                    fieldName={"Driving License Number"}
+                    fieldName={t("Driving License Number")}
                     fieldValue={drivingLicense}
                     width="50px"
                   />
@@ -1134,7 +1220,7 @@ let AppointeeViewForm = ({
               </Stack>
 
               <PersonalInformation
-                fieldName={"See FIR Details"}
+                fieldName={t("See FIR Details")}
                 fieldValue={parsedFIRDetails === "N" ? "No" : NA}
                 width="50px"
               />
@@ -1145,7 +1231,7 @@ let AppointeeViewForm = ({
                   variant="contained"
                   onClick={() => setIsFIRModalOpen(true)}
                 >
-                  View FIR
+                     {t("View FIR")}
                 </Button>
               )}
             </Box>
@@ -1194,70 +1280,70 @@ let AppointeeViewForm = ({
             <Box sx={cardStyle}>
               <Stack sx={listHeadingConteinerStyle}>
                 <Typography sx={listHeadingStyle}>
-                  Personal Information
+                {t("Personal Information")}
                 </Typography>
               </Stack>
               <Grid container spacing={0}>
                 <PersonalInformation
-                  fieldName={"Name"}
+                  fieldName={t("Name")}
                   fieldValue={appointeeName}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAAR Verified"}
+                  badgeTitle={t("AADHAAR Verified")}
                 />
                 <PersonalInformation
-                  fieldName={"Date of Birth"}
+                  fieldName={t("Date of Birth")}
                   fieldValue={dateOfBirth}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAAR Verified"}
+                  badgeTitle={t("AADHAAR Verified")}
                 />
                 <PersonalInformation
                   fieldName={"Gender"}
                   fieldValue={gender}
                   badge={isAadharVerified}
-                  badgeTitle={"AADHAAR Verified"}
+                  badgeTitle={t("AADHAAR Verified")}
                 />
                 <PersonalInformation
-                  fieldName={"Father's / Husband's Name"}
+                  fieldName={t("Father's / Husband's Name")}
                   fieldValue={member}
                   badge={isFnameVarified}
                   badgeTitle={"Verified"}
                 />
                 <PersonalInformation
-                  fieldName={"Relationship with Member"}
+                  fieldName={t("Relationship with Member")}
                   fieldValue={relationshipWithMember}
                 />
                 <PersonalInformation
-                  fieldName={"Nationality"}
+                  fieldName={t("Nationality")}
                   fieldValue={nationality}
                 />
                 <PersonalInformation
-                  fieldName={"Mobile"}
+                  fieldName={t("Mobile")}
                   fieldValue={mobileNo}
                   badge={isAadharVerified}
                   badgeTitle={"AADHAAR Verified"}
                 />
                 <PersonalInformation fieldName={"Email"} fieldValue={email} />
                 <PersonalInformation
-                  fieldName={"Qualification"}
+                  fieldName={t("Qualification")}
                   fieldValue={qualification}
                 />
                 <PersonalInformation
-                  fieldName={"Marital Status"}
+                  fieldName={t("Marital Status")}
                   fieldValue={maritalStatus}
                 />
                 <PersonalInformation
-                  fieldName={"Physically Handicap"}
+                  fieldName={t("Physically Handicap")}
                   fieldValue={isPhysicallyHandicap}
                 />
                 {isPhysicallyHandicap === "Yes" && (
                   <>
                     <PersonalInformation
-                      fieldName={"Handicap Type"}
+                      fieldName={t("Handicap Type")}
                       fieldValue={handicapType ? handicapType : NA}
                     />
 
                     <PersonalInformation
-                      fieldName={"Handicap Certificate"}
+                      fieldName={t("Handicap Certificate")}
                       fieldValue={
                         handicapFile ? (
                           <FileViewComponent
@@ -1280,13 +1366,13 @@ let AppointeeViewForm = ({
               </Stack>
               <Grid container spacing={0}>
                 <PersonalInformation
-                  fieldName={"Date of Joining"}
+                  fieldName={t("Date of Joining")}
                   fieldValue={dateOfJoining}
                 />
 
                 <PersonalInformation
                   // fieldName={"Father's Name Verification Document"}
-                  fieldName={"PAN Card"}
+                  fieldName={t("PAN Card")}
                   fieldValue={
                     otherFile ? (
                       <FileViewComponent
@@ -1302,7 +1388,7 @@ let AppointeeViewForm = ({
                 {console.log("1111", process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH)}
 
                 {process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH === 'true' && <PersonalInformation
-                  fieldName={"10th Pass Certificate"}
+                  fieldName={t("10th Pass Certificate")}
                   fieldValue={
                     tenFile ? (
                       <FileViewComponent
@@ -1323,13 +1409,13 @@ let AppointeeViewForm = ({
               </Stack>
               <Grid container spacing={0}>
                 <PersonalInformation
-                  fieldName={"Bank Account Number"}
+                  fieldName={t("Bank Account Number")}
                   fieldValue={bankAccNumber}
                 />
 
                 <PersonalInformation
                   // fieldName={"Father's Name Verification Document"}
-                  fieldName={"IFSC Code"}
+                  fieldName={t("IFSC Code")}
                   fieldValue={bankIfscNumber}
                 />
 
@@ -1362,7 +1448,7 @@ let AppointeeViewForm = ({
                   />
                 }
               >
-                View Remarks / Issues
+                 {t("View Remarks / Issues")}
               </Button>
             </Box>
             {!roleTypeEnums.candidate.includes(userTypeId)

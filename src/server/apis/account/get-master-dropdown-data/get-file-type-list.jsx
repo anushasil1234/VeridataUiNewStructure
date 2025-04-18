@@ -1,6 +1,6 @@
 import ServerRequest from "server/utils/server-request";
-import { GetMastarDropdowndata_URL, FLT } from "shared/constants/constants";
+import {GetFileTypeDropdowndata_URL } from "shared/constants/constants";
 
-const getFileTypeList = () => ServerRequest(`${GetMastarDropdowndata_URL}${FLT}`, "GET", "", "", "", false);
+const getFileTypeList = () => ServerRequest(`${GetFileTypeDropdowndata_URL}`, "POST", "", "", "", false);
 
 export { getFileTypeList };

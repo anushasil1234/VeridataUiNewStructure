@@ -104,6 +104,7 @@ const UnwrappedGeneralSetupView = (props) => {
   const [emailEsDetailsRestCrtlLvl3, setEmailEsDetailsRestCrtlLvl3] =
     useState();
   const [gracePeriod, setGracePeriod] = useState();
+  const [employementOverLapDay, setEmployementOverLapDay] = useState();
 
   const setupCaseDetailsValues = (
     setupCaseDetailsList,
@@ -138,9 +139,12 @@ const UnwrappedGeneralSetupView = (props) => {
         emailEscalationSetupDetails,
         criticalDays,
         gracePeriod,
+        employementOverLapDay
       } = response.responseInfo;
       setCriticalDays(criticalDays);
       setGracePeriod(gracePeriod);
+      setEmployementOverLapDay(employementOverLapDay);
+
       emailEscalationLevelDetails &&
         emailEscalationLevelDetails.forEach((emailEscalationLevelDetails) => {
           const { emailaddress, noOfDays, setupAlias, levelCode, ...rest } =
@@ -387,6 +391,7 @@ const UnwrappedGeneralSetupView = (props) => {
       ],
       criticalDays,
       gracePeriod,
+      OverlapDays: employementOverLapDay,
       userId,
     };
     const response = await configerationSetUp(payLoad);
@@ -1284,6 +1289,22 @@ const UnwrappedGeneralSetupView = (props) => {
                           value={gracePeriod}
                           inputStyle={{ padding: 0 }}
                           onChange={(e) => setGracePeriod(e.target.value)}
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={4}>
+                        <Typography sx={lable2Style}>Overlap Days</Typography>
+                        <TextField
+                          error={false}
+                          inputProps={{
+                            style: inputPropsStyle,
+                          }}
+                          type="text"
+                          className="customeTextField"
+                          variant="outlined"
+                          defaultValue={""}
+                          value={employementOverLapDay}
+                          inputStyle={{ padding: 0 }}
+                          onChange={(e) => setEmployementOverLapDay(e.target.value)}
                         />
                       </Grid>
                     </Grid>

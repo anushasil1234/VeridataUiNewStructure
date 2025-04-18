@@ -12,10 +12,14 @@ import {
     TimelineSeparator, 
     timelineOppositeContentClasses } from '@mui/lab';
 import { DDMMYYHHMM } from 'shared/utils';
-
+import { useTranslation } from "react-i18next";
+import { useSelector } from 'react-redux';
 
 
 const ActivityLogDetails = ({ activityStatus }) => {
+    const loggedInData = useSelector((state) => state.loggedInData);
+    const { t: translationFunction } = useTranslation();
+    const t = (!loggedInData[0] || loggedInData[0]?.roleId === 5) ? translationFunction : (key) => key;
 
     return (
 
@@ -25,7 +29,7 @@ const ActivityLogDetails = ({ activityStatus }) => {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography sx={listHeadingStyle} >Activity Log</Typography>
+                <Typography sx={listHeadingStyle} >{t("Activity Log")}</Typography>
             </AccordionSummary>
             <AccordionDetails>
                 <Timeline

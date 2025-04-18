@@ -1,0 +1,7 @@
+import ServerRequest from "server/utils/server-request";
+import {  AppointeeProfileImageUpdate_URL } from "shared/constants/constants";
+
+const appointeeProfilePictureUpdate = (payLoad) => 
+    ServerRequest(AppointeeProfileImageUpdate_URL, "POST", payLoad, true);
+
+export { appointeeProfilePictureUpdate };

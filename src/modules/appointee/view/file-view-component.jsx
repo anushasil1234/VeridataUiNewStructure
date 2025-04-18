@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { appointeeImageViewStyle, fileNameStyle, displayImageStyle } from "app";
 import FileSelectionPopup from "modules/appointee/view/FileSelectionPopup ";
 import { getUploadedFileDetailsById } from "server/apis";
-
+import { useTranslation } from "react-i18next";
 export const FileViewComponent = ({
   file,
   fileType,
@@ -18,6 +18,9 @@ export const FileViewComponent = ({
   const apiSlice = useSelector((state) => state.apiSlice);
   const { openDocumentModel } = functionSlice[0];
   // const { GetUploadedFileDetailsById } = apiSlice[0];
+  const loggedInData = useSelector((state) => state.loggedInData);
+  const { t: translationFunction } = useTranslation();
+  const t = (!loggedInData[0] || loggedInData[0]?.roleId === 5) ? translationFunction : (key) => key;
 
   const handleFileClick = async (selectedFile) => {
     const payload = {
@@ -65,7 +68,7 @@ console.log('fileDetails', fileDetails);
         </Box>
       </DarkTooltip>
       <Typography sx={{ width, ...fileNameStyle }}>
-        {"View Files" || "No file available"}
+      {t("View Files") || t("No file available")}
       </Typography>
 
       <FileSelectionPopup

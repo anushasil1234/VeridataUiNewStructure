@@ -46,6 +46,8 @@ import Button1 from "shared/utils/button/button1";
 import { Info } from "@mui/icons-material";
 import { dark } from "@mui/material/styles/createPalette";
 import { getRemarks, postAppointeePrerequisiteStatus } from "server/apis";
+import { removeAppointeeStatusDetailsData, storeAppointeeStatusDetailsData } from "store/slices/appointee-status-details-slice";
+import { getAppointeeStatusDetails } from "server/apis/appointee/appointee-workflow/get-appointee-status-details";
 
 const CandidateView = () => {
   const commonHooksFunctionSlice = useSelector(
@@ -54,10 +56,11 @@ const CandidateView = () => {
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const userDetails = loggedInData[0];
+  console.log('loggedindata',loggedInData[0]);
+  const appointeeStatusDetailsData = useSelector(state => state.appointeeStatusDetailsData);
+  console.log('appointeeStatusDetailsDatacandidate',appointeeStatusDetailsData);
+  
 
-  const prerquistdata =
-    hasValue(userDetails.isPrerequisiteDataAvailable) &&
-    userDetails.isPrerequisiteDataAvailable;
   const { navigateTo } = commonHooksFunctionSlice[0];
   const {  getAppointeeDetails, 
     // postAppointeePrerequisiteStatus
@@ -66,16 +69,47 @@ const CandidateView = () => {
   const {
     userTypeId,
     appointeeId,
-    userName,
-    emailId,
-    phone,
+    //userName,
+   // emailId,
+   // phone,
     status,
-    statusCode,
-    isSubmit,
-    isProcessed,
-    candidateId,
+  // statusCode,
+  //isSubmit,
+  // isProcessed,
+  // candidateId,
   } = loggedInData[0];
 
+const [consentStatus, setConsentStatus] = useState('');
+const [appointeeEmailId, setAppointeeEmailId] = useState('');
+const [mobileNo, setMobileNo] = useState('');
+const [statusCode, setStatusCode] = useState('');
+const [candidateId, setCandidateId] = useState('');
+const [isProcessed, setIsProcessed] = useState(false);
+const [isSubmit, setIsSubmit] = useState(false);
+const [appointeeName, setAppointeeName] = useState('');
+
+ // const {consentStatus,appointeeEmailId,mobileNo,statusCode,candidateId,isProcessed,isSubmit,appointeeName} = appointeeStatusDetailsData[0];
+  const handlegetAppointeeStatusDetails = async (appointeeId) => {
+    const updatedAppointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
+    if (updatedAppointeeStatusResponse) {
+      const {responseInfo} = updatedAppointeeStatusResponse
+      const {consentStatus,appointeeEmailId,mobileNo,statusCode,candidateId,isProcessed,isSubmit,appointeeName} = responseInfo;
+      setConsentStatus(consentStatus);
+      setAppointeeEmailId(appointeeEmailId);
+      setMobileNo(mobileNo);
+      setStatusCode(statusCode);
+      setCandidateId(candidateId);
+      setIsProcessed(isProcessed);
+      setIsSubmit(isSubmit);
+      setAppointeeName(appointeeName);
+    }
+  }
+  useEffect(() => {
+    handlegetAppointeeStatusDetails(appointeeId);
+  },[appointeeId])
+  const prerquistdata =
+  hasValue(appointeeStatusDetailsData[0]?.isPrerequisiteDataAvailable) &&
+  appointeeStatusDetailsData[0]?.isPrerequisiteDataAvailable;
   const [isPrerequisiteDataAvailable, setIsPrerequisiteDataAvailable] =
     useState(prerquistdata);
   const [loading, setLoading] = useState(false);
@@ -91,44 +125,61 @@ const CandidateView = () => {
     openInfoModel,
     openConfirmationYesNoModal,
   } = functionSlice[0];
-  const consentStatus = loggedInData[0]?.consentStatus;
-
+  // const consentStatus = loggedInData[0]?.consentStatus;
+  //const consentStatus = appointeeStatusDetailsData[0]?.consentStatus;
+console.log("consentStatus",consentStatus,appointeeStatusDetailsData[0]?.isPrerequisiteDataAvailable);
   const dispatch = useDispatch();
 
-  const handlePrerequisite = (statusId, statusCode) => {
-    submitPrerequisiteStatus(statusId, statusCode);
+  const handlePrerequisite = (statusId) => {
+    submitPrerequisiteStatus(statusId);
   };
 
-  const handleYes = () => handlePrerequisite(4, "PREREQCNFYES");
-  const handleNo = () => handlePrerequisite(5, "PREREQCNFNO");
+  const handleYes = () => handlePrerequisite(4); //prerequisite yes = 4
+  const handleNo = () => handlePrerequisite(5); //prerequisite no=5
 
   const submitPrerequisiteStatus = async (
-    consentStatusId,
-    consentStatusCode
+    prerequisiteStatus
+    
   ) => {
     const postConsentpayLoad = {
       appointeeId: appointeeId,
-      ConsentStatus: consentStatusId,
-      ConsentStatusCode: consentStatusCode,
+      prerequisiteStatus: prerequisiteStatus,
+      // ConsentStatus: consentStatusId,
+      // ConsentStatusCode: consentStatusCode,
       userId: userDetails?.userId,
     };
     const response = await postAppointeePrerequisiteStatus(postConsentpayLoad);
-    setIsPrerequisiteDataAvailable(consentStatusCode === "PREREQCNFYES");
+    setIsPrerequisiteDataAvailable(prerequisiteStatus === 4);
     if (response) {
       const { responseInfo } = response;
-      if (responseInfo === "success") {
-        setLocalStorageItem("pfc-user", {
-          ...userDetails,
-          isPrerequisiteDataAvailable: consentStatusCode === "PREREQCNFYES",
-        });
-        dispatch(removeLoggedinData());
-        dispatch(
-          storeLoggedinData({
-            ...userDetails,
-            isPrerequisiteDataAvailable: consentStatusCode === "PREREQCNFYES",
-          })
-        );
-      }
+      if (responseInfo === "Success") {
+        // setLocalStorageItem("pfc-user", {
+        //   ...userDetails,
+        //   ///isPrerequisiteDataAvailable: prerequisiteStatus === 5,
+        // });
+        // setLocalStorageItem("candidate-status-details", {
+        //   ...appointeeStatusDetailsData[0],
+        //   isPrerequisiteDataAvailable: prerequisiteStatus === 5,
+        // });
+        // dispatch(removeLoggedinData());
+        // dispatch(
+        //   storeLoggedinData({
+        //     ...userDetails,
+        //    /// isPrerequisiteDataAvailable: prerequisiteStatus === 4,
+        //   })
+        // );
+        const updatedAppointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
+        setLocalStorageItem("candidate-status-details", updatedAppointeeStatusResponse?.responseInfo);
+        dispatch(removeAppointeeStatusDetailsData());
+
+        dispatch(storeAppointeeStatusDetailsData(updatedAppointeeStatusResponse?.responseInfo));
+      //   dispatch(
+      //     storeAppointeeStatusDetailsData(
+      //     appointeeStatusDetailsData[0],
+      //       isPrerequisiteDataAvailable: prerequisiteStatus === 4,
+      //     )
+      //   );
+       }
     }
   };
 
@@ -259,13 +310,13 @@ const CandidateView = () => {
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item lg={3} xs={12}>
-                  Name: {userName}
+                  Name: {appointeeName}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                  Email: {emailId}
+                  Email: {appointeeEmailId}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                  Phone: {phone}
+                  Phone: {mobileNo}
                 </Grid>
                 <Grid item lg={3} xs={12}>
                   Candidate Id: {candidateId}
@@ -282,14 +333,14 @@ const CandidateView = () => {
                     placement="bottom"
                   > */}
                   <Chip
-                    label={status}
+                    label={statusCode}
                     sx={{
-                      ...getStatusChipStyle(status),
+                      ...getStatusChipStyle(statusCode),
 
                       marginLeft: "8px",
                     }}
                     size="small"
-                    aria-label={`Status: ${status}`}
+                    aria-label={`Status: ${statusCode}`}
                   />
                   {/* </Tooltip> */}
                   <Tooltip
