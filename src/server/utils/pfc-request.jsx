@@ -40,7 +40,7 @@ const PfcRequest = (Component) => {
         const [popUpAlertMessage, setPopUpAlertMessage] = useState();
         const dispatch = useDispatch();
         const timeoutRef = useRef(null);
-        const inactivityTime = 10 * 60 * 1000; // 10 minutes in milliseconds
+        const inactivityTime = 100 * 60 * 1000; // 10 minutes in milliseconds
         // const inactivityTime = 1 * 60 * 1000; // 1 minutes in milliseconds
         const API_KEY = (process.env.REACT_APP_API_API_KEY || '');
         const SECRET_KEY = (process.env.REACT_APP_API_API_SECRET || '');

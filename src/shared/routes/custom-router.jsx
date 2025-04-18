@@ -10,7 +10,9 @@ import {
   toUserLogin,
   topfPension,
   toMannualVerification,
-  toReuploadDoc
+  toReuploadDoc,
+  toAadhaarSuccess,
+  toAadhaarFailure
 } from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 import { MsalProvider } from '@azure/msal-react';
@@ -58,6 +60,9 @@ const ForgotPassword = Loadable(lazy(() => import('../../modules/account/login/f
 const UserLogin = Loadable(lazy(() => import('../../modules/account/login/user-login-view')));
 // const PfPension=Loadable(lazy(()=>import('../../modules/reports/pf-pension')))
 const PfPension =Loadable(lazy(()=>import('../../modules/reports/pf-pension')));
+const AadhaarSuccess = Loadable(lazy(() => import('../../modules/appointee/register/aadhaar-verification-success-page')));
+const AadhaarFailure = Loadable(lazy(() => import('../../modules/appointee/register/aadhaar-verification-failed-page')));
+
 const CustomRouter = [
   {
     path: '/',
@@ -91,7 +96,9 @@ const CustomRouter = [
       { path: toNationalityReport, exact: true, element: <AppointeeNationalityReport /> },
       { path: toAppointeeReport, exact: true, element: <AppointeeReport /> },
       // {path: topfPension,exact:true,element:<PfPension/>}
-      {path:topfPension,exact:true,element:<PfPension/>}
+      {path:topfPension,exact:true,element:<PfPension/>},
+      { path: toAadhaarSuccess, element: <AadhaarSuccess /> },
+      { path: toAadhaarFailure, element: <AadhaarFailure /> },
     ],
   },
   {

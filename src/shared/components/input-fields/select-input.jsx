@@ -3,6 +3,7 @@ import { dropdownMenuItemStyle, inputFieldStyle2, inputFieldStylesx, lable1CopyS
 import { useTheme } from '@mui/material/styles';
 import Label from './label';
 const SelectInput = ({ itemList, label, onChange, value, name, required = false, disabled = false, handleClickOnMenuItem, sx, selectProperty = 'value' }) => {
+    console.log('itemList', itemList,selectProperty,value,name);
     const theme = useTheme();
 
     return (
@@ -34,7 +35,7 @@ const SelectInput = ({ itemList, label, onChange, value, name, required = false,
                 {itemList && itemList.length > 0 && itemList.map((item, index) => {
 
                     const { isRead = false, isDisabled = false } = item;
-                    const label = selectProperty === 'code'? item.value : item.label;
+                    const label = selectProperty === 'code'? (item.name||item.value) : item.label;
                     const value = item[selectProperty];
                     return (
                         <MenuItem

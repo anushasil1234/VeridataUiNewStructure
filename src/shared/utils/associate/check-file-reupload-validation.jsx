@@ -1,4 +1,4 @@
-import { epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, fileVerificationEnums, otherFileTypeAlias, tenthCertificateFileTypeAlias, uploadAliasCategory } from "shared/constants/constants";
+import { epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, fileVerificationEnums, otherFileTypeAlias, tenthCertificateFileTypeAlias, uploadAliasCategory,imageFileTypeAlias } from "shared/constants/constants";
 
 const checkFileReuploadValidation = ({ uploadedFile, verificationFieldModal }) => {
     let error = '';

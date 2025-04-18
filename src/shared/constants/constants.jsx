@@ -90,6 +90,8 @@ export const dataSubmitionMsg = `Data submited successfully`;
 export const firVerifyFailedMsg = `FIR has not been verified`;
 export const bankVerifyFailedMsg = `Bank Details has not been verified`;
 // export const dataSubmitionMsg = `Data submited successfully`;
+export const appointeeProfilePictureUpdateSuccess = `The profile picture has been updated successfully for this appointee`;
+export const appointeeProfilePictureUpdateFailure = `The profile picture has not been updated for this appointee`;
 
 export const attentionInfo = `The appointees with the nearest joining dates are listed below, including the following details: Appointee Name, Date of Joining (DOJ), and Days to Join.`;
 export const linkNotSentInfo = `The following appointees, for whom the verification link has not been sent, are listed below along with their respective details: Appointee Name, Email ID and Date of Joining (DOJ).`;
@@ -140,6 +142,7 @@ export const DIS = `DIS`;
 export const FLT = `FLT`;
 export const QUA = `QUA`;
 export const RLE = `RLE`;
+
 export const ENTITY = `ENTITY`;
 export const dateFormat = `DD/MM/YYYY`;
 export const saveButton = "Save as Draft";
@@ -158,7 +161,7 @@ export const trustEpfoFileTypeAlias = "EPFPSBKTRUST";
 export const epfoPassbookFileTypeAlias = "EPFPSSBKMNL";
 export const epfoServiceHistoryFileTypeAlias = "EPFPSHF";
 export const tenthCertificateFileTypeAlias = "10THCERT";
-export const otherFileTypeAlias = "OTHID";
+export const otherFileTypeAlias = "PAN";
 export const AadhaarProfileImageTypeAlias = "ADHPRF";
 export const handicapFileTypeAlias = "HANDCERT";
 export const aadharFileTypeAlias = "ADH";
@@ -168,6 +171,7 @@ export const epfExcelTypeAlias = "EPFPSBKEXCL";
 export const epfFileTypeAlias = "EPFO";
 export const epfFileCategoryTypeAlias = "EPFO";
 export const fatherFileCategoryTypeAlias = "FTHR";
+export const imageFileTypeAlias = "PRF";
 export const NA = "N/A";
 export const toDashboard = "/dashboard";
 export const toRegister = "/appointeeregister";
@@ -202,6 +206,9 @@ export const toNoResponseAgingReport = "/noresponseagigreport";
 export const toNoMovementAgingReport = "/nomovementagigreport";
 export const toNationalityReport = "/nationalityreport";
 export const toAppointeeReport = "/appointeereport";
+export const toAadhaarSuccess = `${toRegister}/:appointeeId/aadhaar/success`;
+export const toAadhaarFailure = `${toRegister}/:appointeeId/aadhaar/failure`;
+
 export const genders = [<Male />, <Female />, <Transgender />].map(
   (genderIcon) => {
     return {
@@ -2480,86 +2487,114 @@ export const appointeeReportTableHeadCell = [
 //         step: 4
 //     }
 // ]
-export const stepperDefaultList = {
+export const stepperDefaultList = (t) => ({
   PD: {
-    name: "Personal Details",
+    name: t("Personal Details"),
     step: 1,
   },
   PassD: {
-    name: "Passport Details",
+    name: t("Passport Details"),
     step: 2,
   },
   OD: {
-    name: "Handicap Details",
+    name: t("Handicap Details"),
     step: 3,
   }
   // CF: {
   //   name: "Cerificate / File Upload",
   //   step: 4,
   // },
-};
+});
 const AppointeeReports = `/AppointeeReports`;
 const AppoienteeWorkFlow = `/AppoienteeWorkFlow`;
 const Account = `/Account`;
 const AadhaarValidate = `/AadhaarValidate`;
-const FileUpload = `/FileUpload`;
+const FileUpload = `/api/File`;
+const UploadType = `UPLOAD`;
 const Users = `/Users`;
+const Masters = `/api/Masters`;
+const Candidate = `/api/Candidate`;
+const Verify = `api/Verify`;
+
 // export const PasswordChange_URL = `${Account}/PostPasswordChange`;
 export const PasswordChange_URL = `/PostPasswordChange`;
 
-export const DownloadSampleXlsFile_URL = `${FileUpload}/DownloadSampleXlsFile`;
+export const DownloadSampleXlsFile_URL = `${FileUpload}/DownloadSampleXlsFile?type=${UploadType}`;
 export const DownloadUpdateSampleXlsFile_URL = `${FileUpload}/DownloadUpdateSampleXlsFile`;
 export const UploadxlsFile_URL = `${FileUpload}/UploadxlsFile`;
 export const UploadUpdatexlsFile_URL = `${FileUpload}/UploadUpdatexlsFile`;
 export const DownloadPassbookFile_URL = `${FileUpload}/DownloadPassbookFile`;
 export const getUploadFileData_URL = `${FileUpload}/getUploadFileData?appointeeId=`;
 export const PostReuploadDocuments_URL = `${FileUpload}/PostReuploadDocuments`;
+// export const GetRawFileData_URL = (companyId, fileId) =>
+//   `${FileUpload}/GetRawFileData?companyId=${companyId}&fileId=${fileId}`;
 export const GetRawFileData_URL = (companyId, fileId) =>
-  `${FileUpload}/GetRawFileData?companyId=${companyId}&fileId=${fileId}`;
+  `${Candidate}/GetRawFileData?companyId=${companyId}&fileId=${fileId}`;
 export const GetReportFilterStatus_URL = `${AppoienteeWorkFlow}/GetAllReportFilterStatus`;
 // export const ValidateUserLogIn_URL = `${Account}/ValidateUserLogIn`;
 export const ValidateUserLogIn_URL = `/ValidateUserLogIn`;
 export const UserSignInDetailsByEmail_URL = `${Account}/UserSignInDetailsByEmail?email=`;
 // export const UserSignInDetails_URL = `${Account}/UserSignInDetails`;
 export const UserSignInDetails_URL = `/UserSignInDetails`;
-export const GetMenuListData_URL = `${Account}/GetMenuListData?userId=`;
+// export const GetMenuListData_URL = `${Account}/GetMenuListData?userId=`;
+export const GetMenuListData_URL = `/GetMenuListData?userId=`;
+
 export const GetDashboardWidgetCardData_URL = (filterDays, isfilterd) =>
   `${Account}/GetDashboardWidgetCardData?filterDays=${filterDays}&isfilterd=${isfilterd}`;
-export const GetAppointeeStatusDetails_URL = `${Account}/GetAppointeeStatusDetails?code=`;
+ export const GetAppointeeStatusDetails_URL = `${Account}/GetAppointeeStatusDetails?code=`;
 export const PostSetupConfigData_URL = `${Account}/PostSetupConfigData`;
 export const GetSetupConfigData_URL = `${Account}/GetSetupConfigData`;
 export const GetMastarDropdowndata_URL = `${Account}/GetMastarDropdowndata?type=`;
+
+
+//export const GetCountryDropdowndata_URL = `${Masters}`;
+export const GetNationalityDropdowndata_URL = `${Masters}/GetAllNationility`;
+export const GetDisablityDropdowndata_URL = `${Masters}/GetAllDisability`;
+export const GetGenderDropdowndata_URL = `${Masters}/GetAllGender`;
+export const GetQualificationDropdowndata_URL = `${Masters}/GetAllQualification`;
+export const GetMaritalStatusDropdowndata_URL = `${Masters}/GetAllMaritalStatus`;
+export const GetCountryDropdowndata_URL = `${Masters}/GetAllCountry`;
+export const GetFileTypeDropdowndata_URL = `${Masters}/GetAllFileType`;
+
+
+
+
+
 export const GetTotalWidgetData_URL = `${Account}/GetTotalWidgetData`;
 export const GetTotalCriticalAppointee_URL = `${Account}/GetTotalCriticalAppointee`;
 export const ValidateProfilePassword_URL = `${Account}/ValidateProfilePassword`;
 export const EditUserProfile_URL = `${Account}/EditUserProfile`;
 export const GetFaqData_URL = `${Account}/GetFaqData`;
 export const GetRefreshToken_URL = `${Account}/GenerateRefreshToken`;
-export const RawDataProcess_URL = `${AppoienteeWorkFlow}/RawDataProcess`;
+export const RawDataProcess_URL = `${Candidate}/RawDataProcess`;
 export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointeeDetailsUpdate`;
-export const PostAppointeeDetailsSave_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSave`;
+// export const PostAppointeeDetailsSave_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSave`;
+export const PostAppointeeDetailsSave_URL = `${Candidate}/CadidatePersonalDetailsSave`;
+
 export const PostAppointeeSearch_URL = `${AppoienteeWorkFlow}/AppointeeSearch?appointeeName=`;
-export const PostAppointeeFileDetails_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSubmit`;
-export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdateDocWithUanDetails`;
+export const PostAppointeeFileDetails_URL = `${Candidate}/PostAppointeeDetailsSubmit`;
+// export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdateDocWithUanDetails`;
+export const PostUpdatePfUanDetails_URL = `${Candidate}/UpdateDocWithUanDetails`;
 export const PostAppointeeReprocess_URL = `${AppoienteeWorkFlow}/PostAppointeeReprocess`;
-export const GetAppointeeDetails_URL = `${AppoienteeWorkFlow}/GetAppointeeDetails?appointeeId=`;
-export const Postfileupload_URL = `${FileUpload}/GetUploadedFileDetailsById`;
-export const GetAppointeeActivity_URL = `${AppoienteeWorkFlow}/GetAppointeeActivity?appointeeId=`;
-export const GetExpiredProcessFileData_URL = `${AppoienteeWorkFlow}/GetExpiredProcessFileData`;
-export const GetUnderProcessFileData_URL = `${AppoienteeWorkFlow}/GetUnderProcessFileData`;
-export const GetRejectedFileData_URL = `${AppoienteeWorkFlow}/GetRejectedFileData`;
-export const PostAppointeeRejected_URL = `${AppoienteeWorkFlow}/PostAppointeeRejected`;
-export const PostAppointeeApproved_URL = `${AppoienteeWorkFlow}/PostAppointeeApproved`;
+export const GetAppointeeDetails_URL = `${Candidate}/GetAppointeeDetails?appointeeId=`;
+export const GetCandidateStatusDetails_URL = `${Candidate}/GetAppointeeStatusDetails?appointeeId=`;
+export const Postfileupload_URL = `${Candidate}/GetUploadedFileDetailsById`;
+export const GetAppointeeActivity_URL = `${Candidate}/GetAppointeeActivity?appointeeId=`;
+export const GetExpiredProcessFileData_URL = `${Candidate}/GetExpiredProcessFileData`;
+export const GetUnderProcessFileData_URL = `${Candidate}/GetUnderProcessFileData`;
+export const GetRejectedFileData_URL = `${Candidate}/GetRejectedFileData`;
+export const PostAppointeeRejected_URL = `${Candidate}/PostAppointeeRejected`;
+export const PostAppointeeApproved_URL = `${Candidate}/PostAppointeeApproved`;
 export const PostAppointeePensionAvailable_URL = `${AppoienteeWorkFlow}/PostAppointeePensionVerification`;
-export const GetProcessedEPFOData_URL = `${AppoienteeWorkFlow}/GetVerifiedData`;
-export const GetUnProcessedFileData_URL = `${AppoienteeWorkFlow}/GetUnProcessedFileData`;
+export const GetProcessedEPFOData_URL = `${Candidate}/GetVerifiedData`;
+export const GetUnProcessedFileData_URL = `${Candidate}/GetUnProcessedFileData`;
 export const GetProcessedMISData_URL = `${AppoienteeWorkFlow}/GetProcessedMISData`;
-export const GetCriticalAppointeeData_URL = `${AppoienteeWorkFlow}/GetCriticalAppointeeList`;
+export const GetCriticalAppointeeData_URL = `${Candidate}/GetCriticalAppointeeList`;
 export const GetRemarksRemedyData_URL = `${AppoienteeWorkFlow}/GetRemarksRemedy`;
-export const GetRemarks_URL = `${AppoienteeWorkFlow}/GetRemarks?AppointeeId=`;
+export const GetRemarks_URL = `${Candidate}/GetRemarks?AppointeeId=`;
 export const GetMannualVerificationData_URL = `${AppoienteeWorkFlow}/GetManualVeificationProcessData`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`;
-export const PostAppointeeDocAvailibility_URL = `${AppoienteeWorkFlow}/PostAppointeeDocAvailibility`;
+export const PostAppointeeDocAvailibility_URL = `${Candidate}/PostAppointeeDocAvailibility`;
 export const PostRemainderMail_URL = (appointeeId, userId) =>
   `${AppoienteeWorkFlow}/PostRemainderMail?AppointeeId=${appointeeId}&UserId=${userId}`;
 export const PostCandidateMailResend_URL = (appointeeId, userId) =>
@@ -2577,6 +2612,8 @@ export const AppointeeNationalityReport_URL = `${AppointeeReports}/NationalityFi
 export const AppointeeDataReport_URL = `${AppointeeReports}/AppointeeDataFilterReport`;
 export const AppointeeCounterReport_URL = `${AppointeeReports}/AppointeeCounterReport`;
 export const AppointeecounterBillingreport_URL = `${AppointeeReports}/AppointeeCounterBillingReport`;
+export const AppointeeProfileImageUpdate_URL = `${AppoienteeWorkFlow}/AppointeeProfileImageUpdate`;
+
 export const ApiCounterReport_URL = (fromDate, toDate) => {
   let ApiCounterReportUrl = `${AppointeeReports}/ApiCounterReport`;
   if (fromDate && toDate) {
@@ -2590,15 +2627,15 @@ export const EmployementDetails_URL = (AppointeeId, userId) => {
   let _EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails`;
   return `${_EmployementDetails_URL}?AppointeeId=${AppointeeId}&userId=${userId}`;
 };
-export const VerifyPassportDetails_URL = `${AadhaarValidate}/VerifyPassportDetails`;
-export const VerifyPanDetails_URL = `${AadhaarValidate}/VerifyPanDetails`;
-export const CheckFIRDetails_URL = `${AadhaarValidate}/VerifyFirDetails`;
-export const VerifyBankAccountDetails_URL = `${AadhaarValidate}/VerifyBanKDetails`;
-export const VerifyDrivingLicenseDetails_URL = `${AadhaarValidate}/VerifyDlDetails`;
-export const VerifyAadharViaXml_URL = `${AadhaarValidate}/VerifyAadharViaXml`;
-export const GenerateUANOTP_URL = `${AadhaarValidate}/UANGenerateOTP`;
-export const GetUANNumber_URL = `${AadhaarValidate}/GetUANDetails`;
-export const UANSubmitOTP_URL = `${AadhaarValidate}/UANSubmitOTP`;
+export const VerifyPassportDetails_URL = `${Verify}/VerifyPassportDetails`;
+export const VerifyPanDetails_URL = `${Verify}/VerifyPanDetails`;
+export const CheckFIRDetails_URL = `${Verify}/VerifyFirDetails`;
+export const VerifyBankAccountDetails_URL = `${Verify}/VerifyBanKDetails`;
+export const VerifyDrivingLicenseDetails_URL = `${Verify}/VerifyDlDetails`;
+export const VerifyAadharViaXml_URL = `${Verify}/VerifyAadharViaXml`;
+export const GenerateUANOTP_URL = `${Verify}/UANGenerateOTP`;
+export const GetUANNumber_URL = `${Verify}/GetUANDetails`;
+export const UANSubmitOTP_URL = `${Verify}/UANSubmitOTP`;
 export const GenerateOTP_URL = `${AadhaarValidate}/GenerateOTP`;
 export const SubmitOTP_URL = `${AadhaarValidate}/SubmitOTP`;
 export const GetAdminUserList_URL = `${Users}/GetAdminUserList`;
@@ -2606,10 +2643,12 @@ export const CreateUser_URL = `${Users}/CreateUser`;
 export const UpdateAdminUser_URL = `${Users}/UpdateAdminUser`;
 export const GetUserByUserId_URL = `${Users}/GetUserByUserId?userId=`;
 export const ValidateUserCode_URL = `${Users}/ValidateUserCode?userCode=`;
-export const AppointeeConsentUpdate_URL = `${Users}/AppointeeConsentUpdate`;
-export const AppointeePrerequisiteUpdate_URL = `${Users}/AppointeePrerequisiteUpdate`;
+export const AppointeeConsentUpdate_URL = `${Candidate}/AppointeeConsentUpdate`;
+export const AppointeePrerequisiteUpdate_URL = `${Candidate}/AppointeePrerequisiteUpdate`;
 // export const ChangePasswordGenerateOTP_URL = `${Account}/ChangePasswordGenerateOTP`;
 export const ChangePasswordGenerateOTP_URL = `/ChangePasswordGenerateOTP`;
+export const GetDigilocker_URL = `${Verify}/GetDigilockerUrl`;
+export const GetDigilockerAadhaarDetails_URL = `${Verify}/GetDigilockerAadhaarDetails`;
 
 export const ValidateUserByOtpForgetPassword_URL = `${Account}/ValidateUserByOtpForgetPassword`;
 export const RemoveAdminUser_URL = (id, userId) =>
@@ -3170,3 +3209,6 @@ export const defaultSecondPageForm = {
   fileDetails: [],
   fileUploaded: [],
 }
+
+export const driving_license_regex = /[A-Z]{2}\d{2} ?\d{11}/;
+export const pan_regex = /[A-Z]{5}\d{4}[A-Z]/;

@@ -26,8 +26,10 @@ import { storeSetRemarksFunction } from "store/slices/set-remarks-functions-slic
 import { getRemarks } from "server/apis";
 import showErrorMessage from "../associate/show-error-message";
 import UploadedDocumentView from "shared/components/document-view/uploaded-document-view";
+import LicenceModal from "../modals/license-modal";
 
 const defaultModalState = {
+  licenceModalOpen: false,
   confirmationOpen: false,
   confirmationYesNoOpen: false,
   otpSubmitionModalOpen: false,
@@ -73,6 +75,7 @@ const Modals = ({ closeModal }) => {
   const [otpSubmitionProps, setOtpSubmitionProps] = useState(null);
   const [consentModalContent, setConsentModalContent] = useState(null);
   const [infoModalContent, setInfoModalContent] = useState(null);
+  const [licenceModalContent, setLicenceModalContent] = useState(null);
   const [appointeeId, setAppointeeId] = useState(null);
   const [appointeePersonalDetails, setAppointeePersonalDetails] = useState();
   const [passbookDetails, setPassbookDetails] = useState(null);
@@ -159,7 +162,21 @@ const Modals = ({ closeModal }) => {
     updateModalState("consentModalOpen", false);
     setConsentModalContent();
   };
+//licence modal
+const openLicenseModal = useCallback((licenceModalContent,
+  liceseCallBack) => {
+    setLicenceModalContent({
+    ...licenceModalContent,
+    liceseCallBack,
+    closeLicenseModal,
+  });
+  updateModalState("licenceModalOpen", true);
+}, []);
 
+const closeLicenseModal = () => {
+  updateModalState("licenceModalOpen", false);
+  setLicenceModalContent();
+};
   // ✅ Info Modal Handlers
   const openInfoModel = useCallback((infoModelcontent, taskAfterClose) => {
     const handleClickOnOk = () => {
@@ -355,6 +372,8 @@ const Modals = ({ closeModal }) => {
     updateFunctionSlice("closeOtpSubmitionModel", closeOtpSubmitionModel);
     updateFunctionSlice("openConsentModal", openConsentModal);
     updateFunctionSlice("closeConsentModal", closeConsentModal);
+    updateFunctionSlice("openLicenseModal", openLicenseModal);
+    updateFunctionSlice("closeLicenseModal", closeLicenseModal);
     updateFunctionSlice("openInfoModel", openInfoModel);
     updateFunctionSlice("closeInfoModel", closeInfoModel);
     updateFunctionSlice("openViewModel", openViewModel);
@@ -389,6 +408,8 @@ const Modals = ({ closeModal }) => {
     closeOtpSubmitionModel,
     openConsentModal,
     closeConsentModal,
+    closeLicenseModal,
+    openLicenseModal,
     openInfoModel,
     closeInfoModel,
     openViewModel,
@@ -436,6 +457,7 @@ const Modals = ({ closeModal }) => {
       closeUploadedDocumentModal();
       closeConsentModal();
       closeInfoModel();
+      closeLicenseModal();
     }
   }, [pathname]);
 
@@ -459,6 +481,10 @@ const Modals = ({ closeModal }) => {
         open={modalState.consentModalOpen}
         consentModalContent={consentModalContent}
       />
+      <LicenceModal
+       open={modalState.licenceModalOpen}
+       licenceModalContent={licenceModalContent}
+       />
       <InfoModel
         open={modalState.infoModelOpen}
         confirmationModalContent={infoModalContent}

@@ -18,6 +18,7 @@ import { Menu } from "@mui/icons-material";
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { submitConfirmationMsg, toDashboard } from "shared/constants/constants";
+import LanguageSelector from "languageSelector/language-selector";
 
 const Header = (props) => {
   const commonHooksFunctionSlice = useSelector(
@@ -83,10 +84,12 @@ const Header = (props) => {
             :
             props?.showRevokeConsentCallToAction !== false &&
             <Box>
+                <LanguageSelector />
               {consentStatus === 1 ?
                 <Chip color="primary"
                   label="Revoke Consent"
                   onClick={appointeeConsent}
+                  sx={{ marginLeft: "16px" }} 
                   icon={<CancelIcon color="error" />}
                 />
                 :

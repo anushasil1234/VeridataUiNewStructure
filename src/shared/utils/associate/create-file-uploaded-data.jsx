@@ -31,7 +31,7 @@ const createFileUploadedData = ({ fileUploaded, verificationFieldModal = null })
                 isFileUploaded: false
             })
         }) :
-        fileUploaded.map(({ uploadDetailsId, fileName, mimeType, uploadTypeId, uploadTypeAlias }) => {
+        fileUploaded?.map(({ uploadDetailsId, fileName, mimeType, uploadTypeId, uploadTypeAlias }) => {
             return ({
                 uploadDetailsId,
                 fileName,

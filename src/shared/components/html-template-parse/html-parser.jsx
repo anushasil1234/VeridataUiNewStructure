@@ -21,7 +21,14 @@ const HtmlParser = ({ data, type }) => {
 
                     htmlmodule = require(`raw-loader!./offlineKycTemplate.html`);
                 }
+                if (type === "CADELUA") {
 
+                    htmlmodule = require(`raw-loader!./user_license.html`);
+                }
+                if (type === "ADMELUA") {
+
+                    htmlmodule = require(`raw-loader!./admin_license.html`);
+                }
                 var html = htmlmodule.default;
                 if (templateRef.current) {
                     const renderedHtml = Mustache.render(html, data);

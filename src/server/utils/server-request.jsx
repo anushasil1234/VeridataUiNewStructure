@@ -68,7 +68,9 @@ const ServerRequest = async (url, type, payload, successMessage, isInternal = fa
         } else {
             console.log('errorResponse', errorResponse);
             
-            errorResponse?.userMessage && showErrorMessage(errorResponse.userMessage);
+             errorResponse?.internalMessages && showErrorMessage(errorResponse.internalMessages);
+             errorResponse?.internalMessage && showErrorMessage(errorResponse.internalMessage);
+             // (errorResponse?.internalMessages || [errorResponse?.internalMessage])?.forEach(showErrorMessage);
         }
     } catch (error) {
         console.log('catch errorResponse', error);
