@@ -85,7 +85,7 @@ import generateRemarks from "shared/utils/associate/generate-remarks";
 import VerificationStatus from "shared/components/verification/verification-status";
 import { patternChecking } from "shared/utils";
 import { bankVerifyFailedMsg } from "shared/constants/constants";
-
+import { useTranslation } from "react-i18next";
 const BankVerification = ({
   // accountNumber,
   // IFSCCode,
@@ -98,7 +98,7 @@ const BankVerification = ({
   setAccountNumber,
   IFSCCode,
   setIFSCCode,
-stepsList}) => {
+  stepsList}) => {
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
@@ -106,6 +106,7 @@ stepsList}) => {
       (state) => state.commonHooksFunctionSlice
     );
     const functionSlice = useSelector((state) => state.functionSlice);
+    const { t } = useTranslation(); 
   const {
     openOtpForm,
     closeOtpForm,
@@ -252,7 +253,7 @@ stepsList}) => {
 
         <Grid item xs={12} md={6} sx={{ paddingLeft: "0px !important" }}>
           <TextInput
-            label={"Bank Account Number"}
+            label={t("Bank Account Number")}
             // onChange={(val) => {
             //   // if (/^\d{0,12}$/.test(val)) {
             //   setAccountNumber(val);
@@ -284,7 +285,7 @@ stepsList}) => {
         >
           {/* <Grid item xs={12} sx={{ paddingLeft: "0px !important" }}> */}
           <TextInput
-            label={"IFSC Code"}
+           label={t("IFSC Code")}
             // onChange={(val) => {
             //   // if (/^\d{0,12}$/.test(val)) {
             //   setIFSCCode(val);
@@ -306,7 +307,7 @@ stepsList}) => {
           onClick={handleBankAccountVerification}
           endIcon={<Autorenew />}
         >
-          Verify
+         {t("Verify")}
         </Button>
 
         

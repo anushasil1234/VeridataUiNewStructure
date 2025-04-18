@@ -29,6 +29,7 @@ import { verifyPANDetails } from "server/apis";
 import FIRVerification from "./fir-verifications";
 import InsuranceDetails from "./insurance-detail";
 
+import { useTranslation } from "react-i18next";
 
 const FifthForm = ({
     formElement,
@@ -55,6 +56,7 @@ const FifthForm = ({
     setDateOfBirth
 }) => {
     const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
+    const { t } = useTranslation(); // Import the translation function
 
     console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
 
@@ -121,7 +123,7 @@ const FifthForm = ({
                                     variant="contained"
                                     color="primary"
                                 >
-                                    {previousButton}
+                                          {t(previousButton)}
                                 </Button>
 
 
@@ -137,7 +139,7 @@ const FifthForm = ({
                                     variant="contained"
                                     color="primary"
                                 >
-                                    {"Next"}
+                                    {t("Next")}
                                 </Button>
 
                             </Stack>

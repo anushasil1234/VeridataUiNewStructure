@@ -29,6 +29,7 @@ import {
   checkBoxLabelStyle,
   checkBoxStyle,
   divederStyle,
+  fileInputs,
   fileUploadSectionContainerStyle,
   headingType1,
   lable1CopyStyle,
@@ -78,6 +79,12 @@ import dayjs from "dayjs";
 import CustomeDatePicker from "shared/components/input-fields/custome-date-picker";
 import { DDMMYYYY } from "shared/utils";
 import { postAppointeeDocAvailibility } from "server/apis/appointee/appointee-workflow/post-appointee-doc-availability";
+import { useTranslation } from "react-i18next";
+import Tesseract from "tesseract.js";
+import { fileInputboxContainerStyle } from "app";
+import { SaveAlt } from '@mui/icons-material';
+import { driving_license_regex } from "shared/constants/constants";
+import { handleImageUpload } from "shared/utils/associate/text-extraction-from-upload-image";
 
 const DrivingLicenseVerification = ({
   // accountNumber,
@@ -103,6 +110,7 @@ const DrivingLicenseVerification = ({
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
+  const { t } = useTranslation();
   const commonHooksFunctionSlice = useSelector(
     (state) => state.commonHooksFunctionSlice
   );
@@ -125,6 +133,8 @@ const DrivingLicenseVerification = ({
   //   new VerificationStatus()
   // );
   const [dlNumberError, setDLNumberError] = useState(false);
+  const [inputMethod, setInputMethod] = useState("manual"); // "manual" or "upload"
+  const [uploadedFileName, setUploadedFileName] = useState(null);
 
   const handleLicenseNumberChange = (value) => {
     //setDrivingLicense(value);
@@ -133,13 +143,19 @@ const DrivingLicenseVerification = ({
   };
 
 
+  const iconColor = 'none';
+  const iconText = (
+    <Typography sx={{ fontSize: "16px" }} >
+      Choose a file to <Typography component="span" sx={{ color: iconColor, fontWeight: 'bold' }}>Upload</Typography>
+    </Typography>
+  )
 
   const handleDrivingLicenseVerification = async () => {
-    if (!isAadhaarVarified) {
-      showErrorMessage(aaddharNumberverify);
-      //setPanNumberError(true);
-      return;
-    }
+    // if (!isAadhaarVarified) {
+    //   showErrorMessage(aaddharNumberverify);
+    //   //setPanNumberError(true);
+    //   return;
+    // }
     if ( drivingLicense === null) {
       showErrorMessage(emptyDLNumberMsg);
       //  setPanNumberError(true);
@@ -198,7 +214,8 @@ const DrivingLicenseVerification = ({
 
     try {
       const response = await postAppointeeDocAvailibility(payLoad);
-      if (response.responseInfo === "success") {
+      if (response.responseInfo === "Success") // todo change all success string to statuscode
+        {
         showSuccessMessage(dlAvailabilitySuccessMsg);
         //console.log("License availability saved successfully");
       } else {
@@ -219,7 +236,24 @@ const DrivingLicenseVerification = ({
   //   console.log("Updated isLicenseAvailablef:", firstPageForm.isDLAvailable);
   // }, [firstPageForm.isDLAvailable]);
   
-
+  // const onTextExtracted = (text) => {
+  //   const extracted = extractLicenseNumber(text);
+  //   setDrivingLicense(extracted);
+  // };
+  const onTextExtracted = (text) => {
+    const extracted = extractLicenseNumber(text);
+    if (extracted) {
+      setDrivingLicense(extracted);
+    }
+    else {
+      showErrorMessage("Can't extract Driving License Number. Please enter it manually.");
+    }
+  };
+  const extractLicenseNumber = (text) => {
+    // Adjust the regex based on your DL format
+    const match = text.match(driving_license_regex);
+    return match ? match[0].replace(/\s/g, '') : '';
+  };
 
 
 
@@ -243,7 +277,8 @@ const DrivingLicenseVerification = ({
         // AADHARVERIFICATION_BY === "XML" && (
         <>
           <Typography sx={{ ...headingType1, lineHeight: "2.4375em", marginLeft: '34px' }}>
-            Do you have Driving License ?
+          {t("Do you have a driving license?")}
+
             {/* An eKYC XML file containing the personal data, required for verification, can be downloaded only by you using your Aadhaar credentials. This file contains the name, date of birth and gender, besides other information, that would be extracted to match with the information provided by you. The process would first inspect the authenticity of the eKYC XML file provided by you and then perform the matching and then dispose the file and the contents
                         Aadhaar verification wiil be done using the offline ekyc method of UIDAI. To see the details steps,   */}
           </Typography>
@@ -268,14 +303,14 @@ const DrivingLicenseVerification = ({
               <FormControlLabel
                 value="Yes"
                 control={<Radio />}
-                label="Yes"
+                label={t("Yes")}
                 disabled={isDLVerificationDisabled}
               />
 
               <FormControlLabel
                 value="No"
                 control={<Radio />}
-                label="No"
+                label={t("No")}
                 disabled={isDLVerificationDisabled}
               />
             </Box>
@@ -291,7 +326,8 @@ const DrivingLicenseVerification = ({
                 sx={{ paddingLeft: "0px !important" }}
               >
                 <TextInput
-                  label={"Driving License Number"}
+                 label={t("Driving License Number")}
+
                   // onChange={(val) => {
                   //   // if (/^\d{0,12}$/.test(val)) {
                   //   setAccountNumber(val);
@@ -315,7 +351,7 @@ const DrivingLicenseVerification = ({
                 }}
               >
                 <TextInput
-                  label={"Date of Birth"}
+                  label={t("Date of Birth")}
                   //value={firstPageForm.dateOfBirth}
                   value={firstPageForm?.dateOfBirth ? DDMMYYYY(firstPageForm?.dateOfBirth) : null}
                   disabled={true}
@@ -329,11 +365,52 @@ const DrivingLicenseVerification = ({
                   onClick={handleDrivingLicenseVerification}
                   endIcon={<Autorenew />}
                 >
-                  Verify
+                     {t("Verify")}
                 </Button>
 
                 <VerificationStatusSection docType={licensestatusMessage} />
               </Grid>
+              <Grid item
+                  xs={12}
+                  md={6}
+                  sx={{
+                    ...fileInputboxContainerStyle,
+                    overflowY: "auto",
+                    position: "relative",
+                    marginBottom: "auto",
+                    paddingLeft: { xs: "0px !important", md: "20px!important" }
+                  }}
+
+                >
+
+                  <Box sx={fileInputs}>
+                    <input
+                      id="hidden-upload"
+                      type="file"
+                      accept="image/*"
+                     // onChange={handleImageUpload}
+                     onChange={(e) => handleImageUpload(e, setUploadedFileName, onTextExtracted)}
+                      style={{ marginBottom: '10px' }}
+                      onClick={(e) => (e.target.value = null)}
+
+                    />
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}
+                      onClick={() => document.getElementById('hidden-upload')?.click()}>
+
+                      <SaveAlt sx={{ mb: 0.5, color: iconColor }} />
+                      <Typography variant="body1" sx={{ color: iconColor }}>{iconText}</Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        Upload an image containing the Driving License Number.
+                      </Typography>
+                      {uploadedFileName && (
+                        <Typography variant="body2" sx={{ mt: 1 }}>
+                          Uploaded File: {uploadedFileName}
+                        </Typography>
+                      )}
+                    </Box>
+
+                  </Box>
+                </Grid>
             </GridRow>
           )}
         </>

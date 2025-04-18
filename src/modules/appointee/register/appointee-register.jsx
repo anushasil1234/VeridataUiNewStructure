@@ -13,25 +13,31 @@ import NotAccessibleSection from "shared/components/not-accessible/not-accessibl
 
 const AppointeeRegister = () => {
   const loggedInData = useSelector((state) => state.loggedInData);
-  const { status, isPrerequisiteDataAvailable, consentStatus } = loggedInData[0];
-  // console.log("logindata", loggedInData[0]);
+  const appointeeStatusDetailsData = useSelector(state => state.appointeeStatusDetailsData);
+  console.log("AppointeeStatusDetailsData", appointeeStatusDetailsData);
+  // const { status, 
+  //   //isPrerequisiteDataAvailable, 
+  //   //consentStatus 
+  //    } = loggedInData[0];
+  const {isPrerequisiteDataAvailable,consentStatus,statusCode} = appointeeStatusDetailsData[0];
   const [isRegistrationPermitted, setIsRegistrationPermitted] = useState();
 
   useEffect(() => {
-    if ((status === 'Ongoing' || status === 'No Response') && isPrerequisiteDataAvailable && consentStatus === 1) {
+    if ((statusCode === 'ONGNG' || statusCode === 'NORES') && isPrerequisiteDataAvailable && consentStatus === 1) {
       setIsRegistrationPermitted(true);
     }
     else {
       setIsRegistrationPermitted(false);
     }
-  }, [status])
+  }, [statusCode]);
   return (
     <CardLayout>
       {
         isRegistrationPermitted === true ?
-          <AppointeeRegisterForm /> :
+          <AppointeeRegisterForm /> 
+          :
           <NotAccessibleSection />
-      }
+       }
     </CardLayout>
   );
 };

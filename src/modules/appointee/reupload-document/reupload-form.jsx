@@ -4,7 +4,7 @@ import { candidateRegistrationFormContainerStyle, endJustifiedbtnContainer, file
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FileUploadSection from 'shared/components/file-upload-section/file-upload-section'
-import { congratulationDialogContentTitle, docResubmissionSuccessDialogContentText, epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, imgAndPdfMaxSize, otherFileTypeAlias, previousButton, registrationSuccessDialogContentText, reUploadsubmitConfirmationMsg, tenthCertificateFileTypeAlias, toDashboard, toHelp } from 'shared/constants/constants'
+import { congratulationDialogContentTitle, docResubmissionSuccessDialogContentText, epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, imgAndPdfMaxSize, otherFileTypeAlias, previousButton, registrationSuccessDialogContentText, reUploadsubmitConfirmationMsg, tenthCertificateFileTypeAlias, toDashboard, toHelp,imageFileTypeAlias } from 'shared/constants/constants'
 import { CardLayout, getLocalStorageItem, hasValue, PageLayout, removeFile, setLocalStorageItem } from 'shared/utils'
 import getFileDetails from 'shared/utils/associate/get-file-details'
 import FormHeading from '../register/form-heading'
@@ -18,12 +18,15 @@ import MergeWithUniqueKey from 'shared/utils/associate/merge-with-unique-key'
 import TextInput from 'shared/components/input-fields/text-input'
 import { getAppointeeDetails, PostReuploadDocuments } from 'server/apis'
 import showErrorMessage from 'shared/utils/associate/show-error-message'
+import { removeAppointeeStatusDetailsData, storeAppointeeStatusDetailsData } from 'store/slices/appointee-status-details-slice'
+import { getAppointeeStatusDetails } from 'server/apis/appointee/appointee-workflow/get-appointee-status-details'
 
 export const ReuploadForm = () => {
 
 
     const dispatch = useDispatch();
-    const loginUserData = getLocalStorageItem("pfc-user");
+    // const loginUserData = getLocalStorageItem("pfc-user");
+    const candidateStatusDetails = getLocalStorageItem("candidate-status-details");
 
     const popUpSlice = useSelector((state) => state.popUpSlice);
     const dropdownList = useSelector((state) => state.dropdownList);
@@ -61,6 +64,8 @@ export const ReuploadForm = () => {
     const [stepsList, setStepsList] = useState();
     const [fathersName, setFathersName] = useState();
     const [responseFathersName, setResponseFathersName] = useState();
+    const [imageFileName, setImageFileName] = useState([]);
+
     // setStepsList({ ...stepsList, ..._steps })
     const formElement = useRef(null);
 
@@ -106,7 +111,10 @@ export const ReuploadForm = () => {
     const upload10thCertificateFile = handleFileUpload(tenthCertificateFileTypeAlias, setTenthCertificateFileName);
     const uploadEpfoServiceHistoryFile = handleFileUpload(epfoServiceHistoryFileTypeAlias, setEpfoServiceHistoryFile, epfoServiceHistoryFile, 'single');
     const uploadEpfoPassBookFile = handleFileUpload(epfoPassbookFileTypeAlias, setEpfoPassBookFiles, epfoPassBookFiles, 'multiple');
-
+    const uploadImageFile = handleFileUpload(
+        imageFileTypeAlias,
+        setImageFileName
+      );
     const openSubmitConfirmationModel = () => {
         const submitconfModelContent = {
             dialogContentText: reUploadsubmitConfirmationMsg,
@@ -133,17 +141,34 @@ export const ReuploadForm = () => {
         const response = await PostReuploadDocuments(formData);
         if (response) {
             const status = 'Submitted';
-            setLocalStorageItem("pfc-user", {
-                ...loginUserData,
-                status: status
-            });
-            dispatch(removeLoggedinData());
-            dispatch(
-                storeLoggedinData({
-                    ...loginUserData,
-                    status: status
-                })
-            );
+            // setLocalStorageItem("pfc-user", {
+            //     ...loginUserData,
+            //     status: status
+            // });
+            // dispatch(removeLoggedinData());
+            // dispatch(
+            //     storeLoggedinData({
+            //         ...loginUserData,
+            //         status: status
+            //     })
+            // );
+            // setLocalStorageItem("candidate-status-details", {
+            //     ...candidateStatusDetails[0],
+            //     statusCode: status
+            // });
+            // dispatch(removeAppointeeStatusDetailsData());
+            // dispatch(
+            //     storeAppointeeStatusDetailsData({
+            //         ...candidateStatusDetails[0],
+            //         statusCode: status
+            //     })
+            // );
+           const updatedAppointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
+                 //dispatch(storeAppointeeStatusDetailsData(updatedAppointeeStatusResponse?.responseInfo));
+                 setLocalStorageItem("candidate-status-details", updatedAppointeeStatusResponse?.responseInfo);
+                 dispatch(removeAppointeeStatusDetailsData());
+           
+                 dispatch(storeAppointeeStatusDetailsData(updatedAppointeeStatusResponse?.responseInfo));
             const docResubmissionSuccessContent = {
                 dialogContentText: docResubmissionSuccessDialogContentText,
                 dialogTitle: congratulationDialogContentTitle,
@@ -192,7 +217,7 @@ export const ReuploadForm = () => {
             } = response.responseInfo;
 
             const { tenthCertificateFileName, otherFileName,
-                epfoPassBookFiles, epfoServiceHistoryFile } = getFilenames({ fileUploaded });
+                epfoPassBookFiles, epfoServiceHistoryFile,imageFileName } = getFilenames({ fileUploaded });
             setTenthCertificateFileName(tenthCertificateFileName);
             setOtherFileName(otherFileName);
             setEpfoServiceHistoryFile(epfoServiceHistoryFile);
@@ -211,6 +236,7 @@ export const ReuploadForm = () => {
             setIsUANVarified(isUanVarified);
             const stepsList = createReuploadStepSequience({ isFathersNameVarified: isFnameVarified, isUanVarified: isUanVarified });
             setStepsList(stepsList);
+            setImageFileName(imageFileName);
         };
     }
 
@@ -338,6 +364,33 @@ export const ReuploadForm = () => {
                                         // disabled={isPreviousSectionDisabled}
                                         maxUploadSize={imgAndPdfMaxSize}
                                         uploadTypeAlias={tenthCertificateFileTypeAlias}
+                                    // handleRemoveFile={remove10thPassCertificate}
+                                    />
+                                </Box>
+                            </Grid>
+                            <Grid item xs={12} md={6} sx={{ paddingLeft: { xs: '0px !important', md: '20px!important' } }}>
+                                <Typography
+                                    sx={{
+                                        ...lable1CopyStyle,
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    Please upload your image
+                                    <span className="requiredField">*</span>
+                                </Typography>
+                                <Box sx={fileUploadSectionContainerStyle}>
+                                    <FileUploadSection
+                                        chooseFile={uploadImageFile}
+                                        // fileName={
+                                        //   fileUploaded.some(file => file.uploadTypeAlias === "10THCERT")
+                                        //     ? fileUploaded.find(file => file.uploadTypeAlias === "10THCERT").fileName
+                                        //     : tenthCertificateFileName
+                                        // }
+                                        fileName={imageFileName}
+                                        accept={"image/png, image/jpeg,application/pdf"}
+                                        // disabled={isPreviousSectionDisabled}
+                                        maxUploadSize={imgAndPdfMaxSize}
+                                        uploadTypeAlias={imageFileTypeAlias}
                                     // handleRemoveFile={remove10thPassCertificate}
                                     />
                                 </Box>

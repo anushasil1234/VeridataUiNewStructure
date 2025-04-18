@@ -32,6 +32,7 @@ import { useState } from "react";
 import { hasValue } from "shared/utils";
 import buildFormData from "shared/utils/associate/build-form-data";
 import { postUpdatePfUanDetails } from "server/apis";
+import { useTranslation } from "react-i18next";
 
 const SecondForm = ({
   // formElement,
@@ -87,6 +88,7 @@ const SecondForm = ({
 }) => {
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
+  const { t } = useTranslation(); 
 // console.log('isHandicapSectionDisabled', isHandicapSectionDisabled);
   const { openInfoModel } = functionSlice[0];
   const { userId, appointeeId, userCode } = loggedInData[0];
@@ -258,7 +260,7 @@ const SecondForm = ({
                   md={6}
                 >
                   <TextInput
-                    label={"Passport Number"}
+                    label={t("Passport Number")}
                     value={firstPageForm.passportNo}
                     disabled={isPreviousSectionDisabled}
                   />
@@ -276,7 +278,7 @@ const SecondForm = ({
                         onClick={handlePassportVerification}
                         endIcon={<Autorenew />}
                       >
-                        Verify
+                         {t("Verify")}
                       </Button>
                       <VerificationStatusSection
                         docType={passportstatusMessage}
@@ -296,7 +298,7 @@ const SecondForm = ({
                   {firstPageForm.originCountry === "India" ? (
                     <>
                       <TextInput
-                        label={"Passport File Number"}
+                        label={t("Passport File Number")}
                         value={passportFileNumber}
                         onChange={handlePassFileNumberOnChange}
                         disabled={isPassportVerifyBtnDisabled}
@@ -322,7 +324,7 @@ const SecondForm = ({
                         //     : passportFileName
                         // }
                         fileName={passportFileName}
-                       // disabled={isPreviousSectionDisabled}
+                        // disabled={isPreviousSectionDisabled}
                         maxUploadSize={imgAndPdfMaxSize}
                         uploadTypeAlias={passportFileTypeAlias}
                         handleViewFile={handleViewFile}
@@ -361,7 +363,7 @@ const SecondForm = ({
                         alignItems: "center",
                       }}
                     >
-                      {"10th pass Certificate"}
+                      {t("10th pass Certificate")}
                     </Typography>
                     {/* <Tooltip
                     arrow="bottom"
@@ -440,7 +442,7 @@ const SecondForm = ({
                     textAlign: "center",
                   }}
                 >
-                  Please upload 10th pass certificate
+                   {t("Please upload 10th pass certificate")}
                   <span className="requiredField">*</span>
                 </Typography>
                 <Box sx={fileUploadSectionContainerStyle}>
@@ -473,7 +475,7 @@ const SecondForm = ({
                     alignItems: "center",
                   }}
                 >
-                  {"PAN Card"}
+                  {t("PAN Card")}
                 </Typography>
                 <Tooltip
                   arrow="bottom"
@@ -525,7 +527,8 @@ const SecondForm = ({
                   textAlign: "center",
                 }}
               >
-                Please upload PAN Card
+                               {t("Please upload PAN Card")}
+
                 <span className="requiredField">*</span>
               </Typography>
               <Box sx={fileUploadSectionContainerStyle}>
@@ -568,7 +571,7 @@ const SecondForm = ({
                   md={6}
                 >
                   <TextInput
-                    label={"Handicap Type"}
+                    label={t("Handicap_Type")}
                     value={getHandicapTypeDescription(firstPageForm.handicapeType)}
                     disabled={isPreviousSectionDisabled}
                   />
@@ -587,7 +590,7 @@ const SecondForm = ({
                       textAlign: "center",
                     }}
                   >
-                    Please upload your Handicap Certificate
+                     {t("Please upload your Handicap Certificate")}
                     <span className="requiredField">*</span>
                   </Typography>
                   <Box sx={fileUploadSectionContainerStyle}>
@@ -639,7 +642,8 @@ const SecondForm = ({
                         marginRight: "-5px",
                       }}
                     >
-                      {"Do you have PF under any Trust/Private, i.e non-EPFO PF, in the past or present"}
+                                           {t("Do you have PF under any Trust/Private i.e non-EPFO PF  in the past or present")}
+
                     </Typography>
                     <Tooltip
                       arrow="bottom"
@@ -684,7 +688,7 @@ const SecondForm = ({
                       alignItems="center"
                       width={"auto"}
                     >
-                      <Typography>No</Typography>
+                      <Typography>{t("No")}</Typography>
                       <Switch
                         onChange={({ target }) =>
                           setIsTrustEpfoAvailable(target.checked)
@@ -694,7 +698,7 @@ const SecondForm = ({
                         disabled={isPreviousSectionDisabled}
                         sx={{ borderColor: "2px" }}
                       />
-                      <Typography>Yes</Typography>
+                      <Typography>{t("Yes")}</Typography>
                     </Stack>
                   </FormControl>
                 </Box>
@@ -749,7 +753,7 @@ const SecondForm = ({
                 alignItems={"start"}
               >
                 <Typography sx={{ ...lable1CopyStyle }}>
-                  {"Do you have UAN number"}
+                  {t("Do you have UAN number")}
                 </Typography>
                 <RadioGroup
                   row
@@ -760,13 +764,13 @@ const SecondForm = ({
                   <FormControlLabel
                     value="no"
                     control={<Radio />}
-                    label="No"
+                    label={t("No")}
                     disabled={isPreviousSectionDisabled}
                   />
                   <FormControlLabel
                     value="yes"
                     control={<Radio />}
-                    label="Yes"
+                    label={t("Yes")}
                     disabled={isPreviousSectionDisabled}
                   />
                 </RadioGroup>
@@ -786,7 +790,8 @@ const SecondForm = ({
                     variant="contained"
                     color="primary"
                   >
-                    {previousButton}
+                    {/* {previousButton} */}
+                    {t("Previous")}
                   </Button>
                   <Button
                     name="save"
@@ -797,7 +802,7 @@ const SecondForm = ({
                     color="primary"
                     disabled={isPreviousSectionDisabled}
                   >
-                    Save as Draft
+                     {t("Save as Draft")}
                   </Button>
                 </Stack>
                 <Stack flexDirection={"row"}>
@@ -811,16 +816,16 @@ const SecondForm = ({
                     color="primary"
                     //disabled={isPreviousSectionDisabled}
                   >
-                    Save
+                    {t("Save")}
                   </Button>
                   <Button
                     onClick={handleNext}
                     sx={submitBtnStyle}
                     variant="contained"
                     color="primary"
-                    disabled={isthirdNextVisible === false}
+                   // disabled={isthirdNextVisible === false}
                   >
-                    Next
+                      {t("Next")}
                   </Button>
                 </Stack>
               </Stack>

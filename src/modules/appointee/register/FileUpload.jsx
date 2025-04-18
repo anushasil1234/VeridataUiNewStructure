@@ -45,6 +45,7 @@ import {
     passportSuccessMsg,
     passportVerifyFailedMsg,
     previousButton,
+    imageFileTypeAlias,
     registrationSuccessDialogContentText,
     submitConfirmationMsg,
     toDashboard,
@@ -161,7 +162,7 @@ const FileUpload = ({ stepsList, mode }) => {
     const [isPANModalOpen, setIsPANModalOpen] = useState(false);
     const [isUANModalOpen, setIsUANModalOpen] = useState(false);
     const [isUANAvailableState, setIsUANAvailableState] = useState(false);
-
+    const [imageFileName, setImageFileName] = useState();
     const [epfostatusMessage, setEpfostatusMessage] = useState(
         new VerificationStatus()
     );
@@ -405,6 +406,7 @@ const FileUpload = ({ stepsList, mode }) => {
     const hasPassportUpload = () => checkFileUpload(passportFileTypeAlias);
     const hasTenthPassCertificateUpload = () => checkFileUpload(tenthCertificateFileTypeAlias);
     const hasFathersDocCertificateUpload = () => checkFileUpload(otherFileTypeAlias);
+    const hasImageUpload = () => checkFileUpload(imageFileTypeAlias);
 
 
     const openUploadDocInfoModel = (dialogContentText) => {
@@ -548,6 +550,7 @@ const FileUpload = ({ stepsList, mode }) => {
     const uploadPassportFile = handleFileUpload(passportFileTypeAlias, setPassportFileName);
     const upload10thCertificateFile = handleFileUpload(tenthCertificateFileTypeAlias, setTenthCertificateFileName);
     const uploadFathersDocFile = handleFileUpload(otherFileTypeAlias, setOtherFileName);
+    const uploadImageFile = handleFileUpload(imageFileTypeAlias, setImageFileName);
 
 
 
@@ -575,6 +578,13 @@ const FileUpload = ({ stepsList, mode }) => {
         return true;
     };
 
+    const checkImageUpload = () => {
+        if (!hasImageUpload()) {
+            showUploadMessage("your image");
+            return false;
+        }
+        return true;
+    };
     // Check if father's doc certificate is uploaded
     const checkFathersDocCertificateUpload = () => {
         if (!hasFathersDocCertificateUpload()) {
@@ -664,6 +674,7 @@ const FileUpload = ({ stepsList, mode }) => {
         if (!checkTenthPassCertificateUpload()) return;
         if (!checkFathersDocCertificateUpload()) return;
         if (!checkHandicapCertificateUpload()) return;
+        if (!checkImageUpload()) return;    
         if (!checkTrustEpfoUpload()) return;
         if (!checkPassportUploadForSpecificCountries()) return;
         if (!checkPassportUploadForOtherCountries()) return;
@@ -723,6 +734,7 @@ const FileUpload = ({ stepsList, mode }) => {
             IsUanAvailable: isUANAvailable,
             FileDetails: fileDetails,
             fileUploaded: uploadedFile,
+            companyId: companyId,
             IsDocReuploaded: isDocReuploaded,
         };
         // Use the buildFormData helper function to create the formData
@@ -937,6 +949,27 @@ const FileUpload = ({ stepsList, mode }) => {
                                                             fileName={tenthCertificateFileName}
                                                             disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
                                                             uploadTypeAlias={tenthCertificateFileTypeAlias}
+                                                        />
+                                                    </Box>
+                                                </Box>
+                                            </Grid>
+                                            <Grid item xs={12} md={6}>
+                                                <Box>
+                                                    <Typography
+                                                        sx={{
+                                                            ...lable1Style,
+                                                            textAlign: "center",
+                                                        }}
+                                                    >
+                                                        Please upload your image
+                                                        <span className="requiredField">*</span>
+                                                    </Typography>
+                                                    <Box sx={fileUploadSectionContainerStyle}>
+                                                        <FileUploadSection
+                                                            chooseFile={uploadImageFile}
+                                                            fileName={imageFileName}
+                                                            disabled={mode !== 'R' ? isPreviousSectionDisabled : false}
+                                                            uploadTypeAlias={imageFileTypeAlias}
                                                         />
                                                     </Box>
                                                 </Box>

@@ -40,6 +40,9 @@ import { getLocalStorageItem, hasValue, setLocalStorageItem } from "shared/utils
 import showErrorMessage from "shared/utils/associate/show-error-message";
 import { postAppointeeDetails } from "server/apis";
 import { removeLoggedinData, storeLoggedinData } from "store/slices/login-slice";
+import { removeAppointeeStatusDetailsData, storeAppointeeStatusDetailsData } from "store/slices/appointee-status-details-slice";
+import { getAppointeeStatusDetails } from "server/apis/appointee/appointee-workflow/get-appointee-status-details";
+import { useTranslation } from "react-i18next";
 
 const FirstForm = ({
   stepsList,
@@ -63,14 +66,19 @@ const FirstForm = ({
   setPassPortMaxLength,
   passportNoMaxLength
 }) => {
-
-  // console.log('genderList', genderList);
+  const { t } = useTranslation();
+   console.log('firstPageForm1111', firstPageForm);
 
   const dispatch = useDispatch();
 
   const dropdownList = useSelector((state) => state.dropdownList);
   const functionSlice = useSelector((state) => state.functionSlice);
   const popUpSlice = useSelector((state) => state.popUpSlice);
+  const loggedInData = useSelector((state) => state.loggedInData);
+  const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
+  
+  const { navigateTo } = commonHooksFunctionSlice[0];
+  const { userId, appointeeId, userCode, status } = loggedInData[0];
   const { openConfirmationYesNoModal } = functionSlice[0];
   const {
     countryList,
@@ -86,6 +94,7 @@ const FirstForm = ({
     dropdownList.length > 0 &&
     dropdownList[0] &&
     dropdownList[0].genderList;
+    console.log('nationalityList', nationalityList,firstPageForm,countryList);
   const { openInfoModel } = functionSlice[0];
   const [passportNumberError, setPassportNumberError] = useState(false);
   const [genderList, setGenderList] = useState();
@@ -210,6 +219,7 @@ const FirstForm = ({
   console.log('firstPageForm22', firstPageForm);
 
   const handleNationalityChange = (value, name) => {
+    console.log('Value:', value,name);
     // const value = target.value;
     if (value !== "none") {
       let _firstPageForm = { ...firstPageForm, [name]: value, passportNo: "", passportValidFrom: null, passportValidTill: null };
@@ -227,7 +237,7 @@ const FirstForm = ({
         _firstPageForm = { ..._firstPageForm, isPassportAvailable: 'N' };
       }
       setFirstPageForm({ ..._firstPageForm });
-      setPassPortMaxLength(value);
+      setPassPortMaxLength(value.toLowerCase());
     }
   };
   const handleAppointeeFormPage1Save = async (formElement) => {
@@ -248,7 +258,8 @@ const FirstForm = ({
         return;
       }
     }
-    const loginUserData = getLocalStorageItem("pfc-user");
+    // const loginUserData = getLocalStorageItem("pfc-user");
+    const candidateStatusDetails = getLocalStorageItem("candidate-status-details");
     const formPostSuccessMessage =
       clickedButton === "S" ? formSaveSuccess : formSubmitionSuccess;
     let payLoad = {
@@ -263,19 +274,39 @@ const FirstForm = ({
       formPostSuccessMessage
     );
     if (response) {
-      setLocalStorageItem("pfc-user", {
-        ...loginUserData,
-        //isSubmit: true,
-        status: "Ongoing",
-      });
-      dispatch(removeLoggedinData());
-      dispatch(
-        storeLoggedinData({
-          ...loginUserData,
-          //isSubmit: true,
-          status: "Ongoing",
-        })
-      );
+      // setLocalStorageItem("pfc-user", {
+      //   ...loginUserData,
+      //   //isSubmit: true,
+      //   status: "Ongoing",
+      // });
+      // dispatch(removeLoggedinData());
+      // dispatch(
+      //   storeLoggedinData({
+      //     ...loginUserData,
+      //     //isSubmit: true,
+      //     status: "Ongoing",
+      //   })
+      // );
+      const updatedAppointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
+      //dispatch(storeAppointeeStatusDetailsData(updatedAppointeeStatusResponse?.responseInfo));
+      setLocalStorageItem("candidate-status-details", updatedAppointeeStatusResponse?.responseInfo);
+      dispatch(removeAppointeeStatusDetailsData());
+
+      dispatch(storeAppointeeStatusDetailsData(updatedAppointeeStatusResponse?.responseInfo));
+
+      // setLocalStorageItem("candidate-status-details", {
+      //   ...candidateStatusDetails[0],
+      //   //isSubmit: true,
+      //   status: "Ongoing",
+      // });
+      // dispatch(removeAppointeeStatusDetailsData());
+      // dispatch(
+      //   storeAppointeeStatusDetailsData({
+      //     ...candidateStatusDetails[0],
+      //     //isSubmit: true,
+      //     status: "Ongoing",
+      //   })
+      // );
       if (clickedButton === "N") {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setCurrentPageNo(2);
@@ -308,10 +339,10 @@ const FirstForm = ({
       if (value === "Y") {
         const nationalityLower = firstPageForm?.nationality?.toLowerCase();
         const matchedNationality = nationalityList.find(
-          (element) => element.value?.toLowerCase() === nationalityLower
+          (element) => element.name?.toLowerCase() === nationalityLower
         );
         const index = nationalityList.indexOf(matchedNationality);
-        _firstPageForm = { ..._firstPageForm, originCountry: countryList[index]?.value };
+        _firstPageForm = { ..._firstPageForm, originCountry: countryList[index]?.name };
       }
       if (value === "N") {
         _firstPageForm = { ..._firstPageForm, originCountry: defaultCountry };
@@ -357,8 +388,8 @@ const FirstForm = ({
               step={stepsList.PD.step}
               heading={stepsList.PD.name}
               info={
-                "Enter all your Personal Details like Gender, DOB to verify with Aadhaar, PAN, UAN.This section ensures all necessary details for creating a PF account are provided in the exact required format."
-              }
+                t("Enter all your Personal Details like Gender, DOB to verify with Aadhaar, PAN, UAN.This section ensures all necessary details for creating a PF account are provided in the exact required format.")
+               }
             />
           </FormHeadingContainer>
           <GridRow>
@@ -372,7 +403,7 @@ const FirstForm = ({
             >
               {genderList &&
                 genderList.map((gender, index) => {
-                  const { value, icon, selected, id, code, selectGender } =
+                  const { name, icon, selected, id, code, selectGender } =
                     gender;
                   const { currentGenderSectionContainer } = GenderSelection(
                     selected,
@@ -384,7 +415,7 @@ const FirstForm = ({
                         <Stack id={id} sx={currentGenderSectionContainer}>
                           {icon}
                           <Typography fontSize="2rem" sx={genderTypeStyle}>
-                            {value}
+                            {name}
                           </Typography>
                         </Stack>
                       ) : (
@@ -397,7 +428,7 @@ const FirstForm = ({
                         >
                           {icon}
                           <Typography fontSize="2rem" sx={genderTypeStyle}>
-                            {value}
+                            {name}
                           </Typography>
                         </Stack>
                       )}
@@ -410,7 +441,7 @@ const FirstForm = ({
           <GridRow>
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <TextInput
-                label={"Name"}
+                label={t("Name")}
                 value={firstPageForm?.appointeeName}
                 disabled={true}
                 required={true}
@@ -426,7 +457,7 @@ const FirstForm = ({
               }}
             >
               <CustomeDatePicker
-                label={"Date Of Birth"}
+                label={t("Date Of Birth")}
                 value={firstPageForm?.dateOfBirth ? dayjs(firstPageForm?.dateOfBirth) : null}
                 setValue={(newDate, name) => {
                   if (newDate) {
@@ -446,7 +477,7 @@ const FirstForm = ({
           <GridRow>
             <Grid item xs={12} md={6} sx={{ paddingLeft: "0px !important" }}>
               <TextInput
-                label={`Father's/ Husband's Name`}
+                label={t("Father's/Husband's Name")}
                 value={firstPageForm?.memberName}
                 name={'memberName'}
                 onChange={handleFirstPageFormInputChange}
@@ -466,7 +497,7 @@ const FirstForm = ({
               }}
             >
               <SelectInput
-                label={"Relationship"}
+                label={t("Relationship")}
                 itemList={relationList}
                 name={"memberRelation"}
                 value={firstPageForm?.memberRelation}
@@ -481,7 +512,7 @@ const FirstForm = ({
           <GridRow>
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <TextInput
-                label={"Mobile No"}
+               label={t("Mobile No")}
                 value={firstPageForm?.mobileNo}
                 disabled={true}
                 required={true}
@@ -496,7 +527,7 @@ const FirstForm = ({
               }}
             >
               <TextInput
-                label={"Email"}
+                label={t("Email")}
                 value={firstPageForm?.appointeeEmailId}
                 disabled={true}
                 required={true}
@@ -506,7 +537,7 @@ const FirstForm = ({
           <GridRow>
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <SelectInput
-                label={"Nationality"}
+                label={t("Nationality")}
                 itemList={nationalityList}
                 name={'nationality'}
                 value={firstPageForm?.nationality}
@@ -525,7 +556,8 @@ const FirstForm = ({
               }}
             >
               <SelectInput
-                label={"Qualification"}
+                              label={t("Qualification")}
+
                 itemList={qualificationList}
                 name={'qualification'}
                 value={firstPageForm?.qualification}
@@ -538,7 +570,8 @@ const FirstForm = ({
           <GridRow>
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <SelectInput
-                label={"Marital status"}
+                                label={t("Marital status")}
+
                 itemList={maritalStatusList}
                 name={'maratialStatus'}
                 value={firstPageForm?.maratialStatus}
@@ -569,7 +602,8 @@ const FirstForm = ({
           <GridRow>
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <SelectInput
-                label={"Is Passport Available"}
+                               label={t("Is Passport Available")}
+
                 itemList={yesNoList}
                 value={firstPageForm?.isPassportAvailable}
                 name={'isPassportAvailable'}
@@ -589,7 +623,8 @@ const FirstForm = ({
                 }}
               >
                 <SelectInput
-                  label={"Is International Worker"}
+                                    label={t("Is International Worker")}
+
                   itemList={yesNoList}
                   value={firstPageForm?.isInternationalWorker}
                   name={'isInternationalWorker'}
@@ -612,7 +647,7 @@ const FirstForm = ({
                   md={6}
                 >
                   <SelectInput
-                    label={"Country of origin"}
+                    label={t("Country of origin")}
                     itemList={countryList}
                     value={firstPageForm?.originCountry}
                     name={'originCountry'}
@@ -632,7 +667,8 @@ const FirstForm = ({
                   }}
                 >
                   <TextInput
-                    label={"Passport Number"}
+                                        label={t("Passport Number")}
+
                     value={firstPageForm?.passportNo}
                     name={'passportNo'}
                     onChange={handlePassportNoChange}
@@ -651,7 +687,7 @@ const FirstForm = ({
                   sx={{ paddingLeft: "0px !important" }}
                 >
                   <CustomeDatePicker
-                    label={"Date Of Issue"}
+                     label={t("Date Of Issue")}
                     value={
                       firstPageForm?.passportValidFrom ? dayjs(firstPageForm?.passportValidFrom) : null
                     }
@@ -673,7 +709,8 @@ const FirstForm = ({
                   }}
                 >
                   <CustomeDatePicker
-                    label={"Date of Expiry"}
+                                       label={t("Date of Expiry")}
+
                     value={
                       firstPageForm?.passportValidTill
                         ? dayjs(firstPageForm?.passportValidTill)
@@ -703,7 +740,8 @@ const FirstForm = ({
           <GridRow>
             <Grid sx={{ paddingLeft: "0px !important" }} item xs={12} md={6}>
               <SelectInput
-                label={"Is Physically Handicap"}
+                                label={t("Is Physically Handicap")}
+
                 itemList={yesNoList}
                 value={firstPageForm?.isHandicap}
                 name={'isHandicap'}
@@ -717,7 +755,7 @@ const FirstForm = ({
               // <GridRow>
               <Grid sx={{ paddingLeft: { xs: "0px !important", md: "20px!important" } }} item xs={12} md={6}>
                 <SelectInput
-                  label={"Handicap type"}
+                  label={t("Handicap type")}
                   itemList={disabilityList}
                   value={firstPageForm?.handicapeType}
                   name={'handicapeType'}
@@ -744,7 +782,8 @@ const FirstForm = ({
                     color="primary"
                     disabled={!isDraft} // Hide saveButton when clickedButton is "N"
                   >
-                    {saveButton}
+                    {/* {saveButton} */}
+                    {t("Save as Draft")}
                   </Button>
                   <Button
                     name="save_and_next"
@@ -754,7 +793,8 @@ const FirstForm = ({
                     variant="contained"
                     color="primary"
                   >
-                    {saveAndNextbutton}
+                    {/* {saveAndNextbutton} */}
+                    {t("Save and Next")}
                   </Button>
                 </Stack>
                 <Button
@@ -762,9 +802,10 @@ const FirstForm = ({
                   sx={submitBtnStyle}
                   variant="contained"
                   color="primary"
-                  disabled={isDraft} // Show Next button only when clickedButton is "N"
+                 // disabled={isDraft} // Show Next button only when clickedButton is "N"
                 >
-                  Next
+                  {/* Next */}
+                  {t("Next")}
                 </Button>
               </Stack>
             </Grid>

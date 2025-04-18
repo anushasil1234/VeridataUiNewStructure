@@ -65,6 +65,8 @@ import startLoader from "shared/utils/associate/start-loader";
 import stopLoader from "shared/utils/associate/stop-loader";
 import showSuccessMessage from "shared/utils/associate/show-success-message";
 import { postLoginCredentialDetails, postLoginDetails } from "server/apis";
+import { getAppointeeStatusDetails } from "server/apis/appointee/appointee-workflow/get-appointee-status-details";
+import { removeAppointeeStatusDetailsData, storeAppointeeStatusDetailsData } from "store/slices/appointee-status-details-slice";
 // import postLoginDetails from "server/apis/post-login-details";
 
 export const UserLoginView = () => {
@@ -143,8 +145,10 @@ export const UserLoginView = () => {
     sessionStorage.clear();
     dispatch(removeLoggedinData());
     dispatch(removeLoggedinTokenData());
+    dispatch(removeAppointeeStatusDetailsData());
     removeLocalStorageItems(["pfc-user"]);
     removeLocalStorageItems(["pfc-token"]);
+    removeLocalStorageItems(["candidate-status-details"]);
     dispatch(removeApi());
     dispatch(removeDropdownList());
     dispatch(removeFunction());
@@ -182,9 +186,10 @@ export const UserLoginView = () => {
       try {
         // Start the loader before making the API call
         startLoader();
+        console.log('res1111',payLoad)
 
         const response = await postLoginCredentialDetails(payLoad);
-
+        console.log('res1111',response);
         if (response) {
           const { responseInfo } = response;
           const { clientId, dbUserType } = responseInfo;
@@ -195,24 +200,38 @@ export const UserLoginView = () => {
               dbUserType: dbUserType,
               otp: otp,
             };
+            let appointeeStatusResponse = null;
 
             const response = await postLoginDetails(payLoad);
-
+            console.log('response1234',response);
             if (response) {
               const { responseInfo } = response;
               const { userDetails, tokenDetails } = responseInfo;
               const {
+                appointeeId,
                 userName,
-                consentStatus,
+                userId,
+                //consentStatus,
                 userTypeId,
                 isDefaultPassword,
                 isPasswordExpire,
               } = userDetails;
+              localStorage.setItem("isDefaultPassword", isDefaultPassword);
 
+
+              if (userTypeId===3) {
+                appointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
+                console.log('appointeeStatusResponselogin', appointeeStatusResponse);
+                
+                if (appointeeStatusResponse) {
+                  setLocalStorageItem("candidate-status-details", appointeeStatusResponse?.responseInfo);
+                  dispatch(storeAppointeeStatusDetailsData(appointeeStatusResponse?.responseInfo));
+                }
+              }
               // Show welcome message if needed
               if (
                 roleTypeEnums.candidate.includes(userTypeId) &&
-                consentStatus === 0 &&
+                appointeeStatusResponse?.responseInfo?.consentStatus === 0 &&
                 !isDefaultPassword &&
                 !isPasswordExpire
               ) {
@@ -225,12 +244,29 @@ export const UserLoginView = () => {
                 };
                 openInfoModel(wellcomeMsgContent);
               }
+              // const appointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
+              // const { responseInfo } = appointeeStatusResponse;
+
+              //console.log('appointeeStatusResponse',appointeeStatusResponse);
 
               // Store user and token data
               setLocalStorageItem("pfc-user", userDetails);
               setLocalStorageItem("pfc-token", tokenDetails);
+             // setLocalStorageItem("candidate-status-details", appointeeStatusResponse?.responseInfo);
+
               dispatch(storeLoggedinData(userDetails));
               dispatch(storeLoggedinTokenData(tokenDetails));
+             // dispatch(storeAppointeeStatusDetailsData(appointeeStatusResponse?.responseInfo));
+            //  if (userId) {
+            //    appointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
+            //    console.log('appointeeStatusResponse', appointeeStatusResponse);
+               
+            //    if (appointeeStatusResponse) {
+            //      setLocalStorageItem("candidate-status-details", appointeeStatusResponse?.responseInfo);
+            //      dispatch(storeAppointeeStatusDetailsData(appointeeStatusResponse?.responseInfo));
+            //    }
+            //  }
+
               dispatch(storeLoggeoutData({ handleClickOnLogout }));
 
               if (isDefaultPassword || isPasswordExpire) {
@@ -273,7 +309,7 @@ export const UserLoginView = () => {
           stopLoader(); // Stop loader if no response
         }
       } catch (error) {
-        // console.error("Error during login:", error);
+         console.error("Error during login:", error);
         // stopLoader(); // Stop loader in case of any errors
         // showErrorMessage("An error occurred during login. Please try again.");
       }finally{

@@ -65,6 +65,7 @@ import { submitUANOTP } from "server/apis/verify/submit-uan-otp";
 import generateRemarks from "shared/utils/associate/generate-remarks";
 import showSuccessMessage from "shared/utils/associate/show-success-message";
 import UANPrerequisiteInformation from "./uan-prerequiestic-info";
+import { useTranslation } from "react-i18next";
 
 const SixthForm = ({
   UAN,
@@ -100,6 +101,7 @@ const SixthForm = ({
   setPan
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
+  const { t } = useTranslation(); // Import the translation function
 
   console.log("AADHARVERIFICATION_BY", AADHARVERIFICATION_BY);
 
@@ -349,7 +351,7 @@ const SixthForm = ({
 
             <Grid item xs={12} md={6} sx={{ paddingLeft: "0px !important" }}>
               <TextInput
-                label={"Universal Account Number(UAN)"}
+                label={t("Universal Account Number(UAN)")}
                 onChange={(val) => {
                   if (/^\d{0,12}$/.test(val)) {
                     setUAN(val);
@@ -370,7 +372,7 @@ const SixthForm = ({
               <VerificationStatusSection docType={epfostatusMessage} />
               <Stack direction={"row"} alignItems={"center"}>
                 <Typography sx={{ margin: "5px 0", color: "#000" }}>
-                  {"UAN Aadhar Link"}
+                  {t("UAN Aadhar Link")}
                 </Typography>
                 <Typography>{`: ${uanAadharLink}`}</Typography>
               </Stack>
@@ -394,7 +396,7 @@ const SixthForm = ({
                   alignItems="start"
                 >
                   <Typography sx={{ ...lable1CopyStyle }}>
-                    {"UAN Verification"}
+                    {t("UAN Verification")}
                   </Typography>
                   <RadioGroup
                     row
@@ -404,14 +406,14 @@ const SixthForm = ({
                     <FormControlLabel
                       value="auto"
                       control={<Radio />}
-                      label="Automatic"
+                      label={t("Automatic")}
                       disabled={!hasValue(UAN)}
                     />
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <FormControlLabel
                         value="manual"
                         control={<Radio />}
-                        label="Manual"
+                        label={t("Manual")}
                         disabled={!hasValue(UAN)}
                       />
                       <Tooltip
@@ -502,7 +504,8 @@ const SixthForm = ({
                         textAlign: "center",
                       }}
                     >
-                      Please upload your EPFO Service History
+                    {t("Please upload your EPFO Service History")}
+
                       <span className="requiredField">*</span>
                     </Typography>
                     <Box sx={fileUploadSectionContainerStyle}>
@@ -529,7 +532,7 @@ const SixthForm = ({
                         textAlign: "center",
                       }}
                     >
-                      Please upload your EPFO passbook
+                     {t("Please upload your EPFO passbook")} 
                       <span className="requiredField">*</span>
                     </Typography>
                     <Box sx={fileUploadSectionContainerStyle}>
@@ -575,7 +578,7 @@ const SixthForm = ({
                     variant="contained"
                     color="primary"
                   >
-                    {previousButton}
+                     {t("Previous")}
                   </Button>
   
                   {isUanVerificationProcessManual === "manual" && (
@@ -588,7 +591,7 @@ const SixthForm = ({
                         variant="contained"
                         color="primary"
                       >
-                        {"Submit"}
+                      {t("Submit")}
                       </Button>
                     </>
                   )}
