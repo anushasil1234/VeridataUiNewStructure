@@ -11,6 +11,7 @@ import downloadFile from "shared/utils/associate/download-file";
 import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
 import { getAppointeeAgingFilterReport } from "server/apis";
 import showErrorMessage from "shared/utils/associate/show-error-message";
+import { getAppointeeInactivityFilterReport } from "server/apis/appointee/appointee-reports/get-appointee-inactivity-filter-report";
 
 const NoMovementAgingReportView = (props) => {
   const { hasPermission } = props;
@@ -28,7 +29,7 @@ const NoMovementAgingReportView = (props) => {
   const { navigateTo } = commonHooksFunctionSlice[0];
   let payloadData = {
     startDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
-    reportType: '',
+   // reportType: '',
     noOfDays: noOfDays ?? 0,
   }
   // const { showErrorMessage } = popUpSlice[0];
@@ -52,7 +53,7 @@ const NoMovementAgingReportView = (props) => {
     const payLoad = {
       startDate: null,
       noOfDays: 0,
-      reportType: '',
+    //  reportType: '',
 
     }
     setPayLoad(payLoad);
@@ -64,7 +65,7 @@ const NoMovementAgingReportView = (props) => {
 
   const setTableRows = async (payLoad) => {
 
-    const response = await getAppointeeAgingFilterReport(payLoad);
+    const response = await getAppointeeInactivityFilterReport(payLoad);
     if (response) {
       const { responseInfo } = response;
       const { filedata } = responseInfo || {}

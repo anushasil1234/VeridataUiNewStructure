@@ -79,10 +79,10 @@ export const MVTable = (filters) => {
       );
       // dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited: false }));
       const { responseInfo } = response;
-      const { manualVerificationList, filedata } = responseInfo;
+      const { manualVerificationList, filedata } = responseInfo || {};
       setResponseList(manualVerificationList);
-      manualVerificationList.length > 0 &&
-        setResponseListLength(manualVerificationList.length);
+      manualVerificationList?.length > 0 &&
+        setResponseListLength(manualVerificationList?.length);
       setResponseFileDetails(filedata);
       let generatedCells = generateTableRowData(
         manualVerificationList,

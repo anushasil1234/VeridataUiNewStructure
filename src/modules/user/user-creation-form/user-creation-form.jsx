@@ -36,7 +36,7 @@ const UserCreationForm = (formData) => {
     const {
         roleList
     } = dropdownList && dropdownList.length > 0 && dropdownList[0];
-
+console.log('roleList', roleList)
     const handleUserCodeBlur = async ({ target }) => {
         const userCode = target.value;
         if (hasValue(userCode)) {
@@ -189,8 +189,8 @@ const UserCreationForm = (formData) => {
                         value={role}
                     >
                         {
-                            roleList && roleList.map(({ id, code, value }) => {
-                                return <MenuItem key={id} value={id}>{`${value}`}</MenuItem>
+                            roleList && roleList.map(({ id, code, name }) => {
+                                return <MenuItem key={id} value={id}>{`${name}`}</MenuItem>
                             })
                         }
                     </Select>

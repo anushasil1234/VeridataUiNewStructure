@@ -41,7 +41,7 @@ export const uanVerifySuccessMsg = `UAN has been verified successfully`;
 export const generateOtpRety = `OTP sending is unsuccessful, please retry`;
 export const generateOtpSucces = `OTP has sent successfully, Please fill the otp and submit`;
 export const aadharNoValidationError = `Your phone number is not linked with Aadhaar. Link your phone number then retry or submit anyway`;
-export const remarksError = `Remarks should have at least 15 charecters long`;
+export const remarksError = `Remarks should have at least 15 characters long`;
 export const remarksemptyerror = `Please provide your Remarks before submitting.`;
 export const categoryFileEmptyerror = `Please go through all the Category(s) and Files, and select the required answers, mention Remarks to be able to Submit`;
 export const fileEmptyerror = `Please select a file`;
@@ -2505,7 +2505,7 @@ export const stepperDefaultList = (t) => ({
   //   step: 4,
   // },
 });
-const AppointeeReports = `/AppointeeReports`;
+const AppointeeReports = `api/Reports`;
 const AppoienteeWorkFlow = `/AppoienteeWorkFlow`;
 const Account = `/Account`;
 const AadhaarValidate = `/AadhaarValidate`;
@@ -2540,8 +2540,8 @@ export const UserSignInDetails_URL = `/UserSignInDetails`;
 export const GetMenuListData_URL = `/GetMenuListData?userId=`;
 
 export const GetDashboardWidgetCardData_URL = (filterDays, isfilterd) =>
-  `${Account}/GetDashboardWidgetCardData?filterDays=${filterDays}&isfilterd=${isfilterd}`;
- export const GetAppointeeStatusDetails_URL = `${Account}/GetAppointeeStatusDetails?code=`;
+  `/GetDashboardWidgetCardData?filterDays=${filterDays}&isfilterd=${isfilterd}`;
+ export const GetAppointeeStatusDetails_URL = `/GetAppointeeStatusDetails?code=`;
 export const PostSetupConfigData_URL = `${Account}/PostSetupConfigData`;
 export const GetSetupConfigData_URL = `${Account}/GetSetupConfigData`;
 export const GetMastarDropdowndata_URL = `${Account}/GetMastarDropdowndata?type=`;
@@ -2555,23 +2555,26 @@ export const GetQualificationDropdowndata_URL = `${Masters}/GetAllQualification`
 export const GetMaritalStatusDropdowndata_URL = `${Masters}/GetAllMaritalStatus`;
 export const GetCountryDropdowndata_URL = `${Masters}/GetAllCountry`;
 export const GetFileTypeDropdowndata_URL = `${Masters}/GetAllFileType`;
+export const GetRoleDropdowndata_URL = `${Masters}/GetAllRole`;
+export const GetEntiyDropdowndata_URL = `${Masters}/GetAllEntity`;
+export const GetProcessDropdowndata_URL = `${Masters}/GetAllProcess`;
 
 
 
 
 
-export const GetTotalWidgetData_URL = `${Account}/GetTotalWidgetData`;
-export const GetTotalCriticalAppointee_URL = `${Account}/GetTotalCriticalAppointee`;
+export const GetTotalWidgetData_URL = `/GetTotalWidgetData`;
+export const GetTotalCriticalAppointee_URL = `/GetTotalCriticalAppointee`;
 export const ValidateProfilePassword_URL = `${Account}/ValidateProfilePassword`;
 export const EditUserProfile_URL = `${Account}/EditUserProfile`;
-export const GetFaqData_URL = `${Account}/GetFaqData`;
-export const GetRefreshToken_URL = `${Account}/GenerateRefreshToken`;
+export const GetFaqData_URL = `/GetFaqData`;
+export const GetRefreshToken_URL = `/GenerateRefreshToken`;
 export const RawDataProcess_URL = `${Candidate}/RawDataProcess`;
 export const AppointeeDetailsUpdate_URL = `${AppoienteeWorkFlow}/CompanyAppointeeDetailsUpdate`;
 // export const PostAppointeeDetailsSave_URL = `${AppoienteeWorkFlow}/PostAppointeeDetailsSave`;
 export const PostAppointeeDetailsSave_URL = `${Candidate}/CadidatePersonalDetailsSave`;
 
-export const PostAppointeeSearch_URL = `${AppoienteeWorkFlow}/AppointeeSearch?appointeeName=`;
+export const PostAppointeeSearch_URL = `/AppointeeSearch?appointeeName=`;
 export const PostAppointeeFileDetails_URL = `${Candidate}/PostAppointeeDetailsSubmit`;
 // export const PostUpdatePfUanDetails_URL = `${AppoienteeWorkFlow}/UpdateDocWithUanDetails`;
 export const PostUpdatePfUanDetails_URL = `${Candidate}/UpdateDocWithUanDetails`;
@@ -2590,16 +2593,16 @@ export const GetProcessedEPFOData_URL = `${Candidate}/GetVerifiedData`;
 export const GetUnProcessedFileData_URL = `${Candidate}/GetUnProcessedFileData`;
 export const GetProcessedMISData_URL = `${AppoienteeWorkFlow}/GetProcessedMISData`;
 export const GetCriticalAppointeeData_URL = `${Candidate}/GetCriticalAppointeeList`;
-export const GetRemarksRemedyData_URL = `${AppoienteeWorkFlow}/GetRemarksRemedy`;
+export const GetRemarksRemedyData_URL = `${Candidate}/GetRemarksRemedy`;
 export const GetRemarks_URL = `${Candidate}/GetRemarks?AppointeeId=`;
-export const GetMannualVerificationData_URL = `${AppoienteeWorkFlow}/GetManualVeificationProcessData`;
+export const GetMannualVerificationData_URL = `${Candidate}/GetManualVeificationProcessData`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`;
 export const PostAppointeeDocAvailibility_URL = `${Candidate}/PostAppointeeDocAvailibility`;
 export const PostRemainderMail_URL = (appointeeId, userId) =>
-  `${AppoienteeWorkFlow}/PostRemainderMail?AppointeeId=${appointeeId}&UserId=${userId}`;
+  `PostRemainderMail?AppointeeId=${appointeeId}&UserId=${userId}`;
 export const PostCandidateMailResend_URL = (appointeeId, userId) =>
-  `${AppoienteeWorkFlow}/PostCandidateMailResend?AppointeeId=${appointeeId}&UserId=${userId}`;
-export const GetPfCreationApponteeReport_URL = `${AppointeeReports}/GetPfCreationApponteeReport`;
+  `PostCandidateMailResend?AppointeeId=${appointeeId}&UserId=${userId}`;
+export const GetPfCreationApponteeReport_URL = `${AppointeeReports}/GetPfCreationAppointeeReport`;
 export const downloadVerifiedList_URL = `${AppointeeReports}/ApprovedApponteeReport`;
 export const downloadPfCreationApponteeList_URL = `${AppointeeReports}/DownloadPfCreationApponteeReport`;
 export const downloadRejectedList_URL = `${AppointeeReports}/RejectedApponteeReport`;
@@ -2608,6 +2611,7 @@ export const downloadLapsedList_URL = `${AppointeeReports}/GetLapsedDataReport`;
 export const downloadApiCounterReport_URL = `${AppointeeReports}/ApiCounterReport`;
 export const downloadpfReport_URL = `${AppointeeReports}/AppointeeDataPfFilterReport`;
 export const AppointeeAgingFilterReport_URL = `${AppointeeReports}/AppointeeAgingFilterReport`;
+export const AppointeeInacitvityFilterReport_URL = `${AppointeeReports}/AppointeeInactivityFilterReport`;
 export const AppointeeNationalityReport_URL = `${AppointeeReports}/NationalityFilterReport`;
 export const AppointeeDataReport_URL = `${AppointeeReports}/AppointeeDataFilterReport`;
 export const AppointeeCounterReport_URL = `${AppointeeReports}/AppointeeCounterReport`;
@@ -2621,10 +2625,10 @@ export const ApiCounterReport_URL = (fromDate, toDate) => {
   }
   return ApiCounterReportUrl;
 };
-export const PassbookDetails_URL = `${AppoienteeWorkFlow}/GetPassbookDetails?AppointeeId=`;
+export const PassbookDetails_URL = `${FileUpload}/GetPassbookDetails?AppointeeId=`;
 export const UpdateAppointeeManualVerification_URL = `${AppoienteeWorkFlow}/UpdateAppointeeManualVerification`;
 export const EmployementDetails_URL = (AppointeeId, userId) => {
-  let _EmployementDetails_URL = `${AppoienteeWorkFlow}/GetEmployementDetails`;
+  let _EmployementDetails_URL = `${FileUpload}/GetEmployementDetails`;
   return `${_EmployementDetails_URL}?AppointeeId=${AppointeeId}&userId=${userId}`;
 };
 export const VerifyPassportDetails_URL = `${Verify}/VerifyPassportDetails`;
@@ -2638,10 +2642,10 @@ export const GetUANNumber_URL = `${Verify}/GetUANDetails`;
 export const UANSubmitOTP_URL = `${Verify}/UANSubmitOTP`;
 export const GenerateOTP_URL = `${AadhaarValidate}/GenerateOTP`;
 export const SubmitOTP_URL = `${AadhaarValidate}/SubmitOTP`;
-export const GetAdminUserList_URL = `${Users}/GetAdminUserList`;
-export const CreateUser_URL = `${Users}/CreateUser`;
-export const UpdateAdminUser_URL = `${Users}/UpdateAdminUser`;
-export const GetUserByUserId_URL = `${Users}/GetUserByUserId?userId=`;
+export const GetAdminUserList_URL = `/GetAdminUserList`;
+export const CreateUser_URL = `/CreateUser`;
+export const UpdateAdminUser_URL = `/UpdateAdminUser`;
+export const GetUserByUserId_URL = `/GetUserByUserId?userId=`;
 export const ValidateUserCode_URL = `${Users}/ValidateUserCode?userCode=`;
 export const AppointeeConsentUpdate_URL = `${Candidate}/AppointeeConsentUpdate`;
 export const AppointeePrerequisiteUpdate_URL = `${Candidate}/AppointeePrerequisiteUpdate`;

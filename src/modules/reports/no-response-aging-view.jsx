@@ -27,7 +27,7 @@ const NoResponseAgingReportView = (props) => {
   const { navigateTo } = commonHooksFunctionSlice[0];
   let payloadData = {
     startDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
-    reportType: 'PINORS',
+   // reportType: 'PINORS',
     noOfDays: noOfDays ?? 0,
   }
   // const { showErrorMessage } = popUpSlice[0];
@@ -51,7 +51,7 @@ const NoResponseAgingReportView = (props) => {
     const payLoad = {
       startDate: null,
       noOfDays: noOfDays ?? 0,
-      reportType: 'PINORS',
+     // reportType: 'PINORS',
 
     }
     setPayLoad(payLoad);

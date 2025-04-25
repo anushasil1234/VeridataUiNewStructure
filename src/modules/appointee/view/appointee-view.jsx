@@ -84,7 +84,9 @@ import {
   noPassBookMsg,
   noEmployementMsg,
   AadhaarProfileImageTypeAlias,
-  imageFileTypeAlias
+  imageFileTypeAlias,
+  remarksemptyerror,
+  remarksError
 } from "shared/constants/constants";
 import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
 import TextSkelton1 from "shared/utils/skeltons/text-skelton/text-skelton1";
@@ -137,7 +139,7 @@ let AppointeeViewForm = ({
   const setRemarksFunctionSlice = useSelector((state) => state.SetRemarksFunctionSlice);
   const setRemarks = setRemarksFunctionSlice && setRemarksFunctionSlice[0] && setRemarksFunctionSlice[0].setRemarks;
 
-  console.log('setRemarks11', setRemarks);
+  console.log('setRemarks11', setRemarksFunctionSlice);
 
   const [isLoading, setIsLoading] = useState(false);
   const { navigateTo } = commonHooksFunctionSlice[0];
@@ -256,13 +258,28 @@ let AppointeeViewForm = ({
 
   const reject = async (remarks) => {
     showErrorMessage();
+        // if (!hasValue(remarks)) {
+        //   showErrorMessage(remarksemptyerror);
+        //   return;
+        // }
+        
     if (hasValue(remarks)) {
+      if (remarks.length < 15) {
+        showErrorMessage(remarksError);
+        return;
+      }
       const payLoad = {
         appointeeId,
         remarks: remarks,
         userId,
       };
       const response = await postAppointeeRejected(payLoad);
+      console.log("response1234", response);
+      // if(response === "undefined")
+      // {
+      //   showErrorMessage(" should be between  10 to 250 characters.");
+      //   return;
+      // }
       if (response) {
         actionsAfterProcess("reject");
       }
@@ -272,8 +289,13 @@ let AppointeeViewForm = ({
     }
   };
   const approve = async (remarks) => {
+    
     showErrorMessage();
     if (hasValue(remarks)) {
+      if (remarks.length < 15) {
+        showErrorMessage(remarksError);
+        return;
+      }
       const payLoad = {
         appointeeId: appointeeId,
         userId: userId,

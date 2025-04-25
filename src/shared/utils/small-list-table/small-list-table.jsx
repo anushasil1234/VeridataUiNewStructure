@@ -83,11 +83,11 @@ const SmallListTable = ({ rows }) => {
                 size={'medium'}
             >
                 <EnhancedTableHead
-                    rowCount={rows.length}
+                    rowCount={rows?.length}
                 />
 
                 <TableBody >
-                    {rows.length > 0 ?
+                    {rows?.length > 0 ?
 
                         <>
                             {

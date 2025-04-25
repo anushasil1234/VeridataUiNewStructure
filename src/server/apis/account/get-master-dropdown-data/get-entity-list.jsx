@@ -1,6 +1,6 @@
 import ServerRequest from "server/utils/server-request";
-import { GetMastarDropdowndata_URL, ENTITY } from "shared/constants/constants";
+import { GetRoleDropdowndata_URL } from "shared/constants/constants";
 
-const getEntityList = () => ServerRequest(`${GetMastarDropdowndata_URL}${ENTITY}`, "GET", "", "", "", false);
+const getEntityList = () => ServerRequest(`${GetRoleDropdowndata_URL}`, "POST", "", "", "", false);
 
 export { getEntityList };

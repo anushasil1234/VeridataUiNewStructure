@@ -17,7 +17,7 @@ import {
   TextField,
   Box,
   Checkbox,
-  ListItemText
+  ListItemText,
 } from "@mui/material";
 import {
   backgroundOverLay,
@@ -26,7 +26,7 @@ import {
   inputPropsStyle,
   primaryFabStyle,
   ResponsiveFab,
-  datePickerstyle
+  datePickerstyle,
 } from "app";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -52,60 +52,88 @@ import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
 import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
 import moment from "moment";
 import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-import ArticleIcon from '@mui/icons-material/Article';
+import ArticleIcon from "@mui/icons-material/Article";
 import downloadFile from "shared/utils/associate/download-file";
-import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
+import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
 import { getAppointeeCounterReport } from "server/apis";
 import showErrorMessage from "shared/utils/associate/show-error-message";
 const AppointeeCount = () => {
   // const popUpSlice = useSelector(state => state.popUpSlice);
   const apiSlice = useSelector((state) => state.apiSlice);
   const dropdownList = useSelector((state) => state.dropdownList);
-  const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
+  const commonHooksFunctionSlice = useSelector(
+    (state) => state.commonHooksFunctionSlice
+  );
 
   const { navigateTo } = commonHooksFunctionSlice[0];
 
   // const { getAppointeeCounterReport } = apiSlice[0];
-  const { reportFilterStatusList, entityList } = dropdownList && dropdownList.length > 0 && dropdownList[0];
+  const { entityList, processList } =
+    dropdownList && dropdownList.length > 0 && dropdownList[0];
   const [toDate, setToDate] = useState(null);
   const [fromDate, setFromDate] = useState(null);
   const [rows, setRows] = useState();
   const [appointeeCountDateWises, setAppointeeCountDateWises] = useState();
   const [appointeeCountListDetails, setAppointeeCountListDetails] = useState();
   const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
-  const [isExalListOpened, setisExalListOpened] = useState(false)
+  const [isExalListOpened, setisExalListOpened] = useState(false);
   // const { showErrorMessage } = popUpSlice[0]
   const [appointeeName, setAppointeeName] = useState(null);
   const [statusCode, setStatusCode] = useState(null);
+  const [processId, setProcessId] = useState(null);
   const [entityId, setEntityId] = useState([]);
 
   const [fileData, setFileData] = useState(null);
-
+  const reportFilterStatusList = [
+    {
+      id: 1,
+      name: "Force Approve",
+      code: "FA",
+    },
+    {
+      id: 2,
+      name: "Approve",
+      code: "AP",
+    },
+    {
+      id: 3,
+      name: "Reject",
+      code: "RJ",
+    },
+  ];
   const payLoadData = {
     appointeeName: appointeeName,
-    statusCode: statusCode ? statusCode.toString() : statusCode,
+    statusId: statusCode ? statusCode.toString() : statusCode,
+    processId: processId ? processId : null,
     fromDate: fromDate ? DateFormatYYYYMMDD(fromDate?.toString()) : fromDate,
     toDate: toDate ? DateFormatYYYYMMDD(toDate?.toString()) : toDate,
-    entityId: entityId
-
+    entityId: entityId,
   };
   let [payLoad, setPayLoad] = useState(payLoadData);
-
-  const fetchTableRows = async ({ appointeeName, statusCode, fromDate, toDate, entityId }) => {
+  console.log("entityList", entityList);
+  const fetchTableRows = async ({
+    appointeeName,
+    statusCode,
+    fromDate,
+    toDate,
+    entityId,
+  }) => {
     payLoad = {
       appointeeName: appointeeName,
       statusCode: hasValue(statusCode) ? statusCode.toString() : null,
-      fromDate: hasValue(fromDate) ? DateFormatYYYYMMDD(fromDate?.toString()) : null,
+      fromDate: hasValue(fromDate)
+        ? DateFormatYYYYMMDD(fromDate?.toString())
+        : null,
+      processId: hasValue(processId) ? processId : null,
       toDate: hasValue(toDate) ? DateFormatYYYYMMDD(toDate?.toString()) : null,
       entityId: entityId.length ? entityId : [],
     };
     const response = await getAppointeeCounterReport(payLoad);
 
     if (response) {
-
       const { responseInfo } = response;
       const { appointeeCountDateWises, appointeeCountListDetails, filedata } =
-        responseInfo;
+        responseInfo || {};
       setAppointeeCountDateWises(appointeeCountDateWises);
       setAppointeeCountListDetails(appointeeCountListDetails);
       setFileData(filedata);
@@ -117,14 +145,15 @@ const AppointeeCount = () => {
         null,
         "appointeeTotalCount"
       );
-      appointeeCountDateWises && appointeeCountDateWises.forEach(({ appointeeCountDetails }, index) => {
-        const detailsCells = generateTableRowData(
-          appointeeCountDetails,
-          appointeeCountDetailsHeadCell,
-          null
-        );
-        generatedCells[index].detailsCells = detailsCells;
-      });
+      appointeeCountDateWises &&
+        appointeeCountDateWises.forEach(({ appointeeCountDetails }, index) => {
+          const detailsCells = generateTableRowData(
+            appointeeCountDetails,
+            appointeeCountDetailsHeadCell,
+            null
+          );
+          generatedCells[index].detailsCells = detailsCells;
+        });
       setRows({
         tableHead: appointeeCountHeadCell,
         tableRows: generatedCells,
@@ -132,32 +161,30 @@ const AppointeeCount = () => {
     }
   };
 
-
   useEffect(() => {
     setAppointeeName(appointeeName);
     setStatusCode(statusCode);
     setFromDate(fromDate);
     setToDate(toDate);
     setEntityId(entityId);
-
+    setProcessId(processId);
   }, [appointeeName, statusCode, fromDate, toDate, entityId]);
 
   const handleClickOnDownload = () => {
     setIsDownloadListOpened(!isDownloadListOpened);
   };
   const handleExalListDownload = () => {
-    setisExalListOpened(!isExalListOpened)
-  }
+    setisExalListOpened(!isExalListOpened);
+  };
   var date = moment();
   var currentDate = date?.format("DDMMYYYY");
-
 
   const handleDownload = () => {
     if (!fileData || fileData.length === 0) {
       showErrorMessage(reportGenarate);
       return;
     }
-    if (fileData && typeof fileData === 'object') {
+    if (fileData && typeof fileData === "object") {
       const base64String = fileData.fileData;
       const fileName = fileData.fileName || "appointee_data.xlsx";
       const blob = generateBlobFromBase64(base64String);
@@ -176,15 +203,15 @@ const AppointeeCount = () => {
       title: label,
     }));
 
-    const tableBodyList = appointeeCountDateWises?.map(({ appointeeTotalCount }) =>
-      CreatePdfTableBody(appointeeTotalCount, appointeeCountHeadCell)
-    ) || [];
+    const tableBodyList =
+      appointeeCountDateWises?.map(({ appointeeTotalCount }) =>
+        CreatePdfTableBody(appointeeTotalCount, appointeeCountHeadCell)
+      ) || [];
 
     const tableObj = {
       headerList: tableHeadList,
       rows: tableBodyList,
       tableName: "Count Details",
-
     };
 
     jsPDFReportDataTemplate({
@@ -194,13 +221,11 @@ const AppointeeCount = () => {
         fromDate: fromDate,
         toDate: toDate,
         rptDesc: generateAppointeeCountReportDesc,
-
       },
       tables: [tableObj],
     });
   };
   const handleAppointeeDetailsDownload = () => {
-
     if (!appointeeCountDateWises || appointeeCountDateWises.length === 0) {
       showErrorMessage(reportGenarate);
       return;
@@ -214,14 +239,18 @@ const AppointeeCount = () => {
       };
     });
     if (entityId.length > 0) {
-
       entityId.map((currEntityId) => {
-        const companyWiseTable = appointeeCountListDetails.filter(({ companyId, companyName }) => {
-          return currEntityId === companyId
-        });
+        const companyWiseTable = appointeeCountListDetails.filter(
+          ({ companyId, companyName }) => {
+            return currEntityId === companyId;
+          }
+        );
         if (companyWiseTable.length > 0) {
           const tableBodyList = companyWiseTable.map((appointeeCount) => {
-            return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
+            return CreatePdfTableBody(
+              appointeeCount,
+              appointeeCountDetailsHeadCell
+            );
           });
           tableObj = {
             headerList: tableHeadList,
@@ -232,28 +261,30 @@ const AppointeeCount = () => {
           totaltable.push(tableObj);
         }
       });
-
     } else {
-
       entityList?.map((currEntity) => {
-        const companyWiseTable = appointeeCountListDetails.filter(({ companyId, companyName }) => {
-          return currEntity.id === companyId
-        });
+        const companyWiseTable = appointeeCountListDetails.filter(
+          ({ companyId, companyName }) => {
+            return currEntity.id === companyId;
+          }
+        );
 
         if (companyWiseTable.length > 0) {
           const tableBodyList = companyWiseTable.map((appointeeCount) => {
-            return CreatePdfTableBody(appointeeCount, appointeeCountDetailsHeadCell);
+            return CreatePdfTableBody(
+              appointeeCount,
+              appointeeCountDetailsHeadCell
+            );
           });
           tableObj = {
             headerList: tableHeadList,
             rows: tableBodyList,
             tableName: "Appointee Details",
-            companyName: currEntity?.value ?? "",
+            companyName: currEntity?.name ?? "",
           };
           totaltable.push(tableObj);
         }
       });
-
     }
 
     jsPDFReportDataTemplate({
@@ -263,7 +294,6 @@ const AppointeeCount = () => {
         fromDate: fromDate,
         toDate: toDate,
         rptDesc: generateAppointeeCountReportDesc,
-
       },
       tables: totaltable,
     });
@@ -276,6 +306,7 @@ const AppointeeCount = () => {
       fromDate: fromDate ? fromDate : null,
       toDate: toDate ? toDate : null,
       entityId: entityId || null,
+      processId : processId ? processId : null,
     };
     fetchTableRows(payLoad);
   };
@@ -284,27 +315,29 @@ const AppointeeCount = () => {
     setToDate(null);
     setStatusCode(null);
     setEntityId([]);
+    setProcessId(null);
     const clearPayLoad = {
       appointeeName: null,
       fromDate: null,
       toDate: null,
       statusCode: null,
+      processId: null,
       entityId: [],
     };
     fetchTableRows(clearPayLoad);
 
     navigateTo(toAppointeecount, { state: false });
   };
-  const handelsearch=()=>{
+  const handelsearch = () => {
     if (hasValue(toDate) && !hasValue(fromDate)) {
       showErrorMessage("From Date can not be empty");
-    }else {
+    } else {
       handleSearch();
     }
-  }
+  };
 
   useEffect(() => {
-    handleSearch()
+    handleSearch();
   }, []);
   return (
     <PageLayout pageName={"Appointee count"}>
@@ -336,7 +369,7 @@ const AppointeeCount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormControl sx={{ width: "100%" }} size="large">
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
-              {statusCode !== undefined &&
+              {statusCode !== undefined && (
                 <Select
                   error={false}
                   labelId="demo-simple-select-label"
@@ -346,10 +379,12 @@ const AppointeeCount = () => {
                   value={statusCode}
                   label="Status"
                   inputProps={{
-                    style: inputPropsStyle
+                    style: inputPropsStyle,
                   }}
                   defaultValue={""}
-                  onChange={(e) => { setStatusCode(e.target.value) }}
+                  onChange={(e) => {
+                    setStatusCode(e.target.value);
+                  }}
                 >
                   {reportFilterStatusList &&
                     reportFilterStatusList.map((element, index) => {
@@ -357,17 +392,50 @@ const AppointeeCount = () => {
                         <MenuItem
                           key={index}
                           value={element.code}
-                        >{`${element.value}`}</MenuItem>
+                        >{`${element.name}`}</MenuItem>
                       );
                     })}
-                </Select>}
+                </Select>
+              )}
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormControl sx={{ width: "100%" }} size="large">
-
+              <InputLabel id="demo-simple-select-label">Process</InputLabel>
+              {processId !== undefined && (
+                <Select
+                  error={false}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  className="customeTextField"
+                  sx={inputFieldStyleAdded}
+                  value={processId}
+                  label="Process"
+                  inputProps={{
+                    style: inputPropsStyle,
+                  }}
+                  defaultValue={""}
+                  onChange={(e) => {
+                    setProcessId(e.target.value);
+                  }}
+                >
+                  {processList &&
+                    processList.map((element, index) => {
+                      return (
+                        <MenuItem
+                          key={index}
+                          value={element.id}
+                        >{`${element.name}`}</MenuItem>
+                      );
+                    })}
+                </Select>
+              )}
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={3}>
+            <FormControl sx={{ width: "100%" }} size="large">
               <InputLabel id="demo-simple-select-label">Entity</InputLabel>
-              {statusCode !== undefined &&
+              {statusCode !== undefined && (
                 <Select
                   error={false}
                   labelId="demo-multiple-select-label"
@@ -378,30 +446,32 @@ const AppointeeCount = () => {
                   value={entityId}
                   label="entityId"
                   inputProps={{
-                    style: inputPropsStyle
+                    style: inputPropsStyle,
                   }}
                   defaultValue={[]}
                   onChange={(e) => {
-                    setEntityId(e.target.value)
+                    setEntityId(e.target.value);
                   }}
                   renderValue={(selected) => {
-
                     return entityList
-                      .filter(element => selected.includes(element.id))
-                      .map(element => element.value)
-                      .join(', ');
+                      .filter((element) => selected.includes(element.id))
+                      .map((element) => element.name)
+                      .join(", ");
                   }}
                 >
                   {entityList &&
                     entityList.map((element, index) => {
                       return (
                         <MenuItem key={index} value={element.id}>
-                          <Checkbox checked={entityId.indexOf(element.id) > -1} />
-                          <ListItemText primary={element.value} />
+                          <Checkbox
+                            checked={entityId.indexOf(element.id) > -1}
+                          />
+                          <ListItemText primary={element.name} />
                         </MenuItem>
                       );
                     })}
-                </Select>}
+                </Select>
+              )}
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -426,11 +496,16 @@ const AppointeeCount = () => {
               label={"Appointee Name"}
               defaultValue={""}
               multiline
-
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3}>
-            <Box sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                position: "relative",
+              }}
+            >
               <DarkTooltip placement="top" title={"Search"} arrow>
                 <ResponsiveFab
                   variant="contained"
@@ -453,8 +528,12 @@ const AppointeeCount = () => {
                   <Refresh width={18} sx={{ color: "#fff" }} />
                 </ResponsiveFab>
               </DarkTooltip>
-              <Box sx={{ position: 'relative' }}>
-                <DarkTooltip placement="top" title={"Download Report(pdf)"} arrow>
+              <Box sx={{ position: "relative" }}>
+                <DarkTooltip
+                  placement="top"
+                  title={"Download Report(pdf)"}
+                  arrow
+                >
                   <ResponsiveFab
                     variant="contained"
                     size="small"
@@ -500,7 +579,6 @@ const AppointeeCount = () => {
                           <Assessment width={18} />
                         </ResponsiveFab>
                       </DarkTooltip>
-
                     </ListItemButton>
                     <ListItemButton component="a">
                       <DarkTooltip
@@ -518,15 +596,12 @@ const AppointeeCount = () => {
                           <ArticleIcon width={18} />
                         </ResponsiveFab>
                       </DarkTooltip>
-
                     </ListItemButton>
                   </List>
                 )}
               </Box>
-
             </Box>
           </Grid>
-
         </Grid>
         <CollapsibleDataTable
           headCells={appointeeCountHeadCell}
@@ -537,7 +612,6 @@ const AppointeeCount = () => {
       </CardLayout>
     </PageLayout>
   );
-
 };
 
 export default AppointeeCount;

@@ -1,7 +1,7 @@
 import ServerRequest from "server/utils/server-request";
-import { GetMastarDropdowndata_URL, RLE } from "shared/constants/constants";
+import { GetMastarDropdowndata_URL, GetRoleDropdowndata_URL, RLE } from "shared/constants/constants";
 
 const getRoleList = () => 
-    ServerRequest(`${GetMastarDropdowndata_URL}${RLE}`, "GET", "", "", "", false);
+    ServerRequest(`${GetRoleDropdowndata_URL}`, "POST", "", "", "", false);
 
 export { getRoleList };
