@@ -1,31 +1,1 @@
-import { Typography } from "@mui/material";
-
-export const generateUPloadErrorMessage = ({duplicateCount, invalidUserCount, nonExsitingCount}) => {
-    let message = "";
-    const lineStart = `Excel file has`
-    const lineEnd = `Please check your mail to know more.`
-    const newLine = `Please download the duplicate &/or invalid file from below.`
-    // if (!rawFileDataCount) {
-    //     message = `${message} no unique data to process,`
-    // }
-    if (duplicateCount) {
-        message = ` ${message} ${duplicateCount} duplicate data;`
-    }
-    if (invalidUserCount) {
-        message = `${message} ${invalidUserCount} invalid data.`
-    }
-    if (nonExsitingCount) {
-        message = `${message} ${nonExsitingCount} non existing data,`
-    }
-    message =
-        <>
-            <Typography>
-                {lineStart}
-                {message}
-                {lineEnd}
-            </Typography>
-            <Typography>{newLine}</Typography>
-        </>
-    // message = `${lineStart} ${message} ${messageEnd}`
-    return message
-}
+import { Typography } from '@mui/material';export const generateUPloadErrorMessage = ({  duplicateCount,  invalidUserCount,  nonExsitingCount,}) => {  let message = '';  const lineStart = `Excel file has`;  const lineEnd = `Please check your mail to know more.`;  const newLine = `Please download the duplicate &/or invalid file from below.`;  if (duplicateCount) {    message = ` ${message} ${duplicateCount} duplicate data;`;  }  if (invalidUserCount) {    message = `${message} ${invalidUserCount} invalid data.`;  }  if (nonExsitingCount) {    message = `${message} ${nonExsitingCount} non existing data,`;  }  message = (    <>      <Typography>        {lineStart}        {message}        {lineEnd}      </Typography>      <Typography>{newLine}</Typography>    </>  );  return message;};

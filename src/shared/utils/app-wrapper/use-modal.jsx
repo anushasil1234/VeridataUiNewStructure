@@ -1,81 +1,1 @@
-import { useState } from 'react';
-
-const useModal = () => {
-  const [isViewOpen, setIsViewOpen] = useState(false);
-  const [isManualVerificationViewOpen, setIsManualVerificationViewOpen] = useState(false);
-  const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);
-  const [isEmploymentViewOpen, setEmploymentIsViewOpen] = useState(false);
-  const [confirmationModelOpen, setConfirmationModelOpen] = useState(false);
-  const [confirmationYesNoModelOpen, setConfirmationYesNoModelOpen] = useState(false);
-  const [consentModalOpen, setConsentModalOpen] = useState(false);
-  const [infoModelOpen, setInfoModelOpen] = useState(false);
-  const [otpFormOpen, setOtpFormOpen] = useState(false);
-  const [otpSubmitionModelOpen, setOtpSubmitionModelOpen] = useState(false);
-  const [remarksModelOpen, setRemarksModelOpen] = useState(false);
-  const [submitModelOpen, setSubmitModelOpen] = useState(false);
-  const [remedyModelOpen, setRemedyModelOpen] = useState(false);
-  const [passwordSubmitionModelOpen, setPasswordSubmitionModelOpen] = useState(false);
-  const [filePasswordSubmitionModelOpen, setFilePasswordSubmitionModelOpen] = useState(false);
-  const [documentModelOpen, setDocumentModelOpen] = useState(false);
-  const [isRemarksInputViewOpen, setRemarksInputViewOpen] = useState(false);
-
-  const closeAllModals = () => {
-    setIsViewOpen(false);
-    setIsManualVerificationViewOpen(false);
-    setPassbookIsViewOpen(false);
-    setEmploymentIsViewOpen(false);
-    setConfirmationModelOpen(false);
-    setConfirmationYesNoModelOpen(false);
-    setConsentModalOpen(false);
-    setInfoModelOpen(false);
-    setOtpFormOpen(false);
-    setOtpSubmitionModelOpen(false);
-    setRemarksModelOpen(false);
-    setSubmitModelOpen(false);
-    setRemedyModelOpen(false);
-    setPasswordSubmitionModelOpen(false);
-    setFilePasswordSubmitionModelOpen(false);
-    setDocumentModelOpen(false);
-    setRemarksInputViewOpen(false);
-  };
-
-  return {
-    isViewOpen,
-    isManualVerificationViewOpen,
-    isPassbookViewOpen,
-    isEmploymentViewOpen,
-    confirmationModelOpen,
-    confirmationYesNoModelOpen,
-    consentModalOpen,
-    infoModelOpen,
-    otpFormOpen,
-    otpSubmitionModelOpen,
-    remarksModelOpen,
-    submitModelOpen,
-    remedyModelOpen,
-    passwordSubmitionModelOpen,
-    filePasswordSubmitionModelOpen,
-    documentModelOpen,
-    isRemarksInputViewOpen,
-    setIsViewOpen,
-    setIsManualVerificationViewOpen,
-    setPassbookIsViewOpen,
-    setEmploymentIsViewOpen,
-    setConfirmationModelOpen,
-    setConfirmationYesNoModelOpen,
-    setConsentModalOpen,
-    setInfoModelOpen,
-    setOtpFormOpen,
-    setOtpSubmitionModelOpen,
-    setRemarksModelOpen,
-    setSubmitModelOpen,
-    setRemedyModelOpen,
-    setPasswordSubmitionModelOpen,
-    setFilePasswordSubmitionModelOpen,
-    setDocumentModelOpen,
-    setRemarksInputViewOpen,
-    closeAllModals,
-  };
-};
-
-export default useModal;
+import { useState } from 'react';const useModal = () => {  const [isViewOpen, setIsViewOpen] = useState(false);  const [isManualVerificationViewOpen, setIsManualVerificationViewOpen] = useState(false);  const [isPassbookViewOpen, setPassbookIsViewOpen] = useState(false);  const [isEmploymentViewOpen, setEmploymentIsViewOpen] = useState(false);  const [confirmationModelOpen, setConfirmationModelOpen] = useState(false);  const [confirmationYesNoModelOpen, setConfirmationYesNoModelOpen] = useState(false);  const [consentModalOpen, setConsentModalOpen] = useState(false);  const [infoModelOpen, setInfoModelOpen] = useState(false);  const [otpFormOpen, setOtpFormOpen] = useState(false);  const [otpSubmitionModelOpen, setOtpSubmitionModelOpen] = useState(false);  const [remarksModelOpen, setRemarksModelOpen] = useState(false);  const [submitModelOpen, setSubmitModelOpen] = useState(false);  const [remedyModelOpen, setRemedyModelOpen] = useState(false);  const [passwordSubmitionModelOpen, setPasswordSubmitionModelOpen] = useState(false);  const [filePasswordSubmitionModelOpen, setFilePasswordSubmitionModelOpen] = useState(false);  const [documentModelOpen, setDocumentModelOpen] = useState(false);  const [isRemarksInputViewOpen, setRemarksInputViewOpen] = useState(false);  const closeAllModals = () => {    setIsViewOpen(false);    setIsManualVerificationViewOpen(false);    setPassbookIsViewOpen(false);    setEmploymentIsViewOpen(false);    setConfirmationModelOpen(false);    setConfirmationYesNoModelOpen(false);    setConsentModalOpen(false);    setInfoModelOpen(false);    setOtpFormOpen(false);    setOtpSubmitionModelOpen(false);    setRemarksModelOpen(false);    setSubmitModelOpen(false);    setRemedyModelOpen(false);    setPasswordSubmitionModelOpen(false);    setFilePasswordSubmitionModelOpen(false);    setDocumentModelOpen(false);    setRemarksInputViewOpen(false);  };  return {    isViewOpen,    isManualVerificationViewOpen,    isPassbookViewOpen,    isEmploymentViewOpen,    confirmationModelOpen,    confirmationYesNoModelOpen,    consentModalOpen,    infoModelOpen,    otpFormOpen,    otpSubmitionModelOpen,    remarksModelOpen,    submitModelOpen,    remedyModelOpen,    passwordSubmitionModelOpen,    filePasswordSubmitionModelOpen,    documentModelOpen,    isRemarksInputViewOpen,    setIsViewOpen,    setIsManualVerificationViewOpen,    setPassbookIsViewOpen,    setEmploymentIsViewOpen,    setConfirmationModelOpen,    setConfirmationYesNoModelOpen,    setConsentModalOpen,    setInfoModelOpen,    setOtpFormOpen,    setOtpSubmitionModelOpen,    setRemarksModelOpen,    setSubmitModelOpen,    setRemedyModelOpen,    setPasswordSubmitionModelOpen,    setFilePasswordSubmitionModelOpen,    setDocumentModelOpen,    setRemarksInputViewOpen,    closeAllModals,  };};export default useModal;

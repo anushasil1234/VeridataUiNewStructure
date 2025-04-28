@@ -1,13 +1,1 @@
-import { Avatar, ListItemAvatar } from '@mui/material'
-import { stepAvataContainerStyle } from 'app'
-import React from 'react'
-
-const StepCount = ({stepNumber}) => {
-    return (
-        <ListItemAvatar sx={stepAvataContainerStyle}>
-            <Avatar alt={stepNumber} src="/static/images/avatar/3.jpg" />
-        </ListItemAvatar>
-    )
-}
-
-export default StepCount
+import { Avatar, ListItemAvatar } from '@mui/material';import { stepAvataContainerStyle } from 'app';import React from 'react';const StepCount = ({ stepNumber }) => {  return (    <ListItemAvatar sx={stepAvataContainerStyle}>      <Avatar alt={stepNumber} src='/static/images/avatar/3.jpg' />    </ListItemAvatar>  );};export default StepCount;

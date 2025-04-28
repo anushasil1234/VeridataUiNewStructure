@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetCandidateStatusDetails_URL } from "shared/constants/constants";
-
-const getAppointeeStatusDetails = (appointeeId) => ServerRequest(`${GetCandidateStatusDetails_URL}${appointeeId}`, "POST");
-
-export { getAppointeeStatusDetails };
+import ServerRequest from 'server/utils/server-request';import { GetCandidateStatusDetails_URL } from 'shared/constants/constants';const getAppointeeStatusDetails = (appointeeId) =>  ServerRequest(`${GetCandidateStatusDetails_URL}${appointeeId}`, 'POST');export { getAppointeeStatusDetails };

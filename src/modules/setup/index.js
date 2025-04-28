@@ -1,1 +1,1 @@
-export * from './general-setup-view'
+export * from './general-setup-view';

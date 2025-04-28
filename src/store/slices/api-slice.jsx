@@ -1,17 +1,1 @@
-import { createSlice} from "@reduxjs/toolkit"
-
-const ApiSlice = createSlice({
-    name: "ApiSlice",
-    initialState: [],
-    reducers: {
-        storeApi(state, action) {
-            state.push(action.payload);
-        },
-        removeApi(state, action) {
-            state.pop();
-        },
-    }
-})
-
-export default ApiSlice.reducer
-export const {storeApi, removeApi} = ApiSlice.actions;
+import { createSlice } from '@reduxjs/toolkit';const ApiSlice = createSlice({  name: 'ApiSlice',  initialState: [],  reducers: {    storeApi(state, action) {      state.push(action.payload);    },    removeApi(state, action) {      state.pop();    },  },});export default ApiSlice.reducer;export const { storeApi, removeApi } = ApiSlice.actions;

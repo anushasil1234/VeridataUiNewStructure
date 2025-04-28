@@ -1,13 +1,1 @@
-const { fileVerificationEnums } = require("shared/constants/constants");
-
-const isEPFOSelectionDisabled = ({verificationFieldName, verificationFieldSet}) => {
-    // let isDisabled = true;
-    // if (verificationFieldName === fileVerificationEnums.docEPFO &&
-    //     verificationFieldSet[fileVerificationEnums.docFname] === true
-    // ) {
-    //     isDisabled = false;
-    // }
-    // return isDisabled;
-    return false; 
-}
-export default isEPFOSelectionDisabled
+const { fileVerificationEnums } = require('shared/constants/constants');const isEPFOSelectionDisabled = ({ verificationFieldName, verificationFieldSet }) => {  return false;};export default isEPFOSelectionDisabled;

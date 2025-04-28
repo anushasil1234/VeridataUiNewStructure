@@ -1,6 +1,1 @@
-export const languageOptions = [
-    { value: "en", label: "English" },
-    { value: "hi", label: "Hindi" },
-    { value: "bng", label: "Bengali" },
-  ];
-  
+export const languageOptions = [  { value: 'en', label: 'English' },  { value: 'hi', label: 'Hindi' },  { value: 'bng', label: 'Bengali' },];

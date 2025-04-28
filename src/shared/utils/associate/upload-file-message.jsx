@@ -1,5 +1,1 @@
-const uploadFileMessage = (message) => {
-  return `Please upload your ${message}`
-}
-
-export default uploadFileMessage
+const uploadFileMessage = (message) => {  return `Please upload your ${message}`;};export default uploadFileMessage;

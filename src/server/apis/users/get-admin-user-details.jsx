@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetAdminUserList_URL } from "shared/constants/constants";
-
-const getAdminUserDetails = () => 
-    ServerRequest(GetAdminUserList_URL, "GET", null, null, true);
-
-export { getAdminUserDetails };
+import ServerRequest from 'server/utils/server-request';import { GetAdminUserList_URL } from 'shared/constants/constants';const getAdminUserDetails = () => ServerRequest(GetAdminUserList_URL, 'GET', null, null, true);export { getAdminUserDetails };

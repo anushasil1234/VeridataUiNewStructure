@@ -4,12 +4,13 @@ Date : 2023-10-10 18:30:29
 
 Directory d:\\Dibyojit\\elogix_projects\\veridata\\general_setupImp\\pfc_ui
 
-Total : 0 files,  0 codes, 0 comments, 0 blanks, all 0 lines
+Total : 0 files, 0 codes, 0 comments, 0 blanks, all 0 lines
 
 [Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details
 
 ## Files
+
 | filename | language | code | comment | blank | total |
-| :--- | :--- | ---: | ---: | ---: | ---: |
+| :------- | :------- | ---: | ------: | ----: | ----: |
 
 [Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details

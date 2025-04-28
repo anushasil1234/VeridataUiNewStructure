@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetMastarDropdowndata_URL, GetQualificationDropdowndata_URL, QUA } from "shared/constants/constants";
-
-const getQualificationList = () => ServerRequest(`${GetQualificationDropdowndata_URL}`, "POST", "", "", "", false);
-
-export { getQualificationList };
+import ServerRequest from 'server/utils/server-request';import {  GetMastarDropdowndata_URL,  GetQualificationDropdowndata_URL,  QUA,} from 'shared/constants/constants';const getQualificationList = () =>  ServerRequest(`${GetQualificationDropdowndata_URL}`, 'POST', '', '', '', false);export { getQualificationList };

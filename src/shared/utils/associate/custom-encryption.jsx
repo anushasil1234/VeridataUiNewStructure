@@ -1,48 +1,1 @@
-const iv = new Uint8Array(process.env.REACT_APP_ENCRYPTION_KEY_LENGTH);
-const textEncoder = new TextEncoder();
-const key = process.env.REACT_APP_ENCRYPTION_KEY;
-const algorithm = {
-    name: 'AES-CBC',
-    iv: iv,
-};
-
-const generateKey = async (type) => {
-    return await crypto.subtle.importKey(
-        'raw',
-        textEncoder.encode(key),
-        { name: 'AES-CBC' },
-        false,
-        [type]
-    );
-}
-
-export const encryptedData = async (plainText) => {
-    const textBuffer = textEncoder.encode(plainText);
-
-    const importedKey = await generateKey('encrypt');
-    const encryptedData = await crypto.subtle.encrypt(
-        algorithm,
-        importedKey,
-        textBuffer
-    );
-
-    const encryptedArray = new Uint8Array(encryptedData);
-    const base64Encoded = btoa(String.fromCharCode(...encryptedArray));
-
-    return base64Encoded;
-}
-
-
- export const decryptedData = async (cipherText) => {
-    const buffer = new Uint8Array(atob(cipherText).split('').map(c => c.charCodeAt(0)));
-
-    const importedKey = await generateKey('decrypt');
-
-    const decryptedData = await crypto.subtle.decrypt(
-        algorithm,
-        importedKey,
-        buffer
-    );
-    return new TextDecoder().decode(decryptedData);
-};
-
+const iv = new Uint8Array(process.env.REACT_APP_ENCRYPTION_KEY_LENGTH);const textEncoder = new TextEncoder();const key = process.env.REACT_APP_ENCRYPTION_KEY;const algorithm = {  name: 'AES-CBC',  iv: iv,};const generateKey = async (type) => {  return await crypto.subtle.importKey('raw', textEncoder.encode(key), { name: 'AES-CBC' }, false, [    type,  ]);};export const encryptedData = async (plainText) => {  const textBuffer = textEncoder.encode(plainText);  const importedKey = await generateKey('encrypt');  const encryptedData = await crypto.subtle.encrypt(algorithm, importedKey, textBuffer);  const encryptedArray = new Uint8Array(encryptedData);  const base64Encoded = btoa(String.fromCharCode(...encryptedArray));  return base64Encoded;};export const decryptedData = async (cipherText) => {  const buffer = new Uint8Array(    atob(cipherText)      .split('')      .map((c) => c.charCodeAt(0)),  );  const importedKey = await generateKey('decrypt');  const decryptedData = await crypto.subtle.decrypt(algorithm, importedKey, buffer);  return new TextDecoder().decode(decryptedData);};

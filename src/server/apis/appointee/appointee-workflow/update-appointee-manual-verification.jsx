@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { dataSubmitionMsg, UpdateAppointeeManualVerification_URL } from "shared/constants/constants";
-
-const UpdateAppointeeManualVerification = (payLoad) => 
-    ServerRequest(UpdateAppointeeManualVerification_URL, "POST", payLoad, dataSubmitionMsg);
-
-export { UpdateAppointeeManualVerification };
+import ServerRequest from 'server/utils/server-request';import {  dataSubmitionMsg,  UpdateAppointeeManualVerification_URL,} from 'shared/constants/constants';const UpdateAppointeeManualVerification = (payLoad) =>  ServerRequest(UpdateAppointeeManualVerification_URL, 'POST', payLoad, dataSubmitionMsg);export { UpdateAppointeeManualVerification };

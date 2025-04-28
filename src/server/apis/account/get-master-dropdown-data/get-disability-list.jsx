@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetMastarDropdowndata_URL, DIS, GetDisablityDropdowndata_URL } from "shared/constants/constants";
-
-const getDisabilityList = () => ServerRequest(`${GetDisablityDropdowndata_URL}`, "POST", "", "", "", false);
-
-export { getDisabilityList };
+import ServerRequest from 'server/utils/server-request';import {  GetMastarDropdowndata_URL,  DIS,  GetDisablityDropdowndata_URL,} from 'shared/constants/constants';const getDisabilityList = () =>  ServerRequest(`${GetDisablityDropdowndata_URL}`, 'POST', '', '', '', false);export { getDisabilityList };

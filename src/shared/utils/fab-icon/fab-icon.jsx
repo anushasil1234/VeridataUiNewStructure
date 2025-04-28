@@ -1,19 +1,1 @@
-import { Fab } from '@mui/material';
-import React from 'react'
-import DarkTooltip from '../tooltip/dark-tooltip';
-
-export const FabIcon = ({ props }) => {
-    const { fabStyle, handleClick, color, selectedIndex, ariaLabel, icon, toolTipTitle, index, placement, size } = props;
-    return (
-        <DarkTooltip placement={placement ? placement : "left-end"} title={toolTipTitle} arrow>
-            <Fab size={size ? size : null}
-                sx={selectedIndex && selectedIndex === index ? { ...fabStyle } : null}
-                index={index}
-                onClick={handleClick}
-                color={color}
-                aria-label={ariaLabel}>
-                {icon}
-            </Fab>
-        </DarkTooltip>
-    )
-}
+import { Fab } from '@mui/material';import React from 'react';import DarkTooltip from '../tooltip/dark-tooltip';export const FabIcon = ({ props }) => {  const {    fabStyle,    handleClick,    color,    selectedIndex,    ariaLabel,    icon,    toolTipTitle,    index,    placement,    size,  } = props;  return (    <DarkTooltip placement={placement ? placement : 'left-end'} title={toolTipTitle} arrow>      <Fab        size={size ? size : null}        sx={selectedIndex && selectedIndex === index ? { ...fabStyle } : null}        index={index}        onClick={handleClick}        color={color}        aria-label={ariaLabel}      >        {icon}      </Fab>    </DarkTooltip>  );};

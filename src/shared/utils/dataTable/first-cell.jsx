@@ -1,28 +1,1 @@
-import { Box, Typography } from '@mui/material'
-import { firstCell, text2 } from 'app'
-import React from 'react'
-
-export const FirstCell = (cellElements) => {
-    return (
-        <Box
-            sx={firstCell}
-        >
-            <Box>
-                <Typography variant="subtitle2" fontWeight={550}>
-                    {cellElements[0]}
-                </Typography>
-                {cellElements.slice(1, 3).map((element, index) => {
-                    return (
-                        <Typography
-                            key={index}
-                            sx={text2}
-                        >
-                            {element}
-                        </Typography>
-                    )
-                })}
-
-            </Box>
-        </Box>
-    )
-}
+import { Box, Typography } from '@mui/material';import { firstCell, text2 } from 'app';import React from 'react';export const FirstCell = (cellElements) => {  return (    <Box sx={firstCell}>      <Box>        <Typography variant='subtitle2' fontWeight={550}>          {cellElements[0]}        </Typography>        {cellElements.slice(1, 3).map((element, index) => {          return (            <Typography key={index} sx={text2}>              {element}            </Typography>          );        })}      </Box>    </Box>  );};

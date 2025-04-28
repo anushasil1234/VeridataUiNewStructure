@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetFaqData_URL } from "shared/constants/constants";
-
-const GetFaqData = () => ServerRequest(GetFaqData_URL, "GET");
-
-export { GetFaqData };
+import ServerRequest from 'server/utils/server-request';import { GetFaqData_URL } from 'shared/constants/constants';const GetFaqData = () => ServerRequest(GetFaqData_URL, 'GET');export { GetFaqData };

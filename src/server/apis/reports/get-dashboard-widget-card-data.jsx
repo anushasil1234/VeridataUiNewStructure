@@ -1,8 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetDashboardWidgetCardData_URL } from "shared/constants/constants";
-
-const getDashboardWidgetCardData = (_filterday, _isfilterd) => 
-    ServerRequest(GetDashboardWidgetCardData_URL(_filterday, _isfilterd), "GET");
-
-export { getDashboardWidgetCardData };
-    
+import ServerRequest from 'server/utils/server-request';import { GetDashboardWidgetCardData_URL } from 'shared/constants/constants';const getDashboardWidgetCardData = (_filterday, _isfilterd) =>  ServerRequest(GetDashboardWidgetCardData_URL(_filterday, _isfilterd), 'GET');export { getDashboardWidgetCardData };

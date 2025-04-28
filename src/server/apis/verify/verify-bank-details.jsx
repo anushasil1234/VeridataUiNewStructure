@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { VerifyBankAccountDetails_URL } from "shared/constants/constants";
-
-const verifyBankDetails = (payLoad) => ServerRequest(VerifyBankAccountDetails_URL, "POST", payLoad);
-
-export { verifyBankDetails };
+import ServerRequest from 'server/utils/server-request';import { VerifyBankAccountDetails_URL } from 'shared/constants/constants';const verifyBankDetails = (payLoad) => ServerRequest(VerifyBankAccountDetails_URL, 'POST', payLoad);export { verifyBankDetails };

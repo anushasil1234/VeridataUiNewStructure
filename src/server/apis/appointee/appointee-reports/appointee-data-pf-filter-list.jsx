@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { downloadpfReport_URL } from "shared/constants/constants";
-
-const AppointeeDataPfFilteRList = (payLoad) => ServerRequest(downloadpfReport_URL, "POST", payLoad, null, true);
-
-export { AppointeeDataPfFilteRList };
+import ServerRequest from 'server/utils/server-request';import { downloadpfReport_URL } from 'shared/constants/constants';const AppointeeDataPfFilteRList = (payLoad) =>  ServerRequest(downloadpfReport_URL, 'POST', payLoad, null, true);export { AppointeeDataPfFilteRList };

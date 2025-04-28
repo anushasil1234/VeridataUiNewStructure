@@ -1,31 +1,1 @@
-import React from 'react'
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import Button1 from '../button/button1';
-import { infoDialogTitleStyle } from 'app';
-
-
-const InfoModel = ({ open, confirmationModelContent }) => {
-  const { dialogContentText, dialogTitle, dialogContentComponent, fullWidth = false,
-    maxWidth = "lg", btnName = "Ok", handleClickOnOk } = confirmationModelContent || "";
-
-  return (
-    <Dialog open={open} fullWidth={fullWidth} maxWidth={maxWidth} >
-      <DialogTitle sx={infoDialogTitleStyle}>{dialogTitle}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          {dialogContentText}
-        </DialogContentText>
-
-        {dialogContentComponent}
-
-      </DialogContent>
-      <DialogActions >
-        <Button1  onClick={handleClickOnOk}>
-          {btnName}
-        </Button1>
-      </DialogActions>
-    </Dialog>
-  )
-}
-
-export default InfoModel
+import React from 'react';import {  Dialog,  DialogActions,  DialogContent,  DialogContentText,  DialogTitle,} from '@mui/material';import Button1 from '../button/button1';import { infoDialogTitleStyle } from 'app';const InfoModel = ({ open, confirmationModelContent }) => {  const {    dialogContentText,    dialogTitle,    dialogContentComponent,    fullWidth = false,    maxWidth = 'lg',    btnName = 'Ok',    handleClickOnOk,  } = confirmationModelContent || '';  return (    <Dialog open={open} fullWidth={fullWidth} maxWidth={maxWidth}>      <DialogTitle sx={infoDialogTitleStyle}>{dialogTitle}</DialogTitle>      <DialogContent>        <DialogContentText>{dialogContentText}</DialogContentText>        {dialogContentComponent}      </DialogContent>      <DialogActions>        <Button1 onClick={handleClickOnOk}>{btnName}</Button1>      </DialogActions>    </Dialog>  );};export default InfoModel;

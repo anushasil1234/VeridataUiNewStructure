@@ -1,17 +1,1 @@
-import { createSlice} from "@reduxjs/toolkit"
-
-const DataSlice = createSlice({
-    name: "DataSlice",
-    initialState: [],
-    reducers: {
-        storeData(state, action) {
-            state.push(action.payload);
-        },
-        removeData(state) {
-            state.pop();
-        },
-    }
-})
-
-export default DataSlice.reducer
-export const {storeData, removeData} = DataSlice.actions;
+import { createSlice } from '@reduxjs/toolkit';const DataSlice = createSlice({  name: 'DataSlice',  initialState: [],  reducers: {    storeData(state, action) {      state.push(action.payload);    },    removeData(state) {      state.pop();    },  },});export default DataSlice.reducer;export const { storeData, removeData } = DataSlice.actions;

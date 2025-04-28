@@ -1,19 +1,1 @@
-import { createSlice } from "@reduxjs/toolkit"
-const defaultInitialState = []
-
-const ManualValidationResponseStatusSlice = createSlice({
-    name: "manualValidationResponseStatusSlice",
-    initialState: defaultInitialState,
-    reducers: {
-        storeManualValidationResponseStatusSlice(state, action) {
-            state.push(action.payload);
-        },
-        removeManualValidationResponseStatusSlice(state) {
-            state.length = 0; // Clear the array
-            state.push(...defaultInitialState);
-        },
-    }
-})
-
-export default ManualValidationResponseStatusSlice.reducer
-export const { storeManualValidationResponseStatusSlice, removeManualValidationResponseStatusSlice } = ManualValidationResponseStatusSlice.actions;
+import { createSlice } from '@reduxjs/toolkit';const defaultInitialState = [];const ManualValidationResponseStatusSlice = createSlice({  name: 'manualValidationResponseStatusSlice',  initialState: defaultInitialState,  reducers: {    storeManualValidationResponseStatusSlice(state, action) {      state.push(action.payload);    },    removeManualValidationResponseStatusSlice(state) {      state.length = 0;       state.push(...defaultInitialState);    },  },});export default ManualValidationResponseStatusSlice.reducer;export const {  storeManualValidationResponseStatusSlice,  removeManualValidationResponseStatusSlice,} = ManualValidationResponseStatusSlice.actions;

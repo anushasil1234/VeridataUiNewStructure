@@ -1,128 +1,1 @@
-import { Button, Grid } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { contactNoEmptyMsg, emailEmptyMsg, emptyUserNameField, invalidEmailMsg, invalidcontactNoMsg, roleEmptyMsg, toUserlist } from 'shared/constants/constants'
-import { CardLayout, PageLayout, hasValue, validationsCheck } from 'shared/utils'
-import UserCreationForm from '../user-creation-form/user-creation-form'
-import { useLocation } from 'react-router-dom'
-import { getInputList, postUpdateUserDetails } from 'server/apis'
-import showErrorMessage from 'shared/utils/associate/show-error-message'
-
-const UpdateUserView = () => {
-
-    const { state } = useLocation();
-    const id = state && state.userId;
-
-    const loggedInData = useSelector(state => state.loggedInData);
-    const apiSlice = useSelector(state => state.apiSlice);
-    const commonHooksFunctionSlice = useSelector(state => state.commonHooksFunctionSlice);
-
-    const { navigateTo } = commonHooksFunctionSlice[0];
-    // const { postUpdateUserDetails
-    //     //  getInputList 
-    //     } = apiSlice[0];
-    const { userId, userTypeId } = loggedInData[0];
-    // const popUpSlice = useSelector(state => state.popUpSlice);
-    // const showErrorMessage = popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-
-    const [userName, setUserName] = useState();
-    const [userEmail, setUserEmail] = useState();
-    const [password, setPassword] = useState();
-    const [userCode, setUserCode] = useState();
-    const [contactNumber, setContactNumber] = useState();
-    const [role, setRole] = useState();
-
-
-    const saveUserDetails = async () => {
-
-        if (!hasValue(userName)) {
-            showErrorMessage(emptyUserNameField);
-            return   
-        }
-
-        if (!hasValue(userEmail) ) {
-            showErrorMessage(emailEmptyMsg);
-            return
-        }
-
-        if (hasValue(userEmail)  && !validationsCheck(userEmail.trim(), 'email')) {
-            showErrorMessage(invalidEmailMsg);
-            return
-        }
-       
-        if (!hasValue(contactNumber)) {
-            showErrorMessage(contactNoEmptyMsg);
-            return
-        }
-        if (hasValue(contactNumber)  && !validationsCheck(contactNumber.trim(), 'phnNumber')) {
-            showErrorMessage(invalidcontactNoMsg);
-            return
-        }
-        if (!hasValue(role)) {
-            showErrorMessage(roleEmptyMsg);
-            return
-        }
-        const payLoad = {
-            id: id,
-            userCode: userCode,
-            userName: userName,
-            password: password,
-            emailId: userEmail,
-            phone: contactNumber,
-            roleId: role,
-            userTypeId: userTypeId,
-            userId: userId
-        }
-        await postUpdateUserDetails(payLoad);
-    }
-    const setInputValues = async () => {
-        const response = await getInputList(id);
-        if (response) {
-            const { responseInfo } = response;
-            const { emailId, roleId, userName, password, phone, userCode } = responseInfo;
-            hasValue(userName) ? setUserName(userName) : setUserName("");
-            hasValue(password) ? setPassword(password) : setPassword("");
-            hasValue(emailId) ? setUserEmail(emailId) : setUserEmail("");
-            hasValue(phone) ? setContactNumber(phone) : setContactNumber("");
-            hasValue(userCode) ? setUserCode(userCode) : setUserCode("");
-            hasValue(roleId) ? setRole(roleId) : setRole();
-        }
-    }
-    useEffect(() => {
-        setInputValues();
-    }, [])
-
-    return (
-        <PageLayout pageName={"Update User"}>
-            <CardLayout>
-                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid container rowSpacing={1} columnSpacing={2.5} item xs={8}>
-                        {
-                            role && <UserCreationForm
-                                userName={userName}
-                                userEmail={userEmail}
-                                password={password}
-                                userCode={userCode}
-                                contactNumber={contactNumber}
-                                role={role}
-                                setUserName={setUserName}
-                                setUserEmail={setUserEmail}
-                                setPassword={setPassword}
-                                setUserCode={setUserCode}
-                                setContactNumber={setContactNumber}
-                                setRole={setRole}
-                                action={'U'}
-                            />
-                        }
-                        <Grid item xs={12} md={6} >
-                            <Button variant='contained' sx={{ marginLeft: "5px" }} onClick={saveUserDetails}>Update</Button>
-                            <Button onClick={() => navigateTo(toUserlist)} variant='contained' sx={{ marginLeft: "5px" }}>Back</Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </CardLayout>
-        </PageLayout>
-    )
-}
-
-export default UpdateUserView
+import { Button, Grid } from '@mui/material';import React, { useEffect, useState } from 'react';import { useSelector } from 'react-redux';import {  contactNoEmptyMsg,  emailEmptyMsg,  emptyUserNameField,  invalidEmailMsg,  invalidcontactNoMsg,  roleEmptyMsg,  toUserlist,} from 'shared/constants/constants';import { CardLayout, PageLayout, hasValue, validationsCheck } from 'shared/utils';import UserCreationForm from '../user-creation-form/user-creation-form';import { useLocation } from 'react-router-dom';import { getInputList, postUpdateUserDetails } from 'server/apis';import showErrorMessage from 'shared/utils/associate/show-error-message';const UpdateUserView = () => {  const { state } = useLocation();  const id = state && state.userId;  const loggedInData = useSelector((state) => state.loggedInData);  const apiSlice = useSelector((state) => state.apiSlice);  const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);  const { navigateTo } = commonHooksFunctionSlice[0];  const { userId, userTypeId } = loggedInData[0];  const [userName, setUserName] = useState();  const [userEmail, setUserEmail] = useState();  const [password, setPassword] = useState();  const [userCode, setUserCode] = useState();  const [contactNumber, setContactNumber] = useState();  const [role, setRole] = useState();  const saveUserDetails = async () => {    if (!hasValue(userName)) {      showErrorMessage(emptyUserNameField);      return;    }    if (!hasValue(userEmail)) {      showErrorMessage(emailEmptyMsg);      return;    }    if (hasValue(userEmail) && !validationsCheck(userEmail.trim(), 'email')) {      showErrorMessage(invalidEmailMsg);      return;    }    if (!hasValue(contactNumber)) {      showErrorMessage(contactNoEmptyMsg);      return;    }    if (hasValue(contactNumber) && !validationsCheck(contactNumber.trim(), 'phnNumber')) {      showErrorMessage(invalidcontactNoMsg);      return;    }    if (!hasValue(role)) {      showErrorMessage(roleEmptyMsg);      return;    }    const payLoad = {      id: id,      userCode: userCode,      userName: userName,      password: password,      emailId: userEmail,      phone: contactNumber,      roleId: role,      userTypeId: userTypeId,      userId: userId,    };    await postUpdateUserDetails(payLoad);  };  const setInputValues = async () => {    const response = await getInputList(id);    if (response) {      const { responseInfo } = response;      const { emailId, roleId, userName, password, phone, userCode } = responseInfo;      hasValue(userName) ? setUserName(userName) : setUserName('');      hasValue(password) ? setPassword(password) : setPassword('');      hasValue(emailId) ? setUserEmail(emailId) : setUserEmail('');      hasValue(phone) ? setContactNumber(phone) : setContactNumber('');      hasValue(userCode) ? setUserCode(userCode) : setUserCode('');      hasValue(roleId) ? setRole(roleId) : setRole();    }  };  useEffect(() => {    setInputValues();  }, []);  return (    <PageLayout pageName={'Update User'}>      <CardLayout>        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>          <Grid container rowSpacing={1} columnSpacing={2.5} item xs={8}>            {role && (              <UserCreationForm                userName={userName}                userEmail={userEmail}                password={password}                userCode={userCode}                contactNumber={contactNumber}                role={role}                setUserName={setUserName}                setUserEmail={setUserEmail}                setPassword={setPassword}                setUserCode={setUserCode}                setContactNumber={setContactNumber}                setRole={setRole}                action={'U'}              />            )}            <Grid item xs={12} md={6}>              <Button variant='contained' sx={{ marginLeft: '5px' }} onClick={saveUserDetails}>                Update              </Button>              <Button                onClick={() => navigateTo(toUserlist)}                variant='contained'                sx={{ marginLeft: '5px' }}              >                Back              </Button>            </Grid>          </Grid>        </Grid>      </CardLayout>    </PageLayout>  );};export default UpdateUserView;

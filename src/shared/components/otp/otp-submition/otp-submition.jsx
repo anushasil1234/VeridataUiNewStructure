@@ -1,278 +1,1 @@
-import { Stack, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import {
-  otpInputSeperatorSx,
-  otpInputSize,
-  hideBoxSx,
-  otpModalTextStyle,
-  otpTextFieldStyle,
-} from "app";
-import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { invalidOtpMsg } from "shared/constants/constants";
-import { ckeckValidNumber } from "shared/utils";
-import secondsToMinuteString from "shared/utils/associate/seconds-to-minute-string";
-import showErrorMessage from "shared/utils/associate/show-error-message";
-import Button1 from "shared/utils/button/button1";
-import FullScreenModel from "shared/utils/modals/fullscreen-modal";
-
-let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {
-  const { otpSubmitionFunction, timeoutTimer, setTimeoutTimer } =
-    otpSubmitionProps || "";
-
-  // const popUpSlice = useSelector((state) => state.popUpSlice);
-  // const showErrorMessage =
-  //   popUpSlice && popUpSlice[0] && popUpSlice[0].showErrorMessage;
-
-
-  const [submitButtonStatus, setSubmitButtonStatus] = useState(false);
-  const [input1, setInput1] = useState("");
-  const [input2, setInput2] = useState("");
-  const [input3, setInput3] = useState("");
-  const [input4, setInput4] = useState("");
-  const [input5, setInput5] = useState("");
-  const [input6, setInput6] = useState("");
-
-  const [remainingTime, setRemainingTime] = useState();
-
-  const handleOtpSubmition = async (form) => {
-    form.preventDefault();
-    const otp = input1 + input2 + input3 + input4 + input5 + input6;
-    if (otp.length === 6) {
-      otpSubmitionFunction(otp);
-    } else {
-      showErrorMessage(invalidOtpMsg);
-    }
-    setInput1("");
-    setInput2("");
-    setInput3("");
-    setInput4("");
-    setInput5("");
-    setInput6("");
-  };
-
-  const input1Ref = useRef(null);
-  const input2Ref = useRef(null);
-  const input3Ref = useRef(null);
-  const input4Ref = useRef(null);
-  const input5Ref = useRef(null);
-  const input6Ref = useRef(null);
-
-  const handleInput1Change = (event) => {
-    const { value } = event.target;
-    if (ckeckValidNumber(value)) {
-      setInput1(value);
-      if (value.length === 1) {
-        input2Ref.current.focus();
-      }
-    } else {
-      setInput1("");
-    }
-  };
-
-  const handleInput2Change = (event) => {
-    const { value } = event.target;
-    if (ckeckValidNumber(value)) {
-      setInput2(value);
-      if (value.length === 1) {
-        input3Ref.current.focus();
-      }
-    } else {
-      setInput2("");
-    }
-  };
-
-  const handleInput3Change = (event) => {
-    const { value } = event.target;
-    if (ckeckValidNumber(value)) {
-      setInput3(value);
-      if (value.length === 1) {
-        input4Ref.current.focus();
-      }
-    } else {
-      setInput3("");
-    }
-  };
-
-  const handleInput4Change = (event) => {
-    const { value } = event.target;
-    if (ckeckValidNumber(value)) {
-      setInput4(value);
-      if (value.length === 1) {
-        input5Ref.current.focus();
-      }
-    } else {
-      setInput4("");
-    }
-  };
-
-  const handleInput5Change = (event) => {
-    const { value } = event.target;
-    if (ckeckValidNumber(value)) {
-      setInput5(value);
-      if (value.length === 1) {
-        input6Ref.current.focus();
-      }
-    } else {
-      setInput5("");
-    }
-  };
-  const handleInput6Change = (event) => {
-    const { value } = event.target;
-    if (ckeckValidNumber(value)) {
-      setInput6(value);
-      if (value.length === 1) {
-        setSubmitButtonStatus(false);
-      }
-    } else {
-      setInput6("");
-    }
-  };
-  useEffect(() => {
-    input1Ref.current.focus();
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (timeoutTimer < 0) {
-        clearInterval(timer);
-        // Add your code to execute when the countdown finishes here
-      } else {
-        const _remainingTime = secondsToMinuteString(timeoutTimer);
-        setTimeoutTimer && setTimeoutTimer(timeoutTimer - 1);
-        setRemainingTime(`${_remainingTime}min`);
-      }
-    }, 1000); // Update every minute (1000 milliseconds * 60 seconds)
-
-    return () => {
-      clearInterval(timer); // Cleanup the timer on unmount
-    };
-  }, [timeoutTimer, setTimeoutTimer]);
-  return (
-    <Box my={"20px"}>
-      <form onSubmit={handleOtpSubmition}>
-        <Typography
-          sx={otpModalTextStyle}
-        >
-          Type OTP - Copy / Paste is disabled
-        </Typography>
-        <Stack
-          justifyContent={"center"}
-          marginBottom={"10px"}
-          alignItems={"center"}
-          direction={"row"}
-        >
-          <Box sx={{ ...otpInputSize, marginLeft: 0 }}>
-            <TextField
-              error={false}
-              style={otpTextFieldStyle}
-              type="text"
-              label=""
-              variant="outlined"
-              onChange={handleInput1Change}
-              inputRef={input1Ref}
-              value={input1}
-              inputProps={{ maxLength: 1 }}
-            />
-          </Box>
-          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>
-            <Stack sx={otpInputSeperatorSx}>-</Stack>
-          </Box>
-          <Box sx={otpInputSize}>
-            <TextField
-              error={false}
-              style={otpTextFieldStyle}
-              type="text"
-              label=""
-              variant="outlined"
-              onChange={handleInput2Change}
-              inputRef={input2Ref}
-              value={input2}
-              inputProps={{ maxLength: 1 }}
-            />
-          </Box>
-          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>
-            <Stack sx={otpInputSeperatorSx}>-</Stack>
-          </Box>
-          <Box sx={otpInputSize}>
-            <TextField
-              error={false}
-              style={otpTextFieldStyle}
-              type="text"
-              label=""
-              variant="outlined"
-              onChange={handleInput3Change}
-              inputRef={input3Ref}
-              value={input3}
-              inputProps={{ maxLength: 1 }}
-            />
-          </Box>
-          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>
-            <Stack sx={otpInputSeperatorSx}>-</Stack>
-          </Box>
-          <Box sx={otpInputSize}>
-            <TextField
-              error={false}
-              style={otpTextFieldStyle}
-              type="text"
-              label=""
-              variant="outlined"
-              onChange={handleInput4Change}
-              inputRef={input4Ref}
-              value={input4}
-              inputProps={{ maxLength: 1 }}
-            />
-          </Box>
-          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>
-            <Stack sx={otpInputSeperatorSx}>-</Stack>
-          </Box>
-          <Box sx={otpInputSize}>
-            <TextField
-              error={false}
-              style={otpTextFieldStyle}
-              type="text"
-              label=""
-              variant="outlined"
-              onChange={handleInput5Change}
-              inputRef={input5Ref}
-              value={input5}
-              inputProps={{ maxLength: 1 }}
-            />
-          </Box>
-          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>
-            <Stack sx={otpInputSeperatorSx}>-</Stack>
-          </Box>
-          <Box sx={otpInputSize}>
-            <TextField
-              error={false}
-              style={otpTextFieldStyle}
-              type="text"
-              label=""
-              variant="outlined"
-              onChange={handleInput6Change}
-              inputRef={input6Ref}
-              value={input6}
-              inputProps={{ maxLength: 1 }}
-            />
-          </Box>
-        </Stack>
-        <Box sx={{ marginTop: "30px" }}>
-          <Button1 disabled={submitButtonStatus} type="submit">
-            Submit
-          </Button1>
-        </Box>
-      </form>
-    </Box>
-  );
-};
-const OtpSubmitionForm = (props) => {
-  return (
-    <FullScreenModel
-      open={props.open}
-      closeModel={props.closeOtpSubmitionModel}
-      content={<UnWrappedOtpSubmitionForm {...props} />}
-    />
-  );
-};
-
-export default OtpSubmitionForm;
+import { Stack, TextField, Typography } from '@mui/material';import { Box } from '@mui/system';import {  otpInputSeperatorSx,  otpInputSize,  hideBoxSx,  otpModalTextStyle,  otpTextFieldStyle,} from 'app';import { useEffect, useRef, useState } from 'react';import { useSelector } from 'react-redux';import { invalidOtpMsg } from 'shared/constants/constants';import { ckeckValidNumber } from 'shared/utils';import secondsToMinuteString from 'shared/utils/associate/seconds-to-minute-string';import showErrorMessage from 'shared/utils/associate/show-error-message';import Button1 from 'shared/utils/button/button1';import FullScreenModel from 'shared/utils/modals/fullscreen-modal';let UnWrappedOtpSubmitionForm = ({ otpSubmitionProps }) => {  const { otpSubmitionFunction, timeoutTimer, setTimeoutTimer } = otpSubmitionProps || '';  const [submitButtonStatus, setSubmitButtonStatus] = useState(false);  const [input1, setInput1] = useState('');  const [input2, setInput2] = useState('');  const [input3, setInput3] = useState('');  const [input4, setInput4] = useState('');  const [input5, setInput5] = useState('');  const [input6, setInput6] = useState('');  const [remainingTime, setRemainingTime] = useState();  const handleOtpSubmition = async (form) => {    form.preventDefault();    const otp = input1 + input2 + input3 + input4 + input5 + input6;    if (otp.length === 6) {      otpSubmitionFunction(otp);    } else {      showErrorMessage(invalidOtpMsg);    }    setInput1('');    setInput2('');    setInput3('');    setInput4('');    setInput5('');    setInput6('');  };  const input1Ref = useRef(null);  const input2Ref = useRef(null);  const input3Ref = useRef(null);  const input4Ref = useRef(null);  const input5Ref = useRef(null);  const input6Ref = useRef(null);  const handleInput1Change = (event) => {    const { value } = event.target;    if (ckeckValidNumber(value)) {      setInput1(value);      if (value.length === 1) {        input2Ref.current.focus();      }    } else {      setInput1('');    }  };  const handleInput2Change = (event) => {    const { value } = event.target;    if (ckeckValidNumber(value)) {      setInput2(value);      if (value.length === 1) {        input3Ref.current.focus();      }    } else {      setInput2('');    }  };  const handleInput3Change = (event) => {    const { value } = event.target;    if (ckeckValidNumber(value)) {      setInput3(value);      if (value.length === 1) {        input4Ref.current.focus();      }    } else {      setInput3('');    }  };  const handleInput4Change = (event) => {    const { value } = event.target;    if (ckeckValidNumber(value)) {      setInput4(value);      if (value.length === 1) {        input5Ref.current.focus();      }    } else {      setInput4('');    }  };  const handleInput5Change = (event) => {    const { value } = event.target;    if (ckeckValidNumber(value)) {      setInput5(value);      if (value.length === 1) {        input6Ref.current.focus();      }    } else {      setInput5('');    }  };  const handleInput6Change = (event) => {    const { value } = event.target;    if (ckeckValidNumber(value)) {      setInput6(value);      if (value.length === 1) {        setSubmitButtonStatus(false);      }    } else {      setInput6('');    }  };  useEffect(() => {    input1Ref.current.focus();  }, []);  useEffect(() => {    const timer = setInterval(() => {      if (timeoutTimer < 0) {        clearInterval(timer);      } else {        const _remainingTime = secondsToMinuteString(timeoutTimer);        setTimeoutTimer && setTimeoutTimer(timeoutTimer - 1);        setRemainingTime(`${_remainingTime}min`);      }    }, 1000);     return () => {      clearInterval(timer);     };  }, [timeoutTimer, setTimeoutTimer]);  return (    <Box my={'20px'}>      <form onSubmit={handleOtpSubmition}>        <Typography sx={otpModalTextStyle}>Type OTP - Copy / Paste is disabled</Typography>        <Stack          justifyContent={'center'}          marginBottom={'10px'}          alignItems={'center'}          direction={'row'}        >          <Box sx={{ ...otpInputSize, marginLeft: 0 }}>            <TextField              error={false}              style={otpTextFieldStyle}              type='text'              label=''              variant='outlined'              onChange={handleInput1Change}              inputRef={input1Ref}              value={input1}              inputProps={{ maxLength: 1 }}            />          </Box>          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>            <Stack sx={otpInputSeperatorSx}>-</Stack>          </Box>          <Box sx={otpInputSize}>            <TextField              error={false}              style={otpTextFieldStyle}              type='text'              label=''              variant='outlined'              onChange={handleInput2Change}              inputRef={input2Ref}              value={input2}              inputProps={{ maxLength: 1 }}            />          </Box>          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>            <Stack sx={otpInputSeperatorSx}>-</Stack>          </Box>          <Box sx={otpInputSize}>            <TextField              error={false}              style={otpTextFieldStyle}              type='text'              label=''              variant='outlined'              onChange={handleInput3Change}              inputRef={input3Ref}              value={input3}              inputProps={{ maxLength: 1 }}            />          </Box>          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>            <Stack sx={otpInputSeperatorSx}>-</Stack>          </Box>          <Box sx={otpInputSize}>            <TextField              error={false}              style={otpTextFieldStyle}              type='text'              label=''              variant='outlined'              onChange={handleInput4Change}              inputRef={input4Ref}              value={input4}              inputProps={{ maxLength: 1 }}            />          </Box>          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>            <Stack sx={otpInputSeperatorSx}>-</Stack>          </Box>          <Box sx={otpInputSize}>            <TextField              error={false}              style={otpTextFieldStyle}              type='text'              label=''              variant='outlined'              onChange={handleInput5Change}              inputRef={input5Ref}              value={input5}              inputProps={{ maxLength: 1 }}            />          </Box>          <Box sx={{ ...otpInputSize, ...hideBoxSx }}>            <Stack sx={otpInputSeperatorSx}>-</Stack>          </Box>          <Box sx={otpInputSize}>            <TextField              error={false}              style={otpTextFieldStyle}              type='text'              label=''              variant='outlined'              onChange={handleInput6Change}              inputRef={input6Ref}              value={input6}              inputProps={{ maxLength: 1 }}            />          </Box>        </Stack>        <Box sx={{ marginTop: '30px' }}>          <Button1 disabled={submitButtonStatus} type='submit'>            Submit          </Button1>        </Box>      </form>    </Box>  );};const OtpSubmitionForm = (props) => {  return (    <FullScreenModel      open={props.open}      closeModel={props.closeOtpSubmitionModel}      content={<UnWrappedOtpSubmitionForm {...props} />}    />  );};export default OtpSubmitionForm;

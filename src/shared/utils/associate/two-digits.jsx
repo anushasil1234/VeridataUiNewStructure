@@ -1,8 +1,1 @@
-const twoDigits = (number) => {
-    if ( Math.floor(number / 10) === 0) {
-        return `0${number}`
-    }
-    return number
-}
-
-export default twoDigits
+const twoDigits = (number) => {  if (Math.floor(number / 10) === 0) {    return `0${number}`;  }  return number;};export default twoDigits;

@@ -1,32 +1,1 @@
-import { Box, Button, TextField } from "@mui/material";
-import { modelButtonStyle } from "app";
-import { useState } from "react";
-
-const CloseAppointeeAddRemarks = () => {
-    const [remarks, setRemarks]=useState(null);
-  return (
-    <>
-      <Box my={"20px"}>
-        <form>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label={"Reason for termination"}
-            type="email"
-            fullWidth
-            variant="standard"
-            multiline
-            rows={2}
-            maxRows={3}
-            onChange={({ target }) => setRemarks(target.value)}
-          />
-            <Button  type="submit" sx={modelButtonStyle}   variant="contained"  color="primary">
-            Save
-          </Button>
-        </form>
-      </Box>
-    </>
-  );
-};
-export default CloseAppointeeAddRemarks;
+import { Box, Button, TextField } from '@mui/material';import { modelButtonStyle } from 'app';import { useState } from 'react';const CloseAppointeeAddRemarks = () => {  const [remarks, setRemarks] = useState(null);  return (    <>      <Box my={'20px'}>        <form>          <TextField            autoFocus            margin='dense'            id='name'            label={'Reason for termination'}            type='email'            fullWidth            variant='standard'            multiline            rows={2}            maxRows={3}            onChange={({ target }) => setRemarks(target.value)}          />          <Button type='submit' sx={modelButtonStyle} variant='contained' color='primary'>            Save          </Button>        </form>      </Box>    </>  );};export default CloseAppointeeAddRemarks;

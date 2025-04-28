@@ -1,55 +1,1 @@
-import { Grid, TextField, Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import { useState } from 'react';
-import Button1 from 'shared/utils/button/button1';
-import FullScreenModel from 'shared/utils/modals/fullscreen-modal';
-
-let UnWrappedOtpGenerationForm = (
-    {
-        generateOtpProps
-    }) => {
-
-    const { generateOtpInput, generateOtpLable, generateOtpFunc } = generateOtpProps || "";
-
-    const [otpError, setOtpError] = useState(false);
-    return (
-        <Box my={"20px"}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid item xs={12} >
-                    <TextField
-                        error={false}
-                        style={{ width: "100%", margin: "5px" }}
-                        type="text"
-                        label={generateOtpLable}
-                        variant="outlined"
-                        value={generateOtpInput}
-                    />
-                    {otpError ?
-                        <Typography sx={{ ml: "5px" }} color={"red"} fontSize={15}>OTP not send. Retry.</Typography>
-                        : null}
-                </Grid>
-                <Grid item xs={12}>
-                    <Button1 onClick={generateOtpFunc} >
-                        {otpError ? "Retry" : "Generate OTP"}
-                    </Button1>
-                </Grid>
-            </Grid>
-        </Box>
-    )
-}
-const OtpGenerationForm = (props) => {
-
-    return (
-        <FullScreenModel
-            open={props.open}
-            headerText={props.generateOtpProps && props.generateOtpProps.headerText}
-            closeModel=
-            {props.closeOtpForm}
-            content={<UnWrappedOtpGenerationForm
-                {...props} />}
-        />
-    )
-
-}
-
-export default OtpGenerationForm
+import { Grid, TextField, Typography } from '@mui/material';import { Box } from '@mui/system';import { useState } from 'react';import Button1 from 'shared/utils/button/button1';import FullScreenModel from 'shared/utils/modals/fullscreen-modal';let UnWrappedOtpGenerationForm = ({ generateOtpProps }) => {  const { generateOtpInput, generateOtpLable, generateOtpFunc } = generateOtpProps || '';  const [otpError, setOtpError] = useState(false);  return (    <Box my={'20px'}>      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>        <Grid item xs={12}>          <TextField            error={false}            style={{ width: '100%', margin: '5px' }}            type='text'            label={generateOtpLable}            variant='outlined'            value={generateOtpInput}          />          {otpError ? (            <Typography sx={{ ml: '5px' }} color={'red'} fontSize={15}>              OTP not send. Retry.            </Typography>          ) : null}        </Grid>        <Grid item xs={12}>          <Button1 onClick={generateOtpFunc}>{otpError ? 'Retry' : 'Generate OTP'}</Button1>        </Grid>      </Grid>    </Box>  );};const OtpGenerationForm = (props) => {  return (    <FullScreenModel      open={props.open}      headerText={props.generateOtpProps && props.generateOtpProps.headerText}      closeModel={props.closeOtpForm}      content={<UnWrappedOtpGenerationForm {...props} />}    />  );};export default OtpGenerationForm;

@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { PostCandidateMailResend_URL, remiderSuccessMsg } from "shared/constants/constants";
-
-const postResendCredMail = (appointeeId, userId) => 
-    ServerRequest(PostCandidateMailResend_URL(appointeeId, userId), "POST", {}, remiderSuccessMsg, true);
-
-export { postResendCredMail };
+import ServerRequest from 'server/utils/server-request';import { PostCandidateMailResend_URL, remiderSuccessMsg } from 'shared/constants/constants';const postResendCredMail = (appointeeId, userId) =>  ServerRequest(    PostCandidateMailResend_URL(appointeeId, userId),    'POST',    {},    remiderSuccessMsg,    true,  );export { postResendCredMail };

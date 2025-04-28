@@ -1,1 +1,1286 @@
-{"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/second.js":{"language":"JavaScript","code":4,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/user-config.js":{"language":"JavaScript","code":18,"comment":5,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/reducers/reducer.jsx":{"language":"JavaScript JSX","code":0,"comment":18,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/README.md":{"language":"Markdown","code":38,"comment":0,"blank":33},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/api-slice.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/package.json":{"language":"JSON","code":57,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/dropdown-slice.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/reducers/loading-context-provider.jsx":{"language":"JavaScript JSX","code":56,"comment":1,"blank":5},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/public/playground_assets/redirect.svg":{"language":"XML","code":6,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/common-hook-function-slice.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/set-table-rows-slice.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/action-route-slice.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/side-menu-items-slice.jsx":{"language":"JavaScript JSX","code":17,"comment":1,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/function-slice.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/popup-slice.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/index.js":{"language":"JavaScript","code":30,"comment":1,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/logout-slice.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/login-slice.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/actions/actionTypes.jsx":{"language":"JavaScript JSX","code":2,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/api/get-menu-item.jsx":{"language":"JavaScript JSX","code":8,"comment":1,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/public/manifest.json":{"language":"JSON","code":25,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/api/city-search.jsx":{"language":"JavaScript JSX","code":0,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/utils/axios.jsx":{"language":"JavaScript JSX","code":28,"comment":0,"blank":5},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/utils/pfc-requiest.jsx":{"language":"JavaScript JSX","code":138,"comment":5,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/api/login.jsx":{"language":"JavaScript JSX","code":6,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/api/access.jsx":{"language":"JavaScript JSX","code":9,"comment":1,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/download-file.jsx":{"language":"JavaScript JSX","code":8,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/tooltip/dark-tooltip.jsx":{"language":"JavaScript JSX","code":15,"comment":1,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/pattern-check.jsx":{"language":"JavaScript JSX","code":3,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/remove-extra-spaces.jsx":{"language":"JavaScript JSX","code":2,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/filter-object-property.jsx":{"language":"JavaScript JSX","code":4,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/has-action-permition.jsx":{"language":"JavaScript JSX","code":35,"comment":10,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/date-filter.jsx":{"language":"JavaScript JSX","code":14,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/open-link.jsx":{"language":"JavaScript JSX","code":3,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/handle-short.jsx":{"language":"JavaScript JSX","code":22,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/get-char-pos.jsx":{"language":"JavaScript JSX","code":3,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/get-from-localstorage.jsx":{"language":"JavaScript JSX","code":4,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/has-value.jsx":{"language":"JavaScript JSX","code":7,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/generate-table-row-data.jsx":{"language":"JavaScript JSX","code":48,"comment":14,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/get-attribute.jsx":{"language":"JavaScript JSX","code":3,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/check-validate-number.jsx":{"language":"JavaScript JSX","code":5,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/update-localstorage.jsx":{"language":"JavaScript JSX","code":4,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/small-list-table/small-list-table.jsx":{"language":"JavaScript JSX","code":121,"comment":3,"blank":26},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/upload-file-message.jsx":{"language":"JavaScript JSX","code":4,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/generate-fileupload-error-message.jsx":{"language":"JavaScript JSX","code":23,"comment":4,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/trimmed-filename.jsx":{"language":"JavaScript JSX","code":7,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/two-digits.jsx":{"language":"JavaScript JSX","code":7,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/trimmed-date.jsx":{"language":"JavaScript JSX","code":4,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/toggle-action-menu.jsx":{"language":"JavaScript JSX","code":8,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/set-to-localstorage.jsx":{"language":"JavaScript JSX","code":4,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/select-checked-rows.jsx":{"language":"JavaScript JSX","code":6,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/seconds-to-minute-string.jsx":{"language":"JavaScript JSX","code":15,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/check-is-pastday.jsx":{"language":"JavaScript JSX","code":13,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/array-of-specific-object-value.jsx":{"language":"JavaScript JSX","code":0,"comment":5,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/remove-from-localstorage.jsx":{"language":"JavaScript JSX","code":6,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/widget-card-skelton.jsx":{"language":"JavaScript JSX","code":10,"comment":3,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/search/search-app-bar.jsx":{"language":"JavaScript JSX","code":109,"comment":0,"blank":11},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/text-skelton/text-skelton1.jsx":{"language":"JavaScript JSX","code":4,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/rectangular-skelton/rectangular-skelton1.jsx":{"language":"JavaScript JSX","code":4,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/rectangular-skelton/rectangular-skelton2.jsx":{"language":"JavaScript JSX","code":4,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/array-object-values.jsx":{"language":"JavaScript JSX","code":0,"comment":3,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/response-message/response-message.jsx":{"language":"JavaScript JSX","code":17,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/arrange-sidebar-items.jsx":{"language":"JavaScript JSX","code":38,"comment":1,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/add-is-check-flag.jsx":{"language":"JavaScript JSX","code":11,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/page-headings/page-heading1.jsx":{"language":"JavaScript JSX","code":8,"comment":1,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/circel-skelton/circel-skelton1.jsx":{"language":"JavaScript JSX","code":5,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/confirmation-model.jsx":{"language":"JavaScript JSX","code":31,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/fullscreen-model.jsx":{"language":"JavaScript JSX","code":57,"comment":25,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/submit-modal.jsx":{"language":"JavaScript JSX","code":39,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/info-moel.jsx":{"language":"JavaScript JSX","code":22,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/form-dialog.jsx":{"language":"JavaScript JSX","code":36,"comment":5,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/loader/circularIndeterminate.jsx":{"language":"JavaScript JSX","code":13,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/list-table/list-table.jsx":{"language":"JavaScript JSX","code":58,"comment":0,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/issue-remedy/issue-remedy.jsx":{"language":"JavaScript JSX","code":52,"comment":2,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/section-search-card.jsx":{"language":"JavaScript JSX","code":0,"comment":10,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/overlay-layout.jsx":{"language":"JavaScript JSX","code":16,"comment":14,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/page-layout.jsx":{"language":"JavaScript JSX","code":19,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/input-card.jsx":{"language":"JavaScript JSX","code":58,"comment":0,"blank":8},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/card-layout.jsx":{"language":"JavaScript JSX","code":14,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/detail-section.jsx":{"language":"JavaScript JSX","code":9,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/content-wrapper.jsx":{"language":"JavaScript JSX","code":10,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/container.jsx":{"language":"JavaScript JSX","code":10,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/input-field/input-field.jsx":{"language":"JavaScript JSX","code":18,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/interactive-list/interactive-list.jsx":{"language":"JavaScript JSX","code":37,"comment":0,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/input-field/input-field-prop.jsx":{"language":"JavaScript JSX","code":8,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dialog/alert-dialog.jsx":{"language":"JavaScript JSX","code":0,"comment":49,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/fab-icon/fab-icon.jsx":{"language":"JavaScript JSX","code":18,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/index.js":{"language":"JavaScript","code":54,"comment":3,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/fab-icon/fab-icon-model.jsx":{"language":"JavaScript JSX","code":14,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/dataTableProps.jsx":{"language":"JavaScript JSX","code":9,"comment":0,"blank":5},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/dataTable.jsx":{"language":"JavaScript JSX","code":318,"comment":5,"blank":28},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/table-status-cell.jsx":{"language":"JavaScript JSX","code":64,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/table-clickable-cell.jsx":{"language":"JavaScript JSX","code":19,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/date-picker/date-picker.jsx":{"language":"JavaScript JSX","code":34,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/first-cell.jsx":{"language":"JavaScript JSX","code":23,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/collapsable-datatable.jsx":{"language":"JavaScript JSX","code":163,"comment":12,"blank":12},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/checkBoxdataTable.jsx":{"language":"JavaScript JSX","code":372,"comment":1,"blank":28},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/singleTableCell.jsx":{"language":"JavaScript JSX","code":79,"comment":0,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/table-action-cell.jsx":{"language":"JavaScript JSX","code":257,"comment":0,"blank":10},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/button/button1.jsx":{"language":"JavaScript JSX","code":11,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/button/button.jsx":{"language":"JavaScript JSX","code":0,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/button/button2.jsx":{"language":"JavaScript JSX","code":9,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/auto-complete/AutoCompleteSelect.jsx":{"language":"JavaScript JSX","code":30,"comment":0,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/confirmation-box/confirmation-box.jsx":{"language":"JavaScript JSX","code":0,"comment":15,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/CustomeAlert.js":{"language":"JavaScript","code":9,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/app-wrapper/app-wrapper.jsx":{"language":"JavaScript JSX","code":753,"comment":208,"blank":13},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/routes/custom-router.jsx":{"language":"JavaScript JSX","code":64,"comment":9,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/ManuallyCloseableSnackBar.js":{"language":"JavaScript","code":46,"comment":3,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/AdminPannelAlert.js":{"language":"JavaScript","code":44,"comment":6,"blank":18},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/ShowAlertList.js":{"language":"JavaScript","code":19,"comment":0,"blank":5},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/constants/attachment-extention.jsx":{"language":"JavaScript JSX","code":2,"comment":3,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/SweetAlert.js":{"language":"JavaScript","code":56,"comment":1,"blank":8},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/blank/BlankLayout.js":{"language":"JavaScript","code":7,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/constants/constants.jsx":{"language":"JavaScript JSX","code":968,"comment":34,"blank":33},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/shared/loadable/Loadable.js":{"language":"JavaScript","code":8,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/shared/logo/Logo.js":{"language":"JavaScript","code":18,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/NavGroup/NavGroup.js":{"language":"JavaScript","code":35,"comment":1,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/SidebarItems.js":{"language":"JavaScript","code":78,"comment":29,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/Sidebar.js":{"language":"JavaScript","code":82,"comment":0,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/NavItem/index.js":{"language":"JavaScript","code":71,"comment":2,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/FullLayout.js":{"language":"JavaScript","code":70,"comment":2,"blank":8},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/MenuItems.js":{"language":"JavaScript","code":319,"comment":101,"blank":10},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/upload-button.jsx/upload-button.jsx":{"language":"JavaScript JSX","code":12,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/authorized-redirection.jsx":{"language":"JavaScript JSX","code":18,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/verification/verification-status.jsx":{"language":"JavaScript JSX","code":28,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/shared-hooks.jsx":{"language":"JavaScript JSX","code":27,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/verification/verification-icon.jsx":{"language":"JavaScript JSX","code":17,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/disble-section/disble-section.jsx":{"language":"JavaScript JSX","code":9,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/remarks-table/remarks-table.jsx":{"language":"JavaScript JSX","code":18,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/verification/verification-status-section.jsx":{"language":"JavaScript JSX","code":13,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/update-button.jsx/update-button.jsx":{"language":"JavaScript JSX","code":12,"comment":0,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/otp/otp-submition/otp-submition.jsx":{"language":"JavaScript JSX","code":252,"comment":7,"blank":24},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/private-component/private-component.jsx":{"language":"JavaScript JSX","code":13,"comment":11,"blank":5},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/otp/otp-generation/otp-generation.jsx":{"language":"JavaScript JSX","code":51,"comment":0,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/full-screen-wrapper/full-screen-wrapper.jsx":{"language":"JavaScript JSX","code":23,"comment":0,"blank":5},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/index.js":{"language":"JavaScript","code":0,"comment":5,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/form-dialog/update-appointee-data.jsx":{"language":"JavaScript JSX","code":85,"comment":4,"blank":13},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/form-dialog/close-appointee-add-Remarks.jsx":{"language":"JavaScript JSX","code":31,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/download-report/download-report.jsx":{"language":"JavaScript JSX","code":117,"comment":13,"blank":5},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/file-upload/file-upload.jsx":{"language":"JavaScript JSX","code":106,"comment":3,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/file-upload-section/file-upload-section.jsx":{"language":"JavaScript JSX","code":33,"comment":3,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/display-information/personal-information.jsx":{"language":"JavaScript JSX","code":40,"comment":0,"blank":5},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/auth-provider.jsx":{"language":"JavaScript JSX","code":19,"comment":5,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/header/Header.js":{"language":"JavaScript","code":71,"comment":0,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/header/profile.jsx":{"language":"JavaScript JSX","code":95,"comment":35,"blank":8},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/header/data.js":{"language":"JavaScript","code":0,"comment":169,"blank":10},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/account/logout/user-logout.jsx":{"language":"JavaScript JSX","code":0,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/account/unauthorized/unauthorized-view.jsx":{"language":"JavaScript JSX","code":0,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/file-update/file-update.jsx":{"language":"JavaScript JSX","code":107,"comment":4,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/user-view/user-view.jsx":{"language":"JavaScript JSX","code":94,"comment":50,"blank":8},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/userlist/userlist-view.jsx":{"language":"JavaScript JSX","code":51,"comment":4,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/update-user-view/update-user-view.jsx":{"language":"JavaScript JSX","code":92,"comment":44,"blank":8},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/user-creation-form/user-creation-form.jsx":{"language":"JavaScript JSX","code":183,"comment":17,"blank":12},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/account/login/login-view.jsx":{"language":"JavaScript JSX","code":164,"comment":6,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/uploaded-data/uploaded-data.jsx":{"language":"JavaScript JSX","code":100,"comment":0,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/create-user/create-user-view.jsx":{"language":"JavaScript JSX","code":87,"comment":139,"blank":14},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/document-view/document-view.jsx":{"language":"JavaScript JSX","code":54,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/report.jsx":{"language":"JavaScript JSX","code":145,"comment":1,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/pfusers-view.jsx":{"language":"JavaScript JSX","code":126,"comment":0,"blank":11},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/index.js":{"language":"JavaScript","code":3,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/cancelled-view.jsx":{"language":"JavaScript JSX","code":118,"comment":5,"blank":14},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/verified-view.jsx":{"language":"JavaScript JSX","code":134,"comment":4,"blank":16},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/appointee-count.jsx":{"language":"JavaScript JSX","code":302,"comment":9,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/link-not-sent/link-not-sent.jsx":{"language":"JavaScript JSX","code":204,"comment":1,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/setup/index.js":{"language":"JavaScript","code":1,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/processing-data/processing-data.jsx":{"language":"JavaScript JSX","code":193,"comment":13,"blank":13},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/index.js":{"language":"JavaScript","code":3,"comment":1,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/setup/general-setup-view.jsx":{"language":"JavaScript JSX","code":873,"comment":43,"blank":16},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/lapsed-data/lapsed-data.jsx":{"language":"JavaScript JSX","code":211,"comment":20,"blank":16},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/index.js":{"language":"JavaScript","code":1,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/home-view.jsx":{"language":"JavaScript JSX","code":212,"comment":0,"blank":13},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/data-upload/data-upload.jsx":{"language":"JavaScript JSX","code":73,"comment":6,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/attention/attention.jsx":{"language":"JavaScript JSX","code":120,"comment":11,"blank":10},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/total-offer.jsx":{"language":"JavaScript JSX","code":23,"comment":6,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/data-update/data-update.jsx":{"language":"JavaScript JSX","code":72,"comment":7,"blank":9},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/under-process.jsx":{"language":"JavaScript JSX","code":102,"comment":11,"blank":8},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/lapsed.jsx":{"language":"JavaScript JSX","code":102,"comment":9,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/no-response.jsx":{"language":"JavaScript JSX","code":103,"comment":9,"blank":5},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/link-not-sent.jsx":{"language":"JavaScript JSX","code":108,"comment":7,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/index.js":{"language":"JavaScript","code":9,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/cumulative-status.jsx":{"language":"JavaScript JSX","code":82,"comment":5,"blank":8},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/verified.jsx":{"language":"JavaScript JSX","code":102,"comment":7,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/critical-recruits.jsx":{"language":"JavaScript JSX","code":111,"comment":10,"blank":11},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/upcoming-recruits.jsx":{"language":"JavaScript JSX","code":85,"comment":0,"blank":15},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/card-structure.jsx":{"language":"JavaScript JSX","code":121,"comment":16,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/widget-card.jsx":{"language":"JavaScript JSX","code":64,"comment":1,"blank":10},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/action-permission/action-permission.jsx":{"language":"JavaScript JSX","code":30,"comment":1,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/index.js":{"language":"JavaScript","code":17,"comment":0,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/config.js":{"language":"JavaScript","code":15,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/appointee/view/appointee-view.jsx":{"language":"JavaScript JSX","code":697,"comment":41,"blank":26},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/hooks/useWindowScrollPositions.jsx":{"language":"JavaScript JSX","code":15,"comment":1,"blank":6},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/appointee/view/activity-log-details.jsx":{"language":"JavaScript JSX","code":81,"comment":4,"blank":16},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/hooks/useAuth.jsx":{"language":"JavaScript JSX","code":0,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/hooks/useScrollBlock.jsx":{"language":"JavaScript JSX","code":29,"comment":10,"blank":11},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/appointee/register/form-heading.jsx":{"language":"JavaScript JSX","code":19,"comment":0,"blank":4},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/appointee/register/appointee-register.jsx":{"language":"JavaScript JSX","code":1505,"comment":55,"blank":92},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/assets/images/logos/VERIDATA_LOGO_FULL.svg":{"language":"XML","code":11,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/assets/images/logos/Veridata_logo_SVG.svg":{"language":"XML","code":3,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/assets/images/logos/dark-logo.svg":{"language":"XML","code":7,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/action.json":{"language":"JSON","code":46,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/public/index.html":{"language":"HTML","code":160,"comment":0,"blank":20},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/config-overrides.js":{"language":"JavaScript","code":6,"comment":0,"blank":1},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/jsconfig.json":{"language":"JSON with Comments","code":8,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/index.js":{"language":"JavaScript","code":48,"comment":6,"blank":3},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/action.json":{"language":"JSON","code":30,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/.vs/VSWorkspaceState.json":{"language":"JSON","code":6,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/index.js":{"language":"JavaScript","code":2,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/app-style.jsx":{"language":"JavaScript JSX","code":983,"comment":177,"blank":63},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/.env":{"language":"Properties","code":1,"comment":3,"blank":2},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/app.jsx":{"language":"JavaScript JSX","code":54,"comment":1,"blank":7},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/icon.css":{"language":"CSS","code":5,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/assets/images/backgrounds/login-bg.svg":{"language":"XML","code":10,"comment":0,"blank":0},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/app.css":{"language":"CSS","code":1048,"comment":53,"blank":113},"file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/package-lock.json":{"language":"JSON","code":31773,"comment":0,"blank":1}}
+{
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/second.js": {
+    "language": "JavaScript",
+    "code": 4,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/user-config.js": {
+    "language": "JavaScript",
+    "code": 18,
+    "comment": 5,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/reducers/reducer.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 18,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/README.md": {
+    "language": "Markdown",
+    "code": 38,
+    "comment": 0,
+    "blank": 33
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/api-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/package.json": {
+    "language": "JSON",
+    "code": 57,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/dropdown-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/reducers/loading-context-provider.jsx": {
+    "language": "JavaScript JSX",
+    "code": 56,
+    "comment": 1,
+    "blank": 5
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/public/playground_assets/redirect.svg": {
+    "language": "XML",
+    "code": 6,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/common-hook-function-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/set-table-rows-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/action-route-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/side-menu-items-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 17,
+    "comment": 1,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/function-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/popup-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/index.js": {
+    "language": "JavaScript",
+    "code": 30,
+    "comment": 1,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/logout-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/slices/login-slice.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/store/actions/actionTypes.jsx": {
+    "language": "JavaScript JSX",
+    "code": 2,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/api/get-menu-item.jsx": {
+    "language": "JavaScript JSX",
+    "code": 8,
+    "comment": 1,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/public/manifest.json": {
+    "language": "JSON",
+    "code": 25,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/api/city-search.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/utils/axios.jsx": {
+    "language": "JavaScript JSX",
+    "code": 28,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/utils/pfc-requiest.jsx": {
+    "language": "JavaScript JSX",
+    "code": 138,
+    "comment": 5,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/api/login.jsx": {
+    "language": "JavaScript JSX",
+    "code": 6,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/server/api/access.jsx": {
+    "language": "JavaScript JSX",
+    "code": 9,
+    "comment": 1,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/download-file.jsx": {
+    "language": "JavaScript JSX",
+    "code": 8,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/tooltip/dark-tooltip.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 1,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/pattern-check.jsx": {
+    "language": "JavaScript JSX",
+    "code": 3,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/remove-extra-spaces.jsx": {
+    "language": "JavaScript JSX",
+    "code": 2,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/filter-object-property.jsx": {
+    "language": "JavaScript JSX",
+    "code": 4,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/has-action-permition.jsx": {
+    "language": "JavaScript JSX",
+    "code": 35,
+    "comment": 10,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/date-filter.jsx": {
+    "language": "JavaScript JSX",
+    "code": 14,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/open-link.jsx": {
+    "language": "JavaScript JSX",
+    "code": 3,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/handle-short.jsx": {
+    "language": "JavaScript JSX",
+    "code": 22,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/get-char-pos.jsx": {
+    "language": "JavaScript JSX",
+    "code": 3,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/get-from-localstorage.jsx": {
+    "language": "JavaScript JSX",
+    "code": 4,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/has-value.jsx": {
+    "language": "JavaScript JSX",
+    "code": 7,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/generate-table-row-data.jsx": {
+    "language": "JavaScript JSX",
+    "code": 48,
+    "comment": 14,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/get-attribute.jsx": {
+    "language": "JavaScript JSX",
+    "code": 3,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/check-validate-number.jsx": {
+    "language": "JavaScript JSX",
+    "code": 5,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/update-localstorage.jsx": {
+    "language": "JavaScript JSX",
+    "code": 4,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/small-list-table/small-list-table.jsx": {
+    "language": "JavaScript JSX",
+    "code": 121,
+    "comment": 3,
+    "blank": 26
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/upload-file-message.jsx": {
+    "language": "JavaScript JSX",
+    "code": 4,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/generate-fileupload-error-message.jsx": {
+    "language": "JavaScript JSX",
+    "code": 23,
+    "comment": 4,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/trimmed-filename.jsx": {
+    "language": "JavaScript JSX",
+    "code": 7,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/two-digits.jsx": {
+    "language": "JavaScript JSX",
+    "code": 7,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/trimmed-date.jsx": {
+    "language": "JavaScript JSX",
+    "code": 4,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/toggle-action-menu.jsx": {
+    "language": "JavaScript JSX",
+    "code": 8,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/set-to-localstorage.jsx": {
+    "language": "JavaScript JSX",
+    "code": 4,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/select-checked-rows.jsx": {
+    "language": "JavaScript JSX",
+    "code": 6,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/seconds-to-minute-string.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/check-is-pastday.jsx": {
+    "language": "JavaScript JSX",
+    "code": 13,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/array-of-specific-object-value.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 5,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/remove-from-localstorage.jsx": {
+    "language": "JavaScript JSX",
+    "code": 6,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/widget-card-skelton.jsx": {
+    "language": "JavaScript JSX",
+    "code": 10,
+    "comment": 3,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/search/search-app-bar.jsx": {
+    "language": "JavaScript JSX",
+    "code": 109,
+    "comment": 0,
+    "blank": 11
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/text-skelton/text-skelton1.jsx": {
+    "language": "JavaScript JSX",
+    "code": 4,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/rectangular-skelton/rectangular-skelton1.jsx": {
+    "language": "JavaScript JSX",
+    "code": 4,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/rectangular-skelton/rectangular-skelton2.jsx": {
+    "language": "JavaScript JSX",
+    "code": 4,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/array-object-values.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 3,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/response-message/response-message.jsx": {
+    "language": "JavaScript JSX",
+    "code": 17,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/arrange-sidebar-items.jsx": {
+    "language": "JavaScript JSX",
+    "code": 38,
+    "comment": 1,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/associate/add-is-check-flag.jsx": {
+    "language": "JavaScript JSX",
+    "code": 11,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/page-headings/page-heading1.jsx": {
+    "language": "JavaScript JSX",
+    "code": 8,
+    "comment": 1,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/skeltons/circel-skelton/circel-skelton1.jsx": {
+    "language": "JavaScript JSX",
+    "code": 5,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/confirmation-model.jsx": {
+    "language": "JavaScript JSX",
+    "code": 31,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/fullscreen-model.jsx": {
+    "language": "JavaScript JSX",
+    "code": 57,
+    "comment": 25,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/submit-modal.jsx": {
+    "language": "JavaScript JSX",
+    "code": 39,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/info-moel.jsx": {
+    "language": "JavaScript JSX",
+    "code": 22,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/models/form-dialog.jsx": {
+    "language": "JavaScript JSX",
+    "code": 36,
+    "comment": 5,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/loader/circularIndeterminate.jsx": {
+    "language": "JavaScript JSX",
+    "code": 13,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/list-table/list-table.jsx": {
+    "language": "JavaScript JSX",
+    "code": 58,
+    "comment": 0,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/issue-remedy/issue-remedy.jsx": {
+    "language": "JavaScript JSX",
+    "code": 52,
+    "comment": 2,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/section-search-card.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 10,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/overlay-layout.jsx": {
+    "language": "JavaScript JSX",
+    "code": 16,
+    "comment": 14,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/page-layout.jsx": {
+    "language": "JavaScript JSX",
+    "code": 19,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/input-card.jsx": {
+    "language": "JavaScript JSX",
+    "code": 58,
+    "comment": 0,
+    "blank": 8
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/card-layout.jsx": {
+    "language": "JavaScript JSX",
+    "code": 14,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/detail-section.jsx": {
+    "language": "JavaScript JSX",
+    "code": 9,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/content-wrapper.jsx": {
+    "language": "JavaScript JSX",
+    "code": 10,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/layout/container.jsx": {
+    "language": "JavaScript JSX",
+    "code": 10,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/input-field/input-field.jsx": {
+    "language": "JavaScript JSX",
+    "code": 18,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/interactive-list/interactive-list.jsx": {
+    "language": "JavaScript JSX",
+    "code": 37,
+    "comment": 0,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/input-field/input-field-prop.jsx": {
+    "language": "JavaScript JSX",
+    "code": 8,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dialog/alert-dialog.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 49,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/fab-icon/fab-icon.jsx": {
+    "language": "JavaScript JSX",
+    "code": 18,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/index.js": {
+    "language": "JavaScript",
+    "code": 54,
+    "comment": 3,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/fab-icon/fab-icon-model.jsx": {
+    "language": "JavaScript JSX",
+    "code": 14,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/dataTableProps.jsx": {
+    "language": "JavaScript JSX",
+    "code": 9,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/dataTable.jsx": {
+    "language": "JavaScript JSX",
+    "code": 318,
+    "comment": 5,
+    "blank": 28
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/table-status-cell.jsx": {
+    "language": "JavaScript JSX",
+    "code": 64,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/table-clickable-cell.jsx": {
+    "language": "JavaScript JSX",
+    "code": 19,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/date-picker/date-picker.jsx": {
+    "language": "JavaScript JSX",
+    "code": 34,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/first-cell.jsx": {
+    "language": "JavaScript JSX",
+    "code": 23,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/collapsable-datatable.jsx": {
+    "language": "JavaScript JSX",
+    "code": 163,
+    "comment": 12,
+    "blank": 12
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/checkBoxdataTable.jsx": {
+    "language": "JavaScript JSX",
+    "code": 372,
+    "comment": 1,
+    "blank": 28
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/singleTableCell.jsx": {
+    "language": "JavaScript JSX",
+    "code": 79,
+    "comment": 0,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/dataTable/table-action-cell.jsx": {
+    "language": "JavaScript JSX",
+    "code": 257,
+    "comment": 0,
+    "blank": 10
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/button/button1.jsx": {
+    "language": "JavaScript JSX",
+    "code": 11,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/button/button.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/button/button2.jsx": {
+    "language": "JavaScript JSX",
+    "code": 9,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/auto-complete/AutoCompleteSelect.jsx": {
+    "language": "JavaScript JSX",
+    "code": 30,
+    "comment": 0,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/confirmation-box/confirmation-box.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 15,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/CustomeAlert.js": {
+    "language": "JavaScript",
+    "code": 9,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/app-wrapper/app-wrapper.jsx": {
+    "language": "JavaScript JSX",
+    "code": 753,
+    "comment": 208,
+    "blank": 13
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/routes/custom-router.jsx": {
+    "language": "JavaScript JSX",
+    "code": 64,
+    "comment": 9,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/ManuallyCloseableSnackBar.js": {
+    "language": "JavaScript",
+    "code": 46,
+    "comment": 3,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/AdminPannelAlert.js": {
+    "language": "JavaScript",
+    "code": 44,
+    "comment": 6,
+    "blank": 18
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/ShowAlertList.js": {
+    "language": "JavaScript",
+    "code": 19,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/constants/attachment-extention.jsx": {
+    "language": "JavaScript JSX",
+    "code": 2,
+    "comment": 3,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/utils/alert/SweetAlert.js": {
+    "language": "JavaScript",
+    "code": 56,
+    "comment": 1,
+    "blank": 8
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/blank/BlankLayout.js": {
+    "language": "JavaScript",
+    "code": 7,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/constants/constants.jsx": {
+    "language": "JavaScript JSX",
+    "code": 968,
+    "comment": 34,
+    "blank": 33
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/shared/loadable/Loadable.js": {
+    "language": "JavaScript",
+    "code": 8,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/shared/logo/Logo.js": {
+    "language": "JavaScript",
+    "code": 18,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/NavGroup/NavGroup.js": {
+    "language": "JavaScript",
+    "code": 35,
+    "comment": 1,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/SidebarItems.js": {
+    "language": "JavaScript",
+    "code": 78,
+    "comment": 29,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/Sidebar.js": {
+    "language": "JavaScript",
+    "code": 82,
+    "comment": 0,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/NavItem/index.js": {
+    "language": "JavaScript",
+    "code": 71,
+    "comment": 2,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/FullLayout.js": {
+    "language": "JavaScript",
+    "code": 70,
+    "comment": 2,
+    "blank": 8
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/sidebar/MenuItems.js": {
+    "language": "JavaScript",
+    "code": 319,
+    "comment": 101,
+    "blank": 10
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/upload-button.jsx/upload-button.jsx": {
+    "language": "JavaScript JSX",
+    "code": 12,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/authorized-redirection.jsx": {
+    "language": "JavaScript JSX",
+    "code": 18,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/verification/verification-status.jsx": {
+    "language": "JavaScript JSX",
+    "code": 28,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/shared-hooks.jsx": {
+    "language": "JavaScript JSX",
+    "code": 27,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/verification/verification-icon.jsx": {
+    "language": "JavaScript JSX",
+    "code": 17,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/disble-section/disble-section.jsx": {
+    "language": "JavaScript JSX",
+    "code": 9,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/remarks-table/remarks-table.jsx": {
+    "language": "JavaScript JSX",
+    "code": 18,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/verification/verification-status-section.jsx": {
+    "language": "JavaScript JSX",
+    "code": 13,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/update-button.jsx/update-button.jsx": {
+    "language": "JavaScript JSX",
+    "code": 12,
+    "comment": 0,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/otp/otp-submition/otp-submition.jsx": {
+    "language": "JavaScript JSX",
+    "code": 252,
+    "comment": 7,
+    "blank": 24
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/private-component/private-component.jsx": {
+    "language": "JavaScript JSX",
+    "code": 13,
+    "comment": 11,
+    "blank": 5
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/otp/otp-generation/otp-generation.jsx": {
+    "language": "JavaScript JSX",
+    "code": 51,
+    "comment": 0,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/full-screen-wrapper/full-screen-wrapper.jsx": {
+    "language": "JavaScript JSX",
+    "code": 23,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/index.js": {
+    "language": "JavaScript",
+    "code": 0,
+    "comment": 5,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/form-dialog/update-appointee-data.jsx": {
+    "language": "JavaScript JSX",
+    "code": 85,
+    "comment": 4,
+    "blank": 13
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/form-dialog/close-appointee-add-Remarks.jsx": {
+    "language": "JavaScript JSX",
+    "code": 31,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/download-report/download-report.jsx": {
+    "language": "JavaScript JSX",
+    "code": 117,
+    "comment": 13,
+    "blank": 5
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/file-upload/file-upload.jsx": {
+    "language": "JavaScript JSX",
+    "code": 106,
+    "comment": 3,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/file-upload-section/file-upload-section.jsx": {
+    "language": "JavaScript JSX",
+    "code": 33,
+    "comment": 3,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/display-information/personal-information.jsx": {
+    "language": "JavaScript JSX",
+    "code": 40,
+    "comment": 0,
+    "blank": 5
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/auth-provider.jsx": {
+    "language": "JavaScript JSX",
+    "code": 19,
+    "comment": 5,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/header/Header.js": {
+    "language": "JavaScript",
+    "code": 71,
+    "comment": 0,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/header/profile.jsx": {
+    "language": "JavaScript JSX",
+    "code": 95,
+    "comment": 35,
+    "blank": 8
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/layouts/full/header/data.js": {
+    "language": "JavaScript",
+    "code": 0,
+    "comment": 169,
+    "blank": 10
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/account/logout/user-logout.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/account/unauthorized/unauthorized-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/file-update/file-update.jsx": {
+    "language": "JavaScript JSX",
+    "code": 107,
+    "comment": 4,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/user-view/user-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 94,
+    "comment": 50,
+    "blank": 8
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/userlist/userlist-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 51,
+    "comment": 4,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/update-user-view/update-user-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 92,
+    "comment": 44,
+    "blank": 8
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/user-creation-form/user-creation-form.jsx": {
+    "language": "JavaScript JSX",
+    "code": 183,
+    "comment": 17,
+    "blank": 12
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/account/login/login-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 164,
+    "comment": 6,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/uploaded-data/uploaded-data.jsx": {
+    "language": "JavaScript JSX",
+    "code": 100,
+    "comment": 0,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/user/create-user/create-user-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 87,
+    "comment": 139,
+    "blank": 14
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/document-view/document-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 54,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/report.jsx": {
+    "language": "JavaScript JSX",
+    "code": 145,
+    "comment": 1,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/pfusers-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 126,
+    "comment": 0,
+    "blank": 11
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/index.js": {
+    "language": "JavaScript",
+    "code": 3,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/cancelled-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 118,
+    "comment": 5,
+    "blank": 14
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/verified-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 134,
+    "comment": 4,
+    "blank": 16
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/reports/appointee-count.jsx": {
+    "language": "JavaScript JSX",
+    "code": 302,
+    "comment": 9,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/link-not-sent/link-not-sent.jsx": {
+    "language": "JavaScript JSX",
+    "code": 204,
+    "comment": 1,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/setup/index.js": {
+    "language": "JavaScript",
+    "code": 1,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/processing-data/processing-data.jsx": {
+    "language": "JavaScript JSX",
+    "code": 193,
+    "comment": 13,
+    "blank": 13
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/index.js": {
+    "language": "JavaScript",
+    "code": 3,
+    "comment": 1,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/setup/general-setup-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 873,
+    "comment": 43,
+    "blank": 16
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/lapsed-data/lapsed-data.jsx": {
+    "language": "JavaScript JSX",
+    "code": 211,
+    "comment": 20,
+    "blank": 16
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/index.js": {
+    "language": "JavaScript",
+    "code": 1,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/home-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 212,
+    "comment": 0,
+    "blank": 13
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/data-upload/data-upload.jsx": {
+    "language": "JavaScript JSX",
+    "code": 73,
+    "comment": 6,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/attention/attention.jsx": {
+    "language": "JavaScript JSX",
+    "code": 120,
+    "comment": 11,
+    "blank": 10
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/total-offer.jsx": {
+    "language": "JavaScript JSX",
+    "code": 23,
+    "comment": 6,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/data-update/data-update.jsx": {
+    "language": "JavaScript JSX",
+    "code": 72,
+    "comment": 7,
+    "blank": 9
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/under-process.jsx": {
+    "language": "JavaScript JSX",
+    "code": 102,
+    "comment": 11,
+    "blank": 8
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/lapsed.jsx": {
+    "language": "JavaScript JSX",
+    "code": 102,
+    "comment": 9,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/no-response.jsx": {
+    "language": "JavaScript JSX",
+    "code": 103,
+    "comment": 9,
+    "blank": 5
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/link-not-sent.jsx": {
+    "language": "JavaScript JSX",
+    "code": 108,
+    "comment": 7,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/index.js": {
+    "language": "JavaScript",
+    "code": 9,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/cumulative-status.jsx": {
+    "language": "JavaScript JSX",
+    "code": 82,
+    "comment": 5,
+    "blank": 8
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/verified.jsx": {
+    "language": "JavaScript JSX",
+    "code": 102,
+    "comment": 7,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/critical-recruits.jsx": {
+    "language": "JavaScript JSX",
+    "code": 111,
+    "comment": 10,
+    "blank": 11
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/upcoming-recruits.jsx": {
+    "language": "JavaScript JSX",
+    "code": 85,
+    "comment": 0,
+    "blank": 15
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/card-structure.jsx": {
+    "language": "JavaScript JSX",
+    "code": 121,
+    "comment": 16,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/home/widget/widget-card.jsx": {
+    "language": "JavaScript JSX",
+    "code": 64,
+    "comment": 1,
+    "blank": 10
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/shared/components/action-permission/action-permission.jsx": {
+    "language": "JavaScript JSX",
+    "code": 30,
+    "comment": 1,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/index.js": {
+    "language": "JavaScript",
+    "code": 17,
+    "comment": 0,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/config.js": {
+    "language": "JavaScript",
+    "code": 15,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/appointee/view/appointee-view.jsx": {
+    "language": "JavaScript JSX",
+    "code": 697,
+    "comment": 41,
+    "blank": 26
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/hooks/useWindowScrollPositions.jsx": {
+    "language": "JavaScript JSX",
+    "code": 15,
+    "comment": 1,
+    "blank": 6
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/appointee/view/activity-log-details.jsx": {
+    "language": "JavaScript JSX",
+    "code": 81,
+    "comment": 4,
+    "blank": 16
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/hooks/useAuth.jsx": {
+    "language": "JavaScript JSX",
+    "code": 0,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/hooks/useScrollBlock.jsx": {
+    "language": "JavaScript JSX",
+    "code": 29,
+    "comment": 10,
+    "blank": 11
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/appointee/register/form-heading.jsx": {
+    "language": "JavaScript JSX",
+    "code": 19,
+    "comment": 0,
+    "blank": 4
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/modules/appointee/register/appointee-register.jsx": {
+    "language": "JavaScript JSX",
+    "code": 1505,
+    "comment": 55,
+    "blank": 92
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/assets/images/logos/VERIDATA_LOGO_FULL.svg": {
+    "language": "XML",
+    "code": 11,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/assets/images/logos/Veridata_logo_SVG.svg": {
+    "language": "XML",
+    "code": 3,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/assets/images/logos/dark-logo.svg": {
+    "language": "XML",
+    "code": 7,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/action.json": {
+    "language": "JSON",
+    "code": 46,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/public/index.html": {
+    "language": "HTML",
+    "code": 160,
+    "comment": 0,
+    "blank": 20
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/config-overrides.js": {
+    "language": "JavaScript",
+    "code": 6,
+    "comment": 0,
+    "blank": 1
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/jsconfig.json": {
+    "language": "JSON with Comments",
+    "code": 8,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/index.js": {
+    "language": "JavaScript",
+    "code": 48,
+    "comment": 6,
+    "blank": 3
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/action.json": {
+    "language": "JSON",
+    "code": 30,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/.vs/VSWorkspaceState.json": {
+    "language": "JSON",
+    "code": 6,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/index.js": {
+    "language": "JavaScript",
+    "code": 2,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/app-style.jsx": {
+    "language": "JavaScript JSX",
+    "code": 983,
+    "comment": 177,
+    "blank": 63
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/.env": {
+    "language": "Properties",
+    "code": 1,
+    "comment": 3,
+    "blank": 2
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/app.jsx": {
+    "language": "JavaScript JSX",
+    "code": 54,
+    "comment": 1,
+    "blank": 7
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/icon.css": {
+    "language": "CSS",
+    "code": 5,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/assets/images/backgrounds/login-bg.svg": {
+    "language": "XML",
+    "code": 10,
+    "comment": 0,
+    "blank": 0
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/src/app/app.css": {
+    "language": "CSS",
+    "code": 1048,
+    "comment": 53,
+    "blank": 113
+  },
+  "file:///d%3A/Dibyojit/elogix_projects/veridata/general_setupImp/pfc_ui/package-lock.json": {
+    "language": "JSON",
+    "code": 31773,
+    "comment": 0,
+    "blank": 1
+  }
+}

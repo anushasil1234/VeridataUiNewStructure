@@ -1,8 +1,1 @@
-const getFileCategoryByFileType = (verificationCategoryList) => {
-    const subCategoryList = verificationCategoryList && verificationCategoryList.length > 0
-        ? verificationCategoryList.map(({ subCategory }) => subCategory)
-        : [];
-    return { subCategoryList }; 
-}
-
-export default getFileCategoryByFileType;
+const getFileCategoryByFileType = (verificationCategoryList) => {  const subCategoryList =    verificationCategoryList && verificationCategoryList.length > 0      ? verificationCategoryList.map(({ subCategory }) => subCategory)      : [];  return { subCategoryList };};export default getFileCategoryByFileType;

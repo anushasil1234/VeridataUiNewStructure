@@ -1,13 +1,1 @@
-import { Skeleton } from '@mui/material'
-import React from 'react'
-
-const WidgetCardSkelton = () => {
-  return (
-<>
-<Skeleton variant="rectangular " sx={{ width: "80px", height: "25px" }} />
-
-</>
-  )
-}
-
-export default WidgetCardSkelton
+import { Skeleton } from '@mui/material';import React from 'react';const WidgetCardSkelton = () => {  return (    <>      <Skeleton variant='rectangular ' sx={{ width: '80px', height: '25px' }} />    </>  );};export default WidgetCardSkelton;

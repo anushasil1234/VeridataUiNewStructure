@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { PassbookDetails_URL } from "shared/constants/constants";
-
-const getPassbookDetails = (Id) => 
-    ServerRequest(`${PassbookDetails_URL}${Id}`, "POST");
-
-export { getPassbookDetails };
+import ServerRequest from 'server/utils/server-request';import { PassbookDetails_URL } from 'shared/constants/constants';const getPassbookDetails = (Id) => ServerRequest(`${PassbookDetails_URL}${Id}`, 'POST');export { getPassbookDetails };

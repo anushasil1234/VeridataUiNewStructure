@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetMastarDropdowndata_URL, GEN, GetGenderDropdowndata_URL } from "shared/constants/constants";
-
-const getGenderList = () => ServerRequest(`${GetGenderDropdowndata_URL}`, "POST", "", "", "", false);
-
-export { getGenderList };
+import ServerRequest from 'server/utils/server-request';import {  GetMastarDropdowndata_URL,  GEN,  GetGenderDropdowndata_URL,} from 'shared/constants/constants';const getGenderList = () =>  ServerRequest(`${GetGenderDropdowndata_URL}`, 'POST', '', '', '', false);export { getGenderList };

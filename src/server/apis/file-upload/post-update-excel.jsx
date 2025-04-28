@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { fileUploadSuccess, UploadUpdatexlsFile_URL } from "shared/constants/constants";
-
-const postUpdateExcel = (payLoad) => ServerRequest(UploadUpdatexlsFile_URL, "POST", payLoad, fileUploadSuccess);
-
-export { postUpdateExcel };
+import ServerRequest from 'server/utils/server-request';import { fileUploadSuccess, UploadUpdatexlsFile_URL } from 'shared/constants/constants';const postUpdateExcel = (payLoad) =>  ServerRequest(UploadUpdatexlsFile_URL, 'POST', payLoad, fileUploadSuccess);export { postUpdateExcel };

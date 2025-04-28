@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { CreateUser_URL, userCreationSuccessMsg } from "shared/constants/constants";
-
-const postUserDetails = (payLoad) => 
-    ServerRequest(CreateUser_URL, "POST", payLoad, userCreationSuccessMsg);
-
-export { postUserDetails };
+import ServerRequest from 'server/utils/server-request';import { CreateUser_URL, userCreationSuccessMsg } from 'shared/constants/constants';const postUserDetails = (payLoad) =>  ServerRequest(CreateUser_URL, 'POST', payLoad, userCreationSuccessMsg);export { postUserDetails };

@@ -1,50 +1,1 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { storeApi } from "store/slices/api-slice";
-import PfcRequiest from "server/utils/pfc-request";
-import CommonHookFunctionWrapper from "shared/components/shared-hooks";
-import { storeDropdownList } from "store/slices/dropdown-slice";
-import Modals from "shared/utils/app-wrapper/modal";
-import { getDropdownList } from "server/data-services/get-dropdown-list";
-import showErrorMessage from "../associate/show-error-message";
-
-
-const AppWrapper = (App) => {
-  const Api = (props) => {
-    const { PfcRequest, startLoader, stopLoader } = props;
-    const apiSlice = useSelector((state) => state.apiSlice);
-
-    const setDropdownListEvent = async () => {
-      try {
-        const dropdownList = await getDropdownList();
-        dispatch(storeDropdownList(dropdownList));
-      } catch (error) {
-        showErrorMessage(error);
-      }
-    };
-    useEffect(() => {
-
-      window.addEventListener("set-dropdown-list", setDropdownListEvent);
-      return () => {
-        window.addEventListener("set-dropdown-list", setDropdownListEvent);
-      }
-    }, [])
-
-    const dispatch = useDispatch();
-    if (apiSlice && apiSlice.length === 0) {
-      dispatch(
-        storeApi({})
-      );
-    }
-
-    return (
-      <>
-        <App />
-        <Modals />
-      </>
-    );
-  };
-  const WrappedApp = CommonHookFunctionWrapper(PfcRequiest(Api));
-  return <WrappedApp />;
-};
-export default AppWrapper;
+import React, { useEffect, useState } from 'react';import { useDispatch, useSelector } from 'react-redux';import { storeApi } from 'store/slices/api-slice';import PfcRequiest from 'server/utils/pfc-request';import CommonHookFunctionWrapper from 'shared/components/shared-hooks';import { storeDropdownList } from 'store/slices/dropdown-slice';import Modals from 'shared/utils/app-wrapper/modal';import { getDropdownList } from 'server/data-services/get-dropdown-list';import showErrorMessage from '../associate/show-error-message';const AppWrapper = (App) => {  const Api = (props) => {    const { PfcRequest, startLoader, stopLoader } = props;    const apiSlice = useSelector((state) => state.apiSlice);    const setDropdownListEvent = async () => {      try {        const dropdownList = await getDropdownList();        dispatch(storeDropdownList(dropdownList));      } catch (error) {        showErrorMessage(error);      }    };    useEffect(() => {      window.addEventListener('set-dropdown-list', setDropdownListEvent);      return () => {        window.addEventListener('set-dropdown-list', setDropdownListEvent);      };    }, []);    const dispatch = useDispatch();    if (apiSlice && apiSlice.length === 0) {      dispatch(storeApi({}));    }    return (      <>        <App />        <Modals />      </>    );  };  const WrappedApp = CommonHookFunctionWrapper(PfcRequiest(Api));  return <WrappedApp />;};export default AppWrapper;

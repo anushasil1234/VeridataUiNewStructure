@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { dataSubmitionMsg, PostReuploadDocuments_URL } from "shared/constants/constants";
-
-const PostReuploadDocuments = (payLoad) => 
-    ServerRequest(PostReuploadDocuments_URL, "POST", payLoad, dataSubmitionMsg);
-
-export { PostReuploadDocuments };
+import ServerRequest from 'server/utils/server-request';import { dataSubmitionMsg, PostReuploadDocuments_URL } from 'shared/constants/constants';const PostReuploadDocuments = (payLoad) =>  ServerRequest(PostReuploadDocuments_URL, 'POST', payLoad, dataSubmitionMsg);export { PostReuploadDocuments };

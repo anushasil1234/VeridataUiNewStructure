@@ -1,19 +1,1 @@
-import { useEffect, useState } from 'react'
-
-export const useWindowScrollPositions = (element) => {
-    const currentElement = element;
-    const [scrollPosition, setPosition] = useState({ scrollX: 0, scrollY: 0 })
-
-    useEffect(() => {
-        function updatePosition() {
-            setPosition({ scrollX: currentElement.scrollX, scrollY: currentElement.scrollY })
-        }
-
-        currentElement.addEventListener('scroll', updatePosition)
-        updatePosition()
-
-        return () => currentElement.removeEventListener('scroll', updatePosition)
-    }, [])
-
-    return scrollPosition
-}
+import { useEffect, useState } from 'react';export const useWindowScrollPositions = (element) => {  const currentElement = element;  const [scrollPosition, setPosition] = useState({ scrollX: 0, scrollY: 0 });  useEffect(() => {    function updatePosition() {      setPosition({ scrollX: currentElement.scrollX, scrollY: currentElement.scrollY });    }    currentElement.addEventListener('scroll', updatePosition);    updatePosition();    return () => currentElement.removeEventListener('scroll', updatePosition);  }, []);  return scrollPosition;};

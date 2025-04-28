@@ -1,3 +1,1 @@
-export * from "./verified-view"
-export * from "./cancelled-view"
-export * from "./pfusers-view"
+export * from './verified-view';export * from './cancelled-view';export * from './pfusers-view';

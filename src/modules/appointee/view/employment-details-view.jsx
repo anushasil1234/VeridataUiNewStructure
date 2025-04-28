@@ -1,385 +1,1 @@
-import { Grid, Typography, Accordion, Card } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { Box, Stack } from "@mui/system";
-import FullScreenModel from "shared/utils/modals/fullscreen-modal";
-import DownloadIcon from "@mui/icons-material/Download";
-import {
-  _addFabStyle,
-  appointeeImageViewStyle,
-  cardStyle,
-  displayImageStyle,
-  fileNameStyle,
-  floatingIconListStyle,
-  gridContainerStyle,
-  listHeadingConteinerStyle,
-  listHeadingStyle,
-} from "app";
-import {
-  epfoServiceHistoryFileTypeAlias,
-  generateEmploymentHistoryReportDesc,
-  NA,
-  noEmployementMsg,
-  noPassBookMsg,
-} from "shared/constants/constants";
-import ActionPermission from "shared/components/action-permission/action-permission";
-import { PersonalInformation } from "shared/components/display-information/personal-information";
-import { useSelector } from "react-redux";
-import FabIconPropsModel from "shared/utils/fab-icon/fab-icon-model";
-import { FabIcon } from "shared/utils";
-import moment from "moment";
-import jsPDFEmploymentHistTemplate from "shared/utils/associate/js-pdf-employmenthist";
-import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
-import viewImage from "assets/images/profile/file_upload_icon.png";
-import FileSelectionPopup from "./FileSelectionPopup ";
-import { getAppointeeDetails, getUploadedFileDetailsById } from "server/apis";
-
-let EmploymentViewDetails = ({
-  appointeeId,
-  epfoDetails,
-  passbookStatusCode,
-}) => {
-  // const apiSlice = useSelector((state) => state.apiSlice);
-  // const popUpSlice = useSelector((state) => state.popUpSlice);
-  const functionSlice = useSelector((state) => state.functionSlice);
-  const [responseInfo, setResponseInfo] = useState([]);
-  // const {
-  //   // getAppointeeDetails,
-  //   GetUploadedFileDetailsById,
-  // } = apiSlice[0];
-  const { openDocumentModel } = functionSlice[0];
-  const [serviceHistoryFile, setServiceHistoryFile] = useState();
-  const [filesByAlias, setFilesByAlias] = useState(new Map());
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
-
-
-  const [expanded, setExpanded] = useState(false);
-  const [dob, setDob] = useState();
-  const [fatherName, setFatherName] = useState();
-  const [fullName, setFullName] = useState();
-  const [pfUan, setPfUan] = useState();
-  const [companies, setCompanies] = useState();
-
-  // const { showErrorMessage } = popUpSlice[0];
-  useEffect(() => {
-    if (epfoDetails) {
-      setTableRows(epfoDetails);
-    }
-    if (passbookStatusCode === "MNL") {
-      setAppointeeDetails();
-    }
-  }, [epfoDetails,passbookStatusCode]);
-
-  const setAppointeeDetails = async () => {
-    const response = await getAppointeeDetails(appointeeId);
-
-    if (response) {
-      const { fileUploaded } = response.responseInfo;
-
-      // Filter out only files related to epfoServiceHistoryFileTypeAlias
-      const epfoFiles = fileUploaded.filter(
-        ({ uploadTypeAlias }) => uploadTypeAlias === epfoServiceHistoryFileTypeAlias
-      );
-
-      const updatedFilesByAlias = new Map();
-      epfoFiles.forEach(
-        ({ uploadTypeAlias, fileName, uploadDetailsId }) => {
-          const file = {
-            appointeeId,
-            uploadDetailsId,
-            fileName,
-          };
-
-          // Store only epfoServiceHistoryFileTypeAlias data
-          if (!updatedFilesByAlias.has(uploadTypeAlias)) {
-            updatedFilesByAlias.set(uploadTypeAlias, []);
-          }
-          updatedFilesByAlias.get(uploadTypeAlias).push(file);
-
-          // Update state for manualPassbookFile
-          setServiceHistoryFile(file);
-        }
-      );
-
-      // Update state with filtered data
-      setFilesByAlias(updatedFilesByAlias);
-    }
-  };
-  const handleFileClick = async (selectedFile) => {
-    const payload = {
-      appointeeId: selectedFile.appointeeId || 0,
-      fileCategory: epfoServiceHistoryFileTypeAlias,
-      fileId: selectedFile.uploadDetailsId,
-    };
-    const response = await getUploadedFileDetailsById(payload);
-    if (response && response.responseInfo) {
-      const { mimeType, fileData } = response.responseInfo;
-      const fileDetails = `data:${mimeType};base64,${fileData}`;
-      //   console.log("mimeType",filename)
-
-      openDocumentModel(
-        fileDetails,
-        selectedFile.fileName,
-        epfoServiceHistoryFileTypeAlias
-      );
-    }
-  };
-  const handleImageClick = () => {
-    const files = filesByAlias?.get(epfoServiceHistoryFileTypeAlias) || [];
-    if (files.length > 1) {
-      setIsPopupOpen(true);
-    } else if (files.length === 1) {
-      handleFileClick(files[0]);
-    }
-  };
-  const setTableRows = async (details) => {
-    const { dob, fatherName, fullName, pfUan, companies } = details || {};
-    setResponseInfo(details);
-    dob ? setDob(dob) : setDob(NA);
-    fatherName ? setFatherName(fatherName) : setFatherName(NA);
-    fullName ? setFullName(fullName) : setFullName(NA);
-    pfUan ? setPfUan(pfUan) : setPfUan(NA);
-    if (Array.isArray(companies)) {
-      companies.length > 0 ? setCompanies(companies) : setCompanies(NA);
-    } else {
-      setCompanies(NA);
-    }
-  };
-  const handleDownload = async () => {
-    var date = moment();
-    var currentDate = date.format("DDMMYYYY");
-   
-
-    jsPDFReportDataTemplate({
-      reportDetails: {
-        fileName: `_Employment_History_${currentDate}`,
-        label: "Employment History",
-        // fromDate: '',
-        //toDate: "",
-        rptDesc: generateEmploymentHistoryReportDesc,
-      },
-      responseInfo: responseInfo,
-      empFlag: true,
-      clientDetailsFlag: true,
-    });
-  };
-  const downloadFabProps = new FabIconPropsModel(
-    _addFabStyle,
-    handleDownload,
-    "primary",
-    "download",
-    <DownloadIcon />,
-    "Employement Report"
-  );
-  // useEffect(() => {
-  //   setTableRows(appointeeId, userId);
-  // }, []);
-  return (
-    <Box
-      bgcolor={"#E2E8F0"}
-      sx={{ position: "relative", width: "100%", height: "100%" }}
-    >
-      {serviceHistoryFile ? (
-        <Box
-          sx={{
-            ...gridContainerStyle,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 2,
-            padding: "16px",
-            backgroundColor: "#F8FAFC",
-          }}
-        >
-          <DarkTooltip placement="right" title="View image" arrow>
-            <Box
-              sx={{
-                ...appointeeImageViewStyle,
-                cursor: "pointer",
-                padding: "8px",
-                width: { xs: "70px", sm: "80px" }, // Adjust image size based on screen width
-                height: { xs: "70px", sm: "80px" },
-              }}
-            >
-              <img
-                src={viewImage}
-                alt={epfoServiceHistoryFileTypeAlias}
-                style={{
-                  ...displayImageStyle,
-                  margin: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
-                onClick={handleImageClick}
-              />
-            </Box>
-          </DarkTooltip>
-
-          <Typography
-            sx={{
-              textAlign: "center",
-              color: "#4A5568",
-              fontSize: { xs: "0.75rem", sm: "0.875rem" }, // Adjust font size for responsiveness
-              fontWeight: 500,
-              ...fileNameStyle,
-            }}
-          >
-            {viewImage ? "View All Service History Files" : "No File Available"}
-          </Typography>
-
-          <FileSelectionPopup
-            isPopupOpen={isPopupOpen}
-            setIsPopupOpen={setIsPopupOpen}
-            files={filesByAlias.get(epfoServiceHistoryFileTypeAlias) || []}
-            handleFileClick={handleFileClick}
-          />
-        </Box>
-      ) : null}
-      {epfoDetails ? (
-        <Box sx={gridContainerStyle}>
-          <Stack sx={floatingIconListStyle}>
-            <FabIcon
-              props={{
-                ...downloadFabProps,
-                selectedIndex: 1,
-                index: 1,
-                placement: "left-end",
-                size: "small",
-              }}
-            />
-          </Stack>
-          <Grid container spacing={1}>
-            <Grid item xs={12} md={12} letterSpacing={12}>
-              <Box sx={cardStyle}>
-                <Stack sx={listHeadingConteinerStyle}>
-                  <Typography sx={listHeadingStyle}>
-                    Personal Information
-                  </Typography>
-                </Stack>
-                <Stack direction="row" spacing={2}>
-                  <PersonalInformation
-                    fieldName={"Name"}
-                    fieldValue={fullName}
-                  />
-
-                  <PersonalInformation
-                    fieldName={"Date of Birth"}
-                    fieldValue={dob}
-                  />
-                </Stack>
-                <Stack direction="row" spacing={2}>
-                  <PersonalInformation
-                    fieldName={"Father's Name"}
-                    fieldValue={fatherName}
-                  />
-                  <PersonalInformation fieldName={"UAN"} fieldValue={pfUan} />
-                </Stack>
-              </Box>
-            </Grid>
-
-            <Grid item xs={12} md={12} letterSpacing={12}>
-              <Box sx={cardStyle}>
-                <Stack sx={listHeadingConteinerStyle}>
-                  <Typography sx={listHeadingStyle}>
-                    Company Information
-                  </Typography>
-                </Stack>
-                {companies &&
-                  companies?.map((companyitem, index) => (
-                    <Accordion
-                      key={index}
-                      expanded={expanded === "panel1"}
-                      onChange={handleChange("panel1")}
-                    >
-                      <Card>
-                        <Grid item xs={12} md={12} letterSpacing={12}>
-                          <Box
-                            sx={{
-                              m: 2,
-                              p: 1,
-                              border: "1px solid #ddd",
-                              borderRadius: "8px",
-                              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Adds a subtle shadow
-                            }}
-                          >
-                            <>
-                              <Stack direction="row" spacing={2}>
-                                <PersonalInformation
-                                  fieldName={"Company Name"}
-                                  fieldValue={companyitem.companyName}
-                                />
-                                <PersonalInformation
-                                  fieldName={"Pf Account for"}
-                                  fieldValue={`${companyitem.workForYear} year ${companyitem.workForMonth} month `}
-                                />
-                              </Stack>
-                              <Stack direction="row" spacing={2}>
-                                <PersonalInformation
-                                  fieldName={"First Transaction Year"}
-                                  fieldValue={companyitem.firstTransactionYear}
-                                />
-                                <PersonalInformation
-                                  fieldName={"First Transaction Month"}
-                                  fieldValue={companyitem.firstTransactionMonth}
-                                />
-                              </Stack>
-                              <Stack direction="row" spacing={2}>
-                                <PersonalInformation
-                                  fieldName={"Last Transaction Year"}
-                                  fieldValue={companyitem.lastTransactionYear}
-                                />
-                                <PersonalInformation
-                                  fieldName={"Last Transaction Month"}
-                                  fieldValue={companyitem.lastTransactionMonth}
-                                />
-                              </Stack>
-                              <Stack direction="row" spacing={2}>
-                                <PersonalInformation
-                                  fieldName={"First Transaction Approved at"}
-                                  fieldValue={
-                                    companyitem.firstTransactionApprovedOn
-                                  }
-                                />
-                                <PersonalInformation
-                                  fieldName={"Last Transaction Approved at"}
-                                  fieldValue={
-                                    companyitem.lastTransactionApprovedOn
-                                  }
-                                />
-                              </Stack>
-                            </>
-                          </Box>
-                        </Grid>
-                      </Card>
-                    </Accordion>
-                  ))}
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-      ) : null}
-    </Box>
-  );
-};
-
-const UnWrappedEmploymentView = (props) => {
-  return (
-    <FullScreenModel
-      headerText={"EPFO Employment history"}
-      open={props.openView}
-      fullScreen={true}
-      closeModel={props.closeViewModel}
-      content={<EmploymentViewDetails {...props} />}
-    />
-  );
-};
-
-const EmploymentView = ActionPermission(UnWrappedEmploymentView);
-
-export default EmploymentView;
+import { Grid, Typography, Accordion, Card } from '@mui/material';import React, { useEffect, useState } from 'react';import { Box, Stack } from '@mui/system';import FullScreenModel from 'shared/utils/modals/fullscreen-modal';import DownloadIcon from '@mui/icons-material/Download';import {  _addFabStyle,  appointeeImageViewStyle,  cardStyle,  displayImageStyle,  fileNameStyle,  floatingIconListStyle,  gridContainerStyle,  listHeadingConteinerStyle,  listHeadingStyle,} from 'app';import {  epfoServiceHistoryFileTypeAlias,  generateEmploymentHistoryReportDesc,  NA,  noEmployementMsg,  noPassBookMsg,} from 'shared/constants/constants';import ActionPermission from 'shared/components/action-permission/action-permission';import { PersonalInformation } from 'shared/components/display-information/personal-information';import { useSelector } from 'react-redux';import FabIconPropsModel from 'shared/utils/fab-icon/fab-icon-model';import { FabIcon } from 'shared/utils';import moment from 'moment';import jsPDFEmploymentHistTemplate from 'shared/utils/associate/js-pdf-employmenthist';import jsPDFReportDataTemplate from 'shared/utils/associate/js-pdf-report';import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';import viewImage from 'assets/images/profile/file_upload_icon.png';import FileSelectionPopup from './FileSelectionPopup ';import { getAppointeeDetails, getUploadedFileDetailsById } from 'server/apis';let EmploymentViewDetails = ({ appointeeId, epfoDetails, passbookStatusCode }) => {  const functionSlice = useSelector((state) => state.functionSlice);  const [responseInfo, setResponseInfo] = useState([]);  const { openDocumentModel } = functionSlice[0];  const [serviceHistoryFile, setServiceHistoryFile] = useState();  const [filesByAlias, setFilesByAlias] = useState(new Map());  const [isPopupOpen, setIsPopupOpen] = useState(false);  const handleChange = (panel) => (event, isExpanded) => {    setExpanded(isExpanded ? panel : false);  };  const [expanded, setExpanded] = useState(false);  const [dob, setDob] = useState();  const [fatherName, setFatherName] = useState();  const [fullName, setFullName] = useState();  const [pfUan, setPfUan] = useState();  const [companies, setCompanies] = useState();  useEffect(() => {    if (epfoDetails) {      setTableRows(epfoDetails);    }    if (passbookStatusCode === 'MNL') {      setAppointeeDetails();    }  }, [epfoDetails, passbookStatusCode]);  const setAppointeeDetails = async () => {    const response = await getAppointeeDetails(appointeeId);    if (response) {      const { fileUploaded } = response.responseInfo;      const epfoFiles = fileUploaded.filter(        ({ uploadTypeAlias }) => uploadTypeAlias === epfoServiceHistoryFileTypeAlias,      );      const updatedFilesByAlias = new Map();      epfoFiles.forEach(({ uploadTypeAlias, fileName, uploadDetailsId }) => {        const file = {          appointeeId,          uploadDetailsId,          fileName,        };        if (!updatedFilesByAlias.has(uploadTypeAlias)) {          updatedFilesByAlias.set(uploadTypeAlias, []);        }        updatedFilesByAlias.get(uploadTypeAlias).push(file);        setServiceHistoryFile(file);      });      setFilesByAlias(updatedFilesByAlias);    }  };  const handleFileClick = async (selectedFile) => {    const payload = {      appointeeId: selectedFile.appointeeId || 0,      fileCategory: epfoServiceHistoryFileTypeAlias,      fileId: selectedFile.uploadDetailsId,    };    const response = await getUploadedFileDetailsById(payload);    if (response && response.responseInfo) {      const { mimeType, fileData } = response.responseInfo;      const fileDetails = `data:${mimeType};base64,${fileData}`;      openDocumentModel(fileDetails, selectedFile.fileName, epfoServiceHistoryFileTypeAlias);    }  };  const handleImageClick = () => {    const files = filesByAlias?.get(epfoServiceHistoryFileTypeAlias) || [];    if (files.length > 1) {      setIsPopupOpen(true);    } else if (files.length === 1) {      handleFileClick(files[0]);    }  };  const setTableRows = async (details) => {    const { dob, fatherName, fullName, pfUan, companies } = details || {};    setResponseInfo(details);    dob ? setDob(dob) : setDob(NA);    fatherName ? setFatherName(fatherName) : setFatherName(NA);    fullName ? setFullName(fullName) : setFullName(NA);    pfUan ? setPfUan(pfUan) : setPfUan(NA);    if (Array.isArray(companies)) {      companies.length > 0 ? setCompanies(companies) : setCompanies(NA);    } else {      setCompanies(NA);    }  };  const handleDownload = async () => {    var date = moment();    var currentDate = date.format('DDMMYYYY');    jsPDFReportDataTemplate({      reportDetails: {        fileName: `_Employment_History_${currentDate}`,        label: 'Employment History',        rptDesc: generateEmploymentHistoryReportDesc,      },      responseInfo: responseInfo,      empFlag: true,      clientDetailsFlag: true,    });  };  const downloadFabProps = new FabIconPropsModel(    _addFabStyle,    handleDownload,    'primary',    'download',    <DownloadIcon />,    'Employement Report',  );  return (    <Box bgcolor={'#E2E8F0'} sx={{ position: 'relative', width: '100%', height: '100%' }}>      {serviceHistoryFile ? (        <Box          sx={{            ...gridContainerStyle,            display: 'flex',            flexDirection: 'column',            alignItems: 'center',            justifyContent: 'center',            gap: 2,            padding: '16px',            backgroundColor: '#F8FAFC',          }}        >          <DarkTooltip placement='right' title='View image' arrow>            <Box              sx={{                ...appointeeImageViewStyle,                cursor: 'pointer',                padding: '8px',                width: { xs: '70px', sm: '80px' },                 height: { xs: '70px', sm: '80px' },              }}            >              <img                src={viewImage}                alt={epfoServiceHistoryFileTypeAlias}                style={{                  ...displayImageStyle,                  margin: 0,                  width: '100%',                  height: '100%',                  objectFit: 'contain',                }}                onClick={handleImageClick}              />            </Box>          </DarkTooltip>          <Typography            sx={{              textAlign: 'center',              color: '#4A5568',              fontSize: { xs: '0.75rem', sm: '0.875rem' },               fontWeight: 500,              ...fileNameStyle,            }}          >            {viewImage ? 'View All Service History Files' : 'No File Available'}          </Typography>          <FileSelectionPopup            isPopupOpen={isPopupOpen}            setIsPopupOpen={setIsPopupOpen}            files={filesByAlias.get(epfoServiceHistoryFileTypeAlias) || []}            handleFileClick={handleFileClick}          />        </Box>      ) : null}      {epfoDetails ? (        <Box sx={gridContainerStyle}>          <Stack sx={floatingIconListStyle}>            <FabIcon              props={{                ...downloadFabProps,                selectedIndex: 1,                index: 1,                placement: 'left-end',                size: 'small',              }}            />          </Stack>          <Grid container spacing={1}>            <Grid item xs={12} md={12} letterSpacing={12}>              <Box sx={cardStyle}>                <Stack sx={listHeadingConteinerStyle}>                  <Typography sx={listHeadingStyle}>Personal Information</Typography>                </Stack>                <Stack direction='row' spacing={2}>                  <PersonalInformation fieldName={'Name'} fieldValue={fullName} />                  <PersonalInformation fieldName={'Date of Birth'} fieldValue={dob} />                </Stack>                <Stack direction='row' spacing={2}>                  <PersonalInformation fieldName={"Father's Name"} fieldValue={fatherName} />                  <PersonalInformation fieldName={'UAN'} fieldValue={pfUan} />                </Stack>              </Box>            </Grid>            <Grid item xs={12} md={12} letterSpacing={12}>              <Box sx={cardStyle}>                <Stack sx={listHeadingConteinerStyle}>                  <Typography sx={listHeadingStyle}>Company Information</Typography>                </Stack>                {companies &&                  companies?.map((companyitem, index) => (                    <Accordion                      key={index}                      expanded={expanded === 'panel1'}                      onChange={handleChange('panel1')}                    >                      <Card>                        <Grid item xs={12} md={12} letterSpacing={12}>                          <Box                            sx={{                              m: 2,                              p: 1,                              border: '1px solid #ddd',                              borderRadius: '8px',                              boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',                             }}                          >                            <>                              <Stack direction='row' spacing={2}>                                <PersonalInformation                                  fieldName={'Company Name'}                                  fieldValue={companyitem.companyName}                                />                                <PersonalInformation                                  fieldName={'Pf Account for'}                                  fieldValue={`${companyitem.workForYear} year ${companyitem.workForMonth} month `}                                />                              </Stack>                              <Stack direction='row' spacing={2}>                                <PersonalInformation                                  fieldName={'First Transaction Year'}                                  fieldValue={companyitem.firstTransactionYear}                                />                                <PersonalInformation                                  fieldName={'First Transaction Month'}                                  fieldValue={companyitem.firstTransactionMonth}                                />                              </Stack>                              <Stack direction='row' spacing={2}>                                <PersonalInformation                                  fieldName={'Last Transaction Year'}                                  fieldValue={companyitem.lastTransactionYear}                                />                                <PersonalInformation                                  fieldName={'Last Transaction Month'}                                  fieldValue={companyitem.lastTransactionMonth}                                />                              </Stack>                              <Stack direction='row' spacing={2}>                                <PersonalInformation                                  fieldName={'First Transaction Approved at'}                                  fieldValue={companyitem.firstTransactionApprovedOn}                                />                                <PersonalInformation                                  fieldName={'Last Transaction Approved at'}                                  fieldValue={companyitem.lastTransactionApprovedOn}                                />                              </Stack>                            </>                          </Box>                        </Grid>                      </Card>                    </Accordion>                  ))}              </Box>            </Grid>          </Grid>        </Box>      ) : null}    </Box>  );};const UnWrappedEmploymentView = (props) => {  return (    <FullScreenModel      headerText={'EPFO Employment history'}      open={props.openView}      fullScreen={true}      closeModel={props.closeViewModel}      content={<EmploymentViewDetails {...props} />}    />  );};const EmploymentView = ActionPermission(UnWrappedEmploymentView);export default EmploymentView;

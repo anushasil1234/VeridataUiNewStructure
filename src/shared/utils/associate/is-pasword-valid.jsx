@@ -1,57 +1,1 @@
-// import { patternChecking } from ".."
-
-// const isPaswordValid = (input) => {
-//     const pattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
-//     return patternChecking(input, pattern);
-// }
-const isPasswordValid = (input) => {
-    const minLength = 8;
-    const maxLength = 15;
-    const hasUpperCase = /[A-Z]/.test(input);
-    const hasLowerCase = /[a-z]/.test(input);
-    const hasNumber = /\d/.test(input);
-    const hasSpecialChar = /[@$!%*?&]/.test(input);
-    const isLengthValid = input.length >= minLength && input.length <= maxLength;
-
-    if (!isLengthValid) {
-        return {
-            isValid: false,
-            msg: input.length < minLength 
-                ? "Password must be at least 8 characters long." 
-                : "Password must be no more than 15 characters long."
-        };
-    }
-    if (!hasUpperCase) {
-        return {
-            isValid: false,
-            msg: "Password must contain at least one uppercase letter."
-        };
-    }
-    if (!hasLowerCase) {
-        return {
-            isValid: false,
-            msg: "Password must contain at least one lowercase letter."
-        };
-    }
-    if (!hasNumber) {
-        return {
-            isValid: false,
-            msg: "Password must contain at least one number."
-        };
-    }
-    if (!hasSpecialChar) {
-        return {
-            isValid: false,
-            msg: "Password must contain at least one special character (@$!%*?&)."
-        };
-    }
-
-    return {
-        isValid: true,
-        msg: "Password is valid."
-    };
-};
-
-// Example usage:
-
-export default isPasswordValid
+const isPasswordValid = (input) => {  const minLength = 8;  const maxLength = 15;  const hasUpperCase = /[A-Z]/.test(input);  const hasLowerCase = /[a-z]/.test(input);  const hasNumber = /\d/.test(input);  const hasSpecialChar = /[@$!%*?&]/.test(input);  const isLengthValid = input.length >= minLength && input.length <= maxLength;  if (!isLengthValid) {    return {      isValid: false,      msg:        input.length < minLength          ? 'Password must be at least 8 characters long.'          : 'Password must be no more than 15 characters long.',    };  }  if (!hasUpperCase) {    return {      isValid: false,      msg: 'Password must contain at least one uppercase letter.',    };  }  if (!hasLowerCase) {    return {      isValid: false,      msg: 'Password must contain at least one lowercase letter.',    };  }  if (!hasNumber) {    return {      isValid: false,      msg: 'Password must contain at least one number.',    };  }  if (!hasSpecialChar) {    return {      isValid: false,      msg: 'Password must contain at least one special character (@$!%*?&).',    };  }  return {    isValid: true,    msg: 'Password is valid.',  };};export default isPasswordValid;

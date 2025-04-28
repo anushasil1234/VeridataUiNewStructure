@@ -1,21 +1,1 @@
-import { Link } from 'react-router-dom';
-import { ReactComponent as LogoDark } from 'assets/images/logos/VERIDATA_LOGO_FULL.svg'; 
-import { styled } from '@mui/material';
-import { toDashboard } from 'shared/constants/constants';
-
-const LinkStyled = styled(Link)(() => ({
-  height: '70px',
-  width: '180px',
-  overflow: 'hidden',
-  display: 'block',
-}));
-
-const Logo = () => {
-  return (
-    <LinkStyled to={toDashboard}>
-      <LogoDark height={70} />
-    </LinkStyled>
-  )
-};
-
-export default Logo;
+import { Link } from 'react-router-dom';import { ReactComponent as LogoDark } from 'assets/images/logos/VERIDATA_LOGO_FULL.svg';import { styled } from '@mui/material';import { toDashboard } from 'shared/constants/constants';const LinkStyled = styled(Link)(() => ({  height: '70px',  width: '180px',  overflow: 'hidden',  display: 'block',}));const Logo = () => {  return (    <LinkStyled to={toDashboard}>      <LogoDark height={70} />    </LinkStyled>  );};export default Logo;

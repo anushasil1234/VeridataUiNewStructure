@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { AppointeeAgingFilterReport_URL } from "shared/constants/constants";
-
-const getAppointeeAgingFilterReport = (payLoad) => 
-    ServerRequest(AppointeeAgingFilterReport_URL, "POST", payLoad, null, true);
-
-export { getAppointeeAgingFilterReport };
+import ServerRequest from 'server/utils/server-request';import { AppointeeAgingFilterReport_URL } from 'shared/constants/constants';const getAppointeeAgingFilterReport = (payLoad) =>  ServerRequest(AppointeeAgingFilterReport_URL, 'POST', payLoad, null, true);export { getAppointeeAgingFilterReport };

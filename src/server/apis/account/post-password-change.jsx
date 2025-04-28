@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { PasswordChange_URL } from "shared/constants/constants";
-
-const postPasswordChange = (payLoad) => 
-    ServerRequest(PasswordChange_URL, "POST", payLoad);
-
-export { postPasswordChange };
+import ServerRequest from 'server/utils/server-request';import { PasswordChange_URL } from 'shared/constants/constants';const postPasswordChange = (payLoad) => ServerRequest(PasswordChange_URL, 'POST', payLoad);export { postPasswordChange };

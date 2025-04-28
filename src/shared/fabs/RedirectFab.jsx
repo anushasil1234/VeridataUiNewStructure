@@ -1,26 +1,1 @@
-import { Fab } from '@mui/material'
-import { primaryFabStyle } from 'app'
-import React from 'react'
-import DarkTooltip from 'shared/utils/tooltip/dark-tooltip'
-
-const RedirectFab = ({ onClick, tooltip }) => {
-    return (
-        <DarkTooltip placement="top" title={tooltip} arrow>
-            <Fab
-                mood="V"
-                variant="contained"
-                size="small"
-                onClick={() => onClick()}
-                sx={{
-                    background: 'linear-gradient(45deg, #7851A9, #5E3D8D)',
-                    ...primaryFabStyle
-                }}
-            >
-                {/* <Navigation width={18} /> */}
-                <img width={18} src={"./playground_assets/redirect.svg"} alt="YourSVG" style={{ width: '70%', height: 'auto' }} />
-            </Fab>
-        </DarkTooltip>
-    )
-}
-
-export default RedirectFab
+import { Fab } from '@mui/material';import { primaryFabStyle } from 'app';import React from 'react';import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';const RedirectFab = ({ onClick, tooltip }) => {  return (    <DarkTooltip placement='top' title={tooltip} arrow>      <Fab        mood='V'        variant='contained'        size='small'        onClick={() => onClick()}        sx={{          background: 'linear-gradient(45deg, #7851A9, #5E3D8D)',          ...primaryFabStyle,        }}      >        {}        <img          width={18}          src={'./playground_assets/redirect.svg'}          alt='YourSVG'          style={{ width: '70%', height: 'auto' }}        />      </Fab>    </DarkTooltip>  );};export default RedirectFab;

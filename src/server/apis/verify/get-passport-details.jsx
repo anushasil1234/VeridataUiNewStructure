@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { VerifyPassportDetails_URL } from "shared/constants/constants";
-
-const getPassportDetails = (payLoad) => ServerRequest(VerifyPassportDetails_URL, "POST", payLoad);
-
-export { getPassportDetails };
+import ServerRequest from 'server/utils/server-request';import { VerifyPassportDetails_URL } from 'shared/constants/constants';const getPassportDetails = (payLoad) => ServerRequest(VerifyPassportDetails_URL, 'POST', payLoad);export { getPassportDetails };

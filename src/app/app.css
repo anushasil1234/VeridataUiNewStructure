@@ -6,25 +6,25 @@
 :root {
   --dl-color-gray-500: #595959;
   --dl-color-gray-700: #999999;
-  --dl-color-gray-900: #D9D9D9;
+  --dl-color-gray-900: #d9d9d9;
   --dl-size-size-large: 144px;
   --dl-size-size-small: 48px;
-  --dl-color-danger-300: #A22020;
-  --dl-color-danger-500: #BF2626;
-  --dl-color-danger-700: #E14747;
+  --dl-color-danger-300: #a22020;
+  --dl-color-danger-500: #bf2626;
+  --dl-color-danger-700: #e14747;
   --dl-color-gray-black: #000000;
-  --dl-color-gray-white: #FFFFFF;
+  --dl-color-gray-white: #ffffff;
   --dl-size-size-medium: 96px;
   --dl-size-size-xlarge: 192px;
   --dl-size-size-xsmall: 16px;
   --dl-space-space-unit: 16px;
-  --dl-color-primary-100: #003EB3;
-  --dl-color-primary-300: #0074F0;
-  --dl-color-primary-500: #14A9FF;
-  --dl-color-primary-700: #85DCFF;
+  --dl-color-primary-100: #003eb3;
+  --dl-color-primary-300: #0074f0;
+  --dl-color-primary-500: #14a9ff;
+  --dl-color-primary-700: #85dcff;
   --dl-color-success-300: #199033;
-  --dl-color-success-500: #32A94C;
-  --dl-color-success-700: #4CC366;
+  --dl-color-success-500: #32a94c;
+  --dl-color-success-700: #4cc366;
   --dl-size-size-xxlarge: 288px;
   --dl-size-size-maxwidth: 1400px;
   --dl-radius-radius-round: 50%;
@@ -52,14 +52,13 @@
 
 .autocompleteInput .css-w6fb6m input {
   height: 54px;
- 
 }
-.autocompleteInput> div> div {
+.autocompleteInput > div > div {
   font-size: 1.125rem;
   margin-left: 8px;
   margin-top: 3px;
 }
-.autocompleteInput> div {
+.autocompleteInput > div {
   align-items: center;
 }
 
@@ -122,7 +121,7 @@
 .border_container {
   width: 100vw;
   height: 100vh;
-  background-color: #3174CF;
+  background-color: #3174cf;
   display: flex;
   justify-content: center;
 }
@@ -143,28 +142,27 @@
 }
 
 .cardshawdow {
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-
+  box-shadow:
+    rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 .cardList {
-
   top: 204px;
   left: 144px;
   position: relative;
 }
 
-.img-bar{
+.img-bar {
   height: 100%;
   width: 64%;
   margin: auto;
 }
 .overlay-image {
-  width:42.5%;
+  width: 42.5%;
 }
 .align_right {
   margin-left: auto;
-
 }
 
 .icon {
@@ -172,7 +170,6 @@
   height: 116px;
 }
 
-.requiredField{
+.requiredField {
   color: var(--dl-color-danger-500);
-
 }

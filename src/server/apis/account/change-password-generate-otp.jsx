@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { ChangePasswordGenerateOTP_URL } from "shared/constants/constants";
-
-const ChangePasswordGenerateOTP = (payLoad) => 
-    ServerRequest(ChangePasswordGenerateOTP_URL, "POST", payLoad);
-
-export { ChangePasswordGenerateOTP };
+import ServerRequest from 'server/utils/server-request';import { ChangePasswordGenerateOTP_URL } from 'shared/constants/constants';const ChangePasswordGenerateOTP = (payLoad) =>  ServerRequest(ChangePasswordGenerateOTP_URL, 'POST', payLoad);export { ChangePasswordGenerateOTP };

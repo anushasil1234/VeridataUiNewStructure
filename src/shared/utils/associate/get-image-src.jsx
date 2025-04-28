@@ -1,8 +1,1 @@
-const GetImageSrc = (fileObject) => {
-    const { mimeType, fileData } = fileObject;
-    return ({
-        fileSrc: `data:${mimeType};base64,${fileData}`
-    })
-}
-
-export default GetImageSrc
+const GetImageSrc = (fileObject) => {  const { mimeType, fileData } = fileObject;  return {    fileSrc: `data:${mimeType};base64,${fileData}`,  };};export default GetImageSrc;

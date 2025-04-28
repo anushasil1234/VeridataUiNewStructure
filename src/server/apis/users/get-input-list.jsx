@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetUserByUserId_URL } from "shared/constants/constants";
-
-const getInputList = (userId) => 
-    ServerRequest(`${GetUserByUserId_URL}${userId}`, "GET");
-
-export { getInputList };
+import ServerRequest from 'server/utils/server-request';import { GetUserByUserId_URL } from 'shared/constants/constants';const getInputList = (userId) => ServerRequest(`${GetUserByUserId_URL}${userId}`, 'GET');export { getInputList };

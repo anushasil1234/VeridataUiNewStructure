@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { RemoveAdminUser_URL, userDeletedSuccessMsg } from "shared/constants/constants";
-
-const deleteUserDetails = (id, userId) => 
-    ServerRequest(RemoveAdminUser_URL(id, userId), "POST", null, userDeletedSuccessMsg);
-
-export { deleteUserDetails };
+import ServerRequest from 'server/utils/server-request';import { RemoveAdminUser_URL, userDeletedSuccessMsg } from 'shared/constants/constants';const deleteUserDetails = (id, userId) =>  ServerRequest(RemoveAdminUser_URL(id, userId), 'POST', null, userDeletedSuccessMsg);export { deleteUserDetails };

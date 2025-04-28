@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetCountryDropdowndata_URL } from "shared/constants/constants";
-
-const getCountryList = () => ServerRequest(`${GetCountryDropdowndata_URL}`, "POST", "", "", "", false);
-
-export { getCountryList };
+import ServerRequest from 'server/utils/server-request';import { GetCountryDropdowndata_URL } from 'shared/constants/constants';const getCountryList = () =>  ServerRequest(`${GetCountryDropdowndata_URL}`, 'POST', '', '', '', false);export { getCountryList };

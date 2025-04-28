@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { Postfileupload_URL } from "shared/constants/constants";
-
-const getUploadedFileDetailsById = (payLoad) => ServerRequest(Postfileupload_URL, "POST", payLoad);
-
-export { getUploadedFileDetailsById };
+import ServerRequest from 'server/utils/server-request';import { Postfileupload_URL } from 'shared/constants/constants';const getUploadedFileDetailsById = (payLoad) => ServerRequest(Postfileupload_URL, 'POST', payLoad);export { getUploadedFileDetailsById };

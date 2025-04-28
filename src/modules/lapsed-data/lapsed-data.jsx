@@ -1,440 +1,1 @@
-import {
-  Download,
-  Info,
-  Refresh,
-  Search,
-} from "@mui/icons-material";
-import {
-  Box,
-  FormControl,
-  Grid,
-  InputLabel,
-  List,
-  ListItemButton,
-  MenuItem,
-  Select,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import {
-  generateLapsedAppointeeReportDesc,
-  lapsedListPdfTableHeadCell,
-  lapsedListTableHeadCell,
-  toLapseddata,
-  reportGenarate,
-  FromDateEmptyMsg,
-} from "shared/constants/constants";
-import {
-  CardLayout,
-  CreatePdfTableBody,
-  DataTable,
-  DateFormatYYYYMMDD,
-  PageLayout,
-  generateTableRowData,
-} from "shared/utils";
-import DatePicker from "shared/utils/date-picker/date-picker";
-import { removeActionRoute } from "store/slices/action-route-slice";
-import dayjs from "dayjs";
-import {
-  inputFieldStyleAdded,
-  primaryFabStyle,
-  ResponsiveFab,
-  downLoadListSx,
-  datePickerstyle,
-} from "app";
-import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
-import ActionPermission from "shared/components/action-permission/action-permission";
-import moment from "moment";
-import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-import Button from "@mui/material/Button";
-import downloadFile from "shared/utils/associate/download-file";
-import generateBlobFromBase64 from "shared/utils/associate/generateBlob";
-import { hasValue } from "shared/utils";
-import { getLapsedDataList, GetLapsedDataReport } from "server/apis";
-import showErrorMessage from "shared/utils/associate/show-error-message";
-const UnwrappedLapseddata = (props) => {
-  const { hasPermission } = props;
-  const { state } = useLocation();
-  const popUpSlice = useSelector((state) => state.popUpSlice);
-  let noOfDays = 0;
-  // const { showErrorMessage } = popUpSlice[0];
-  const apiSlice = useSelector((state) => state.apiSlice);
-  const loggedInData = useSelector((state) => state.loggedInData);
-  const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
-  const commonHooksFunctionSlice = useSelector(
-    (state) => state.commonHooksFunctionSlice
-  );
-
-  const { navigateTo } = commonHooksFunctionSlice[0];
-  // const { getLapsedDataList } = apiSlice[0];
-  // const { GetLapsedDataReport } = apiSlice[0];
-  const { companyId } = loggedInData[0];
-
-  if (state) {
-    if (state.dayRangePayLoad) {
-      noOfDays = state.dayRangePayLoad;
-    }
-  }
-  let _fromday;
-  let _today;
-  if (noOfDays > 0) {
-    const now = new Date();
-    _fromday = dayjs(new Date(now.setDate(now.getDate() - noOfDays)));
-    _today = dayjs(new Date());
-  }
-
-  const [rows, setRows] = useState([]);
-  const [pageName, setPageName] = useState(null);
-  const [toDate, setToDate] = useState(_today);
-  const [fromDate, setFromDate] = useState(_fromday);
-  const [responseList, setResponseList] = useState();
-  const [statusCode, setStatusCode] = useState("All");
-  const [isDownloadListOpened, setDownloadListOpened] = useState(false);
-  const payloadData = {
-    isFiltered: state && state.dayRangePayLoad ? true : false,
-    noOfDays: state && state.dayRangePayLoad ? state.dayRangePayLoad : 0,
-    filterType: state && state.filterType,
-    appointeeName: state && state.appointeeName,
-    companyId: companyId,
-    candidateId: state && state.candidateId,
-    statusCode: statusCode,
-    fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),
-    toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),
-  };
-
-  let [payLoad, setPayLoad] = useState(payloadData);
-  var date = moment();
-  var currentDate = date.format("DDMMYYYY");
-  const handleDownloade = (rf) => {
-    if (rf.fileData && typeof rf.fileData === "string") {
-      const base64String = rf.fileData;
-      const fileName = rf.fileName || "appointee_data.xlsx";
-      const blob = generateBlobFromBase64(base64String);
-      const blobUrl = window.URL.createObjectURL(blob);
-      downloadFile(blobUrl, fileName);
-      window.URL.revokeObjectURL(blobUrl);
-    }
-  };
-  const handleClick = async (payLoad) => {
-    const response = await GetLapsedDataReport(payLoad);
-    if (response) {
-      const { responseInfo } = response;
-      handleDownloade(responseInfo);
-    }
-  };
-
-  const setTableRows = async (payLoad) => {
-    let noOfDays = 0;
-    let isFiltered = false;
-
-    if (state) {
-      if (state.dayRangePayLoad) {
-        noOfDays = state.dayRangePayLoad;
-        isFiltered = true;
-      }
-    }
-    setPageName(
-      isFiltered === true && noOfDays > 0 ? `Lapsed List` : "Lapsed List"
-    );
-    const response = await getLapsedDataList(payLoad);
-    if (response) {
-      const { responseInfos } = response;
-      setResponseList(responseInfos);
-      let generatedCells = generateTableRowData(
-        responseInfos,
-        lapsedListTableHeadCell,
-        null,
-        hasPermission
-      );
-      responseInfos.forEach(({ Details }, index) => {
-        const detailsCells = generateTableRowData(
-          Details,
-          lapsedListTableHeadCell,
-          null
-        );
-        generatedCells[index].detailsCells = detailsCells;
-      });
-      setRows({
-        tableHead: lapsedListTableHeadCell,
-        tableRows: generatedCells,
-      });
-    }
-  };
-
-  const handleDownloadExal = () => {
-    setDownloadListOpened(!isDownloadListOpened);
-  };
-
-  const clearSearch = () => {
-    setFromDate(null);
-    setToDate(null);
-    setStatusCode("All");
-    const payLoad = {
-      isFiltered: false,
-      noOfDays: 0,
-      filterType: null,
-      appointeeName: null,
-      candidateId: null,
-      companyId: companyId,
-      isPfRequired: null,
-    };
-    setTableRows(payLoad);
-    navigateTo(toLapseddata, { state: false });
-  };
-
-  const handleSearch = () => {
-    // if (!hasValue(fromDate)) {
-    //   showErrorMessage(FromDateEmptyMsg);
-    //   return;
-    // }
-    setTableRows(payLoad);
-  };
-  const handleDownload = () => {
-    if (!responseList || responseList.length === 0) {
-      showErrorMessage(reportGenarate);
-      return;
-    }
-
-    const tableHeadList = lapsedListPdfTableHeadCell.map(({ label }) => {
-      return {
-        title: label,
-      };
-    });
-
-    const tableBodyList =
-      responseList &&
-      responseList.map((tableRows) => {
-        return CreatePdfTableBody(tableRows, lapsedListPdfTableHeadCell);
-      });
-
-    const tableObj = {
-      headerList: tableHeadList,
-      rows: tableBodyList,
-      tableName: "Appointee details",
-      rptDesc: generateLapsedAppointeeReportDesc,
-    };
-
-    jsPDFReportDataTemplate({
-      reportDetails: {
-        fileName: `_Lapsed_List_${currentDate}`,
-        label: "Lapsed List",
-        fromDate: fromDate,
-        toDate: toDate,
-        rptDesc: generateLapsedAppointeeReportDesc,
-      },
-      tables: [tableObj],
-    });
-  };
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(removeActionRoute());
-    if (actionRouteSlice.length === 0 && hasPermission) {
-      setTableRows(payloadData);
-    }
-  }, [actionRouteSlice, state, hasPermission]);
-  useEffect(() => {
-    payLoad.fromDate = DateFormatYYYYMMDD(fromDate?.toString());
-    setPayLoad(payLoad);
-  }, [fromDate]);
-  useEffect(() => {
-    payLoad.toDate = DateFormatYYYYMMDD(toDate?.toString());
-    setPayLoad(payLoad);
-  }, [toDate]);
-  useEffect(() => {
-    payLoad.statusCode = statusCode;
-    setPayLoad(payLoad);
-  }, [statusCode]);
-  const handelsearch = () => {
-    if (hasValue(toDate) && !hasValue(fromDate)) {
-      showErrorMessage("From Date can not be empty");
-    } else {
-      handleSearch();
-    }
-  };
-  return (
-    <PageLayout pageName={pageName}>
-      <CardLayout>
-        <Grid container spacing={1} alignItems="center">
-          <Grid item xs={3}>
-            <Box sx={{ ...datePickerstyle }}>
-              <DatePicker
-                label={"From Date"}
-                value={fromDate}
-                maxDate={toDate}
-                setValue={setFromDate}
-                disableFuture={true}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={3}>
-            <Box sx={{ ...datePickerstyle }}>
-              <DatePicker
-                label={"To Date"}
-                value={toDate}
-                minDate={fromDate}
-                setValue={setToDate}
-                disableFuture={true}
-              />
-            </Box>
-          </Grid>
-          <Grid item xs={2}>
-            <FormControl sx={{ width: "100%" }} size="large">
-              <InputLabel id="demo-simple-select-label">Status</InputLabel>
-              {statusCode !== undefined && (
-                <Select
-                  error={false}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  className="customeTextField"
-                  sx={inputFieldStyleAdded}
-                  defaultValue={"All"}
-                  value={statusCode}
-                  label="Status"
-                  onChange={(e) => {
-                    setStatusCode(e.target.value);
-                  }}
-                >
-                  <MenuItem value={"All"}>All</MenuItem>
-                  <MenuItem value={"0"}>No Response</MenuItem>
-                  <MenuItem value={"1"}>Ongoing</MenuItem>
-                  <MenuItem value={"2"}>Submitted</MenuItem>
-                </Select>
-              )}
-            </FormControl>
-          </Grid>
-
-          <Grid
-            item
-            xs={4}
-            display="flex"
-            justifyContent="flex-start"
-            alignItems="center"
-          >
-            <DarkTooltip placement="top" title={"Search"} arrow>
-              <ResponsiveFab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={handelsearch}
-                sx={primaryFabStyle}
-              >
-                <Search width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>
-            </DarkTooltip>
-            <DarkTooltip placement="top" title={"Clear Search"} arrow>
-              <ResponsiveFab
-                List
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={clearSearch}
-                sx={primaryFabStyle}
-              >
-                <Refresh width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>
-            </DarkTooltip>
-
-            {hasPermission && hasPermission["A008"] && (
-              <Grid
-                item
-                sx={{
-                  position: "relative",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <DarkTooltip placement="top" title={"Download Report"} arrow>
-                  <ResponsiveFab
-                    variant="contained"
-                    size="small"
-                    button={"N"}
-                    onClick={handleDownloadExal}
-                    sx={primaryFabStyle}
-                  >
-                    <Download width={18} sx={{ color: "#fff" }} />
-                  </ResponsiveFab>
-                </DarkTooltip>
-                {isDownloadListOpened && (
-                  <List
-                    sx={{
-                      ...downLoadListSx,
-                      zIndex: 1000,
-                    }}
-                  >
-                    <ListItemButton component="a">
-                      <DarkTooltip
-                        placement="top"
-                        title={"Download PDF Report"}
-                        arrow
-                      >
-                        {/* <ResponsiveFab
-                          variant="contained"
-                          size="small"
-                          button={"N"}
-                          sx={primaryFabStyle}
-                          onClick={handleDownload}
-                        >
-                          <Summarize width={18} sx={{ color: "#fff" }} />
-                        </ResponsiveFab> */}
-                        <Button variant="contained" onClick={handleDownload}>
-                          PDF
-                        </Button>
-                      </DarkTooltip>
-                    </ListItemButton>
-                    <ListItemButton component="a">
-                      <DarkTooltip
-                        placement="top"
-                        title={"Download XLSX Report"}
-                        arrow
-                      >
-                        {/* <ResponsiveFab
-                          variant="contained"
-                          size="small"
-                          button={"N"}
-                          sx={primaryFabStyle}
-                        >
-                          <ArticleIcon width={18} sx={{ color: "#fff" }} />
-                        </ResponsiveFab> */}
-                        <Button
-                          variant="contained"
-                          onClick={() => handleClick(payLoad)}
-                        >
-                          XLSX
-                        </Button>
-                      </DarkTooltip>
-                    </ListItemButton>
-                  </List>
-                )}
-                <DarkTooltip
-                  placement="top"
-                  title={generateLapsedAppointeeReportDesc}
-                  arrow
-                >
-                  <ResponsiveFab
-                    variant="contained"
-                    size="small"
-                    button={"N"}
-                    sx={primaryFabStyle}
-                  >
-                    <Info width={18} sx={{ color: "#fff" }} />
-                  </ResponsiveFab>
-                </DarkTooltip>
-              </Grid>
-            )}
-          </Grid>
-        </Grid>
-        <DataTable
-          rows={rows}
-          setRows={setRows}
-          headCells={lapsedListTableHeadCell}
-          checkboxEnable={true}
-        />
-      </CardLayout>
-    </PageLayout>
-  );
-};
-
-const LapsedData = ActionPermission(UnwrappedLapseddata);
-export default LapsedData;
+import { Download, Info, Refresh, Search } from '@mui/icons-material';import {  Box,  FormControl,  Grid,  InputLabel,  List,  ListItemButton,  MenuItem,  Select,} from '@mui/material';import React, { useEffect, useState } from 'react';import { useDispatch, useSelector } from 'react-redux';import { useLocation } from 'react-router-dom';import {  generateLapsedAppointeeReportDesc,  lapsedListPdfTableHeadCell,  lapsedListTableHeadCell,  toLapseddata,  reportGenarate,  FromDateEmptyMsg,} from 'shared/constants/constants';import {  CardLayout,  CreatePdfTableBody,  DataTable,  DateFormatYYYYMMDD,  PageLayout,  generateTableRowData,} from 'shared/utils';import DatePicker from 'shared/utils/date-picker/date-picker';import { removeActionRoute } from 'store/slices/action-route-slice';import dayjs from 'dayjs';import {  inputFieldStyleAdded,  primaryFabStyle,  ResponsiveFab,  downLoadListSx,  datePickerstyle,} from 'app';import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';import ActionPermission from 'shared/components/action-permission/action-permission';import moment from 'moment';import jsPDFReportDataTemplate from 'shared/utils/associate/js-pdf-report';import Button from '@mui/material/Button';import downloadFile from 'shared/utils/associate/download-file';import generateBlobFromBase64 from 'shared/utils/associate/generateBlob';import { hasValue } from 'shared/utils';import { getLapsedDataList, GetLapsedDataReport } from 'server/apis';import showErrorMessage from 'shared/utils/associate/show-error-message';const UnwrappedLapseddata = (props) => {  const { hasPermission } = props;  const { state } = useLocation();  const popUpSlice = useSelector((state) => state.popUpSlice);  let noOfDays = 0;  const apiSlice = useSelector((state) => state.apiSlice);  const loggedInData = useSelector((state) => state.loggedInData);  const actionRouteSlice = useSelector((state) => state.actionRouteSlice);  const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);  const { navigateTo } = commonHooksFunctionSlice[0];  const { companyId } = loggedInData[0];  if (state) {    if (state.dayRangePayLoad) {      noOfDays = state.dayRangePayLoad;    }  }  let _fromday;  let _today;  if (noOfDays > 0) {    const now = new Date();    _fromday = dayjs(new Date(now.setDate(now.getDate() - noOfDays)));    _today = dayjs(new Date());  }  const [rows, setRows] = useState([]);  const [pageName, setPageName] = useState(null);  const [toDate, setToDate] = useState(_today);  const [fromDate, setFromDate] = useState(_fromday);  const [responseList, setResponseList] = useState();  const [statusCode, setStatusCode] = useState('All');  const [isDownloadListOpened, setDownloadListOpened] = useState(false);  const payloadData = {    isFiltered: state && state.dayRangePayLoad ? true : false,    noOfDays: state && state.dayRangePayLoad ? state.dayRangePayLoad : 0,    filterType: state && state.filterType,    appointeeName: state && state.appointeeName,    companyId: companyId,    candidateId: state && state.candidateId,    statusCode: statusCode,    fromDate: fromDate && DateFormatYYYYMMDD(fromDate?.toString()),    toDate: toDate && DateFormatYYYYMMDD(toDate?.toString()),  };  let [payLoad, setPayLoad] = useState(payloadData);  var date = moment();  var currentDate = date.format('DDMMYYYY');  const handleDownloade = (rf) => {    if (rf.fileData && typeof rf.fileData === 'string') {      const base64String = rf.fileData;      const fileName = rf.fileName || 'appointee_data.xlsx';      const blob = generateBlobFromBase64(base64String);      const blobUrl = window.URL.createObjectURL(blob);      downloadFile(blobUrl, fileName);      window.URL.revokeObjectURL(blobUrl);    }  };  const handleClick = async (payLoad) => {    const response = await GetLapsedDataReport(payLoad);    if (response) {      const { responseInfo } = response;      handleDownloade(responseInfo);    }  };  const setTableRows = async (payLoad) => {    let noOfDays = 0;    let isFiltered = false;    if (state) {      if (state.dayRangePayLoad) {        noOfDays = state.dayRangePayLoad;        isFiltered = true;      }    }    setPageName(isFiltered === true && noOfDays > 0 ? `Lapsed List` : 'Lapsed List');    const response = await getLapsedDataList(payLoad);    if (response) {      const { responseInfos } = response;      setResponseList(responseInfos);      let generatedCells = generateTableRowData(        responseInfos,        lapsedListTableHeadCell,        null,        hasPermission,      );      responseInfos.forEach(({ Details }, index) => {        const detailsCells = generateTableRowData(Details, lapsedListTableHeadCell, null);        generatedCells[index].detailsCells = detailsCells;      });      setRows({        tableHead: lapsedListTableHeadCell,        tableRows: generatedCells,      });    }  };  const handleDownloadExal = () => {    setDownloadListOpened(!isDownloadListOpened);  };  const clearSearch = () => {    setFromDate(null);    setToDate(null);    setStatusCode('All');    const payLoad = {      isFiltered: false,      noOfDays: 0,      filterType: null,      appointeeName: null,      candidateId: null,      companyId: companyId,      isPfRequired: null,    };    setTableRows(payLoad);    navigateTo(toLapseddata, { state: false });  };  const handleSearch = () => {    setTableRows(payLoad);  };  const handleDownload = () => {    if (!responseList || responseList.length === 0) {      showErrorMessage(reportGenarate);      return;    }    const tableHeadList = lapsedListPdfTableHeadCell.map(({ label }) => {      return {        title: label,      };    });    const tableBodyList =      responseList &&      responseList.map((tableRows) => {        return CreatePdfTableBody(tableRows, lapsedListPdfTableHeadCell);      });    const tableObj = {      headerList: tableHeadList,      rows: tableBodyList,      tableName: 'Appointee details',      rptDesc: generateLapsedAppointeeReportDesc,    };    jsPDFReportDataTemplate({      reportDetails: {        fileName: `_Lapsed_List_${currentDate}`,        label: 'Lapsed List',        fromDate: fromDate,        toDate: toDate,        rptDesc: generateLapsedAppointeeReportDesc,      },      tables: [tableObj],    });  };  const dispatch = useDispatch();  useEffect(() => {    dispatch(removeActionRoute());    if (actionRouteSlice.length === 0 && hasPermission) {      setTableRows(payloadData);    }  }, [actionRouteSlice, state, hasPermission]);  useEffect(() => {    payLoad.fromDate = DateFormatYYYYMMDD(fromDate?.toString());    setPayLoad(payLoad);  }, [fromDate]);  useEffect(() => {    payLoad.toDate = DateFormatYYYYMMDD(toDate?.toString());    setPayLoad(payLoad);  }, [toDate]);  useEffect(() => {    payLoad.statusCode = statusCode;    setPayLoad(payLoad);  }, [statusCode]);  const handelsearch = () => {    if (hasValue(toDate) && !hasValue(fromDate)) {      showErrorMessage('From Date can not be empty');    } else {      handleSearch();    }  };  return (    <PageLayout pageName={pageName}>      <CardLayout>        <Grid container spacing={1} alignItems='center'>          <Grid item xs={3}>            <Box sx={{ ...datePickerstyle }}>              <DatePicker                label={'From Date'}                value={fromDate}                maxDate={toDate}                setValue={setFromDate}                disableFuture={true}              />            </Box>          </Grid>          <Grid item xs={3}>            <Box sx={{ ...datePickerstyle }}>              <DatePicker                label={'To Date'}                value={toDate}                minDate={fromDate}                setValue={setToDate}                disableFuture={true}              />            </Box>          </Grid>          <Grid item xs={2}>            <FormControl sx={{ width: '100%' }} size='large'>              <InputLabel id='demo-simple-select-label'>Status</InputLabel>              {statusCode !== undefined && (                <Select                  error={false}                  labelId='demo-simple-select-label'                  id='demo-simple-select'                  className='customeTextField'                  sx={inputFieldStyleAdded}                  defaultValue={'All'}                  value={statusCode}                  label='Status'                  onChange={(e) => {                    setStatusCode(e.target.value);                  }}                >                  <MenuItem value={'All'}>All</MenuItem>                  <MenuItem value={'0'}>No Response</MenuItem>                  <MenuItem value={'1'}>Ongoing</MenuItem>                  <MenuItem value={'2'}>Submitted</MenuItem>                </Select>              )}            </FormControl>          </Grid>          <Grid item xs={4} display='flex' justifyContent='flex-start' alignItems='center'>            <DarkTooltip placement='top' title={'Search'} arrow>              <ResponsiveFab                variant='contained'                size='small'                button={'N'}                onClick={handelsearch}                sx={primaryFabStyle}              >                <Search width={18} sx={{ color: '#fff' }} />              </ResponsiveFab>            </DarkTooltip>            <DarkTooltip placement='top' title={'Clear Search'} arrow>              <ResponsiveFab                List                variant='contained'                size='small'                button={'N'}                onClick={clearSearch}                sx={primaryFabStyle}              >                <Refresh width={18} sx={{ color: '#fff' }} />              </ResponsiveFab>            </DarkTooltip>            {hasPermission && hasPermission['A008'] && (              <Grid                item                sx={{                  position: 'relative',                  display: 'flex',                  alignItems: 'center',                }}              >                <DarkTooltip placement='top' title={'Download Report'} arrow>                  <ResponsiveFab                    variant='contained'                    size='small'                    button={'N'}                    onClick={handleDownloadExal}                    sx={primaryFabStyle}                  >                    <Download width={18} sx={{ color: '#fff' }} />                  </ResponsiveFab>                </DarkTooltip>                {isDownloadListOpened && (                  <List                    sx={{                      ...downLoadListSx,                      zIndex: 1000,                    }}                  >                    <ListItemButton component='a'>                      <DarkTooltip placement='top' title={'Download PDF Report'} arrow>                        {}                        <Button variant='contained' onClick={handleDownload}>                          PDF                        </Button>                      </DarkTooltip>                    </ListItemButton>                    <ListItemButton component='a'>                      <DarkTooltip placement='top' title={'Download XLSX Report'} arrow>                        {}                        <Button variant='contained' onClick={() => handleClick(payLoad)}>                          XLSX                        </Button>                      </DarkTooltip>                    </ListItemButton>                  </List>                )}                <DarkTooltip placement='top' title={generateLapsedAppointeeReportDesc} arrow>                  <ResponsiveFab variant='contained' size='small' button={'N'} sx={primaryFabStyle}>                    <Info width={18} sx={{ color: '#fff' }} />                  </ResponsiveFab>                </DarkTooltip>              </Grid>            )}          </Grid>        </Grid>        <DataTable          rows={rows}          setRows={setRows}          headCells={lapsedListTableHeadCell}          checkboxEnable={true}        />      </CardLayout>    </PageLayout>  );};const LapsedData = ActionPermission(UnwrappedLapseddata);export default LapsedData;

@@ -1,29 +1,1 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { removeCommonHooksFunction, storeCommonHooksFunction } from "store/slices/common-hook-function-slice";
-
-const CommonHookFunctionWrapper = (Component) => {
-    const CommonHookFunction = () => {
-        const navigate = useNavigate();
-        const navigateTo = (to, pramObj) => {
-            navigate(to, pramObj)
-        }
-
-        const dispatch = useDispatch();
-        const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice)
-        if (commonHooksFunctionSlice && commonHooksFunctionSlice.length === 0) {
-            dispatch(storeCommonHooksFunction({ navigateTo }))
-        }
-        useEffect(() => {
-            return () => {
-                dispatch(removeCommonHooksFunction());
-            }
-        }, [])
-
-        return <Component />
-    }
-
-    return CommonHookFunction
-};
-export default CommonHookFunctionWrapper;
+import { useEffect } from 'react';import { useDispatch, useSelector } from 'react-redux';import { useNavigate } from 'react-router-dom';import {  removeCommonHooksFunction,  storeCommonHooksFunction,} from 'store/slices/common-hook-function-slice';const CommonHookFunctionWrapper = (Component) => {  const CommonHookFunction = () => {    const navigate = useNavigate();    const navigateTo = (to, pramObj) => {      navigate(to, pramObj);    };    const dispatch = useDispatch();    const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);    if (commonHooksFunctionSlice && commonHooksFunctionSlice.length === 0) {      dispatch(storeCommonHooksFunction({ navigateTo }));    }    useEffect(() => {      return () => {        dispatch(removeCommonHooksFunction());      };    }, []);    return <Component />;  };  return CommonHookFunction;};export default CommonHookFunctionWrapper;

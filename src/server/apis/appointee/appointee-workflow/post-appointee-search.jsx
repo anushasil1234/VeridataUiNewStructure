@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { PostAppointeeSearch_URL } from "shared/constants/constants";
-
-const postAppointeeSearch = (searchInput) => 
-    ServerRequest(`${PostAppointeeSearch_URL}${searchInput}`, "POST");
-
-export { postAppointeeSearch };
+import ServerRequest from 'server/utils/server-request';import { PostAppointeeSearch_URL } from 'shared/constants/constants';const postAppointeeSearch = (searchInput) =>  ServerRequest(`${PostAppointeeSearch_URL}${searchInput}`, 'POST');export { postAppointeeSearch };

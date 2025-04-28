@@ -1,22 +1,1 @@
-import { Edit } from '@mui/icons-material'
-import { Fab } from '@mui/material'
-import { yellowFabStyle } from 'app'
-import React from 'react'
-import DarkTooltip from 'shared/utils/tooltip/dark-tooltip'
-
-const EditFab = ({onClick, title}) => {
-    return (
-        <DarkTooltip placement="top" title={title} arrow>
-            <Fab
-                variant="contained"
-                size="small"
-                onClick={() => onClick()}
-                sx={yellowFabStyle}
-            >
-                <Edit width={18} />
-            </Fab>
-        </DarkTooltip>
-    )
-}
-
-export default EditFab
+import { Edit } from '@mui/icons-material';import { Fab } from '@mui/material';import { yellowFabStyle } from 'app';import React from 'react';import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';const EditFab = ({ onClick, title }) => {  return (    <DarkTooltip placement='top' title={title} arrow>      <Fab variant='contained' size='small' onClick={() => onClick()} sx={yellowFabStyle}>        <Edit width={18} />      </Fab>    </DarkTooltip>  );};export default EditFab;

@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { AppointeeInacitvityFilterReport_URL } from "shared/constants/constants";
-
-const getAppointeeInactivityFilterReport = (payLoad) => 
-    ServerRequest(AppointeeInacitvityFilterReport_URL, "POST", payLoad, null, true);
-
-export { getAppointeeInactivityFilterReport };
+import ServerRequest from 'server/utils/server-request';import { AppointeeInacitvityFilterReport_URL } from 'shared/constants/constants';const getAppointeeInactivityFilterReport = (payLoad) =>  ServerRequest(AppointeeInacitvityFilterReport_URL, 'POST', payLoad, null, true);export { getAppointeeInactivityFilterReport };

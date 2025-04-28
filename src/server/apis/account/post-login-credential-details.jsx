@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request"
-import { ValidateUserLogIn_URL } from "shared/constants/constants";
-
-const postLoginCredentialDetails = async (payLoad) => ServerRequest(ValidateUserLogIn_URL, "POST", payLoad);
-
-export  {postLoginCredentialDetails}
+import ServerRequest from 'server/utils/server-request';import { ValidateUserLogIn_URL } from 'shared/constants/constants';const postLoginCredentialDetails = async (payLoad) =>  ServerRequest(ValidateUserLogIn_URL, 'POST', payLoad);export { postLoginCredentialDetails };

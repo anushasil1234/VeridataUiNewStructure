@@ -1,264 +1,1 @@
-import { Download, Info, Refresh, Search, Summarize } from "@mui/icons-material";
-import {
-  Box,
-  Grid,
-  Fab,
-  FormControl,
-  InputLabel,
-  List,
-  ListItemButton,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  useTheme
-} from "@mui/material";
-import { datePickerstyle, downLoadListSx, inputFieldStyle, primaryFabStyle,ResponsiveFab } from "app";
-import React, { useEffect, useRef, useState } from "react";
-import DatePicker from "shared/utils/date-picker/date-picker";
-import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
-import { DateFormatYYYYMMDD, hasValue } from "shared/utils";
-import moment from "moment";
-import ArticleIcon from '@mui/icons-material/Article';
-import Button from '@mui/material/Button';
-import { appointeeCountInfo, generateAppointeeCountReportDesc, generatenationlityReportDesc, nationalityInfo } from "shared/constants/constants";
-import showErrorMessage from "shared/utils/associate/show-error-message";
-const DownloadReportFilter = ({
-  filterType,
-  setFilterType,
-  handleSearch,
-  clearSearch,
-  handleDownload,
-  fromDate,
-  setFromDate,
-  toDate,
-  setToDate,
-  dropdownFilterType,
-  dropdownFilterTypeChange,
-  filterCode,
-  hasPermission,
-  handleDownloadxlsx
-}) => {
-  // const { popUpSlice } = useSelector(
-  //   (state) => state
-  // );
-  const downloadListRef = useRef(null);
-  
-  const currentDate = moment();
-  const _currentDate = currentDate.format("DD-MMM-YYYY");
-  // const { showErrorMessage } = popUpSlice[0];
-  const[isDownloadListOpened,setIsDownloadListOpened]=useState(false);
-  const handleDownloadClick =()=>{
-    // console.log('clikoutside')
-
-    setIsDownloadListOpened(!isDownloadListOpened);
-  }
-  const handleReportSearch = () => {
-    if (filterType === 0) {
-      setFromDate(null);
-      setToDate(null);
-      dropdownFilterTypeChange('All')
-      handleSearch();
-    }
-    else if (hasValue(toDate) && !hasValue(fromDate)) {
-      showErrorMessage("From date can not be empty");
-    } else {
-      handleSearch();
-    }
-  };
-  // Close download list on outside click
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // console.log('clikoutside',event.target)
-      if (downloadListRef.current && !downloadListRef.current.contains(event.target)) {
-        setIsDownloadListOpened(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  return (
-    <Grid
-      container
-      spacing={1}
-      alignItems="center"
-      justifyContent="flex-start"
-      my={2}
-    >
-      <Grid item xs={12} sm={6} md={3} lg={2} >
-        <FormControl fullWidth size="large">
-          <InputLabel id="demo-select-small">Filter</InputLabel>
-          <Select
-            labelId="demo-select-small"
-            id="demo-select-small"
-            value={filterType}
-            label="Filter"
-            onChange={(e) => setFilterType(e.target.value)}
-          >
-            <MenuItem value={0}>All</MenuItem>
-            <MenuItem value={1}>Custom</MenuItem>
-          </Select>
-        </FormControl>
-      </Grid>
-  
-      {filterType !== 0 && (
-        <>
-          <Grid item xs={12} sm={6} md={3} lg={2} >
-          <Box sx={{ ...datePickerstyle }}>
-            <DatePicker
-              label="From Date"
-              value={fromDate}
-              setValue={setFromDate}
-              disableFuture={true}
-              sx={{ width: '100%' }}
-            />
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={2}>
-          <Box sx={{ ...datePickerstyle }}>
-            <DatePicker
-              label="To Date"
-              value={toDate}
-              setValue={setToDate}
-              disableFuture={true}
-              sx={{ width: '100%' }}
-            />
-            </Box>
-          </Grid>
-  
-          <Grid item xs={12} sm={6} md={3} lg={2}>
-            {filterCode === 'NATNLTY' ? (
-              <FormControl fullWidth size="large">
-                <InputLabel id="nationality-select">Nationality</InputLabel>
-                <Select
-                  labelId="nationality-select"
-                  id="nationality-select"
-                  value={dropdownFilterType}
-                  label="Nationality"
-                  onChange={(e) => dropdownFilterTypeChange(e.target.value)}
-                >
-                  <MenuItem value="All">All</MenuItem>
-                  <MenuItem value="IN">Indian</MenuItem>
-                  <MenuItem value="OTH">Foreigner</MenuItem>
-                </Select>
-              </FormControl>
-            ) : filterCode === 'APPNTE' ? (
-              <FormControl fullWidth size="large">
-                <InputLabel id="status-select">Status</InputLabel>
-                <Select
-                  labelId="status-select"
-                  id="status-select"
-                  value={dropdownFilterType}
-                  label="Status"
-                  onChange={(e) => dropdownFilterTypeChange(e.target.value)}
-                >
-                  <MenuItem value="All"> All</MenuItem>
-                  <MenuItem value="001">Under Process</MenuItem>
-                  <MenuItem value="003">Verified</MenuItem>
-                  <MenuItem value="004">Rejected</MenuItem>
-                  <MenuItem value="005">Lapsed</MenuItem>
-                </Select>
-              </FormControl>
-            ) : null}
-          </Grid>
-        </>
-      )}
-  
-      <Grid item xs={12} sm={6} md={3} lg={3} container spacing={1} justifyContent="flex-start">
-        <Grid item>
-          <DarkTooltip placement="top" title="Search" arrow>
-            <ResponsiveFab
-              variant="contained"
-              size="small"
-              button="N"
-              onClick={handleReportSearch}
-              sx={primaryFabStyle}
-            >
-              <Search width={18} sx={{ color: "#fff" }} />
-            </ResponsiveFab>
-          </DarkTooltip>
-        </Grid>
-        <Grid item>
-          <DarkTooltip placement="top" title="Clear Search" arrow>
-            <ResponsiveFab
-              variant="contained"
-              size="small"
-              button="N"
-              onClick={clearSearch}
-              sx={primaryFabStyle}
-            >
-              <Refresh width={18} sx={{ color: "#fff" }} />
-            </ResponsiveFab>
-          </DarkTooltip>
-        </Grid>
-        {hasPermission && hasPermission["A008"] && (
-          <Grid item sx={{position:'relative'}}>
-            <DarkTooltip placement="top" title="Download Report" arrow>
-              <ResponsiveFab
-                variant="contained"
-                size="small"
-                button="N"
-                onClick={handleDownloadClick}
-                sx={primaryFabStyle}
-              >
-                <Download width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>
-            </DarkTooltip>
-
-            {isDownloadListOpened && (
-              
-              <List  ref={downloadListRef} sx={{ ...downLoadListSx, left: '-16px', zIndex: 1000 }}>
-                <ListItemButton component="a">
-                  <DarkTooltip placement="top" title="Download PDF Report" arrow>
-                    <Button variant="contained" onClick={handleDownload}>PDF</Button>
-                  </DarkTooltip>
-                </ListItemButton>
-                <ListItemButton component="a">
-                  <DarkTooltip placement="top" title="Download XLSX Report" arrow>
-                    <Button variant="contained" onClick={handleDownloadxlsx}>XLSX</Button>
-                  </DarkTooltip>
-                </ListItemButton>
-              </List>
-            )}
-          </Grid>
-        )}
-        <Grid item>
-        <DarkTooltip placement="top" title={filterCode === "NATNLTY" ? nationalityInfo(dropdownFilterType?.toString()):filterCode === "APPNTE" ? appointeeCountInfo :''} arrow>
-            <ResponsiveFab
-              variant="contained"
-              size="small"
-              button="N"
-           //   onClick={clearSearch}
-              sx={primaryFabStyle}
-            >
-              <Info width={18} sx={{ color: "#fff" }} />
-            </ResponsiveFab>
-          </DarkTooltip>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-  
-  
-};
-
-DownloadReportFilter.propTypes = {
-  handleSearch: PropTypes.func.isRequired,
-  handleDownload: PropTypes.func.isRequired,
-  fromDate: PropTypes.string,
-  setFromDate: PropTypes.func.isRequired,
-  toDate: PropTypes.string,
-  setToDate: PropTypes.func.isRequired,
-  nationalityType: PropTypes.string.isRequired,
-  handleNationalityChange: PropTypes.func.isRequired,
-  filterType: PropTypes.number,
-  setFilterType: PropTypes.func.isRequired,
-};
-
-export default DownloadReportFilter;
+import { Download, Info, Refresh, Search, Summarize } from '@mui/icons-material';import {  Box,  Grid,  Fab,  FormControl,  InputLabel,  List,  ListItemButton,  MenuItem,  Select,  Stack,  TextField,  useTheme,} from '@mui/material';import {  datePickerstyle,  downLoadListSx,  inputFieldStyle,  primaryFabStyle,  ResponsiveFab,} from 'app';import React, { useEffect, useRef, useState } from 'react';import DatePicker from 'shared/utils/date-picker/date-picker';import PropTypes from 'prop-types';import { useSelector } from 'react-redux';import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';import { DateFormatYYYYMMDD, hasValue } from 'shared/utils';import moment from 'moment';import ArticleIcon from '@mui/icons-material/Article';import Button from '@mui/material/Button';import {  appointeeCountInfo,  generateAppointeeCountReportDesc,  generatenationlityReportDesc,  nationalityInfo,} from 'shared/constants/constants';import showErrorMessage from 'shared/utils/associate/show-error-message';const DownloadReportFilter = ({  filterType,  setFilterType,  handleSearch,  clearSearch,  handleDownload,  fromDate,  setFromDate,  toDate,  setToDate,  dropdownFilterType,  dropdownFilterTypeChange,  filterCode,  hasPermission,  handleDownloadxlsx,}) => {  const downloadListRef = useRef(null);  const currentDate = moment();  const _currentDate = currentDate.format('DD-MMM-YYYY');  const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);  const handleDownloadClick = () => {    setIsDownloadListOpened(!isDownloadListOpened);  };  const handleReportSearch = () => {    if (filterType === 0) {      setFromDate(null);      setToDate(null);      dropdownFilterTypeChange('All');      handleSearch();    } else if (hasValue(toDate) && !hasValue(fromDate)) {      showErrorMessage('From date can not be empty');    } else {      handleSearch();    }  };  useEffect(() => {    const handleClickOutside = (event) => {      if (downloadListRef.current && !downloadListRef.current.contains(event.target)) {        setIsDownloadListOpened(false);      }    };    document.addEventListener('mousedown', handleClickOutside);    return () => {      document.removeEventListener('mousedown', handleClickOutside);    };  }, []);  return (    <Grid container spacing={1} alignItems='center' justifyContent='flex-start' my={2}>      <Grid item xs={12} sm={6} md={3} lg={2}>        <FormControl fullWidth size='large'>          <InputLabel id='demo-select-small'>Filter</InputLabel>          <Select            labelId='demo-select-small'            id='demo-select-small'            value={filterType}            label='Filter'            onChange={(e) => setFilterType(e.target.value)}          >            <MenuItem value={0}>All</MenuItem>            <MenuItem value={1}>Custom</MenuItem>          </Select>        </FormControl>      </Grid>      {filterType !== 0 && (        <>          <Grid item xs={12} sm={6} md={3} lg={2}>            <Box sx={{ ...datePickerstyle }}>              <DatePicker                label='From Date'                value={fromDate}                setValue={setFromDate}                disableFuture={true}                sx={{ width: '100%' }}              />            </Box>          </Grid>          <Grid item xs={12} sm={6} md={3} lg={2}>            <Box sx={{ ...datePickerstyle }}>              <DatePicker                label='To Date'                value={toDate}                setValue={setToDate}                disableFuture={true}                sx={{ width: '100%' }}              />            </Box>          </Grid>          <Grid item xs={12} sm={6} md={3} lg={2}>            {filterCode === 'NATNLTY' ? (              <FormControl fullWidth size='large'>                <InputLabel id='nationality-select'>Nationality</InputLabel>                <Select                  labelId='nationality-select'                  id='nationality-select'                  value={dropdownFilterType}                  label='Nationality'                  onChange={(e) => dropdownFilterTypeChange(e.target.value)}                >                  <MenuItem value='All'>All</MenuItem>                  <MenuItem value='IN'>Indian</MenuItem>                  <MenuItem value='OTH'>Foreigner</MenuItem>                </Select>              </FormControl>            ) : filterCode === 'APPNTE' ? (              <FormControl fullWidth size='large'>                <InputLabel id='status-select'>Status</InputLabel>                <Select                  labelId='status-select'                  id='status-select'                  value={dropdownFilterType}                  label='Status'                  onChange={(e) => dropdownFilterTypeChange(e.target.value)}                >                  <MenuItem value='All'> All</MenuItem>                  <MenuItem value='001'>Under Process</MenuItem>                  <MenuItem value='003'>Verified</MenuItem>                  <MenuItem value='004'>Rejected</MenuItem>                  <MenuItem value='005'>Lapsed</MenuItem>                </Select>              </FormControl>            ) : null}          </Grid>        </>      )}      <Grid item xs={12} sm={6} md={3} lg={3} container spacing={1} justifyContent='flex-start'>        <Grid item>          <DarkTooltip placement='top' title='Search' arrow>            <ResponsiveFab              variant='contained'              size='small'              button='N'              onClick={handleReportSearch}              sx={primaryFabStyle}            >              <Search width={18} sx={{ color: '#fff' }} />            </ResponsiveFab>          </DarkTooltip>        </Grid>        <Grid item>          <DarkTooltip placement='top' title='Clear Search' arrow>            <ResponsiveFab              variant='contained'              size='small'              button='N'              onClick={clearSearch}              sx={primaryFabStyle}            >              <Refresh width={18} sx={{ color: '#fff' }} />            </ResponsiveFab>          </DarkTooltip>        </Grid>        {hasPermission && hasPermission['A008'] && (          <Grid item sx={{ position: 'relative' }}>            <DarkTooltip placement='top' title='Download Report' arrow>              <ResponsiveFab                variant='contained'                size='small'                button='N'                onClick={handleDownloadClick}                sx={primaryFabStyle}              >                <Download width={18} sx={{ color: '#fff' }} />              </ResponsiveFab>            </DarkTooltip>            {isDownloadListOpened && (              <List ref={downloadListRef} sx={{ ...downLoadListSx, left: '-16px', zIndex: 1000 }}>                <ListItemButton component='a'>                  <DarkTooltip placement='top' title='Download PDF Report' arrow>                    <Button variant='contained' onClick={handleDownload}>                      PDF                    </Button>                  </DarkTooltip>                </ListItemButton>                <ListItemButton component='a'>                  <DarkTooltip placement='top' title='Download XLSX Report' arrow>                    <Button variant='contained' onClick={handleDownloadxlsx}>                      XLSX                    </Button>                  </DarkTooltip>                </ListItemButton>              </List>            )}          </Grid>        )}        <Grid item>          <DarkTooltip            placement='top'            title={              filterCode === 'NATNLTY'                ? nationalityInfo(dropdownFilterType?.toString())                : filterCode === 'APPNTE'                  ? appointeeCountInfo                  : ''            }            arrow          >            <ResponsiveFab              variant='contained'              size='small'              button='N'              sx={primaryFabStyle}            >              <Info width={18} sx={{ color: '#fff' }} />            </ResponsiveFab>          </DarkTooltip>        </Grid>      </Grid>    </Grid>  );};DownloadReportFilter.propTypes = {  handleSearch: PropTypes.func.isRequired,  handleDownload: PropTypes.func.isRequired,  fromDate: PropTypes.string,  setFromDate: PropTypes.func.isRequired,  toDate: PropTypes.string,  setToDate: PropTypes.func.isRequired,  nationalityType: PropTypes.string.isRequired,  handleNationalityChange: PropTypes.func.isRequired,  filterType: PropTypes.number,  setFilterType: PropTypes.func.isRequired,};export default DownloadReportFilter;

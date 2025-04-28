@@ -1,55 +1,1 @@
-import { Outlet } from "react-router-dom";
-import { Box, styled } from '@mui/material';
-import CustomContainer from "shared/utils/layout/container";
-import Header from "../full/header/Header";
-import ContentWrapper from "shared/utils/layout/content-wrapper";
-
-const MainWrapper = styled('div')(() => ({
-    display: 'flex',
-    minHeight: '100vh',
-    width: '100%',
-}));
-const PageWrapper = styled('div')(() => ({
-    display: 'flex',
-    flexGrow: 1,
-    paddingBottom: '60px',
-    flexDirection: 'column',
-    zIndex: 1,
-    backgroundColor: 'transparent',
-}));
-
-
-const BlankLayoutWithHeader = ({children}) => (
-    <MainWrapper
-        className='mainwrapper'
-    >
-        <PageWrapper
-            className="page-wrapper"
-        >
-            {/* ------------------------------------------- */}
-            {/* Header */}
-            {/* ------------------------------------------- */}
-            <Header showRevokeConsentCallToAction={false} />
-            {/* ------------------------------------------- */}
-            {/* PageContent */}
-            {/* ------------------------------------------- */}
-            <CustomContainer>
-                {/* ------------------------------------------- */}
-                {/* Page Route */}
-                {/* ------------------------------------------- */}
-                <Box sx={{ minHeight: 'calc(100vh - 170px)' }}>
-                    <ContentWrapper>
-                        {/* <Outlet /> */}
-                        {children}
-                    </ContentWrapper>
-                </Box>
-                {/* ------------------------------------------- */}
-                {/* End Page */}
-                {/* ------------------------------------------- */}
-            </CustomContainer>
-        </PageWrapper>
-
-    </MainWrapper>
-);
-
-export default BlankLayoutWithHeader;
+import { Outlet } from 'react-router-dom';import { Box, styled } from '@mui/material';import CustomContainer from 'shared/utils/layout/container';import Header from '../full/header/Header';import ContentWrapper from 'shared/utils/layout/content-wrapper';const MainWrapper = styled('div')(() => ({  display: 'flex',  minHeight: '100vh',  width: '100%',}));const PageWrapper = styled('div')(() => ({  display: 'flex',  flexGrow: 1,  paddingBottom: '60px',  flexDirection: 'column',  zIndex: 1,  backgroundColor: 'transparent',}));const BlankLayoutWithHeader = ({ children }) => (  <MainWrapper className='mainwrapper'>    <PageWrapper className='page-wrapper'>      {}      {}      {}      <Header showRevokeConsentCallToAction={false} />      {}      {}      {}      <CustomContainer>        {}        {}        {}        <Box sx={{ minHeight: 'calc(100vh - 170px)' }}>          <ContentWrapper>            {}            {children}          </ContentWrapper>        </Box>        {}        {}        {}      </CustomContainer>    </PageWrapper>  </MainWrapper>);export default BlankLayoutWithHeader;

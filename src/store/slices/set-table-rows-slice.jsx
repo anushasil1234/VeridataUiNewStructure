@@ -1,17 +1,1 @@
-import { createSlice} from "@reduxjs/toolkit"
-
-const SetTableRowsSlice = createSlice({
-    name: "SetTableRowsSlice",
-    initialState: [],
-    reducers: {
-        storeSetTableRowsSetFunction(state, action) {
-            state.push(action.payload);
-        },
-        removeSetTableRowsSetFunction(state) {
-            state.pop();
-        },
-    }
-})
-
-export default SetTableRowsSlice.reducer
-export const {storeSetTableRowsSetFunction, removeSetTableRowsSetFunction} = SetTableRowsSlice.actions;
+import { createSlice } from '@reduxjs/toolkit';const SetTableRowsSlice = createSlice({  name: 'SetTableRowsSlice',  initialState: [],  reducers: {    storeSetTableRowsSetFunction(state, action) {      state.push(action.payload);    },    removeSetTableRowsSetFunction(state) {      state.pop();    },  },});export default SetTableRowsSlice.reducer;export const { storeSetTableRowsSetFunction, removeSetTableRowsSetFunction } =  SetTableRowsSlice.actions;

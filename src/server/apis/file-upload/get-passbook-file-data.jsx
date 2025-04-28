@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { DownloadPassbookFile_URL } from "shared/constants/constants";
-
-const getPassbookFileData = (payLoad) => ServerRequest(DownloadPassbookFile_URL, "POST", payLoad);
-
-export { getPassbookFileData };
+import ServerRequest from 'server/utils/server-request';import { DownloadPassbookFile_URL } from 'shared/constants/constants';const getPassbookFileData = (payLoad) => ServerRequest(DownloadPassbookFile_URL, 'POST', payLoad);export { getPassbookFileData };

@@ -1,23 +1,1 @@
-import { Box } from '@mui/system'
-import React, { useEffect } from 'react'
-import { useSnackbar } from "notistack";
-
-export const ShowAlertList = ({alertMessages, severity}) => {
-    const { enqueueSnackbar } = useSnackbar();
-    useEffect(()=>{
-         alertMessages.forEach((msg) => {
-             enqueueSnackbar(msg, {
-               variant: severity,
-               autoHideDuration: 3000,  
-               anchorOrigin: { vertical: "top", horizontal: "center" }
-             });
-           });
-         
-
-      }, [alertMessages])
-  return (
-    <Box>
-
-    </Box>
-  )
-}
+import { Box } from '@mui/system';import React, { useEffect } from 'react';import { useSnackbar } from 'notistack';export const ShowAlertList = ({ alertMessages, severity }) => {  const { enqueueSnackbar } = useSnackbar();  useEffect(() => {    alertMessages.forEach((msg) => {      enqueueSnackbar(msg, {        variant: severity,        autoHideDuration: 3000,        anchorOrigin: { vertical: 'top', horizontal: 'center' },      });    });  }, [alertMessages]);  return <Box></Box>;};

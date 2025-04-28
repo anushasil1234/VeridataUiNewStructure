@@ -1,17 +1,1 @@
-import { createSlice} from "@reduxjs/toolkit"
-
-const SetRemarksFunctionSlice = createSlice({
-    name: "setRemarksFunctionSlice",
-    initialState: [],
-    reducers: {
-        storeSetRemarksFunction(state, action) {
-            state.push(action.payload);
-        },
-        removeSetRemarksFunction(state, action) {
-            state.pop();
-        },
-    }
-})
-
-export default SetRemarksFunctionSlice.reducer
-export const {storeSetRemarksFunction, removeSetRemarksFunction} = SetRemarksFunctionSlice.actions;
+import { createSlice } from '@reduxjs/toolkit';const SetRemarksFunctionSlice = createSlice({  name: 'setRemarksFunctionSlice',  initialState: [],  reducers: {    storeSetRemarksFunction(state, action) {      state.push(action.payload);    },    removeSetRemarksFunction(state, action) {      state.pop();    },  },});export default SetRemarksFunctionSlice.reducer;export const { storeSetRemarksFunction, removeSetRemarksFunction } =  SetRemarksFunctionSlice.actions;

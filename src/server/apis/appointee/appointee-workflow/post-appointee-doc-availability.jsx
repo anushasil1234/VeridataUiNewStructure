@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { PostAppointeeDocAvailibility_URL } from "shared/constants/constants";
-
-const postAppointeeDocAvailibility = (payLoad) => 
-    ServerRequest(PostAppointeeDocAvailibility_URL, "POST", payLoad, true);
-
-export { postAppointeeDocAvailibility };
+import ServerRequest from 'server/utils/server-request';import { PostAppointeeDocAvailibility_URL } from 'shared/constants/constants';const postAppointeeDocAvailibility = (payLoad) =>  ServerRequest(PostAppointeeDocAvailibility_URL, 'POST', payLoad, true);export { postAppointeeDocAvailibility };

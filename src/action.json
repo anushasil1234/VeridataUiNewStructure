@@ -1,66 +1,66 @@
 [
-    {
-        "code": "A001",
-        "actionName": "view"
-    },
-    {
-        "code": "A002",
-        "actionName": "approve"
-    },
-    {
-        "code": "A003",
-        "actionName": "reject"
-    },
-    {
-        "code": "A004",
-        "actionName": "start verify"
-    },
-    {
-        "code": "A005",
-        "actionName": "notify user"
-    },
-    {
-        "code": "A006",
-        "actionName": "upload data"
-    },
-    {
-        "code": "A007",
-        "actionName": "edit"
-    },
-    {
-        "code": "A008",
-        "actionName": "download Report"
-    },
-    {
-        "code": "A009",
-        "actionName": "save"
-    },
-    {
-        "code": "A010",
-        "actionName": "reprocess"
-    },
-    {
-        "code": "A011",
-        "actionName": "remarks"
-    },
-    {
-        "code": "A012",
-        "actionName": "view Passbook"
-    },
-    {
-        "code": "A013",
-        "actionName": "download Passbook"
-    },
-    {
-        "code": "A014",
-        "actionName": "download Trust Passbook"
-    },
-    {
-        "code": "A015",
-        "actionName": "manual Verification"
-    },
-    {
-        "code": "A016",
-        "actionName": "go to manual Verification"
-    }
+  {
+    "code": "A001",
+    "actionName": "view"
+  },
+  {
+    "code": "A002",
+    "actionName": "approve"
+  },
+  {
+    "code": "A003",
+    "actionName": "reject"
+  },
+  {
+    "code": "A004",
+    "actionName": "start verify"
+  },
+  {
+    "code": "A005",
+    "actionName": "notify user"
+  },
+  {
+    "code": "A006",
+    "actionName": "upload data"
+  },
+  {
+    "code": "A007",
+    "actionName": "edit"
+  },
+  {
+    "code": "A008",
+    "actionName": "download Report"
+  },
+  {
+    "code": "A009",
+    "actionName": "save"
+  },
+  {
+    "code": "A010",
+    "actionName": "reprocess"
+  },
+  {
+    "code": "A011",
+    "actionName": "remarks"
+  },
+  {
+    "code": "A012",
+    "actionName": "view Passbook"
+  },
+  {
+    "code": "A013",
+    "actionName": "download Passbook"
+  },
+  {
+    "code": "A014",
+    "actionName": "download Trust Passbook"
+  },
+  {
+    "code": "A015",
+    "actionName": "manual Verification"
+  },
+  {
+    "code": "A016",
+    "actionName": "go to manual Verification"
+  }
 ]

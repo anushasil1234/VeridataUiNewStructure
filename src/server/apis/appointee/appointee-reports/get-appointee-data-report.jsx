@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { AppointeeDataReport_URL } from "shared/constants/constants";
-
-const getAppointeeDataReport = (payLoad) => 
-    ServerRequest(AppointeeDataReport_URL, "POST", payLoad, null, true);
-
-export { getAppointeeDataReport };
+import ServerRequest from 'server/utils/server-request';import { AppointeeDataReport_URL } from 'shared/constants/constants';const getAppointeeDataReport = (payLoad) =>  ServerRequest(AppointeeDataReport_URL, 'POST', payLoad, null, true);export { getAppointeeDataReport };

@@ -1,23 +1,1 @@
-import { Article } from '@mui/icons-material'
-import { Fab } from '@mui/material'
-import { greenFabStyle } from 'app'
-import React from 'react'
-import DarkTooltip from 'shared/utils/tooltip/dark-tooltip'
-
-const ViewFab = ({ onClick, title }) => {
-  return (
-    <DarkTooltip placement="top" title={title} arrow>
-      <Fab
-        mood="V"
-        variant="contained"
-        size="small"
-        onClick={() => onClick()}
-        sx={greenFabStyle}
-      >
-        <Article width={18} />
-      </Fab>
-    </DarkTooltip>
-  )
-}
-
-export default ViewFab
+import { Article } from '@mui/icons-material';import { Fab } from '@mui/material';import { greenFabStyle } from 'app';import React from 'react';import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';const ViewFab = ({ onClick, title }) => {  return (    <DarkTooltip placement='top' title={title} arrow>      <Fab mood='V' variant='contained' size='small' onClick={() => onClick()} sx={greenFabStyle}>        <Article width={18} />      </Fab>    </DarkTooltip>  );};export default ViewFab;

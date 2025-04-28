@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { AppointeeCounterReport_URL } from "shared/constants/constants";
-
-const getAppointeeCounterReport = (payLoad) => 
-    ServerRequest(AppointeeCounterReport_URL, "POST", payLoad, null, true);
-
-export { getAppointeeCounterReport };
+import ServerRequest from 'server/utils/server-request';import { AppointeeCounterReport_URL } from 'shared/constants/constants';const getAppointeeCounterReport = (payLoad) =>  ServerRequest(AppointeeCounterReport_URL, 'POST', payLoad, null, true);export { getAppointeeCounterReport };

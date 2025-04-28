@@ -1,3 +1,1 @@
-export const patternChecking = (input, pattern) => {
-    return pattern && pattern.test(input)
-}
+export const patternChecking = (input, pattern) => {  return pattern && pattern.test(input);};

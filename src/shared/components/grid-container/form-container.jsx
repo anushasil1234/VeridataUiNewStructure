@@ -1,29 +1,1 @@
-import { Box, Grid } from '@mui/material'
-import { candidateRegistrationFormContainerStyle } from 'app'
-import React from 'react'
-
-const FormContainer = ({ children }) => {
-  return (
-    <Box sx={{ width: "100%" }}>
-      <Grid
-        container
-        rowSpacing={1}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      >
-        <Grid
-          container
-          rowSpacing={1}
-          columnSpacing={2.5}
-          item
-          xs={12}
-          md={12}
-          sx={candidateRegistrationFormContainerStyle}
-        >
-          {children}
-        </Grid>
-      </Grid>
-    </Box>
-  )
-}
-
-export default FormContainer
+import { Box, Grid } from '@mui/material';import { candidateRegistrationFormContainerStyle } from 'app';import React from 'react';const FormContainer = ({ children }) => {  return (    <Box sx={{ width: '100%' }}>      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>        <Grid          container          rowSpacing={1}          columnSpacing={2.5}          item          xs={12}          md={12}          sx={candidateRegistrationFormContainerStyle}        >          {children}        </Grid>      </Grid>    </Box>  );};export default FormContainer;

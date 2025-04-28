@@ -1,25 +1,1 @@
-import { epfFileCategoryTypeAlias, fileVerificationEnums } from "shared/constants/constants";
-import isEPFOSelectionDisabled from "./is-epfo-disabled";
-
-const createVerificationTypeList = (verificationTypeList, verificationFieldSet) => {
-    let _verificationTypeList = verificationTypeList.filter(({ verificationFieldName }) => {
-        return verificationFieldSet[verificationFieldName] !== true;
-    });
-
-    _verificationTypeList.map((_verificationTypeItem) => {
-        const { verificationFieldName } = _verificationTypeItem;
-        if (verificationFieldName === fileVerificationEnums.docEPFO) {
-            _verificationTypeItem.isDisabled = false; 
-        }
-        return _verificationTypeItem;
-    });
-
- 
-
-    return { verificationTypeList: _verificationTypeList };
-};
-
-
-
-
-export default createVerificationTypeList
+import { epfFileCategoryTypeAlias, fileVerificationEnums } from 'shared/constants/constants';import isEPFOSelectionDisabled from './is-epfo-disabled';const createVerificationTypeList = (verificationTypeList, verificationFieldSet) => {  let _verificationTypeList = verificationTypeList.filter(({ verificationFieldName }) => {    return verificationFieldSet[verificationFieldName] !== true;  });  _verificationTypeList.map((_verificationTypeItem) => {    const { verificationFieldName } = _verificationTypeItem;    if (verificationFieldName === fileVerificationEnums.docEPFO) {      _verificationTypeItem.isDisabled = false;    }    return _verificationTypeItem;  });  return { verificationTypeList: _verificationTypeList };};export default createVerificationTypeList;

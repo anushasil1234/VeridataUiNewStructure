@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetRemarksRemedyData_URL } from "shared/constants/constants";
-
-const getRemarksRemedyData = (payLoad) => 
-    ServerRequest(GetRemarksRemedyData_URL, "POST", payLoad);
-
-export { getRemarksRemedyData };
+import ServerRequest from 'server/utils/server-request';import { GetRemarksRemedyData_URL } from 'shared/constants/constants';const getRemarksRemedyData = (payLoad) => ServerRequest(GetRemarksRemedyData_URL, 'POST', payLoad);export { getRemarksRemedyData };

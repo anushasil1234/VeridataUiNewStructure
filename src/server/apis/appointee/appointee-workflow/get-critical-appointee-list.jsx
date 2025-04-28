@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GetCriticalAppointeeData_URL } from "shared/constants/constants";
-
-const getCriticalAppointeeList = (payLoad) => ServerRequest(GetCriticalAppointeeData_URL, "POST", payLoad, null, true);
-
-export { getCriticalAppointeeList };
+import ServerRequest from 'server/utils/server-request';import { GetCriticalAppointeeData_URL } from 'shared/constants/constants';const getCriticalAppointeeList = (payLoad) =>  ServerRequest(GetCriticalAppointeeData_URL, 'POST', payLoad, null, true);export { getCriticalAppointeeList };

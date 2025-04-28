@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { AppointeeConsentUpdate_URL } from "shared/constants/constants";
-
-const postAppointeeConsent = (payLoad) => 
-    ServerRequest(AppointeeConsentUpdate_URL, "POST", payLoad);
-
-export { postAppointeeConsent };
+import ServerRequest from 'server/utils/server-request';import { AppointeeConsentUpdate_URL } from 'shared/constants/constants';const postAppointeeConsent = (payLoad) =>  ServerRequest(AppointeeConsentUpdate_URL, 'POST', payLoad);export { postAppointeeConsent };

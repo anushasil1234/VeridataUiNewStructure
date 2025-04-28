@@ -1,512 +1,1 @@
-import {
-    Assessment,
-    Download,
-    Info,
-    Refresh,
-    Search,
-    Summarize,
-} from "@mui/icons-material";
-import {
-    Fab,
-    FormControl,
-    Grid,
-    InputLabel,
-    List,
-    ListItemButton,
-    MenuItem,
-    Select,
-    TextField,
-    Box,
-    Checkbox,
-    ListItemText,
-    Typography,
-    Button
-} from "@mui/material";
-import {
-    backgroundOverLay,
-    downLoadListSx,
-    inputFieldStyleAdded,
-    inputPropsStyle,
-    primaryFabStyle,
-    ResponsiveFab,
-    datePickerstyle,
-    dropDownLableStyle,
-    inputFieldStyle
-} from "app";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import {
-    appointeeBillingdesc,
-    appointeeCountDetailsHeadCell,
-    appointeeCountDetailsHeadCell1,
-    appointeeCountDetailsreportHeadCell,
-    appointeeCountHeadCell,
-    companyName,
-    generateAppointeeCountReportDesc,
-    reportGenarate,
-    toAppointeeInvoice
-} from "shared/constants/constants";
-import {
-    CardLayout,
-    CreatePdfTableBody,
-    DDMMYYYY,
-    DataTable,
-    DateFormatYYYYMMDD,
-    PageLayout,
-    generateTableRowData,
-    hasValue,
-} from "shared/utils";
-import { CollapsibleDataTable } from "shared/utils/dataTable/collapsable-datatable";
-import DatePicker from "shared/utils/date-picker/date-picker";
-import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
-import jsPDFReportTemplate from "shared/utils/associate/js-pdf-invoice";
-import moment from "moment";
-import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-import ArticleIcon from '@mui/icons-material/Article';
-import downloadFile from "shared/utils/associate/download-file";
-import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
-import jsPDFinvoiceReportDataTemplate from "shared/utils/associate/js-pdfInvoice";
-import DatePickerolt from "shared/utils/date-picker/date-picker1";
-import dayjs from "dayjs";
-import { getAppointeeCounterBillingReport } from "server/apis";
-import showErrorMessage from "shared/utils/associate/show-error-message";
-const AppointeeInvoice = () => {
-    const popUpSlice = useSelector(state => state.popUpSlice);
-    const apiSlice = useSelector((state) => state.apiSlice);
-    const dropdownList = useSelector((state) => state.dropdownList);
-    const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
-
-
-    const { dayscoustom } = dropdownList.length > 0 && dropdownList[0];
-    const { navigateTo } = commonHooksFunctionSlice[0];
-
-    // const { getAppointeeCounterBillingReport } = apiSlice[0];
-    const { reportFilterStatusList, entityList } = dropdownList && dropdownList.length > 0 && dropdownList[0];
-    const [toDate, setToDate] = useState(null);
-    const [fromDate, setFromDate] = useState(null);
-    const [rows, setRows] = useState();
-    const [appointeeCountBilling, setAppointeeCountBilling] = useState();
-    const [appointeeCountListDetails, setAppointeeCountListDetails] = useState();
-    const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
-    const [isExalListOpened, setisExalListOpened] = useState(false)
-    // const { showErrorMessage } = popUpSlice[0]
-    const [appointeeName, setAppointeeName] = useState(null);
-    const [statusCode, setStatusCode] = useState(null);
-    const [entityId, setEntityId] = useState([]);
-    const [dayRange, setDayRange] = useState(30);
-    const [fileData, setFileData] = useState(null);
-    const [timedetails, setTimedetails] = useState()
-    const payLoadData = {
-        appointeeName: appointeeName,
-        statusCode: statusCode ? statusCode.toString() : statusCode,
-        fromDate: fromDate ? DateFormatYYYYMMDD(fromDate?.toString()) : fromDate,
-        toDate: toDate ? DateFormatYYYYMMDD(toDate?.toString()) : toDate,
-        entityId: entityId
-
-    };
-    let [payLoad, setPayLoad] = useState(payLoadData);
-
-    const fetchTableRows = async ({ fromDate, toDate, entityId }) => {
-        const payLoad = {
-            fromDate: hasValue(fromDate) ? DateFormatYYYYMMDD(fromDate?.toString()) : null,
-            toDate: hasValue(toDate) ? DateFormatYYYYMMDD(toDate?.toString()) : null,
-            entityId: entityId.length ? entityId : [],
-        };
-
-        const response = await getAppointeeCounterBillingReport(payLoad);
-
-        if (response) {
-            const { responseInfo } = response;
-            const { appointeeCounteBillReport, filedata } = responseInfo;
-
-            setAppointeeCountBilling(appointeeCounteBillReport);
-            setFileData(filedata);
-
-            
-            const timePeriod = payLoad.fromDate && payLoad.toDate
-                ? `${DDMMYYYY(payLoad.fromDate)} - ${DDMMYYYY(payLoad.toDate)}`
-                : payLoad.fromDate
-                    ? `From ${DDMMYYYY(payLoad.fromDate)}`
-                    : payLoad.toDate
-                        ? `To ${DDMMYYYY(payLoad.toDate)}`
-                        : "All";
-            
-            setTimedetails(timePeriod);
-            
-            const generatedCells = generateTableRowData(
-                (appointeeCounteBillReport || []).map((report) => ({
-                    ...report,
-                    timePeriod,
-                })),
-                appointeeCountDetailsHeadCell1,
-                null,
-                "appointeeTotalCount"
-            );
-           
-            setRows({
-                tableHead: appointeeCountDetailsHeadCell1,
-                tableRows: generatedCells,
-            });
-        }
-    };
-
-
-
-    useEffect(() => {
-        setFromDate(fromDate);
-        setToDate(toDate);
-        setEntityId(entityId);
-
-    }, [fromDate, toDate, entityId]);
-
-    const handleClickOnDownload = () => {
-        setIsDownloadListOpened(!isDownloadListOpened);
-    };
-    const handleExalListDownload = () => {
-        setisExalListOpened(!isExalListOpened)
-    }
-    var date = moment();
-    var currentDate = date?.format("DDMMYYYY");
-
-
-    const handleDownload = () => {
-        if (!fileData || fileData.length === 0) {
-            showErrorMessage(reportGenarate);
-            return;
-        }
-        if (fileData && typeof fileData === 'object') {
-            const base64String = fileData.fileData;
-            const fileName = fileData.fileName || "appointee_data.xlsx";
-            const blob = generateBlobFromBase64(base64String);
-            const blobUrl = window.URL.createObjectURL(blob);
-            downloadFile(blobUrl, fileName);
-            window.URL.revokeObjectURL(blobUrl);
-        }
-    };
-    const handleAppointeeCountinvoiceDownload = () => {
-        if (!appointeeCountBilling || appointeeCountBilling.length === 0) {
-            showErrorMessage(reportGenarate);
-            return;
-        }
-
-
-        const tableHeadList = appointeeCountDetailsreportHeadCell.map(({ label }) => ({
-            title: label,
-        }));
-
-        const tableBodyList = appointeeCountBilling && appointeeCountBilling.map((tableRows) => {
-            return CreatePdfTableBody(
-                { ...tableRows, timePeriod: timedetails  },
-                appointeeCountDetailsreportHeadCell
-            );
-        });
-
-
-        const tableObj = {
-            headerList: tableHeadList,
-            rows: tableBodyList,
-            tableName: "Report Details",
-            companyName: `${companyName} REPORT`,
-        };
-
-        jsPDFinvoiceReportDataTemplate({
-            reportDetails: {
-                fileName: `Billing_Information_Report${currentDate}`,
-                label: "Billing Information",
-                // fromDate: fromDate,
-                // toDate: toDate,
-                rptDesc: appointeeBillingdesc
-            },
-            tables: [tableObj],
-        });
-
-    };
-
-
-
-
-
-    const handleSearch = () => {
-        const formattedFromDate = hasValue(fromDate)
-            ? dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange===180
-                ? dayjs(fromDate).format("YYYY-MM")
-                : DateFormatYYYYMMDD(fromDate.toString())
-            : null;
-
-        const formattedToDate = hasValue(toDate)
-            ? dayRange === 30 || dayRange === 90 || dayRange === 365|| dayRange===180
-                ? dayjs(toDate).format("YYYY-MM")
-                : DateFormatYYYYMMDD(toDate.toString())
-            : null;
-
-        const payLoad = {
-            fromDate: formattedFromDate,
-            toDate: formattedToDate,
-            entityId: entityId || null,
-        };
-
-        const timePeriod = formattedFromDate && formattedToDate
-            ? `${formattedFromDate} - ${formattedToDate}`
-            : formattedFromDate
-                ? `From ${formattedFromDate}`
-                : formattedToDate
-                    ? `To ${formattedToDate}`
-                    : "All";
-
-        payLoad.timePeriod = timePeriod;
-        fetchTableRows(payLoad);
-    };
-
-    const clearSearch = () => {
-        setFromDate(null);
-        setToDate(null);
-        setEntityId([]);
-        setDayRange(dayscoustom[0].value)
-        const clearPayLoad = {
-            appointeeName: null,
-            fromDate: null,
-            toDate: null,
-            statusCode: null,
-            entityId: [],
-        };
-        fetchTableRows(clearPayLoad);
-
-        navigateTo(toAppointeeInvoice, { state: false });
-    };
-    const handelsearch = () => {
-        if (hasValue(toDate) && !hasValue(fromDate)) {
-            showErrorMessage("From Date can not be empty");
-        } else {
-            handleSearch();
-        }
-    }
-    useEffect(() => {
-        if (dayscoustom) {
-            setDayRange(dayscoustom[0].value);
-        }
-    }, [dayscoustom]);
-    useEffect(() => {
-        handleSearch()
-    }, []);
-    // useEffect(() => {
-    //     setTimedetails(timedetails)
-    // }, []);
-    useEffect(() => {
-        if (fromDate && dayRange) {
-            let newToDate = null;
-
-            if (dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange=== 180) {
-                newToDate = dayjs(fromDate).add(dayRange / 30, "month").endOf("month");
-            } else {
-                newToDate = dayjs(fromDate).add(dayRange, "days");
-            }
-
-            if (newToDate) {
-                const today = dayjs();
-                if (newToDate.isAfter(today)) {
-                    showErrorMessage("To date cannot be in the future.");
-                    setFromDate(null);
-                    setToDate(null);
-                } else {
-                    setToDate(newToDate.toDate());
-                }
-            }
-        } else {
-            setToDate(null);
-        }
-    }, [dayRange, fromDate]);
-
-
-
-
-    return (
-        <PageLayout pageName={"Appointee Billing Report"}>
-            <CardLayout sx={{ width: "100%" }}>
-                <Grid container spacing={2}>
-                    <Grid itemxs={12} sm={6} md={4} lg={3}>
-                        <FormControl sx={{ width: "100%", paddingTop: "16px" }} size="large">
-                            {dayRange && (
-                                <Select
-                                    error={false}
-                                    labelId="demo-multiple-select-label"
-                                    id="demo-multiple-select"
-                                    className="customeTextField"
-                                    value={dayRange}
-
-                                    sx={{ ...inputFieldStyleAdded }}
-                                    onChange={(event) => setDayRange(event.target.value)}
-                                >
-                                    {dayscoustom &&
-                                        dayscoustom.map((element, index) => {
-                                            return (
-                                                <MenuItem key={index} value={element.value}>
-                                                    {element.lable}
-                                                </MenuItem>
-                                            );
-                                        })}
-                                </Select>
-                            )}
-                        </FormControl>
-                    </Grid>
-
-                    <> <Grid item xs={12} sm={6} md={4} lg={3}>
-                        <Box sx={{ ...datePickerstyle }}>
-                            <DatePickerolt
-                                label={"From Date"}
-                                value={fromDate}
-                                maxDate={toDate}
-                                setValue={setFromDate}
-                                disableFuture={true}
-                                views={dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange===180? ['year', 'month'] : ['year', 'month', 'day']}
-                                openTo={dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange===180? 'month' : 'day'}
-                            />
-                        </Box>
-                    </Grid>
-                        <Grid item xs={12} sm={6} md={4} lg={3}>
-                            <Box sx={{ ...datePickerstyle }}>
-                                <DatePickerolt
-                                    label={"To Date"}
-                                    clearable
-                                    value={toDate}
-                                    minDate={fromDate}
-                                    setValue={setToDate}
-                                    disableFuture={true}
-                                    views={dayRange === 30 || dayRange === 90 || dayRange === 365|| dayRange===180 ? ['year', 'month'] : ['year', 'month', 'day']}
-                                    openTo={dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange ===180? 'month' : 'day'}
-                                />
-                            </Box>
-                        </Grid>
-                    </>
-                    <Grid item xs={12} sm={6} md={4} lg={3}>
-                        <FormControl sx={{ width: "100%" }} size="large">
-
-                            <InputLabel id="demo-simple-select-label">Entity</InputLabel>
-                            {statusCode !== undefined &&
-                                <Select
-                                    error={false}
-                                    labelId="demo-multiple-select-label"
-                                    id="demo-multiple-select"
-                                    className="customeTextField"
-                                    sx={inputFieldStyleAdded}
-                                    multiple
-                                    value={entityId}
-                                    label="entity"
-                                    inputProps={{
-                                        style: inputPropsStyle
-                                    }}
-                                    defaultValue={[]}
-                                    onChange={(e) => {
-                                        setEntityId(e.target.value)
-                                    }}
-                                    renderValue={(selected) => {
-
-                                        return entityList
-                                            .filter(element => selected.includes(element.id))
-                                            .map(element => element.value)
-                                            .join(', ');
-                                    }}
-                                >
-                                    {entityList &&
-                                        entityList.map((element, index) => {
-                                            return (
-                                                <MenuItem key={index} value={element.id}>
-                                                    <Checkbox checked={entityId.indexOf(element.id) > -1} />
-                                                    <ListItemText primary={element.value} />
-                                                </MenuItem>
-                                            );
-                                        })}
-                                </Select>}
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4} lg={3}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-                            <DarkTooltip placement="top" title={"Search"} arrow>
-                                <ResponsiveFab
-                                    variant="contained"
-                                    size="small"
-                                    button={"N"}
-                                    onClick={handelsearch}
-                                    sx={primaryFabStyle}
-                                >
-                                    <Search width={18} sx={{ color: "#fff" }} />
-                                </ResponsiveFab>
-                            </DarkTooltip>
-                            <DarkTooltip placement="top" title={"Clear Search"} arrow>
-                                <ResponsiveFab
-                                    variant="contained"
-                                    size="small"
-                                    button={"N"}
-                                    onClick={clearSearch}
-                                    sx={primaryFabStyle}
-                                >
-                                    <Refresh width={18} sx={{ color: "#fff" }} />
-                                </ResponsiveFab>
-                            </DarkTooltip>
-                            <Grid item sx={{ position: 'relative' }}>
-                                <DarkTooltip placement="top" title={"Download Report"} arrow>
-                                    <ResponsiveFab
-                                        variant="contained"
-                                        size="small"
-                                        button={"N"}
-                                        onClick={handleClickOnDownload}
-                                        sx={primaryFabStyle}
-                                    >
-                                        <Download width={18} />
-                                    </ResponsiveFab>
-                                </DarkTooltip>
-                                {isDownloadListOpened && (
-                                    <List
-                                        sx={{
-                                            ...downLoadListSx,
-                                            zIndex: 1000,
-                                        }}
-                                    >
-                                        <ListItemButton component="a">
-                                            <DarkTooltip
-                                                placement="top"
-                                                title={"Download pdf report"}
-                                                arrow
-                                            >
-                                                <Button variant="contained" onClick={handleAppointeeCountinvoiceDownload} >PDF</Button>
-                                            </DarkTooltip>
-                                        </ListItemButton>
-                                        <ListItemButton component="a">
-                                            <DarkTooltip
-                                                placement="top"
-                                                title={"Download xlsx report"}
-                                                arrow
-                                            >
-                                                <Button variant="contained" onClick={handleDownload}>XLSX</Button>
-                                            </DarkTooltip>
-                                        </ListItemButton>
-                                    </List>
-
-                                )}
-                                <DarkTooltip placement="top" title={appointeeBillingdesc} arrow>
-                                <ResponsiveFab
-                                    variant="contained"
-                                    size="small"
-                                    button={"N"}
-                                //    onClick={clearSearch}
-                                    sx={primaryFabStyle}
-                                >
-                                    <Info width={18} sx={{ color: "#fff" }} />
-                                </ResponsiveFab>
-                            </DarkTooltip>
-                            </Grid>
-                        </Box>
-                    </Grid>
-
-                </Grid>
-                <DataTable
-                    headCells={appointeeCountDetailsHeadCell1}
-                    rows={rows}
-                    setRows={setRows}
-                />
-            </CardLayout>
-        </PageLayout>
-    );
-
-};
-
-export default AppointeeInvoice;
+import { Assessment, Download, Info, Refresh, Search, Summarize } from '@mui/icons-material';import {  Fab,  FormControl,  Grid,  InputLabel,  List,  ListItemButton,  MenuItem,  Select,  TextField,  Box,  Checkbox,  ListItemText,  Typography,  Button,} from '@mui/material';import {  backgroundOverLay,  downLoadListSx,  inputFieldStyleAdded,  inputPropsStyle,  primaryFabStyle,  ResponsiveFab,  datePickerstyle,  dropDownLableStyle,  inputFieldStyle,} from 'app';import React, { useEffect, useState } from 'react';import { useSelector } from 'react-redux';import {  appointeeBillingdesc,  appointeeCountDetailsHeadCell,  appointeeCountDetailsHeadCell1,  appointeeCountDetailsreportHeadCell,  appointeeCountHeadCell,  companyName,  generateAppointeeCountReportDesc,  reportGenarate,  toAppointeeInvoice,} from 'shared/constants/constants';import {  CardLayout,  CreatePdfTableBody,  DDMMYYYY,  DataTable,  DateFormatYYYYMMDD,  PageLayout,  generateTableRowData,  hasValue,} from 'shared/utils';import { CollapsibleDataTable } from 'shared/utils/dataTable/collapsable-datatable';import DatePicker from 'shared/utils/date-picker/date-picker';import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';import jsPDFReportTemplate from 'shared/utils/associate/js-pdf-invoice';import moment from 'moment';import jsPDFReportDataTemplate from 'shared/utils/associate/js-pdf-report';import ArticleIcon from '@mui/icons-material/Article';import downloadFile from 'shared/utils/associate/download-file';import generateBlobFromBase64 from 'shared/utils/associate/generateBlob';import jsPDFinvoiceReportDataTemplate from 'shared/utils/associate/js-pdfInvoice';import DatePickerolt from 'shared/utils/date-picker/date-picker1';import dayjs from 'dayjs';import { getAppointeeCounterBillingReport } from 'server/apis';import showErrorMessage from 'shared/utils/associate/show-error-message';const AppointeeInvoice = () => {  const popUpSlice = useSelector((state) => state.popUpSlice);  const apiSlice = useSelector((state) => state.apiSlice);  const dropdownList = useSelector((state) => state.dropdownList);  const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);  const { dayscoustom } = dropdownList.length > 0 && dropdownList[0];  const { navigateTo } = commonHooksFunctionSlice[0];  const { reportFilterStatusList, entityList } =    dropdownList && dropdownList.length > 0 && dropdownList[0];  const [toDate, setToDate] = useState(null);  const [fromDate, setFromDate] = useState(null);  const [rows, setRows] = useState();  const [appointeeCountBilling, setAppointeeCountBilling] = useState();  const [appointeeCountListDetails, setAppointeeCountListDetails] = useState();  const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);  const [isExalListOpened, setisExalListOpened] = useState(false);  const [appointeeName, setAppointeeName] = useState(null);  const [statusCode, setStatusCode] = useState(null);  const [entityId, setEntityId] = useState([]);  const [dayRange, setDayRange] = useState(30);  const [fileData, setFileData] = useState(null);  const [timedetails, setTimedetails] = useState();  const payLoadData = {    appointeeName: appointeeName,    statusCode: statusCode ? statusCode.toString() : statusCode,    fromDate: fromDate ? DateFormatYYYYMMDD(fromDate?.toString()) : fromDate,    toDate: toDate ? DateFormatYYYYMMDD(toDate?.toString()) : toDate,    entityId: entityId,  };  let [payLoad, setPayLoad] = useState(payLoadData);  const fetchTableRows = async ({ fromDate, toDate, entityId }) => {    const payLoad = {      fromDate: hasValue(fromDate) ? DateFormatYYYYMMDD(fromDate?.toString()) : null,      toDate: hasValue(toDate) ? DateFormatYYYYMMDD(toDate?.toString()) : null,      entityId: entityId.length ? entityId : [],    };    const response = await getAppointeeCounterBillingReport(payLoad);    if (response) {      const { responseInfo } = response;      const { appointeeCounteBillReport, filedata } = responseInfo;      setAppointeeCountBilling(appointeeCounteBillReport);      setFileData(filedata);      const timePeriod =        payLoad.fromDate && payLoad.toDate          ? `${DDMMYYYY(payLoad.fromDate)} - ${DDMMYYYY(payLoad.toDate)}`          : payLoad.fromDate            ? `From ${DDMMYYYY(payLoad.fromDate)}`            : payLoad.toDate              ? `To ${DDMMYYYY(payLoad.toDate)}`              : 'All';      setTimedetails(timePeriod);      const generatedCells = generateTableRowData(        (appointeeCounteBillReport || []).map((report) => ({          ...report,          timePeriod,        })),        appointeeCountDetailsHeadCell1,        null,        'appointeeTotalCount',      );      setRows({        tableHead: appointeeCountDetailsHeadCell1,        tableRows: generatedCells,      });    }  };  useEffect(() => {    setFromDate(fromDate);    setToDate(toDate);    setEntityId(entityId);  }, [fromDate, toDate, entityId]);  const handleClickOnDownload = () => {    setIsDownloadListOpened(!isDownloadListOpened);  };  const handleExalListDownload = () => {    setisExalListOpened(!isExalListOpened);  };  var date = moment();  var currentDate = date?.format('DDMMYYYY');  const handleDownload = () => {    if (!fileData || fileData.length === 0) {      showErrorMessage(reportGenarate);      return;    }    if (fileData && typeof fileData === 'object') {      const base64String = fileData.fileData;      const fileName = fileData.fileName || 'appointee_data.xlsx';      const blob = generateBlobFromBase64(base64String);      const blobUrl = window.URL.createObjectURL(blob);      downloadFile(blobUrl, fileName);      window.URL.revokeObjectURL(blobUrl);    }  };  const handleAppointeeCountinvoiceDownload = () => {    if (!appointeeCountBilling || appointeeCountBilling.length === 0) {      showErrorMessage(reportGenarate);      return;    }    const tableHeadList = appointeeCountDetailsreportHeadCell.map(({ label }) => ({      title: label,    }));    const tableBodyList =      appointeeCountBilling &&      appointeeCountBilling.map((tableRows) => {        return CreatePdfTableBody(          { ...tableRows, timePeriod: timedetails },          appointeeCountDetailsreportHeadCell,        );      });    const tableObj = {      headerList: tableHeadList,      rows: tableBodyList,      tableName: 'Report Details',      companyName: `${companyName} REPORT`,    };    jsPDFinvoiceReportDataTemplate({      reportDetails: {        fileName: `Billing_Information_Report${currentDate}`,        label: 'Billing Information',        rptDesc: appointeeBillingdesc,      },      tables: [tableObj],    });  };  const handleSearch = () => {    const formattedFromDate = hasValue(fromDate)      ? dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange === 180        ? dayjs(fromDate).format('YYYY-MM')        : DateFormatYYYYMMDD(fromDate.toString())      : null;    const formattedToDate = hasValue(toDate)      ? dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange === 180        ? dayjs(toDate).format('YYYY-MM')        : DateFormatYYYYMMDD(toDate.toString())      : null;    const payLoad = {      fromDate: formattedFromDate,      toDate: formattedToDate,      entityId: entityId || null,    };    const timePeriod =      formattedFromDate && formattedToDate        ? `${formattedFromDate} - ${formattedToDate}`        : formattedFromDate          ? `From ${formattedFromDate}`          : formattedToDate            ? `To ${formattedToDate}`            : 'All';    payLoad.timePeriod = timePeriod;    fetchTableRows(payLoad);  };  const clearSearch = () => {    setFromDate(null);    setToDate(null);    setEntityId([]);    setDayRange(dayscoustom[0].value);    const clearPayLoad = {      appointeeName: null,      fromDate: null,      toDate: null,      statusCode: null,      entityId: [],    };    fetchTableRows(clearPayLoad);    navigateTo(toAppointeeInvoice, { state: false });  };  const handelsearch = () => {    if (hasValue(toDate) && !hasValue(fromDate)) {      showErrorMessage('From Date can not be empty');    } else {      handleSearch();    }  };  useEffect(() => {    if (dayscoustom) {      setDayRange(dayscoustom[0].value);    }  }, [dayscoustom]);  useEffect(() => {    handleSearch();  }, []);  useEffect(() => {    if (fromDate && dayRange) {      let newToDate = null;      if (dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange === 180) {        newToDate = dayjs(fromDate)          .add(dayRange / 30, 'month')          .endOf('month');      } else {        newToDate = dayjs(fromDate).add(dayRange, 'days');      }      if (newToDate) {        const today = dayjs();        if (newToDate.isAfter(today)) {          showErrorMessage('To date cannot be in the future.');          setFromDate(null);          setToDate(null);        } else {          setToDate(newToDate.toDate());        }      }    } else {      setToDate(null);    }  }, [dayRange, fromDate]);  return (    <PageLayout pageName={'Appointee Billing Report'}>      <CardLayout sx={{ width: '100%' }}>        <Grid container spacing={2}>          <Grid itemxs={12} sm={6} md={4} lg={3}>            <FormControl sx={{ width: '100%', paddingTop: '16px' }} size='large'>              {dayRange && (                <Select                  error={false}                  labelId='demo-multiple-select-label'                  id='demo-multiple-select'                  className='customeTextField'                  value={dayRange}                  sx={{ ...inputFieldStyleAdded }}                  onChange={(event) => setDayRange(event.target.value)}                >                  {dayscoustom &&                    dayscoustom.map((element, index) => {                      return (                        <MenuItem key={index} value={element.value}>                          {element.lable}                        </MenuItem>                      );                    })}                </Select>              )}            </FormControl>          </Grid>          <>            {' '}            <Grid item xs={12} sm={6} md={4} lg={3}>              <Box sx={{ ...datePickerstyle }}>                <DatePickerolt                  label={'From Date'}                  value={fromDate}                  maxDate={toDate}                  setValue={setFromDate}                  disableFuture={true}                  views={                    dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange === 180                      ? ['year', 'month']                      : ['year', 'month', 'day']                  }                  openTo={                    dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange === 180                      ? 'month'                      : 'day'                  }                />              </Box>            </Grid>            <Grid item xs={12} sm={6} md={4} lg={3}>              <Box sx={{ ...datePickerstyle }}>                <DatePickerolt                  label={'To Date'}                  clearable                  value={toDate}                  minDate={fromDate}                  setValue={setToDate}                  disableFuture={true}                  views={                    dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange === 180                      ? ['year', 'month']                      : ['year', 'month', 'day']                  }                  openTo={                    dayRange === 30 || dayRange === 90 || dayRange === 365 || dayRange === 180                      ? 'month'                      : 'day'                  }                />              </Box>            </Grid>          </>          <Grid item xs={12} sm={6} md={4} lg={3}>            <FormControl sx={{ width: '100%' }} size='large'>              <InputLabel id='demo-simple-select-label'>Entity</InputLabel>              {statusCode !== undefined && (                <Select                  error={false}                  labelId='demo-multiple-select-label'                  id='demo-multiple-select'                  className='customeTextField'                  sx={inputFieldStyleAdded}                  multiple                  value={entityId}                  label='entity'                  inputProps={{                    style: inputPropsStyle,                  }}                  defaultValue={[]}                  onChange={(e) => {                    setEntityId(e.target.value);                  }}                  renderValue={(selected) => {                    return entityList                      .filter((element) => selected.includes(element.id))                      .map((element) => element.value)                      .join(', ');                  }}                >                  {entityList &&                    entityList.map((element, index) => {                      return (                        <MenuItem key={index} value={element.id}>                          <Checkbox checked={entityId.indexOf(element.id) > -1} />                          <ListItemText primary={element.value} />                        </MenuItem>                      );                    })}                </Select>              )}            </FormControl>          </Grid>          <Grid item xs={12} sm={6} md={4} lg={3}>            <Box sx={{ display: 'flex', alignItems: 'center', position: 'relative' }}>              <DarkTooltip placement='top' title={'Search'} arrow>                <ResponsiveFab                  variant='contained'                  size='small'                  button={'N'}                  onClick={handelsearch}                  sx={primaryFabStyle}                >                  <Search width={18} sx={{ color: '#fff' }} />                </ResponsiveFab>              </DarkTooltip>              <DarkTooltip placement='top' title={'Clear Search'} arrow>                <ResponsiveFab                  variant='contained'                  size='small'                  button={'N'}                  onClick={clearSearch}                  sx={primaryFabStyle}                >                  <Refresh width={18} sx={{ color: '#fff' }} />                </ResponsiveFab>              </DarkTooltip>              <Grid item sx={{ position: 'relative' }}>                <DarkTooltip placement='top' title={'Download Report'} arrow>                  <ResponsiveFab                    variant='contained'                    size='small'                    button={'N'}                    onClick={handleClickOnDownload}                    sx={primaryFabStyle}                  >                    <Download width={18} />                  </ResponsiveFab>                </DarkTooltip>                {isDownloadListOpened && (                  <List                    sx={{                      ...downLoadListSx,                      zIndex: 1000,                    }}                  >                    <ListItemButton component='a'>                      <DarkTooltip placement='top' title={'Download pdf report'} arrow>                        <Button variant='contained' onClick={handleAppointeeCountinvoiceDownload}>                          PDF                        </Button>                      </DarkTooltip>                    </ListItemButton>                    <ListItemButton component='a'>                      <DarkTooltip placement='top' title={'Download xlsx report'} arrow>                        <Button variant='contained' onClick={handleDownload}>                          XLSX                        </Button>                      </DarkTooltip>                    </ListItemButton>                  </List>                )}                <DarkTooltip placement='top' title={appointeeBillingdesc} arrow>                  <ResponsiveFab                    variant='contained'                    size='small'                    button={'N'}                    sx={primaryFabStyle}                  >                    <Info width={18} sx={{ color: '#fff' }} />                  </ResponsiveFab>                </DarkTooltip>              </Grid>            </Box>          </Grid>        </Grid>        <DataTable headCells={appointeeCountDetailsHeadCell1} rows={rows} setRows={setRows} />      </CardLayout>    </PageLayout>  );};export default AppointeeInvoice;

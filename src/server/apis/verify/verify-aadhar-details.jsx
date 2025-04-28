@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { VerifyAadharViaXml_URL } from "shared/constants/constants";
-
-const verifyAadharDetails = (payLoad) => ServerRequest(VerifyAadharViaXml_URL, "POST", payLoad);
-
-export { verifyAadharDetails };
+import ServerRequest from 'server/utils/server-request';import { VerifyAadharViaXml_URL } from 'shared/constants/constants';const verifyAadharDetails = (payLoad) => ServerRequest(VerifyAadharViaXml_URL, 'POST', payLoad);export { verifyAadharDetails };

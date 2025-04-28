@@ -1,45 +1,1 @@
-import { Alert, IconButton, Snackbar } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close';
-import { alertErrorStyle, alertSuccessStyle } from 'app';
-
-export const ManuallyCloseableSnackBar = ({ alertMessage, setPopUpAlertMessage, severity }) => {
-
-
-  const vertical = 'top';
-  const horizontal = 'center';
-  const handleClose = (reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setPopUpAlertMessage();
-  };
-  const action = (
-    <IconButton
-      size="small"
-      aria-label="close"
-      color="inherit"
-      onClick={handleClose}
-    >
-      <CloseIcon fontSize="small" />
-    </IconButton>
-  );
-  const alertStyle = severity === "success" ? alertSuccessStyle : alertErrorStyle;
-  return (
-    <Snackbar
-      action={action}
-      anchorOrigin={{ vertical, horizontal }}
-      key={vertical + horizontal}
-      open={alertMessage ? true : false} 
-      onClose={handleClose}
-    >
-      <Alert
-        onClose={handleClose}
-        severity={severity}
-        variant="filled"
-        sx={alertStyle}
-      >
-        {alertMessage}
-      </Alert>
-    </Snackbar>
-  )
-}
+import { Alert, IconButton, Snackbar } from '@mui/material';import CloseIcon from '@mui/icons-material/Close';import { alertErrorStyle, alertSuccessStyle } from 'app';export const ManuallyCloseableSnackBar = ({ alertMessage, setPopUpAlertMessage, severity }) => {  const vertical = 'top';  const horizontal = 'center';  const handleClose = (reason) => {    if (reason === 'clickaway') {      return;    }    setPopUpAlertMessage();  };  const action = (    <IconButton size='small' aria-label='close' color='inherit' onClick={handleClose}>      <CloseIcon fontSize='small' />    </IconButton>  );  const alertStyle = severity === 'success' ? alertSuccessStyle : alertErrorStyle;  return (    <Snackbar      action={action}      anchorOrigin={{ vertical, horizontal }}      key={vertical + horizontal}      open={alertMessage ? true : false}      onClose={handleClose}    >      <Alert onClose={handleClose} severity={severity} variant='filled' sx={alertStyle}>        {alertMessage}      </Alert>    </Snackbar>  );};

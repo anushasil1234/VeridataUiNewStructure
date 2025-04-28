@@ -1,6 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { GenerateUANOTP_URL } from "shared/constants/constants";
-
-const generateUANOtp = (payLoad) => ServerRequest(GenerateUANOTP_URL, "POST", payLoad);
-
-export { generateUANOtp };
+import ServerRequest from 'server/utils/server-request';import { GenerateUANOTP_URL } from 'shared/constants/constants';const generateUANOtp = (payLoad) => ServerRequest(GenerateUANOTP_URL, 'POST', payLoad);export { generateUANOtp };

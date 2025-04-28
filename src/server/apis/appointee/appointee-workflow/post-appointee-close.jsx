@@ -1,7 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import { appointteTerminationSuccess, PostAppointeeClose_URL } from "shared/constants/constants";
-
-const postAppointeeClose = (payLoad) => 
-    ServerRequest(PostAppointeeClose_URL, "POST", payLoad, appointteTerminationSuccess, true);
-
-export { postAppointeeClose };
+import ServerRequest from 'server/utils/server-request';import { appointteTerminationSuccess, PostAppointeeClose_URL } from 'shared/constants/constants';const postAppointeeClose = (payLoad) =>  ServerRequest(PostAppointeeClose_URL, 'POST', payLoad, appointteTerminationSuccess, true);export { postAppointeeClose };

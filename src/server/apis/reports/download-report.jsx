@@ -1,18 +1,1 @@
-import ServerRequest from "server/utils/server-request";
-import downloadFile from "shared/utils/associate/download-file";
-import showErrorMessage from "shared/utils/associate/show-error-message";
-
-const downloadReport = async (_url, payLoad) => {
-    try {
-        const response = await ServerRequest(_url, "POST", payLoad);
-        if (response) {
-            const { fileData, fileName } = response.responseInfo;
-            const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${fileData}`;
-            downloadFile(linkSource, fileName);
-        }
-    } catch (error) {
-        showErrorMessage(error);
-    }
-};
-
-export { downloadReport };
+import ServerRequest from 'server/utils/server-request';import downloadFile from 'shared/utils/associate/download-file';import showErrorMessage from 'shared/utils/associate/show-error-message';const downloadReport = async (_url, payLoad) => {  try {    const response = await ServerRequest(_url, 'POST', payLoad);    if (response) {      const { fileData, fileName } = response.responseInfo;      const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${fileData}`;      downloadFile(linkSource, fileName);    }  } catch (error) {    showErrorMessage(error);  }};export { downloadReport };

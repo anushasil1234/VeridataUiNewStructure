@@ -1,315 +1,1 @@
-import { Download, Refresh, Search, Assessment, Summarize,} from "@mui/icons-material";
-import { Box, Stack , List,ListItemButton,Grid} from "@mui/material";
-import { primaryFabStyle, ResponsiveFab , downLoadListSx} from "app";
-import Button from '@mui/material/Button';
-
-import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import ActionPermission from "shared/components/action-permission/action-permission";
-import {
-  apiCountDetailsHeadCell,
-  apiCountHeadCell,
-  consoidateApiCountHeadCell,
-  generateAppointeeCountReportDesc,
-  toApiCountReport,
-  reportGenarate
-} from "shared/constants/constants";
-import {
-  CardLayout,
-  CreatePdfTableBody,
-  DataTable,
-  PageLayout,
-  generateTableRowData,
-  hasValue,
-} from "shared/utils";
-import jsPDFReportDataTemplate from "shared/utils/associate/js-pdf-report";
-import DatePicker from "shared/utils/date-picker/date-picker";
-import DarkTooltip from "shared/utils/tooltip/dark-tooltip";
-import { removeActionRoute } from "store/slices/action-route-slice";
-import ArticleIcon from '@mui/icons-material/Article';
-import downloadFile from "shared/utils/associate/download-file";
-import generateBlobFromBase64 from "shared/utils/associate/generateBlob"
-import { getApiCounterReport } from "server/apis";
-import showErrorMessage from "shared/utils/associate/show-error-message";
-
-const UnwrappedReport = (props) => {
-  const { hasPermission } = props;
-  // const popUpSlice = useSelector(state => state.popUpSlice);
-  const apiSlice = useSelector((state) => state.apiSlice);
-  const actionRouteSlice = useSelector((state) => state.actionRouteSlice);
-  const commonHooksFunctionSlice = useSelector(
-    (state) => state.commonHooksFunctionSlice
-  );
-
-  // const { getApiCounterReport } = apiSlice[0];
-  const { navigateTo } = commonHooksFunctionSlice[0];
-
-  const [toDate, setToDate] = useState();
-  const [fromDate, setFromDate] = useState();
-  const [rows, setRows] = useState([]);
-  const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);
-  const [apiCountList, setApiCountList] = useState();
-  const [apiConsolidateCountList, setApiConsolidateCountList] = useState();
-  // const {showErrorMessage} =popUpSlice[0]
-  const [fileData, setFileData] = useState(null);
-  const setTableRows = async (fromDate = null, toDate = null) => {
-    const response = await getApiCounterReport(fromDate, toDate);
-
-    if (response) {
-      const { responseInfo } = response;
-      const { apiCountList, apiConsolidateCountList ,filedata } = responseInfo;
-      setApiConsolidateCountList(apiConsolidateCountList);
-      setApiCountList(apiCountList);
-      setFileData(filedata);
-      let generatedCells = generateTableRowData(
-        apiCountList,
-        apiCountDetailsHeadCell,
-        null,
-        hasPermission
-      );
-
-      apiCountList.forEach(({ apiCountDetails }, index) => {
-        const detailsCells = generateTableRowData(
-          apiCountDetails,
-          apiCountDetailsHeadCell,
-          null
-        );
-        generatedCells[index].detailsCells = detailsCells;
-      });
-      setRows({
-        tableHead: apiCountHeadCell,
-        tableRows: generatedCells,
-      });
-    }
-  };
-
-  const dispatch = useDispatch();
-
-  var date = moment();
-  var currentDate = date.format("DDMMYYYY");
-
-  // const handleApiCountDownload = () => {
-  //   const tableHeadList = apiCountHeadCell.map(({ label }) => {
-  //     return {
-  //       title: label,
-  //     };
-  //   });
-  //   const consolidateTableHeadList = consoidateApiCountHeadCell.map(({ label }) => {
-  //     return {
-  //       title: label,
-  //     };
-  //   });
-  //   const tableBodyList = apiCountList.map((apiTotalCount) => {
-  //     return CreatePdfTableBody(apiTotalCount, apiCountHeadCell);
-  //   });
-  //   const tableBodyListConsolidated = apiConsolidateCountList.map(
-  //     (apiCount) => {
-  //       return CreatePdfTableBody(apiCount, consoidateApiCountHeadCell);
-  //     }
-  //   );
-
-  //   const tableObj = {
-  //     headerList: tableHeadList,
-  //     rows: tableBodyList,
-  //     fileName: `_Api_Count_${currentDate}`,
-  //     label: "Api Count",
-  //     fromDate: fromDate,
-  //     toDate: toDate,
-  //   };
-  //   const tableObjConsolidate = {
-  //     headerListConsolidate: consolidateTableHeadList,
-  //     rowsConsolidate: tableBodyListConsolidated,
-  //     // fileName1: `_Api_Count_${currentDate}`,
-  //     // label1: "Api Count",
-  //     // fromDate1: fromDate,
-  //     // toDate1: toDate,
-  //   };
-
-
-  //   jsPDFReportTemplate({ tableObj, tableObjConsolidate });
-  // };
-  const handleDownload = () => {
-    if (!fileData || fileData.length === 0) {
-      showErrorMessage(reportGenarate);
-      return;
-    }
-    if (fileData && typeof fileData === 'object') {
-        const base64String = fileData.fileData; 
-        const fileName = fileData.fileName || "appointee_data.xlsx"; 
-        const blob = generateBlobFromBase64(base64String);
-        const blobUrl = window.URL.createObjectURL(blob);
-        downloadFile(blobUrl, fileName);
-        window.URL.revokeObjectURL(blobUrl);
-    } 
-  };
-  const handleClickOnDownload = () => {
-    setIsDownloadListOpened(!isDownloadListOpened);
-  };
-
-  const handleApiCountDownload = async () => {
-    if(!apiConsolidateCountList || apiConsolidateCountList.length === 0){
-      showErrorMessage(reportGenarate)
-      return;
-    }
-    const tableHeadList = apiCountHeadCell.map(({ label }) => ({ title: label }));
-    const consolidateTableHeadList = consoidateApiCountHeadCell.map(({ label }) => ({ title: label }));
-
-    const tableBodyList = apiCountList.map((apiTotalCount) =>
-      CreatePdfTableBody(apiTotalCount, apiCountHeadCell)
-    );
-    const tableBodyListConsolidated = apiConsolidateCountList.map((apiCount) =>
-      CreatePdfTableBody(apiCount, consoidateApiCountHeadCell)
-    );
-
-    const reportDetails = {
-      fileName: `_Api_Count_${currentDate}`,
-      label: "Api Count",
-      fromDate,
-      toDate,
-      rptDesc: generateAppointeeCountReportDesc,
-      companyName: 'ELOGIX Software Pvt.Ltd'
-    };
-
-    const tables = [
-      {
-        tableName: "API Count",
-        headerList: tableHeadList,
-        rows: tableBodyList,
-      },
-      {
-        tableName: "Consolidated API Count",
-        headerList: consolidateTableHeadList,
-        rows: tableBodyListConsolidated,
-      },
-
-    ];
-
-    await jsPDFReportDataTemplate({ reportDetails, tables });
-  };
-  const handleSearch = () => {
-    setTableRows(fromDate, toDate);
-  };
-  const clearSearch = () => {
-    setFromDate(null);
-    setToDate(null);
-    setTableRows();
-    navigateTo(toApiCountReport, { state: false });
-  };
-
-  useEffect(() => {
-    dispatch(removeActionRoute());
-    if (actionRouteSlice.length === 0) {
-      setTableRows(fromDate, toDate);
-    }
-  }, [actionRouteSlice]);
-  const handelsearch=()=>{
-    if (hasValue(toDate) && !hasValue(fromDate)) {
-      showErrorMessage("From Date can not be empty");
-    }else {
-      handleSearch();
-    }
-  }
-  return (
-    <PageLayout pageName={"Api count report"}>
-      <CardLayout>
-        <Grid container spacing={1} alignItems="center"> 
-          <Grid item>
-            <DatePicker
-              label={"From Date"}
-              value={fromDate}
-              maxDate={toDate}
-              setValue={setFromDate}
-              disableFuture={true}
-            />
-          </Grid>
-          <Grid item>
-            <DatePicker
-              label={"To Date"}
-              clearable
-              value={toDate}
-              minDate={fromDate}
-              setValue={setToDate}
-              disableFuture={true}
-            />
-          </Grid>
-          <Grid item>
-            <DarkTooltip placement="top" title={"Search"} arrow>
-              <ResponsiveFab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={handelsearch}
-                sx={primaryFabStyle}
-              >
-                <Search width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>
-            </DarkTooltip>
-          </Grid>
-          <Grid item>
-            <DarkTooltip placement="top" title={"Clear Search"} arrow>
-              <ResponsiveFab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={clearSearch}
-                sx={primaryFabStyle}
-              >
-                <Refresh width={18} sx={{ color: "#fff" }} />
-              </ResponsiveFab>
-            </DarkTooltip>
-          </Grid>
-          <Grid item sx={{ position: 'relative' }}>
-            <DarkTooltip placement="top" title={"Download Report"} arrow>
-              <ResponsiveFab
-                variant="contained"
-                size="small"
-                button={"N"}
-                onClick={handleClickOnDownload}
-                sx={primaryFabStyle}
-              >
-                <Download width={18} />
-              </ResponsiveFab>
-            </DarkTooltip>
-  
-            {isDownloadListOpened && (
-              <List
-                sx={{
-                  ...downLoadListSx,         
-                  zIndex: 1000,
-                }}
-              >
-                <ListItemButton component="a">
-                  <DarkTooltip
-                    placement="top"
-                    title={"Download pdf report"}
-                    arrow
-                  >
-                   
-                    <Button variant="contained" onClick={handleApiCountDownload}>PDF</Button>
-                  </DarkTooltip>
-                </ListItemButton>
-                <ListItemButton component="a">
-                  <DarkTooltip
-                    placement="top"
-                    title={"Download xlsx report"}
-                    arrow
-                  >
-                   
-                    <Button variant="contained" onClick={handleDownload}>XLSX</Button>
-                  </DarkTooltip>
-                </ListItemButton>
-              </List>
-            )}
-          </Grid>
-        </Grid>
-        <DataTable rows={rows} setRows={setRows} headCells={apiCountHeadCell} />
-      </CardLayout>
-    </PageLayout>
-  );
-  
-};
-
-//export default Report;
-const Report = ActionPermission(UnwrappedReport);
-export default Report;
+import { Download, Refresh, Search, Assessment, Summarize } from '@mui/icons-material';import { Box, Stack, List, ListItemButton, Grid } from '@mui/material';import { primaryFabStyle, ResponsiveFab, downLoadListSx } from 'app';import Button from '@mui/material/Button';import moment from 'moment';import React, { useEffect, useState } from 'react';import { useDispatch, useSelector } from 'react-redux';import ActionPermission from 'shared/components/action-permission/action-permission';import {  apiCountDetailsHeadCell,  apiCountHeadCell,  consoidateApiCountHeadCell,  generateAppointeeCountReportDesc,  toApiCountReport,  reportGenarate,} from 'shared/constants/constants';import {  CardLayout,  CreatePdfTableBody,  DataTable,  PageLayout,  generateTableRowData,  hasValue,} from 'shared/utils';import jsPDFReportDataTemplate from 'shared/utils/associate/js-pdf-report';import DatePicker from 'shared/utils/date-picker/date-picker';import DarkTooltip from 'shared/utils/tooltip/dark-tooltip';import { removeActionRoute } from 'store/slices/action-route-slice';import ArticleIcon from '@mui/icons-material/Article';import downloadFile from 'shared/utils/associate/download-file';import generateBlobFromBase64 from 'shared/utils/associate/generateBlob';import { getApiCounterReport } from 'server/apis';import showErrorMessage from 'shared/utils/associate/show-error-message';const UnwrappedReport = (props) => {  const { hasPermission } = props;  const apiSlice = useSelector((state) => state.apiSlice);  const actionRouteSlice = useSelector((state) => state.actionRouteSlice);  const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);  const { navigateTo } = commonHooksFunctionSlice[0];  const [toDate, setToDate] = useState();  const [fromDate, setFromDate] = useState();  const [rows, setRows] = useState([]);  const [isDownloadListOpened, setIsDownloadListOpened] = useState(false);  const [apiCountList, setApiCountList] = useState();  const [apiConsolidateCountList, setApiConsolidateCountList] = useState();  const [fileData, setFileData] = useState(null);  const setTableRows = async (fromDate = null, toDate = null) => {    const response = await getApiCounterReport(fromDate, toDate);    if (response) {      const { responseInfo } = response;      const { apiCountList, apiConsolidateCountList, filedata } = responseInfo;      setApiConsolidateCountList(apiConsolidateCountList);      setApiCountList(apiCountList);      setFileData(filedata);      let generatedCells = generateTableRowData(        apiCountList,        apiCountDetailsHeadCell,        null,        hasPermission,      );      apiCountList.forEach(({ apiCountDetails }, index) => {        const detailsCells = generateTableRowData(apiCountDetails, apiCountDetailsHeadCell, null);        generatedCells[index].detailsCells = detailsCells;      });      setRows({        tableHead: apiCountHeadCell,        tableRows: generatedCells,      });    }  };  const dispatch = useDispatch();  var date = moment();  var currentDate = date.format('DDMMYYYY');  const handleDownload = () => {    if (!fileData || fileData.length === 0) {      showErrorMessage(reportGenarate);      return;    }    if (fileData && typeof fileData === 'object') {      const base64String = fileData.fileData;      const fileName = fileData.fileName || 'appointee_data.xlsx';      const blob = generateBlobFromBase64(base64String);      const blobUrl = window.URL.createObjectURL(blob);      downloadFile(blobUrl, fileName);      window.URL.revokeObjectURL(blobUrl);    }  };  const handleClickOnDownload = () => {    setIsDownloadListOpened(!isDownloadListOpened);  };  const handleApiCountDownload = async () => {    if (!apiConsolidateCountList || apiConsolidateCountList.length === 0) {      showErrorMessage(reportGenarate);      return;    }    const tableHeadList = apiCountHeadCell.map(({ label }) => ({ title: label }));    const consolidateTableHeadList = consoidateApiCountHeadCell.map(({ label }) => ({      title: label,    }));    const tableBodyList = apiCountList.map((apiTotalCount) =>      CreatePdfTableBody(apiTotalCount, apiCountHeadCell),    );    const tableBodyListConsolidated = apiConsolidateCountList.map((apiCount) =>      CreatePdfTableBody(apiCount, consoidateApiCountHeadCell),    );    const reportDetails = {      fileName: `_Api_Count_${currentDate}`,      label: 'Api Count',      fromDate,      toDate,      rptDesc: generateAppointeeCountReportDesc,      companyName: 'ELOGIX Software Pvt.Ltd',    };    const tables = [      {        tableName: 'API Count',        headerList: tableHeadList,        rows: tableBodyList,      },      {        tableName: 'Consolidated API Count',        headerList: consolidateTableHeadList,        rows: tableBodyListConsolidated,      },    ];    await jsPDFReportDataTemplate({ reportDetails, tables });  };  const handleSearch = () => {    setTableRows(fromDate, toDate);  };  const clearSearch = () => {    setFromDate(null);    setToDate(null);    setTableRows();    navigateTo(toApiCountReport, { state: false });  };  useEffect(() => {    dispatch(removeActionRoute());    if (actionRouteSlice.length === 0) {      setTableRows(fromDate, toDate);    }  }, [actionRouteSlice]);  const handelsearch = () => {    if (hasValue(toDate) && !hasValue(fromDate)) {      showErrorMessage('From Date can not be empty');    } else {      handleSearch();    }  };  return (    <PageLayout pageName={'Api count report'}>      <CardLayout>        <Grid container spacing={1} alignItems='center'>          <Grid item>            <DatePicker              label={'From Date'}              value={fromDate}              maxDate={toDate}              setValue={setFromDate}              disableFuture={true}            />          </Grid>          <Grid item>            <DatePicker              label={'To Date'}              clearable              value={toDate}              minDate={fromDate}              setValue={setToDate}              disableFuture={true}            />          </Grid>          <Grid item>            <DarkTooltip placement='top' title={'Search'} arrow>              <ResponsiveFab                variant='contained'                size='small'                button={'N'}                onClick={handelsearch}                sx={primaryFabStyle}              >                <Search width={18} sx={{ color: '#fff' }} />              </ResponsiveFab>            </DarkTooltip>          </Grid>          <Grid item>            <DarkTooltip placement='top' title={'Clear Search'} arrow>              <ResponsiveFab                variant='contained'                size='small'                button={'N'}                onClick={clearSearch}                sx={primaryFabStyle}              >                <Refresh width={18} sx={{ color: '#fff' }} />              </ResponsiveFab>            </DarkTooltip>          </Grid>          <Grid item sx={{ position: 'relative' }}>            <DarkTooltip placement='top' title={'Download Report'} arrow>              <ResponsiveFab                variant='contained'                size='small'                button={'N'}                onClick={handleClickOnDownload}                sx={primaryFabStyle}              >                <Download width={18} />              </ResponsiveFab>            </DarkTooltip>            {isDownloadListOpened && (              <List                sx={{                  ...downLoadListSx,                  zIndex: 1000,                }}              >                <ListItemButton component='a'>                  <DarkTooltip placement='top' title={'Download pdf report'} arrow>                    <Button variant='contained' onClick={handleApiCountDownload}>                      PDF                    </Button>                  </DarkTooltip>                </ListItemButton>                <ListItemButton component='a'>                  <DarkTooltip placement='top' title={'Download xlsx report'} arrow>                    <Button variant='contained' onClick={handleDownload}>                      XLSX                    </Button>                  </DarkTooltip>                </ListItemButton>              </List>            )}          </Grid>        </Grid>        <DataTable rows={rows} setRows={setRows} headCells={apiCountHeadCell} />      </CardLayout>    </PageLayout>  );};const Report = ActionPermission(UnwrappedReport);export default Report;

@@ -1,3 +1,1 @@
-export const GetAttribute = (element, attribute) => {
-    return element.currentTarget.getAttribute(attribute);
-}
+export const GetAttribute = (element, attribute) => {  return element.currentTarget.getAttribute(attribute);};

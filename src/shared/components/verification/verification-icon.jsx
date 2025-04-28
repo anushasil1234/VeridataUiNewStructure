@@ -1,20 +1,1 @@
-import { GppBad, VerifiedUser } from '@mui/icons-material'
-import { verificationStyle } from 'app'
-import React from 'react'
-
-export const VerificationIcon = ({ status }) => {
-    return (
-        <>
-            {
-                status !== null ?
-                    (status ?
-                        < VerifiedUser sx={{ ...verificationStyle, color: "green" }} />
-                        :
-                        < GppBad sx={{ ...verificationStyle, color: "#D32F2F" }} />) :
-                    null
-
-            }
-        </>
-
-    )
-}
+import { GppBad, VerifiedUser } from '@mui/icons-material';import { verificationStyle } from 'app';import React from 'react';export const VerificationIcon = ({ status }) => {  return (    <>      {status !== null ? (        status ? (          <VerifiedUser sx={{ ...verificationStyle, color: 'green' }} />        ) : (          <GppBad sx={{ ...verificationStyle, color: '#D32F2F' }} />        )      ) : null}    </>  );};

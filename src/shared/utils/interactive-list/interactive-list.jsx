@@ -1,42 +1,1 @@
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Grid from "@mui/material/Grid";
-import { interactiveListBoxStyle, interactiveListContainter } from "app";
-
-
-export default function InteractiveList({ customeStyle, list, handleClickOnlist }) {
-
-  const { boxStyle, listItemStyle } = customeStyle
-  return (
-    <Box sx={{ ...interactiveListContainter, ...boxStyle }} >
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Box sx={interactiveListBoxStyle}>
-            <List dense={false}>
-              {list && list.length >0 && list.map(({ primaryText, secondaryText }, index) => {
-                return (
-                  <ListItem
-                    key={index}
-                    index ={index}
-                    sx={{ ...listItemStyle }}
-                    onClick={handleClickOnlist}
-                  >
-                    <ListItemText
-                      primary={primaryText}
-                      sx={{ color: '#000' }}
-                      secondary={secondaryText ? secondaryText : null}
-                    />
-
-                  </ListItem>
-                )
-              })}
-
-            </List>
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
-  );
-}
+import Box from '@mui/material/Box';import List from '@mui/material/List';import ListItem from '@mui/material/ListItem';import ListItemText from '@mui/material/ListItemText';import Grid from '@mui/material/Grid';import { interactiveListBoxStyle, interactiveListContainter } from 'app';export default function InteractiveList({ customeStyle, list, handleClickOnlist }) {  const { boxStyle, listItemStyle } = customeStyle;  return (    <Box sx={{ ...interactiveListContainter, ...boxStyle }}>      <Grid container spacing={2}>        <Grid item xs={12}>          <Box sx={interactiveListBoxStyle}>            <List dense={false}>              {list &&                list.length > 0 &&                list.map(({ primaryText, secondaryText }, index) => {                  return (                    <ListItem                      key={index}                      index={index}                      sx={{ ...listItemStyle }}                      onClick={handleClickOnlist}                    >                      <ListItemText                        primary={primaryText}                        sx={{ color: '#000' }}                        secondary={secondaryText ? secondaryText : null}                      />                    </ListItem>                  );                })}            </List>          </Box>        </Grid>      </Grid>    </Box>  );}
