@@ -1,1 +1,6 @@
-const Message = (message) => {  return {    detail: { message },  };};export default Message;
+// const Message = (message) => {
+//   return {
+//     detail: { message },
+//   };
+// };
+// export default Message;

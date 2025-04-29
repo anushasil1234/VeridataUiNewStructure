@@ -1,1 +1,36 @@
-import * as React from 'react';import {  AppBar,  Dialog,  DialogContent,  DialogContentText,  DialogTitle,  IconButton,  Toolbar,} from '@mui/material';import { modelToolbar } from 'app';import { Close } from '@mui/icons-material';export default function SubmitModal(props) {  const { openModal, submitmodalprops, closeModel } = props;  const { submitmodalcontent } = submitmodalprops || '';  const { dialogComponent, dialogTitle, dialogContentText } = submitmodalcontent || '';  const title = dialogTitle ? dialogTitle : null;  return (    <div>      <Dialog fullWidth open={openModal}>        <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0' }}>          <Toolbar>            <IconButton edge='start' onClick={closeModel} aria-label='close'>              <Close sx={{ color: '#fff' }} />            </IconButton>          </Toolbar>        </AppBar>        <DialogTitle>{title}</DialogTitle>        <DialogContent>          {dialogContentText && <DialogContentText>{dialogContentText}</DialogContentText>}          {dialogComponent}        </DialogContent>      </Dialog>    </div>  );}
+// import * as React from 'react';
+// import {
+//   AppBar,
+//   Dialog,
+//   DialogContent,
+//   DialogContentText,
+//   DialogTitle,
+//   IconButton,
+//   Toolbar,
+// } from '@mui/material';
+// import { modelToolbar } from 'app';
+// import { Close } from '@mui/icons-material';
+// export default function SubmitModal(props) {
+//   const { openModal, submitmodalprops, closeModel } = props;
+//   const { submitmodalcontent } = submitmodalprops || '';
+//   const { dialogComponent, dialogTitle, dialogContentText } = submitmodalcontent || '';
+//   const title = dialogTitle ? dialogTitle : null;
+//   return (
+//     <div>
+//       <Dialog fullWidth open={openModal}>
+//         <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0' }}>
+//           <Toolbar>
+//             <IconButton edge='start' onClick={closeModel} aria-label='close'>
+//               <Close sx={{ color: '#fff' }} />
+//             </IconButton>
+//           </Toolbar>
+//         </AppBar>
+//         <DialogTitle>{title}</DialogTitle>
+//         <DialogContent>
+//           {dialogContentText && <DialogContentText>{dialogContentText}</DialogContentText>}
+//           {dialogComponent}
+//         </DialogContent>
+//       </Dialog>
+//     </div>
+//   );
+// }

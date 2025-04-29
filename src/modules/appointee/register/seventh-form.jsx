@@ -1,13 +1,13 @@
 import { Box, Button, Grid, Stack } from '@mui/material';
-import React, { useState } from 'react';
-import GridRow from 'shared/components/grid-container/grid-row';
 import { submitBtnStyle } from 'app';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import GridRow from 'shared/components/grid-container/grid-row';
 import {
-  previousButton,
+    previousButton
 } from 'shared/constants/constants';
-import { useSelector, useDispatch } from 'react-redux';
-import BankVerification from './bank-verifications';
-const SixthForm = ({
+import FIRVerification from './fir-verifications';
+const SeventhForm = ({
   formElement,
   stepsList,
   isAadhaarVarified,
@@ -16,21 +16,28 @@ const SixthForm = ({
   setCurrentPageNo,
   activeStep,
   setActiveStep,
-  bankstatusMessage,
-  setBankStatusMessage,
-  setIsPanVarified,
-  isPanVarified,
-  isBankVarified,
-  setIsBankVarified,
-  accountNumber,
-  setAccountNumber,
-  IFSCCode,
-  setIFSCCode,
+  firstPageForm,
+  isPANAvailable,
+  setIsPANAvailable,
+  firstatusMessage,
+  isPoliceVarified,
+  setisPoliceVarified,
+  setFIRStatusMessage,
+  firDetails,
+  setFIRDetails,
+  pan,
+  setPan,
+  nameAsOnPan,
+  dateOfBirth,
+  setDateOfBirth,
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
+  const { t } = useTranslation(); 
   console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
+  const functionSlice = useSelector((state) => state.functionSlice);
+  const { openRemarksModel } = functionSlice[0];
   const loggedInData = useSelector((state) => state.loggedInData);
-
+  const { userId, appointeeId, userCode, candidateId, userName } = loggedInData[0];
   return (
     <Box sx={{ width: '100%' }}>
       <form ref={formElement}>
@@ -40,17 +47,18 @@ const SixthForm = ({
           rowSpacing={1}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          <BankVerification
+          <FIRVerification
             isAadhaarVarified={isAadhaarVarified}
             stepsList={stepsList}
-            bankstatusMessage={bankstatusMessage}
-            setBankStatusMessage={setBankStatusMessage}
-            isBankVarified={isBankVarified}
-            setIsBankVarified={setIsBankVarified}
-            accountNumber={accountNumber}
-            setAccountNumber={setAccountNumber}
-            IFSCCode={IFSCCode}
-            setIFSCCode={setIFSCCode}
+            firstPageForm={firstPageForm}
+            firstatusMessage={firstatusMessage}
+            setFIRStatusMessage={setFIRStatusMessage}
+            isPoliceVarified={isPoliceVarified}
+            setisPoliceVarified={setisPoliceVarified}
+            firDetails={firDetails}
+            setFIRDetails={setFIRDetails}
+            dateOfBirth={dateOfBirth}
+            setDateOfBirth={setDateOfBirth}
           />
 
           <GridRow>
@@ -62,18 +70,18 @@ const SixthForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {previousButton}
+                  {t(previousButton)}
                 </Button>
                 <Button
                   onClick={() => {
-                    setCurrentPageNo(7); 
-                    setActiveStep(6); 
+                    setCurrentPageNo(8); 
+                    setActiveStep(7); 
                   }}
                   sx={submitBtnStyle}
                   variant='contained'
                   color='primary'
                 >
-                  {'Next'}
+                  {t('Next')}
                 </Button>
               </Stack>
             </Grid>
@@ -83,5 +91,4 @@ const SixthForm = ({
     </Box>
   );
 };
-export default SixthForm;
-
+export default SeventhForm;
