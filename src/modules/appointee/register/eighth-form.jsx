@@ -233,15 +233,15 @@ const EighthForm = ({
     const response = await generateUANOtp(payLoad);
     if (response) {
       const { responseInfo } = response;
-      let { otp_sent, client_id } = responseInfo;
-      if (!otp_sent) {
+      let { otpSent, clientId } = responseInfo;
+      if (!otpSent) {
         showErrorMessage(generateOtpRety);
       } else {
         initialTimeOfOtpTimer();
         showSuccessMessage(generateOtpSucces);
         closeOtpForm();
         openOtpSubmitionModel({
-          otpSubmitionFunction: (otp) => verifyUAN(otp, client_id),
+          otpSubmitionFunction: (otp) => verifyUAN(otp, clientId),
           timeoutTimer: timeoutTimer,
           setTimeoutTimer: setTimeoutTimer,
         });
@@ -255,9 +255,9 @@ const EighthForm = ({
     const payLoad = {
       appointeeId: appointeeId,
       otp: otp,
-      client_id: clientId,
+      clientId: clientId,
       userId: userId,
-      AppointeeCode: userCode,
+      appointeeCode: userCode,
     };
     const response = await submitUANOTP(payLoad);
     if (response) {
@@ -303,13 +303,14 @@ const EighthForm = ({
                   }
                 }}
                 value={UAN}
+                disabled={isUanVarified}
               />
               <Button
                 sx={verificationBtnStyle}
                 variant='contained'
                 onClick={handleEpfoButtonClick}
                 endIcon={<Autorenew />}
-                disabled={isUanVerificationProcessManual === 'manual'}
+                disabled={isUanVerificationProcessManual === 'manual' || isUanVarified}
               >
                 {epfoButton}
               </Button>
@@ -333,7 +334,7 @@ const EighthForm = ({
                 },
               }}
             >
-              <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
+              <Grid item xs={12} sx={{ paddingLeft: '0px !important' }} >
                 <Stack flexDirection='column' justifyContent='space-between' alignItems='start'>
                   <Typography sx={{ ...lable1CopyStyle }}>{t('UAN Verification')}</Typography>
                   <RadioGroup
@@ -345,14 +346,14 @@ const EighthForm = ({
                       value='auto'
                       control={<Radio />}
                       label={t('Automatic')}
-                      disabled={!hasValue(UAN)}
+                      disabled={!hasValue(UAN) || isUanVarified}
                     />
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <FormControlLabel
                         value='manual'
                         control={<Radio />}
                         label={t('Manual')}
-                        disabled={!hasValue(UAN)}
+                        disabled={!hasValue(UAN) || isUanVarified}
                       />
                       <Tooltip
                         arrow

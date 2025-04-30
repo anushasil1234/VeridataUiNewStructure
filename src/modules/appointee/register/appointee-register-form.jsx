@@ -420,7 +420,7 @@ const AppointeeRegisterForm = () => {
           : setIsUanVerificationProcessManual('auto')
         : setIsUanVerificationProcessManual('auto');
       hasValue(isUanLinkWithAadhar) ? setUanAadharLink(isUanLinkWithAadhar) : setUanAadharLink(NA);
-      if (hasValue(uanNumber)) {
+      if (!hasValue(uanNumber)) {
         epfostatusMessage.message = NA;
         epfostatusMessage.success = null;
         setEpfostatusMessage(epfostatusMessage);
@@ -539,12 +539,12 @@ const AppointeeRegisterForm = () => {
     setStepsList((prevSteps) => ({ ...prevSteps, ..._steps }));
   };
   console.log('uploadedFile fileDetails', uploadedFile, fileDetails);
-  const fetchUanConfirmationSubmittion = (value) => {
-    if (value === 'Y') {
-      handleGetUANNumber();
-    }
-    setFetchUanConfirmation(false);
-  };
+  // const fetchUanConfirmationSubmittion = (value) => {
+  //   if (value === 'Y') {
+  //     handleGetUANNumber();
+  //   }
+  //   setFetchUanConfirmation(false);
+  // };
   const openSubmitConfirmationModel = () => {
     const submitconfModelContent = {
       dialogContentText: submitConfirmationMsg,
@@ -630,7 +630,7 @@ const AppointeeRegisterForm = () => {
       setDisabledAadharInput(true);
     }
     if (isSubmit === false) {
-      if (isAadhaarVarified && isUanVarified && isPoliceVarified) {
+      if (isAadhaarVarified && isUanVarified ) {
         submitDetails(true, false);
       }
     }
@@ -1038,67 +1038,67 @@ const AppointeeRegisterForm = () => {
     }
     return formData;
   };
-  const verifyPAN = async () => {
-    const payLoad = {
-      appointeeId: appointeeId,
-      panNummber: pan,
-      panName: hasValue(nameAsOnPan) ? removeExtraSpaces(nameAsOnPan) : null,
-      userId: userId,
-    };
-    const response = await verifyPANDetails(payLoad);
-    if (response) {
-      const { remarks, isValid } = response.responseInfo;
-      setIsPanVarified(isValid);
-      if (isValid) {
-        setIsEpfoSectionDisabled(false);
-        setIsPANModalOpen(true);
-        console.log('panmodal');
-      } else {
-        displayPanError(panVerifyFailedMsg);
-        if (hasValue(remarks)) {
-          const generatedRemarks = generateRemarks(remarks);
-          openRemarksModel(generatedRemarks);
-        }
-      }
-      setPANStatusMessage(new VerificationStatus(isValid, 'V'));
-    }
-  };
-  const handleBankAccountVerification = async () => {
-    if (!isAadhaarVarified) {
-      showErrorMessage(aaddharNumberverify);
-      setPanNumberError(true);
-      return;
-    }
-    if (accountNumber === null) {
-      showErrorMessage(emptyAccountNumberMsg);
-    } else if (IFSCCode === null) {
-      showErrorMessage(emptyIFSCMsg);
-    }
-    else {
-      verifyBank();
-    }
-  };
-  const verifyBank = async () => {
-    const payLoad = {
-      appointeeId: appointeeId,
-      accountNumber: accountNumber,
-      ifsc: hasValue(IFSCCode) ? removeExtraSpaces(IFSCCode) : null,
-      userId: userId,
-    };
-    const response = await verifyBankDetails(payLoad);
-    if (response) {
-      const { remarks, isValid } = response.responseInfo;
-      setIsBankVarified(isValid);
-      if (isValid) {
-      } else {
-        if (hasValue(remarks)) {
-          const generatedRemarks = generateRemarks(remarks);
-          openRemarksModel(generatedRemarks);
-        }
-      }
-      setBankStatusMessage(new VerificationStatus(isValid, 'V'));
-    }
-  };
+  // const verifyPAN = async () => {
+  //   const payLoad = {
+  //     appointeeId: appointeeId,
+  //     panNummber: pan,
+  //     panName: hasValue(nameAsOnPan) ? removeExtraSpaces(nameAsOnPan) : null,
+  //     userId: userId,
+  //   };
+  //   const response = await verifyPANDetails(payLoad);
+  //   if (response) {
+  //     const { remarks, isValid } = response.responseInfo;
+  //     setIsPanVarified(isValid);
+  //     if (isValid) {
+  //       setIsEpfoSectionDisabled(false);
+  //       setIsPANModalOpen(true);
+  //       console.log('panmodal');
+  //     } else {
+  //       displayPanError(panVerifyFailedMsg);
+  //       if (hasValue(remarks)) {
+  //         const generatedRemarks = generateRemarks(remarks);
+  //         openRemarksModel(generatedRemarks);
+  //       }
+  //     }
+  //     setPANStatusMessage(new VerificationStatus(isValid, 'V'));
+  //   }
+  // };
+  // const handleBankAccountVerification = async () => {
+  //   if (!isAadhaarVarified) {
+  //     showErrorMessage(aaddharNumberverify);
+  //     setPanNumberError(true);
+  //     return;
+  //   }
+  //   if (accountNumber === null) {
+  //     showErrorMessage(emptyAccountNumberMsg);
+  //   } else if (IFSCCode === null) {
+  //     showErrorMessage(emptyIFSCMsg);
+  //   }
+  //   else {
+  //     verifyBank();
+  //   }
+  // };
+  // const verifyBank = async () => {
+  //   const payLoad = {
+  //     appointeeId: appointeeId,
+  //     accountNumber: accountNumber,
+  //     ifsc: hasValue(IFSCCode) ? removeExtraSpaces(IFSCCode) : null,
+  //     userId: userId,
+  //   };
+  //   const response = await verifyBankDetails(payLoad);
+  //   if (response) {
+  //     const { remarks, isValid } = response.responseInfo;
+  //     setIsBankVarified(isValid);
+  //     if (isValid) {
+  //     } else {
+  //       if (hasValue(remarks)) {
+  //         const generatedRemarks = generateRemarks(remarks);
+  //         openRemarksModel(generatedRemarks);
+  //       }
+  //     }
+  //     setBankStatusMessage(new VerificationStatus(isValid, 'V'));
+  //   }
+  // };
   const handleDialogConfirm = () => {
     setIsPANModalOpen(false); 
   };
@@ -1109,22 +1109,22 @@ const AppointeeRegisterForm = () => {
     showErrorMessage(msg);
     setPanNumberError(true);
   };
-  const handlePanVerifiaction = () => {
-    if (!isAadhaarVarified) {
-      showErrorMessage(aaddharNumberverify);
-      setPanNumberError(true);
-      return;
-    }
-    if (pan === null || nameAsOnPan === null || nameAsOnPan === '') {
-      showErrorMessage(emptyPanMsg);
-      setPanNumberError(true);
-    } else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
-      showErrorMessage(invalidPanMsg);
-      setPanNumberError(true);
-    } else {
-      verifyPAN();
-    }
-  };
+  // const handlePanVerifiaction = () => {
+  //   if (!isAadhaarVarified) {
+  //     showErrorMessage(aaddharNumberverify);
+  //     setPanNumberError(true);
+  //     return;
+  //   }
+  //   if (pan === null || nameAsOnPan === null || nameAsOnPan === '') {
+  //     showErrorMessage(emptyPanMsg);
+  //     setPanNumberError(true);
+  //   } else if (!patternChecking(pan, /^[A-Z]{5}[0-9]{4}[A-Z]{1}/)) {
+  //     showErrorMessage(invalidPanMsg);
+  //     setPanNumberError(true);
+  //   } else {
+  //     verifyPAN();
+  //   }
+  // };
   const dispatch = useDispatch();
   const handleAppointeeFormPage2Save = async ({ isUanManualUpload, status }) => {
     let payLoad = {
@@ -1180,57 +1180,57 @@ const AppointeeRegisterForm = () => {
     const value = event.target.value;
     setUanNumberAvailable(value);
   };
-  const handleEpfoButtonClick = () => {
-    if (!hasValue(UAN)) {
-      if (isPanVarified === false || isAadhaarVarified === false) {
-        const confirmationModelContent = {
-          dialogContentText: fetchUanConfirmationtMsg,
-        };
-        openConfirmationModel(confirmationModelContent, handleGetUANNumber);
-      } else {
-        handleGetUANNumber();
-      }
-    } else if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
-      showErrorMessage(UANPatterErrorMsg);
-    } else handleEpfoVerifiaction();
-  };
-  const handleGetUANNumber = async () => {
-    const payLoad = {
-      aaddharNumber: hasValue(aadhar) ? removeExtraSpaces(aadhar) : null,
-      appointeeId,
-      panNumber: hasValue(pan) ? removeExtraSpaces(pan) : null,
-      mobileNumber: hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null,
-      userId,
-    };
-    const response = await getUANNumber(payLoad);
-    if (response) {
-      const { isUanAvailable, uanNumber, remarks } = response.responseInfo;
-      if (uanNumber) {
-        setUAN(uanNumber); 
-        generateUANOTPDialog(uanNumber);
-      } else if (isUANAvailableState === false && !isUanAvailable && !hasValue(uanNumber)) {
-        setUAN(null);
-        setisUanVarified(true);
-      } else {
-        showErrorMessage(remarks);
-      }
-      setEpfostatusMessage(epfostatusMessage);
-    }
-  };
-  const generateUANOTPDialog = (UAN, mobileNo) => {
-    setEpfoButton('Auto UAN Verification');
-    epfostatusMessage.message = NA;
-    epfostatusMessage.success = null;
-    setEpfostatusMessage(epfostatusMessage);
-    const mobileNumber = hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null;
-    openOtpForm(
-      UAN,
-      mobileNumber,
-      'UAN Number',
-      () => validateUANOtp(UAN, mobileNumber),
-      'Generate OTP for PF Verification',
-    );
-  };
+  // const handleEpfoButtonClick = () => {
+  //   if (!hasValue(UAN)) {
+  //     if (isPanVarified === false || isAadhaarVarified === false) {
+  //       const confirmationModelContent = {
+  //         dialogContentText: fetchUanConfirmationtMsg,
+  //       };
+  //       openConfirmationModel(confirmationModelContent, handleGetUANNumber);
+  //     } else {
+  //       handleGetUANNumber();
+  //     }
+  //   } else if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
+  //     showErrorMessage(UANPatterErrorMsg);
+  //   } else handleEpfoVerifiaction();
+  // };
+  // const handleGetUANNumber = async () => {
+  //   const payLoad = {
+  //     aaddharNumber: hasValue(aadhar) ? removeExtraSpaces(aadhar) : null,
+  //     appointeeId,
+  //     panNumber: hasValue(pan) ? removeExtraSpaces(pan) : null,
+  //     mobileNumber: hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null,
+  //     userId,
+  //   };
+  //   const response = await getUANNumber(payLoad);
+  //   if (response) {
+  //     const { isUanAvailable, uanNumber, remarks } = response.responseInfo;
+  //     if (uanNumber) {
+  //       setUAN(uanNumber); 
+  //       generateUANOTPDialog(uanNumber);
+  //     } else if (isUANAvailableState === false && !isUanAvailable && !hasValue(uanNumber)) {
+  //       setUAN(null);
+  //       setisUanVarified(true);
+  //     } else {
+  //       showErrorMessage(remarks);
+  //     }
+  //     setEpfostatusMessage(epfostatusMessage);
+  //   }
+  // };
+  // const generateUANOTPDialog = (UAN, mobileNo) => {
+  //   setEpfoButton('Auto UAN Verification');
+  //   epfostatusMessage.message = NA;
+  //   epfostatusMessage.success = null;
+  //   setEpfostatusMessage(epfostatusMessage);
+  //   const mobileNumber = hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null;
+  //   openOtpForm(
+  //     UAN,
+  //     mobileNumber,
+  //     'UAN Number',
+  //     () => validateUANOtp(UAN, mobileNumber),
+  //     'Generate OTP for PF Verification',
+  //   );
+  // };
   const handlePassportVerification = async () => {
     if (!validationsCheck(passportFileNumber, 'indPassportFile')) {
       showErrorMessage(passportFilePatternErrorMsg);
@@ -1295,41 +1295,41 @@ const AppointeeRegisterForm = () => {
       setEpfostatusMessage(new VerificationStatus(isVarified, 'V'));
     }
   };
-  const validateUANOtp = async (uanNumber, mobileNumber) => {
-    const payLoad = {
-      uanNumber,
-      mobileNumber,
-      appointeeId,
-      userId,
-    };
-    const response = await generateUANOtp(payLoad);
-    if (response) {
-      const { responseInfo } = response;
-      let { otp_sent, client_id } = responseInfo;
-      if (!otp_sent) {
-        showErrorMessage(generateOtpRety);
-      } else {
-        initialTimeOfOtpTimer();
-        showSuccessMessage(generateOtpSucces);
-        closeOtpForm();
-        openOtpSubmitionModel({
-          otpSubmitionFunction: (otp) => verifyUAN(otp, client_id),
-          timeoutTimer: timeoutTimer,
-          setTimeoutTimer: setTimeoutTimer,
-        });
-      }
-    }
-  };
-  const handleEpfoVerifiaction = () => {
-    const mobileNumber = hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null;
-    openOtpForm(
-      UAN,
-      mobileNumber,
-      'UAN Number',
-      () => validateUANOtp(UAN, mobileNumber),
-      'Generate OTP for PF Verification',
-    );
-  };
+  // const validateUANOtp = async (uanNumber, mobileNumber) => {
+  //   const payLoad = {
+  //     uanNumber,
+  //     mobileNumber,
+  //     appointeeId,
+  //     userId,
+  //   };
+  //   const response = await generateUANOtp(payLoad);
+  //   if (response) {
+  //     const { responseInfo } = response;
+  //     let { otp_sent, client_id } = responseInfo;
+  //     if (!otp_sent) {
+  //       showErrorMessage(generateOtpRety);
+  //     } else {
+  //       initialTimeOfOtpTimer();
+  //       showSuccessMessage(generateOtpSucces);
+  //       closeOtpForm();
+  //       openOtpSubmitionModel({
+  //         otpSubmitionFunction: (otp) => verifyUAN(otp, client_id),
+  //         timeoutTimer: timeoutTimer,
+  //         setTimeoutTimer: setTimeoutTimer,
+  //       });
+  //     }
+  //   }
+  // };
+  // const handleEpfoVerifiaction = () => {
+  //   const mobileNumber = hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null;
+  //   openOtpForm(
+  //     UAN,
+  //     mobileNumber,
+  //     'UAN Number',
+  //     () => validateUANOtp(UAN, mobileNumber),
+  //     'Generate OTP for PF Verification',
+  //   );
+  // };
   const formElement = useRef(null);
   const handlePassFileNumberOnChange = (value) => {
     setPassportFileNumber(value);
@@ -1690,10 +1690,10 @@ const AppointeeRegisterForm = () => {
                   nameAsOnPan={nameAsOnPan}
                   panstatusMessage={panstatusMessage}
                   setPANStatusMessage={setPANStatusMessage}
+                  setIsPanVarified={setIsPanVarified}
                   // bankstatusMessage={bankstatusMessage}
                   // setBankStatusMessage={setBankStatusMessage}
                   // isPanVarified={isPanVarified}
-                  // setIsPanVarified={setIsPanVarified}
                   // setIsBankVarified={setIsBankVarified}
                   // isBankVarified={isBankVarified}
                   pan={pan}
@@ -1795,6 +1795,7 @@ const AppointeeRegisterForm = () => {
                   epfoPassBookFiles={epfoPassBookFiles}
                   isUANAvailableState={isUANAvailableState}
                   setisUanVarified={setisUanVarified}
+                  isUanVarified={isUanVarified}
                   submitDetails={submitDetails}
                   setUAN={setUAN}
                   UAN={UAN}
@@ -1898,13 +1899,13 @@ const AppointeeRegisterForm = () => {
             ) : null} */}
           </FormContainer>
         </Box>
-        <FormDialog
+        {/* <FormDialog
           open={fetchUanConfirmation}
           DialogTitle={
             'Your Aadhaar verification has failed. If you continue you will not be able to change your Aadhaar. Do you want to continue?'
           }
           shouldTakeAction={fetchUanConfirmationSubmittion}
-        />
+        /> */}
       </Box>
       {}
     </>

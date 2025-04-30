@@ -97,9 +97,9 @@ const BankVerification = ({
     };
     const response = await verifyBankDetails(payLoad);
     if (response) {
-      const { remarks, isValid } = response.responseInfo;
-      setIsBankVarified(isValid);
-      if (isValid) {
+      const { remarks, isVarified } = response.responseInfo;
+      setIsBankVarified(isVarified);
+      if (isVarified) {
       } else {
         displayBankError(bankVerifyFailedMsg);
         if (hasValue(remarks)) {
@@ -107,7 +107,7 @@ const BankVerification = ({
           openRemarksModel(generatedRemarks);
         }
       }
-      setBankStatusMessage(new VerificationStatus(isValid, 'V'));
+      setBankStatusMessage(new VerificationStatus(isVarified, 'V'));
     }
   };
   return (

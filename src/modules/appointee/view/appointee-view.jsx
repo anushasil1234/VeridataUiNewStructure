@@ -150,7 +150,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
     openPassbookViewModel,
     openEmploymentViewModel,
   } = functionSlice[0];
-  const { relationList, qualificationList, disabilityList, maritalStatusList, genderList } =
+  const { relationList} =
     dropdownList.length > 0 && dropdownList[0];
   const { userTypeId, userId } = (loggedInData && loggedInData[0]) || {
     userTypeId: null,
@@ -199,6 +199,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isAadharVerified, setIsAadharVerified] = useState(null);
   const [isPassportAvailable, setIsPassportAvailable] = useState(null);
+  const [isDLVarified, setIsDLVarified] = useState(null);
   const [isDLAvailable, setIsDLAvailable] = useState(null);
   const [drivingLicense, setDrivingLicense] = useState(null);
   const [isProcessed, setIsProcessed] = useState(null);
@@ -213,6 +214,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
   const [isPensionApplicable, setIsPensionApplicable] = useState(null);
   const [filesByAlias, setFilesByAlias] = useState(new Map());
   const [fileDataStore, setFileDataStore] = useState();
+  const [isBankAccVarified, setIsBankAccVarified] = useState(null);
   const [bankAccNumber, setBankAccNumber] = useState(null);
   const [bankIfscNumber, setBankIfscNumber] = useState(null);
   const [firDetails, setFIRDetails] = useState(null);
@@ -332,6 +334,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
         isTrustPassbook,
         isManualPassbook,
         workFlowStatus,
+        uanAadharLinkStatus,
         isUanLinkWithAadhar,
         candidateId,
         isBankAccVarified,
@@ -364,7 +367,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
       isProcessed ? setIsProcessed(isProcessed) : setIsProcessed(false);
       isFnameVarified ? setIsFnameVarified(isFnameVarified) : setIsFnameVarified(null);
       appointeeName ? setAppointeeName(appointeeName) : setAppointeeName(NA);
-      isUanLinkWithAadhar ? setUanAadhar(isUanLinkWithAadhar) : setUanAadhar(NA);
+      uanAadharLinkStatus ? setUanAadhar(uanAadharLinkStatus) : setUanAadhar(NA);
       candidateId ? SetcandidateId(candidateId) : SetcandidateId(null);
       isUanVarified
         ? setIsUanVerified(isUanVarified)
@@ -374,25 +377,35 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
       isPassportAvailable
         ? setIsPassportAvailable(isPassportAvailable)
         : setIsPassportAvailable(NA);
+        isDLVarified
+        ? setIsDLVarified(isDLVarified)
+        : isDLVarified === false
+          ? setIsDLVarified(isDLVarified)
+          : setIsDLVarified(NA);
       isDLAvailable ? setIsDLAvailable(isDLAvailable) : setIsDLAvailable(NA);
       memberName ? setMember(memberName) : setMember(NA);
       dateOfBirth ? setDateOfBirth(DDMMYYYY(dateOfBirth)) : setDateOfBirth(NA);
       dateOfJoining ? setDateOfJoining(DDMMYYYY(dateOfJoining)) : setDateOfJoining(NA);
+      isBankAccVarified
+        ? setIsBankAccVarified(isBankAccVarified)
+        : isBankAccVarified === false
+          ? setIsBankAccVarified(isBankAccVarified)
+          : setIsBankAccVarified(NA);
       maskedBankAccNumber ? setBankAccNumber(maskedBankAccNumber) : setBankAccNumber(NA);
       maskedBankIfscNumber ? setBankIfscNumber(maskedBankIfscNumber) : setBankIfscNumber(NA);
       firDetails ? setFIRDetails(firDetails) : setFIRDetails(NA);
-      gender ? setGender(filteredObjectProperty(genderList, gender)) : setGender(NA);
+      gender ? setGender( gender) : setGender(NA);
       memberRelation
-        ? setRelationshipWithMember(filteredObjectProperty(relationList, memberRelation))
+        ? setRelationshipWithMember(memberRelation)
         : setRelationshipWithMember(NA);
       mobileNo ? setMobileNo(mobileNo) : setMobileNo(NA);
       appointeeEmailId ? setEmail(appointeeEmailId) : setEmail(NA);
       nationality ? setNationality(nationality) : setNationality(NA);
       qualification
-        ? setQualification(filteredObjectProperty(qualificationList, qualification))
+        ? setQualification( qualification)
         : setQualification(NA);
       maratialStatus
-        ? setMaritalStatus(filteredObjectProperty(maritalStatusList, maratialStatus))
+        ? setMaritalStatus( maratialStatus)
         : setMaritalStatus(NA);
       maskedDrivingLicense ? setDrivingLicense(maskedDrivingLicense) : setDrivingLicense(NA);
       hasValue(isInternationalWorker)
@@ -445,7 +458,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
         : setIsPhysicallyHandicap(NA);
       isHandicap === 'N' || !isHandicap
         ? setHandicapType(NA)
-        : setHandicapType(filteredObjectProperty(disabilityList, handicapeType));
+        : setHandicapType( handicapeType);
       aadhaarNumberView ? setAadhar(aadhaarNumberView) : setAadhar(NA);
       aadhaarName ? setNameAsOnAadhar(aadhaarName) : setNameAsOnAadhar(NA);
       maskedPANNumber ? setPan(maskedPANNumber) : setPan(NA);
@@ -900,11 +913,11 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
                 fieldName={t('PAN Number')}
                 fieldValue={pan}
               />
-              <DocumentDetails
+              {/* <DocumentDetails
                 isVerified={isPanVarified}
                 fieldName={t('Name on PAN')}
                 fieldValue={nameAsOnPan}
-              />
+              /> */}
               <DocumentDetails fieldName={t('Trust PF')} fieldValue={isTrustPassbook} />
               {isTrustPassbook === 'Yes' && trustPfFile && (
                 <DocumentDetails
@@ -1003,88 +1016,42 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
               <Stack sx={listHeadingConteinerStyle}>
                 <Typography sx={listHeadingStyle}>Driving License Details</Typography>
               </Stack>
-              <PersonalInformation
+              <DocumentDetails
                 fieldName={t('Driving License Available')}
                 fieldValue={isDLAvailable}
-                width='50px'
+                // width='50px'
               />
               {isDLAvailable === 'Yes' && (
                 <>
-                  <PersonalInformation
+                  <DocumentDetails
+                    isVerified={isDLVarified}
                     fieldName={t('Driving License Number')}
                     fieldValue={drivingLicense}
-                    width='50px'
+                    // width='50px'
                   />
                 </>
               )}
             </Box>
-            <Box sx={{ ...cardStyle }}>
+            <Box sx={cardStyle}>
               <Stack sx={listHeadingConteinerStyle}>
-                <Typography sx={listHeadingStyle}>FIR Details</Typography>
+                <Typography sx={listHeadingStyle}>Bank Details</Typography>
               </Stack>
-              <PersonalInformation
-                fieldName={t('See FIR Details')}
-                fieldValue={parsedFIRDetails === 'N' ? 'No' : NA}
-                width='50px'
-              />
-              {Array.isArray(parsedFIRDetails) && parsedFIRDetails.length > 0 && (
-                <Button
-                  sx={{ ...submitBtnStyle, margin: '5px 0' }}
-                  variant='contained'
-                  onClick={() => setIsFIRModalOpen(true)}
-                >
-                  {t('View FIR')}
-                </Button>
-              )}
+              {/* <Grid container spacing={0}> */}
+                <DocumentDetails
+                 isVerified={isBankAccVarified}
+                  fieldName={t('Bank Account Number')}
+                  fieldValue={bankAccNumber}
+                />
+                {/* </Grid>
+                  <Grid container spacing={0}> */}
+                <DocumentDetails
+                 isVerified={isBankAccVarified}
+                  fieldName={t('IFSC Code')}
+                  fieldValue={bankIfscNumber}
+                />
+              {/* </Grid> */}
             </Box>
-            <Dialog open={isFIRModalOpen} onClose={handleDialogCancel}>
-              <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0' }}>
-                <Toolbar>
-                  <IconButton edge='start' onClick={handleDialogCancel} aria-label='close'>
-                    <Close sx={{ color: '#fff' }} />
-                  </IconButton>
-                </Toolbar>
-              </AppBar>
-              <DialogTitle>FIR Details</DialogTitle>
-              <DialogContent>
-                {parsedFIRDetails.length > 0 ? (
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>
-                          <strong>FIR Number</strong>
-                        </TableCell>
-                        <TableCell>
-                          <strong>Date</strong>
-                        </TableCell>
-                        <TableCell>
-                          <strong>Police Station</strong>
-                        </TableCell>
-                        <TableCell>
-                          <strong>Crime Type</strong>
-                        </TableCell>
-                        <TableCell>
-                          <strong>Status</strong>
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {parsedFIRDetails.map((fir, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{fir.FirNumber}</TableCell>
-                          <TableCell>{fir.Date}</TableCell>
-                          <TableCell>{fir.PoliceStation}</TableCell>
-                          <TableCell>{fir.CrimeType}</TableCell>
-                          <TableCell>{fir.Status}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                ) : (
-                  <Typography>No FIR records found.</Typography>
-                )}
-              </DialogContent>
-            </Dialog>
+          
           </Grid>
           <Grid item xs={12} md={5.5}>
             <Box sx={cardStyle}>
@@ -1197,21 +1164,73 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
                 )}
               </Grid>
             </Box>
-            <Box sx={cardStyle}>
+            <Box sx={{ ...cardStyle }}>
               <Stack sx={listHeadingConteinerStyle}>
-                <Typography sx={listHeadingStyle}>Bank Details</Typography>
+                <Typography sx={listHeadingStyle}>FIR Details</Typography>
               </Stack>
-              <Grid container spacing={0}>
-                <PersonalInformation
-                  fieldName={t('Bank Account Number')}
-                  fieldValue={bankAccNumber}
-                />
-                <PersonalInformation
-                  fieldName={t('IFSC Code')}
-                  fieldValue={bankIfscNumber}
-                />
-              </Grid>
+              <PersonalInformation
+                fieldName={t('See FIR Details')}
+                fieldValue={parsedFIRDetails === 'N' ? 'No' : NA}
+                width='50px'
+              />
+              {Array.isArray(parsedFIRDetails) && parsedFIRDetails.length > 0 && (
+                <Button
+                  sx={{ ...submitBtnStyle, margin: '5px 0' }}
+                  variant='contained'
+                  onClick={() => setIsFIRModalOpen(true)}
+                >
+                  {t('View FIR')}
+                </Button>
+              )}
             </Box>
+            <Dialog open={isFIRModalOpen} onClose={handleDialogCancel}>
+              <AppBar sx={{ ...modelToolbar, position: 'sticky', top: '0' }}>
+                <Toolbar>
+                  <IconButton edge='start' onClick={handleDialogCancel} aria-label='close'>
+                    <Close sx={{ color: '#fff' }} />
+                  </IconButton>
+                </Toolbar>
+              </AppBar>
+              <DialogTitle>FIR Details</DialogTitle>
+              <DialogContent>
+                {parsedFIRDetails.length > 0 ? (
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>
+                          <strong>FIR Number</strong>
+                        </TableCell>
+                        <TableCell>
+                          <strong>Date</strong>
+                        </TableCell>
+                        <TableCell>
+                          <strong>Police Station</strong>
+                        </TableCell>
+                        <TableCell>
+                          <strong>Crime Type</strong>
+                        </TableCell>
+                        <TableCell>
+                          <strong>Status</strong>
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {parsedFIRDetails.map((fir, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{fir.FirNumber}</TableCell>
+                          <TableCell>{fir.Date}</TableCell>
+                          <TableCell>{fir.PoliceStation}</TableCell>
+                          <TableCell>{fir.CrimeType}</TableCell>
+                          <TableCell>{fir.Status}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                ) : (
+                  <Typography>No FIR records found.</Typography>
+                )}
+              </DialogContent>
+            </Dialog>
           </Grid>
           <Grid item xs={12} md={3.5}>
             <Box
