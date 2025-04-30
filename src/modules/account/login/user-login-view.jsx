@@ -120,8 +120,8 @@ export const UserLoginView = () => {
     dispatch(removeLoggedinData());
     dispatch(removeLoggedinTokenData());
     dispatch(removeAppointeeStatusDetailsData());
-    removeLocalStorageItems(['pfc-user']);
-    removeLocalStorageItems(['pfc-token']);
+    removeLocalStorageItems(['app-user']);
+    removeLocalStorageItems(['app-token']);
     removeLocalStorageItems(['candidate-status-details']);
     dispatch(removeApi());
     dispatch(removeDropdownList());
@@ -205,8 +205,8 @@ export const UserLoginView = () => {
                 };
                 openInfoModel(wellcomeMsgContent);
               }
-              setLocalStorageItem('pfc-user', userDetails);
-              setLocalStorageItem('pfc-token', tokenDetails);
+              setLocalStorageItem('app-user', userDetails);
+              setLocalStorageItem('app-token', tokenDetails);
               dispatch(storeLoggedinData(userDetails));
               dispatch(storeLoggedinTokenData(tokenDetails));
               dispatch(storeLoggeoutData({ handleClickOnLogout }));

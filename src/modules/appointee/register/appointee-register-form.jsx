@@ -116,7 +116,7 @@ import SeventhForm from './seventh-form';
 import EighthForm from './eighth-form';
 const AppointeeRegisterForm = () => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
-  const loginUserData = getLocalStorageItem('pfc-user');
+  const loginUserData = getLocalStorageItem('app-user');
   const candidateStatusDetails = getLocalStorageItem('candidate-status-details');
   const steps = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5', 'Step 6','Step 7','Final Step'];
   const [activeStep, setActiveStep] = useState(0);

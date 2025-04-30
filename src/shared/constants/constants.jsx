@@ -2454,7 +2454,7 @@ export const UserSignInDetails_URL = `/UserSignInDetails`;
 export const GetMenuListData_URL = `/GetMenuListData?userId=`;
 export const GetDashboardWidgetCardData_URL = (filterDays, isfilterd) =>
   `/GetDashboardWidgetCardData?filterDays=${filterDays}&isfilterd=${isfilterd}`;
-export const GetAppointeeStatusDetails_URL = `/GetAppointeeStatusDetails?code=`;
+export const GetAppointeeStatusDetails_URL = `/GetAppointeeByStatusWidgetDetail?code=`;
 export const PostSetupConfigData_URL = `${Account}/PostSetupConfigData`;
 export const GetSetupConfigData_URL = `${Account}/GetSetupConfigData`;
 export const GetMastarDropdowndata_URL = `${Account}/GetMastarDropdowndata?type=`;
