@@ -16,34 +16,25 @@ import {
   passportFilePatternErrorMsg,
   epfoServiceHistoryFileTypeAlias,
   UANPatterErrorMsg,
-  emptyAadharNoMsg,
-  aadharPatternErrorMsg,
   docResubmissionSuccessDialogContentText,
-  NA,
 } from 'shared/constants/constants';
 import {
   CreateStepSequience,
   DateFormatYYYYMMDD,
-  getLocalStorageItem,
   hasValue,
   removeFile,
   setLocalStorageItem,
-  trimmedDate,
   validationsCheck,
 } from 'shared/utils';
 import {
   aadharVerifyFailedMsg,
   aadharVerifySuccessMsg,
   congratulationDialogContentTitle,
-  emptyAadharMsg,
-  emptyShareCodeMsg,
   passportSuccessMsg,
   passportVerifyFailedMsg,
   registrationSuccessDialogContentText,
   submitConfirmationMsg,
   toDashboard,
-  uanVerifyFailedMsg,
-  uanVerifySuccessMsg,
   uploadSizeErrorMsg,
   uploadFormatErrorMsg,
 } from 'shared/constants/constants';
@@ -54,8 +45,6 @@ import selectUANmessage from 'shared/utils/associate/select-uan-message';
 import { FILE_SIZE_LIMIT, validFileTypes } from 'shared/constants/constants';
 import UANPrerequisiteInformation from './uan-prerequiestic-info';
 import getFileDetails from 'shared/utils/associate/get-file-details';
-import getFilenames from 'shared/utils/associate/get-filenames';
-import createFileUploadedData from 'shared/utils/associate/create-file-uploaded-data';
 import LinearStepper from 'shared/components/Stepper/linear-stepper';
 import FormContainer from 'shared/components/grid-container/form-container';
 import FirstForm from './first-form';
@@ -72,7 +61,6 @@ import {
   postAppointeeFileDetails,
   verifyAadharDetails,
 } from 'server/apis';
-import { submitUANOTP } from 'server/apis/verify/submit-uan-otp';
 import showSuccessMessage from 'shared/utils/associate/show-success-message';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import { storeCurrentPageNo } from 'store/slices/candidate-page-slice';
