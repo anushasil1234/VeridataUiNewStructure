@@ -1026,20 +1026,16 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
               <Stack sx={listHeadingConteinerStyle}>
                 <Typography sx={listHeadingStyle}>Bank Details</Typography>
               </Stack>
-              {/* <Grid container spacing={0}> */}
               <DocumentDetails
                 isVerified={isBankAccVarified}
                 fieldName={t('Bank Account Number')}
                 fieldValue={bankAccNumber}
               />
-              {/* </Grid>
-                  <Grid container spacing={0}> */}
               <DocumentDetails
                 isVerified={isBankAccVarified}
                 fieldName={t('IFSC Code')}
                 fieldValue={bankIfscNumber}
               />
-              {/* </Grid> */}
             </Box>
           </Grid>
           <Grid item xs={12} md={5.5}>
