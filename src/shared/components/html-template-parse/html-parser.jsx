@@ -83,4 +83,3 @@ const HtmlParser = ({ data, type }) => {
 };
 
 export default HtmlParser;
-

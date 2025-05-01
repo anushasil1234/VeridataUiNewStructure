@@ -159,10 +159,10 @@ const PANVerification = ({
     }
   };
   const handleDialogConfirm = () => {
-    setIsPANModalOpen(false); 
+    setIsPANModalOpen(false);
   };
   const handleDialogCancel = () => {
-    setIsPANModalOpen(false); 
+    setIsPANModalOpen(false);
   };
   const generateRemarks = (remarks) => {
     let remarksList = [];
@@ -177,13 +177,13 @@ const PANVerification = ({
     return remarksList;
   };
   const handleChangePANAvailable = async (event) => {
-    const selectedValue = event.target.value === 'Yes'; 
-    setIsPANAvailable(selectedValue); 
+    const selectedValue = event.target.value === 'Yes';
+    setIsPANAvailable(selectedValue);
     const payLoad = {
       appointeeId: appointeeId,
       userId: userId,
       type: 'PAN',
-      value: selectedValue, 
+      value: selectedValue,
     };
     try {
       const response = await postAppointeeDocAvailibility(payLoad);

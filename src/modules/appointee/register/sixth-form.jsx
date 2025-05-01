@@ -2,9 +2,7 @@ import { Box, Button, Grid, Stack } from '@mui/material';
 import React, { useState } from 'react';
 import GridRow from 'shared/components/grid-container/grid-row';
 import { submitBtnStyle } from 'app';
-import {
-  previousButton,
-} from 'shared/constants/constants';
+import { previousButton } from 'shared/constants/constants';
 import { useSelector, useDispatch } from 'react-redux';
 import BankVerification from './bank-verifications';
 const SixthForm = ({
@@ -66,8 +64,8 @@ const SixthForm = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setCurrentPageNo(7); 
-                    setActiveStep(6); 
+                    setCurrentPageNo(7);
+                    setActiveStep(6);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'
@@ -84,4 +82,3 @@ const SixthForm = ({
   );
 };
 export default SixthForm;
-

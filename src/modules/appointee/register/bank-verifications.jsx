@@ -1,14 +1,6 @@
-import {
-  Autorenew
-} from '@mui/icons-material';
-import {
-  Button,
-  Grid
-} from '@mui/material';
-import {
-  positionRelative,
-  submitBtnStyle
-} from 'app';
+import { Autorenew } from '@mui/icons-material';
+import { Button, Grid } from '@mui/material';
+import { positionRelative, submitBtnStyle } from 'app';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -24,7 +16,7 @@ import {
   emptyAccountNumberMsg,
   emptyIFSCMsg,
   invalidIFSCMsg,
-  legthmismatchIFSCMsg
+  legthmismatchIFSCMsg,
 } from 'shared/constants/constants';
 import { hasValue, patternChecking } from 'shared/utils';
 import generateRemarks from 'shared/utils/associate/generate-remarks';

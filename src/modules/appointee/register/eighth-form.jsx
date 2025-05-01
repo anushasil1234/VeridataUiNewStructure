@@ -97,7 +97,7 @@ const EighthForm = ({
   setPan,
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openRemarksModel } = functionSlice[0];
@@ -126,8 +126,7 @@ const EighthForm = ({
   const handleDialogConfirm = () => {
     setCurrentPageNo(3);
   };
-  const handleDialogCancel = () => {
-  };
+  const handleDialogCancel = () => {};
   const handleGetUANNumber = async () => {
     const payLoad = {
       aaddharNumber: aadhar,
@@ -142,7 +141,7 @@ const EighthForm = ({
     if (response) {
       const { isUanAvailable, uanNumber, remarks } = response.responseInfo;
       if (uanNumber) {
-        setUAN(uanNumber); 
+        setUAN(uanNumber);
         generateUANOTPDialog(uanNumber, firstPageForm.mobileNo);
       } else if (isUANAvailableState === false && !isUanAvailable && !hasValue(uanNumber)) {
         setUAN(null);
@@ -334,7 +333,7 @@ const EighthForm = ({
                 },
               }}
             >
-              <Grid item xs={12} sx={{ paddingLeft: '0px !important' }} >
+              <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
                 <Stack flexDirection='column' justifyContent='space-between' alignItems='start'>
                   <Typography sx={{ ...lable1CopyStyle }}>{t('UAN Verification')}</Typography>
                   <RadioGroup
@@ -370,7 +369,7 @@ const EighthForm = ({
                           variant='contained'
                           size='small'
                           sx={{ ...primaryFabStyle, ml: 1 }}
-                          onClick={handleOpenModal} 
+                          onClick={handleOpenModal}
                         >
                           <Info width={18} sx={{ color: '#fff' }} />
                         </Fab>

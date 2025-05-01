@@ -150,14 +150,12 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
     openPassbookViewModel,
     openEmploymentViewModel,
   } = functionSlice[0];
-  const { relationList} =
-    dropdownList.length > 0 && dropdownList[0];
+  const { relationList } = dropdownList.length > 0 && dropdownList[0];
   const { userTypeId, userId } = (loggedInData && loggedInData[0]) || {
     userTypeId: null,
     userId: null,
   };
-  const {
-  } = apiSlice[0];
+  const {} = apiSlice[0];
   const [UAN, setUAN] = useState(null);
   const [uanNumber, setUanNumber] = useState(null);
   const [appointeeName, setAppointeeName] = useState(null);
@@ -231,10 +229,10 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
     dispatch(storeActionRoute({ actionRoute }));
   };
   const handleDialogCancel = () => {
-    setIsFIRModalOpen(false); 
+    setIsFIRModalOpen(false);
   };
   const reject = async (remarks) => {
- //   showErrorMessage();
+    //   showErrorMessage();
     if (hasValue(remarks)) {
       if (remarks.length < 15) {
         showErrorMessage(remarksError);
@@ -256,7 +254,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
     }
   };
   const approve = async (remarks) => {
-   // showErrorMessage();
+    // showErrorMessage();
     if (hasValue(remarks)) {
       if (remarks.length < 15) {
         showErrorMessage(remarksError);
@@ -377,7 +375,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
       isPassportAvailable
         ? setIsPassportAvailable(isPassportAvailable)
         : setIsPassportAvailable(NA);
-        isDLVarified
+      isDLVarified
         ? setIsDLVarified(isDLVarified)
         : isDLVarified === false
           ? setIsDLVarified(isDLVarified)
@@ -394,19 +392,13 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
       maskedBankAccNumber ? setBankAccNumber(maskedBankAccNumber) : setBankAccNumber(NA);
       maskedBankIfscNumber ? setBankIfscNumber(maskedBankIfscNumber) : setBankIfscNumber(NA);
       firDetails ? setFIRDetails(firDetails) : setFIRDetails(NA);
-      gender ? setGender( gender) : setGender(NA);
-      memberRelation
-        ? setRelationshipWithMember(memberRelation)
-        : setRelationshipWithMember(NA);
+      gender ? setGender(gender) : setGender(NA);
+      memberRelation ? setRelationshipWithMember(memberRelation) : setRelationshipWithMember(NA);
       mobileNo ? setMobileNo(mobileNo) : setMobileNo(NA);
       appointeeEmailId ? setEmail(appointeeEmailId) : setEmail(NA);
       nationality ? setNationality(nationality) : setNationality(NA);
-      qualification
-        ? setQualification( qualification)
-        : setQualification(NA);
-      maratialStatus
-        ? setMaritalStatus( maratialStatus)
-        : setMaritalStatus(NA);
+      qualification ? setQualification(qualification) : setQualification(NA);
+      maratialStatus ? setMaritalStatus(maratialStatus) : setMaritalStatus(NA);
       maskedDrivingLicense ? setDrivingLicense(maskedDrivingLicense) : setDrivingLicense(NA);
       hasValue(isInternationalWorker)
         ? isInternationalWorker === 'Y'
@@ -456,9 +448,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
           ? setIsPhysicallyHandicap('Yes')
           : setIsPhysicallyHandicap('No')
         : setIsPhysicallyHandicap(NA);
-      isHandicap === 'N' || !isHandicap
-        ? setHandicapType(NA)
-        : setHandicapType( handicapeType);
+      isHandicap === 'N' || !isHandicap ? setHandicapType(NA) : setHandicapType(handicapeType);
       aadhaarNumberView ? setAadhar(aadhaarNumberView) : setAadhar(NA);
       aadhaarName ? setNameAsOnAadhar(aadhaarName) : setNameAsOnAadhar(NA);
       maskedPANNumber ? setPan(maskedPANNumber) : setPan(NA);
@@ -497,7 +487,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
         if (uploadTypeAlias === imageFileTypeAlias) {
           setProfileImage(file);
           tempPayload = filepayload;
-          hasImageFile = true; 
+          hasImageFile = true;
         }
         if (uploadTypeAlias === AadhaarProfileImageTypeAlias) {
           setOtherFile(file);
@@ -597,7 +587,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
     if (appointeeId && !hasFetchedData) {
       setAppointeeDetails();
       setAppointeeActivity();
-      setHasFetchedData(true); 
+      setHasFetchedData(true);
     }
   }, [appointeeId]);
   const handleClickOnReview = async () => {
@@ -1037,21 +1027,20 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
                 <Typography sx={listHeadingStyle}>Bank Details</Typography>
               </Stack>
               {/* <Grid container spacing={0}> */}
-                <DocumentDetails
-                 isVerified={isBankAccVarified}
-                  fieldName={t('Bank Account Number')}
-                  fieldValue={bankAccNumber}
-                />
-                {/* </Grid>
+              <DocumentDetails
+                isVerified={isBankAccVarified}
+                fieldName={t('Bank Account Number')}
+                fieldValue={bankAccNumber}
+              />
+              {/* </Grid>
                   <Grid container spacing={0}> */}
-                <DocumentDetails
-                 isVerified={isBankAccVarified}
-                  fieldName={t('IFSC Code')}
-                  fieldValue={bankIfscNumber}
-                />
+              <DocumentDetails
+                isVerified={isBankAccVarified}
+                fieldName={t('IFSC Code')}
+                fieldValue={bankIfscNumber}
+              />
               {/* </Grid> */}
             </Box>
-          
           </Grid>
           <Grid item xs={12} md={5.5}>
             <Box sx={cardStyle}>
@@ -1295,8 +1284,7 @@ let AppointeeViewForm = ({ appointeeStatus, appointeeId, closeViewModel, hasPerm
                 )
               : null}
             {!roleTypeEnums.candidate.includes(userTypeId)
-              ? 
-                hasPermission &&
+              ? hasPermission &&
                 hasPermission['A016'] &&
                 ['MV', 'MRV', 'RD'].includes(manualVerificationStatus) && (
                   <Box

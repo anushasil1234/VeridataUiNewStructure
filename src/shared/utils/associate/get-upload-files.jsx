@@ -1,1 +1,1 @@
-const getUploadFiles = ({ files }, uploadTypeAlias, _filenameList, uploadType = 'single') => {};export default getUploadFiles;
+const getUploadFiles = ({ files }, uploadTypeAlias, _filenameList, uploadType = 'single') => {};export default getUploadFiles;

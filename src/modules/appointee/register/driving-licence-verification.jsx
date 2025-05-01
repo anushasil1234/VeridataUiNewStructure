@@ -124,7 +124,7 @@ const DrivingLicenseVerification = ({
   const [dob, setDob] = useState(null);
   const [isLicenseVerified, setIsLicenseVerified] = useState();
   const [dlNumberError, setDLNumberError] = useState(false);
-  const [inputMethod, setInputMethod] = useState('manual'); 
+  const [inputMethod, setInputMethod] = useState('manual');
   const [uploadedFileName, setUploadedFileName] = useState(null);
   const handleLicenseNumberChange = (value) => {
     setDrivingLicense(value.toUpperCase());
@@ -171,13 +171,13 @@ const DrivingLicenseVerification = ({
     }
   };
   const handleChangeLicenseAvailable = async (event) => {
-    const selectedValue = event.target.value === 'Yes'; 
+    const selectedValue = event.target.value === 'Yes';
     setIsDLAvailable(selectedValue);
     const payLoad = {
       appointeeId: appointeeId,
       userId: userId,
       type: 'DL',
-      value: selectedValue, 
+      value: selectedValue,
     };
     try {
       const response = await postAppointeeDocAvailibility(payLoad);

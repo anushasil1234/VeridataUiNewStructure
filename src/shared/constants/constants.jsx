@@ -2447,7 +2447,7 @@ export const getUploadFileData_URL = `${FileUpload}/getUploadFileData?appointeeI
 export const PostReuploadDocuments_URL = `${FileUpload}/PostReuploadDocuments`;
 export const GetRawFileData_URL = (companyId, fileId) =>
   `${Candidate}/GetRawFileData?companyId=${companyId}&fileId=${fileId}`;
-export const GetReportFilterStatus_URL = `${AppoienteeWorkFlow}/GetAllReportFilterStatus`;//not used now
+export const GetReportFilterStatus_URL = `${AppoienteeWorkFlow}/GetAllReportFilterStatus`; //not used now
 export const ValidateUserLogIn_URL = `/ValidateUserLogIn`;
 export const UserSignInDetailsByEmail_URL = `${Account}/UserSignInDetailsByEmail?email=`;
 export const UserSignInDetails_URL = `/UserSignInDetails`;
@@ -2480,7 +2480,7 @@ export const PostAppointeeDetailsSave_URL = `${Candidate}/CadidatePersonalDetail
 export const PostAppointeeSearch_URL = `/AppointeeSearch?appointeeName=`;
 export const PostAppointeeFileDetails_URL = `${Candidate}/PostAppointeeDetailsSubmit`;
 export const PostUpdatePfUanDetails_URL = `${Candidate}/UpdateDocWithUanDetails`;
-export const PostAppointeeReprocess_URL = `${AppoienteeWorkFlow}/PostAppointeeReprocess`;//not used
+export const PostAppointeeReprocess_URL = `${AppoienteeWorkFlow}/PostAppointeeReprocess`; //not used
 export const GetAppointeeDetails_URL = `${Candidate}/GetAppointeeDetails?appointeeId=`;
 export const GetCandidateStatusDetails_URL = `${Candidate}/GetAppointeeStatusDetails?appointeeId=`;
 export const Postfileupload_URL = `${Candidate}/GetUploadedFileDetailsById`;
@@ -2493,12 +2493,12 @@ export const PostAppointeeApproved_URL = `${Candidate}/PostAppointeeApproved`;
 export const PostAppointeePensionAvailable_URL = `${AppoienteeWorkFlow}/PostAppointeePensionVerification`;
 export const GetProcessedEPFOData_URL = `${Candidate}/GetVerifiedData`;
 export const GetUnProcessedFileData_URL = `${Candidate}/GetUnProcessedFileData`;
-export const GetProcessedMISData_URL = `${AppoienteeWorkFlow}/GetProcessedMISData`;//not used
+export const GetProcessedMISData_URL = `${AppoienteeWorkFlow}/GetProcessedMISData`; //not used
 export const GetCriticalAppointeeData_URL = `${Candidate}/GetCriticalAppointeeList`;
 export const GetRemarksRemedyData_URL = `${Candidate}/GetRemarksRemedy`;
 export const GetRemarks_URL = `${Candidate}/GetRemarks?AppointeeId=`;
 export const GetMannualVerificationData_URL = `${Verify}/GetManualVeificationProcessData`;
-export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`;//not used
+export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`; //not used
 export const PostAppointeeDocAvailibility_URL = `${Candidate}/PostAppointeeDocAvailibility`;
 export const PostRemainderMail_URL = (appointeeId, userId) =>
   `PostRemainderMail?AppointeeId=${appointeeId}&UserId=${userId}`;
@@ -2718,10 +2718,10 @@ export const getHandicapTypeDescription = (type) => {
     case 'V':
       return 'Visual';
     default:
-      return ''; 
+      return '';
   }
 };
-export const FILE_SIZE_LIMIT = 4000000; 
+export const FILE_SIZE_LIMIT = 4000000;
 export const imgAndPdfMaxSize = '2MB';
 export const imgAndPdfMaxSizeValue = 2000000;
 export const validFileTypes = [
@@ -2730,8 +2730,8 @@ export const validFileTypes = [
   'application/zip',
 ];
 export const roleTypeEnums = {
-  admin: [1, 2], 
-  candidate: [3], 
+  admin: [1, 2],
+  candidate: [3],
 };
 export const issueFilterList = [
   {
@@ -2839,22 +2839,22 @@ export const fatherVerificationQuestionSet = [
     label: 'Completeness of document?',
     name: fileVerificationEnums.docComplete,
     subCategory: fatherFileCategoryTypeAlias,
-    type: 'prerequisite', 
+    type: 'prerequisite',
     disabled: true,
   },
   {
     label: 'Correctness of document?',
     name: fileVerificationEnums.docValid,
     subCategory: fatherFileCategoryTypeAlias,
-    type: 'prerequisite', 
+    type: 'prerequisite',
     disabled: true,
   },
   {
     label: "Document's Father's Name matches with Candidate provided Father's Name?",
     name: fileVerificationEnums.docFname,
     subCategory: fatherFileCategoryTypeAlias,
-    type: 'dependent', 
-    dependsOn: [fileVerificationEnums.docComplete, fileVerificationEnums.docValid], 
+    type: 'dependent',
+    dependsOn: [fileVerificationEnums.docComplete, fileVerificationEnums.docValid],
     disabled: true,
   },
 ];
@@ -2891,10 +2891,7 @@ export const passbookVerificationQuestionSet = [
     label: 'Is member of EPS?',
     name: fileVerificationEnums.pensionApplicable,
     subCategory: epfoPassbookFileTypeAlias,
-    dependsOn: [
-      fileVerificationEnums.docComplete,
-      fileVerificationEnums.docValid,
-    ],
+    dependsOn: [fileVerificationEnums.docComplete, fileVerificationEnums.docValid],
     disabled: true,
   },
   {

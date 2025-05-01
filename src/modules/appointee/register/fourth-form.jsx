@@ -1,25 +1,11 @@
-
-import {
-    Visibility,
-    VisibilityOff
-} from '@mui/icons-material';
-import {
-    Box,
-    Button,
-    Grid,
-    Stack
-} from '@mui/material';
-import {
-    loginFieldIconStyle,
-    submitBtnStyle
-} from 'app';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Box, Button, Grid, Stack } from '@mui/material';
+import { loginFieldIconStyle, submitBtnStyle } from 'app';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import GridRow from 'shared/components/grid-container/grid-row';
-import {
-    aaddharNumberverify
-} from 'shared/constants/constants';
+import { aaddharNumberverify } from 'shared/constants/constants';
 import { hasValue } from 'shared/utils';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import DrivingLicenseVerification from './driving-licence-verification';
@@ -124,10 +110,10 @@ const FourthForm = ({
                   onClick={() => {
                     if (!isAadhaarVarified) {
                       showErrorMessage(aaddharNumberverify);
-                      return; 
+                      return;
                     }
-                    setCurrentPageNo(5); 
-                    setActiveStep(4); 
+                    setCurrentPageNo(5);
+                    setActiveStep(4);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'
@@ -151,4 +137,3 @@ const FourthForm = ({
   );
 };
 export default FourthForm;
-

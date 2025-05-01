@@ -158,10 +158,10 @@ const ThirdForm = ({
     openInfoModel(offlineKycContent);
   };
   const handleOpenModal = () => {
-    setOpenModal(true); 
+    setOpenModal(true);
   };
   const handleCloseModal = () => {
-    setOpenModal(false); 
+    setOpenModal(false);
   };
   const [passwordType, setPasswordType] = useState('password');
   const [isPasswordVisibilityOn, setIsPasswordVisibilityOn] = useState(false);
@@ -288,18 +288,18 @@ const ThirdForm = ({
                   onClick={() => {
                     if (!isAadhaarVarified) {
                       showErrorMessage(aaddharNumberverify);
-                      return; 
+                      return;
                     }
-                    setCurrentPageNo(4); 
-                    setActiveStep(3); 
+                    setCurrentPageNo(4);
+                    setActiveStep(3);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'
                   color='primary'
-                  disabled = {!(isAadhaarVarified)}
+                  disabled={!isAadhaarVarified}
                   // disabled={
                   //   !(
-                  //     (isAadhaarVarified 
+                  //     (isAadhaarVarified
                   //       && (!isLicenseAvailable || isDLVarified)) ||
                   //     !isDLAvailable ||
                   //     isDLVarified

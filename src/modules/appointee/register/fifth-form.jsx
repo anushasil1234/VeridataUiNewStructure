@@ -1,11 +1,8 @@
-
 import { Box, Button, Grid, Stack } from '@mui/material';
 import { submitBtnStyle } from 'app';
 import { useSelector } from 'react-redux';
 import GridRow from 'shared/components/grid-container/grid-row';
-import {
-    previousButton
-} from 'shared/constants/constants';
+import { previousButton } from 'shared/constants/constants';
 import PANVerification from './pan-verification';
 const FifthForm = ({
   formElement,
@@ -66,8 +63,8 @@ const FifthForm = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setCurrentPageNo(6); 
-                    setActiveStep(5); 
+                    setCurrentPageNo(6);
+                    setActiveStep(5);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'
@@ -84,4 +81,3 @@ const FifthForm = ({
   );
 };
 export default FifthForm;
-

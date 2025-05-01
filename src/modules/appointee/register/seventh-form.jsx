@@ -3,9 +3,7 @@ import { submitBtnStyle } from 'app';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import GridRow from 'shared/components/grid-container/grid-row';
-import {
-    previousButton
-} from 'shared/constants/constants';
+import { previousButton } from 'shared/constants/constants';
 import FIRVerification from './fir-verifications';
 const SeventhForm = ({
   formElement,
@@ -32,7 +30,7 @@ const SeventhForm = ({
   setDateOfBirth,
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openRemarksModel } = functionSlice[0];
@@ -74,8 +72,8 @@ const SeventhForm = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setCurrentPageNo(8); 
-                    setActiveStep(7); 
+                    setCurrentPageNo(8);
+                    setActiveStep(7);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'

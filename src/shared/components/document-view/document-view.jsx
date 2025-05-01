@@ -49,7 +49,7 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
       calculateContainerHeight(fileDetails, setContainerHeight);
     }
   }, [fileDetails, mimeType]);
- // console.log('fileDetails', fileDetails);
+  // console.log('fileDetails', fileDetails);
   return (
     <Stack sx={{ position: 'relative' }}>
       <Stack sx={{ ...imageFileContainerStackStyle, height: containerHeight }}>

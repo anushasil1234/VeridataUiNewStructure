@@ -219,12 +219,12 @@ export const UserLoginView = () => {
               closeOtpSubmitionModel();
             } else {
               navigate('/');
-              stopLoader(); 
+              stopLoader();
             }
           };
           if (dbUserType === 3) {
             console.log('dbUserType');
-            stopLoader(); 
+            stopLoader();
             showSuccessMessage(otpToMailMsg);
             openOtpSubmitionModel({
               otpSubmitionFunction: (otp) => {
@@ -234,13 +234,13 @@ export const UserLoginView = () => {
               setTimeoutTimer: setTimeoutTimer,
             });
           } else {
-            startLoader(); 
+            startLoader();
             handlePostUserDetails();
-            stopLoader(); 
+            stopLoader();
           }
         } else {
           navigate('/');
-          stopLoader(); 
+          stopLoader();
         }
       } catch (error) {
         console.error('Error during login:', error);

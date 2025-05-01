@@ -119,7 +119,7 @@ const DrivingLicenseVerification = ({
   const [isLicenseVerified, setIsLicenseVerified] = useState();
   const [dlNumberError, setDLNumberError] = useState(false);
   const [scanMode, setScanMode] = useState(false);
-  const [inputMethod, setInputMethod] = useState('manual'); 
+  const [inputMethod, setInputMethod] = useState('manual');
   const webcamRef = useRef(null);
   const [isScanning, setIsScanning] = useState(false);
   const handleLicenseNumberChange = (value) => {
@@ -162,13 +162,13 @@ const DrivingLicenseVerification = ({
     }
   };
   const handleChangeLicenseAvailable = async (event) => {
-    const selectedValue = event.target.value === 'Yes'; 
+    const selectedValue = event.target.value === 'Yes';
     setIsDLAvailable(selectedValue);
     const payLoad = {
       appointeeId: appointeeId,
       userId: userId,
       type: 'DL',
-      value: selectedValue, 
+      value: selectedValue,
     };
     try {
       const response = await postAppointeeDocAvailibility(payLoad);
@@ -194,7 +194,7 @@ const DrivingLicenseVerification = ({
         const {
           data: { text },
         } = await Tesseract.recognize(imageSrc, 'eng');
-        console.log('OCR Result:', text); 
+        console.log('OCR Result:', text);
         Tesseract.recognize(imageSrc, 'eng')
           .then(({ data: { text } }) => {
             console.log('Extracted text:', text);

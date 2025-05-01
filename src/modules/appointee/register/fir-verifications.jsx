@@ -61,7 +61,7 @@ const FIRVerification = ({
   setDateOfBirth,
 }) => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
   console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openRemarksModel } = functionSlice[0];
@@ -125,8 +125,8 @@ const FIRVerification = ({
     if (response) {
       const { policeFirDetails, IsVarified, remarks } = response.responseInfo;
       setisPoliceVarified(IsVarified);
-      setFIRDetails(policeFirDetails); 
-      setIsViewFIREnabled(policeFirDetails?.length > 0); 
+      setFIRDetails(policeFirDetails);
+      setIsViewFIREnabled(policeFirDetails?.length > 0);
       if (IsVarified) {
       } else {
         displayFirError(firVerifyFailedMsg);
@@ -141,10 +141,10 @@ const FIRVerification = ({
   const parsedFIRDetails =
     typeof firDetails === 'string' ? JSON.parse(firDetails) : firDetails || [];
   const handleDialogConfirm = () => {
-    setIsFIRModalOpen(false); 
+    setIsFIRModalOpen(false);
   };
   const handleDialogCancel = () => {
-    setIsFIRModalOpen(false); 
+    setIsFIRModalOpen(false);
   };
   const generateRemarks = (remarks) => {
     let remarksList = [];
@@ -170,11 +170,7 @@ const FIRVerification = ({
       </FormHeadingContainer>
       <GridRow>
         <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-          <TextInput
-            label={t('Candidate Name')}
-            value={userName}
-            disabled={true}
-          />
+          <TextInput label={t('Candidate Name')} value={userName} disabled={true} />
           <Button
             sx={{ ...submitBtnStyle, margin: '5px 10px 5px 0' }}
             disabled={isPoliceVarified}

@@ -76,8 +76,7 @@ export const TableActionCell = (props1, props2) => {
     dropdownList.length > 0 && dropdownList[0];
   const [isPassbookAvailable, setIsPassbookAvailable] = useState(true);
   const [isEmploymentAvailable, setIsEmploymentAvailable] = useState(true);
-  const {
-  } = apiSlice[0];
+  const {} = apiSlice[0];
   const { userId } = loggedInData[0];
   const downloadPassbook = async (pasbooktype) => {
     const payLoad = {
@@ -197,9 +196,8 @@ export const TableActionCell = (props1, props2) => {
     actionList.map((action) => {
       return (
         <>
-          {action === 'VIEWDETAILS' 
-          // && actionPermissionList && actionPermissionList['A001'] 
-          ? (
+          {action === 'VIEWDETAILS' ? (
+            // && actionPermissionList && actionPermissionList['A001']
             <ViewFab onClick={() => openViewModel(appointeeId)} title={'Open Details'} />
           ) : null}
           {action === 'VIEWUSERDETAILS' && actionPermissionList && actionPermissionList['A001'] ? (
@@ -219,9 +217,8 @@ export const TableActionCell = (props1, props2) => {
           {action === 'NOTIFYMAIL' && actionPermissionList && actionPermissionList['A005'] ? (
             <NotifyFab onClick={notiFyAppointee} title={'Notify Appointee'} />
           ) : null}
-          {action === 'MANUALVER' 
-          // && actionPermissionList && actionPermissionList['A015'] 
-          ? (
+          {action === 'MANUALVER' ? (
+            // && actionPermissionList && actionPermissionList['A015']
             <ExclamationFab
               onClick={() => handleGetAppointeeDetails(appointeeId)}
               title={'Manual Verification'}

@@ -36,7 +36,7 @@ const PfcRequest = (Component) => {
     const [popUpAlertMessage, setPopUpAlertMessage] = useState();
     const dispatch = useDispatch();
     const timeoutRef = useRef(null);
-    const inactivityTime = 100 * 60 * 1000; 
+    const inactivityTime = 100 * 60 * 1000;
     const API_KEY = process.env.REACT_APP_API_API_KEY || '';
     const SECRET_KEY = process.env.REACT_APP_API_API_SECRET || '';
     const PROXY_AUTH = process.env.REACT_APP_API_PROXY_AUTH || '';
@@ -117,8 +117,7 @@ const PfcRequest = (Component) => {
             alertMessage={popUpAlertMessage}
           />
         )}
-        {loading && <CircularIndeterminate />}{' '}
-        {}
+        {loading && <CircularIndeterminate />} {}
         <Component startLoader={startLoader} stopLoader={stopLoader} />
       </>
     );
