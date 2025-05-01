@@ -91,7 +91,6 @@ const AppointeeRegisterForm = () => {
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
-  console.log('loggedInData', loggedInData);
   const { t } = useTranslation();
   const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
   const functionSlice = useSelector((state) => state.functionSlice);
@@ -105,12 +104,9 @@ const AppointeeRegisterForm = () => {
   } = functionSlice[0];
   const { countryList, nationalityList, fileTypeList } =
     dropdownList && dropdownList.length > 0 && dropdownList[0];
-  console.log('countrylist', countryList, fileTypeList);
   const {} = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
-  console.log('userId', userId);
-  console.log('loggedInData', loggedInData[0]);
   const currentPageNo = useSelector((state) => state.CandidatePageSlice.currentPageNo);
   const setCurrentPageNo = (currentPageNo) => {
     dispatch(storeCurrentPageNo(currentPageNo));
@@ -309,7 +305,6 @@ const AppointeeRegisterForm = () => {
     });
     setStepsList((prevSteps) => ({ ...prevSteps, ..._steps }));
   };
-  console.log('uploadedFile fileDetails', uploadedFile, fileDetails);
   const openSubmitConfirmationModel = () => {
     const submitconfModelContent = {
       dialogContentText: submitConfirmationMsg,
@@ -338,7 +333,6 @@ const AppointeeRegisterForm = () => {
     openInfoModel({ dialogContentText });
   };
   const submitDetails = (autoSubmit, isManual) => {
-    console.log('submitsixthform', autoSubmit, isManual);
     if (autoSubmit) {
       handleAppointeeFormPage2Save({
         isUanManualUpload: isManual,
@@ -357,7 +351,6 @@ const AppointeeRegisterForm = () => {
         countryList && countryList?.find(({ name }) => name?.toUpperCase() === 'INDIA')?.name;
       setDefaultCountry(defaultCountry);
       setAppointeeDetailsOptimized(appointeeId);
-      console.log('firstPageForm1111', firstPageForm);
     }
   }, [countryList]);
   useEffect(() => {
@@ -605,7 +598,6 @@ const AppointeeRegisterForm = () => {
     }
   };
   const verifAadharByNumber = async () => {
-    console.log('VerifAadharByNumber');
     const payload = {
       appointeeId: appointeeId,
       userId: userId,
@@ -748,7 +740,6 @@ const AppointeeRegisterForm = () => {
   };
   const buildFormData = (payLoad) => {
     let formData = new FormData();
-    console.log('buildFormData');
     for (const property in payLoad) {
       if (Object.hasOwnProperty.call(payLoad, property)) {
         if (payLoad[property] === '') {
@@ -759,7 +750,6 @@ const AppointeeRegisterForm = () => {
           } else if (property === 'fileDetails') {
             if (payLoad?.fileDetails?.length > 0) {
               payLoad?.fileDetails?.forEach((element, index) => {
-                console.log('payLoad[property][index]', payLoad[property][index]);
                 formData.append(`${property}`, payLoad[property][index]);
               });
             }
@@ -886,10 +876,6 @@ const AppointeeRegisterForm = () => {
     let _firstPageForm;
     if (matchedNationality) {
       const index = nationalityList.indexOf(matchedNationality);
-      console.log(
-        'defaultww',
-        defaultCountry?.toLowerCase() === countryList[index]?.name?.toLowerCase(),
-      );
       if (defaultCountry?.toLowerCase() === countryList[index]?.name?.toLowerCase()) {
         _firstPageForm = { ...firstPageForm, isInternationalWorker: 'N' };
         setDisabledIsInterNationalWorker(true);
@@ -946,12 +932,10 @@ const AppointeeRegisterForm = () => {
     const file = fileUploaded?.find((f) => f.fileName === fileName);
     const fileUnsaved = uploadedFile?.filter((file) => file.uploadDetailsId === 0);
     if (!file) {
-      console.log('File not found from api');
-      const fileWithDetails = fileUnsaved
+      fileUnsaved
         ?.map((file) => {
           let previewURL = null;
           const matchedFile = fileDetails.find((fileDetail) => file.fileName === fileDetail.name);
-          console.log('matched', matchedFile);
           if (matchedFile) {
             previewURL = window.URL.createObjectURL(matchedFile);
           }
@@ -962,18 +946,17 @@ const AppointeeRegisterForm = () => {
             mimeType: file.mimeType,
           };
         })
-        .filter((file) => file.previewURL);
-      console.log('fileWithDetails', fileWithDetails);
-      fileWithDetails.map((fileWithDetail) => {
-        if (fileWithDetail.fileName === fileName) {
-          openUploadedDocumentModal(
-            fileWithDetail.previewURL,
-            fileWithDetail.fileName,
-            fileWithDetail.uploadTypeAlias,
-            fileWithDetail.mimeType,
-          );
-        }
-      });
+        .filter((file) => file.previewURL)
+        .map((fileWithDetail) => {
+          if (fileWithDetail.fileName === fileName) {
+            openUploadedDocumentModal(
+              fileWithDetail.previewURL,
+              fileWithDetail.fileName,
+              fileWithDetail.uploadTypeAlias,
+              fileWithDetail.mimeType,
+            );
+          }
+        });
     } else {
       const payload = {
         appointeeId: appointeeId,
@@ -981,7 +964,6 @@ const AppointeeRegisterForm = () => {
         fileId: file?.uploadDetailsId,
       };
       const response = await getUploadedFileDetailsById(payload);
-      console.log('Uploaded file details', response);
       if (response && response.responseInfo) {
         const { mimeType, fileData } = response.responseInfo;
         const fileDetails = `data:${mimeType};base64,${fileData}`;
@@ -1009,10 +991,8 @@ const AppointeeRegisterForm = () => {
     }
     setFirstPageForm(_firstPageForm);
   };
-  console.log('firstpageform', firstPageForm);
   return (
     <>
-      {}
       {currentPageNo === 2 && (
         <Typography sx={{ ...heading2, mb: 3 }}>
           Your personal details must match with your Aadhaar details
@@ -1102,7 +1082,6 @@ const AppointeeRegisterForm = () => {
                 />
               </>
             ) : null}
-            {}
             {currentPageNo === 3 ? (
               <>
                 <ThirdForm
@@ -1302,17 +1281,9 @@ const AppointeeRegisterForm = () => {
                 />
               </>
             ) : null}
-           
           </FormContainer>
         </Box>
- {/* <FormDialog
-          open={fetchUanConfirmation}
-          DialogTitle={
-            'Your Aadhaar verification has failed. If you continue you will not be able to change your Aadhaar. Do you want to continue?'
-          }
-          shouldTakeAction={fetchUanConfirmationSubmittion}
-        /> */}      </Box>
-      {}
+      </Box>
     </>
   );
 };
