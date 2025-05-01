@@ -228,14 +228,17 @@ export function useAppointeeViewLogic({ appointeeStatus, appointeeId, closeViewM
         appointeeName,
         dateOfBirth,
         dateOfJoining,
-        gender,
+        // gender,
+        genderName,
         memberName,
         memberRelation,
         mobileNo,
         appointeeEmailId,
         nationality,
-        qualification,
-        maratialStatus,
+        // qualification,
+        qualificationName,
+        // maratialStatus,
+        maratialStatusName,
         isPassportAvailable,
         isInternationalWorker,
         originCountry,
@@ -243,7 +246,8 @@ export function useAppointeeViewLogic({ appointeeStatus, appointeeId, closeViewM
         passportValidFrom,
         passportValidTill,
         isHandicap,
-        handicapeType,
+        // handicapeType,
+        handicapeTypeName,
         aadhaarNumberView,
         aadhaarName,
         panName,
@@ -319,13 +323,13 @@ export function useAppointeeViewLogic({ appointeeStatus, appointeeId, closeViewM
       maskedBankAccNumber ? setBankAccNumber(maskedBankAccNumber) : setBankAccNumber(NA);
       maskedBankIfscNumber ? setBankIfscNumber(maskedBankIfscNumber) : setBankIfscNumber(NA);
       firDetails ? setFIRDetails(firDetails) : setFIRDetails(NA);
-      gender ? setGender(gender) : setGender(NA);
+      genderName ? setGender(genderName) : setGender(NA);
       memberRelation ? setRelationshipWithMember(filteredObjectProperty(relationList, memberRelation)) : setRelationshipWithMember(NA);
       mobileNo ? setMobileNo(mobileNo) : setMobileNo(NA);
       appointeeEmailId ? setEmail(appointeeEmailId) : setEmail(NA);
       nationality ? setNationality(nationality) : setNationality(NA);
-      qualification ? setQualification(qualification) : setQualification(NA);
-      maratialStatus ? setMaritalStatus(maratialStatus) : setMaritalStatus(NA);
+      qualificationName ? setQualification(qualificationName) : setQualification(NA);
+      maratialStatusName ? setMaritalStatus(maratialStatusName) : setMaritalStatus(NA);
       maskedDrivingLicense ? setDrivingLicense(maskedDrivingLicense) : setDrivingLicense(NA);
       hasValue(isInternationalWorker)
         ? isInternationalWorker === 'Y'
@@ -375,7 +379,7 @@ export function useAppointeeViewLogic({ appointeeStatus, appointeeId, closeViewM
           ? setIsPhysicallyHandicap('Yes')
           : setIsPhysicallyHandicap('No')
         : setIsPhysicallyHandicap(NA);
-      isHandicap === 'N' || !isHandicap ? setHandicapType(NA) : setHandicapType(handicapeType);
+      isHandicap === 'N' || !isHandicap ? setHandicapType(NA) : setHandicapType(handicapeTypeName);
       aadhaarNumberView ? setAadhar(aadhaarNumberView) : setAadhar(NA);
       aadhaarName ? setNameAsOnAadhar(aadhaarName) : setNameAsOnAadhar(NA);
       maskedPANNumber ? setPan(maskedPANNumber) : setPan(NA);
