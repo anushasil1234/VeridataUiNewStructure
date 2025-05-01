@@ -47,10 +47,14 @@ import UANPrerequisiteInformation from './uan-prerequiestic-info';
 import getFileDetails from 'shared/utils/associate/get-file-details';
 import LinearStepper from 'shared/components/Stepper/linear-stepper';
 import FormContainer from 'shared/components/grid-container/form-container';
-import FirstForm from './first-form';
-import SecondForm from './second-form';
-import ThirdForm from './third-form';
-import FourthForm from './fourth-form';
+import FirstForm from './form-steps/first-form';
+import SecondForm from './form-steps/second-form';
+import ThirdForm from './form-steps/third-form';
+import FourthForm from './form-steps/fourth-form';
+import FifthForm from './form-steps/fifth-form';
+import SixthForm from './form-steps/sixth-form';
+import SeventhForm from './form-steps/seventh-form';
+import EighthForm from './form-steps/eighth-form';
 
 import {
   GenerateAadharOtp,
@@ -70,10 +74,7 @@ import {
   storeAppointeeStatusDetailsData,
 } from 'store/slices/appointee-status-details-slice';
 import { getAppointeeStatusDetails } from 'server/apis/appointee/appointee-workflow/get-appointee-status-details';
-import FifthForm from './fifth-form';
-import SixthForm from './sixth-form';
-import SeventhForm from './seventh-form';
-import EighthForm from './eighth-form';
+
 const AppointeeRegisterForm = () => {
   const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
   const steps = [

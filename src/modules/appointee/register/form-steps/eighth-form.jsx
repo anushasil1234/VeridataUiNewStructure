@@ -18,7 +18,7 @@ import {
 import myImage from 'assets/images/profile/instrucToServiceHistory.png';
 import React, { useState } from 'react';
 import FormHeadingContainer from 'shared/components/grid-container/form-heading-container';
-import FormHeading from './form-heading';
+import FormHeading from '../form-heading';
 import GridRow from 'shared/components/grid-container/grid-row';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import {
@@ -55,7 +55,7 @@ import TextInput from 'shared/components/input-fields/text-input';
 import { useSelector, useDispatch } from 'react-redux';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
 import { hasValue, validationsCheck } from 'shared/utils';
-import VerificationStatus from '../../../shared/components/verification/verification-status';
+import VerificationStatus from '../../../../shared/components/verification/verification-status';
 import removeExtraSpaces from 'shared/utils/associate/remove-extra-spaces';
 import { generateUANOtp, getUANNumber } from 'server/apis';
 import { storeCurrentPageNo } from 'store/slices/candidate-page-slice';
@@ -63,7 +63,7 @@ import FileUploadSection from 'shared/components/file-upload-section/file-upload
 import { submitUANOTP } from 'server/apis/verify/submit-uan-otp';
 import generateRemarks from 'shared/utils/associate/generate-remarks';
 import showSuccessMessage from 'shared/utils/associate/show-success-message';
-import UANPrerequisiteInformation from './uan-prerequiestic-info';
+import UANPrerequisiteInformation from '../uan-prerequiestic-info';
 import { useTranslation } from 'react-i18next';
 const EighthForm = ({
   UAN,

@@ -1,13 +1,7 @@
 import {
   Box,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Grid,
-  Stack,
   Typography,
   Radio,
   RadioGroup,
@@ -15,15 +9,13 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import FormHeadingContainer from 'shared/components/grid-container/form-heading-container';
-import FormHeading from './form-heading';
+import FormHeading from '../../form-heading';
 import GridRow from 'shared/components/grid-container/grid-row';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import showSuccessMessage from 'shared/utils/associate/show-success-message';
 import { submitBtnStyle, headingType1, fileInputs, positionRelative } from 'app';
 import { Autorenew } from '@mui/icons-material';
 import {
-  previousButton,
-  aaddharNumberverify,
   emptyPanMsg,
   invalidPanMsg,
   panVerifyFailedMsg,
@@ -34,8 +26,7 @@ import TextInput from 'shared/components/input-fields/text-input';
 import { useSelector, useDispatch } from 'react-redux';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
 import { hasValue, patternChecking } from 'shared/utils';
-import BankVerification from './bank-verifications';
-import VerificationStatus from '../../../shared/components/verification/verification-status';
+import VerificationStatus from '../../../../../shared/components/verification/verification-status';
 import removeExtraSpaces from 'shared/utils/associate/remove-extra-spaces';
 import { verifyPANDetails } from 'server/apis';
 import { storeCurrentPageNo } from 'store/slices/candidate-page-slice';

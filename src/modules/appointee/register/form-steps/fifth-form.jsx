@@ -1,33 +1,30 @@
 import { Box, Button, Grid, Stack } from '@mui/material';
-import React, { useState } from 'react';
-import GridRow from 'shared/components/grid-container/grid-row';
 import { submitBtnStyle } from 'app';
+import { useSelector } from 'react-redux';
+import GridRow from 'shared/components/grid-container/grid-row';
 import { previousButton } from 'shared/constants/constants';
-import { useSelector, useDispatch } from 'react-redux';
-import BankVerification from './bank-verifications';
+import PANVerification from './verifications/pan-verification';
 
-const SixthForm = ({
+const FifthForm = ({
   formElement,
   stepsList,
   isAadhaarVarified,
   handleBack,
-  currentPageNo,
   setCurrentPageNo,
-  activeStep,
   setActiveStep,
-  bankstatusMessage,
-  setBankStatusMessage,
+  isPANAvailable,
+  setIsPANAvailable,
+  nameAsOnPan,
+  panstatusMessage,
+  setPANStatusMessage,
   setIsPanVarified,
   isPanVarified,
-  isBankVarified,
-  setIsBankVarified,
-  accountNumber,
-  setAccountNumber,
-  IFSCCode,
-  setIFSCCode,
+  disabledPanInput,
+  pan,
+  setPan,
 }) => {
   const loggedInData = useSelector((state) => state.loggedInData);
-
+  const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
   return (
     <Box sx={{ width: '100%' }}>
       <form ref={formElement}>
@@ -37,17 +34,19 @@ const SixthForm = ({
           rowSpacing={1}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          <BankVerification
+          <PANVerification
             isAadhaarVarified={isAadhaarVarified}
             stepsList={stepsList}
-            bankstatusMessage={bankstatusMessage}
-            setBankStatusMessage={setBankStatusMessage}
-            isBankVarified={isBankVarified}
-            setIsBankVarified={setIsBankVarified}
-            accountNumber={accountNumber}
-            setAccountNumber={setAccountNumber}
-            IFSCCode={IFSCCode}
-            setIFSCCode={setIFSCCode}
+            isPANAvailable={isPANAvailable}
+            setIsPANAvailable={setIsPANAvailable}
+            nameAsOnPan={nameAsOnPan}
+            panstatusMessage={panstatusMessage}
+            setPANStatusMessage={setPANStatusMessage}
+            setIsPanVarified={setIsPanVarified}
+            isPanVarified={isPanVarified}
+            disabledPanInput={disabledPanInput}
+            pan={pan}
+            setPan={setPan}
           />
 
           <GridRow>
@@ -63,8 +62,8 @@ const SixthForm = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setCurrentPageNo(7);
-                    setActiveStep(6);
+                    setCurrentPageNo(6);
+                    setActiveStep(5);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'
@@ -81,4 +80,4 @@ const SixthForm = ({
   );
 };
 
-export default SixthForm;
+export default FifthForm;

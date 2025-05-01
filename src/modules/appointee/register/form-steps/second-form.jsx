@@ -50,7 +50,7 @@ import {
   trustEpfoFileTypeAlias,
 } from 'shared/constants/constants';
 import buildFormData from 'shared/utils/associate/build-form-data';
-import FormHeading from './form-heading';
+import FormHeading from '../form-heading';
 const SecondForm = ({
   stepsList,
   isPreviousSectionDisabled,

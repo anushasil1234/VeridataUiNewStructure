@@ -1,86 +1,44 @@
 import {
   Box,
   Button,
-  Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Divider,
-  Fab,
-  FormControl,
   FormControlLabel,
   Grid,
-  IconButton,
-  InputAdornment,
   Radio,
   RadioGroup,
-  Stack,
-  Switch,
-  Tooltip,
   Typography,
 } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import FormHeadingContainer from 'shared/components/grid-container/form-heading-container';
-import FormHeading from './form-heading';
+import FormHeading from '../../form-heading';
 import GridRow from 'shared/components/grid-container/grid-row';
 import {
-  checkBoxLabelStyle,
-  checkBoxStyle,
-  divederStyle,
   fileInputs,
-  fileUploadSectionContainerStyle,
   headingType1,
-  lable1CopyStyle,
-  loginFieldIconStyle,
   positionRelative,
-  primaryFabStyle,
-  responsiveBtnType1Style,
-  statusBoxstyle,
-  statusstyle,
-  submitBtnContainerStyle,
   submitBtnStyle,
-  verificationBtnStyle,
 } from 'app';
 import {
   Autorenew,
-  HelpOutline,
-  Info,
-  InfoOutlined,
-  Visibility,
-  VisibilityOff,
 } from '@mui/icons-material';
 import {
-  aaddharNumberverify,
   emptyDLNumberMsg,
   invalidDLMsg,
   dlAvailabilitySuccessMsg,
   dlAvailabilityErrorMsg,
 } from 'shared/constants/constants';
 import TextInput from 'shared/components/input-fields/text-input';
-import FileUploadSection from 'shared/components/file-upload-section/file-upload-section';
 import { useSelector } from 'react-redux';
-import PassportFileNoSample from 'assets/images/backgrounds/file-number-in-indian-passport.png';
-import { DisableSection } from 'shared/components/disble-section/disble-section';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
-import { Link } from 'react-router-dom';
-import VerficationAadharSteps from 'shared/components/verification/verfication-aadhar';
 import { hasValue, patternChecking } from 'shared/utils';
-import myImage from 'assets/images/profile/instrucToServiceHistory.png';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import showSuccessMessage from 'shared/utils/associate/show-success-message';
 import { verifyDrivingLicenseDetails } from 'server/apis/verify/verify-driving-license';
-import removeExtraSpaces from 'shared/utils/associate/remove-extra-spaces';
 import removeSingleSpaces from 'shared/utils/associate/remove-single-spaces';
 import generateRemarks from 'shared/utils/associate/generate-remarks';
 import VerificationStatus from 'shared/components/verification/verification-status';
-import dayjs from 'dayjs';
-import CustomeDatePicker from 'shared/components/input-fields/custome-date-picker';
 import { DDMMYYYY } from 'shared/utils';
 import { postAppointeeDocAvailibility } from 'server/apis/appointee/appointee-workflow/post-appointee-doc-availability';
 import { useTranslation } from 'react-i18next';
-import Tesseract from 'tesseract.js';
 import { fileInputboxContainerStyle } from 'app';
 import { SaveAlt } from '@mui/icons-material';
 import { driving_license_regex } from 'shared/constants/constants';

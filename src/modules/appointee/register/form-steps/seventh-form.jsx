@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import GridRow from 'shared/components/grid-container/grid-row';
 import { previousButton } from 'shared/constants/constants';
-import FIRVerification from './fir-verifications';
+import FIRVerification from './verifications/fir-verifications';
 
 const SeventhForm = ({
   formElement,

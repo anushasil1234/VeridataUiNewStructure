@@ -22,7 +22,7 @@ import { hasValue, patternChecking } from 'shared/utils';
 import generateRemarks from 'shared/utils/associate/generate-remarks';
 import removeExtraSpaces from 'shared/utils/associate/remove-extra-spaces';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
-import FormHeading from './form-heading';
+import FormHeading from '../../form-heading';
 const BankVerification = ({
   bankstatusMessage,
   setBankStatusMessage,

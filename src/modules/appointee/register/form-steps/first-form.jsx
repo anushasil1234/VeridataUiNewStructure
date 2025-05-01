@@ -23,7 +23,7 @@ import {
   yesNoList,
 } from 'shared/constants/constants';
 import GenderSelection from 'shared/utils/associate/gender-selection';
-import FormHeading from './form-heading';
+import FormHeading from '../form-heading';
 import SelectInput from 'shared/components/input-fields/select-input';
 import { HelpOutline } from '@mui/icons-material';
 import PassportSample from 'assets/images/backgrounds/PassportSample2.jpeg';

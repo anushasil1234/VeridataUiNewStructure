@@ -8,7 +8,7 @@ import GridRow from 'shared/components/grid-container/grid-row';
 import { aaddharNumberverify } from 'shared/constants/constants';
 import { hasValue } from 'shared/utils';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
-import DrivingLicenseVerification from './driving-licence-verification';
+import DrivingLicenseVerification from './verifications/driving-licence-verification';
 const FourthForm = ({
   formElement,
   stepsList,

@@ -1,20 +1,14 @@
 import {
-  Box,
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Grid,
-  Stack,
-  Typography,
   Table,
   TableHead,
   TableBody,
   TableRow,
   TableCell,
-  TableContainer,
   AppBar,
   IconButton,
   Toolbar,
@@ -23,26 +17,20 @@ import { modelToolbar } from 'app';
 import { Close } from '@mui/icons-material';
 import React, { useState } from 'react';
 import FormHeadingContainer from 'shared/components/grid-container/form-heading-container';
-import FormHeading from './form-heading';
+import FormHeading from '../../form-heading';
 import GridRow from 'shared/components/grid-container/grid-row';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import { submitBtnStyle } from 'app';
 import { Autorenew } from '@mui/icons-material';
 import {
-  previousButton,
   aaddharNumberverify,
-  emptyPanMsg,
-  invalidPanMsg,
-  panVerifyFailedMsg,
   firVerifyFailedMsg,
 } from 'shared/constants/constants';
 import TextInput from 'shared/components/input-fields/text-input';
 import { useSelector, useDispatch } from 'react-redux';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
-import { hasValue, patternChecking } from 'shared/utils';
-import BankVerification from './bank-verifications';
-import VerificationStatus from '../../../shared/components/verification/verification-status';
-import removeExtraSpaces from 'shared/utils/associate/remove-extra-spaces';
+import { hasValue } from 'shared/utils';
+import VerificationStatus from '../../../../../shared/components/verification/verification-status';
 import { checkFIRDetails } from 'server/apis/verify/check-fir-details';
 import { storeCurrentPageNo } from 'store/slices/candidate-page-slice';
 import { DDMMYYYY } from 'shared/utils';
