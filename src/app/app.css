@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
@@ -43,42 +44,41 @@
 .button {
   color: var(--dl-color-gray-black);
   display: inline-block;
-  padding: 0.5rem 1rem;
-  border-color: var(--dl-color-gray-black);
-  border-width: 1px;
-  border-radius: 4px;
+  padding: var(--dl-space-space-halfunit) var(--dl-space-space-unit);
+  border: 1px solid var(--dl-color-gray-black);
+  border-radius: var(--dl-radius-radius-radius4);
   background-color: var(--dl-color-gray-white);
 }
 
-.autocompleteInput .css-w6fb6m input {
-  height: 54px;
-}
-.autocompleteInput > div > div {
-  font-size: 1.125rem;
-  margin-left: 8px;
-  margin-top: 3px;
-}
-.autocompleteInput > div {
-  align-items: center;
+.autocompleteInput {
+  & .css-w6fb6m input {
+    height: 54px;
+  }
+  & > div > div {
+    font-size: 1.125rem;
+    margin-left: var(--dl-space-space-halfunit);
+    margin-top: 3px;
+  }
+  & > div {
+    align-items: center;
+  }
 }
 
 .textarea {
   color: var(--dl-color-gray-black);
   cursor: auto;
-  padding: 0.5rem;
-  border-color: var(--dl-color-gray-black);
-  border-width: 1px;
-  border-radius: 4px;
+  padding: var(--dl-space-space-halfunit);
+  border: 1px solid var(--dl-color-gray-black);
+  border-radius: var(--dl-radius-radius-radius4);
   background-color: var(--dl-color-gray-white);
 }
 
 .list {
   width: 100%;
-  margin: 1em 0px 1em 0px;
+  margin: var(--dl-space-space-unit) 0;
   display: block;
-  padding: 0px 0px 0px 1.5rem;
-  list-style-type: none;
-  list-style-position: outside;
+  padding: 0 0 0 var(--dl-space-space-oneandhalfunits);
+  list-style: none;
 }
 
 .list-item {
@@ -92,7 +92,7 @@
 
 .Content {
   font-size: 16px;
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-weight: 400;
   line-height: 1.15;
   text-transform: none;
@@ -101,7 +101,7 @@
 
 .Heading {
   font-size: 32px;
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-weight: 700;
   line-height: 1.15;
   text-transform: none;
@@ -112,7 +112,8 @@
   width: 62%;
   height: auto;
 }
-@media only screen and (min-width: 640) {
+
+@media (min-width: 640px) {
   .image {
     width: 74%;
   }
@@ -121,14 +122,12 @@
 .border_container {
   width: 100vw;
   height: 100vh;
-  background-color: #3174cf;
+  background-color: var(--dl-color-primary-100);
   display: flex;
   justify-content: center;
 }
 
 .logo {
-  /* width: auto;
-  height: 2.1vw; */
   width: 11.78vw;
   height: auto;
 }
@@ -141,25 +140,27 @@
 }
 
 .cardshawdow {
-  box-shadow:
-    rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: 
+    rgba(14, 30, 37, 0.12) 0 2px 4px 0,
+    rgba(14, 30, 37, 0.32) 0 2px 16px 0;
 }
 
 .cardList {
+  position: relative;
   top: 204px;
   left: 144px;
-  position: relative;
 }
 
 .img-bar {
-  height: 100%;
   width: 64%;
+  height: 100%;
   margin: auto;
 }
+
 .overlay-image {
   width: 42.5%;
 }
+
 .align_right {
   margin-left: auto;
 }
