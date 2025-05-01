@@ -5,6 +5,7 @@ import { submitBtnStyle } from 'app';
 import { previousButton } from 'shared/constants/constants';
 import { useSelector, useDispatch } from 'react-redux';
 import BankVerification from './bank-verifications';
+
 const SixthForm = ({
   formElement,
   stepsList,
@@ -25,8 +26,6 @@ const SixthForm = ({
   IFSCCode,
   setIFSCCode,
 }) => {
-  const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
-  console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
   const loggedInData = useSelector((state) => state.loggedInData);
 
   return (
@@ -81,4 +80,5 @@ const SixthForm = ({
     </Box>
   );
 };
+
 export default SixthForm;

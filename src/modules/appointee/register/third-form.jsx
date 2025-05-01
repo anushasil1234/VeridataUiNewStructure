@@ -133,8 +133,6 @@ const ThirdForm = ({
   dateOfBirth,
   setDateOfBirth,
 }) => {
-  console.log('currentPageNo', currentPageNo);
-  console.log('activeStep', activeStep);
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const { openInfoModel } = functionSlice[0];

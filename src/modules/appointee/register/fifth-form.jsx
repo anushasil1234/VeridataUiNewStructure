@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import GridRow from 'shared/components/grid-container/grid-row';
 import { previousButton } from 'shared/constants/constants';
 import PANVerification from './pan-verification';
+
 const FifthForm = ({
   formElement,
   stepsList,
@@ -22,8 +23,6 @@ const FifthForm = ({
   pan,
   setPan,
 }) => {
-  const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
-  console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
   const loggedInData = useSelector((state) => state.loggedInData);
   const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
   return (
@@ -80,4 +79,5 @@ const FifthForm = ({
     </Box>
   );
 };
+
 export default FifthForm;

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import GridRow from 'shared/components/grid-container/grid-row';
 import { previousButton } from 'shared/constants/constants';
 import FIRVerification from './fir-verifications';
+
 const SeventhForm = ({
   formElement,
   stepsList,
@@ -29,13 +30,10 @@ const SeventhForm = ({
   dateOfBirth,
   setDateOfBirth,
 }) => {
-  const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
-  const { t } = useTranslation();
-  console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openRemarksModel } = functionSlice[0];
   const loggedInData = useSelector((state) => state.loggedInData);
-  const { userId, appointeeId, userCode, candidateId, userName } = loggedInData[0];
+  const { t } = useTranslation();
   return (
     <Box sx={{ width: '100%' }}>
       <form ref={formElement}>
@@ -89,4 +87,5 @@ const SeventhForm = ({
     </Box>
   );
 };
+
 export default SeventhForm;

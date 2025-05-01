@@ -96,9 +96,6 @@ const EighthForm = ({
   pan,
   setPan,
 }) => {
-  const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
-  const { t } = useTranslation();
-  console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openRemarksModel } = functionSlice[0];
   const {
@@ -114,6 +111,7 @@ const EighthForm = ({
   const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { t } = useTranslation();
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -403,7 +401,7 @@ const EighthForm = ({
                             your employment contributions.
                           </Typography>
                           <Typography variant='subtitle2' sx={{ mt: 1 }}>
-                            {`2. Log in to the EPFO Member Portal. Navigate to ‘View’ -> ‘Service History’. Download the service history file.`}
+                            {`2. Log in to the EPFO Member Portal. Navigate to 'View' -> 'Service History'. Download the service history file.`}
                           </Typography>
                         </DialogContent>
                         <DialogActions>
