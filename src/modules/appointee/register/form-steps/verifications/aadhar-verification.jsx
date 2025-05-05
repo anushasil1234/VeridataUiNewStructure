@@ -1,14 +1,10 @@
 import {
-  Box,
   Button,
   Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
-  Divider,
-  Fab,
   FormControl,
   FormControlLabel,
   Grid,
@@ -16,9 +12,6 @@ import {
   InputAdornment,
   Radio,
   RadioGroup,
-  Stack,
-  Switch,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
@@ -28,62 +21,29 @@ import GridRow from 'shared/components/grid-container/grid-row';
 import {
   checkBoxLabelStyle,
   checkBoxStyle,
-  divederStyle,
-  fileUploadSectionContainerStyle,
   headingType1,
-  lable1CopyStyle,
   loginFieldIconStyle,
   positionRelative,
-  primaryFabStyle,
-  responsiveBtnType1Style,
-  statusBoxstyle,
-  statusstyle,
-  subHeadingContentTextStyle,
-  submitBtnContainerStyle,
   submitBtnStyle,
-  verificationBtnStyle,
 } from 'app';
 import {
   Autorenew,
-  HelpOutline,
-  Info,
-  InfoOutlined,
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material';
 import {
   aadharFileTypeAlias,
-  emptyAadharNoMsg,
-  aadharPatternErrorMsg,
-  epfoPassbookFileTypeAlias,
-  epfoServiceHistoryFileTypeAlias,
-  getHandicapTypeDescription,
-  handicapFileTypeAlias,
-  imgAndPdfMaxSize,
-  otherFileTypeAlias,
-  passportFileTypeAlias,
-  previousButton,
-  tenthCertificateFileTypeAlias,
-  trustEpfoFileTypeAlias,
-  aaddharNumberverify,
 } from 'shared/constants/constants';
 import TextInput from 'shared/components/input-fields/text-input';
 import FileUploadSection from 'shared/components/file-upload-section/file-upload-section';
 import { useSelector } from 'react-redux';
-import PassportFileNoSample from 'assets/images/backgrounds/file-number-in-indian-passport.png';
 import { DisableSection } from 'shared/components/disble-section/disble-section';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
-import { Link } from 'react-router-dom';
 import VerficationAadharSteps from 'shared/components/verification/verfication-aadhar';
 import { hasValue } from 'shared/utils';
-import myImage from 'assets/images/profile/instrucToServiceHistory.png';
-import BankVerification from './bank-verifications';
-import DrivingLicenseVerification from './driving-licence-verification';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
-import { getAppointeeDetails } from 'server/apis';
 import { setLocalStorageItem } from 'shared/utils';
-import { toAadhaarSuccess, toAadhaarFailure, toRegister } from 'shared/constants/constants';
-import { decryptedData } from 'shared/utils';
+import { toAadhaarSuccess, toAadhaarFailure } from 'shared/constants/constants';
 import CircularIndeterminate from 'shared/utils/loader/circularIndeterminate';
 import { verifyAadharDetails } from 'server/apis';
 import showSuccessMessage from 'shared/utils/associate/show-success-message';
@@ -97,64 +57,64 @@ import VerificationStatus from '../../../../../shared/components/verification/ve
 import { useLocation } from 'react-router-dom';
 import { GetDigilockerUrl } from 'server/apis/verify/get-digilocker-url';
 import { useTranslation } from 'react-i18next';
-const AadhaarVerification = ({
-  formElement,
-  stepsList,
-  setisAadhaarVarified,
-  isAadhaarVarified,
-  isOfflineXmlDownloaded,
-  setIsOfflineXmlDownloaded,
-  handleIsOfflineXmlDownloadedOnChange,
-  nameAsOnAadhar,
-  handleChangeNameOnAadhar,
-  handleChangeAadharNumber,
-  aadharShareCode,
-  setAadharShareCode,
-  disabledAadharInput,
-  isAadhaarXmlUploaded,
-  xmlFileUploaded,
-  setXmlFileUploaded,
-  aadharstatusMessage,
-  setAadharstatusMessage,
-  uploadAadharXmlFile,
-  aadharXmlFileName,
-  handleBack,
-  submitDetails,
-  aadharNumber,
-  currentPageNo,
-  setCurrentPageNo,
-  activeStep,
-  setActiveStep,
-  firstPageForm,
-  setFirstPageForm,
-}) => {
-  console.log('currentPageNo', currentPageNo);
+import { FILE_SIZE_LIMIT, validFileTypes,uploadFormatErrorMsg,uploadSizeErrorMsg } from 'shared/constants/constants';
+
+const AadhaarVerification = ({ stepsList,isAadhaarVarified, onVerified ,userInfo}) => {
   const { t } = useTranslation();
-  console.log('activeStep', activeStep);
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
-  const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
+  const { userId, appointeeId, candidateId } = loggedInData[0];
+console.log('stepsList', stepsList);
+  const [isOfflineXmlDownloaded, setIsOfflineXmlDownloaded] = useState(false);
+  const [nameAsOnAadhar, setNameAsOnAadhar] = useState(userInfo.appointeeName);
+  const [aadharShareCode, setAadharShareCode] = useState('');
+  const [aadharstatusMessage, setAadharstatusMessage] = useState(new VerificationStatus(null, ''));
+  const [xmlFileUploaded, setXmlFileUploaded] = useState(null);
+  const [aadharXmlFileName, setAadharXmlFileName] = useState('');
+  const [aadharNumber, setAadharNumber] = useState('');
+  const [disabledAadharInput, setDisabledAadharInput] = useState(false);
+  const [isAadhaarXmlUploaded, setIsAadhaarXmlUploaded] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [isDLVerificationDisabled, setIsDLVerificationDisabled] = useState(false);
-  const [showDialog, setShowDialog] = useState(false);
   const [AADHARVERIFICATION_BY, setAADHARVERIFICATION_BY] = useState('XML');
   const [loading, setLoading] = useState(false);
   const startLoader = () => setLoading(true);
   const stopLoader = () => setLoading(false);
   const {
-    openOtpForm,
-    closeOtpForm,
-    openOtpSubmitionModel,
     closeOtpSubmitionModel,
     openRemarksModel,
-    openConfirmationModel,
     openInfoModel,
   } = functionSlice[0];
   const location = useLocation();
   const responseInfo = location.state?.responseInfo;
-  console.log('responseInfo', responseInfo);
   const remarks = responseInfo?.remarks || null;
-  console.log('remarks', remarks);
+
+  const handleChangeNameOnAadhar = (e) => setNameAsOnAadhar(e.target.value);
+  const handleChangeAadharNumber = (e) => setAadharNumber(e.target.value);
+  const handleAadharShareCode = (val) => {
+    if (/^\d{0,4}$/.test(val)) setAadharShareCode(val);
+  };
+  const handleIsOfflineXmlDownloadedOnChange = (e) => setIsOfflineXmlDownloaded(e.target.checked);
+  const uploadAadharXmlFile = ({ target }) => {
+    setXmlFileUploaded();
+    setAadharXmlFileName();
+    const { files } = target;
+    const fileData = files[0];
+    const { name, size, type } = fileData;
+    if (!validFileTypes.includes(type)) {
+      showErrorMessage(uploadFormatErrorMsg);
+    } else if (size > FILE_SIZE_LIMIT) {
+      showErrorMessage(uploadSizeErrorMsg);
+    } else {
+      setAadharXmlFileName([name]);
+      setXmlFileUploaded(fileData);
+    }
+    setIsAadhaarXmlUploaded(true);
+  };
+
+  useEffect(() => {
+    if (isAadhaarVarified && onVerified) onVerified(true);
+  }, [isAadhaarVarified, onVerified]);
+
   const openOfflineKycInfoModel = () => {
     const offlineKycContent = {
       dialogTitle: 'Offline Aadhaar Kyc Steps Info',
@@ -199,12 +159,6 @@ const AadhaarVerification = ({
   const handleShareCodeVisibility = () => {
     setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
   };
-  const handleAadharShareCode = (val) => {
-    console.log('sharecode', val);
-    if (/^\d{0,4}$/.test(val)) {
-      setAadharShareCode(val);
-    }
-  };
   const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] = useState(false);
   const shareCodeProps = {
     endAdornment: (
@@ -224,14 +178,6 @@ const AadhaarVerification = ({
       setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
     }
   }, [isPasswordVisibilityOn]);
-  useEffect(() => {
-    if (hasValue(firstPageForm.isDLAvailable)) {
-      setIsPreviousSectionDisabled(true);
-    }
-  }, [firstPageForm.isDLAvailable]);
-  useEffect(() => {
-    console.log('isDLVerificationDisabled changed:', isDLVerificationDisabled);
-  }, [isDLVerificationDisabled]);
   const baseURL = window.location.origin;
   const handleFetchAadhaar = async () => {
     startLoader();
@@ -275,7 +221,7 @@ const AadhaarVerification = ({
           openRemarksModel(generatedRemarks);
         }
       }
-      setisAadhaarVarified(isVarified);
+      onVerified(isVarified);
       setIsOfflineXmlDownloaded(true);
       closeOtpSubmitionModel();
       setAadharstatusMessage(new VerificationStatus(isVarified, 'V'));

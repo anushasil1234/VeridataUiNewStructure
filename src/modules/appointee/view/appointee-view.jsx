@@ -126,19 +126,19 @@ let AppointeeViewForm = (props) => {
   const {
     t,
     setRemarks,
-    isLoading,
-    otherFilePayload,
-    profileImageBase64,
-    fileDataStore,
-    verifyIconStyle,
-    isSaveStep,
+  isLoading, 
+  otherFilePayload, 
+  profileImageBase64, 
+  fileDataStore, 
+  verifyIconStyle, 
+  isSaveStep, 
     isAadharVerified,
-    isPanVarified,
+        isPanVarified,
     isUanVerified,
-    isManualPassbook,
+        isManualPassbook,
     uanNumber,
     appointeeName,
-    candidateId,
+        candidateId,
     nameAsOnAadhar,
     aadhar,
     UAN,
@@ -156,13 +156,13 @@ let AppointeeViewForm = (props) => {
     passportValidFromDate,
     passportValidTillDate,
     visaFile,
-    isDLAvailable,
-    isDLVarified,
-    drivingLicense,
+        isDLAvailable,
+        isDLVarified,
+        drivingLicense,
     isBankAccVarified,
     bankAccNumber,
     bankIfscNumber,
-    firDetails,
+        firDetails,
     isFIRModalOpen,
     parsedFIRDetails,
     handleDialogCancel,
@@ -219,11 +219,11 @@ let AppointeeViewForm = (props) => {
               fileDataStore={fileDataStore}
               verifyIconStyle={verifyIconStyle}
               isSaveStep={isSaveStep}
-              isAadharVerified={isAadharVerified}
-              isPanVarified={isPanVarified}
-              isUanVerified={isUanVerified}
-              isManualPassbook={isManualPassbook}
-              uanNumber={uanNumber}
+                  isAadharVerified={isAadharVerified}
+                  isPanVarified={isPanVarified}
+                  isUanVerified={isUanVerified}
+                  isManualPassbook={isManualPassbook}
+                  uanNumber={uanNumber}
               appointeeName={appointeeName}
               onProfileClick={() => setRemarks(props.appointeeId)}
             />

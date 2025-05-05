@@ -1,30 +1,24 @@
 import { Box, Button, Grid, Stack } from '@mui/material';
 import { submitBtnStyle } from 'app';
-import { useSelector } from 'react-redux';
 import GridRow from 'shared/components/grid-container/grid-row';
-import { previousButton } from 'shared/constants/constants';
 import PANVerification from './verifications/pan-verification';
+import usePanVerification from '../hooks/usePanVerification';
 
 const FifthForm = ({
   formElement,
   stepsList,
-  isAadhaarVarified,
   handleBack,
   setCurrentPageNo,
   setActiveStep,
-  isPANAvailable,
-  setIsPANAvailable,
-  nameAsOnPan,
-  panstatusMessage,
-  setPANStatusMessage,
-  setIsPanVarified,
-  isPanVarified,
-  disabledPanInput,
-  pan,
-  setPan,
+  userInfo,
+  setUserInfo,
 }) => {
-  const loggedInData = useSelector((state) => state.loggedInData);
-  const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
+  // Use the custom hook for all PAN logic/state
+  const panVerification = usePanVerification({
+    userInfo,
+    setUserInfo,
+  });
+
   return (
     <Box sx={{ width: '100%' }}>
       <form ref={formElement}>
@@ -35,20 +29,9 @@ const FifthForm = ({
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
           <PANVerification
-            isAadhaarVarified={isAadhaarVarified}
             stepsList={stepsList}
-            isPANAvailable={isPANAvailable}
-            setIsPANAvailable={setIsPANAvailable}
-            nameAsOnPan={nameAsOnPan}
-            panstatusMessage={panstatusMessage}
-            setPANStatusMessage={setPANStatusMessage}
-            setIsPanVarified={setIsPanVarified}
-            isPanVarified={isPanVarified}
-            disabledPanInput={disabledPanInput}
-            pan={pan}
-            setPan={setPan}
+            {...panVerification}
           />
-
           <GridRow>
             <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
               <Stack flexDirection={'row'}>
@@ -58,7 +41,7 @@ const FifthForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {previousButton}
+                  {'Previous'}
                 </Button>
                 <Button
                   onClick={() => {

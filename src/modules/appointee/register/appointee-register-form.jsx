@@ -49,12 +49,12 @@ import LinearStepper from 'shared/components/Stepper/linear-stepper';
 import FormContainer from 'shared/components/grid-container/form-container';
 import FirstForm from './form-steps/first-form';
 import SecondForm from './form-steps/second-form';
-import ThirdForm from './form-steps/third-form';
 import FourthForm from './form-steps/fourth-form';
 import FifthForm from './form-steps/fifth-form';
 import SixthForm from './form-steps/sixth-form';
 import SeventhForm from './form-steps/seventh-form';
 import EighthForm from './form-steps/eighth-form';
+import ThirdForm from './third-form';
 
 import {
   GenerateAadharOtp,
@@ -75,8 +75,11 @@ import {
 } from 'store/slices/appointee-status-details-slice';
 import { getAppointeeStatusDetails } from 'server/apis/appointee/appointee-workflow/get-appointee-status-details';
 
+import usePersonalDetails from './hooks/usePersonalDetails';
+import useVerificationStatus from './hooks/useVerificationStatus';
+import useFileUploads from './hooks/useFileUploads';
+
 const AppointeeRegisterForm = () => {
-  const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
   const steps = [
     'Step 1',
     'Step 2',
@@ -96,8 +99,6 @@ const AppointeeRegisterForm = () => {
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openDocumentModel, openUploadedDocumentModal } = functionSlice[0];
   const {
-    openOtpSubmitionModel,
-    closeOtpSubmitionModel,
     openRemarksModel,
     openConfirmationModel,
     openInfoModel,
@@ -106,7 +107,7 @@ const AppointeeRegisterForm = () => {
     dropdownList && dropdownList.length > 0 && dropdownList[0];
   const {} = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
+  const { userId, appointeeId, userCode } = loggedInData[0];
   const currentPageNo = useSelector((state) => state.CandidatePageSlice.currentPageNo);
   const setCurrentPageNo = (currentPageNo) => {
     dispatch(storeCurrentPageNo(currentPageNo));
@@ -141,7 +142,7 @@ const AppointeeRegisterForm = () => {
   const [firDetails, setFIRDetails] = useState(null);
   const [nameAsOnPan, setNameAsOnPan] = useState(null);
   const [aadhar, setAadhar] = useState(null);
-  const [nameAsOnAadhar, setNameAsOnAadhar] = useState(null);
+  // const [nameAsOnAadhar, setNameAsOnAadhar] = useState(null);
   const [aadharShareCode, setAadharShareCode] = useState(null);
   const [fetchUanConfirmation, setFetchUanConfirmation] = useState(false);
   const [appointeeDetailsId, setAppointeeDetailsId] = useState(0);
@@ -158,7 +159,7 @@ const AppointeeRegisterForm = () => {
   const [isDLAvailable, setIsDLAvailable] = useState(true);
   const [isPassportAvailable, setIsPassportAvailable] = useState(false);
   const [epfostatusMessage, setEpfostatusMessage] = useState(new VerificationStatus());
-  const [aadharstatusMessage, setAadharstatusMessage] = useState(new VerificationStatus());
+  // const [aadharstatusMessage, setAadharstatusMessage] = useState(new VerificationStatus());
   const [passportstatusMessage, setPassportStatusMessage] = useState(new VerificationStatus());
   const [panstatusMessage, setPANStatusMessage] = useState(new VerificationStatus());
   const [bankstatusMessage, setBankStatusMessage] = useState(new VerificationStatus());
@@ -166,8 +167,6 @@ const AppointeeRegisterForm = () => {
   const [licensestatusMessage, setLicenseStatusMessage] = useState(new VerificationStatus());
   const [isAadhaarVarified, setisAadhaarVarified] = useState(false);
   const [isDLVarified, setisDLVarified] = useState(false);
-  const [isAadhaarXmlUploaded, setIsAadhaarXmlUploaded] = useState(false);
-  const [isOfflineXmlDownloaded, setIsOfflineXmlDownloaded] = useState(false);
   const [isPanVarified, setIsPanVarified] = useState(null);
   const [isBankVarified, setIsBankVarified] = useState(null);
   const [isPassportVarified, setIsPassportVarified] = useState(false);
@@ -186,7 +185,6 @@ const AppointeeRegisterForm = () => {
   const [handicapFileName, setHandicapFileName] = useState();
   const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
   const [epfoServiceHistoryFile, setEpfoServiceHistoryFile] = useState();
-  const [aadharXmlFileName, setAadharXmlFileName] = useState([]);
   const [passportFileName, setPassportFileName] = useState([]);
   const [tenthCertificateFileName, setTenthCertificateFileName] = useState([]);
   const [imageFileName, setImageFileName] = useState([]);
@@ -209,9 +207,13 @@ const AppointeeRegisterForm = () => {
   const [panNumber, setPanNumber] = useState();
   const [isPensionApplicable, setIsPensionApplicable] = useState();
   const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] = useState(false);
-  const defaultFirstPageForm = {
-    gender: '',
+
+  const stepCounter = 3;
+  const [personalDetails, updatePersonalDetail, setPersonalDetails] = usePersonalDetails({
     appointeeName: '',
+    mobileNo: '',
+    email: '',
+    gender: '',
     dateOfBirth: '',
     memberName: '',
     memberRelation: '',
@@ -222,8 +224,6 @@ const AppointeeRegisterForm = () => {
     isInternationalWorker: '',
     originCountry: '',
     passportNo: '',
-    mobileNo: '',
-    appointeeEmailId: '',
     passportValidFrom: '',
     passportValidTill: '',
     isHandicap: '',
@@ -241,9 +241,9 @@ const AppointeeRegisterForm = () => {
     drivingLicense: '',
     firDetails: '',
     isPanAvailable: '',
-  };
-  const [firstPageForm, setFirstPageForm] = useState(defaultFirstPageForm);
-  const stepCounter = 3;
+  });
+  const [verificationStatus, updateVerificationStatus, setVerificationStatus] = useVerificationStatus();
+  const [fileUploads, updateFileUpload, setFileUploads] = useFileUploads();
   const clearFileVaribles = (fileTypeAlias, setFileName, fileNameList) => {
     if (!fileDetails?.length) return;
     const filesToRemove = uploadedFile.filter(
@@ -272,7 +272,7 @@ const AppointeeRegisterForm = () => {
   };
   const setAppointeeDetailsOptimized = async (appointeeIdFromSession) => {
     const response = await getAppointeeDetails(appointeeIdFromSession);
-    const {
+      const {
       appointeeDetailsId: sessionAppointeeDetailsId,
       appointeeId: sessionAppointeeId,
       candidateId: sessionCandidateId,
@@ -281,7 +281,7 @@ const AppointeeRegisterForm = () => {
     } = loggedInData[0] || {};
     const companyIdValue = companyId || sessionCompanyId;
     if (response && response.responseInfo) {
-      setFirstPageForm(prev => ({
+      setPersonalDetails(prev => ({
         ...prev,
         ...response.responseInfo,
         appointeeDetailsId: sessionAppointeeDetailsId || response.responseInfo.appointeeDetailsId,
@@ -290,6 +290,7 @@ const AppointeeRegisterForm = () => {
         appointeeCode: sessionUserCode || response.responseInfo.appointeeCode,
         companyId: companyIdValue || response.responseInfo.companyId,
       }));
+      // setNameAsOnAadhar(response.responseInfo.appointeeName);
     }
   };
   useEffect(() => {
@@ -328,7 +329,6 @@ const AppointeeRegisterForm = () => {
   const hasFathersDocCertificateUpload = () => checkFileUpload(otherFileTypeAlias);
   const hasEPFOPassbookUpload = () => checkFileUpload(epfoPassbookFileTypeAlias);
   const hasEPFOServiceHistoryUpload = () => checkFileUpload(epfoServiceHistoryFile);
-  const hasImageUpload = () => checkFileUpload(imageFileTypeAlias);
   const openUploadDocInfoModel = (dialogContentText) => {
     openInfoModel({ dialogContentText });
   };
@@ -391,24 +391,24 @@ const AppointeeRegisterForm = () => {
     }
   }, [isAadhaarVarified, isUanVarified]);
   useEffect(() => {
-    if (firstPageForm.gender === 'M') {
-      setFirstPageForm({ ...firstPageForm, memberRelation: 'F' });
+    if (personalDetails.gender === 'M') {
+      setPersonalDetails({ ...personalDetails, memberRelation: 'F' });
       setIsRelationShipWithMemberDisabled(true);
     } else {
       setIsRelationShipWithMemberDisabled(false);
     }
-  }, [firstPageForm.gender]);
+  }, [personalDetails.gender]);
   useEffect(() => {
-    if (firstPageForm.isPassportAvailable === 'Y') {
-      const nationalityLower = firstPageForm.nationality?.toLowerCase();
+    if (personalDetails.isPassportAvailable === 'Y') {
+      const nationalityLower = personalDetails.nationality?.toLowerCase();
       setCountryOfOriginBasedOnNationality(nationalityLower);
     }
-  }, [firstPageForm.nationality, firstPageForm.isPassportAvailable]);
+  }, [personalDetails.nationality, personalDetails.isPassportAvailable]);
   useEffect(() => {
-    if (firstPageForm.isHandicap === 'N') {
+    if (personalDetails.isHandicap === 'N') {
       clearFileVaribles(handicapFileTypeAlias, setHandicapFileName, handicapFileName);
     }
-  }, [firstPageForm.isHandicap]);
+  }, [personalDetails.isHandicap]);
   useEffect(() => {
     if (isUanVerificationProcessManual === 'auto') {
       clearFileVaribles(epfoPassbookFileTypeAlias, setEpfoPassBookFiles, epfoPassBookFiles);
@@ -491,22 +491,22 @@ const AppointeeRegisterForm = () => {
     setUploadedFile(_updatedUploadedFileList);
     setFileDetails(_updatedFileDetails);
   };
-  const uploadAadharXmlFile = ({ target }) => {
-    setXmlFileUploaded();
-    setAadharXmlFileName();
-    const { files } = target;
-    const fileData = files[0];
-    const { name, size, type } = fileData;
-    if (!validFileTypes.includes(type)) {
-      showErrorMessage(uploadFormatErrorMsg);
-    } else if (size > FILE_SIZE_LIMIT) {
-      showErrorMessage(uploadSizeErrorMsg);
-    } else {
-      setAadharXmlFileName([name]);
-      setXmlFileUploaded(fileData);
-    }
-    setIsAadhaarXmlUploaded(true);
-  };
+  // const uploadAadharXmlFile = ({ target }) => {
+  //   setXmlFileUploaded();
+  //   setAadharXmlFileName();
+  //   const { files } = target;
+  //   const fileData = files[0];
+  //   const { name, size, type } = fileData;
+  //   if (!validFileTypes.includes(type)) {
+  //     showErrorMessage(uploadFormatErrorMsg);
+  //   } else if (size > FILE_SIZE_LIMIT) {
+  //     showErrorMessage(uploadSizeErrorMsg);
+  //   } else {
+  //     setAadharXmlFileName([name]);
+  //     setXmlFileUploaded(fileData);
+  //   }
+  //   setIsAadhaarXmlUploaded(true);
+  // };
   const handleFileUpload =
     (fileTypeAlias, setFileName, fileNameList = [], uploadType) =>
     ({ target }) => {
@@ -544,78 +544,6 @@ const AppointeeRegisterForm = () => {
   );
   const uploadFathersDocFile = handleFileUpload(otherFileTypeAlias, setOtherFileName);
   const uploadImageFile = handleFileUpload(imageFileTypeAlias, setImageFileName);
-  const verifyAadharByXML = async () => {
-    let formData = new FormData();
-    formData.append('AppointeeId', appointeeId);
-    formData.append('AadhaarName', nameAsOnAadhar.trim());
-    formData.append('UserId', userId);
-    formData.append('ShareCode', aadharShareCode.trim());
-    formData.append('AadhaarFileDetails', xmlFileUploaded);
-    const response = await verifyAadharDetails(formData);
-    if (response) {
-      const { remarks, isVarified } = response.responseInfo;
-      if (isVarified) {
-        showSuccessMessage(aadharVerifySuccessMsg);
-      } else {
-        showErrorMessage(aadharVerifyFailedMsg);
-        if (hasValue(remarks)) {
-          const generatedRemarks = generateRemarks(remarks);
-          openRemarksModel(generatedRemarks);
-        }
-      }
-      setisAadhaarVarified(isVarified);
-      setIsOfflineXmlDownloaded(true);
-      closeOtpSubmitionModel();
-      setAadharstatusMessage(new VerificationStatus(isVarified, 'V'));
-    }
-  };
-  const handleAadharotpSubmition = async (otp, client_id) => {
-    const payload = {
-      appointeeId: appointeeId,
-      userId: userId,
-      client_id: client_id,
-      otp: otp,
-      aadharNumber: aadhar.trim(),
-      aadharName: nameAsOnAadhar,
-      shareCode: '',
-    };
-    const response = await PostAadharOtp(payload);
-    if (response) {
-      const { remarks, isVarified } = response.responseInfo;
-      if (isVarified) {
-        showSuccessMessage(aadharVerifySuccessMsg);
-      } else {
-        showErrorMessage(aadharVerifyFailedMsg);
-        if (hasValue(remarks)) {
-          const generatedRemarks = generateRemarks(remarks);
-          openRemarksModel(generatedRemarks);
-        }
-      }
-      setisAadhaarVarified(isVarified);
-      setIsOfflineXmlDownloaded(true);
-      closeOtpSubmitionModel();
-      setAadharstatusMessage(new VerificationStatus(isVarified, 'V'));
-    }
-  };
-  const verifAadharByNumber = async () => {
-    const payload = {
-      appointeeId: appointeeId,
-      userId: userId,
-      aadharNumber: aadhar.trim(),
-      aadharName: nameAsOnAadhar,
-    };
-    const response = await GenerateAadharOtp(payload);
-    if (response) {
-      const { otp_sent, client_id, valid_aadhaar } = response?.responseInfo;
-      if (otp_sent && valid_aadhaar) {
-        openOtpSubmitionModel({
-          otpSubmitionFunction: async (otp) => await handleAadharotpSubmition(otp, client_id),
-          timeoutTimer: timeoutTimer,
-          setTimeoutTimer: setTimeoutTimer,
-        });
-      }
-    }
-  };
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -761,12 +689,6 @@ const AppointeeRegisterForm = () => {
     }
     return formData;
   };
-  const handleDialogConfirm = () => {
-    setIsPANModalOpen(false);
-  };
-  const handleDialogCancel = () => {
-    setIsPANModalOpen(false);
-  };
   const dispatch = useDispatch();
   const handleAppointeeFormPage2Save = async ({ isUanManualUpload }) => {
     let payLoad = {
@@ -814,10 +736,6 @@ const AppointeeRegisterForm = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setCurrentPageNo(2);
   };
-  const handleThirdNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setCurrentPageNo(4);
-  };
   const handleChange = (event) => {
     const value = event.target.value;
     setUanNumberAvailable(value);
@@ -832,7 +750,7 @@ const AppointeeRegisterForm = () => {
       appointeeId,
       userId,
       passportFileNo: passportFileNumber,
-      dateOfBirth: DateFormatYYYYMMDD(firstPageForm.dateOfBirth),
+      dateOfBirth: DateFormatYYYYMMDD(personalDetails.dateOfBirth),
     };
     const response = await getPassportDetails(payLoad);
     if (response) {
@@ -866,9 +784,6 @@ const AppointeeRegisterForm = () => {
     setPassportFileNumber(value);
     setPassportFileNumberError(false);
   };
-  const handleIsOfflineXmlDownloadedOnChange = (e) => {
-    setIsOfflineXmlDownloaded(e.target.checked);
-  };
   const setCountryOfOriginBasedOnNationality = (nationalityLower) => {
     const matchedNationality = nationalityList.find(
       (element) => element.name?.toLowerCase() === nationalityLower,
@@ -877,10 +792,10 @@ const AppointeeRegisterForm = () => {
     if (matchedNationality) {
       const index = nationalityList.indexOf(matchedNationality);
       if (defaultCountry?.toLowerCase() === countryList[index]?.name?.toLowerCase()) {
-        _firstPageForm = { ...firstPageForm, isInternationalWorker: 'N' };
+        _firstPageForm = { ...personalDetails, isInternationalWorker: 'N' };
         setDisabledIsInterNationalWorker(true);
       } else {
-        _firstPageForm = { ...firstPageForm };
+        _firstPageForm = { ...personalDetails };
         setDisabledIsInterNationalWorker(false);
       }
       _firstPageForm = {
@@ -890,7 +805,7 @@ const AppointeeRegisterForm = () => {
     } else {
       _firstPageForm = { ..._firstPageForm, originCountry: defaultCountry };
     }
-    setFirstPageForm(_firstPageForm);
+    setPersonalDetails(_firstPageForm);
   };
   const handleChangeUanVerification = ({ target }) => {
     const value = target.value;
@@ -922,12 +837,9 @@ const AppointeeRegisterForm = () => {
       openInfoModel(prerequisiteModelContent);
     }
   };
-  const handleChangeNameOnAadhar = (value) => {
-    setNameAsOnAadhar(value.toUpperCase());
-  };
-  const handleChangeAadharNumber = (value) => {
-    setAadhar(value);
-  };
+  // const handleChangeNameOnAadhar = (value) => {
+  //   setNameAsOnAadhar(value.toUpperCase());
+  // };
   const handleViewFile = async (fileName) => {
     const file = fileUploaded?.find((f) => f.fileName === fileName);
     const fileUnsaved = uploadedFile?.filter((file) => file.uploadDetailsId === 0);
@@ -948,15 +860,15 @@ const AppointeeRegisterForm = () => {
         })
         .filter((file) => file.previewURL)
         .map((fileWithDetail) => {
-          if (fileWithDetail.fileName === fileName) {
-            openUploadedDocumentModal(
-              fileWithDetail.previewURL,
-              fileWithDetail.fileName,
-              fileWithDetail.uploadTypeAlias,
-              fileWithDetail.mimeType,
-            );
-          }
-        });
+        if (fileWithDetail.fileName === fileName) {
+          openUploadedDocumentModal(
+            fileWithDetail.previewURL,
+            fileWithDetail.fileName,
+            fileWithDetail.uploadTypeAlias,
+            fileWithDetail.mimeType,
+          );
+        }
+      });
     } else {
       const payload = {
         appointeeId: appointeeId,
@@ -974,22 +886,22 @@ const AppointeeRegisterForm = () => {
   const handleChangeDateofIssue = (value, name) => {
     let _firstPageForm;
     if (value) {
-      _firstPageForm = { ...firstPageForm, [name]: value.format('YYYY-MM-DD') };
+      _firstPageForm = { ...personalDetails, [name]: value.format('YYYY-MM-DD') };
       const expiryDate = value.add(10, 'year').subtract(1, 'day').format('YYYY-MM-DD');
       _firstPageForm = { ..._firstPageForm, passportValidTillDate: expiryDate };
     } else {
-      _firstPageForm = { ...firstPageForm, passportValidFrom: null };
+      _firstPageForm = { ...personalDetails, passportValidFrom: null };
     }
-    setFirstPageForm(_firstPageForm);
+    setPersonalDetails(_firstPageForm);
   };
   const handleChangeinDateofexpiry = (value, name) => {
     let _firstPageForm;
     if (value) {
-      _firstPageForm = { ...firstPageForm, [name]: value.format('YYYY-MM-DD') };
+      _firstPageForm = { ...personalDetails, [name]: value.format('YYYY-MM-DD') };
     } else {
-      _firstPageForm = { ...firstPageForm, [name]: null };
+      _firstPageForm = { ...personalDetails, [name]: null };
     }
-    setFirstPageForm(_firstPageForm);
+    setPersonalDetails(_firstPageForm);
   };
   return (
     <>
@@ -1014,8 +926,8 @@ const AppointeeRegisterForm = () => {
                   disabledIsInterNationalWorker={disabledIsInterNationalWorker}
                   isDraft={isDraft}
                   handleSecondNext={handleSecondNext}
-                  firstPageForm={firstPageForm}
-                  setFirstPageForm={setFirstPageForm}
+                  firstPageForm={personalDetails}
+                  setFirstPageForm={setPersonalDetails}
                   handleChangeDateofIssue={handleChangeDateofIssue}
                   handleChangeinDateofexpiry={handleChangeinDateofexpiry}
                   setActiveStep={setActiveStep}
@@ -1041,7 +953,7 @@ const AppointeeRegisterForm = () => {
                   tenthCertificateFileName={tenthCertificateFileName}
                   uploadFathersDocFile={uploadFathersDocFile}
                   otherFileName={otherFileName}
-                  firstPageForm={firstPageForm}
+                  firstPageForm={personalDetails}
                   isPhysicallyHandicap={isPhysicallyHandicap}
                   uploadHandicapFile={uploadHandicapFile}
                   handicapFileName={handicapFileName}
@@ -1083,88 +995,26 @@ const AppointeeRegisterForm = () => {
               </>
             ) : null}
             {currentPageNo === 3 ? (
-              <>
-                <ThirdForm
-                  formElement={formElement}
-                  stepsList={stepsList}
+              <ThirdForm t={t} stepsList={stepsList} 
                   isAadhaarVarified={isAadhaarVarified}
-                  setisAadhaarVarified={setisAadhaarVarified}
-                  isOfflineXmlDownloaded={isOfflineXmlDownloaded}
-                  setIsOfflineXmlDownloaded={setIsOfflineXmlDownloaded}
-                  handleIsOfflineXmlDownloadedOnChange={handleIsOfflineXmlDownloadedOnChange}
-                  nameAsOnAadhar={nameAsOnAadhar}
-                  handleChangeNameOnAadhar={handleChangeNameOnAadhar}
-                  aadharShareCode={aadharShareCode}
-                  setAadharShareCode={setAadharShareCode}
-                  disabledAadharInput={disabledAadharInput}
-                  isAadhaarXmlUploaded={isAadhaarXmlUploaded}
-                  aadharstatusMessage={aadharstatusMessage}
-                  setAadharstatusMessage={setAadharstatusMessage}
-                  uploadAadharXmlFile={uploadAadharXmlFile}
-                  aadharXmlFileName={aadharXmlFileName}
-                  handleDialogCancel={handleDialogCancel}
-                  handleDialogConfirm={handleDialogConfirm}
-                  xmlFileUploaded={xmlFileUploaded}
-                  setXmlFileUploaded={setXmlFileUploaded}
+              onAadhaarVerified={setisAadhaarVarified} 
+              userInfo={personalDetails}
                   handleBack={handleBack}
-                  submitDetails={submitDetails}
-                  aadharNumber={aadhar}
-                  handleChangeAadharNumber={handleChangeAadharNumber}
-                  handleViewFile={handleViewFile}
-                  handleChangeinDateofexpiry={handleChangeinDateofexpiry}
-                  currentPageNo={currentPageNo}
                   setCurrentPageNo={setCurrentPageNo}
-                  handleThirdNext={handleThirdNext}
-                  activeStep={activeStep}
                   setActiveStep={setActiveStep}
-                  firstPageForm={firstPageForm}
-                  setFirstPageForm={setFirstPageForm}
-                  isLicenseAvailable={isLicenseAvailable}
-                  setIsLicenseAvailable={setIsLicenseAvailable}
-                  isDLVarified={isDLVarified}
-                  setisDLVarified={setisDLVarified}
-                  licensestatusMessage={licensestatusMessage}
-                  setLicenseStatusMessage={setLicenseStatusMessage}
-                  isDLAvailable={isDLAvailable}
-                  setIsDLAvailable={setIsDLAvailable}
-                  drivingLicense={drivingLicense}
-                  setDrivingLicense={setDrivingLicense}
-                  dateOfBirth={dateOfBirth}
-                  setDateOfBirth={setDateOfBirth}
-                />
-              </>
+              />
             ) : null}
-
             {currentPageNo === 4 ? (
               <>
                 <FourthForm
                   formElement={formElement}
                   stepsList={stepsList}
                   isAadhaarVarified={isAadhaarVarified}
-                  setisAadhaarVarified={setisAadhaarVarified}
                   handleBack={handleBack}
-                  submitDetails={submitDetails}
-                  handleViewFile={handleViewFile}
-                  handleChangeinDateofexpiry={handleChangeinDateofexpiry}
-                  currentPageNo={currentPageNo}
                   setCurrentPageNo={setCurrentPageNo}
-                  handleThirdNext={handleThirdNext}
-                  activeStep={activeStep}
                   setActiveStep={setActiveStep}
-                  firstPageForm={firstPageForm}
-                  setFirstPageForm={setFirstPageForm}
-                  isLicenseAvailable={isLicenseAvailable}
-                  setIsLicenseAvailable={setIsLicenseAvailable}
-                  isDLVarified={isDLVarified}
-                  setisDLVarified={setisDLVarified}
-                  licensestatusMessage={licensestatusMessage}
-                  setLicenseStatusMessage={setLicenseStatusMessage}
-                  isDLAvailable={isDLAvailable}
-                  setIsDLAvailable={setIsDLAvailable}
-                  drivingLicense={drivingLicense}
-                  setDrivingLicense={setDrivingLicense}
-                  dateOfBirth={dateOfBirth}
-                  setDateOfBirth={setDateOfBirth}
+                  userInfo={personalDetails}
+                  setUserInfo={setPersonalDetails}
                 />
               </>
             ) : null}
@@ -1172,22 +1022,13 @@ const AppointeeRegisterForm = () => {
             {currentPageNo === 5 ? (
               <>
                 <FifthForm
-                  isAadhaarVarified={isAadhaarVarified}
                   formElement={formElement}
                   stepsList={stepsList}
-                  currentPageNo={currentPageNo}
-                  setCurrentPageNo={setCurrentPageNo}
                   handleBack={handleBack}
-                  activeStep={activeStep}
+                  setCurrentPageNo={setCurrentPageNo}
                   setActiveStep={setActiveStep}
-                  isPANAvailable={isPANAvailable}
-                  setIsPANAvailable={setIsPANAvailable}
-                  nameAsOnPan={nameAsOnPan}
-                  panstatusMessage={panstatusMessage}
-                  setPANStatusMessage={setPANStatusMessage}
-                  setIsPanVarified={setIsPanVarified}
-                  pan={pan}
-                  setPan={setPan}
+                  userInfo={personalDetails}
+                  setUserInfo={setPersonalDetails}
                 />
               </>
             ) : null}
@@ -1229,7 +1070,7 @@ const AppointeeRegisterForm = () => {
                   handleBack={handleBack}
                   activeStep={activeStep}
                   setActiveStep={setActiveStep}
-                  firstPageForm={firstPageForm}
+                  firstPageForm={personalDetails}
                   isPANAvailable={isPANAvailable}
                   setIsPANAvailable={setIsPANAvailable}
                   firstatusMessage={firstatusMessage}
@@ -1256,7 +1097,7 @@ const AppointeeRegisterForm = () => {
                   setCurrentPageNo={setCurrentPageNo}
                   handleBack={handleBack}
                   handleViewFile={handleViewFile}
-                  firstPageForm={firstPageForm}
+                  firstPageForm={personalDetails}
                   aadhar={aadhar}
                   setAadhar={setAadhar}
                   epfoButton={epfoButton}

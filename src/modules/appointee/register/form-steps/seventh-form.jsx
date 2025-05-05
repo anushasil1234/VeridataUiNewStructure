@@ -1,39 +1,25 @@
 import { Box, Button, Grid, Stack } from '@mui/material';
 import { submitBtnStyle } from 'app';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import GridRow from 'shared/components/grid-container/grid-row';
-import { previousButton } from 'shared/constants/constants';
 import FIRVerification from './verifications/fir-verifications';
+import useFIRVerification from '../hooks/useFIRVerification';
+import { useSelector } from 'react-redux';
 
 const SeventhForm = ({
   formElement,
   stepsList,
-  isAadhaarVarified,
   handleBack,
-  currentPageNo,
   setCurrentPageNo,
-  activeStep,
   setActiveStep,
-  firstPageForm,
-  isPANAvailable,
-  setIsPANAvailable,
-  firstatusMessage,
-  isPoliceVarified,
-  setisPoliceVarified,
-  setFIRStatusMessage,
-  firDetails,
-  setFIRDetails,
-  pan,
-  setPan,
-  nameAsOnPan,
-  dateOfBirth,
-  setDateOfBirth,
+  userInfo,
+  setUserInfo,
 }) => {
-  const functionSlice = useSelector((state) => state.functionSlice);
-  const { openRemarksModel } = functionSlice[0];
-  const loggedInData = useSelector((state) => state.loggedInData);
-  const { t } = useTranslation();
+  // Use the custom hook for all FIR logic/state
+  const firVerification = useFIRVerification({
+    userInfo,
+    setUserInfo,
+  });
+
   return (
     <Box sx={{ width: '100%' }}>
       <form ref={formElement}>
@@ -44,19 +30,10 @@ const SeventhForm = ({
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
           <FIRVerification
-            isAadhaarVarified={isAadhaarVarified}
             stepsList={stepsList}
-            firstPageForm={firstPageForm}
-            firstatusMessage={firstatusMessage}
-            setFIRStatusMessage={setFIRStatusMessage}
-            isPoliceVarified={isPoliceVarified}
-            setisPoliceVarified={setisPoliceVarified}
-            firDetails={firDetails}
-            setFIRDetails={setFIRDetails}
-            dateOfBirth={dateOfBirth}
-            setDateOfBirth={setDateOfBirth}
+            userInfo={userInfo}
+            {...firVerification}
           />
-
           <GridRow>
             <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
               <Stack flexDirection={'row'}>
@@ -66,7 +43,7 @@ const SeventhForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {t(previousButton)}
+                  {'Previous'}
                 </Button>
                 <Button
                   onClick={() => {
@@ -77,7 +54,7 @@ const SeventhForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {t('Next')}
+                  {'Next'}
                 </Button>
               </Stack>
             </Grid>

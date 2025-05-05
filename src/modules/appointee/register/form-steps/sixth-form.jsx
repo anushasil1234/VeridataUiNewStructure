@@ -1,10 +1,8 @@
 import { Box, Button, Grid, Stack } from '@mui/material';
-import React, { useState } from 'react';
 import GridRow from 'shared/components/grid-container/grid-row';
 import { submitBtnStyle } from 'app';
-import { previousButton } from 'shared/constants/constants';
-import { useSelector, useDispatch } from 'react-redux';
 import BankVerification from './verifications/bank-verifications';
+import useBankVerification from '../hooks/useBankVerification';
 
 const SixthForm = ({
   formElement,
@@ -13,15 +11,14 @@ const SixthForm = ({
   handleBack,
   setCurrentPageNo,
   setActiveStep,
-  bankstatusMessage,
-  setBankStatusMessage,
-  isBankVarified,
-  setIsBankVarified,
-  accountNumber,
-  setAccountNumber,
-  IFSCCode,
-  setIFSCCode,
+  userInfo,
+  setUserInfo,
 }) => {
+  // Use the custom hook for all bank logic/state
+  const bankVerification = useBankVerification({
+    userInfo,
+    setUserInfo,
+  });
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -33,18 +30,10 @@ const SixthForm = ({
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
           <BankVerification
-            isAadhaarVarified={isAadhaarVarified}
             stepsList={stepsList}
-            bankstatusMessage={bankstatusMessage}
-            setBankStatusMessage={setBankStatusMessage}
-            isBankVarified={isBankVarified}
-            setIsBankVarified={setIsBankVarified}
-            accountNumber={accountNumber}
-            setAccountNumber={setAccountNumber}
-            IFSCCode={IFSCCode}
-            setIFSCCode={setIFSCCode}
+            isAadhaarVarified={isAadhaarVarified}
+            {...bankVerification}
           />
-
           <GridRow>
             <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
               <Stack flexDirection={'row'}>
@@ -54,7 +43,7 @@ const SixthForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {previousButton}
+                  {'Previous'}
                 </Button>
                 <Button
                   onClick={() => {

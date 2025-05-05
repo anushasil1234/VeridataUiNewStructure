@@ -14,141 +14,32 @@ import {
   Toolbar,
 } from '@mui/material';
 import { modelToolbar } from 'app';
-import { Close } from '@mui/icons-material';
-import React, { useState } from 'react';
+import { Close, Autorenew } from '@mui/icons-material';
+import React from 'react';
 import FormHeadingContainer from 'shared/components/grid-container/form-heading-container';
 import FormHeading from '../../form-heading';
 import GridRow from 'shared/components/grid-container/grid-row';
-import showErrorMessage from 'shared/utils/associate/show-error-message';
 import { submitBtnStyle } from 'app';
-import { Autorenew } from '@mui/icons-material';
-import {
-  aaddharNumberverify,
-  firVerifyFailedMsg,
-} from 'shared/constants/constants';
 import TextInput from 'shared/components/input-fields/text-input';
-import { useSelector, useDispatch } from 'react-redux';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
-import { hasValue } from 'shared/utils';
-import VerificationStatus from '../../../../../shared/components/verification/verification-status';
-import { checkFIRDetails } from 'server/apis/verify/check-fir-details';
-import { storeCurrentPageNo } from 'store/slices/candidate-page-slice';
 import { DDMMYYYY } from 'shared/utils';
-import { useTranslation } from 'react-i18next';
+
 const FIRVerification = ({
   stepsList,
-  isAadhaarVarified,
-  firstPageForm,
-  firstatusMessage,
   isPoliceVarified,
-  setisPoliceVarified,
-  setFIRStatusMessage,
+  handleFIRChecking,
+  isViewFIREnabled,
+  setIsFIRModalOpen,
+  isFIRModalOpen,
   firDetails,
-  setFIRDetails,
-  dateOfBirth,
-  setDateOfBirth,
+  handleDialogCancel,
+  firStatusMessage,
+  userInfo,
 }) => {
-  const AADHARVERIFICATION_BY = process.env.REACT_APP_AADHARVERIFICATION_BY;
-  const { t } = useTranslation();
-  console.log('AADHARVERIFICATION_BY', AADHARVERIFICATION_BY);
-  const functionSlice = useSelector((state) => state.functionSlice);
-  const { openRemarksModel } = functionSlice[0];
-  console.log('stepsList', stepsList);
-  const [pan, setPan] = useState(null);
-  const [panNumberError, setPanNumberError] = useState(false);
-  const [disabledPanInput, setDisabledPanInput] = useState(false);
-  const [isFIRModalOpen, setIsFIRModalOpen] = useState(false);
-  const [isViewFIREnabled, setIsViewFIREnabled] = useState(false);
-  const [nameAsOnPan, setNameAsOnPan] = useState(null);
-  const loggedInData = useSelector((state) => state.loggedInData);
-  const { userId, appointeeId, userCode, candidateId, userName } = loggedInData[0];
-  const dispatch = useDispatch();
-  const setCurrentPageNo = (currentPageNo) => {
-    dispatch(storeCurrentPageNo(currentPageNo));
-  };
-  const handelPANNumberChange = (value) => {
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    if (value !== 'none') {
-      if (value.length <= 10) {
-        const upperCaseValue = value.trim().toUpperCase();
-        setPan(upperCaseValue);
-        if (upperCaseValue.length === 10) {
-          if (panRegex.test(upperCaseValue)) {
-            setPanNumberError(false);
-            if (isAadhaarVarified) {
-              setPan(upperCaseValue);
-            } else {
-              showErrorMessage(aaddharNumberverify);
-            }
-          } else {
-            setPanNumberError(true);
-            console.log('handelPANNumberChange');
-            showErrorMessage('Invalid PAN number format. Please enter a valid PAN.');
-          }
-        } else {
-          setPanNumberError(false);
-        }
-      }
-    }
-  };
-  const handleBlurPAN = () => {
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    if (pan?.length === 10 && !panRegex.test(pan)) {
-      setPanNumberError(true);
-      showErrorMessage('Invalid PAN number format. Please enter a valid PAN.');
-    }
-  };
-  const displayFirError = (msg) => {
-    showErrorMessage(msg);
-  };
-  const handleFIRChecking = () => {
-    checkFIR();
-  };
-  const checkFIR = async () => {
-    const payLoad = {
-      appointeeId: appointeeId,
-      userId: userId,
-    };
-    const response = await checkFIRDetails(payLoad);
-    if (response) {
-      const { policeFirDetails, IsVarified, remarks } = response.responseInfo;
-      setisPoliceVarified(IsVarified);
-      setFIRDetails(policeFirDetails);
-      setIsViewFIREnabled(policeFirDetails?.length > 0);
-      if (IsVarified) {
-      } else {
-        displayFirError(firVerifyFailedMsg);
-        if (hasValue(policeFirDetails)) {
-          setIsFIRModalOpen(true);
-        }
-      }
-      setIsFIRModalOpen(true);
-      setFIRStatusMessage(new VerificationStatus(IsVarified, 'V'));
-    }
-  };
   const parsedFIRDetails =
     typeof firDetails === 'string' ? JSON.parse(firDetails) : firDetails || [];
-  const handleDialogConfirm = () => {
-    setIsFIRModalOpen(false);
-  };
-  const handleDialogCancel = () => {
-    setIsFIRModalOpen(false);
-  };
-  const generateRemarks = (remarks) => {
-    let remarksList = [];
-    if (hasValue(remarks)) {
-      remarksList = remarks.split(',').map((remark) => {
-        return {
-          remarksCategory: 'NRML',
-          remarks: remark,
-        };
-      });
-    }
-    return remarksList;
-  };
   return (
     <>
-      {}
       <FormHeadingContainer>
         <FormHeading
           step={stepsList?.FIRV?.step}
@@ -158,7 +49,7 @@ const FIRVerification = ({
       </FormHeadingContainer>
       <GridRow>
         <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-          <TextInput label={t('Candidate Name')} value={userName} disabled={true} />
+          <TextInput label={'Candidate Name'} value={userInfo?.appointeeName} disabled={true} />
           <Button
             sx={{ ...submitBtnStyle, margin: '5px 10px 5px 0' }}
             disabled={isPoliceVarified}
@@ -166,7 +57,7 @@ const FIRVerification = ({
             onClick={handleFIRChecking}
             endIcon={<Autorenew />}
           >
-            {t('Check')}
+            {'Check'}
           </Button>
           {isViewFIREnabled && (
             <Button
@@ -225,8 +116,7 @@ const FIRVerification = ({
               </DialogContent>
             </Dialog>
           )}
-          {}
-          <VerificationStatusSection docType={firstatusMessage} />
+          <VerificationStatusSection docType={firStatusMessage} />
         </Grid>
         <Grid
           item
@@ -237,13 +127,12 @@ const FIRVerification = ({
           }}
         >
           <TextInput
-            label={t('Date Of Birth')}
-            value={firstPageForm?.dateOfBirth ? DDMMYYYY(firstPageForm?.dateOfBirth) : null}
+            label={'Date Of Birth'}
+            value={userInfo?.dateOfBirth ? DDMMYYYY(userInfo?.dateOfBirth) : null}
             disabled={true}
           />
         </Grid>
       </GridRow>
-      {}
     </>
   );
 };

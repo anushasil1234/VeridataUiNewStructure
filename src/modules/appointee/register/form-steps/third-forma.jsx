@@ -25,7 +25,7 @@ import { hasValue } from 'shared/utils';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import { useTranslation } from 'react-i18next';
 import AadhaarVerification from './verifications/aadhar-verification';
-const ThirdForm = ({
+const ThirdForma = ({
   formElement,
   stepsList,
   isAadhaarVarified,
@@ -62,7 +62,6 @@ const ThirdForm = ({
   setFirstPageForm,
 }) => {
   const functionSlice = useSelector((state) => state.functionSlice);
-  const loggedInData = useSelector((state) => state.loggedInData);
   const { openInfoModel } = functionSlice[0];
   const [openModal, setOpenModal] = useState(false);
   const [isDLVerificationDisabled, setIsDLVerificationDisabled] = useState(false);
@@ -75,10 +74,7 @@ const ThirdForm = ({
   const [passwordFieldIcon, setPasswordFieldIcon] = useState(
     <VisibilityOff sx={loginFieldIconStyle} />,
   );
-  const handleShareCodeVisibility = () => {
-    setIsPasswordVisibilityOn(!isPasswordVisibilityOn);
-  };
-  const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] = useState(false);
+  // const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] = useState(false);
   useEffect(() => {
     if (isPasswordVisibilityOn) {
       setPasswordType('text');
@@ -88,14 +84,7 @@ const ThirdForm = ({
       setPasswordFieldIcon(<VisibilityOff sx={loginFieldIconStyle} />);
     }
   }, [isPasswordVisibilityOn]);
-  useEffect(() => {
-    if (hasValue(firstPageForm.isDLAvailable)) {
-      setIsPreviousSectionDisabled(true);
-    }
-  }, [firstPageForm.isDLAvailable]);
-  useEffect(() => {
-    console.log('isDLVerificationDisabled changed:', isDLVerificationDisabled);
-  }, [isDLVerificationDisabled]);
+ 
   return (
     <Box sx={{ width: '100%' }}>
       <form ref={formElement}>
@@ -105,7 +94,6 @@ const ThirdForm = ({
           rowSpacing={1}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          {}
           <AadhaarVerification
             stepsList={stepsList}
             isAadhaarVarified={isAadhaarVarified}
@@ -141,29 +129,6 @@ const ThirdForm = ({
             firstPageForm={firstPageForm}
             setFirstPageForm={setFirstPageForm}
           />
-          {}
-          {}
-          {}
-          {/* <DrivingLicenseVerification
-            isAadhaarVarified={isAadhaarVarified}
-            stepsList={stepsList}
-            firstPageForm={firstPageForm}
-            setFirstPageForm={setFirstPageForm}
-            isLicenseAvailable={isLicenseAvailable}
-            setIsLicenseAvailable={setIsLicenseAvailable}
-            isDLVarified={isDLVarified}
-            setisDLVarified={setisDLVarified}
-            licensestatusMessage={licensestatusMessage}
-            setLicenseStatusMessage={setLicenseStatusMessage}
-            isDLVerificationDisabled={isDLVerificationDisabled}
-            isDLAvailable={isDLAvailable}
-            setIsDLAvailable={setIsDLAvailable}
-            drivingLicense={drivingLicense}
-            setDrivingLicense={setDrivingLicense}
-            dateOfBirth={dateOfBirth}
-            setDateOfBirth={setDateOfBirth}
-          /> */}
-          {}
           <GridRow>
             <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
               <Stack flexDirection={'row'}>
@@ -189,14 +154,7 @@ const ThirdForm = ({
                   variant='contained'
                   color='primary'
                   disabled={!isAadhaarVarified}
-                  // disabled={
-                  //   !(
-                  //     (isAadhaarVarified
-                  //       && (!isLicenseAvailable || isDLVarified)) ||
-                  //     !isDLAvailable ||
-                  //     isDLVarified
-                  //   )
-                  // }
+                 
                 >
                   {t('Next')}
                 </Button>
@@ -208,4 +166,4 @@ const ThirdForm = ({
     </Box>
   );
 };
-export default ThirdForm;
+export default ThirdForma;
