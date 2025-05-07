@@ -26,7 +26,7 @@ import { VerificationStatusSection } from 'shared/components/verification/verifi
 import { DDMMYYYY } from 'shared/utils';
 import { fileInputboxContainerStyle } from 'app';
 import { handleImageUpload } from 'shared/utils/associate/text-extraction-from-upload-image';
-
+import { useTranslation } from "react-i18next";
 const DrivingLicenseVerification = ({
   stepsList,
   isDLAvailable,
@@ -51,7 +51,7 @@ const DrivingLicenseVerification = ({
       </Typography>
     </Typography>
   );
-  
+  const { t } = useTranslation();
   return (
     <>
       <FormHeadingContainer>
@@ -63,7 +63,7 @@ const DrivingLicenseVerification = ({
       </FormHeadingContainer>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography sx={{ ...headingType1, lineHeight: '2.4375em', marginLeft: '34px' }}>
-          Do you have a driving license?
+        {t("Do you have a driving license?")}
         </Typography>
         <RadioGroup
           row
@@ -74,13 +74,13 @@ const DrivingLicenseVerification = ({
           <FormControlLabel
             value='Yes'
             control={<Radio />}
-            label={'Yes'}
+            label={t("Yes")}
             disabled={isDLVerificationDisabled}
           />
           <FormControlLabel
             value='No'
             control={<Radio />}
-            label={'No'}
+            label={t("No")}
             disabled={isDLVerificationDisabled}
           />
         </RadioGroup>
@@ -89,13 +89,13 @@ const DrivingLicenseVerification = ({
         <GridRow sx={positionRelative}>
           <Grid item xs={12} md={6} sx={{ paddingLeft: '0px !important' }}>
             <TextInput
-              label={'Driving License Number'}
+              label={t("Driving License Number")}
               onChange={handleLicenseNumberChange}
               disabled={isDlVarified}
               value={drivingLicense}
             />
             <TextInput
-              label={'Date of Birth'}
+              label={t("Date Of Birth")}
               value={userInfo?.dateOfBirth ? DDMMYYYY(userInfo?.dateOfBirth) : null}
               disabled={true}
             />
@@ -106,7 +106,7 @@ const DrivingLicenseVerification = ({
               onClick={handleDrivingLicenseVerification}
               endIcon={<Autorenew />}
             >
-              Verify
+              {t("Verify")}
             </Button>
             <VerificationStatusSection docType={licensestatusMessage} />
           </Grid>

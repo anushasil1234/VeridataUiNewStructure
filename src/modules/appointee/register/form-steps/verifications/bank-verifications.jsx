@@ -6,7 +6,7 @@ import GridRow from 'shared/components/grid-container/grid-row';
 import TextInput from 'shared/components/input-fields/text-input';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
 import FormHeading from '../../form-heading';
-
+import { useTranslation } from "react-i18next";
 const BankVerification = ({
   bankstatusMessage,
   isAadhaarVarified,
@@ -19,19 +19,20 @@ const BankVerification = ({
   handleBankAccountVerification,
   stepsList,
 }) => {
+  const { t } = useTranslation(); 
   return (
     <>
       <FormHeadingContainer>
         <FormHeading
           step={stepsList?.BAV?.step}
           heading={stepsList?.BAV?.name}
-          info={'Enter your Bank Account Details to verify.'}
+          info={t('Enter your Bank Account Details to verify.')}
         />
       </FormHeadingContainer>
       <GridRow sx={positionRelative}>
         <Grid item xs={12} md={6} sx={{ paddingLeft: '0px !important' }}>
           <TextInput
-            label={'Bank Account Number'}
+            label={t('Bank Account Number')}
             onKeyDown={(e) => {
               if (!/^[0-9]+$/.test(e.key) && e.key !== 'Backspace') {
                 e.preventDefault();
@@ -55,7 +56,7 @@ const BankVerification = ({
           }}
         >
           <TextInput
-            label={'IFSC Code'}
+            label={t('IFSC Code')}
             onChange={handleIFSCCodeChange}
             value={IFSCCode}
             disabled={isBankVarified}
@@ -70,7 +71,7 @@ const BankVerification = ({
             onClick={() => handleBankAccountVerification(isAadhaarVarified)}
             endIcon={<Autorenew />}
           >
-            {'Verify'}
+            {t('Verify')}
           </Button>
           <VerificationStatusSection docType={bankstatusMessage} />
         </Grid>

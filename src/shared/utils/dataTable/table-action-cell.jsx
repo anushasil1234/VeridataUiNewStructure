@@ -1,20 +1,4 @@
 import { Button, Fab, Stack, Typography } from '@mui/material';
-import DarkTooltip from '../tooltip/dark-tooltip';
-import {
-  AccountBox,
-  Article,
-  Cancel,
-  ContactMail,
-  Download,
-  Edit,
-  ForwardToInbox,
-  ForwardToInboxOutlined,
-  MenuBook,
-  Notifications,
-  Verified,
-  VerifiedRounded,
-} from '@mui/icons-material';
-import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { buttonStyleSx, greenFabStyle, primaryFabStyle, redFabStyle, yellowFabStyle } from 'app';
 import { useSelector } from 'react-redux';
 import {
@@ -224,7 +208,9 @@ export const TableActionCell = (props1, props2) => {
               title={'Manual Verification'}
             />
           ) : null}
-          {action === 'MANUALREVER' && actionPermissionList && actionPermissionList['A015'] ? (
+          {action === 'MANUALREVER' 
+          // && actionPermissionList && actionPermissionList['A015'] 
+          ? (
             <ExclamationFab
               onClick={() => handleGetAppointeeDetails(appointeeId)}
               title={'Manual Re-Verification'}

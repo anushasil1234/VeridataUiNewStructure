@@ -40,7 +40,7 @@ useEffect(() => {
   };
 
   const handleIFSCCodeChange = (value) => {
-    setIFSCCode(value);
+    setIFSCCode(value.toUpperCase());
   };
 
   const displayBankError = (msg) => {

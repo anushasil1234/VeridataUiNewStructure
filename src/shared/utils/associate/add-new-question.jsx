@@ -1,1 +1,37 @@
-import {  epfFileCategoryTypeAlias,  fatherFileCategoryTypeAlias,  fatherVerificationQuestionSet,  passbookVerificationQuestionSet,} from 'shared/constants/constants';const addNewQuestion = ({ verificationType, verificationQuestionSet }) => {  console.log('verificationType234', verificationType);  const _fatherVerificationQuestionSet = JSON.parse(JSON.stringify(fatherVerificationQuestionSet));  const _passbookVerificationQuestionSet = JSON.parse(    JSON.stringify(passbookVerificationQuestionSet),  );  let updatedQuestion;  if (verificationType.value === fatherFileCategoryTypeAlias) {    updatedQuestion = _fatherVerificationQuestionSet;  }  if (verificationType.value === epfFileCategoryTypeAlias) {    updatedQuestion = _passbookVerificationQuestionSet;  }  return {    updatedQuestionSet: [...verificationQuestionSet, ...updatedQuestion],  };};export default addNewQuestion;
+import { GetManualVerificationQuestion } from 'server/apis/verify/get-manual-verification-question';
+
+const addNewQuestion = async ({ verificationType }) => {
+  console.log('verificationType234', verificationType);
+  const response = await GetManualVerificationQuestion(verificationType);
+  console.log('responseman', response);
+
+    const groupByQuestionId = (data) => {
+      const seen = new Set();
+      const grouped = [];
+    
+      data.forEach(item => {
+        const { questionId, answerId, answerText, action, nextQuestion } = item;
+    
+        let question = grouped.find(q => q.questionId === questionId);
+    
+        if (!question) {
+          question = {
+            ...item,
+            answers: []
+          };
+          grouped.push(question);
+          seen.add(questionId);
+        }
+    
+        question.answers.push({ answerId, answerText, action, nextQuestion });
+      });
+    
+      return grouped;
+    };
+    const groupedData = Object.values(groupByQuestionId(response?.responseInfos));
+    console.log('groupedData', groupedData);
+    return {
+        updatedQuestionSet: groupedData
+    };
+};
+export default addNewQuestion;

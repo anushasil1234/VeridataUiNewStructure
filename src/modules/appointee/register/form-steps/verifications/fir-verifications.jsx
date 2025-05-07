@@ -23,6 +23,7 @@ import { submitBtnStyle } from 'app';
 import TextInput from 'shared/components/input-fields/text-input';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
 import { DDMMYYYY } from 'shared/utils';
+import { useTranslation } from 'react-i18next';
 
 const FIRVerification = ({
   stepsList,
@@ -36,6 +37,7 @@ const FIRVerification = ({
   firStatusMessage,
   userInfo,
 }) => {
+  const { t } = useTranslation();
   const parsedFIRDetails =
     typeof firDetails === 'string' ? JSON.parse(firDetails) : firDetails || [];
   return (
@@ -44,12 +46,12 @@ const FIRVerification = ({
         <FormHeading
           step={stepsList?.FIRV?.step}
           heading={stepsList?.FIRV?.name}
-          info={'Check if any FIR is filed against you.'}
+          info={t('Check if any FIR is filed against you.')}
         />
       </FormHeadingContainer>
       <GridRow>
         <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
-          <TextInput label={'Candidate Name'} value={userInfo?.appointeeName} disabled={true} />
+          <TextInput label={t('Candidate Name')} value={userInfo?.appointeeName} disabled={true} />
           <Button
             sx={{ ...submitBtnStyle, margin: '5px 10px 5px 0' }}
             disabled={isPoliceVarified}
@@ -57,7 +59,7 @@ const FIRVerification = ({
             onClick={handleFIRChecking}
             endIcon={<Autorenew />}
           >
-            {'Check'}
+            {t('Check')}
           </Button>
           {isViewFIREnabled && (
             <Button
@@ -65,7 +67,7 @@ const FIRVerification = ({
               variant='contained'
               onClick={() => setIsFIRModalOpen(true)}
             >
-              FIR Details
+              {t('FIR Details')}
             </Button>
           )}
           {parsedFIRDetails.length > 0 && (
@@ -127,7 +129,7 @@ const FIRVerification = ({
           }}
         >
           <TextInput
-            label={'Date Of Birth'}
+            label={t('Date Of Birth')}
             value={userInfo?.dateOfBirth ? DDMMYYYY(userInfo?.dateOfBirth) : null}
             disabled={true}
           />

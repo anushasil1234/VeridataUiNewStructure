@@ -32,6 +32,7 @@ import Button1 from 'shared/utils/button/button1';
 import { Info } from '@mui/icons-material';
 import { dark } from '@mui/material/styles/createPalette';
 import { getRemarks, postAppointeePrerequisiteStatus } from 'server/apis';
+import { useTranslation } from "react-i18next";
 import {
   removeAppointeeStatusDetailsData,
   storeAppointeeStatusDetailsData,
@@ -42,6 +43,7 @@ const CandidateView = () => {
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const userDetails = loggedInData[0];
+  const { t } = useTranslation();
   console.log('loggedindata', loggedInData[0]);
   const appointeeStatusDetailsData = useSelector((state) => state.appointeeStatusDetailsData);
   console.log('appointeeStatusDetailsDatacandidate', appointeeStatusDetailsData);
@@ -250,19 +252,19 @@ const CandidateView = () => {
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item lg={3} xs={12}>
-                  Name: {appointeeName}
+                {t("Name")}: {appointeeName}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                  Email: {appointeeEmailId}
+                {t("email")}: {appointeeEmailId}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                  Phone: {mobileNo}
+                {t("Phone")}: {mobileNo}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                  Candidate Id: {candidateId}
+                {t("Candidate ID")}: {candidateId}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                  Status:
+                {t("Status")}:
                   {}
                   <Chip
                     label={currStatus}

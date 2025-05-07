@@ -239,8 +239,8 @@ const AppointeeRegisterForm = () => {
       ({ name, size }) =>
         !removeDetailsList.some((removed) => removed.name === name && removed.size === size),
     );
-    const removedNames = removeDetailsList.map(({ name }) => name);
-    const updatedFileNameList = fileNameList.filter((name) => !removedNames.includes(name));
+    const removedNames = removeDetailsList?.map(({ name }) => name);
+    const updatedFileNameList = fileNameList?.filter((name) => !removedNames.includes(name));
     setUploadedFile(updatedUploadedFiles);
     setFileDetails(updatedFileDetails);
     setFileName(updatedFileNameList);
@@ -273,16 +273,17 @@ const AppointeeRegisterForm = () => {
       setisAadhaarVarified(response.responseInfo.isAadhaarVarified)
     }
   };
+  console.log('isPassportAvailable',personalDetails.isPassportAvailable,isPhysicallyHandicap)
   useEffect(() => {
     updateStep({});
-  }, [t, stepCounter, isPhysicallyHandicap, isPassportAvailable]);
+  }, [t, stepCounter, isPhysicallyHandicap, personalDetails.isPassportAvailable]);
   const updateStep = (param) => {
     const _steps = CreateStepSequience({
       ...param,
       stepCounter,
       t,
       isHandicap: isPhysicallyHandicap,
-      isPassportAvailable: isPassportAvailable,
+      isPassportAvailable: personalDetails.isPassportAvailable,
     });
     setStepsList((prevSteps) => ({ ...prevSteps, ..._steps }));
   };

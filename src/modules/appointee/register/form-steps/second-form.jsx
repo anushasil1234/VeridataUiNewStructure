@@ -108,6 +108,7 @@ const SecondForm = ({
   openUploadDocInfoModel,
   handleFileUpload
 }) => {
+  console.log('firstPageForm', firstPageForm,stepsList);
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const { t } = useTranslation();

@@ -4,6 +4,7 @@ import GridRow from 'shared/components/grid-container/grid-row';
 import FIRVerification from './verifications/fir-verifications';
 import useFIRVerification from '../hooks/useFIRVerification';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const SeventhForm = ({
   formElement,
@@ -14,6 +15,7 @@ const SeventhForm = ({
   userInfo,
   setUserInfo,
 }) => {
+  const { t } = useTranslation();
   // Use the custom hook for all FIR logic/state
   const firVerification = useFIRVerification({
     userInfo,
@@ -43,7 +45,7 @@ const SeventhForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {'Previous'}
+                  {t('Previous')}
                 </Button>
                 <Button
                   onClick={() => {
@@ -54,7 +56,7 @@ const SeventhForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {'Next'}
+                  {t('Next')}
                 </Button>
               </Stack>
             </Grid>

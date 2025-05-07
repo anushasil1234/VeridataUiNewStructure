@@ -3,6 +3,7 @@ import GridRow from 'shared/components/grid-container/grid-row';
 import { submitBtnStyle } from 'app';
 import BankVerification from './verifications/bank-verifications';
 import useBankVerification from '../hooks/useBankVerification';
+import { useTranslation } from 'react-i18next';
 
 const SixthForm = ({
   formElement,
@@ -14,6 +15,7 @@ const SixthForm = ({
   userInfo,
   setUserInfo,
 }) => {
+    const { t } = useTranslation(); 
   // Use the custom hook for all bank logic/state
   const bankVerification = useBankVerification({
     userInfo,
@@ -43,7 +45,7 @@ const SixthForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {'Previous'}
+                  {t('Previous')}
                 </Button>
                 <Button
                   onClick={() => {
@@ -54,7 +56,7 @@ const SixthForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {'Next'}
+                  {t('Next')}
                 </Button>
               </Stack>
             </Grid>

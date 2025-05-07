@@ -218,7 +218,7 @@ export const UserLoginView = () => {
               stopLoader();
               closeOtpSubmitionModel();
             } else {
-              navigate('/');
+             // navigate('/');
               stopLoader();
             }
           };
@@ -239,7 +239,7 @@ export const UserLoginView = () => {
             stopLoader();
           }
         } else {
-          navigate('/');
+          //navigate('/');
           stopLoader();
         }
       } catch (error) {

@@ -166,7 +166,9 @@ export const epfTypeAlias = 'EPFPSBK';
 export const epfExcelTypeAlias = 'EPFPSBKEXCL';
 export const epfFileTypeAlias = 'EPFO';
 export const epfFileCategoryTypeAlias = 'EPFO';
-export const fatherFileCategoryTypeAlias = 'FTHR';
+//export const fatherFileCategoryTypeAlias = 'FTHR';
+export const fatherFileCategoryTypeAlias = 'FATHER';
+
 export const imageFileTypeAlias = 'PRF';
 export const NA = 'N/A';
 export const toDashboard = '/dashboard';
@@ -2496,7 +2498,7 @@ export const GetUnProcessedFileData_URL = `${Candidate}/GetUnProcessedFileData`;
 export const GetProcessedMISData_URL = `${AppoienteeWorkFlow}/GetProcessedMISData`; //not used
 export const GetCriticalAppointeeData_URL = `${Candidate}/GetCriticalAppointeeList`;
 export const GetRemarksRemedyData_URL = `${Candidate}/GetRemarksRemedy`;
-export const GetRemarks_URL = `${Candidate}/GetRemarks?AppointeeId=`;
+export const GetRemarks_URL = `${Candidate}/GetRemarks?appointeeId=`;
 export const GetMannualVerificationData_URL = `${Verify}/GetManualVeificationProcessData`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`; //not used
 export const PostAppointeeDocAvailibility_URL = `${Candidate}/PostAppointeeDocAvailibility`;
@@ -2527,7 +2529,7 @@ export const ApiCounterReport_URL = (fromDate, toDate) => {
   return ApiCounterReportUrl;
 };
 export const PassbookDetails_URL = `${FileUpload}/GetPassbookDetails?AppointeeId=`;
-export const UpdateAppointeeManualVerification_URL = `${AppoienteeWorkFlow}/UpdateAppointeeManualVerification`;
+export const UpdateAppointeeManualVerification_URL = `${Verify}/VerifyManualDetails`;
 export const EmployementDetails_URL = (AppointeeId, userId) => {
   let _EmployementDetails_URL = `${FileUpload}/GetEmployementDetails`;
   return `${_EmployementDetails_URL}?AppointeeId=${AppointeeId}&userId=${userId}`;
@@ -2541,6 +2543,7 @@ export const VerifyAadharViaXml_URL = `${Verify}/VerifyAadharViaXml`;
 export const GenerateUANOTP_URL = `${Verify}/UANGenerateOTP`;
 export const GetUANNumber_URL = `${Verify}/GetUANDetails`;
 export const UANSubmitOTP_URL = `${Verify}/UANSubmitOTP`;
+export const GetManualVerificationQuestion_URL = `${Verify}/GetManualVeificationQuestion?processType=`;
 export const GenerateOTP_URL = `${AadhaarValidate}/GenerateOTP`;
 export const SubmitOTP_URL = `${AadhaarValidate}/SubmitOTP`;
 export const GetAdminUserList_URL = `/GetAdminUserList`;

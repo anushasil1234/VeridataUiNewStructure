@@ -17,7 +17,7 @@ import TextInput from 'shared/components/input-fields/text-input';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
 import { fileInputboxContainerStyle } from 'app';
 import { handleImageUpload } from 'shared/utils/associate/text-extraction-from-upload-image';
-
+import { useTranslation } from "react-i18next";
 const PANVerification = ({
   stepsList,
   isPANAvailable,
@@ -34,6 +34,7 @@ const PANVerification = ({
   setUploadedFileName,
   onTextExtracted,
 }) => {
+  const { t } = useTranslation();
   const iconColor = 'none';
   const iconText = (
     <Typography sx={{ fontSize: '16px' }}>
@@ -54,7 +55,7 @@ const PANVerification = ({
       </FormHeadingContainer>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography sx={{ ...headingType1, lineHeight: '2.4375em', marginLeft: '34px' }}>
-          Do you have PAN Detail?
+        {t("Do you have PAN Detail?")}
         </Typography>
         <RadioGroup
           row
@@ -65,13 +66,13 @@ const PANVerification = ({
           <FormControlLabel
             value='Yes'
             control={<Radio />}
-            label={'Yes'}
+            label={t("Yes")}
             disabled={isPanVarified}
           />
           <FormControlLabel
             value='No'
             control={<Radio />}
-            label={'No'}
+            label={t("No")}
             disabled={isPanVarified}
           />
         </RadioGroup>
@@ -81,14 +82,14 @@ const PANVerification = ({
           <GridRow sx={positionRelative}>
             <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
               <TextInput
-                label={'PAN Number'}
+                label={t('PAN Number')}
                 value={pan}
                 onChange={handelPANNumberChange}
                 disabled={isPanVarified}
                 error={panNumberError}
                 onBlur={handleBlurPAN}
               />
-              <TextInput label={'Name on PAN'} value={nameAsOnPan} disabled={true} />
+              <TextInput label={t('Name on PAN')} value={nameAsOnPan} disabled={true} />
               <Button
                 sx={{ ...submitBtnStyle, margin: '5px 0' }}
                 disabled={isPanVarified}
@@ -96,7 +97,7 @@ const PANVerification = ({
                 onClick={handlePanVerifiaction}
                 endIcon={<Autorenew />}
               >
-                Verify
+                {t("Verify")}
               </Button>
               <VerificationStatusSection docType={panstatusMessage} />
             </Grid>

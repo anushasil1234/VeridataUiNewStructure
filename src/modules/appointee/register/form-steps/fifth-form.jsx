@@ -3,7 +3,7 @@ import { submitBtnStyle } from 'app';
 import GridRow from 'shared/components/grid-container/grid-row';
 import PANVerification from './verifications/pan-verification';
 import usePanVerification from '../hooks/usePanVerification';
-
+import { useTranslation } from "react-i18next";
 const FifthForm = ({
   formElement,
   stepsList,
@@ -13,6 +13,7 @@ const FifthForm = ({
   userInfo,
   setUserInfo,
 }) => {
+  const { t } = useTranslation();
   // Use the custom hook for all PAN logic/state
   const panVerification = usePanVerification({
     userInfo,
@@ -42,7 +43,7 @@ const FifthForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {'Previous'}
+                  {t('Previous')}
                 </Button>
                 <Button
                   onClick={() => {
@@ -53,7 +54,7 @@ const FifthForm = ({
                   variant='contained'
                   color='primary'
                 >
-                  {'Next'}
+                  {t('Next')}
                 </Button>
               </Stack>
             </Grid>
