@@ -1,120 +1,33 @@
-import { Grid, Typography, Chip, Button, Skeleton, Avatar } from '@mui/material';
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import viewImage from 'assets/images/profile/file_upload_icon.png';
+import { Grid, Typography, Button } from '@mui/material';
+import React, { } from 'react';
 import { Box, Stack } from '@mui/system';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  DialogContentText,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  TableContainer,
-  AppBar,
-  IconButton,
-  Toolbar,
-} from '@mui/material';
 import { submitBtnStyle } from 'app';
-import { modelToolbar } from 'app';
-import { Close } from '@mui/icons-material';
-import {
-  Comment,
-  RestartAlt,
-  Security,
-  ThumbDown,
-  ThumbUp,
-  Add,
-  TaskAlt,
-  WarningAmber,
-  PermMedia,
-  MenuBook,
-  AccountBox,
-} from '@mui/icons-material';
 import exclamation from 'assets/images/exclamation.png';
 import FullScreenModel from 'shared/utils/modals/fullscreen-modal';
 import {
-  DATEDIFF,
-  DDMMYYYY,
-  DateFormatYYYYMMDD,
-  FabIcon,
-  filteredObjectProperty,
-  hasValue,
-  toggleActionMenu,
-} from 'shared/utils';
-import {
   _addFabStyle,
-  actionIconListStyle,
-  actionIconStyle,
-  appointeeVerificationStatusChipPropsStyle,
   buttonStyleSx,
   cardStyle,
-  documentListItemStyle,
-  documentListStyle,
-  floatingIconListStyle,
   gridContainerStyle,
   listHeadingConteinerStyle,
   listHeadingStyle,
-  memberNameStyle,
-  notVerifySuccessIconStyle,
-  subHeadingContentTextStyle,
-  verifyFailedIconStyle,
-  verifySuccessIconStyle,
 } from 'app';
 import ActivityLogDetails from './activity-log-details';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   NA,
-  appointeerejetionConfirmationMsg,
-  approveConfirmation,
   passportFileTypeAlias,
   handicapFileTypeAlias,
   trustEpfoFileTypeAlias,
   tenthCertificateFileTypeAlias,
   otherFileTypeAlias,
-  remarksEmptyMsg,
-  roleTypeEnums,
   epfoPassbookFileTypeAlias,
-  pensionConfirmation,
   epfoServiceHistoryFileTypeAlias,
-  toMannualVerification,
-  remarksissuemessage,
-  noPassBookMsg,
-  noEmployementMsg,
-  AadhaarProfileImageTypeAlias,
-  imageFileTypeAlias,
-  remarksemptyerror,
-  remarksError,
 } from 'shared/constants/constants';
-import FabIconPropsModel from 'shared/utils/fab-icon/fab-icon-model';
-import TextSkelton1 from 'shared/utils/skeltons/text-skelton/text-skelton1';
-import { storeActionRoute } from 'store/slices/action-route-slice';
 import ActionPermission from 'shared/components/action-permission/action-permission';
-import ProfileImg from 'assets/images/profile/user-2.jpg';
 import {
-  FieldName,
-  FieldValue,
   PersonalInformation,
 } from 'shared/components/display-information/personal-information';
-import RemarksInputModel from 'shared/utils/modals/remarks-modal';
 import { FileViewComponent } from './file-view-component';
-import {
-  getAppointeeActivity,
-  getAppointeeDetails,
-  getEmploymentDetails,
-  getPassbookDetails,
-  getRemarks,
-  getUploadedFileDetailsById,
-  postAppointeeApproved,
-  postAppointeePensionApplicable,
-  postAppointeeRejected,
-} from 'server/apis';
-import showErrorMessage from 'shared/utils/associate/show-error-message';
-import { useTranslation } from 'react-i18next';
-import VerificationStatus from './components/VerificationStatus';
 import ProfileSection from './components/ProfileSection';
 import ActionButtons from './components/ActionButtons';
 import DocumentDetails from './components/DocumentDetails';
@@ -126,19 +39,19 @@ let AppointeeViewForm = (props) => {
   const {
     t,
     setRemarks,
-  isLoading, 
-  otherFilePayload, 
-  profileImageBase64, 
-  fileDataStore, 
-  verifyIconStyle, 
-  isSaveStep, 
+    isLoading,
+    otherFilePayload,
+    profileImageBase64,
+    fileDataStore,
+    verifyIconStyle,
+    isSaveStep,
     isAadharVerified,
-        isPanVarified,
+    isPanVarified,
     isUanVerified,
-        isManualPassbook,
+    isManualPassbook,
     uanNumber,
     appointeeName,
-        candidateId,
+    candidateId,
     nameAsOnAadhar,
     aadhar,
     UAN,
@@ -156,13 +69,13 @@ let AppointeeViewForm = (props) => {
     passportValidFromDate,
     passportValidTillDate,
     visaFile,
-        isDLAvailable,
-        isDLVarified,
-        drivingLicense,
+    isDLAvailable,
+    isDLVarified,
+    drivingLicense,
     isBankAccVarified,
     bankAccNumber,
     bankIfscNumber,
-        firDetails,
+    firDetails,
     isFIRModalOpen,
     parsedFIRDetails,
     handleDialogCancel,
@@ -205,7 +118,7 @@ let AppointeeViewForm = (props) => {
     setIsFIRModalOpen,
     handelclick,
   } = logic;
-  console.log('dateOfJoining', dateOfJoining);
+  console.log('manualPassbookFile', manualPassbookFile);
 
   return (
     <Box bgcolor={'#E2E8F0'} sx={{ position: 'relative', borderRadius: '8px' }}>
@@ -219,11 +132,11 @@ let AppointeeViewForm = (props) => {
               fileDataStore={fileDataStore}
               verifyIconStyle={verifyIconStyle}
               isSaveStep={isSaveStep}
-                  isAadharVerified={isAadharVerified}
-                  isPanVarified={isPanVarified}
-                  isUanVerified={isUanVerified}
-                  isManualPassbook={isManualPassbook}
-                  uanNumber={uanNumber}
+              isAadharVerified={isAadharVerified}
+              isPanVarified={isPanVarified}
+              isUanVerified={isUanVerified}
+              isManualPassbook={isManualPassbook}
+              uanNumber={uanNumber}
               appointeeName={appointeeName}
               onProfileClick={() => setRemarks(props.appointeeId)}
             />
@@ -355,7 +268,7 @@ let AppointeeViewForm = (props) => {
               <DocumentDetails
                 fieldName={t('Driving License Available')}
                 fieldValue={isDLAvailable}
-                // width='50px'
+              // width='50px'
               />
               {isDLAvailable === 'Yes' && (
                 <>
@@ -363,7 +276,7 @@ let AppointeeViewForm = (props) => {
                     isVerified={isDLVarified}
                     fieldName={t('Driving License Number')}
                     fieldValue={drivingLicense}
-                    // width='50px'
+                  // width='50px'
                   />
                 </>
               )}
@@ -546,67 +459,67 @@ let AppointeeViewForm = (props) => {
             </Box>
             {!roleTypeEnums.candidate.includes(userTypeId)
               ? isManualPassbook &&
-                (manualVerificationStatus === 'MV' || manualVerificationStatus === 'MRV') &&
-                hasPermission &&
-                hasPermission['A015'] && (
-                  <Box
-                    sx={{
-                      ...cardStyle,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
+              (manualVerificationStatus === 'MV' || manualVerificationStatus === 'MRV') &&
+              hasPermission &&
+              hasPermission['A015'] && (
+                <Box
+                  sx={{
+                    ...cardStyle,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Button
+                    onClick={handelclick}
+                    variant='contained'
+                    sx={{ ...buttonStyleSx }}
+                    startIcon={
+                      <img
+                        src={exclamation}
+                        alt='exclamation'
+                        style={{
+                          width: 25,
+                          height: 25,
+                          filter: 'invert(1) brightness(100%)',
+                        }}
+                      />
+                    }
                   >
-                    <Button
-                      onClick={handelclick}
-                      variant='contained'
-                      sx={{ ...buttonStyleSx }}
-                      startIcon={
-                        <img
-                          src={exclamation}
-                          alt='exclamation'
-                          style={{
-                            width: 25,
-                            height: 25,
-                            filter: 'invert(1) brightness(100%)',
-                          }}
-                        />
-                      }
-                    >
-                      Verify Manually
-                    </Button>
-                  </Box>
-                )
+                    Verify Manually
+                  </Button>
+                </Box>
+              )
               : null}
             {!roleTypeEnums.candidate.includes(userTypeId)
               ? hasPermission &&
-                hasPermission['A016'] &&
-                ['MV', 'MRV', 'RD'].includes(manualVerificationStatus) && (
-                  <Box
-                    sx={{
-                      ...cardStyle,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
+              hasPermission['A016'] &&
+              ['MV', 'MRV', 'RD'].includes(manualVerificationStatus) && (
+                <Box
+                  sx={{
+                    ...cardStyle,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Button
+                    onClick={() => handleGetManualVerifiedFilter(manualVerificationStatus)}
+                    variant='contained'
+                    sx={{ ...buttonStyleSx }}
+                    startIcon={
+                      <img
+                        width={18}
+                        src={'./playground_assets/redirect.svg'}
+                        alt='YourSVG'
+                        style={{ width: '100%', height: 'auto' }}
+                      />
+                    }
                   >
-                    <Button
-                      onClick={() => handleGetManualVerifiedFilter(manualVerificationStatus)}
-                      variant='contained'
-                      sx={{ ...buttonStyleSx }}
-                      startIcon={
-                        <img
-                          width={18}
-                          src={'./playground_assets/redirect.svg'}
-                          alt='YourSVG'
-                          style={{ width: '100%', height: 'auto' }}
-                        />
-                      }
-                    >
-                      Visit Manual Verification Page
-                    </Button>
-                  </Box>
-                )
+                    Visit Manual Verification Page
+                  </Button>
+                </Box>
+              )
               : null}
             <Box sx={{ margin: '1rem 0' }}>
               <ActivityLogDetails activityStatus={timelineStates} />
