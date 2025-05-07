@@ -59,7 +59,7 @@ import { GetDigilockerUrl } from 'server/apis/verify/get-digilocker-url';
 import { useTranslation } from 'react-i18next';
 import { FILE_SIZE_LIMIT, validFileTypes,uploadFormatErrorMsg,uploadSizeErrorMsg } from 'shared/constants/constants';
 
-const AadhaarVerification = ({ stepsList,isAadhaarVarified, onVerified ,userInfo}) => {
+const AadhaarVerification = ({ stepsList,isAadhaarVarified, onVerified ,userInfo,setUserInfo}) => {
   const { t } = useTranslation();
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
@@ -223,6 +223,7 @@ console.log('stepsList', stepsList);
           openRemarksModel(generatedRemarks);
         }
       }
+      setUserInfo && setUserInfo((prev) => ({ ...prev, isAadhaarVarified: isVarified }));
       onVerified(isVarified);
       setIsOfflineXmlDownloaded(true);
       closeOtpSubmitionModel();

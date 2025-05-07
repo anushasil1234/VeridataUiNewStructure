@@ -23,6 +23,7 @@ import TextInput from 'shared/components/input-fields/text-input';
 import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
 import FileUploadSection from 'shared/components/file-upload-section/file-upload-section';
 import { fileUploadSectionContainerStyle, lable1CopyStyle, positionRelative, primaryFabStyle, responsiveBtnType1Style, statusBoxstyle, statusstyle, verificationBtnStyle } from 'app';
+import { epfoPassbookFileTypeAlias, epfoServiceHistoryFileTypeAlias, imgAndPdfMaxSize } from 'shared/constants/constants';
 
 const UANVerification = ({
   t,
@@ -45,14 +46,7 @@ const UANVerification = ({
   removeEPFOPassbookFile,
   epfoPassBookFiles,
   handleViewFile,
-  imgAndPdfMaxSize,
-  epfoServiceHistoryFileTypeAlias,
-  epfoPassbookFileTypeAlias,
-  fileUploadSectionContainerStyle,
-  lable1CopyStyle,
   // primaryFabStyle,
-  responsiveBtnType1Style,
-  verificationBtnStyle,
 }) => {
   return (
     <>

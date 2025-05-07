@@ -158,7 +158,7 @@ export default function usePanVerification({
       if (response.responseInfo === 'Success') {
         setUserInfo((prevState) => ({
           ...prevState,
-          isPANAvailable: selectedValue,
+          isPanAvailable: selectedValue,
         }));
         showSuccessMessage('PAN availability updated successfully.');
       } else {

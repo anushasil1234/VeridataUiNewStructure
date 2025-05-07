@@ -24,6 +24,7 @@ export default function useUANVerification({
   checkFileUpload,
   openUploadDocInfoModel,
   functionSlice,
+  fileTypeList,
   ...rest
 }) {
   const { t } = useTranslation();
@@ -73,7 +74,7 @@ export default function useUANVerification({
       setFileName,
       _filenameList,
       uploadType,
-      fileTypeList: [],
+      fileTypeList: fileTypeList,
       uploadedFile,
       fileDetails,
     });
@@ -85,29 +86,18 @@ export default function useUANVerification({
     setFileName([...fileNameList]);
   };
 
-  const handleFileUpload = (fileTypeAlias, setFileName, fileNameList = [], uploadType) => ({ target }) => {
+   const handleFileUpload = (fileTypeAlias, setFileName, fileNameList = [], uploadType) => ({ target }) => {
     uploadFile({
-      files: target.files,
-      uploadTypeAlias: fileTypeAlias,
-      setFileName,
-      _filenameList: fileNameList,
+       files: target.files,
+       uploadTypeAlias: fileTypeAlias,
+       setFileName,
+     _filenameList: fileNameList,
       uploadType,
-    });
-  };
+     });
+   };
 
-  const uploadEpfoPassBookFile = handleFileUpload(
-    epfoPassbookFileTypeAlias,
-    setEpfoPassBookFiles,
-    epfoPassBookFiles,
-    'multiple',
-  );
-
-  const uploadEpfoServiceHistoryFile = handleFileUpload(
-    epfoServiceHistoryFileTypeAlias,
-    setEpfoServiceHistoryFile,
-    epfoServiceHistoryFile,
-    'single',
-  );
+  const uploadEpfoPassBookFile = handleFileUpload(epfoPassbookFileTypeAlias, setEpfoPassBookFiles, epfoPassBookFiles, 'multiple');
+  const uploadEpfoServiceHistoryFile = handleFileUpload(epfoServiceHistoryFileTypeAlias, setEpfoServiceHistoryFile, epfoServiceHistoryFile, 'single');
 
   const removeEPFOPassbookFile = (currentFileName) => {
     const { fileNameList: _fileNameList, updatedUploadedFileList: _updatedUploadedFileList, updatedFileDetails: _updatedFileDetails } = removeFile({
@@ -261,6 +251,10 @@ export default function useUANVerification({
     const response = await getUANNumber(payLoad);
     if (response) {
       const { isUanAvailable, uanNumber, remarks } = response.responseInfo;
+      setUserInfo((prevState) => ({
+        ...prevState,
+        isUanAvailable: isUanAvailable,
+      }));
       if (uanNumber) {
         setUAN(uanNumber);
         generateUANOTPDialog(uanNumber, userInfo.mobileNo);
@@ -399,6 +393,10 @@ export default function useUANVerification({
           openRemarksModel(generatedRemarks);
         }
       }
+      setUserInfo((prevState) => ({
+        ...prevState,
+        isUanVarified: isVarified,
+      }));
       closeOtpSubmitionModel();
       setEpfostatusMessage(new VerificationStatus(isVarified, 'V'));
     }
@@ -406,15 +404,34 @@ export default function useUANVerification({
 
   useEffect(() => {
     setUAN(userInfo.uanNumber);
-    setUanAadharLink(userInfo?.isUanLinkWithAadhar??NA);
-  }, [userInfo.uanNumber,userInfo?.isUanLinkWithAadhar]);
+    setUanAadharLink(userInfo?.isUanLinkWithAadhar ?? NA);
+  }, [userInfo.uanNumber, userInfo?.isUanLinkWithAadhar]);
 
   useEffect(() => {
     if (userInfo?.isAadhaarVarified !== null && userInfo?.isAadhaarVarified === true) {
       setIsEpfoSectionDisabled(false);
     }
   }, [userInfo?.isAadhaarVarified]);
-
+  useEffect(() => {
+    // if (isAadhaarVarified === true && isUanVarified !== null) {
+    // }
+    // if (isPanVarified) {
+    //   setDisabledPanInput(true);
+    // }
+    // if (isAadhaarVarified !== null && isAadhaarVarified === true) {
+    //   setIsEpfoSectionDisabled(false);
+    // }
+    // if (isAadhaarVarified !== null) {
+    // }
+    // if (isAadhaarVarified) {
+    //   setDisabledAadharInput(true);
+    // }
+    if (userInfo?.isSubmit === false) {
+      if (userInfo?.isAadhaarVarified && isUanVarified) {
+        submitDetails(true, false);
+      }
+    }
+  }, [userInfo?.isAadhaarVarified, isUanVarified]);
   return {
     UAN,
     setUAN,

@@ -81,7 +81,7 @@ const SecondForm = ({
   // isTrustEpfoAvailable,
   // uploadTrustEPFOFile,
   removeEPFOFile,
-   trustEpfoFileName,
+  trustEpfoFileName,
   // uanNumberAvailable,
   // handleChange,
   handleBack,
@@ -108,11 +108,11 @@ const SecondForm = ({
   openUploadDocInfoModel,
   handleFileUpload
 }) => {
-  console.log('firstPageForm', firstPageForm,stepsList);
+  console.log('firstPageForm', firstPageForm, stepsList);
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const { t } = useTranslation();
-  const {fileUploaded,isTrustPassbook,isUanAvailable}=firstPageForm;
+  const { fileUploaded, isTrustPassbook, isUanAvailable } = firstPageForm;
   const { openInfoModel } = functionSlice[0];
   const { userId, appointeeId, userCode } = loggedInData[0];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -121,8 +121,8 @@ const SecondForm = ({
   const [handicapFiles, setHandicapFiles] = useState();
   const [passportFiles, setPassportFiles] = useState([]);
   const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(isTrustPassbook ?? true);
-    const [uanNumberAvailable, setUanNumberAvailable] = useState('');
-  
+  const [uanNumberAvailable, setUanNumberAvailable] = useState('');
+
   // const {
   //   tenthCertificateFileName,
   //   otherFileName,
@@ -193,8 +193,8 @@ const SecondForm = ({
     };
     let formData = buildFormData(payLoad);
     const response = await postUpdatePfUanDetails(formData, formSaveSuccess);
-    if(isUANAvailable==true){
-      updatePersonalDetail("isUanAvailable",isUANAvailable);
+    if (isUANAvailable == true) {
+      updatePersonalDetail("isUanAvailable", isUANAvailable);
     }
   };
   const handleConfirmSave = async () => {
@@ -211,10 +211,7 @@ const SecondForm = ({
   );
   const uploadHandicapFile = handleFileUpload(handicapFileTypeAlias, setHandicapFiles);
   const uploadPassportFile = handleFileUpload(passportFileTypeAlias, setPassportFiles);
-  const upload10thCertificateFile = handleFileUpload(
-    tenthCertificateFileTypeAlias,
-    setTenthCertificateFiles,
-  );
+  const upload10thCertificateFile = handleFileUpload(tenthCertificateFileTypeAlias, setTenthCertificateFiles);
   const uploadFathersDocFile = handleFileUpload(otherFileTypeAlias, setOtherFiles);
   const hasTenthPassCertificateUpload = () => checkFileUpload(tenthCertificateFileTypeAlias);
   const hasFathersDocCertificateUpload = () => checkFileUpload(otherFileTypeAlias);
@@ -308,14 +305,14 @@ const SecondForm = ({
     }
   }, [isTrustEpfoAvailable]);
   useEffect(() => {
-    setIsTrustEpfoAvailable(isTrustPassbook)
+    setIsTrustEpfoAvailable(isTrustPassbook ?? false)
     hasValue(isUanAvailable)
-        ? setUanNumberAvailable(isUanAvailable ? "yes" : "no")
-        : setUanNumberAvailable(null);
-         hasValue(isUanAvailable) ?
-              setIsPreviousSectionDisabled(true):setIsPreviousSectionDisabled(false);
-            
-  }, [isTrustPassbook,isUanAvailable]);
+      ? setUanNumberAvailable(isUanAvailable ? "yes" : "no")
+      : setUanNumberAvailable(null);
+    hasValue(isUanAvailable) ?
+      setIsPreviousSectionDisabled(true) : setIsPreviousSectionDisabled(false);
+
+  }, [isTrustPassbook, isUanAvailable]);
   useEffect(() => {
     const {
       tenthCertificateFileName,
@@ -326,7 +323,7 @@ const SecondForm = ({
       epfoPassBookFiles,
       epfoServiceHistoryFile,
     } = getFilenames({ fileUploaded });
-  
+
     setTenthCertificateFiles(tenthCertificateFileName);
     setOtherFiles(otherFileName);
     setPassportFiles(passportFileName);
@@ -334,10 +331,10 @@ const SecondForm = ({
     setTrustEpfoFileName(trustEpfoFileName);
     // ...set other files as needed
   }, [fileUploaded]);
-    const handleChange = (event) => {
-      const value = event.target.value;
-      setUanNumberAvailable(value);
-    };
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setUanNumberAvailable(value);
+  };
   const handleNavigationToHelpPage = () => { };
   return (
     <Box sx={{ width: '100%' }}>

@@ -305,21 +305,21 @@ const AppointeeRegisterForm = () => {
   };
 
  
-  const hasEPFOPassbookUpload = () => checkFileUpload(epfoPassbookFileTypeAlias);
-  const hasEPFOServiceHistoryUpload = () => checkFileUpload(epfoServiceHistoryFile);
+  // const hasEPFOPassbookUpload = () => checkFileUpload(epfoPassbookFileTypeAlias);
+  // const hasEPFOServiceHistoryUpload = () => checkFileUpload(epfoServiceHistoryFile);
   const openUploadDocInfoModel = (dialogContentText) => {
     openInfoModel({ dialogContentText });
   };
-  const submitDetails = (autoSubmit, isManual) => {
-    if (autoSubmit) {
-      handleAppointeeFormPage2Save({
-        isUanManualUpload: isManual,
-        status: 'Verified',
-      });
-    } else {
-      handleAppointeeFormPage3Save();
-    }
-  };
+  // const submitDetails = (autoSubmit, isManual) => {
+  //   if (autoSubmit) {
+  //     handleAppointeeFormPage2Save({
+  //       isUanManualUpload: isManual,
+  //       status: 'Verified',
+  //     });
+  //   } else {
+  //     handleAppointeeFormPage3Save();
+  //   }
+  // };
   useEffect(() => {
     localStorage.setItem('activeStep', activeStep);
   }, [activeStep]);
@@ -339,26 +339,26 @@ const AppointeeRegisterForm = () => {
     }
   }, [UAN, t]);
 
-  useEffect(() => {
-    if (isAadhaarVarified === true && isUanVarified !== null) {
-    }
-    if (isPanVarified) {
-      setDisabledPanInput(true);
-    }
-    if (isAadhaarVarified !== null && isAadhaarVarified === true) {
-      setIsEpfoSectionDisabled(false);
-    }
-    if (isAadhaarVarified !== null) {
-    }
-    if (isAadhaarVarified) {
-      setDisabledAadharInput(true);
-    }
-    if (isSubmit === false) {
-      if (isAadhaarVarified && isUanVarified) {
-        submitDetails(true, false);
-      }
-    }
-  }, [isAadhaarVarified, isUanVarified]);
+  // useEffect(() => {
+  //   if (isAadhaarVarified === true && isUanVarified !== null) {
+  //   }
+  //   if (isPanVarified) {
+  //     setDisabledPanInput(true);
+  //   }
+  //   if (isAadhaarVarified !== null && isAadhaarVarified === true) {
+  //     setIsEpfoSectionDisabled(false);
+  //   }
+  //   if (isAadhaarVarified !== null) {
+  //   }
+  //   if (isAadhaarVarified) {
+  //     setDisabledAadharInput(true);
+  //   }
+  //   if (isSubmit === false) {
+  //     if (isAadhaarVarified && isUanVarified) {
+  //       submitDetails(true, false);
+  //     }
+  //   }
+  // }, [isAadhaarVarified, isUanVarified]);
   useEffect(() => {
     if (personalDetails.gender === 'M') {
       setPersonalDetails({ ...personalDetails, memberRelation: 'F' });
@@ -421,23 +421,23 @@ const AppointeeRegisterForm = () => {
     setFileDetails([...updatedFileDetails]);
     setFileName([...fileNameList]);
   };
-  const removeEPFOPassbookFile = (currentFileName) => {
-    const {
-      fileNameList: _fileNameList,
-      updatedUploadedFileList: _updatedUploadedFileList,
-      updatedFileDetails: _updatedFileDetails,
-    } = removeFile({
-      uploadedFile: uploadedFile,
-      fileDetails: fileDetails,
-      uploadTypeAlias: epfoPassbookFileTypeAlias,
-      fileNameList: epfoPassBookFiles,
-      currentFileName: currentFileName,
-      uploadType: 'multiple',
-    });
-    setEpfoPassBookFiles(_fileNameList);
-    setUploadedFile(_updatedUploadedFileList);
-    setFileDetails(_updatedFileDetails);
-  };
+  // const removeEPFOPassbookFile = (currentFileName) => {
+  //   const {
+  //     fileNameList: _fileNameList,
+  //     updatedUploadedFileList: _updatedUploadedFileList,
+  //     updatedFileDetails: _updatedFileDetails,
+  //   } = removeFile({
+  //     uploadedFile: uploadedFile,
+  //     fileDetails: fileDetails,
+  //     uploadTypeAlias: epfoPassbookFileTypeAlias,
+  //     fileNameList: epfoPassBookFiles,
+  //     currentFileName: currentFileName,
+  //     uploadType: 'multiple',
+  //   });
+  //   setEpfoPassBookFiles(_fileNameList);
+  //   setUploadedFile(_updatedUploadedFileList);
+  //   setFileDetails(_updatedFileDetails);
+  // };
   const removeEPFOFile = (currentFileName) => {
     const {
       fileNameList: _fileNameList,
@@ -468,18 +468,18 @@ const AppointeeRegisterForm = () => {
     };
   
   
-  const uploadEpfoPassBookFile = handleFileUpload(
-    epfoPassbookFileTypeAlias,
-    setEpfoPassBookFiles,
-    epfoPassBookFiles,
-    'multiple',
-  );
-  const uploadEpfoServiceHistoryFile = handleFileUpload(
-    epfoServiceHistoryFileTypeAlias,
-    setEpfoServiceHistoryFile,
-    epfoServiceHistoryFile,
-    'single',
-  );
+  // const uploadEpfoPassBookFile = handleFileUpload(
+  //   epfoPassbookFileTypeAlias,
+  //   setEpfoPassBookFiles,
+  //   epfoPassBookFiles,
+  //   'multiple',
+  // );
+  // const uploadEpfoServiceHistoryFile = handleFileUpload(
+  //   epfoServiceHistoryFileTypeAlias,
+  //   setEpfoServiceHistoryFile,
+  //   epfoServiceHistoryFile,
+  //   'single',
+  // );
   
   const uploadImageFile = handleFileUpload(imageFileTypeAlias, setImageFileName);
 
@@ -490,34 +490,34 @@ const AppointeeRegisterForm = () => {
     }
   };
  
-  const checkEPFOPassbookDocCertificateUpload = () => {
-    const isUploaded = hasEPFOPassbookUpload() || hasValue(epfoPassBookFiles);
-    if (!isUploaded) showUploadMessage('EPFO Passbook file');
-    return isUploaded;
-  };
-  const checkEPFOServiceHistoryDocCertificateUpload = () => {
-    const isUploaded = hasEPFOServiceHistoryUpload() || hasValue(epfoServiceHistoryFile);
-    if (!isUploaded) showUploadMessage('EPFO Service History file');
-    return isUploaded;
-  };
+  // const checkEPFOPassbookDocCertificateUpload = () => {
+  //   const isUploaded = hasEPFOPassbookUpload() || hasValue(epfoPassBookFiles);
+  //   if (!isUploaded) showUploadMessage('EPFO Passbook file');
+  //   return isUploaded;
+  // };
+  // const checkEPFOServiceHistoryDocCertificateUpload = () => {
+  //   const isUploaded = hasEPFOServiceHistoryUpload() || hasValue(epfoServiceHistoryFile);
+  //   if (!isUploaded) showUploadMessage('EPFO Service History file');
+  //   return isUploaded;
+  // };
 
-  const checkUANVerificationRequiredDoc = () => {
-    if (!hasValue(UAN)) {
-      showErrorMessage(UANEmptyErrorMsg);
-      return false;
-    }
-    if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
-      showErrorMessage(UANPatterErrorMsg);
-      return false;
-    }
-    if (!checkEPFOServiceHistoryDocCertificateUpload()) {
-      return false;
-    }
-    if (!checkEPFOPassbookDocCertificateUpload()) {
-      return false;
-    }
-    return true;
-  };
+  // const checkUANVerificationRequiredDoc = () => {
+  //   if (!hasValue(UAN)) {
+  //     showErrorMessage(UANEmptyErrorMsg);
+  //     return false;
+  //   }
+  //   if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
+  //     showErrorMessage(UANPatterErrorMsg);
+  //     return false;
+  //   }
+  //   if (!checkEPFOServiceHistoryDocCertificateUpload()) {
+  //     return false;
+  //   }
+  //   if (!checkEPFOPassbookDocCertificateUpload()) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
   const checkAadharVerification = () => {
     if (isAadhaarVarified !== true) {
       showErrorMessage(aadharVerificationErrorMsg);
@@ -585,15 +585,15 @@ const AppointeeRegisterForm = () => {
       openInfoModel(registrationSuccessContent, () => navigateTo(toDashboard));
     }
   };
-  const handleAppointeeFormPage3Save = () => {
-    if (!checkAadharVerification()) {
-      return;
-    }
-    if (!checkUANVerificationRequiredDoc()) {
-      return;
-    }
-    openSubmitConfirmationModel();
-  };
+  // const handleAppointeeFormPage3Save = () => {
+  //   if (!checkAadharVerification()) {
+  //     return;
+  //   }
+  //   if (!checkUANVerificationRequiredDoc()) {
+  //     return;
+  //   }
+  //   openSubmitConfirmationModel();
+  // };
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setCurrentPageNo(3);
@@ -670,36 +670,7 @@ const AppointeeRegisterForm = () => {
     }
     setPersonalDetails(_firstPageForm);
   };
-  const handleChangeUanVerification = ({ target }) => {
-    const value = target.value;
-    setIsUanVerificationProcessManual(value);
-    if (value === 'manual') {
-      const prerequisiteModelContent = {
-        dialogTitle: (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Typography>Prerequisite Informatiton for mannual upload</Typography>
-          </div>
-        ),
-        dialogContentText: (
-          <>
-            <Typography sx={subHeadingContentTextStyle}>
-              Before verification there are some prerequisites, thats needs to be done...
-            </Typography>
-            <Typography> </Typography>
-          </>
-        ),
-        dialogContentComponent: <UANPrerequisiteInformation />,
-        fullWidth: false,
-      };
-      openInfoModel(prerequisiteModelContent);
-    }
-  };
+
   const handleViewFile = async (fileName) => {
     const file = fileUploaded?.find((f) => f.fileName === fileName);
     const fileUnsaved = uploadedFile?.filter((file) => file.uploadDetailsId === 0);
@@ -766,7 +737,6 @@ const AppointeeRegisterForm = () => {
 
   const secondFormFileProps = useMemo(() => ({
     handleFileUpload ,
-
     removeEPFOFile,
     trustEpfoFileName,
     fileDetails,
@@ -867,6 +837,7 @@ const AppointeeRegisterForm = () => {
               <ThirdForm t={t} stepsList={stepsList} 
                   onAadhaarVerified={setisAadhaarVarified} 
               userInfo={personalDetails}
+              setUserInfo={setPersonalDetails}
                   handleBack={handleBack}
                   setCurrentPageNo={setCurrentPageNo}
                   setActiveStep={setActiveStep}
@@ -908,53 +879,25 @@ const AppointeeRegisterForm = () => {
                   isAadhaarVarified={isAadhaarVarified}
                   formElement={formElement}
                   stepsList={stepsList}
-                  // currentPageNo={currentPageNo}
                   setCurrentPageNo={setCurrentPageNo}
                   handleBack={handleBack}
-                  // activeStep={activeStep}
                   setActiveStep={setActiveStep}
                   userInfo={personalDetails}
                   setUserInfo={setPersonalDetails}
-                  // setBankStatusMessage={setBankStatusMessage}
-                  // isPanVarified={isPanVarified}
-                  // setIsPanVarified={setIsPanVarified}
-                  // setIsBankVarified={setIsBankVarified}
-                  // isBankVarified={isBankVarified}
-                  // pan={pan}
-                  // setPan={setPan}
-                  // accountNumber={accountNumber}
-                  // setAccountNumber={setAccountNumber}
-                  // IFSCCode={IFSCCode}
-                  // setIFSCCode={setIFSCCode}
                 />
               </>
             ) : null}
             {currentPageNo === 7 ? (
               <>
                 <SeventhForm
-                  // isAadhaarVarified={isAadhaarVarified}
                   formElement={formElement}
                   stepsList={stepsList}
-                  // currentPageNo={currentPageNo}
                   setCurrentPageNo={setCurrentPageNo}
                   handleBack={handleBack}
-                  // activeStep={activeStep}
                   setActiveStep={setActiveStep}
                   userInfo={personalDetails}
                   setUserInfo={setPersonalDetails}
-                  // isPANAvailable={isPANAvailable}
-                  // setIsPANAvailable={setIsPANAvailable}
-                  // firstatusMessage={firstatusMessage}
-                  // setFIRStatusMessage={setFIRStatusMessage}
-                  // isPoliceVarified={isPoliceVarified}
-                  // setisPoliceVarified={setisPoliceVarified}
-                  // firDetails={firDetails}
-                  // setFIRDetails={setFIRDetails}
-                  // pan={pan}
-                  // setPan={setPan}
-                  // nameAsOnPan={nameAsOnPan}
-                  // dateOfBirth={dateOfBirth}
-                  // setDateOfBirth={setDateOfBirth}
+                 
                 />
               </>
             ) : null}
@@ -965,6 +908,7 @@ const AppointeeRegisterForm = () => {
                   formElement={formElement}
                   stepsList={stepsList}
                   handleBack={handleBack}
+                  fileTypeList={fileTypeList}
                   handleViewFile={handleViewFile}
                   userInfo={personalDetails}
                   setUserInfo={setPersonalDetails}

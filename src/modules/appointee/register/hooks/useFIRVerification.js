@@ -46,19 +46,19 @@ export default function useFIRVerification({
     };
     const response = await checkFIRDetails(payLoad);
     if (response) {
-      const { policeFirDetails, IsVarified, remarks } = response.responseInfo;
-      setisPoliceVarified(IsVarified);
-      setUserInfo && setUserInfo((prev) => ({ ...prev, isPoliceVarified: IsVarified }));
+      const { policeFirDetails, isVarified, remarks } = response.responseInfo;
+      setisPoliceVarified(isVarified);
+      setUserInfo && setUserInfo((prev) => ({ ...prev, isPoliceVarified: isVarified }));
       setFIRDetails(policeFirDetails);
       setIsViewFIREnabled(policeFirDetails?.length > 0);
-      if (!IsVarified) {
+      if (!isVarified) {
         displayFirError('FIR verification failed.');
         if (hasValue(policeFirDetails)) {
           setIsFIRModalOpen(true);
         }
       }
       setIsFIRModalOpen(true);
-      setFIRStatusMessage(new VerificationStatus(IsVarified, 'V'));
+      setFIRStatusMessage(new VerificationStatus(isVarified, 'V'));
     }
   };
 
