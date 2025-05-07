@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import showSuccessMessage from 'shared/utils/associate/show-success-message';
@@ -13,13 +13,14 @@ import { hasValue, patternChecking } from 'shared/utils';
 export default function useDrivingLicenseVerification({
   userInfo,
   setUserInfo,
+  updateUserInfo,
   initialDL = '',
   initialStatusMessage = new VerificationStatus(null , ''),
 }) {
   console.log('userInfo', userInfo);
   const [drivingLicense, setDrivingLicense] = useState(initialDL);
-  const [isDLAvailable, setIsDLAvailable] = useState( userInfo?.isDLAvailable ??false);
-  const [isDLVarified, setisDLVarified] = useState(null);
+  const [isDLAvailable, setIsDLAvailable] = useState(userInfo?.isDLAvailable ?? false);
+  const [isDlVarified, setisDlVarified] = useState(userInfo?.isDLVarified ?? null);
   const [licensestatusMessage, setLicenseStatusMessage] = useState(initialStatusMessage);
   const [dlNumberError, setDLNumberError] = useState(false);
   const [isDLVerificationDisabled, setIsDLVerificationDisabled] = useState(false);
@@ -31,12 +32,27 @@ export default function useDrivingLicenseVerification({
   const { openRemarksModel } = functionSlice[0] || {};
   const { userId, appointeeId } = loggedInData[0] || {};
 
+  // Ref to track if user has interacted (verified or changed availability)
+  const hasInteracted = useRef(false);
+
+  // Only initialize from userInfo if the user hasn't interacted
+  useEffect(() => {
+    if (!hasInteracted.current) {
+      setisDlVarified(userInfo?.isDLVarified ?? null);
+      setIsDLAvailable(userInfo?.isDLAvailable ?? false);
+      setDrivingLicense(userInfo?.drivingLicense ?? '');
+      setLicenseStatusMessage(new VerificationStatus(userInfo?.isDLVarified, ''));
+    }
+    // eslint-disable-next-line
+  }, [userInfo?.isDLVarified, userInfo?.isDLAvailable, userInfo?.drivingLicense]);
+
   const handleLicenseNumberChange = (value) => {
     setDrivingLicense(value.toUpperCase());
     setDLNumberError(false);
   };
 
   const handleDrivingLicenseVerification = async () => {
+    hasInteracted.current = true;
     if (!drivingLicense) {
       showErrorMessage('Please enter your Driving License number.');
     } else if (!patternChecking(drivingLicense, /^(?:[A-Z]{2}\d{2}-?|\w{2}-\d{2}|\w{2}\d{2} ?)\d{4}\d{7}$/)) {
@@ -55,23 +71,26 @@ export default function useDrivingLicenseVerification({
     };
     const response = await verifyDrivingLicenseDetails(payLoad);
     if (response) {
-      const { remarks, IsVarified } = response.responseInfo;
-      if (!IsVarified && hasValue(remarks)) {
+      const { remarks, isVarified } = response.responseInfo;
+      if (!isVarified && hasValue(remarks)) {
         const generatedRemarks = generateRemarks(remarks);
         openRemarksModel && openRemarksModel(generatedRemarks);
       }
-      setisDLVarified(IsVarified);
+      console.log('responseaaa', response,isVarified);
+      setisDlVarified(isVarified);
       setUserInfo((prevState) => ({
         ...prevState,
         drivingLicense: drivingLicense,
         isDLAvailable: isDLAvailable,
-        isDLVarified: IsVarified,
+        isDLVarified: isVarified,
       }));
-      setLicenseStatusMessage(new VerificationStatus(IsVarified, 'V'));
+      // updateUserInfo("isDLVarified", IsVarified);
+      setLicenseStatusMessage(new VerificationStatus(isVarified, 'V'));
     }
   };
 
   const handleChangeLicenseAvailable = async (event) => {
+    hasInteracted.current = true;
     const selectedValue = event.target.value === 'Yes';
     setIsDLAvailable(selectedValue);
     const payLoad = {
@@ -88,6 +107,9 @@ export default function useDrivingLicenseVerification({
           ...prevState,
           isDLAvailable: isDLAvailable,
         }));
+        setisDlVarified(false)
+        setIsDLVerificationDisabled(false);
+        setLicenseStatusMessage(initialStatusMessage);
       } else {
         showErrorMessage('Failed to update Driving License availability.');
       }
@@ -115,8 +137,8 @@ export default function useDrivingLicenseVerification({
     setDrivingLicense,
     isDLAvailable,
     setIsDLAvailable,
-    isDLVarified,
-    setisDLVarified,
+    isDlVarified,
+    setisDlVarified,
     licensestatusMessage,
     setLicenseStatusMessage,
     dlNumberError,

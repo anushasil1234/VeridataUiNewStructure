@@ -51,17 +51,22 @@ import {
 } from 'shared/constants/constants';
 import buildFormData from 'shared/utils/associate/build-form-data';
 import FormHeading from '../form-heading';
+import { hasValue } from 'shared/utils';
+import { useEffect, useState } from 'react';
+import selectUANmessage from 'shared/utils/associate/select-uan-message';
+import getFilenames from 'shared/utils/associate/get-filenames';
 const SecondForm = ({
+  updatePersonalDetail,
   stepsList,
   isPreviousSectionDisabled,
   setIsPreviousSectionDisabled,
-  upload10thCertificateFile,
-  tenthCertificateFileName,
-  uploadFathersDocFile,
-  otherFileName,
+  // upload10thCertificateFile,
+  // tenthCertificateFileName,
+  // uploadFathersDocFile,
+  // otherFiles,
   firstPageForm,
-  uploadHandicapFile,
-  handicapFileName,
+  // uploadHandicapFile,
+  // handicapFiles,
   passportAvailable,
   passportNo,
   countryOfOrigin,
@@ -70,22 +75,23 @@ const SecondForm = ({
   passportstatusMessage,
   handlePassFileNumberOnChange,
   passportFileNumberError,
-  uploadPassportFile,
-  passportFileName,
-  isTrustEpfoAvailable,
-  uploadTrustEPFOFile,
+  // uploadPassportFile,
+  // passportFiles,
+  // isTrustEpfoAvailable,
+  // isTrustEpfoAvailable,
+  // uploadTrustEPFOFile,
   removeEPFOFile,
-  trustEpfoFileName,
-  uanNumberAvailable,
-  handleChange,
+   trustEpfoFileName,
+  // uanNumberAvailable,
+  // handleChange,
   handleBack,
-  handleSaveClick,
+  // handleSaveClick,
   handleNext,
   isthirdNextVisible,
-  isModalOpen,
-  handleCloseModal,
+  // isModalOpen,
+  // handleCloseModal,
   passportFileNumber,
-  setIsTrustEpfoAvailable,
+  // setIsTrustEpfoAvailable,
   handleViewFile,
   isAppointeeUanAvailable,
   setIsUANAvailableState,
@@ -93,15 +99,45 @@ const SecondForm = ({
   uploadedFile,
   clearFileVaribles,
   setTrustEpfoFileName,
-  setHandicapFileName,
-  setPassportFileName,
+  // setHandicapFiles,
+  // setPassportFiles,
   setIsThirdNextVisible,
+  checkFileUpload,
+  showUploadMessage,
+  isPhysicallyHandicap,
+  openUploadDocInfoModel,
+  handleFileUpload
 }) => {
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const { t } = useTranslation();
+  const {fileUploaded,isTrustPassbook,isUanAvailable}=firstPageForm;
   const { openInfoModel } = functionSlice[0];
   const { userId, appointeeId, userCode } = loggedInData[0];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [tenthCertificateFiles, setTenthCertificateFiles] = useState([]);
+  const [otherFiles, setOtherFiles] = useState([]);
+  const [handicapFiles, setHandicapFiles] = useState();
+  const [passportFiles, setPassportFiles] = useState([]);
+  const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(isTrustPassbook ?? true);
+    const [uanNumberAvailable, setUanNumberAvailable] = useState('');
+  
+  // const {
+  //   tenthCertificateFileName,
+  //   otherFileName,
+  //   passportFileName,
+  //   handicapFileName,
+  //   trustEpfoFileName,
+  //   epfoPassBookFiles,
+  //   epfoServiceHistoryFile,
+  // } = getFilenames( {fileUploaded});
+  // setTenthCertificateFiles(tenthCertificateFileName);
+  // setOtherFiles(otherFiles);
+  // setPassportFiles(passportFiles);
+  // setHandicapFiles(handicapFiles);
+  // setTrustEpfoFileName(trustEpfoFileName);
+  // setEpfoPassBookFiles(epfoPassBookFiles);
+  // setEpfoServiceHistoryFile(epfoServiceHistoryFile);
   const handlePassporFileNumbertHelp = () => {
     const passportHelpContent = {
       dialogContentText: '',
@@ -137,8 +173,8 @@ const SecondForm = ({
       handleNext();
       setIsPreviousSectionDisabled(true);
       clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName);
-      clearFileVaribles(handicapFileTypeAlias, setHandicapFileName, handicapFileName);
-      clearFileVaribles(passportFileTypeAlias, setPassportFileName, passportFileName);
+      clearFileVaribles(handicapFileTypeAlias, setHandicapFiles, handicapFiles);
+      clearFileVaribles(passportFileTypeAlias, setPassportFiles, passportFiles);
     }
   };
   const DraftSave = async () => {
@@ -156,6 +192,9 @@ const SecondForm = ({
     };
     let formData = buildFormData(payLoad);
     const response = await postUpdatePfUanDetails(formData, formSaveSuccess);
+    if(isUANAvailable==true){
+      updatePersonalDetail("isUanAvailable",isUANAvailable);
+    }
   };
   const handleConfirmSave = async () => {
     await saveDetails(true);
@@ -163,10 +202,145 @@ const SecondForm = ({
     handleCloseModal();
     setIsThirdNextVisible(true);
   };
-  const handleNavigationToHelpPage = () => {};
+  const uploadTrustEPFOFile = handleFileUpload(
+    trustEpfoFileTypeAlias,
+    setTrustEpfoFileName,
+    trustEpfoFileName,
+    'multiple',
+  );
+  const uploadHandicapFile = handleFileUpload(handicapFileTypeAlias, setHandicapFiles);
+  const uploadPassportFile = handleFileUpload(passportFileTypeAlias, setPassportFiles);
+  const upload10thCertificateFile = handleFileUpload(
+    tenthCertificateFileTypeAlias,
+    setTenthCertificateFiles,
+  );
+  const uploadFathersDocFile = handleFileUpload(otherFileTypeAlias, setOtherFiles);
+  const hasTenthPassCertificateUpload = () => checkFileUpload(tenthCertificateFileTypeAlias);
+  const hasFathersDocCertificateUpload = () => checkFileUpload(otherFileTypeAlias);
+  const hasTrustEpfoUpload = () => checkFileUpload(trustEpfoFileTypeAlias);
+  const hasHandicapUpload = () => checkFileUpload(handicapFileTypeAlias);
+  const hasPassportUpload = () => checkFileUpload(passportFileTypeAlias);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleSaveClick = () => {
+    if (process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH === 'true')
+      if (!checkTenthPassCertificateUpload()) return;
+    if (!checkFathersDocCertificateUpload()) return;
+    if (!checkHandicapCertificateUpload()) return;
+    if (!checkTrustEpfoUpload()) return;
+    if (!checkPassportUploadForOtherCountries()) return;
+    if (!checkUanNumber()) return;
+    handleOpenModal();
+  };
+  const checkTenthPassCertificateUpload = () => {
+    const isUploaded = hasTenthPassCertificateUpload() || hasValue(tenthCertificateFiles);
+    if (!isUploaded) showUploadMessage('10th pass certificate');
+    return isUploaded;
+  };
+  const checkFathersDocCertificateUpload = () => {
+    const isUploaded = hasFathersDocCertificateUpload() || hasValue(otherFiles);
+    if (!isUploaded) showUploadMessage('PAN Card');
+    return isUploaded;
+  };
+  const checkHandicapCertificateUpload = () => {
+    if (isPhysicallyHandicap != 'Y') {
+      return true;
+    } else {
+      const isUploaded = hasHandicapUpload() || hasValue(handicapFiles);
+      if (!isUploaded) showUploadMessage('handicap certificate');
+      return isUploaded;
+    }
+  };
+  const checkTrustEpfoUpload = () => {
+    if (isTrustEpfoAvailable != true) {
+      return true;
+    } else {
+      const isUploaded = hasTrustEpfoUpload() || hasValue(trustEpfoFileName);
+      if (!isUploaded) showUploadMessage('trust EPFO passbook');
+      return isUploaded;
+    }
+  };
+  const checkPassportUploadForOtherCountries = () => {
+    if (
+      hasValue(countryOfOrigin) &&
+      countryOfOrigin !== 'India' &&
+      countryOfOrigin !== 'Nepal' &&
+      countryOfOrigin !== 'Bhutan'
+    ) {
+      if (passportAvailable !== 'Y') {
+        return true;
+      } else {
+        const isUploaded = hasPassportUpload() || hasValue(passportFiles);
+        if (!isUploaded) showUploadMessage('visa');
+        return isUploaded;
+      }
+    }
+    return true;
+  };
+  const checkUanNumber = () => {
+    if (!uanNumberAvailable) {
+      showSelectUanMessage();
+      return false;
+    }
+    return true;
+  };
+  const showSelectUanMessage = () => {
+    let dialogContentText = (
+      <Typography>
+        {selectUANmessage('whether you have a UAN number (Yes or No)')}, then save the details
+      </Typography>
+    );
+    openUploadDocInfoModel(dialogContentText);
+  };
+  useEffect(() => {
+    if (firstPageForm.isHandicap === 'N') {
+      clearFileVaribles(handicapFileTypeAlias, setHandicapFiles, handicapFiles);
+    }
+  }, [firstPageForm.isHandicap]);
+  useEffect(() => {
+    if (!isTrustEpfoAvailable) {
+      clearFileVaribles(trustEpfoFileTypeAlias, setTrustEpfoFileName, trustEpfoFileName);
+    }
+  }, [isTrustEpfoAvailable]);
+  useEffect(() => {
+    setIsTrustEpfoAvailable(isTrustPassbook)
+    hasValue(isUanAvailable)
+        ? setUanNumberAvailable(isUanAvailable ? "yes" : "no")
+        : setUanNumberAvailable(null);
+         hasValue(isUanAvailable) ?
+              setIsPreviousSectionDisabled(true):setIsPreviousSectionDisabled(false);
+            
+  }, [isTrustPassbook,isUanAvailable]);
+  useEffect(() => {
+    const {
+      tenthCertificateFileName,
+      otherFileName,
+      passportFileName,
+      handicapFileName,
+      trustEpfoFileName,
+      epfoPassBookFiles,
+      epfoServiceHistoryFile,
+    } = getFilenames({ fileUploaded });
+  
+    setTenthCertificateFiles(tenthCertificateFileName);
+    setOtherFiles(otherFileName);
+    setPassportFiles(passportFileName);
+    setHandicapFiles(handicapFileName);
+    setTrustEpfoFileName(trustEpfoFileName);
+    // ...set other files as needed
+  }, [fileUploaded]);
+    const handleChange = (event) => {
+      const value = event.target.value;
+      setUanNumberAvailable(value);
+    };
+  const handleNavigationToHelpPage = () => { };
   return (
     <Box sx={{ width: '100%' }}>
-      {}
+      { }
       <form>
         <Grid
           sx={{ paddingLeft: '20px' }}
@@ -174,7 +348,7 @@ const SecondForm = ({
           rowSpacing={1}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          {}
+          { }
           {firstPageForm.isPassportAvailable === 'Y' ? (
             <>
               <FormHeadingContainer>
@@ -252,7 +426,7 @@ const SecondForm = ({
                       </Typography>
                       <FileUploadSection
                         chooseFile={uploadPassportFile}
-                        fileName={passportFileName}
+                        fileName={passportFiles}
                         maxUploadSize={imgAndPdfMaxSize}
                         uploadTypeAlias={passportFileTypeAlias}
                         handleViewFile={handleViewFile}
@@ -263,8 +437,8 @@ const SecondForm = ({
               </GridRow>
             </>
           ) : null}
-          {}
-          {}
+          { }
+          { }
           <FormHeadingContainer>
             <FormHeading
               step={stepsList?.CF?.step}
@@ -286,7 +460,7 @@ const SecondForm = ({
                     >
                       {t('10th pass Certificate')}
                     </Typography>
-                    {}
+                    { }
                     <Tooltip
                       arrow
                       placement='bottom'
@@ -338,7 +512,7 @@ const SecondForm = ({
                 <Box sx={fileUploadSectionContainerStyle}>
                   <FileUploadSection
                     chooseFile={upload10thCertificateFile}
-                    fileName={tenthCertificateFileName}
+                    fileName={tenthCertificateFiles}
                     accept={'image/png, image/jpeg,application/pdf'}
                     maxUploadSize={imgAndPdfMaxSize}
                     uploadTypeAlias={tenthCertificateFileTypeAlias}
@@ -413,7 +587,7 @@ const SecondForm = ({
               <Box sx={fileUploadSectionContainerStyle}>
                 <FileUploadSection
                   chooseFile={uploadFathersDocFile}
-                  fileName={otherFileName}
+                  fileName={otherFiles}
                   accept={'image/png, image/jpeg,application/pdf'}
                   maxUploadSize={imgAndPdfMaxSize}
                   uploadTypeAlias={otherFileTypeAlias}
@@ -422,8 +596,6 @@ const SecondForm = ({
               </Box>
             </Grid>
           </GridRow>
-          {}
-          {}
           {firstPageForm.isHandicap === 'Y' && (
             <>
               <FormHeadingContainer>
@@ -461,7 +633,7 @@ const SecondForm = ({
                   <Box sx={fileUploadSectionContainerStyle}>
                     <FileUploadSection
                       chooseFile={uploadHandicapFile}
-                      fileName={handicapFileName}
+                      fileName={handicapFiles}
                       accept={'image/png, image/jpeg,application/pdf'}
                       maxUploadSize={imgAndPdfMaxSize}
                       uploadTypeAlias={handicapFileTypeAlias}
@@ -472,8 +644,8 @@ const SecondForm = ({
               </GridRow>
             </>
           )}
-          {}
-          {}
+          { }
+          { }
           <FormHeadingContainer>
             <FormHeading
               step={stepsList?.PFD?.step}
@@ -585,8 +757,8 @@ const SecondForm = ({
             </Grid>
           </GridRow>
           <Divider sx={{ ...divederStyle }} />
-          {}
-          {}
+          { }
+          { }
           <GridRow>
             <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
               <Stack flexDirection={'col'} justifyContent={'space-between'} alignItems={'start'}>
@@ -613,7 +785,7 @@ const SecondForm = ({
               </Stack>
             </Grid>
           </GridRow>
-          {}
+          { }
           <GridRow>
             <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
               <Stack sx={submitBtnContainerStyle}>
@@ -624,7 +796,7 @@ const SecondForm = ({
                     variant='contained'
                     color='primary'
                   >
-                    {}
+                    { }
                     {t('Previous')}
                   </Button>
                   <Button

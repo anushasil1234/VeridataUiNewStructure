@@ -7,7 +7,7 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import FormHeadingContainer from 'shared/components/grid-container/form-heading-container';
 import FormHeading from '../../form-heading';
 import GridRow from 'shared/components/grid-container/grid-row';
@@ -34,7 +34,7 @@ const DrivingLicenseVerification = ({
   handleChangeLicenseAvailable,
   drivingLicense,
   handleLicenseNumberChange,
-  isDLVarified,
+  isDlVarified,
   handleDrivingLicenseVerification,
   licensestatusMessage,
   userInfo,
@@ -51,7 +51,7 @@ const DrivingLicenseVerification = ({
       </Typography>
     </Typography>
   );
-
+  
   return (
     <>
       <FormHeadingContainer>
@@ -91,7 +91,7 @@ const DrivingLicenseVerification = ({
             <TextInput
               label={'Driving License Number'}
               onChange={handleLicenseNumberChange}
-              disabled={isDLVarified}
+              disabled={isDlVarified}
               value={drivingLicense}
             />
             <TextInput
@@ -101,7 +101,7 @@ const DrivingLicenseVerification = ({
             />
             <Button
               sx={{ ...submitBtnStyle, margin: '5px 0' }}
-              disabled={isDLVarified}
+              disabled={isDlVarified}
               variant='contained'
               onClick={handleDrivingLicenseVerification}
               endIcon={<Autorenew />}

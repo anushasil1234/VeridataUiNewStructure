@@ -113,6 +113,8 @@ console.log('stepsList', stepsList);
 
   useEffect(() => {
     if (isAadhaarVarified && onVerified) onVerified(true);
+    setAadharstatusMessage(new VerificationStatus(isAadhaarVarified, ''));
+    
   }, [isAadhaarVarified, onVerified]);
 
   const openOfflineKycInfoModel = () => {

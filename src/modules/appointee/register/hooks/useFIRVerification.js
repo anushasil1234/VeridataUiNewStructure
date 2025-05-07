@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import VerificationStatus from 'shared/components/verification/verification-status';
@@ -22,6 +22,7 @@ export default function useFIRVerification({
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openRemarksModel } = functionSlice[0] || {};
   const { userId, appointeeId } = loggedInData[0] || {};
+  const hasInteracted = useRef(false);
 
   const displayFirError = (msg) => {
     showErrorMessage(msg);
@@ -30,7 +31,14 @@ export default function useFIRVerification({
   const handleFIRChecking = async () => {
     await checkFIR();
   };
-
+ useEffect(() => {
+    if (!hasInteracted.current) {
+      setisPoliceVarified(userInfo?.isPoliceVarified ?? null);
+    
+      setFIRStatusMessage(new VerificationStatus(userInfo?.isPoliceVarified, ''));
+    }
+    // eslint-disable-next-line
+  }, [userInfo?.isPoliceVarified]);
   const checkFIR = async () => {
     const payLoad = {
       appointeeId: appointeeId,

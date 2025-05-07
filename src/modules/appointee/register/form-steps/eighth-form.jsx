@@ -1,278 +1,253 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Fab,
-  FormControlLabel,
-  Grid,
-  Radio,
-  RadioGroup,
-  Stack,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-import myImage from 'assets/images/profile/instrucToServiceHistory.png';
-import React, { useState } from 'react';
-import FormHeadingContainer from 'shared/components/grid-container/form-heading-container';
-import FormHeading from '../form-heading';
+import React, { useState, useEffect } from 'react';
+import { Box, Button, Grid, Stack } from '@mui/material';
 import GridRow from 'shared/components/grid-container/grid-row';
+import { submitBtnStyle } from 'app';
+import UANVerification from './verifications/uan-verification';
+import useUANVerification from '../hooks/useUANVerification';
+import { imgAndPdfMaxSize, epfoServiceHistoryFileTypeAlias, epfoPassbookFileTypeAlias, UANEmptyErrorMsg, UANPatterErrorMsg, aadharVerificationErrorMsg, submitConfirmationMsg, docResubmissionSuccessDialogContentText, registrationSuccessDialogContentText, congratulationDialogContentTitle, toDashboard } from 'shared/constants/constants';
+import { hasValue, validationsCheck, removeFile } from 'shared/utils';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
-import {
-  fileUploadSectionContainerStyle,
-  lable1CopyStyle,
-  positionRelative,
-  primaryFabStyle,
-  responsiveBtnType1Style,
-  statusBoxstyle,
-  statusstyle,
-  subHeadingContentTextStyle,
-  submitBtnStyle,
-  verificationBtnStyle,
-} from 'app';
-import { Autorenew, Info } from '@mui/icons-material';
-import {
-  previousButton,
-  aaddharNumberverify,
-  emptyPanMsg,
-  invalidPanMsg,
-  panVerifyFailedMsg,
-  fetchUanConfirmationtMsg,
-  epfoPassbookFileTypeAlias,
-  imgAndPdfMaxSize,
-  UANPatterErrorMsg,
-  epfoServiceHistoryFileTypeAlias,
-  generateOtpRety,
-  NA,
-  generateOtpSucces,
-  uanVerifySuccessMsg,
-  uanVerifyFailedMsg,
-} from 'shared/constants/constants';
-import TextInput from 'shared/components/input-fields/text-input';
-import { useSelector, useDispatch } from 'react-redux';
-import { VerificationStatusSection } from 'shared/components/verification/verification-status-section';
-import { hasValue, validationsCheck } from 'shared/utils';
-import VerificationStatus from '../../../../shared/components/verification/verification-status';
-import removeExtraSpaces from 'shared/utils/associate/remove-extra-spaces';
-import { generateUANOtp, getUANNumber } from 'server/apis';
-import { storeCurrentPageNo } from 'store/slices/candidate-page-slice';
-import FileUploadSection from 'shared/components/file-upload-section/file-upload-section';
-import { submitUANOTP } from 'server/apis/verify/submit-uan-otp';
-import generateRemarks from 'shared/utils/associate/generate-remarks';
-import showSuccessMessage from 'shared/utils/associate/show-success-message';
-import UANPrerequisiteInformation from '../uan-prerequiestic-info';
 import { useTranslation } from 'react-i18next';
+import getFileDetails from 'shared/utils/associate/get-file-details';
+import { useSelector } from 'react-redux';
+import { postAppointeeFileDetails } from 'server/apis';
+import { getAppointeeStatusDetails } from 'server/apis/appointee/appointee-workflow/get-appointee-status-details';
+
 const EighthForm = ({
-  UAN,
-  setUAN,
   formElement,
   stepsList,
-  isAadhaarVarified,
-  isPanVarified,
   handleBack,
-  handleViewFile,
-  isUanVarified,
-  isUanVerificationProcessManual,
-  setIsUanVerificationProcessManual,
-  epfoButton,
-  setEpfoButton,
-  epfostatusMessage,
-  setEpfostatusMessage,
-  uanAadharLink,
-  uploadEpfoServiceHistoryFile,
-  epfoServiceHistoryFile,
-  uploadEpfoPassBookFile,
-  removeEPFOPassbookFile,
-  epfoPassBookFiles,
-  firstPageForm,
-  isUANAvailableState,
-  setisUanVarified,
-  submitDetails,
-  aadhar,
-  setAadhar,
-  pan,
-  setPan,
+  userInfo,
+  setUserInfo,
+  checkFileUpload,
+  openUploadDocInfoModel,
+  ...rest
 }) => {
-  const functionSlice = useSelector((state) => state.functionSlice);
-  const { openRemarksModel } = functionSlice[0];
+  const { t } = useTranslation();
+  // Local state for UAN/EPFO
+  const [UAN, setUAN] = useState('');
+  const [epfoButton, setEpfoButton] = useState(t('Fetch N Verify UAN'));
+  // const [epfostatusMessage, setEpfostatusMessage] = useState({});
+  // const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
+  // const [epfoServiceHistoryFile, setEpfoServiceHistoryFile] = useState();
+  // const [isUanVarified, setisUanVarified] = useState(null);
+  // const [isUANAvailableState, setIsUANAvailableState] = useState(false);
+  // const [uanAadharLink, setUanAadharLink] = useState('');
+  // const [uploadedFile, setUploadedFile] = useState([]);
+  // const [fileDetails, setFileDetails] = useState([]);
+  const [isEpfoSectionDisabled, setIsEpfoSectionDisabled] = useState(true);
+
+  const loggedInData = useSelector((state) => state.loggedInData);
+  // const { userId, appointeeId, userCode } = loggedInData[0] || {};
+  // const commonHooksFunctionSlice = useSelector((state) => state.commonHooksFunctionSlice);
+  // const { navigateTo } = commonHooksFunctionSlice[0];
+
+  // File upload logic
+  // const uploadFile = ({ files, uploadTypeAlias, setFileName, _filenameList = [], uploadType = 'single' }) => {
+  //   const { error, updatedUploadedFileList, updatedFileDetails, fileNameList } = getFileDetails({
+  //     files,
+  //     uploadTypeAlias,
+  //     setFileName,
+  //     _filenameList,
+  //     uploadType,
+  //     fileTypeList: [], // TODO: Pass fileTypeList here if you have global validation rules
+  //     uploadedFile,
+  //     fileDetails,
+  //   });
+  //   if (hasValue(error)) {
+  //     showErrorMessage(error);
+  //   }
+  //   setUploadedFile([...updatedUploadedFileList]);
+  //   setFileDetails([...updatedFileDetails]);
+  //   setFileName([...fileNameList]);
+  // };
+  // const handleFileUpload = (fileTypeAlias, setFileName, fileNameList = [], uploadType) => ({ target }) => {
+  //   uploadFile({
+  //     files: target.files,
+  //     uploadTypeAlias: fileTypeAlias,
+  //     setFileName,
+  //     _filenameList: fileNameList,
+  //     uploadType,
+  //   });
+  // };
+  // const uploadEpfoPassBookFile = handleFileUpload(
+  //   epfoPassbookFileTypeAlias,
+  //   setEpfoPassBookFiles,
+  //   epfoPassBookFiles,
+  //   'multiple',
+  // );
+  // const uploadEpfoServiceHistoryFile = handleFileUpload(
+  //   epfoServiceHistoryFileTypeAlias,
+  //   setEpfoServiceHistoryFile,
+  //   epfoServiceHistoryFile,
+  //   'single',
+  // );
+  // const removeEPFOPassbookFile = (currentFileName) => {
+  //   const { fileNameList: _fileNameList, updatedUploadedFileList: _updatedUploadedFileList, updatedFileDetails: _updatedFileDetails } = removeFile({
+  //     uploadedFile: uploadedFile,
+  //     fileDetails: fileDetails,
+  //     uploadTypeAlias: epfoPassbookFileTypeAlias,
+  //     fileNameList: epfoPassBookFiles,
+  //     currentFileName: currentFileName,
+  //     uploadType: 'multiple',
+  //   });
+  //   setEpfoPassBookFiles(_fileNameList);
+  //   setUploadedFile(_updatedUploadedFileList);
+  //   setFileDetails(_updatedFileDetails);
+  // };
+  // const hasEPFOPassbookUpload = () => checkFileUpload(epfoPassbookFileTypeAlias);
+  // const hasEPFOServiceHistoryUpload = () => checkFileUpload(epfoServiceHistoryFile);
+  // Validation logic
+  // const checkEPFOPassbookDocCertificateUpload = () => {
+  //   const isUploaded = hasEPFOPassbookUpload() || hasValue(epfoPassBookFiles);
+  //   if (!isUploaded) showErrorMessage('EPFO Passbook file');
+  //   return isUploaded;
+  // };
+  // const checkEPFOServiceHistoryDocCertificateUpload = () => {
+  //   const isUploaded = hasEPFOServiceHistoryUpload() || hasValue(epfoServiceHistoryFile);
+  //   if (!isUploaded) showErrorMessage('EPFO Service History file');
+  //   return isUploaded;
+  // };
+  // const checkUANVerificationRequiredDoc = () => {
+  //   if (!hasValue(UAN)) {
+  //     showErrorMessage(UANEmptyErrorMsg);
+  //     return false;
+  //   }
+  //   if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
+  //     showErrorMessage(UANPatterErrorMsg);
+  //     return false;
+  //   }
+  //   if (!checkEPFOServiceHistoryDocCertificateUpload()) {
+  //     return false;
+  //   }
+  //   if (!checkEPFOPassbookDocCertificateUpload()) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
+  // const checkAadharVerification = () => {
+  //   if (!userInfo?.isAadhaarVarified) {
+  //     showErrorMessage(aadharVerificationErrorMsg);
+  //     return false;
+  //   }
+  //   return true;
+  // };
+  // const submitDetails = (autoSubmit, isManual) => {
+  //   if (autoSubmit) {
+  //     handleAppointeeFormPage2Save({
+  //       isUanManualUpload: isManual,
+  //       status: 'Verified',
+  //     });
+  //   } else {
+  //     handleAppointeeFormPage3Save();
+  //   }
+  // };
+  // const openSubmitConfirmationModel = () => {
+  //   const submitconfModelContent = {
+  //     dialogContentText: submitConfirmationMsg,
+  //   };
+  //   openConfirmationModel(submitconfModelContent, () =>
+  //     handleAppointeeFormPage2Save({
+  //       isUanManualUpload: true,
+  //       status: 'Submitted',
+  //     }),
+  //   );
+  // };
+  // const handleAppointeeFormPage3Save = () => {
+  //   if (!checkAadharVerification()) {
+  //     return;
+  //   }
+  //   if (!checkUANVerificationRequiredDoc()) {
+  //     return;
+  //   }
+  //   openSubmitConfirmationModel();
+  // };
+  // UAN verification logic (custom hook)
+  const functionSlice = rest.functionSlice || [];
   const {
+    openRemarksModel,
     openOtpForm,
     closeOtpForm,
     openOtpSubmitionModel,
     closeOtpSubmitionModel,
     openConfirmationModel,
     openInfoModel,
-  } = functionSlice[0];
-  const [timeoutTimer, setTimeoutTimer] = useState();
-  const loggedInData = useSelector((state) => state.loggedInData);
-  const { userId, appointeeId, userCode, candidateId } = loggedInData[0];
-  const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { t } = useTranslation();
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-  const setCurrentPageNo = (currentPageNo) => {
-    dispatch(storeCurrentPageNo(currentPageNo));
-  };
-  const handleDialogConfirm = () => {
-    setCurrentPageNo(3);
-  };
-  const handleDialogCancel = () => {};
-  const handleGetUANNumber = async () => {
-    const payLoad = {
-      aaddharNumber: aadhar,
-      appointeeId,
-      panNumber: pan,
-      mobileNumber: hasValue(firstPageForm.mobileNo)
-        ? removeExtraSpaces(firstPageForm.mobileNo)
-        : null,
-      userId,
-    };
-    const response = await getUANNumber(payLoad);
-    if (response) {
-      const { isUanAvailable, uanNumber, remarks } = response.responseInfo;
-      if (uanNumber) {
-        setUAN(uanNumber);
-        generateUANOTPDialog(uanNumber, firstPageForm.mobileNo);
-      } else if (isUANAvailableState === false && !isUanAvailable && !hasValue(uanNumber)) {
-        setUAN(null);
-        setisUanVarified(true);
-      } else {
-        showErrorMessage(remarks);
-      }
-      setEpfostatusMessage(epfostatusMessage);
-    }
-  };
-  const handleChangeUanVerification = ({ target }) => {
-    const value = target.value;
-    setIsUanVerificationProcessManual(value);
-    if (value === 'manual') {
-      const prerequisiteModelContent = {
-        dialogTitle: (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Typography>Prerequisite Informatiton for mannual upload</Typography>
-          </div>
-        ),
-        dialogContentText: (
-          <>
-            <Typography sx={subHeadingContentTextStyle}>
-              Before verification there are some prerequisites, thats needs to be done...
-            </Typography>
-            <Typography> </Typography>
-          </>
-        ),
-        dialogContentComponent: <UANPrerequisiteInformation />,
-        fullWidth: false,
-      };
-      openInfoModel(prerequisiteModelContent);
-    }
-  };
-  const handleEpfoButtonClick = () => {
+  } = functionSlice[0] || {};
+  // const buildFormData = (payLoad) => {
+  //   let formData = new FormData();
+  //   for (const property in payLoad) {
+  //     if (Object.hasOwnProperty.call(payLoad, property)) {
+  //       if (payLoad[property] === '') {
+  //         delete payLoad[property];
+  //       } else {
+  //         if (property === 'fileUploaded') {
+  //           formData.append(`${property}`, JSON.stringify(payLoad[property]));
+  //         } else if (property === 'fileDetails') {
+  //           if (payLoad?.fileDetails?.length > 0) {
+  //             payLoad?.fileDetails?.forEach((element, index) => {
+  //               formData.append(`${property}`, payLoad[property][index]);
+  //             });
+  //           }
+  //         } else {
+  //           formData.append(`${property}`, payLoad[property]);
+  //         }
+  //       }
+  //     }
+  //   }
+  //   return formData;
+  // };
+  // const handleAppointeeFormPage2Save = async ({ isUanManualUpload }) => {
+  //   let payLoad = {
+  //     appointeeId: appointeeId,
+  //     appointeeCode: userCode,
+  //     isSubmit: true,
+  //     userId: userId,
+  //     fileDetails: fileDetails,
+  //     fileUploaded: uploadedFile,
+  //     isManualPassbookUploaded: isUanManualUpload,
+  //   };
+  //   let formData = buildFormData(payLoad);
+  //   const response = await postAppointeeFileDetails(formData);
+  //   if (response) {
+  //     const updatedAppointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
+  //     const registrationSuccessContent = {
+  //       dialogContentText:
+  //         isUanManualUpload === true
+  //           ? docResubmissionSuccessDialogContentText
+  //           : registrationSuccessDialogContentText,
+  //       dialogTitle: congratulationDialogContentTitle,
+  //       maxWidth: 'sm',
+  //       btnName: 'Go to Dashboard',
+  //     };
+  //     openInfoModel(registrationSuccessContent, () => navigateTo(toDashboard));
+  //   }
+  // };
+
+  const uanVerification = useUANVerification({
+    userInfo,
+    setUserInfo,
+    checkFileUpload,
+    openUploadDocInfoModel,
+    functionSlice,
+    ...rest
+  });
+  useEffect(() => {
+    setUAN(userInfo.uanNumber);
+  }, [userInfo.uanNumber]);
+  // Set epfoButton text based on UAN
+  useEffect(() => {
     if (!hasValue(UAN)) {
-      if (isPanVarified === false || isAadhaarVarified === false) {
-        const confirmationModelContent = {
-          dialogContentText: fetchUanConfirmationtMsg,
-        };
-        openConfirmationModel(confirmationModelContent, handleGetUANNumber);
-      } else {
-        handleGetUANNumber();
-      }
-    } else if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
-      showErrorMessage(UANPatterErrorMsg);
-    } else handleEpfoVerifiaction();
-  };
-  const handleEpfoVerifiaction = () => {
-    const mobileNumber = hasValue(firstPageForm.mobileNo)
-      ? removeExtraSpaces(firstPageForm.mobileNo)
-      : null;
-    openOtpForm(
-      UAN,
-      mobileNumber,
-      'UAN Number',
-      () => validateUANOtp(UAN, mobileNumber),
-      'Generate OTP for PF Verification',
-    );
-  };
-  const generateUANOTPDialog = (UAN, mobileNo) => {
-    setEpfoButton('Auto UAN Verification');
-    epfostatusMessage.message = NA;
-    epfostatusMessage.success = null;
-    setEpfostatusMessage(epfostatusMessage);
-    const mobileNumber = hasValue(mobileNo) ? removeExtraSpaces(mobileNo) : null;
-    openOtpForm(
-      UAN,
-      mobileNumber,
-      'UAN Number',
-      () => validateUANOtp(UAN, mobileNumber),
-      'Generate OTP for PF Verification',
-    );
-  };
-  const validateUANOtp = async (uanNumber, mobileNumber) => {
-    const payLoad = {
-      uanNumber,
-      mobileNumber,
-      appointeeId,
-      userId,
-    };
-    const response = await generateUANOtp(payLoad);
-    if (response) {
-      const { responseInfo } = response;
-      let { otpSent, clientId } = responseInfo;
-      if (!otpSent) {
-        showErrorMessage(generateOtpRety);
-      } else {
-        initialTimeOfOtpTimer();
-        showSuccessMessage(generateOtpSucces);
-        closeOtpForm();
-        openOtpSubmitionModel({
-          otpSubmitionFunction: (otp) => verifyUAN(otp, clientId),
-          timeoutTimer: timeoutTimer,
-          setTimeoutTimer: setTimeoutTimer,
-        });
-      }
+      setEpfoButton(t('Fetch N Verify UAN'));
+    } else {
+      setEpfoButton('Auto UAN Verification');
     }
-  };
-  const initialTimeOfOtpTimer = () => {
-    setTimeoutTimer(10 * 60);
-  };
-  const verifyUAN = async (otp, clientId) => {
-    const payLoad = {
-      appointeeId: appointeeId,
-      otp: otp,
-      clientId: clientId,
-      userId: userId,
-      appointeeCode: userCode,
-    };
-    const response = await submitUANOTP(payLoad);
-    if (response) {
-      const { remarks, isVarified } = response.responseInfo;
-      if (isVarified) {
-        showSuccessMessage(uanVerifySuccessMsg);
-        setisUanVarified(true);
-      } else {
-        showErrorMessage(uanVerifyFailedMsg);
-        if (hasValue(remarks)) {
-          const generatedRemarks = generateRemarks(remarks);
-          openRemarksModel(generatedRemarks);
-        }
-      }
-      closeOtpSubmitionModel();
-      setEpfostatusMessage(new VerificationStatus(isVarified, 'V'));
+  }, [UAN, t]);
+  useEffect(() => {
+    if (userInfo?.isAadhaarVarified !== null && userInfo?.isAadhaarVarified === true) {
+      setIsEpfoSectionDisabled(false);
     }
-  };
+  }, [userInfo?.isAadhaarVarified]);
+
   return (
     <Box sx={{ width: '100%' }}>
       <form ref={formElement}>
@@ -280,196 +255,38 @@ const EighthForm = ({
           sx={{ paddingLeft: '20px' }}
           container
           rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          columnSpacing={{ xs: 1, sm: 2, md: 2 }}
         >
-          <FormHeadingContainer>
-            <FormHeading
-              step={stepsList?.UAV?.step}
-              heading={stepsList?.UAV?.name}
-              info={'Enter your Universal Account Number(UAN) to verify.'}
-            />
-          </FormHeadingContainer>
-          <GridRow sx={positionRelative}>
-            {}
-            <Grid item xs={12} md={6} sx={{ paddingLeft: '0px !important' }}>
-              <TextInput
-                label={t('Universal Account Number(UAN)')}
-                onChange={(val) => {
-                  if (/^\d{0,12}$/.test(val)) {
-                    setUAN(val);
-                  }
-                }}
-                value={UAN}
-                disabled={isUanVarified}
-              />
-              <Button
-                sx={verificationBtnStyle}
-                variant='contained'
-                onClick={handleEpfoButtonClick}
-                endIcon={<Autorenew />}
-                disabled={isUanVerificationProcessManual === 'manual' || isUanVarified}
-              >
-                {epfoButton}
-              </Button>
-              <VerificationStatusSection docType={epfostatusMessage} />
-              <Stack direction={'row'} alignItems={'center'}>
-                <Typography sx={{ margin: '5px 0', color: '#000' }}>
-                  {t('UAN Aadhar Link')}
-                </Typography>
-                <Typography>{`: ${uanAadharLink}`}</Typography>
-              </Stack>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={6}
-              sx={{
-                paddingLeft: {
-                  xs: '0px !important',
-                  md: '20px!important',
-                  ...positionRelative,
-                },
-              }}
-            >
-              <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
-                <Stack flexDirection='column' justifyContent='space-between' alignItems='start'>
-                  <Typography sx={{ ...lable1CopyStyle }}>{t('UAN Verification')}</Typography>
-                  <RadioGroup
-                    row
-                    value={isUanVerificationProcessManual}
-                    onChange={handleChangeUanVerification}
-                  >
-                    <FormControlLabel
-                      value='auto'
-                      control={<Radio />}
-                      label={t('Automatic')}
-                      disabled={!hasValue(UAN) || isUanVarified}
-                    />
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <FormControlLabel
-                        value='manual'
-                        control={<Radio />}
-                        label={t('Manual')}
-                        disabled={!hasValue(UAN) || isUanVarified}
-                      />
-                      <Tooltip
-                        arrow
-                        title={
-                          <Box sx={{ ...statusBoxstyle }}>
-                            <Typography variant='body2' sx={{ ...statusstyle, fontSize: '16px' }}>
-                              It is mandatory for EPFO members to upload all PF passbooks 2005
-                              onwards (if applicable).
-                            </Typography>
-                          </Box>
-                        }
-                      >
-                        <Fab
-                          variant='contained'
-                          size='small'
-                          sx={{ ...primaryFabStyle, ml: 1 }}
-                          onClick={handleOpenModal}
-                        >
-                          <Info width={18} sx={{ color: '#fff' }} />
-                        </Fab>
-                      </Tooltip>
-                      <Dialog open={isModalOpen} onClose={handleCloseModal} maxWidth='lg' fullWidth>
-                        <DialogTitle>How To Access Service History</DialogTitle>
-                        <DialogContent
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <img
-                            src={myImage}
-                            alt='Description'
-                            style={{ maxWidth: '100%', maxHeight: '100%' }}
-                          />
-                        </DialogContent>
-                        <DialogContent
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'left',
-                            alignItems: 'flex-start',
-                          }}
-                        >
-                          <Typography variant='subtitle2'>Notes :</Typography>
-                          <Typography variant='subtitle2' sx={{ mt: 1 }}>
-                            1. Upload your EPFO service history to provide accurate details about
-                            your employment contributions.
-                          </Typography>
-                          <Typography variant='subtitle2' sx={{ mt: 1 }}>
-                            {`2. Log in to the EPFO Member Portal. Navigate to 'View' -> 'Service History'. Download the service history file.`}
-                          </Typography>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button
-                            variant='contained'
-                            color='primary'
-                            sx={{ ...responsiveBtnType1Style }}
-                            onClick={handleCloseModal}
-                          >
-                            CLOSE
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-                    </Box>
-                  </RadioGroup>
-                </Stack>
-              </Grid>
-              {isUanVerificationProcessManual === 'manual' && (
-                <Grid>
-                  <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
-                    <Typography
-                      sx={{
-                        ...lable1CopyStyle,
-                        textAlign: 'center',
-                      }}
-                    >
-                      {t('Please upload your EPFO Service History')}
-                      <span className='requiredField'>*</span>
-                    </Typography>
-                    <Box sx={fileUploadSectionContainerStyle}>
-                      <FileUploadSection
-                        chooseFile={uploadEpfoServiceHistoryFile}
-                        fileName={epfoServiceHistoryFile}
-                        accept={'application/pdf'}
-                        maxUploadSize={imgAndPdfMaxSize}
-                        uploadTypeAlias={epfoServiceHistoryFileTypeAlias}
-                        handleViewFile={handleViewFile}
-                      />
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sx={{ paddingLeft: '0px !important' }}>
-                    <Typography
-                      sx={{
-                        ...lable1CopyStyle,
-                        textAlign: 'center',
-                      }}
-                    >
-                      {t('Please upload your EPFO passbook')}
-                      <span className='requiredField'>*</span>
-                    </Typography>
-                    <Box sx={fileUploadSectionContainerStyle}>
-                      <FileUploadSection
-                        chooseFile={uploadEpfoPassBookFile}
-                        handleRemoveFile={removeEPFOPassbookFile}
-                        fileName={epfoPassBookFiles}
-                        accept={'application/pdf'}
-                        maxUploadSize={imgAndPdfMaxSize}
-                        multiple={true}
-                        uploadTypeAlias={epfoPassbookFileTypeAlias}
-                        handleViewFile={handleViewFile}
-                      />
-                    </Box>
-                  </Grid>
-                </Grid>
-              )}
-            </Grid>
-            {}
-          </GridRow>
+          <UANVerification
+            t={t}
+            stepsList={stepsList}
+            UAN={uanVerification.UAN}
+            setUAN={uanVerification.setUAN}
+            isUanVarified={uanVerification.isUanVarified}
+            isUanVerificationProcessManual={uanVerification.isUanVerificationProcessManual}
+            handleChangeUanVerification={uanVerification.handleChangeUanVerification}
+            handleEpfoButtonClick={uanVerification.handleEpfoButtonClick}
+            epfoButton={uanVerification.epfoButton}
+            epfostatusMessage={uanVerification.epfostatusMessage}
+            uanAadharLink={uanVerification.uanAadharLink}
+            isModalOpen={uanVerification.isModalOpen}
+            handleOpenModal={uanVerification.handleOpenModal}
+            handleCloseModal={uanVerification.handleCloseModal}
+            uploadEpfoServiceHistoryFile={uanVerification.uploadEpfoServiceHistoryFile}
+            epfoServiceHistoryFile={uanVerification.epfoServiceHistoryFile}
+            uploadEpfoPassBookFile={uanVerification.uploadEpfoPassBookFile}
+            removeEPFOPassbookFile={uanVerification.removeEPFOPassbookFile}
+            epfoPassBookFiles={uanVerification.epfoPassBookFiles}
+            handleViewFile={rest.handleViewFile}
+            imgAndPdfMaxSize={imgAndPdfMaxSize}
+            epfoServiceHistoryFileTypeAlias={epfoServiceHistoryFileTypeAlias}
+            epfoPassbookFileTypeAlias={epfoPassbookFileTypeAlias}
+            fileUploadSectionContainerStyle={rest.fileUploadSectionContainerStyle}
+            lable1CopyStyle={rest.lable1CopyStyle}
+            primaryFabStyle={rest.primaryFabStyle}
+            responsiveBtnType1Style={rest.responsiveBtnType1Style}
+            verificationBtnStyle={rest.verificationBtnStyle}
+          />
           <GridRow>
             <Grid sx={{ paddingLeft: '0px !important' }} item xs={12}>
               <Stack flexDirection={'row'}>
@@ -481,17 +298,15 @@ const EighthForm = ({
                 >
                   {t('Previous')}
                 </Button>
-                {isUanVerificationProcessManual === 'manual' && (
-                  <>
-                    <Button
-                      onClick={() => submitDetails(false, true)}
-                      sx={submitBtnStyle}
-                      variant='contained'
-                      color='primary'
-                    >
-                      {t('Submit')}
-                    </Button>
-                  </>
+                {uanVerification.isUanVerificationProcessManual === 'manual' && (
+                  <Button
+                    onClick={() => uanVerification.submitDetails(false, true)}
+                    sx={submitBtnStyle}
+                    variant='contained'
+                    color='primary'
+                  >
+                    {t('Submit')}
+                  </Button>
                 )}
               </Stack>
             </Grid>
@@ -501,4 +316,5 @@ const EighthForm = ({
     </Box>
   );
 };
+
 export default EighthForm;

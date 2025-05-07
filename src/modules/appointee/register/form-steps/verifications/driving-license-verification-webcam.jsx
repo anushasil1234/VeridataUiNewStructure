@@ -87,7 +87,7 @@ const DrivingLicenseVerification = ({
   setFirstPageForm,
   isLicenseAvailable,
   setIsLicenseAvailable,
-  isDLVarified,
+  isDlVarified,
   setisDLVarified,
   licensestatusMessage,
   setLicenseStatusMessage,
@@ -281,7 +281,7 @@ const DrivingLicenseVerification = ({
                   <TextInput
                     label={'Driving License Number'}
                     onChange={handleLicenseNumberChange}
-                    disabled={isDLVarified}
+                    disabled={isDlVarified}
                     value={drivingLicense}
                   />
                 </Grid>
@@ -328,7 +328,7 @@ const DrivingLicenseVerification = ({
               <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>
                 <Button
                   sx={{ ...submitBtnStyle, margin: '5px 0' }}
-                  disabled={isDLVarified}
+                  disabled={isDlVarified}
                   variant='contained'
                   onClick={handleDrivingLicenseVerification}
                   endIcon={<Autorenew />}

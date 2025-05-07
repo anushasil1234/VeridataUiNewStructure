@@ -11,17 +11,15 @@ const UANPrerequisiteInformation = () => {
       secondaryComponent: (
         <Typography
           sx={{ display: 'inline' }}
-          component='span'
-          variant='body2'
-          color='text.primary'
+          component="span"
+          variant="body2"
+          color="text.primary"
         >
           Please go to EPF member portal. (
           <Link
-            style={{
-              color: '#1976d2',
-            }}
-            target='_blank'
-            to={'https://unifiedportal-mem.epfindia.gov.in/memberinterface/'}
+            style={{ color: '#1976d2' }}
+            target="_blank"
+            to="https://unifiedportal-mem.epfindia.gov.in/memberinterface/"
           >
             click here
           </Link>
@@ -32,13 +30,12 @@ const UANPrerequisiteInformation = () => {
     {
       StepNumber: '2',
       primaryHeading: 'Login',
-      secondaryText:
-        'Login with your creadential and download "Employment Service History" and "Passbook".',
+      secondaryText: 'Login with your credentials and download "Employment Service History" and "Passbook".',
       secondaryComponent: null,
     },
     {
       StepNumber: '3',
-      primaryHeading: 'Upload the details here in respective uplload section.',
+      primaryHeading: 'Upload the details here in respective upload section.',
       secondaryText: null,
       secondaryComponent: null,
     },

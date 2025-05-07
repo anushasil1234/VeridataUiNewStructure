@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import GridRow from 'shared/components/grid-container/grid-row';
 import DrivingLicenseVerification from './verifications/driving-licence-verification';
 import useDrivingLicenseVerification from '../hooks/useDrivingLicenseVerification';
+import showErrorMessage from 'shared/utils/associate/show-error-message';
+import { aaddharNumberverify } from 'shared/constants/constants';
 
 const FourthForm = ({
   formElement,
@@ -14,13 +16,13 @@ const FourthForm = ({
   setActiveStep,
   userInfo,
   setUserInfo,
+  updateUserInfo,
 }) => {
   const { t } = useTranslation();
-
-  // Use the custom hook for all DL logic/state
   const dlVerification = useDrivingLicenseVerification({
      setUserInfo,
      userInfo,
+     updateUserInfo
   });
 
   return (
@@ -50,23 +52,23 @@ const FourthForm = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    // if (!isAadhaarVarified) {
-                    //   showErrorMessage(aaddharNumberverify);
-                    //   return;
-                    // }
+                     if (!isAadhaarVarified) {
+                       showErrorMessage(aaddharNumberverify);
+                       return;
+                     }
                     setCurrentPageNo(5);
                     setActiveStep(4);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'
                   color='primary'
-                  // disabled={
-                  //   !(
-                  //     (isAadhaarVarified && (!dlVerification.isDLAvailable || dlVerification.isDLVarified)) ||
-                  //     !dlVerification.isDLAvailable ||
-                  //     dlVerification.isDLVarified
-                  //   )
-                  // }
+                   disabled={
+                    !(
+                      (isAadhaarVarified && (!dlVerification.isDLAvailable || dlVerification.isDlVarified)) ||
+                      !dlVerification.isDLAvailable ||
+                      dlVerification.isDlVarified
+                    )
+                  }
                 >
                   {t('Next')}
                 </Button>

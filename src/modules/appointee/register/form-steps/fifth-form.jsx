@@ -30,6 +30,7 @@ const FifthForm = ({
         >
           <PANVerification
             stepsList={stepsList}
+            
             {...panVerification}
           />
           <GridRow>

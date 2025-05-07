@@ -20,7 +20,7 @@ import { handleImageUpload } from 'shared/utils/associate/text-extraction-from-u
 
 const PANVerification = ({
   stepsList,
-  isPanAvailable,
+  isPANAvailable,
   handleChangePANAvailable,
   pan,
   handelPANNumberChange,
@@ -58,7 +58,7 @@ const PANVerification = ({
         </Typography>
         <RadioGroup
           row
-          value={isPanAvailable ? 'Yes' : 'No'}
+          value={isPANAvailable ? 'Yes' : 'No'}
           onChange={handleChangePANAvailable}
           sx={{ marginLeft: '24px' }}
         >
@@ -76,7 +76,7 @@ const PANVerification = ({
           />
         </RadioGroup>
       </Box>
-      {isPanAvailable && (
+      {isPANAvailable && (
         <>
           <GridRow sx={positionRelative}>
             <Grid sx={{ paddingLeft: '0px !important' }} item xs={12} md={6}>

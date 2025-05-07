@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import showSuccessMessage from 'shared/utils/associate/show-success-message';
@@ -18,11 +18,11 @@ export default function usePanVerification({
   setUserInfo,
   userInfo,
 }) {
-  console.log('userInfo', userInfo);
+  console.log('userInfoisPanAvailable', userInfo.appointeeName);
 
   const [pan, setPan] = useState(initialPan);
   const [nameAsOnPan, setNameAsOnPan] = useState(userInfo.appointeeName ?? initialName);
-  const [isPANAvailable, setIsPANAvailable] = useState(userInfo.isPanAvailable??initialIsPANAvailable);
+  const [isPANAvailable, setIsPANAvailable] = useState(userInfo.isPanAvailable ?? initialIsPANAvailable);
   const [isPanVarified, setIsPanVarified] = useState(userInfo?.isPanVarified ?? initialIsPanVarified);
   const [panstatusMessage, setPANStatusMessage] = useState(initialStatusMessage);
   const [panNumberError, setPanNumberError] = useState(false);
@@ -32,7 +32,18 @@ export default function usePanVerification({
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openRemarksModel } = functionSlice[0] || {};
   const { userId, appointeeId } = loggedInData[0] || {};
-  const dispatch = useDispatch();
+  const hasInteracted = useRef(false);
+  useEffect(() => {
+    if (!hasInteracted.current) {
+      setNameAsOnPan(userInfo?.appointeeName ?? initialName);
+      setIsPanVarified(userInfo?.isPanVarified ?? null);
+      setIsPANAvailable(userInfo?.isPanAvailable ?? false);
+      setPan(userInfo?.panNumber ?? '');
+      setPANStatusMessage(new VerificationStatus(userInfo?.isPanVarified, ''));
+    }
+    // eslint-disable-next-line
+  }, [userInfo?.isPanVarified, userInfo?.isPanAvailable, userInfo?.panNumber]);
+  console.log('userInfoisPanAvailableaaqqq', nameAsOnPan);
 
   const onTextExtracted = (text) => {
     const extracted = extractPanNumber(text);
@@ -102,21 +113,21 @@ export default function usePanVerification({
     };
     const response = await verifyPANDetails(payLoad);
     if (response) {
-      const { remarks, IsVarified } = response.responseInfo;
-      setIsPanVarified(IsVarified);
+      const { remarks, isVarified } = response.responseInfo;
+      setIsPanVarified(isVarified);
       setUserInfo((prevState) => ({
         ...prevState,
-        isPanVarified: IsVarified,
-      
+        isPanVarified: isVarified,
+
       }));
-      if (!IsVarified) {
+      if (!isVarified) {
         displayPanError('PAN verification failed.');
         if (hasValue(remarks)) {
           const generatedRemarks = generateRemarks(remarks);
           openRemarksModel && openRemarksModel(generatedRemarks);
         }
       }
-      setPANStatusMessage(new VerificationStatus(IsVarified, 'V'));
+      setPANStatusMessage(new VerificationStatus(isVarified, 'V'));
     }
   };
 

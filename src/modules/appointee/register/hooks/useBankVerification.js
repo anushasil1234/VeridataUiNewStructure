@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import { verifyBankDetails } from 'server/apis/verify/verify-bank-details';
@@ -15,8 +15,8 @@ export default function useBankVerification({
   setUserInfo,
   userInfo,
 }) {
-  const [accountNumber, setAccountNumber] = useState(initialAccountNumber);
-  const [IFSCCode, setIFSCCode] = useState(initialIFSC);
+  const [accountNumber, setAccountNumber] = useState(userInfo?.bankAccNumber??initialAccountNumber);
+  const [IFSCCode, setIFSCCode] = useState(userInfo?.bankIfscNumber??initialIFSC);
   const [isBankVarified, setIsBankVarified] = useState(userInfo?.isBankVarified ?? initialIsBankVarified);
   const [bankstatusMessage, setBankStatusMessage] = useState(initialStatusMessage);
   const [ifscCodeError, setIFSCCodeError] = useState(false);
@@ -25,7 +25,16 @@ export default function useBankVerification({
   const functionSlice = useSelector((state) => state.functionSlice);
   const { openRemarksModel } = functionSlice[0] || {};
   const { userId, appointeeId } = loggedInData[0] || {};
-
+    const hasInteracted = useRef(false);
+  
+useEffect(() => {
+    if (!hasInteracted.current) {
+      setIsBankVarified(userInfo?.isBankAccVarified ?? null);
+      setAccountNumber(userInfo?.bankAccNumber ?? '');
+      setIFSCCode(userInfo?.bankIfscNumber ?? '');
+      setBankStatusMessage(new VerificationStatus(userInfo?.isBankAccVarified, ''));
+    }
+  }, [userInfo?.isBankAccVarified,  userInfo?.bankIfscNumber, userInfo?.bankAccNumber]);
   const handleAccountNumberChange = (value) => {
     setAccountNumber(value);
   };
