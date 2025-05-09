@@ -481,34 +481,44 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
   const handleAnswer = (questionId, selectedAnswerText) => {
     const updatedAnswers = { ...answers, [questionId]: selectedAnswerText };
     setAnswers(updatedAnswers);
-
-    const completenessQs = verificationQuestionSet.filter((q) => q.fieldCode === '014');
-    const correctnessQs = verificationQuestionSet.filter((q) => q.fieldCode === '015');
-
-    const allCompletenessYes = completenessQs.every((q) => updatedAnswers[q.questionId] === 'YES');
-    const allCorrectnessYes = correctnessQs.every((q) => updatedAnswers[q.questionId] === 'YES');
-
-    const baseEnabled = [...completenessQs, ...correctnessQs].map((q) => q.questionId);
-
-    let nextQuestionIds = [...baseEnabled];
-
-    verificationQuestionSet.forEach((q) => {
-      const selectedAnswer = q.answers.find(
-        (a) => a.answerText === updatedAnswers[q.questionId]
-      );
-
-      if (selectedAnswer?.nextQuestion && selectedAnswer.action !== "END") {
-        nextQuestionIds.push(selectedAnswer.nextQuestion);
-      }
-    });
-
+  
+    const completenessQs = verificationQuestionSet.filter(q => q.fieldCode === '014');
+    const correctnessQs = verificationQuestionSet.filter(q => q.fieldCode === '015');
+  
+    const allCompletenessYes = completenessQs.every(q => updatedAnswers[q.questionId] === 'YES');
+    const allCorrectnessYes = correctnessQs.every(q => updatedAnswers[q.questionId] === 'YES');
+  
+    const baseEnabled = [...completenessQs, ...correctnessQs].map(q => q.questionId);
+  
     if (allCompletenessYes && allCorrectnessYes) {
-      setEnabledQuestions([...new Set(nextQuestionIds)]);
+      const newEnabled = new Set(baseEnabled);
+      const visited = new Set();
+  
+      const walkNext = (qid) => {
+        if (visited.has(qid)) return;
+        visited.add(qid);
+  
+        const q = verificationQuestionSet.find(q => q.questionId === qid);
+        if (!q) return;
+  
+        const selectedAnsText = updatedAnswers[qid];
+        const selectedAnswer = q.answers.find(a => a.answerText === selectedAnsText);
+  
+        // Only proceed if action is explicitly NXTQUESTN
+        if (selectedAnswer?.action === 'NXTQUESTN' && selectedAnswer.nextQuestion) {
+          newEnabled.add(selectedAnswer.nextQuestion);
+          walkNext(selectedAnswer.nextQuestion);
+        }
+      };
+  
+      baseEnabled.forEach(walkNext);
+      setEnabledQuestions(Array.from(newEnabled));
     } else {
       setEnabledQuestions(baseEnabled);
     }
   };
-
+  
+  
   console.log('answers & enabled questions', answers,enabledQuestions);
   return (
     <Box
