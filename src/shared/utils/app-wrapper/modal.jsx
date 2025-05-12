@@ -283,8 +283,8 @@ const Modals = ({ closeModal }) => {
   };
   const setRemarks = async (appointeeId) => {
     const response = await getRemarks(appointeeId);
-    if (response?.responseInfo && response?.responseInfo.length > 0) {
-      const remarks = response?.responseInfo;
+    if (response?.responseInfos && response?.responseInfos.length > 0) {
+      const remarks = response?.responseInfos;
       openRemarksModel && openRemarksModel(remarks);
     } else {
       showErrorMessage(noRemarksMsg);

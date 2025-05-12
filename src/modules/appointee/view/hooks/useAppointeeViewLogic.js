@@ -520,13 +520,14 @@ export function useAppointeeViewLogic({ appointeeStatus, appointeeId, closeViewM
     }
   }, [appointeeId]);
   const handleClickOnReview = async () => {
-    const response = await getRemarks(appointeeId);
-    if (response && response.responseInfo && response.responseInfo.length > 0) {
-      const remarks = response.responseInfo;
-      openRemarksModel(remarks);
-    } else {
-      showErrorMessage(remarksissuemessage);
-    }
+     setRemarks(appointeeId);
+    // const response = await getRemarks(appointeeId);
+    // if (response && response.responseInfos && response.responseInfos.length > 0) {
+    //   const remarks = response.responseInfos;
+    //   openRemarksModel(remarks);
+    // } else {
+    //   showErrorMessage(remarksissuemessage);
+    // }
   };
   const handleClickOnMannualUpload = () => {};
   const handelclick = () => {

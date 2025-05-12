@@ -200,7 +200,7 @@ const CandidateView = () => {
   const setRemarks = async () => {
     const response = await getRemarks(appointeeId);
     if (response) {
-      setRemarkList(response.responseInfo);
+      setRemarkList(response.responseInfos);
     }
   };
   const setSubmitStatus = async () => {
