@@ -2500,6 +2500,7 @@ export const GetCriticalAppointeeData_URL = `${Candidate}/GetCriticalAppointeeLi
 export const GetRemarksRemedyData_URL = `${Candidate}/GetRemarksRemedy`;
 export const GetRemarks_URL = `${Candidate}/GetRemarks?appointeeId=`;
 export const GetMannualVerificationData_URL = `${Verify}/GetManualVeificationProcessData`;
+export const GetMannualVerificationDataReport_URL = `${AppointeeReports}/GetManualVerificationReport`;
 export const PostAppointeeClose_URL = `${AppoienteeWorkFlow}/PostAppointeeClose`; //not used
 export const PostAppointeeDocAvailibility_URL = `${Candidate}/PostAppointeeDocAvailibility`;
 export const PostRemainderMail_URL = (appointeeId, userId) =>

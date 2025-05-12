@@ -24,7 +24,7 @@ import {
   removeManualValidationResponseStatusSlice,
   storeManualValidationResponseStatusSlice,
 } from 'store/slices/manual-validation-response-status-slice';
-import { getMannualVerificationDataList } from 'server/apis';
+import { getMannualVerificationDataList,getMannualVerificationReportDataList } from 'server/apis';
 import showErrorMessage from '../associate/show-error-message';
 export const MVTable = (filters) => {
   const {
@@ -54,6 +54,23 @@ export const MVTable = (filters) => {
     filterType: props,
     ...payload,
   };
+  // const handleDownloade = (rf) => {
+  //     if (rf.fileData && typeof rf.fileData === 'string') {
+  //       const base64String = rf.fileData;
+  //       const fileName = rf.fileName || 'appointee_data.xlsx';
+  //       const blob = generateBlobFromBase64(base64String);
+  //       const blobUrl = window.URL.createObjectURL(blob);
+  //       downloadFile(blobUrl, fileName);
+  //       window.URL.revokeObjectURL(blobUrl);
+  //     }
+  //   };
+  const handleClick = async () => {
+      const response = await getMannualVerificationReportDataList(payload_MV);
+      if (response) {
+        const { responseInfo } = response;
+        handleDownloadExcel(responseInfo);
+      }
+    };
   const setTableRows = async (payload_MV) => {
     const response = await getMannualVerificationDataList(payload_MV);
     if (response) {
@@ -155,8 +172,8 @@ export const MVTable = (filters) => {
       return;
     }
   };
-  const handleDownloadExcel = () => {
-    if (responseList && responseList?.length > 0) {
+  const handleDownloadExcel = (responseFileDetails) => {
+    if (responseFileDetails && responseFileDetails?.fileData.length > 0) {
       if (responseFileDetails?.fileData && typeof responseFileDetails?.fileData === 'string') {
         const base64String = responseFileDetails?.fileData;
         const fileName =
@@ -177,7 +194,7 @@ export const MVTable = (filters) => {
   };
   useEffect(() => {
     if (isDownloadExcel === true) {
-      handleDownloadExcel();
+      handleClick();
       setIsDownloadExcel(false);
     }
     if (isDownload === true) {
