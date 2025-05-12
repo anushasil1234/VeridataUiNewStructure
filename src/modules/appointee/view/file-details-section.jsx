@@ -63,18 +63,6 @@ const FiledetailsSection = ({
   setIsVarified,
 }) => {
   const dispatch = useDispatch();
-  // console.log(
-  //   'enabledQuestions',
-  //   enabledQuestions,
-  //   fileTypeCategory,
-  //   verificationType,
-  //   verificationTypeList,
-  // );
-  // console.log(
-  //   'selectedMandatoryCategoryList',
-  //   selectedMandatoryCategoryList,
-  //   verificationCategoryList,
-  // );
   const mimeType = fileSrc.split(';')[0].split(':')[1];
   const loggedInData = useSelector((state) => state.loggedInData);
   const functionSlice = useSelector((state) => state.functionSlice);
@@ -139,11 +127,8 @@ const FiledetailsSection = ({
     verificationCategory: verificationType.value,
     remarks: remarks,
   };
-  console.log('payload', payload);
-
   const handleVerificationSubmit = async () => {
     const unansweredQuestions = enabledQuestions.filter((qId) => !verificationAnswers[qId]);
-    console.log('unansweredQuestions', unansweredQuestions);
     if (fileTypeCategory !== 'none' && unansweredQuestions.length > 0) {
       showErrorMessage('Please answer all enabled questions before proceeding.');
       return;

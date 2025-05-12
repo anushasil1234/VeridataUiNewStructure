@@ -95,7 +95,6 @@ const AppointeeCount = () => {
     entityId: entityId,
   };
   let [payLoad, setPayLoad] = useState(payLoadData);
-  console.log('entityList', entityList);
   const fetchTableRows = async ({ appointeeName, statusCode, fromDate, toDate, entityId }) => {
     payLoad = {
       appointeeName: appointeeName,

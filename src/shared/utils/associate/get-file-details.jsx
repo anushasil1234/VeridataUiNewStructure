@@ -14,7 +14,6 @@ const getFileDetails = ({
   fileDetails,
   fileTypeList,
 }) => {
-  console.log('uploadType12321', uploadType, uploadTypeAlias, uploadedFile, fileTypeList);
   let fileNameList = [..._filenameList];
   let updatedUploadedFileList = [...uploadedFile];
   let updatedFileDetails = [...fileDetails];

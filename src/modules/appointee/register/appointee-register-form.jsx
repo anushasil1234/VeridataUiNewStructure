@@ -273,7 +273,6 @@ const AppointeeRegisterForm = () => {
       setisAadhaarVarified(response.responseInfo.isAadhaarVarified)
     }
   };
-  console.log('isPassportAvailable',personalDetails.isPassportAvailable,isPhysicallyHandicap)
   useEffect(() => {
     updateStep({});
   }, [t, stepCounter, isPhysicallyHandicap, personalDetails.isPassportAvailable]);

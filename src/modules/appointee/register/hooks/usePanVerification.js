@@ -18,8 +18,6 @@ export default function usePanVerification({
   setUserInfo,
   userInfo,
 }) {
-  console.log('userInfoisPanAvailable', userInfo.appointeeName);
-
   const [pan, setPan] = useState(initialPan);
   const [nameAsOnPan, setNameAsOnPan] = useState(userInfo.appointeeName ?? initialName);
   const [isPANAvailable, setIsPANAvailable] = useState(userInfo.isPanAvailable ?? initialIsPANAvailable);
@@ -43,7 +41,6 @@ export default function usePanVerification({
     }
     // eslint-disable-next-line
   }, [userInfo?.isPanVarified, userInfo?.isPanAvailable, userInfo?.panNumber]);
-  console.log('userInfoisPanAvailableaaqqq', nameAsOnPan);
 
   const onTextExtracted = (text) => {
     const extracted = extractPanNumber(text);

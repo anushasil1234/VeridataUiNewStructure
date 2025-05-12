@@ -1798,7 +1798,7 @@ export const appointeeCountDetailsHeadCell = [
     id: 'emailId',
     numeric: true,
     type: 'string',
-    enums: ['companyName'],
+    enums: ['emailId'],
     disablePadding: false,
     label: 'Entity Name',
     component: {

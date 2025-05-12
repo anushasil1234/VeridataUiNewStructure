@@ -64,7 +64,6 @@ const AadhaarVerification = ({ stepsList,isAadhaarVarified, onVerified ,userInfo
   const functionSlice = useSelector((state) => state.functionSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
   const { userId, appointeeId, candidateId } = loggedInData[0];
-console.log('stepsList', stepsList);
   const [isOfflineXmlDownloaded, setIsOfflineXmlDownloaded] = useState(false);
   const [nameAsOnAadhar, setNameAsOnAadhar] = useState(userInfo.appointeeName);
   const [aadharShareCode, setAadharShareCode] = useState('');
@@ -192,7 +191,6 @@ console.log('stepsList', stepsList);
         successRedirectUrl: successUrl,
         failureRedirectUrl: failureUrl,
       };
-      console.log('payload', payload);
       const response = await GetDigilockerUrl(payload);
       if (response) {
         const { digilockerUrl, requestId } = response.responseInfo;

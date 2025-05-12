@@ -118,8 +118,6 @@ let AppointeeViewForm = (props) => {
     setIsFIRModalOpen,
     handelclick,
   } = logic;
-  console.log('manualPassbookFile', manualPassbookFile);
-
   return (
     <Box bgcolor={'#E2E8F0'} sx={{ position: 'relative', borderRadius: '8px' }}>
       <Box sx={gridContainerStyle}>
@@ -389,7 +387,6 @@ let AppointeeViewForm = (props) => {
                     )
                   }
                 />
-                {console.log('1111', process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH)}
                 {process.env.REACT_APP_VARIABLE_CERITIFICATE_10TH === 'true' && (
                   <PersonalInformation
                     fieldName={t('10th Pass Certificate')}

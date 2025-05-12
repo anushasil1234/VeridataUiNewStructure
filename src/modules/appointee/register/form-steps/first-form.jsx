@@ -160,7 +160,6 @@ const FirstForm = ({
   };
   const selectGender = (genderCode) => {
     const selectedGender = genderCode;
-    console.log('genderDropdownList', genderDropdownList);
     const updatedGender =
       genderDropdownList &&
       genderDropdownList.map((gender, index) => {
@@ -176,11 +175,9 @@ const FirstForm = ({
           selectGender,
         };
       }, genders);
-    console.log('updatedGender12', updatedGender);
     setGenderList(updatedGender);
   };
   const handleNationalityChange = (value, name) => {
-    console.log('Value:', value, name);
     if (value !== 'none') {
       let _firstPageForm = {
         ...firstPageForm,

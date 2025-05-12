@@ -132,7 +132,6 @@ export const UserLoginView = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (userName === '') {
-      console.log('handleSubmit');
       showErrorMessage(emptyUserNameField);
       return;
     }
@@ -152,9 +151,7 @@ export const UserLoginView = () => {
       };
       try {
         startLoader();
-        console.log('res1111', payLoad);
         const response = await postLoginCredentialDetails(payLoad);
-        console.log('res1111', response);
         if (response) {
           const { responseInfo } = response;
           const { clientId, dbUserType } = responseInfo;
@@ -166,7 +163,6 @@ export const UserLoginView = () => {
             };
             let appointeeStatusResponse = null;
             const response = await postLoginDetails(payLoad);
-            console.log('response1234', response);
             if (response) {
               const { responseInfo } = response;
               const { userDetails, tokenDetails } = responseInfo;
@@ -181,7 +177,6 @@ export const UserLoginView = () => {
               localStorage.setItem('isDefaultPassword', isDefaultPassword);
               if (userTypeId === 3) {
                 appointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
-                console.log('appointeeStatusResponselogin', appointeeStatusResponse);
                 if (appointeeStatusResponse) {
                   setLocalStorageItem(
                     'candidate-status-details',
@@ -223,7 +218,6 @@ export const UserLoginView = () => {
             }
           };
           if (dbUserType === 3) {
-            console.log('dbUserType');
             stopLoader();
             showSuccessMessage(otpToMailMsg);
             openOtpSubmitionModel({

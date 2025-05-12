@@ -90,7 +90,6 @@ export const TableActionCell = (props1, props2) => {
     const confirmationModelContent = {
       dialogContentText: verificationRemiderMsg,
     };
-    console.log('openConfirmationModel', openConfirmationModel);
     openConfirmationModel(
       confirmationModelContent,
       async () => await postRemainderMail(appointeeId, userId),
@@ -100,7 +99,6 @@ export const TableActionCell = (props1, props2) => {
     const confirmationModelContent = {
       dialogContentText: credentialRemiderMsg,
     };
-    console.log('openConfirmationModel');
     openConfirmationModel(
       confirmationModelContent,
       async () => await postResendCredMail(appointeeId, userId),
@@ -268,6 +266,5 @@ export const TableActionCell = (props1, props2) => {
         </>
       );
     });
-  console.log('actionListData', actionListData);
   return <Stack flexDirection={'row'}>{actionListData}</Stack>;
 };

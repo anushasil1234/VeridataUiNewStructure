@@ -53,10 +53,8 @@ const PfcRequest = (Component) => {
       timeoutRef.current = setTimeout(handleClickOnLogout, inactivityTime);
     };
     const showSuccessMessageEvent = (event) => {
-      console.log('event1121', event);
       const { message } = event?.detail || '';
       setSeverity('success');
-      console.log('message333', message);
       setPopUpAlertMessage(message);
     };
     const showErrorMessageEvent = (event) => {
@@ -65,7 +63,6 @@ const PfcRequest = (Component) => {
       setPopUpAlertMessage(message);
     };
     const handleClickOnLogoutEvent = () => {
-      console.log('handleClickOnLogoutEvent');
       const IsAdminUser = isAdmin();
       localStorage.clear();
       sessionStorage.clear();
@@ -86,18 +83,15 @@ const PfcRequest = (Component) => {
       return !roleTypeEnums.candidate.includes(userDetails?.userTypeId);
     };
     useEffect(() => {
-      console.log('addEventListener');
       if (roleTypeEnums.candidate.includes(userDetails?.userTypeId)) {
         resetTimeout();
       }
-      console.log('addEventListener2');
       window.addEventListener('logout', handleClickOnLogoutEvent);
       window.addEventListener('show-error', showErrorMessageEvent);
       window.addEventListener('show-success', showSuccessMessageEvent);
       window.addEventListener('start-loader', startLoaderEvent);
       window.addEventListener('stop-loader', stopLoaderEvent);
       return () => {
-        console.log('removeEventListener');
         window.removeEventListener('show-success', showSuccessMessageEvent);
         window.removeEventListener('show-error', showErrorMessageEvent);
         window.removeEventListener('start-loader', startLoaderEvent);

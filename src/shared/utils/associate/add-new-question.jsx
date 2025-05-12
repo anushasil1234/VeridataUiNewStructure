@@ -1,10 +1,7 @@
 import { GetManualVerificationQuestion } from 'server/apis/verify/get-manual-verification-question';
 
 const addNewQuestion = async ({ verificationType }) => {
-  console.log('verificationType234', verificationType);
   const response = await GetManualVerificationQuestion(verificationType);
-  console.log('responseman', response);
-
     const groupByQuestionId = (data) => {
       const seen = new Set();
       const grouped = [];
@@ -29,7 +26,6 @@ const addNewQuestion = async ({ verificationType }) => {
       return grouped;
     };
     const groupedData = Object.values(groupByQuestionId(response?.responseInfos));
-    console.log('groupedData', groupedData);
     return {
         updatedQuestionSet: groupedData
     };

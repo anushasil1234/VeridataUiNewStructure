@@ -29,7 +29,6 @@ const App = () => {
   const loginData = getLocalStorageItem('app-user');
   const tokenData = getLocalStorageItem('app-token');
   const candidateStatusDetails = getLocalStorageItem('candidate-status-details');
-  console.log('candidateStatusDetails', candidateStatusDetails);
   const handleClickOnLogout = () => {
     localStorage.clear();
     sessionStorage.clear();

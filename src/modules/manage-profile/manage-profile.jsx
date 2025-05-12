@@ -1,1 +1,54 @@
-import React, { useState } from 'react';import { Button, Grid, Stack, Typography, Avatar } from '@mui/material';import { heading4 } from 'app';import { CardLayout } from 'shared/utils';import ProfileImg from 'assets/images/profile/user-2.jpg';import { PersonalInformation } from 'shared/components/display-information/personal-information';import { useSelector } from 'react-redux';import ProfileImageUploader from 'shared/components/file-upload-section/upload-profile-picture';const ManageProfile = () => {  const loggedInData = useSelector((state) => state.loggedInData);  console.log('loggedInData', loggedInData[0]);  const { roleName, userName, emailId, appointeeId, userId } = loggedInData?.[0] || {};  const [selectedImage, setSelectedImage] = useState(null);  const [uploadedFileDetails, setUploadedFileDetails] = useState([]);  const [uploadedFile, setUploadedFile] = useState([]);  return (    <CardLayout>      <Grid container rowSpacing={2} columnSpacing={2.5}>        {}        <Grid item xs={12} sm={6} md={4} lg={4} xl={3}>          <Stack spacing={2} alignItems='center'>            <Avatar              src={ProfileImg || selectedImage}              sx={{ width: '100%', height: 'auto', borderRadius: '8px' }}            />            <Typography variant='body1'>Upload your profile picture</Typography>            {}            <ProfileImageUploader              selectedImage={selectedImage}              setSelectedImage={setSelectedImage}              setUploadedFileDetails={setUploadedFileDetails}              uploadedFileDetails={uploadedFileDetails}              uploadedFile={uploadedFile}              setUploadedFile={setUploadedFile}              appointeeId={appointeeId}              userId={userId}            />          </Stack>        </Grid>        {}        <Grid item xs={12} sm={6} md={8} lg={8} xl={9}>          <Typography sx={heading4} variant='h4' gutterBottom>            {userName}          </Typography>          <Grid container spacing={2}>            <PersonalInformation fieldName='Role' fieldValue={roleName} />            <PersonalInformation fieldName='Email' fieldValue={emailId} />          </Grid>        </Grid>      </Grid>      {}    </CardLayout>  );};export default ManageProfile;
+import React, { useState } from 'react';
+import { Button, Grid, Stack, Typography, Avatar } from '@mui/material';
+import { heading4 } from 'app';
+import { CardLayout } from 'shared/utils';
+import ProfileImg from 'assets/images/profile/user-2.jpg';
+import { PersonalInformation } from 'shared/components/display-information/personal-information';
+import { useSelector } from 'react-redux';
+import ProfileImageUploader from 'shared/components/file-upload-section/upload-profile-picture';
+const ManageProfile = () => {
+  const loggedInData = useSelector((state) => state.loggedInData);
+  const { roleName, userName, emailId, appointeeId, userId } = loggedInData?.[0] || {};
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [uploadedFileDetails, setUploadedFileDetails] = useState([]);
+  const [uploadedFile, setUploadedFile] = useState([]);
+  return (
+    <CardLayout>
+      <Grid container rowSpacing={2} columnSpacing={2.5}>
+        {}
+        <Grid item xs={12} sm={6} md={4} lg={4} xl={3}>
+          <Stack spacing={2} alignItems='center'>
+            <Avatar
+              src={ProfileImg || selectedImage}
+              sx={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+            />
+            <Typography variant='body1'>Upload your profile picture</Typography>
+            {}
+            <ProfileImageUploader
+              selectedImage={selectedImage}
+              setSelectedImage={setSelectedImage}
+              setUploadedFileDetails={setUploadedFileDetails}
+              uploadedFileDetails={uploadedFileDetails}
+              uploadedFile={uploadedFile}
+              setUploadedFile={setUploadedFile}
+              appointeeId={appointeeId}
+              userId={userId}
+            />
+          </Stack>
+        </Grid>
+        {}
+        <Grid item xs={12} sm={6} md={8} lg={8} xl={9}>
+          <Typography sx={heading4} variant='h4' gutterBottom>
+            {userName}
+          </Typography>
+          <Grid container spacing={2}>
+            <PersonalInformation fieldName='Role' fieldValue={roleName} />
+            <PersonalInformation fieldName='Email' fieldValue={emailId} />
+          </Grid>
+        </Grid>
+      </Grid>
+      {}
+    </CardLayout>
+  );
+};
+export default ManageProfile;

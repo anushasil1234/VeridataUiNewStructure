@@ -21,7 +21,6 @@ function walkDirectory(dir) {
       let content = fs.readFileSync(filePath, 'utf8');
       const cleanedContent = removeComments(content);
       fs.writeFileSync(filePath, cleanedContent, 'utf8');
-      console.log(`🧹 Cleaned: ${filePath}`);
     }
   });
 }
@@ -31,7 +30,6 @@ const startDir = path.join(__dirname, 'src');
 
 if (fs.existsSync(startDir)) {
   walkDirectory(startDir);
-  console.log('✨ All comments removed successfully!');
 } else {
   console.error('❌ src folder not found!');
 }

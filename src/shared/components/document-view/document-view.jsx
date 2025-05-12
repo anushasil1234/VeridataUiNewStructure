@@ -49,7 +49,6 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
       calculateContainerHeight(fileDetails, setContainerHeight);
     }
   }, [fileDetails, mimeType]);
-  // console.log('fileDetails', fileDetails);
   return (
     <Stack sx={{ position: 'relative' }}>
       <Stack sx={{ ...imageFileContainerStackStyle, height: containerHeight }}>
@@ -73,7 +72,6 @@ const UnWrappedDocumentView = ({ documentModelProps, zoomLevel }) => {
         >
           {mimeType === 'application/pdf' ? (
             <>
-              {console.log('fileDetails111', fileDetails)}
               {}
               {}
               <embed

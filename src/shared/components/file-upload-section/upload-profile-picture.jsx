@@ -1,1 +1,244 @@
-import React, { useState, useRef, useEffect } from 'react';import {  Button,  Stack,  Dialog,  DialogTitle,  DialogContent,  DialogActions,  Typography,} from '@mui/material';import Webcam from 'react-webcam';import { imageFileTypeAlias } from 'shared/constants/constants';import { appointeeProfilePictureUpdate } from 'server/apis/appointee/appointee-workflow/appointee-profile-image-update';import {  appointeeProfilePictureUpdateSuccess,  appointeeProfilePictureUpdateFailure,} from 'shared/constants/constants';import showErrorMessage from 'shared/utils/associate/show-error-message';import showSuccessMessage from 'shared/utils/associate/show-success-message';const ProfileImageUploader = ({  setSelectedImage,  selectedImage,  uploadedFileDetails,  setUploadedFileDetails,  uploadedFile,  setUploadedFile,  appointeeId,  userId,}) => {  const [openDialog, setOpenDialog] = useState(false);  const [useWebcam, setUseWebcam] = useState(false);  const [confirmDialog, setConfirmDialog] = useState(false);  const [previewDialog, setPreviewDialog] = useState(false);  const [previewImage, setPreviewImage] = useState(null);  const webcamRef = useRef(null);  const [capturedImage, setCapturedImage] = useState(null);  const [isApiCallPending, setIsApiCallPending] = useState(false);  const handleImageUpload = (event) => {    const file = event.target.files?.[0];    if (file) {      const imageUrl = URL.createObjectURL(file);      setPreviewImage(imageUrl);      setPreviewDialog(true);      setSelectedImage(file);    }  };  const captureImage = () => {    if (webcamRef.current) {      const imageSrc = webcamRef.current.getScreenshot();      checkIfImageIsBlack(imageSrc).then((isBlack) => {        if (isBlack) {          showErrorMessage('Please check your connection and try again.');        } else {          setCapturedImage(imageSrc);          setConfirmDialog(true);        }      });    } else {      showErrorMessage('Webcam not accessible.');    }  };  const checkIfImageIsBlack = (base64Image) => {    return new Promise((resolve) => {      if (!base64Image) return resolve(true);      const img = new Image();      img.src = base64Image;      img.onload = () => {        const canvas = document.createElement('canvas');        canvas.width = img.width;        canvas.height = img.height;        const ctx = canvas.getContext('2d');        ctx.drawImage(img, 0, 0, img.width, img.height);        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;        let totalBrightness = 0;        const step = 4 * 100;        for (let i = 0; i < imageData.length; i += step) {          const r = imageData[i];          const g = imageData[i + 1];          const b = imageData[i + 2];          const brightness = (r + g + b) / 3;          totalBrightness += brightness;        }        const avgBrightness = totalBrightness / (imageData.length / step);        resolve(avgBrightness < 10);      };      img.onerror = () => resolve(true);    });  };  const confirmCapture = () => {    const file = base64ToFile(capturedImage, 'webcam-image.jpg');    setSelectedImage(capturedImage);    storeFileDetails(file);    setConfirmDialog(false);    setOpenDialog(false);    callApi(file);  };  const confirmPreview = () => {    storeFileDetails(selectedImage);    setPreviewDialog(false);    setOpenDialog(false);  };  const base64ToFile = (base64, filename) => {    const arr = base64.split(',');    const mime = arr[0].match(/:(.*?);/)[1];    const bstr = atob(arr[1]);    let n = bstr.length;    const u8arr = new Uint8Array(n);    while (n--) {      u8arr[n] = bstr.charCodeAt(n);    }    return new File([u8arr], filename, { type: mime });  };  const storeFileDetails = (file) => {    const fileArray = [      new File([file], file.name, { type: file.type, lastModified: file.lastModified }),    ];    const fileDetails = [      {        uploadDetailsId: 0,        fileName: file.name,        mimeType: file.type,        fileLength: file.size,        uploadTypeId: 12,        uploadTypeAlias: imageFileTypeAlias,        isFileUploaded: true,      },    ];    setUploadedFile(fileArray);    setUploadedFileDetails(fileDetails);    setTimeout(() => {      callApi(fileArray, fileDetails);    }, 0);  };  const buildFormData = (payLoad) => {    let formData = new FormData();    console.log('buildFormData');    for (const property in payLoad) {      if (Object.hasOwnProperty.call(payLoad, property)) {        if (payLoad[property] === '') {          delete payLoad[property];        } else {          if (property === 'FileUploaded') {            formData.append(`${property}`, JSON.stringify(payLoad[property]));          } else if (property === 'ProfileImage') {            if (payLoad?.ProfileImage?.length > 0) {              payLoad?.ProfileImage?.forEach((element, index) => {                console.log('payLoad[property][index] working', payLoad[property][index]);                formData.append(`${property}`, payLoad[property][index]);              });            }          } else {            formData.append(`${property}`, payLoad[property]);          }        }      }    }    return formData;  };  const callApi = async (fileArray, fileDetails) => {    console.log('File to be uploaded:', fileArray);    const payload = {      AppointeeId: appointeeId,      UserId: userId,      ProfileImage: fileArray,      FileUploaded: fileDetails,    };    console.log('Payload:', payload);    let formData = buildFormData(payload);    console.log('FormData:', formData, payload);    try {      const response = await appointeeProfilePictureUpdate(formData);      if (response.responseInfo === 'success') {        showSuccessMessage(appointeeProfilePictureUpdateSuccess);      } else {        showErrorMessage(appointeeProfilePictureUpdateFailure);      }    } catch (error) {      showErrorMessage(appointeeProfilePictureUpdateFailure);    }  };  return (    <Stack spacing={2} alignItems='center'>      {!selectedImage && <Typography color='error'>No image selected</Typography>}      <Button variant='contained' onClick={() => setOpenDialog(true)}>        Upload Image      </Button>      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>        <DialogTitle>Choose Profile Picture</DialogTitle>        <DialogContent>          {useWebcam ? (            <Stack alignItems='center'>              <Webcam ref={webcamRef} screenshotFormat='image/jpeg' width='100%' />              <Button variant='contained' sx={{ mt: 2 }} onClick={captureImage}>                Capture Photo              </Button>            </Stack>          ) : (            <Stack spacing={2}>              <Button variant='contained' component='label'>                Choose from Device                <input type='file' accept='image/*' hidden onChange={handleImageUpload} />              </Button>              <Button variant='contained' color='secondary' onClick={() => setUseWebcam(true)}>                Use Webcam              </Button>            </Stack>          )}        </DialogContent>        <DialogActions>          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>          {useWebcam && <Button onClick={() => setUseWebcam(false)}>Back</Button>}        </DialogActions>      </Dialog>      <Dialog open={confirmDialog} onClose={() => setConfirmDialog(false)}>        <DialogTitle>Confirm Photo</DialogTitle>        <DialogContent>          <Typography>Are you sure you want to save this photo?</Typography>          <img src={capturedImage} alt='Captured' style={{ width: '100%', marginTop: 10 }} />        </DialogContent>        <DialogActions>          <Button onClick={() => setConfirmDialog(false)}>No</Button>          <Button variant='contained' onClick={confirmCapture}>            Yes          </Button>        </DialogActions>      </Dialog>      <Dialog open={previewDialog} onClose={() => setPreviewDialog(false)}>        <DialogTitle>Preview Selected Image</DialogTitle>        <DialogContent>          <img src={previewImage} alt='Selected' style={{ width: '100%', marginTop: 10 }} />        </DialogContent>        <DialogActions>          <Button            onClick={() => {              setPreviewDialog(false);              setOpenDialog(true);            }}          >            Cancel          </Button>          <Button variant='contained' onClick={confirmPreview}>            Save          </Button>        </DialogActions>      </Dialog>    </Stack>  );};export default ProfileImageUploader;
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Button,
+  Stack,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Typography,
+} from '@mui/material';
+import Webcam from 'react-webcam';
+import { imageFileTypeAlias } from 'shared/constants/constants';
+import { appointeeProfilePictureUpdate } from 'server/apis/appointee/appointee-workflow/appointee-profile-image-update';
+import {
+  appointeeProfilePictureUpdateSuccess,
+  appointeeProfilePictureUpdateFailure,
+} from 'shared/constants/constants';
+import showErrorMessage from 'shared/utils/associate/show-error-message';
+import showSuccessMessage from 'shared/utils/associate/show-success-message';
+const ProfileImageUploader = ({
+  setSelectedImage,
+  selectedImage,
+  uploadedFileDetails,
+  setUploadedFileDetails,
+  uploadedFile,
+  setUploadedFile,
+  appointeeId,
+  userId,
+}) => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [useWebcam, setUseWebcam] = useState(false);
+  const [confirmDialog, setConfirmDialog] = useState(false);
+  const [previewDialog, setPreviewDialog] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+  const webcamRef = useRef(null);
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [isApiCallPending, setIsApiCallPending] = useState(false);
+  const handleImageUpload = (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl);
+      setPreviewDialog(true);
+      setSelectedImage(file);
+    }
+  };
+  const captureImage = () => {
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      checkIfImageIsBlack(imageSrc).then((isBlack) => {
+        if (isBlack) {
+          showErrorMessage('Please check your connection and try again.');
+        } else {
+          setCapturedImage(imageSrc);
+          setConfirmDialog(true);
+        }
+      });
+    } else {
+      showErrorMessage('Webcam not accessible.');
+    }
+  };
+  const checkIfImageIsBlack = (base64Image) => {
+    return new Promise((resolve) => {
+      if (!base64Image) return resolve(true);
+      const img = new Image();
+      img.src = base64Image;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        let totalBrightness = 0;
+        const step = 4 * 100;
+        for (let i = 0; i < imageData.length; i += step) {
+          const r = imageData[i];
+          const g = imageData[i + 1];
+          const b = imageData[i + 2];
+          const brightness = (r + g + b) / 3;
+          totalBrightness += brightness;
+        }
+        const avgBrightness = totalBrightness / (imageData.length / step);
+        resolve(avgBrightness < 10);
+      };
+      img.onerror = () => resolve(true);
+    });
+  };
+  const confirmCapture = () => {
+    const file = base64ToFile(capturedImage, 'webcam-image.jpg');
+    setSelectedImage(capturedImage);
+    storeFileDetails(file);
+    setConfirmDialog(false);
+    setOpenDialog(false);
+    callApi(file);
+  };
+  const confirmPreview = () => {
+    storeFileDetails(selectedImage);
+    setPreviewDialog(false);
+    setOpenDialog(false);
+  };
+  const base64ToFile = (base64, filename) => {
+    const arr = base64.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+  const storeFileDetails = (file) => {
+    const fileArray = [
+      new File([file], file.name, { type: file.type, lastModified: file.lastModified }),
+    ];
+    const fileDetails = [
+      {
+        uploadDetailsId: 0,
+        fileName: file.name,
+        mimeType: file.type,
+        fileLength: file.size,
+        uploadTypeId: 12,
+        uploadTypeAlias: imageFileTypeAlias,
+        isFileUploaded: true,
+      },
+    ];
+    setUploadedFile(fileArray);
+    setUploadedFileDetails(fileDetails);
+    setTimeout(() => {
+      callApi(fileArray, fileDetails);
+    }, 0);
+  };
+  const buildFormData = (payLoad) => {
+    let formData = new FormData();
+    for (const property in payLoad) {
+      if (Object.hasOwnProperty.call(payLoad, property)) {
+        if (payLoad[property] === '') {
+          delete payLoad[property];
+        } else {
+          if (property === 'FileUploaded') {
+            formData.append(`${property}`, JSON.stringify(payLoad[property]));
+          } else if (property === 'ProfileImage') {
+            if (payLoad?.ProfileImage?.length > 0) {
+              payLoad?.ProfileImage?.forEach((element, index) => {
+                formData.append(`${property}`, payLoad[property][index]);
+              });
+            }
+          } else {
+            formData.append(`${property}`, payLoad[property]);
+          }
+        }
+      }
+    }
+    return formData;
+  };
+  const callApi = async (fileArray, fileDetails) => {
+    const payload = {
+      AppointeeId: appointeeId,
+      UserId: userId,
+      ProfileImage: fileArray,
+      FileUploaded: fileDetails,
+    };
+    let formData = buildFormData(payload);
+    try {
+      const response = await appointeeProfilePictureUpdate(formData);
+      if (response.responseInfo === 'success') {
+        showSuccessMessage(appointeeProfilePictureUpdateSuccess);
+      } else {
+        showErrorMessage(appointeeProfilePictureUpdateFailure);
+      }
+    } catch (error) {
+      showErrorMessage(appointeeProfilePictureUpdateFailure);
+    }
+  };
+  return (
+    <Stack spacing={2} alignItems='center'>
+      {!selectedImage && <Typography color='error'>No image selected</Typography>}
+      <Button variant='contained' onClick={() => setOpenDialog(true)}>
+        Upload Image
+      </Button>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Choose Profile Picture</DialogTitle>
+        <DialogContent>
+          {useWebcam ? (
+            <Stack alignItems='center'>
+              <Webcam ref={webcamRef} screenshotFormat='image/jpeg' width='100%' />
+              <Button variant='contained' sx={{ mt: 2 }} onClick={captureImage}>
+                Capture Photo
+              </Button>
+            </Stack>
+          ) : (
+            <Stack spacing={2}>
+              <Button variant='contained' component='label'>
+                Choose from Device
+                <input type='file' accept='image/*' hidden onChange={handleImageUpload} />
+              </Button>
+              <Button variant='contained' color='secondary' onClick={() => setUseWebcam(true)}>
+                Use Webcam
+              </Button>
+            </Stack>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
+          {useWebcam && <Button onClick={() => setUseWebcam(false)}>Back</Button>}
+        </DialogActions>
+      </Dialog>
+      <Dialog open={confirmDialog} onClose={() => setConfirmDialog(false)}>
+        <DialogTitle>Confirm Photo</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to save this photo?</Typography>
+          <img src={capturedImage} alt='Captured' style={{ width: '100%', marginTop: 10 }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDialog(false)}>No</Button>
+          <Button variant='contained' onClick={confirmCapture}>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={previewDialog} onClose={() => setPreviewDialog(false)}>
+        <DialogTitle>Preview Selected Image</DialogTitle>
+        <DialogContent>
+          <img src={previewImage} alt='Selected' style={{ width: '100%', marginTop: 10 }} />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setPreviewDialog(false);
+              setOpenDialog(true);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button variant='contained' onClick={confirmPreview}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Stack>
+  );
+};
+export default ProfileImageUploader;

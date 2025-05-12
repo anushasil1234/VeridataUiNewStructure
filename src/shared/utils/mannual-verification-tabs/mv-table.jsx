@@ -56,15 +56,12 @@ export const MVTable = (filters) => {
   };
   const setTableRows = async (payload_MV) => {
     const response = await getMannualVerificationDataList(payload_MV);
-    //console.log('responseMV', response);    
     if (response) {
       dispatch(removeManualValidationResponseStatusSlice());
       dispatch(storeManualValidationResponseStatusSlice({ isdataSubmited: false }));
       const { responseInfos } = response;
-    //  const { manualVerificationList, filedata } = responseInfos || {};
       setResponseList(responseInfos);
       responseInfos?.length > 0 && setResponseListLength(responseInfos?.length);
-     // setResponseFileDetails(filedata);
       let generatedCells = generateTableRowData(
         responseInfos,
         props === 'MV'
@@ -159,7 +156,6 @@ export const MVTable = (filters) => {
     }
   };
   const handleDownloadExcel = () => {
-    console.log('isDownloadExcel', isDownloadExcel, isDownload);
     if (responseList && responseList?.length > 0) {
       if (responseFileDetails?.fileData && typeof responseFileDetails?.fileData === 'string') {
         const base64String = responseFileDetails?.fileData;

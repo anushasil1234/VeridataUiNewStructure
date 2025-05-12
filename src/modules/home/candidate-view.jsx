@@ -44,9 +44,7 @@ const CandidateView = () => {
   const loggedInData = useSelector((state) => state.loggedInData);
   const userDetails = loggedInData[0];
   const { t } = useTranslation();
-  console.log('loggedindata', loggedInData[0]);
   const appointeeStatusDetailsData = useSelector((state) => state.appointeeStatusDetailsData);
-  console.log('appointeeStatusDetailsDatacandidate', appointeeStatusDetailsData);
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { getAppointeeDetails } = apiSlice[0];
   const { userTypeId, appointeeId, status } = loggedInData[0];
@@ -98,13 +96,8 @@ const CandidateView = () => {
   const startLoader = () => setLoading(true);
   const stopLoader = () => setLoading(false);
   const functionSlice = useSelector((state) => state.functionSlice);
-  const { openViewModel, openConsentModal, openInfoModel, openConfirmationYesNoModal } =
-    functionSlice[0];
-  console.log(
-    'consentStatus',
-    consentStatus,
-    appointeeStatusDetailsData[0]?.isPrerequisiteDataAvailable,
-  );
+  const { openViewModel, openConsentModal, openInfoModel, openConfirmationYesNoModal } = functionSlice[0];
+
   const dispatch = useDispatch();
   const handlePrerequisite = (statusId) => {
     submitPrerequisiteStatus(statusId);
@@ -252,20 +245,20 @@ const CandidateView = () => {
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item lg={3} xs={12}>
-                {t("Name")}: {appointeeName}
+                  {t("Name")}: {appointeeName}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                {t("email")}: {appointeeEmailId}
+                  {t("email")}: {appointeeEmailId}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                {t("Phone")}: {mobileNo}
+                  {t("Phone")}: {mobileNo}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                {t("Candidate ID")}: {candidateId}
+                  {t("Candidate ID")}: {candidateId}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                {t("Status")}:
-                  {}
+                  {t("Status")}:
+                  { }
                   <Chip
                     label={currStatus}
                     sx={{
@@ -275,7 +268,7 @@ const CandidateView = () => {
                     size='small'
                     aria-label={`Status: ${currStatus}`}
                   />
-                  {}
+                  { }
                   <Tooltip
                     arrow
                     title={
@@ -320,8 +313,8 @@ const CandidateView = () => {
                       <Info width={18} sx={{ color: '#fff' }} />
                     </Fab>
                   </Tooltip>
-                  {}
-                  {}
+                  { }
+                  { }
                 </Grid>
                 <Grid item lg={4} xs={12}>
                   <Button
@@ -367,7 +360,7 @@ const CandidateView = () => {
                         sx={{ ...pendingverificationsx }}
                       >
                         {(consentStatus === 4 || consentStatus === 0 || consentStatus === 5) &&
-                        isProcessed !== true
+                          isProcessed !== true
                           ? 'Start Verification'
                           : 'Pending Verification'}
                       </Button>

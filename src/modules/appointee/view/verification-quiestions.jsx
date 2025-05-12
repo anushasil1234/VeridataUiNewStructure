@@ -17,8 +17,6 @@ const VerificationQuiestions = ({
   categorySelected,
   enabledQuestions
 }) => {
-
-  console.log('verificationQuestionSet', verificationQuestionSet);
   return (
     <Box sx={{ width: '100%', maxWidth: '1400px', margin: '0 auto' }}>
     <Stack spacing={2}>

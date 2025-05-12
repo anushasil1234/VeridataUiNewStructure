@@ -184,7 +184,6 @@ const DrivingLicenseVerification = ({
   const scanDLFromWebcam = async () => {
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
-      console.log('imageSrc', imageSrc);
       if (!imageSrc) {
         showErrorMessage('Could not capture image from webcam');
         return;
@@ -194,10 +193,8 @@ const DrivingLicenseVerification = ({
         const {
           data: { text },
         } = await Tesseract.recognize(imageSrc, 'eng');
-        console.log('OCR Result:', text);
         Tesseract.recognize(imageSrc, 'eng')
           .then(({ data: { text } }) => {
-            console.log('Extracted text:', text);
           })
           .catch((err) => {
             console.error('Tesseract error:', err);

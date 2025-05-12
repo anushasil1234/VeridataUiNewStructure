@@ -163,8 +163,6 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
       const { updatedQuestionSet } = await addNewQuestion({
         verificationType: currentValue,
       });
-      console.log('updatedQuestionSetMANNUAL', updatedQuestionSet);
-  
       setVerificationQuestionSet(updatedQuestionSet); // 🔁 Set new questions
     }
 
@@ -517,9 +515,6 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
       setEnabledQuestions(baseEnabled);
     }
   };
-  
-  
-  console.log('answers & enabled questions', answers,enabledQuestions);
   return (
     <Box
       bgcolor={'#E2E8F0'}

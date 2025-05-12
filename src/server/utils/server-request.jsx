@@ -57,17 +57,13 @@ const ServerRequest = async (
         : await api.get(url, methodHeader);
     const { errorResponse, responseInfo, responseInfos, statusCode } = response.data;
     if (statusCode === 200) {
-      console.log('successMessage', successMessage);
       successMessage && showSuccessMessage(successMessage);
-      console.log('response.data', response.data);
       return { responseInfo, responseInfos, errorResponse };
     } else {
-      console.log('errorResponse', errorResponse);
       errorResponse?.internalMessages && showErrorMessage(errorResponse.internalMessages);
       errorResponse?.internalMessage && showErrorMessage(errorResponse.internalMessage);
     }
   } catch (error) {
-    console.log('catch errorResponse', error);
     handleOtherErrors(error);
   } finally {
     isStopLoaderEnabled && stopLoader();

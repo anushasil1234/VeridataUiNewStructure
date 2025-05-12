@@ -17,7 +17,6 @@ export default function useDrivingLicenseVerification({
   initialDL = '',
   initialStatusMessage = new VerificationStatus(null , ''),
 }) {
-  console.log('userInfo', userInfo);
   const [drivingLicense, setDrivingLicense] = useState(initialDL);
   const [isDLAvailable, setIsDLAvailable] = useState(userInfo?.isDLAvailable ?? false);
   const [isDlVarified, setisDlVarified] = useState(userInfo?.isDLVarified ?? null);
@@ -76,7 +75,6 @@ export default function useDrivingLicenseVerification({
         const generatedRemarks = generateRemarks(remarks);
         openRemarksModel && openRemarksModel(generatedRemarks);
       }
-      console.log('responseaaa', response,isVarified);
       setisDlVarified(isVarified);
       setUserInfo((prevState) => ({
         ...prevState,
