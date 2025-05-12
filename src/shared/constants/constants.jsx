@@ -253,12 +253,12 @@ export const verifiedListTableHeadCell = [
     },
   },
   {
-    id: 'adhaarNo',
+    id: 'aadhaarNo',
     numeric: true,
     type: 'string',
     disablePadding: false,
     label: 'Aadhaar No.',
-    enums: ['adhaarNo'],
+    enums: ['aadhaarNo'],
     component: {
       element: Typography,
     },
