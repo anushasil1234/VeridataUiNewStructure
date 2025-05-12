@@ -248,7 +248,7 @@ const CandidateView = () => {
                   {t("Name")}: {appointeeName}
                 </Grid>
                 <Grid item lg={3} xs={12}>
-                  {t("email")}: {appointeeEmailId}
+                  {t("Email")}: {appointeeEmailId}
                 </Grid>
                 <Grid item lg={3} xs={12}>
                   {t("Phone")}: {mobileNo}

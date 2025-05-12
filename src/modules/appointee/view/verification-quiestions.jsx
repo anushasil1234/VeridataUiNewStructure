@@ -12,70 +12,70 @@ import { listHeadingStyle, smallstepNumberContainerStyle } from 'app';
 import { useState, useEffect } from 'react';
 import GridContainer from 'shared/components/grid-container/grid-container';
 const VerificationQuiestions = ({
+  verificationAnswers,
   verificationOnChange,
   verificationQuestionSet,
   categorySelected,
-  enabledQuestions
+  enabledQuestions,
 }) => {
   return (
     <Box sx={{ width: '100%', maxWidth: '1400px', margin: '0 auto' }}>
-    <Stack spacing={2}>
-      <Box>
-        <Typography
-          sx={{
-            ...listHeadingStyle,
-            fontSize: '1rem',
-            textAlign: 'left',
-            ml: 2,
-          }}
-        >
-          Verification Questions
-        </Typography>
-        <Divider sx={{ mt: '2px' }} />
-      </Box>
+      <Stack spacing={2}>
+        <Box>
+          <Typography
+            sx={{
+              ...listHeadingStyle,
+              fontSize: '1rem',
+              textAlign: 'left',
+              ml: 2,
+            }}
+          >
+            Verification Questions
+          </Typography>
+          <Divider sx={{ mt: '2px' }} />
+        </Box>
 
-      {verificationQuestionSet.map((question, index) => {
-        const { questionText, answers = [], questionId } = question;
-        const isEnabled = enabledQuestions.includes(questionId);
+        {verificationQuestionSet.map((question, index) => {
+          const { questionText, answers = [], questionId } = question;
+          const isEnabled = enabledQuestions.includes(questionId);
+         // console.log('isEnabled', verificationQuestionSet, enabledQuestions, verificationAnswers,isEnabled);
+          return (
+            <GridContainer key={index}>
+              <Grid container spacing={2} alignItems='flex-start'>
+                <Grid item xs={12} sm={1}>
+                  <Stack sx={{ ...smallstepNumberContainerStyle }}>
+                    <Typography fontWeight={500} sx={{ fontSize: '0.8rem' }}>
+                      {index + 1}
+                    </Typography>
+                  </Stack>
+                </Grid>
 
-        return (
-          <GridContainer key={index}>
-            <Grid container spacing={2} alignItems="flex-start">
-              <Grid item xs={12} sm={1}>
-                <Stack sx={{ ...smallstepNumberContainerStyle }}>
-                  <Typography fontWeight={500} sx={{ fontSize: '0.8rem' }}>
-                    {index + 1}
+                <Grid item xs={12} sm={11}>
+                  <Typography fontWeight={600} sx={{ fontSize: '0.9rem', mb: 1 }}>
+                    {questionText}
                   </Typography>
-                </Stack>
-              </Grid>
 
-              <Grid item xs={12} sm={11}>
-                <Typography fontWeight={600} sx={{ fontSize: '0.9rem', mb: 1 }}>
-                  {questionText}
-                </Typography>
-
-                <RadioGroup
-                  row
-                  onChange={(e) => verificationOnChange(questionId, e.target.value)}
-                >
-                  {answers?.map(({ answerText, answerId }) => (
-                    <FormControlLabel
-                      key={answerId}
-                      value={answerText}
-                      control={
-                        <Radio size="small" disabled={!categorySelected || !isEnabled} />
-                      }
-                      label={answerText}
-                    />
-                  ))}
-                </RadioGroup>
+                  <RadioGroup
+                    value={isEnabled ? verificationAnswers[questionId] || "" : ""}
+                    row
+                    onChange={(e) => verificationOnChange(questionId, e.target.value)}
+                  >
+                    {answers?.map(({ answerText, answerId }) => (
+                      <FormControlLabel
+                        key={answerId}
+                        value={answerText}
+                        control={<Radio size='small' disabled={!categorySelected || !isEnabled} />}
+                        label={answerText}
+                      />
+                    ))}
+                  </RadioGroup>
+                </Grid>
               </Grid>
-            </Grid>
-          </GridContainer>
-        );
-      })}
-    </Stack>
-  </Box>
+            </GridContainer>
+          );
+        })}
+      </Stack>
+    </Box>
   );
 };
 export default VerificationQuiestions;

@@ -335,6 +335,7 @@ const FiledetailsSection = ({
           <GridContainer>
             <VerificationQuiestions
               //verificationUpdate={verificationUpdate}
+              verificationAnswers={verificationAnswers}
               enabledQuestions={enabledQuestions}
               verificationQuestionSet={verificationQuestionSet}
               verificationOnChange={verificationOnChange}

@@ -75,6 +75,9 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
   const { relationList, qualificationList, disabilityList, maritalStatusList, genderList } =
     dropdownList.length > 0 && dropdownList[0];
   const functionSlice = useSelector((state) => state.functionSlice);
+    const setRemarksFunctionSlice = useSelector((state) => state.SetRemarksFunctionSlice);
+  const setRemarks =
+  setRemarksFunctionSlice && setRemarksFunctionSlice[0] && setRemarksFunctionSlice[0].setRemarks;
   const { GetUploadedFileDetailsById } = apiSlice[0];
   const {
     openRemarksModel,
@@ -354,15 +357,15 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     setDegreeOfRotation(value.degreeOfRotation);
     setActionIconListDisplay(value.actionIconListDisplay);
   };
-  const handleClickOnReview = async () => {
-    const response = await getRemarks(appointeeId);
-    if (response && response.responseInfo && response.responseInfo.length > 0) {
-      const remarks = response.responseInfo;
-      openRemarksModel(remarks);
-    } else {
-      showErrorMessage(remarksissuemessage);
-    }
-  };
+  // const handleClickOnReview = async () => {
+  //   const response = await getRemarks(appointeeId);
+  //   if (response && response.responseInfo && response.responseInfo.length > 0) {
+  //     const remarks = response.responseInfo;
+  //     openRemarksModel(remarks);
+  //   } else {
+  //     showErrorMessage(remarksissuemessage);
+  //   }
+  // };
   const handleApproveModal = async () => {
     const confirmationModelContent = {
       dialogContentText: approveConfirmation,
@@ -396,7 +399,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
   );
   const remarksFabProps = new FabIconPropsModel(
     actionIconStyle,
-    handleClickOnReview,
+    setRemarks,
     'info',
     'remarks',
     <Comment />,
@@ -475,46 +478,62 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
       setEnabledQuestions(initialIds);
       setAnswers({});
     }, [verificationQuestionSet]);
-    
+
   const handleAnswer = (questionId, selectedAnswerText) => {
     const updatedAnswers = { ...answers, [questionId]: selectedAnswerText };
     setAnswers(updatedAnswers);
   
-    const completenessQs = verificationQuestionSet.filter(q => q.fieldCode === '014');
-    const correctnessQs = verificationQuestionSet.filter(q => q.fieldCode === '015');
+    const completenessQs = verificationQuestionSet.filter((q) => q.fieldCode === '014');
+    const correctnessQs = verificationQuestionSet.filter((q) => q.fieldCode === '015');
   
-    const allCompletenessYes = completenessQs.every(q => updatedAnswers[q.questionId] === 'YES');
-    const allCorrectnessYes = correctnessQs.every(q => updatedAnswers[q.questionId] === 'YES');
+    const allCompletenessYes = completenessQs.every((q) => updatedAnswers[q.questionId] === 'YES');
+    const allCorrectnessYes = correctnessQs.every((q) => updatedAnswers[q.questionId] === 'YES');
   
-    const baseEnabled = [...completenessQs, ...correctnessQs].map(q => q.questionId);
+    const baseEnabled = [...completenessQs, ...correctnessQs].map((q) => q.questionId);
+  
+    let newEnabled = new Set(baseEnabled);
+    const visited = new Set();
+  
+    const walkNext = (qid) => {
+      if (visited.has(qid)) return;
+      visited.add(qid);
+  
+      const q = verificationQuestionSet.find((q) => q.questionId === qid);
+      if (!q) return;
+  
+      const selectedAnsText = updatedAnswers[qid];
+      const selectedAnswer = q.answers.find((a) => a.answerText === selectedAnsText);
+  
+      // Only proceed if action is explicitly NXTQUESTN
+      if (selectedAnswer?.action === 'NXTQUESTN' && selectedAnswer.nextQuestion) {
+        newEnabled.add(selectedAnswer.nextQuestion);
+        walkNext(selectedAnswer.nextQuestion);
+      }
+    };
   
     if (allCompletenessYes && allCorrectnessYes) {
-      const newEnabled = new Set(baseEnabled);
-      const visited = new Set();
-  
-      const walkNext = (qid) => {
-        if (visited.has(qid)) return;
-        visited.add(qid);
-  
-        const q = verificationQuestionSet.find(q => q.questionId === qid);
-        if (!q) return;
-  
-        const selectedAnsText = updatedAnswers[qid];
-        const selectedAnswer = q.answers.find(a => a.answerText === selectedAnsText);
-  
-        // Only proceed if action is explicitly NXTQUESTN
-        if (selectedAnswer?.action === 'NXTQUESTN' && selectedAnswer.nextQuestion) {
-          newEnabled.add(selectedAnswer.nextQuestion);
-          walkNext(selectedAnswer.nextQuestion);
-        }
-      };
-  
       baseEnabled.forEach(walkNext);
-      setEnabledQuestions(Array.from(newEnabled));
-    } else {
-      setEnabledQuestions(baseEnabled);
     }
+  
+    // Update enabled questions
+    const updatedEnabledQuestions = Array.from(newEnabled);
+    setEnabledQuestions(updatedEnabledQuestions);
+  
+    console.log('updated enabled questions', updatedEnabledQuestions);
+    // Clear answers for disabled questions
+    const clearedAnswers = Object.keys(updatedAnswers).reduce((acc, key) => {
+      if (updatedEnabledQuestions.includes(parseInt(key))) {
+        acc[key] = updatedAnswers[key];
+      }
+      return acc;
+    }, {});
+  
+    console.log('cleared answers', clearedAnswers);
+  
+    setAnswers(clearedAnswers);
   };
+  
+  console.log('answers & enabled questions', answers,enabledQuestions);
   return (
     <Box
       bgcolor={'#E2E8F0'}
@@ -602,7 +621,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
                     <PersonalInformation
                       fieldName={'Handicap Type'}
                       fieldValue={handicapType ? handicapType : NA}
-                    />
+                    /> 
                   </>
                 )}
               </Stack>
