@@ -9,6 +9,8 @@ export * from './reports/get-dashboard-widget-card-data';
 export * from './account/get-total-widget-data';
 export * from './account/get-latest-appointees';
 export * from './account/post-login-by-email-details';
+export * from './appointee/appointee-workflow/get-current-workflow-policy-details';
+export * from './appointee/appointee-workflow/post-new-workflow-policy';
 export * from './appointee/appointee-workflow/get-verified-appointee-list';
 export * from './appointee/appointee-workflow/get-rejected-appointee-list';
 export * from './appointee/appointee-workflow/get-critical-appointee-list';

@@ -39,11 +39,13 @@ import {
   toReuploadDoc,
   toAadhaarSuccess,
   toAadhaarFailure,
+  toPolicySetup,
 } from 'shared/constants/constants';
 import BlankLayoutWithHeader from 'shared/layouts/blank/BlankLayoutWithHeader';
 import { MsalProvider } from '@azure/msal-react';
 import { msalConfig } from 'authConfig';
 import { PublicClientApplication } from '@azure/msal-browser';
+import { PolicySetup } from '../../modules/policy-setup';
 const msalInstance = new PublicClientApplication(msalConfig);
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')));
@@ -139,6 +141,7 @@ const CustomRouter = [
       { path: topfPension, exact: true, element: <PfPension /> },
       { path: toAadhaarSuccess, element: <AadhaarSuccess /> },
       { path: toAadhaarFailure, element: <AadhaarFailure /> },
+      { path: toPolicySetup, exact: true, element: <PolicySetup /> },
     ],
   },
   {
