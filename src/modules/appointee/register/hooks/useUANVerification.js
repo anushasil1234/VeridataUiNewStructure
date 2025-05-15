@@ -468,7 +468,7 @@ export default function useUANVerification({
     handleViewFile: rest.handleViewFile,
     timeoutTimer,
     setTimeoutTimer,
-    setCurrentPageNo: (currentPageNo) => dispatch(storeCurrentPageNo(currentPageNo)),
+    // setCurrentPageNo: (currentPageNo) => dispatch(storeCurrentPageNo(currentPageNo)),
     handleGetUANNumber,
   };
 } 

@@ -8,8 +8,9 @@ const FifthForm = ({
   formElement,
   stepsList,
   handleBack,
-  setCurrentPageNo,
-  setActiveStep,
+  handleNext,
+  // setCurrentPageNo,
+  // setActiveStep,
   userInfo,
   setUserInfo,
 }) => {
@@ -47,8 +48,9 @@ const FifthForm = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setCurrentPageNo(6);
-                    setActiveStep(5);
+                    handleNext();
+                    // setCurrentPageNo(6);
+                    // setActiveStep(5);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'

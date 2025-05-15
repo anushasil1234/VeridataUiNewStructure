@@ -27,9 +27,9 @@ const InsuranceDetails = ({
   const dispatch = useDispatch();
   const [insurancestatusMessage, setInsuranceStatusMessage] = useState(new VerificationStatus());
 
-  const setCurrentPageNo = (currentPageNo) => {
-    dispatch(storeCurrentPageNo(currentPageNo));
-  };
+  // const setCurrentPageNo = (currentPageNo) => {
+  //   dispatch(storeCurrentPageNo(currentPageNo));
+  // };
 
   return (
     <>

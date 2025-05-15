@@ -10,8 +10,9 @@ const SeventhForm = ({
   formElement,
   stepsList,
   handleBack,
-  setCurrentPageNo,
-  setActiveStep,
+  handleNext,
+  // setCurrentPageNo,
+  // setActiveStep,
   userInfo,
   setUserInfo,
 }) => {
@@ -49,8 +50,9 @@ const SeventhForm = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setCurrentPageNo(8);
-                    setActiveStep(7);
+                    handleNext();
+                    // setCurrentPageNo(8);
+                    // setActiveStep(7);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'

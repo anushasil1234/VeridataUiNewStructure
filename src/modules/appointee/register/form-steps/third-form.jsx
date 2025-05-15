@@ -11,7 +11,7 @@ import showErrorMessage from "shared/utils/associate/show-error-message";
 import { aaddharNumberverify } from "shared/constants/constants";
 import { useEffect } from 'react';
 
-const ThirdForm = ({ t, formElement, stepsList, onAadhaarVerified, userInfo,setUserInfo, handleBack, setCurrentPageNo, setActiveStep }) => {
+const ThirdForm = ({ t, formElement, stepsList, onAadhaarVerified, userInfo,setUserInfo, handleBack,handleNext, setCurrentPageNo, setActiveStep }) => {
   const { isAadhaarVarified } = userInfo;
   
   useEffect(() => {
@@ -40,12 +40,13 @@ const ThirdForm = ({ t, formElement, stepsList, onAadhaarVerified, userInfo,setU
               </Button>
               <Button
                 onClick={() => {
+                  handleNext()
                   // if (!isAadhaarVarified) {
                   //   showErrorMessage(aaddharNumberverify);
                   //   return;
                   // }
-                  setCurrentPageNo(4);
-                  setActiveStep(3);
+                  // setCurrentPageNo(4);
+                  // setActiveStep(3);
                 }}
                 sx={submitBtnStyle}
                 variant='contained'

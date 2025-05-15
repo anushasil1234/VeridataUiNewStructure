@@ -62,9 +62,10 @@ export const PolicyStage = ({ stage, isEditing, handleProcessChange }) => {
     }
   };
 
-  const isStageEnabled = stage.processes.some(process => 
-    process.isAutomated || process.isManual || process.isOptional || process.applyManualOnAutofail
-  );
+  // const isStageEnabled = stage.processes.some(process => 
+  //   process.isAutomated || process.isManual || process.isOptional || process.applyManualOnAutofail
+  // );  
+  const isStageEnabled = stage.isActive;
 
   const renderStatusBadges = (process) => (
     <Stack direction="row" spacing={1} sx={{ ml: 2 }}>
@@ -133,7 +134,7 @@ export const PolicyStage = ({ stage, isEditing, handleProcessChange }) => {
         />
       </Box>
       {stage.processes.map((process) => {
-        const isProcessEnabled = process.isAutomated || process.isManual || process.isOptional || process.applyManualOnAutofail;
+        const isProcessEnabled =process.activeStatus && (process.isAutomated || process.isManual || process.isOptional || process.applyManualOnAutofail || isStageEnabled);
         
         return (
           <Box 

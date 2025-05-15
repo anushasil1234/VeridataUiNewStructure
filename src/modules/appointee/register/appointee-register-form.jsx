@@ -38,6 +38,7 @@ import ThirdForm from './form-steps/third-form';
 
 import {
   getAppointeeDetails,
+  getCurrentPolicyDetails,
   getPassportDetails,
   getUploadedFileDetailsById,
 } from 'server/apis';
@@ -51,17 +52,8 @@ import useVerificationStatus from './hooks/useVerificationStatus';
 import useFileUploads from './hooks/useFileUploads';
 
 const AppointeeRegisterForm = () => {
-  const steps = [
-    'Step 1',
-    'Step 2',
-    'Step 3',
-    'Step 4',
-    'Step 5',
-    'Step 6',
-    'Step 7',
-    'Final Step',
-  ];
-  const [activeStep, setActiveStep] = useState(0);
+  // const [steps, setSteps] = useState([]);
+  const [currentStageIndex, setCurrentStageIndex] = useState(0);
   const dropdownList = useSelector((state) => state.dropdownList);
   const apiSlice = useSelector((state) => state.apiSlice);
   const loggedInData = useSelector((state) => state.loggedInData);
@@ -75,13 +67,8 @@ const AppointeeRegisterForm = () => {
   } = functionSlice[0];
   const { countryList, nationalityList, fileTypeList } =
     dropdownList && dropdownList.length > 0 && dropdownList[0];
-  const {} = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
   const { userId, appointeeId } = loggedInData[0];
-  const currentPageNo = useSelector((state) => state.CandidatePageSlice.currentPageNo);
-  const setCurrentPageNo = (currentPageNo) => {
-    dispatch(storeCurrentPageNo(currentPageNo));
-  };
   const [companyId, setCompanyId] = useState(0);
   const [defaultCountry, setDefaultCountry] = useState();
   const [passportFileNumber, setPassportFileNumber] = useState('');
@@ -176,12 +163,10 @@ const AppointeeRegisterForm = () => {
     setFileDetails(updatedFileDetails);
     setFileName(updatedFileNameList);
   };
-  const disablePassportVerifyBtn = () => {
-    setIsPassportVerifyBtnDisabled(true);
-  };
+  const disablePassportVerifyBtn = () => { setIsPassportVerifyBtnDisabled(true); };
   const setAppointeeDetailsOptimized = async (appointeeIdFromSession) => {
     const response = await getAppointeeDetails(appointeeIdFromSession);
-      const {
+    const {
       appointeeDetailsId: sessionAppointeeDetailsId,
       appointeeId: sessionAppointeeId,
       candidateId: sessionCandidateId,
@@ -199,8 +184,7 @@ const AppointeeRegisterForm = () => {
         appointeeCode: sessionUserCode || response.responseInfo.appointeeCode,
         companyId: companyIdValue || response.responseInfo.companyId,
       }));
-      setCurrentPageNo(response.responseInfo.saveStep+1);
-      setActiveStep(response.responseInfo.saveStep);
+      setCurrentStageIndex(response.responseInfo.saveStep);
       setisAadhaarVarified(response.responseInfo.isAadhaarVarified)
     }
   };
@@ -223,16 +207,13 @@ const AppointeeRegisterForm = () => {
     return hasValue(uploadTypeAlias);
   };
 
- 
-  // const hasEPFOPassbookUpload = () => checkFileUpload(epfoPassbookFileTypeAlias);
-  // const hasEPFOServiceHistoryUpload = () => checkFileUpload(epfoServiceHistoryFile);
   const openUploadDocInfoModel = (dialogContentText) => {
     openInfoModel({ dialogContentText });
   };
- 
+
   useEffect(() => {
-    localStorage.setItem('activeStep', activeStep);
-  }, [activeStep]);
+    localStorage.setItem('activeStep', currentStageIndex);
+  }, [currentStageIndex]);
   useEffect(() => {
     if (countryList !== undefined) {
       const defaultCountry =
@@ -311,7 +292,7 @@ const AppointeeRegisterForm = () => {
     setFileDetails([...updatedFileDetails]);
     setFileName([...fileNameList]);
   };
- 
+
   const removeEPFOFile = (currentFileName) => {
     const {
       fileNameList: _fileNameList,
@@ -329,8 +310,7 @@ const AppointeeRegisterForm = () => {
     setUploadedFile(_updatedUploadedFileList);
     setFileDetails(_updatedFileDetails);
   };
-  const handleFileUpload =
-    (fileTypeAlias, setFileName, fileNameList = [], uploadType) =>
+  const handleFileUpload = (fileTypeAlias, setFileName, fileNameList = [], uploadType) =>
     ({ target }) => {
       uploadFile({
         files: target.files,
@@ -340,33 +320,113 @@ const AppointeeRegisterForm = () => {
         uploadType,
       });
     };
- 
-  
-  const uploadImageFile = handleFileUpload(imageFileTypeAlias, setImageFileName);
 
-  const handleBack = () => {
-    if (activeStep > 0) {
-      setActiveStep(activeStep - 1);
-      setCurrentPageNo(currentPageNo - 1);
+  const fetchActivePolicy = async () => {
+    try {
+      console.log('Fetching active policy...');
+      const response = await getCurrentPolicyDetails();
+      console.log('Policy response:', response);
+      if (response) {
+        const { responseInfo, statusCode } = response;
+        console.log('Setting active policy:', responseInfo);
+        setActivePolicy(responseInfo);
+      } else {
+        throw new Error('Failed to fetch policy');
+      }
+    } catch (err) {
+      console.error('Error fetching policy:', err);
+      // setError(err.message);
+      // enqueueSnackbar('Failed to fetch policy', { variant: 'error' });
+    } finally {
+      // setLoading(false);
     }
   };
- 
+
+  const isStageActive = (stageStep) => {
+    if (!activePolicy?.stages) {
+      return false;
+    }
+    const stage = activePolicy.stages.find(s => s.stageStep === stageStep);
+    // Check if stage is active and has at least one active process
+    return stage?.isActive === true &&
+      stage?.processes?.some(process => process.activeStatus === true);
+  };
+
+  useEffect(() => {
+    fetchActivePolicy();
+  }, []);
+
+  // Add effect to monitor activePolicy changes
+  useEffect(() => {
+  }, [activePolicy]);
+
+  const uploadImageFile = handleFileUpload(imageFileTypeAlias, setImageFileName);
+
+  // Function to get active stages up to and including the stage with processId 850
+  const getActiveStages = () => {
+    if (!activePolicy?.stages) return [];
+    const stages = activePolicy.stages;
+    const finalStageIndex = stages.findIndex(stage =>
+      stage.processes?.some(process => process.processId === 850)
+    );
+    return stages
+      .filter((stage, index) => {
+        const isStageActive = stage.isActive && 
+          stage.processes?.some(process => process.activeStatus === true);
+        const hasValidProcess = stage.processes?.some(process => process.processId <= 850);
+        return isStageActive && hasValidProcess && stage.stepper >= 0 &&
+          (finalStageIndex === -1 || index <= finalStageIndex);
+      })
+      .sort((a, b) => a.stepper - b.stepper);
+  };
+
+  // Get the filtered active stages and the current stage
+  const activeStages = getActiveStages();
+  const currentStage = activeStages[currentStageIndex];
+  const currentStepper = currentStage?.stageId;
+
+  // Build the stepper steps from the filtered active stages
+  const stepNamesSequential = [
+    'Personal Information',
+    'Document Upload',
+    'Aadhaar Verification',
+    'Driving License Verification',
+    'PAN Verification',
+    'Bank Verification',
+    'Police Verification',
+    'UAN/EPFO Verification',
+  ];
+  const steps = activeStages.map((stage, idx) => `${stage.stageId + 1}. ${stepNamesSequential[stage.stageId] || `Step ${idx + 1}`}`);
+  console.log('steps Stages:', steps);
+
+  // Navigation handlers
+  const handleNext = () => {
+    if (currentStageIndex < activeStages.length - 1) {
+      setCurrentStageIndex(currentStageIndex + 1);
+    }
+  };
+  const handleBack = () => {
+    if (currentStageIndex > 0) {
+      setCurrentStageIndex(currentStageIndex - 1);
+    }
+  };
+
+  // Reset index if out of bounds when active stages change
+  React.useEffect(() => {
+    if (currentStageIndex >= activeStages.length) {
+      setCurrentStageIndex(0);
+    }
+  }, [activeStages.length]);
+
   const showUploadMessage = (docType) => {
     let dialogContentText = (
       <Typography>{uploadFileMessage(docType)}, then save the details</Typography>
     );
     openUploadDocInfoModel(dialogContentText);
   };
- 
-  const dispatch = useDispatch();
-  
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setCurrentPageNo(3);
-  };
+
   const handleSecondNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setCurrentPageNo(2);
+    setCurrentStageIndex(2);
   };
 
   const handlePassportVerification = async () => {
@@ -457,15 +517,15 @@ const AppointeeRegisterForm = () => {
         })
         .filter((file) => file.previewURL)
         .map((fileWithDetail) => {
-        if (fileWithDetail.fileName === fileName) {
-          openUploadedDocumentModal(
-            fileWithDetail.previewURL,
-            fileWithDetail.fileName,
-            fileWithDetail.uploadTypeAlias,
-            fileWithDetail.mimeType,
-          );
-        }
-      });
+          if (fileWithDetail.fileName === fileName) {
+            openUploadedDocumentModal(
+              fileWithDetail.previewURL,
+              fileWithDetail.fileName,
+              fileWithDetail.uploadTypeAlias,
+              fileWithDetail.mimeType,
+            );
+          }
+        });
     } else {
       const payload = {
         appointeeId: appointeeId,
@@ -502,7 +562,7 @@ const AppointeeRegisterForm = () => {
   };
 
   const secondFormFileProps = useMemo(() => ({
-    handleFileUpload ,
+    handleFileUpload,
     removeEPFOFile,
     trustEpfoFileName,
     fileDetails,
@@ -511,10 +571,10 @@ const AppointeeRegisterForm = () => {
     clearFileVaribles,
     handleViewFile,
   }), [
-     
-       
-    handleFileUpload , removeEPFOFile, trustEpfoFileName, fileDetails, uploadedFile,
-    setTrustEpfoFileName,   clearFileVaribles, handleViewFile
+
+
+    handleFileUpload, removeEPFOFile, trustEpfoFileName, fileDetails, uploadedFile,
+    setTrustEpfoFileName, clearFileVaribles, handleViewFile
   ]);
 
   const secondFormStatusProps = useMemo(() => ({
@@ -544,145 +604,123 @@ const AppointeeRegisterForm = () => {
     updatePersonalDetail, isPreviousSectionDisabled, setIsPreviousSectionDisabled, isPhysicallyHandicap, passportAvailable,
     passportNo, countryOfOrigin, isPassportVerifyBtnDisabled, handlePassportVerification,
     passportstatusMessage, handlePassFileNumberOnChange, passportFileNumberError,
-      handleBack, handleNext, isthirdNextVisible, passportFileNumber,
-     isAppointeeUanAvailable, setIsUANAvailableState, setIsThirdNextVisible,
+    handleBack, handleNext, isthirdNextVisible, passportFileNumber,
+    isAppointeeUanAvailable, setIsUANAvailableState, setIsThirdNextVisible,
     checkFileUpload, showUploadMessage, openUploadDocInfoModel
   ]);
 
   return (
     <>
-      {currentPageNo === 2 && (
+      {currentStageIndex === 1 && (
         <Typography sx={{ ...heading2, mb: 3 }}>
           Your personal details must match with your Aadhaar details
         </Typography>
       )}
       <Box sx={{ width: '100%' }}>
-        <LinearStepper steps={steps} activeStep={activeStep} />
+        <LinearStepper steps={steps} activeStep={currentStageIndex} />
         <Box my={'20px'}>
           <FormContainer>
-            {currentPageNo === 1 ? (
-              <>
-                <FirstForm
-                  stepsList={stepsList}
-                  isRelationShipWithMemberDisabled={isRelationShipWithMemberDisabled}
-                  passportAvailable={passportAvailable}
-                  setPassportAvailable={setPassportAvailable}
-                  isAadhaarVarified={isAadhaarVarified}
-                  isPassportVarified={isPassportVarified}
-                  disabledIsInterNationalWorker={disabledIsInterNationalWorker}
-                  isDraft={isDraft}
-                  handleSecondNext={handleSecondNext}
-                  firstPageForm={personalDetails}
-                  setFirstPageForm={setPersonalDetails}
-                  handleChangeDateofIssue={handleChangeDateofIssue}
-                  handleChangeinDateofexpiry={handleChangeinDateofexpiry}
-                  setActiveStep={setActiveStep}
-                  setCurrentPageNo={setCurrentPageNo}
-                  setIsDraft={setIsDraft}
-                  updateStep={updateStep}
-                  defaultCountry={defaultCountry}
-                  setPassPortMaxLength={setPassPortMaxLength}
-                  passportNoMaxLength={passportNoMaxLength}
-                  imageFileName={imageFileName}
-                  uploadImageFile={uploadImageFile}
-                  handleViewFile={handleViewFile}
-                />
-              </>
-            ) : null}
-            {currentPageNo === 2 ? (
-              <>
-                <SecondForm
-                  stepsList={stepsList}
-                  firstPageForm={personalDetails}
-                  {...secondFormFileProps}
-                  {...secondFormStatusProps}
-                />
-              </>
-            ) : null}
-            {currentPageNo === 3 ? (
-              <ThirdForm t={t} stepsList={stepsList} 
-                  onAadhaarVerified={setisAadhaarVarified} 
-              userInfo={personalDetails}
-              setUserInfo={setPersonalDetails}
-                  handleBack={handleBack}
-                  setCurrentPageNo={setCurrentPageNo}
-                  setActiveStep={setActiveStep}
+            {currentStepper === 0 ? (
+              <FirstForm
+                stepsList={stepsList}
+                isRelationShipWithMemberDisabled={isRelationShipWithMemberDisabled}
+                passportAvailable={passportAvailable}
+                setPassportAvailable={setPassportAvailable}
+                isAadhaarVarified={isAadhaarVarified}
+                isPassportVarified={isPassportVarified}
+                disabledIsInterNationalWorker={disabledIsInterNationalWorker}
+                isDraft={isDraft}
+                handleSecondNext={handleSecondNext}
+                firstPageForm={personalDetails}
+                setFirstPageForm={setPersonalDetails}
+                handleChangeDateofIssue={handleChangeDateofIssue}
+                handleChangeinDateofexpiry={handleChangeinDateofexpiry}
+                setCurrentStageIndex={setCurrentStageIndex}
+                setIsDraft={setIsDraft}
+                updateStep={updateStep}
+                defaultCountry={defaultCountry}
+                setPassPortMaxLength={setPassPortMaxLength}
+                passportNoMaxLength={passportNoMaxLength}
+                imageFileName={imageFileName}
+                uploadImageFile={uploadImageFile}
+                handleViewFile={handleViewFile}
+                handleNext={handleNext}
               />
             ) : null}
-            {currentPageNo === 4 ? (
-              <>
-                <FourthForm
-                  formElement={formElement}
-                  stepsList={stepsList}
-                  isAadhaarVarified={isAadhaarVarified}
-                  handleBack={handleBack}
-                  setCurrentPageNo={setCurrentPageNo}
-                  setActiveStep={setActiveStep}
-                  userInfo={personalDetails}
-                  setUserInfo={setPersonalDetails}
-                  updateUserInfo={updatePersonalDetail}
-                />
-              </>
+            {currentStepper === 1 ? (
+              <SecondForm
+                stepsList={stepsList}
+                firstPageForm={personalDetails}
+                {...secondFormFileProps}
+                {...secondFormStatusProps}
+              />
             ) : null}
-
-            {currentPageNo === 5 ? (
-              <>
-                <FifthForm
-                  formElement={formElement}
-                  stepsList={stepsList}
-                  handleBack={handleBack}
-                  setCurrentPageNo={setCurrentPageNo}
-                  setActiveStep={setActiveStep}
-                  userInfo={personalDetails}
-                  setUserInfo={setPersonalDetails}
-                />
-              </>
+            {currentStepper === 2 ? (
+              <ThirdForm t={t} stepsList={stepsList}
+                onAadhaarVerified={setisAadhaarVarified}
+                userInfo={personalDetails}
+                setUserInfo={setPersonalDetails}
+                handleBack={handleBack}
+                handleNext={handleNext}
+              />
             ) : null}
-
-            {currentPageNo === 6 ? (
-              <>
-                <SixthForm
-                  isAadhaarVarified={isAadhaarVarified}
-                  formElement={formElement}
-                  stepsList={stepsList}
-                  setCurrentPageNo={setCurrentPageNo}
-                  handleBack={handleBack}
-                  setActiveStep={setActiveStep}
-                  userInfo={personalDetails}
-                  setUserInfo={setPersonalDetails}
-                />
-              </>
+            {currentStepper === 3 ? (
+              <FourthForm
+                formElement={formElement}
+                stepsList={stepsList}
+                isAadhaarVarified={isAadhaarVarified}
+                handleBack={handleBack}
+                handleNext={handleNext}
+                userInfo={personalDetails}
+                setUserInfo={setPersonalDetails}
+                updateUserInfo={updatePersonalDetail}
+              />
             ) : null}
-            {currentPageNo === 7 ? (
-              <>
-                <SeventhForm
-                  formElement={formElement}
-                  stepsList={stepsList}
-                  setCurrentPageNo={setCurrentPageNo}
-                  handleBack={handleBack}
-                  setActiveStep={setActiveStep}
-                  userInfo={personalDetails}
-                  setUserInfo={setPersonalDetails}
-                 
-                />
-              </>
+            {currentStepper === 4 ? (
+              <FifthForm
+                formElement={formElement}
+                stepsList={stepsList}
+                handleBack={handleBack}
+                handleNext={handleNext}
+                userInfo={personalDetails}
+                setUserInfo={setPersonalDetails}
+              />
             ) : null}
-            {currentPageNo === 8 ? (
-              <>
-                <EighthForm
-                  isAadhaarVarified={isAadhaarVarified}
-                  formElement={formElement}
-                  stepsList={stepsList}
-                  handleBack={handleBack}
-                  fileTypeList={fileTypeList}
-                  handleViewFile={handleViewFile}
-                  userInfo={personalDetails}
-                  setUserInfo={setPersonalDetails}
-                  checkFileUpload={checkFileUpload}
-                  openUploadDocInfoModel={openUploadDocInfoModel}
-                  functionSlice={functionSlice}
-                />
-              </>
+            {currentStepper === 5 ? (
+              <SixthForm
+                isAadhaarVarified={isAadhaarVarified}
+                formElement={formElement}
+                stepsList={stepsList}
+                handleBack={handleBack}
+                handleNext={handleNext}
+                userInfo={personalDetails}
+                setUserInfo={setPersonalDetails}
+              />
+            ) : null}
+            {currentStepper === 6 ? (
+              <SeventhForm
+                formElement={formElement}
+                stepsList={stepsList}
+                handleBack={handleBack}
+                handleNext={handleNext}
+                userInfo={personalDetails}
+                setUserInfo={setPersonalDetails}
+              />
+            ) : null}
+            {currentStepper === 7 ? (
+              <EighthForm
+                isAadhaarVarified={isAadhaarVarified}
+                formElement={formElement}
+                stepsList={stepsList}
+                handleBack={handleBack}
+                fileTypeList={fileTypeList}
+                handleViewFile={handleViewFile}
+                userInfo={personalDetails}
+                setUserInfo={setPersonalDetails}
+                checkFileUpload={checkFileUpload}
+                openUploadDocInfoModel={openUploadDocInfoModel}
+                functionSlice={functionSlice}
+              />
             ) : null}
           </FormContainer>
         </Box>

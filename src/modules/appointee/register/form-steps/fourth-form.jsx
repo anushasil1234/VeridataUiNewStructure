@@ -12,8 +12,9 @@ const FourthForm = ({
   stepsList,
   isAadhaarVarified,
   handleBack,
-  setCurrentPageNo,
-  setActiveStep,
+  handleNext,
+  // setCurrentPageNo,
+  // setActiveStep,
   userInfo,
   setUserInfo,
   updateUserInfo,
@@ -56,8 +57,9 @@ const FourthForm = ({
                        showErrorMessage(aaddharNumberverify);
                        return;
                      }
-                    setCurrentPageNo(5);
-                    setActiveStep(4);
+                     handleNext()
+                    // setCurrentPageNo(5);
+                    // setActiveStep(4);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'

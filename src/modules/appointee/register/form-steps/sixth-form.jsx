@@ -10,8 +10,9 @@ const SixthForm = ({
   stepsList,
   isAadhaarVarified,
   handleBack,
-  setCurrentPageNo,
-  setActiveStep,
+  handleNext,
+  // setCurrentPageNo,
+  // setActiveStep,
   userInfo,
   setUserInfo,
 }) => {
@@ -49,8 +50,9 @@ const SixthForm = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setCurrentPageNo(7);
-                    setActiveStep(6);
+                    handleNext();
+                    // setCurrentPageNo(7);
+                    // setActiveStep(6);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'

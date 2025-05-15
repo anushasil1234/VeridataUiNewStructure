@@ -123,7 +123,7 @@ const FileUpload = ({ stepsList, mode }) => {
   const [fetchUanConfirmation, setFetchUanConfirmation] = useState(false);
   const [appointeeDetailsId, setAppointeeDetailsId] = useState(0);
   const [candidteId, setCandidteId] = useState(null);
-  const [currentPageNo, setCurrentPageNo] = useState(null);
+  // const [currentPageNo, setCurrentPageNo] = useState(null);
   const [clickedButton, setClickedButton] = useState(null);
   const [isAppointeeUanAvailable, setIsAppointeeUanAvailable] = useState(null);
   const [uanNumberAvailable, setUanNumberAvailable] = useState('');

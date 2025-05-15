@@ -54,8 +54,9 @@ const FirstForm = ({
   handleChangeDateofIssue,
   handleChangeinDateofexpiry,
   setFirstPageForm,
-  setActiveStep,
-  setCurrentPageNo,
+  handleNext,
+  // setActiveStep,
+  // setCurrentPageNo,
   setIsDraft,
   updateStep,
   defaultCountry,
@@ -117,7 +118,8 @@ const FirstForm = ({
     }
   };
   const handleYes = (e) => {
-    handleSecondNext();
+    // handleSecondNext();
+    handleNext();
   };
   const handleNo = (e) => {};
   const handleClickOnNext = async () => {
@@ -232,8 +234,9 @@ const FirstForm = ({
       dispatch(removeAppointeeStatusDetailsData());
       dispatch(storeAppointeeStatusDetailsData(updatedAppointeeStatusResponse?.responseInfo));
       if (clickedButton === 'N') {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setCurrentPageNo(2);
+        // setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        // setCurrentPageNo(2);
+        handleNext();
         setIsDraft(false);
         updateStep({
           isHandicap: firstPageForm?.isHandicap,
