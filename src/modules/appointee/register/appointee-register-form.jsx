@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { heading2, subHeadingContentTextStyle } from 'app';
+import { heading2 } from 'app';
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,33 +7,23 @@ import {
   trustEpfoFileTypeAlias,
   imageFileTypeAlias,
   epfoPassbookFileTypeAlias,
-  UANEmptyErrorMsg,
-  aadharVerificationErrorMsg,
   passportFilePatternErrorMsg,
   epfoServiceHistoryFileTypeAlias,
-  UANPatterErrorMsg,
-  docResubmissionSuccessDialogContentText,
 } from 'shared/constants/constants';
 import {
   CreateStepSequience,
   DateFormatYYYYMMDD,
   hasValue,
   removeFile,
-  setLocalStorageItem,
   validationsCheck,
 } from 'shared/utils';
 import {
-  congratulationDialogContentTitle,
   passportSuccessMsg,
   passportVerifyFailedMsg,
-  registrationSuccessDialogContentText,
-  submitConfirmationMsg,
-  toDashboard,
 } from 'shared/constants/constants';
 import { useTranslation } from 'react-i18next';
 import VerificationStatus from '../../../shared/components/verification/verification-status';
 import uploadFileMessage from 'shared/utils/associate/upload-file-message';
-import UANPrerequisiteInformation from './uan-prerequiestic-info';
 import getFileDetails from 'shared/utils/associate/get-file-details';
 import LinearStepper from 'shared/components/Stepper/linear-stepper';
 import FormContainer from 'shared/components/grid-container/form-container';
@@ -50,17 +40,11 @@ import {
   getAppointeeDetails,
   getPassportDetails,
   getUploadedFileDetailsById,
-  postAppointeeFileDetails,
 } from 'server/apis';
 import showSuccessMessage from 'shared/utils/associate/show-success-message';
 import showErrorMessage from 'shared/utils/associate/show-error-message';
 import { storeCurrentPageNo } from 'store/slices/candidate-page-slice';
 
-import {
-  removeAppointeeStatusDetailsData,
-  storeAppointeeStatusDetailsData,
-} from 'store/slices/appointee-status-details-slice';
-import { getAppointeeStatusDetails } from 'server/apis/appointee/appointee-workflow/get-appointee-status-details';
 
 import usePersonalDetails from './hooks/usePersonalDetails';
 import useVerificationStatus from './hooks/useVerificationStatus';
@@ -87,14 +71,13 @@ const AppointeeRegisterForm = () => {
   const { openDocumentModel, openUploadedDocumentModal } = functionSlice[0];
   const {
     openRemarksModel,
-    openConfirmationModel,
     openInfoModel,
   } = functionSlice[0];
   const { countryList, nationalityList, fileTypeList } =
     dropdownList && dropdownList.length > 0 && dropdownList[0];
   const {} = apiSlice[0];
   const { navigateTo } = commonHooksFunctionSlice[0];
-  const { userId, appointeeId, userCode } = loggedInData[0];
+  const { userId, appointeeId } = loggedInData[0];
   const currentPageNo = useSelector((state) => state.CandidatePageSlice.currentPageNo);
   const setCurrentPageNo = (currentPageNo) => {
     dispatch(storeCurrentPageNo(currentPageNo));
@@ -104,86 +87,34 @@ const AppointeeRegisterForm = () => {
   const [passportFileNumber, setPassportFileNumber] = useState('');
   const [passportFileNumberError, setPassportFileNumberError] = useState(false);
   const [UAN, setUAN] = useState('');
-  // const [memberName, setMemberName] = useState('');
-  // const [dateOfBirth, setDateOfBirth] = useState('');
-  // const [dateOfJoining, setDateOfJoining] = useState('');
-  // const [gender, setGender] = useState('');
-  // const [appointeeName, setAppointeeName] = useState('');
-  // const [fathersOrHusbandName, setFathersOrHusbandName] = useState('');
-  // const [relationshipWithMember, setRelationshipWithMember] = useState('');
-  // const [mobileNo, setMobileNo] = useState(null);
-  // const [email, setEmail] = useState(null);
-  // const [nationality, setNationality] = useState('');
-  // const [EPFWages, setEPFWages] = useState(null);
-  // const [qualification, setQualification] = useState(' ');
-  // const [maritalStatus, setMaritalStatus] = useState(' ');
-  // const [isInterNationalWorker, setisInterNationalWorker] = useState('N');
   const [disabledIsInterNationalWorker, setDisabledIsInterNationalWorker] = useState(false);
   const [passportAvailable, setPassportAvailable] = useState(null);
   const [countryOfOrigin, setCountryOfOrigin] = useState('');
   const [passportNo, setPassportNo] = useState(null);
   const [isPhysicallyHandicap, setIsPhysicallyHandicap] = useState('');
-  // const [handicapType, setHandicapType] = useState('');
-  // const [pan, setPan] = useState(null);
-  // const [drivingLicense, setDrivingLicense] = useState(null);
-  // const [firDetails, setFIRDetails] = useState(null);
-  // const [nameAsOnPan, setNameAsOnPan] = useState(null);
-  // const [aadhar, setAadhar] = useState(null);
-  // const [aadharShareCode, setAadharShareCode] = useState(null);
-  // const [fetchUanConfirmation, setFetchUanConfirmation] = useState(false);
-  // const [appointeeDetailsId, setAppointeeDetailsId] = useState(0);
-  // const [candidteId, setCandidteId] = useState(null);
   const [isAppointeeUanAvailable, setIsAppointeeUanAvailable] = useState(null);
   const [passportNoMaxLength, setPassportNoMaxLength] = useState(null);
-  // const [showAdditionalSection, setShowAdditionalSection] = useState(false);
-  // const [isPANModalOpen, setIsPANModalOpen] = useState(false);
   const [isUANAvailableState, setIsUANAvailableState] = useState(false);
-  // const [isPANAvailable, setIsPANAvailable] = useState(true);
-  // const [isLicenseAvailable, setIsLicenseAvailable] = useState(true);
-  // const [isDLAvailable, setIsDLAvailable] = useState(true);
-  const [isPassportAvailable, setIsPassportAvailable] = useState(false);
-   const [epfostatusMessage, setEpfostatusMessage] = useState(new VerificationStatus());
   const [passportstatusMessage, setPassportStatusMessage] = useState(new VerificationStatus());
-  // const [panstatusMessage, setPANStatusMessage] = useState(new VerificationStatus());
-  // const [bankstatusMessage, setBankStatusMessage] = useState(new VerificationStatus());
-  // const [firstatusMessage, setFIRStatusMessage] = useState(new VerificationStatus());
-  // const [licensestatusMessage, setLicenseStatusMessage] = useState(new VerificationStatus());
   const [isAadhaarVarified, setisAadhaarVarified] = useState(false);
-  const [isPanVarified, setIsPanVarified] = useState(null);
-  // const [isBankVarified, setIsBankVarified] = useState(null);
   const [isPassportVarified, setIsPassportVarified] = useState(false);
-  // const [isPoliceVarified, setisPoliceVarified] = useState(null);
-  const [isUanVarified, setisUanVarified] = useState(null);
   const [epfoButton, setEpfoButton] = useState(null);
-  const [disabledAadharInput, setDisabledAadharInput] = useState(false);
-  const [disabledPanInput, setDisabledPanInput] = useState(false);
-  const [isEpfoSectionDisabled, setIsEpfoSectionDisabled] = useState(true);
   const [isPassportVerifyBtnDisabled, setIsPassportVerifyBtnDisabled] = useState(false);
   const [uploadedFile, setUploadedFile] = useState([]);
-  // const [xmlFileUploaded, setXmlFileUploaded] = useState();
   const [fileDetails, setFileDetails] = useState([]);
   const [trustEpfoFileName, setTrustEpfoFileName] = useState([]);
   const [epfoPassBookFiles, setEpfoPassBookFiles] = useState([]);
   const [epfoServiceHistoryFile, setEpfoServiceHistoryFile] = useState();
   const [imageFileName, setImageFileName] = useState([]);
-  // const [accountNumber, setAccountNumber] = useState(null);
-  // const [IFSCCode, setIFSCCode] = useState(null);
   const [isRelationShipWithMemberDisabled, setIsRelationShipWithMemberDisabled] = useState(false);
   const [isSubmit, setIsSubmit] = useState();
-  // const [companyName, setCompanyName] = useState();
-  // const [timeoutTimer, setTimeoutTimer] = useState();
   const [fileUploaded, setFileUploaded] = useState();
-  // const [isNextVisible, setIsNextVisible] = useState(false);
   const [isthirdNextVisible, setIsThirdNextVisible] = useState(false);
   const [isDraft, setIsDraft] = useState(true);
-  const [uanAadharLink, setUanAadharLink] = useState('');
   const [stepsList, setStepsList] = useState(() => stepperDefaultList(t));
   const [isUanVerificationProcessManual, setIsUanVerificationProcessManual] = useState('auto');
-  // const [panNumberError, setPanNumberError] = useState(false);
-  // const [isPFverificationReq, setIsPFverificationReq] = useState();
-  // const [panNumber, setPanNumber] = useState();
-  // const [isPensionApplicable, setIsPensionApplicable] = useState();
   const [isPreviousSectionDisabled, setIsPreviousSectionDisabled] = useState(false);
+  const [activePolicy, setActivePolicy] = useState(null);
 
   const stepCounter = 3;
   const [personalDetails, updatePersonalDetail, setPersonalDetails] = usePersonalDetails({
@@ -286,17 +217,6 @@ const AppointeeRegisterForm = () => {
     });
     setStepsList((prevSteps) => ({ ...prevSteps, ..._steps }));
   };
-  const openSubmitConfirmationModel = () => {
-    const submitconfModelContent = {
-      dialogContentText: submitConfirmationMsg,
-    };
-    openConfirmationModel(submitconfModelContent, () =>
-      handleAppointeeFormPage2Save({
-        isUanManualUpload: true,
-        status: 'Submitted',
-      }),
-    );
-  };
   const checkFileUpload = (fileTypeAlias) => {
     const uploadTypeAlias =
       uploadedFile && uploadedFile.find(({ uploadTypeAlias }) => uploadTypeAlias === fileTypeAlias);
@@ -309,16 +229,7 @@ const AppointeeRegisterForm = () => {
   const openUploadDocInfoModel = (dialogContentText) => {
     openInfoModel({ dialogContentText });
   };
-  // const submitDetails = (autoSubmit, isManual) => {
-  //   if (autoSubmit) {
-  //     handleAppointeeFormPage2Save({
-  //       isUanManualUpload: isManual,
-  //       status: 'Verified',
-  //     });
-  //   } else {
-  //     handleAppointeeFormPage3Save();
-  //   }
-  // };
+ 
   useEffect(() => {
     localStorage.setItem('activeStep', activeStep);
   }, [activeStep]);
@@ -338,26 +249,6 @@ const AppointeeRegisterForm = () => {
     }
   }, [UAN, t]);
 
-  // useEffect(() => {
-  //   if (isAadhaarVarified === true && isUanVarified !== null) {
-  //   }
-  //   if (isPanVarified) {
-  //     setDisabledPanInput(true);
-  //   }
-  //   if (isAadhaarVarified !== null && isAadhaarVarified === true) {
-  //     setIsEpfoSectionDisabled(false);
-  //   }
-  //   if (isAadhaarVarified !== null) {
-  //   }
-  //   if (isAadhaarVarified) {
-  //     setDisabledAadharInput(true);
-  //   }
-  //   if (isSubmit === false) {
-  //     if (isAadhaarVarified && isUanVarified) {
-  //       submitDetails(true, false);
-  //     }
-  //   }
-  // }, [isAadhaarVarified, isUanVarified]);
   useEffect(() => {
     if (personalDetails.gender === 'M') {
       setPersonalDetails({ ...personalDetails, memberRelation: 'F' });
@@ -420,23 +311,7 @@ const AppointeeRegisterForm = () => {
     setFileDetails([...updatedFileDetails]);
     setFileName([...fileNameList]);
   };
-  // const removeEPFOPassbookFile = (currentFileName) => {
-  //   const {
-  //     fileNameList: _fileNameList,
-  //     updatedUploadedFileList: _updatedUploadedFileList,
-  //     updatedFileDetails: _updatedFileDetails,
-  //   } = removeFile({
-  //     uploadedFile: uploadedFile,
-  //     fileDetails: fileDetails,
-  //     uploadTypeAlias: epfoPassbookFileTypeAlias,
-  //     fileNameList: epfoPassBookFiles,
-  //     currentFileName: currentFileName,
-  //     uploadType: 'multiple',
-  //   });
-  //   setEpfoPassBookFiles(_fileNameList);
-  //   setUploadedFile(_updatedUploadedFileList);
-  //   setFileDetails(_updatedFileDetails);
-  // };
+ 
   const removeEPFOFile = (currentFileName) => {
     const {
       fileNameList: _fileNameList,
@@ -465,20 +340,7 @@ const AppointeeRegisterForm = () => {
         uploadType,
       });
     };
-  
-  
-  // const uploadEpfoPassBookFile = handleFileUpload(
-  //   epfoPassbookFileTypeAlias,
-  //   setEpfoPassBookFiles,
-  //   epfoPassBookFiles,
-  //   'multiple',
-  // );
-  // const uploadEpfoServiceHistoryFile = handleFileUpload(
-  //   epfoServiceHistoryFileTypeAlias,
-  //   setEpfoServiceHistoryFile,
-  //   epfoServiceHistoryFile,
-  //   'single',
-  // );
+ 
   
   const uploadImageFile = handleFileUpload(imageFileTypeAlias, setImageFileName);
 
@@ -489,41 +351,6 @@ const AppointeeRegisterForm = () => {
     }
   };
  
-  // const checkEPFOPassbookDocCertificateUpload = () => {
-  //   const isUploaded = hasEPFOPassbookUpload() || hasValue(epfoPassBookFiles);
-  //   if (!isUploaded) showUploadMessage('EPFO Passbook file');
-  //   return isUploaded;
-  // };
-  // const checkEPFOServiceHistoryDocCertificateUpload = () => {
-  //   const isUploaded = hasEPFOServiceHistoryUpload() || hasValue(epfoServiceHistoryFile);
-  //   if (!isUploaded) showUploadMessage('EPFO Service History file');
-  //   return isUploaded;
-  // };
-
-  // const checkUANVerificationRequiredDoc = () => {
-  //   if (!hasValue(UAN)) {
-  //     showErrorMessage(UANEmptyErrorMsg);
-  //     return false;
-  //   }
-  //   if (hasValue(UAN) && !validationsCheck(UAN, 'UAN')) {
-  //     showErrorMessage(UANPatterErrorMsg);
-  //     return false;
-  //   }
-  //   if (!checkEPFOServiceHistoryDocCertificateUpload()) {
-  //     return false;
-  //   }
-  //   if (!checkEPFOPassbookDocCertificateUpload()) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
-  const checkAadharVerification = () => {
-    if (isAadhaarVarified !== true) {
-      showErrorMessage(aadharVerificationErrorMsg);
-      return false;
-    }
-    return true;
-  };
   const showUploadMessage = (docType) => {
     let dialogContentText = (
       <Typography>{uploadFileMessage(docType)}, then save the details</Typography>
@@ -531,68 +358,8 @@ const AppointeeRegisterForm = () => {
     openUploadDocInfoModel(dialogContentText);
   };
  
-  const buildFormData = (payLoad) => {
-    let formData = new FormData();
-    for (const property in payLoad) {
-      if (Object.hasOwnProperty.call(payLoad, property)) {
-        if (payLoad[property] === '') {
-          delete payLoad[property];
-        } else {
-          if (property === 'fileUploaded') {
-            formData.append(`${property}`, JSON.stringify(payLoad[property]));
-          } else if (property === 'fileDetails') {
-            if (payLoad?.fileDetails?.length > 0) {
-              payLoad?.fileDetails?.forEach((element, index) => {
-                formData.append(`${property}`, payLoad[property][index]);
-              });
-            }
-          } else {
-            formData.append(`${property}`, payLoad[property]);
-          }
-        }
-      }
-    }
-    return formData;
-  };
   const dispatch = useDispatch();
-  const handleAppointeeFormPage2Save = async ({ isUanManualUpload }) => {
-    let payLoad = {
-      appointeeId: appointeeId,
-      appointeeCode: userCode,
-      isSubmit: true,
-      userId: userId,
-      fileDetails: fileDetails,
-      fileUploaded: uploadedFile,
-      isManualPassbookUploaded: isUanManualUpload,
-    };
-    let formData = buildFormData(payLoad);
-    const response = await postAppointeeFileDetails(formData);
-    if (response) {
-      const updatedAppointeeStatusResponse = await getAppointeeStatusDetails(appointeeId);
-      setLocalStorageItem('candidate-status-details', updatedAppointeeStatusResponse?.responseInfo);
-      dispatch(removeAppointeeStatusDetailsData());
-      dispatch(storeAppointeeStatusDetailsData(updatedAppointeeStatusResponse?.responseInfo));
-      const registrationSuccessContent = {
-        dialogContentText:
-          isUanManualUpload === true
-            ? docResubmissionSuccessDialogContentText
-            : registrationSuccessDialogContentText,
-        dialogTitle: congratulationDialogContentTitle,
-        maxWidth: 'sm',
-        btnName: 'Go to Dashboard',
-      };
-      openInfoModel(registrationSuccessContent, () => navigateTo(toDashboard));
-    }
-  };
-  // const handleAppointeeFormPage3Save = () => {
-  //   if (!checkAadharVerification()) {
-  //     return;
-  //   }
-  //   if (!checkUANVerificationRequiredDoc()) {
-  //     return;
-  //   }
-  //   openSubmitConfirmationModel();
-  // };
+  
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setCurrentPageNo(3);
