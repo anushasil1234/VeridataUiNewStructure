@@ -49,14 +49,11 @@ const FirstForm = ({
   isPassportVarified,
   disabledIsInterNationalWorker,
   isDraft,
-  handleSecondNext,
   firstPageForm,
   handleChangeDateofIssue,
   handleChangeinDateofexpiry,
   setFirstPageForm,
   handleNext,
-  // setActiveStep,
-  // setCurrentPageNo,
   setIsDraft,
   updateStep,
   defaultCountry,
@@ -118,7 +115,6 @@ const FirstForm = ({
     }
   };
   const handleYes = (e) => {
-    // handleSecondNext();
     handleNext();
   };
   const handleNo = (e) => {};
@@ -234,8 +230,6 @@ const FirstForm = ({
       dispatch(removeAppointeeStatusDetailsData());
       dispatch(storeAppointeeStatusDetailsData(updatedAppointeeStatusResponse?.responseInfo));
       if (clickedButton === 'N') {
-        // setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        // setCurrentPageNo(2);
         handleNext();
         setIsDraft(false);
         updateStep({

@@ -413,19 +413,7 @@ export default function useUANVerification({
     }
   }, [userInfo?.isAadhaarVarified]);
   useEffect(() => {
-    // if (isAadhaarVarified === true && isUanVarified !== null) {
-    // }
-    // if (isPanVarified) {
-    //   setDisabledPanInput(true);
-    // }
-    // if (isAadhaarVarified !== null && isAadhaarVarified === true) {
-    //   setIsEpfoSectionDisabled(false);
-    // }
-    // if (isAadhaarVarified !== null) {
-    // }
-    // if (isAadhaarVarified) {
-    //   setDisabledAadharInput(true);
-    // }
+   
     if (userInfo?.isSubmit === false) {
       if (userInfo?.isAadhaarVarified && isUanVarified) {
         submitDetails(true, false);

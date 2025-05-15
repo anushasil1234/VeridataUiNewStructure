@@ -18,15 +18,7 @@ const ListTable = ({ rows }) => {
   const userTypeId = loggedInData[0] && loggedInData[0]?.userTypeId;
   let issuesList = [];
   let noteList = [];
-  // rows &&
-  //   rows.forEach((row) => {
-  //     if (row.remarksCategory === 'NRML') {
-  //       issuesList = [...issuesList, row];
-  //     }
-  //     if (row.remarksCategory === 'OTHER') {
-  //       noteList = [...noteList, row];
-  //     }
-  //   });
+ 
   return (
     <Stack sx={listTableBoxContainerStyle}>
       <Box>

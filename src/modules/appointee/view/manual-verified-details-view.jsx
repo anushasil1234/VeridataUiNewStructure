@@ -357,15 +357,7 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     setDegreeOfRotation(value.degreeOfRotation);
     setActionIconListDisplay(value.actionIconListDisplay);
   };
-  // const handleClickOnReview = async () => {
-  //   const response = await getRemarks(appointeeId);
-  //   if (response && response.responseInfo && response.responseInfo.length > 0) {
-  //     const remarks = response.responseInfo;
-  //     openRemarksModel(remarks);
-  //   } else {
-  //     showErrorMessage(remarksissuemessage);
-  //   }
-  // };
+
   const handleApproveModal = async () => {
     const confirmationModelContent = {
       dialogContentText: approveConfirmation,
@@ -519,7 +511,6 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
     const updatedEnabledQuestions = Array.from(newEnabled);
     setEnabledQuestions(updatedEnabledQuestions);
   
-    console.log('updated enabled questions', updatedEnabledQuestions);
     // Clear answers for disabled questions
     const clearedAnswers = Object.keys(updatedAnswers).reduce((acc, key) => {
       if (updatedEnabledQuestions.includes(parseInt(key))) {
@@ -528,12 +519,10 @@ let ManualverifiedViewDetails = ({ details, closeModel }) => {
       return acc;
     }, {});
   
-    console.log('cleared answers', clearedAnswers);
   
     setAnswers(clearedAnswers);
   };
   
-  console.log('answers & enabled questions', answers,enabledQuestions);
   return (
     <Box
       bgcolor={'#E2E8F0'}

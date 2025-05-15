@@ -323,22 +323,16 @@ const AppointeeRegisterForm = () => {
 
   const fetchActivePolicy = async () => {
     try {
-      console.log('Fetching active policy...');
       const response = await getCurrentPolicyDetails();
-      console.log('Policy response:', response);
       if (response) {
         const { responseInfo, statusCode } = response;
-        console.log('Setting active policy:', responseInfo);
         setActivePolicy(responseInfo);
       } else {
         throw new Error('Failed to fetch policy');
       }
     } catch (err) {
       console.error('Error fetching policy:', err);
-      // setError(err.message);
-      // enqueueSnackbar('Failed to fetch policy', { variant: 'error' });
     } finally {
-      // setLoading(false);
     }
   };
 
@@ -397,7 +391,6 @@ const AppointeeRegisterForm = () => {
     'UAN/EPFO Verification',
   ];
   const steps = activeStages.map((stage, idx) => `${stage.stageId + 1}. ${stepNamesSequential[stage.stageId] || `Step ${idx + 1}`}`);
-  console.log('steps Stages:', steps);
 
   // Navigation handlers
   const handleNext = () => {

@@ -60,13 +60,7 @@ const SecondForm = ({
   stepsList,
   isPreviousSectionDisabled,
   setIsPreviousSectionDisabled,
-  // upload10thCertificateFile,
-  // tenthCertificateFileName,
-  // uploadFathersDocFile,
-  // otherFiles,
   firstPageForm,
-  // uploadHandicapFile,
-  // handicapFiles,
   passportAvailable,
   passportNo,
   countryOfOrigin,
@@ -75,23 +69,12 @@ const SecondForm = ({
   passportstatusMessage,
   handlePassFileNumberOnChange,
   passportFileNumberError,
-  // uploadPassportFile,
-  // passportFiles,
-  // isTrustEpfoAvailable,
-  // isTrustEpfoAvailable,
-  // uploadTrustEPFOFile,
   removeEPFOFile,
   trustEpfoFileName,
-  // uanNumberAvailable,
-  // handleChange,
   handleBack,
-  // handleSaveClick,
   handleNext,
   isthirdNextVisible,
-  // isModalOpen,
-  // handleCloseModal,
   passportFileNumber,
-  // setIsTrustEpfoAvailable,
   handleViewFile,
   isAppointeeUanAvailable,
   setIsUANAvailableState,
@@ -99,8 +82,6 @@ const SecondForm = ({
   uploadedFile,
   clearFileVaribles,
   setTrustEpfoFileName,
-  // setHandicapFiles,
-  // setPassportFiles,
   setIsThirdNextVisible,
   checkFileUpload,
   showUploadMessage,
@@ -122,22 +103,7 @@ const SecondForm = ({
   const [isTrustEpfoAvailable, setIsTrustEpfoAvailable] = useState(isTrustPassbook ?? true);
   const [uanNumberAvailable, setUanNumberAvailable] = useState('');
 
-  // const {
-  //   tenthCertificateFileName,
-  //   otherFileName,
-  //   passportFileName,
-  //   handicapFileName,
-  //   trustEpfoFileName,
-  //   epfoPassBookFiles,
-  //   epfoServiceHistoryFile,
-  // } = getFilenames( {fileUploaded});
-  // setTenthCertificateFiles(tenthCertificateFileName);
-  // setOtherFiles(otherFiles);
-  // setPassportFiles(passportFiles);
-  // setHandicapFiles(handicapFiles);
-  // setTrustEpfoFileName(trustEpfoFileName);
-  // setEpfoPassBookFiles(epfoPassBookFiles);
-  // setEpfoServiceHistoryFile(epfoServiceHistoryFile);
+
   const handlePassporFileNumbertHelp = () => {
     const passportHelpContent = {
       dialogContentText: '',

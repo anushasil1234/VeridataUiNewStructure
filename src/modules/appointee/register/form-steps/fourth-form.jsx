@@ -13,8 +13,6 @@ const FourthForm = ({
   isAadhaarVarified,
   handleBack,
   handleNext,
-  // setCurrentPageNo,
-  // setActiveStep,
   userInfo,
   setUserInfo,
   updateUserInfo,
@@ -58,8 +56,6 @@ const FourthForm = ({
                        return;
                      }
                      handleNext()
-                    // setCurrentPageNo(5);
-                    // setActiveStep(4);
                   }}
                   sx={submitBtnStyle}
                   variant='contained'

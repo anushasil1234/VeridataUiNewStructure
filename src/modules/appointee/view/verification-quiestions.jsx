@@ -38,7 +38,6 @@ const VerificationQuiestions = ({
         {verificationQuestionSet.map((question, index) => {
           const { questionText, answers = [], questionId } = question;
           const isEnabled = enabledQuestions.includes(questionId);
-         // console.log('isEnabled', verificationQuestionSet, enabledQuestions, verificationAnswers,isEnabled);
           return (
             <GridContainer key={index}>
               <Grid container spacing={2} alignItems='flex-start'>

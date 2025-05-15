@@ -41,12 +41,10 @@ const ThirdForm = ({ t, formElement, stepsList, onAadhaarVerified, userInfo,setU
               <Button
                 onClick={() => {
                   handleNext()
-                  // if (!isAadhaarVarified) {
-                  //   showErrorMessage(aaddharNumberverify);
-                  //   return;
-                  // }
-                  // setCurrentPageNo(4);
-                  // setActiveStep(3);
+                   if (!isAadhaarVarified) {
+                     showErrorMessage(aaddharNumberverify);
+                    return;
+                   }
                 }}
                 sx={submitBtnStyle}
                 variant='contained'
